@@ -23,6 +23,7 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@mcgarrah.org"}
   - {title: Github, icon: github, url: "https://github.com/mcgarrah"}
+  - {title: Resume, icon: file-user, url: "/resume/"}
   - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 comments:
