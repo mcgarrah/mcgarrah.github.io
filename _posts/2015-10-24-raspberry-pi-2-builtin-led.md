@@ -8,7 +8,7 @@ For an assignment in my robotics class, I need to have an autonomous system reac
 
 I have two objectives for the Raspberry Pi 2 (RasPi2) and those are to take a picture using the 5mp webcam and flash a LED. I could use the standard GPIO pins and setup a separate LED but noticed we have two perfectly good LEDs built into the board.
 
-Reading on these built-in LED did not elicit any clear way of interacting with them from the regular Linux documentation. I informally called them the Red Power and Green DiskIO LEDs. It was by reading the headers to the source for Windows 10 for Raspberry Pi 2 that I found the GPIO pinouts for these two LEDs. They are:
+Reading on these built-in LED did not elicit any clear way of interacting with them from the regular Linux documentation. I informally called them the Red Power and Green DiskIO LEDs. It was by reading the headers to the source for [Windows 10 for Raspberry Pi 2](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsRPi2.htm) that I found the GPIO pinouts for these two LEDs. They are:
 
 ```
 35 Red Power LED
