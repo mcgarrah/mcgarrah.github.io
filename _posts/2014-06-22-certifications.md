@@ -7,7 +7,7 @@ I’ve got a pile of certifications that I’ve accumulated over the years.
 
 Below are my Redhat Linux, Microsoft, Sun Solaris, Nortel Networking and ITIL cert logos. I think the RHCE and Sun Solaris certs were probably the hardest of this bunch.
 
-![RHCE MCP SCSA NNCDS ITIL]([assets/images/email-sig-cert-logo.jpg](https://raw.githubusercontent.com/mcgarrah/mcgarrah.github.io/main/assets/images/email-sig-cert-logo.jpg))
+![RHCE MCP SCSA NNCDS ITIL](https://raw.githubusercontent.com/mcgarrah/mcgarrah.github.io/main/assets/images/email-sig-cert-logo.jpg)
 
 Here are my SAS certifications that took me six months to complete on my own time. The Clinical Trials Programmer exam was by far the hardest of this set of tests. I mostly use my SAS experience now to port software to R.
 
