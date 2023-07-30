@@ -9,21 +9,21 @@ One of this issues I ran into with bouncing between VMware Player 6.0.3 and my V
 The simple solution is to modify the .vmx file for your virtual machine and change the line:
 
 ```
-.encoding = “UTF-8″
-displayname = “mininet-pyretic-vm”
-guestos = “ubuntu-64″
-virtualhw.version = “10″
-config.version = “8″
+.encoding = "UTF-8"
+displayname = "mininet-pyretic-vm"
+guestos = "ubuntu-64"
+virtualhw.version = "10"
+config.version = "8"
 ```
 
 Notice the change in the forth line.
 
 ```
-.encoding = “UTF-8″
-displayname = “mininet-pyretic-vm”
-guestos = “ubuntu-64″
-virtualhw.version = “9″
-config.version = “8″
+.encoding = "UTF-8"
+displayname = "mininet-pyretic-vm"
+guestos = "ubuntu-64"
+virtualhw.version = "9"
+config.version = "8"
 ```
 
 You should shutdown the virtual machine, of course, before doing this and might want to remove it from the ESXi inventory without removing the files. Modify the VMX file, then re-add it to the inventory. You can download the VMX file to your desktop using the datastore browsers and return the file to the datastore with the same browser if you do not have SSH enabled on your ESXi server.
