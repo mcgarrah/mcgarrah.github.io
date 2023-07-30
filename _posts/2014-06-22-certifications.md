@@ -1,6 +1,7 @@
 ---
 title: "Certifications"
 layout: post
+categories: technical certifications
 ---
 
 I’ve got a pile of certifications that I’ve accumulated over the years.
