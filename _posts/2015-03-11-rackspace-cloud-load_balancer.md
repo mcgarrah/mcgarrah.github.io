@@ -14,7 +14,7 @@ My guess is that the Rackspace Load Balancer is actually an F5. The LBs are tryi
 
 Below is an EnabledTLS12.reg file for enabling TLSv1.2 on a Windows 2012 server.
 
-{% highlight ini %}
+{% highlight text %}
 
 Windows Registry Editor Version 5.00
 
