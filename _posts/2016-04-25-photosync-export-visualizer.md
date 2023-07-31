@@ -16,7 +16,7 @@ What I found most interesting was the 3D data in one of the views they offered s
 
 Above is the demonstration of the working project code against two of the Photosynth projects. I fully extract the data from the web service and put it into a common format then introduce that data into an interactive visualization environment. Extracting the raw binary data from the web service, then decoding the binary data and putting it into a standard useful format was a challenge.
 
-Here is the link to my online slideshow presentation for the [Final Project](https://goo.gl/q8c2ot).
+Here is the link to my online slideshow presentation for the [Final Project](https://github.com/mcgarrah/PyPhotoSynthExport/blob/master/McGarrah_JMichael_Portfolio.pdf).
 
 The python code for the project is available at my GitHub [PyPhotoSynthExport](https://github.com/mcgarrah/PyPhotoSynthExport) project for those interested.
 
