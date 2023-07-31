@@ -5,7 +5,7 @@ categories: technical
 ---
 
 I have developed something interesting for my graduate class in Computations Photography for the final project. 
-As background, for the class we had an assignment in which we used the [Microsoft Photosynth](https://photosynth.net/preview/users/mcgarrah) service to generate a 3D walkthru of an area by uploading several hundred photographs.
+As background, for the class we had an assignment in which we used the [Microsoft Photosynth](https://en.wikipedia.org/wiki/Photosynth) service to generate a 3D walkthru of an area by uploading several hundred photographs.
 On the back-end the Photosynth web service does feature extraction on all the photos and then related the photos in three dimensions to each other and the feature points. This generated a point cloud of related points between the photos.
 
 ![PhotoSynth](/assets/images/PhotoSynthPointCloud.png)
