@@ -14,7 +14,7 @@ files in it's directory structure.
 
 ---
 
-** Settings in VC6
+## Settings in VC6
 
 Tools->Customize -- add the "View Full Screen" from the View Category to the menu bars.
 
@@ -24,7 +24,7 @@ Workspace -- "Display clock on status bar" and "Reload last workspace at startup
 
 ---
 
-** Running DevStudio 6.0 builds in low priority.
+## Running DevStudio 6.0 builds in low priority.
 
 Original article was written by Leigh Stivers.
 
@@ -46,7 +46,7 @@ JMM: I have the old code for ShellEx.exe that I wrote from my Ziff-Davis days th
 
 ---
 
-** SysIncl.dat update removes BASETSD.H dependancy
+## SysIncl.dat update removes BASETSD.H dependancy
 
 Article was written by Michael McGarrah
 
@@ -54,7 +54,7 @@ Tired of BASETSD.H being added as a dependacy of every project. Add it to the x:
 
 ---
 
-** XString 4245 warnings for UINT to INT conversions
+## XString 4245 warnings for UINT to INT conversions
 
 Article was written by Michael McGarrah
 
@@ -100,7 +100,7 @@ _STD_END
 
 ---
 
-Tabifying and settings for DevStudio
+## Tabifying and settings for DevStudio
 
 Article was written by Michael McGarrah
 
@@ -159,7 +159,7 @@ REGEDIT4
 
 ---
 
-** Common problem and solution to linker errors
+## Common problem and solution to linker errors
 
 by Michael McGarrah
 
