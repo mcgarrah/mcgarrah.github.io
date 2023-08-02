@@ -26,6 +26,7 @@ external:                  # shows a footer with social links - for available ic
   - {title: Resume, icon: file, url: "/resume/"}
   - {title: ResearchGate, icon: researchgate, url: "https://www.researchgate.net/profile/James-Mcgarrah"}
   - {title: ORCID, icon: orcid, url: "https://orcid.org/0000-0001-8935-1293"}
+  - {title: Google Scholar, icon: graduation-cap, url: "https://scholar.google.com/citations?user=Lt7T2SwAAAAJ"}
   - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 comments:
