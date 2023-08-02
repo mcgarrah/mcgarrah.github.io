@@ -8,10 +8,10 @@ date_format: "%B %d, %Y"
 
 # Layout
 
-show_excerpts: true        # show article excerpts on the home page
-show_frame: true           # adds a gray frame to the site
+show_excerpts: false        # show article excerpts on the home page
+show_frame: false          # adds a gray frame to the site
 show_sidebar: false        # show a sidebar instead of the usual header
-minimal: false             # use a dark header
+minimal: true              # use a dark header
 
 # Menu
 
@@ -23,7 +23,7 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@mcgarrah.org"}
   - {title: Github, icon: github, url: "https://github.com/mcgarrah"}
-  - {title: Resume, icon: file-user, url: "/resume/"}
+  - {title: Resume, icon: file, url: "/resume/"}
   - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 comments:
