@@ -19,7 +19,7 @@ dark_header: true         # keep the header dark
 dark_footer: true         # keep the footer dark
 
 # Layout
-show_excerpts: false      # show article excerpts on the home page
+show_excerpts: true       # show article excerpts on the home page
 show_frame: false         # adds a gray frame to the site
 show_sidebar: true        # show a sidebar instead of the usual header
 minimal: true             # use a dark header
