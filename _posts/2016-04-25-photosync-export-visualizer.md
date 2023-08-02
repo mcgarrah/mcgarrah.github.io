@@ -12,7 +12,7 @@ On the back-end the Photosynth web service does feature extraction on all the ph
 
 What I found most interesting was the 3D data in one of the views they offered shown above. So working with this 3D data is what I picked for my final project in the class.
 
-{% include embed.html url="https://www.youtube.com/embed/WZPtuNnaqVc" %}
+{% include embed.html url="https://www.youtube.com/embed/WZPtuNnaqVc" width="50%" height="50%" %}
 
 Above is the demonstration of the working project code against two of the Photosynth projects. I fully extract the data from the web service and put it into a common format then introduce that data into an interactive visualization environment. Extracting the raw binary data from the web service, then decoding the binary data and putting it into a standard useful format was a challenge.
 
