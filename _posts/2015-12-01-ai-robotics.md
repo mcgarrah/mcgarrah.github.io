@@ -15,4 +15,4 @@ robotic platform to investigate computer vision technology. The platform include
 an Arduino with sensors and motors and a Raspberry Pi 2 for the vision and primary 
 control system. The project URL is a video channel that shows the progress and challenges.
 
-{% include embed.html url="https://youtube.com/playlist?list=PLG_DpV4CFj63n9GYGOhZV1fKbdO_CHNoa" %}
+{% include embed.html url="https://www.youtube.com/embed/videoseries?list=PLG_DpV4CFj63n9GYGOhZV1fKbdO_CHNoa" %}
