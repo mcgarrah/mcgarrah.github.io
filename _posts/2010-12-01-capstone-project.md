@@ -4,14 +4,11 @@ layout: post
 categories: technical
 ---
 
-NC State University
-
-Computer Science
+NC State University - Computer Science
 
 Senior Design Project
 
-
-“Senior Design: NetApp iSCSI with RDMA/TOE” (Fall 2010 Capstone Project)“Senior Design: NetApp iSCSI with RDMA/TOE” (Fall 2010 Capstone Project)
+[“Senior Design: NetApp iSCSI with RDMA/TOE” (Fall 2010 Capstone Project)](https://web.archive.org/web/20210416110703/https://www.csc2.ncsu.edu/sdc/students/information/projects/f2k10.php#p3)
 
 Aug 2010 - Dec 2010
 
