@@ -1,6 +1,6 @@
 title: "Technical Blog"
 author: "Michael McGarrah"
-description: "Technical Blog"
+description: "Michael McGarrah's Technical Blog"
 lang: "en"
 
 # Page Settings
@@ -9,7 +9,11 @@ excerpt_separator: "\n\n\n"
 date_format: "%B %d, %Y"
 paginate: 3
 
-remote_theme: niklasbuschmann/contrast
+# Layout
+show_excerpts: true       # show article excerpts on the home page
+show_frame: false         # adds a gray frame to the site
+show_sidebar: true        # show a sidebar instead of the usual header
+minimal: true             # use a dark header
 
 # Theme Settings
 hide_title: false         # remove site heading in the header
@@ -17,12 +21,6 @@ hide_footer: false        # hide the "previous" and "next" links at the end of e
 dark_theme: true          # use the dark mode as default
 dark_header: true         # keep the header dark
 dark_footer: true         # keep the footer dark
-
-# Layout
-show_excerpts: true       # show article excerpts on the home page
-show_frame: false         # adds a gray frame to the site
-show_sidebar: true        # show a sidebar instead of the usual header
-minimal: true             # use a dark header
 
 # Menu
 
@@ -42,14 +40,12 @@ external:                  # shows a footer with social links - for available ic
   - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 comments:
-#  disqus_shortname: ""    # see https://disqus.com/
-#  isso_domain: ""         # see https://posativ.org/isso/
+#  disqus_shortname: ""    # see https://disqus.com/        - needs money or ad-verts
+#  isso_domain: ""         # see https://posativ.org/isso/  - python hosted service with sqlite (money for hosting server)
 
 plugins:
- - jekyll-feed
- - jekyll-paginate
- - jekyll-default-layout
- - jekyll-remote-theme
- - jekyll-redirect-from
+ - jekyll-feed             # used for RSS XML feed
+ - jekyll-paginate         # adding back from earlier implementation in upstream fork
+ - jekyll-default-layout   # ??? maybe not needed ???
 
 theme: jekyll-theme-modernist
