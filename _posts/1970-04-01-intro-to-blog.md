@@ -1,6 +1,7 @@
 ---
 title: "Installation and Configuration of Blog"
 layout: post
+published: false
 ---
 
 ## Installation
