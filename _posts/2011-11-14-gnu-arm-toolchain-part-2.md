@@ -6,6 +6,9 @@ categories: personal black_armor hardware nas seagate arm armv5 toolchain
 
 Lesson learned on doing a toolchain build or anything else for that matter; make sure you are reading the most current documentation available.  I was working with very old versions of the software by using the GNU ARM website mentioned earlier.  In digging into the problems for those builds, I found a few other sites that have detailed discussions on building the toolchain for specific version of the ARM platform.
 
+
+
+
 One of interest is the OpenHardware [Building the ARM GNU 4.3.2](http://openhardware.net/Embedded_ARM/Toolchain/) that has lots of useful hints.  Also, the [Installing Gnuarm ARM Toolchain on Ubuntu 9.04](http://blog.nutaksas.com/2009/05/installing-gnuarm-arm-toolchain-on.html) had some useful notes as well.  Both are very different approaches and for very different ARM platforms but they have lots of useful notes on how to create a toolchain.  I'll probably use something in the middle between the two to get the job done.
 
 So I lost some time with old versions but learned a good bit about the software in the process.
