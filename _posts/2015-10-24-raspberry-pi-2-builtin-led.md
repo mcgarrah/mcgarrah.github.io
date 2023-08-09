@@ -15,6 +15,9 @@ Reading on these built-in LED did not elicit any clear way of interacting with t
 47 Yellow DiskIO LED
 ```
 
+
+
+
 So far as I know, these are only valid for the Raspberry Pi 2 and not older versions of the board. I’m including below a test script that has to be run as root that flashes the Red Power LED several times. The Green LED is accessible but tied to a trigger when the SSD card is accessed.
 
 {% highlight python %}
