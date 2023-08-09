@@ -6,48 +6,53 @@ categories: personal aws cloudstack eucalyptus openstack virtualization
 
 My first step was to review the major services we wanted to use on Amazon. They have a massive set of services available for use and some are not easily replicated without a major infrastructure and skill set to manage it. To give you some idea of the number of services here is a summary of the services and a quick reference as of August 2013.
 
+
+
+
 ### Amazon Web Services (AWS) as of August 2013
 
 #### Compute & Networking
-**EC2**    Virtual Servers in the Cloud
-ELB    Elastic Load Balancing or Auto Scaling of services 
-EMR   Hosted Hadoop Framework
-VPC    Isolated Cloud Resources
-Route 53   Scalable Domain Name System (DNS)
-Direct Connect Dedicated Network Connection to AWS
+
+- **EC2**    Virtual Servers in the Cloud
+- ELB    Elastic Load Balancing or Auto Scaling of services 
+- EMR   Hosted Hadoop Framework
+- VPC    Isolated Cloud Resources
+- Route 53   Scalable Domain Name System (DNS)
+- Direct Connect Dedicated Network Connection to AWS
 
 #### Storage & CDN
-**S3**    Scalable Storage in the Cloud
-Glacier    Low-Cost Archive Storage in the Cloud
-**EBS**    EC2 Block Storage Volumes
-Import/Export  Large Volume Data Transfer
-Storage Gateway Integrates on-premises IT environments with Cloud storage
-CloudFront  Global Content Delivery Network (CDN)
+
+- **S3**    Scalable Storage in the Cloud
+- Glacier    Low-Cost Archive Storage in the Cloud
+- **EBS**    EC2 Block Storage Volumes
+- Import/Export  Large Volume Data Transfer
+- Storage Gateway Integrates on-premises IT environments with Cloud storage
+- CloudFront  Global Content Delivery Network (CDN)
 
 #### Database
-RDS   Managed Relational Database Service for MySQL, Oracle and SQL Server
-DynamoDB   Fast, Predictable, Highly-scalable NoSQL data store
-ElastiCache  In-Memory Caching Service
-Redshift    Fast, Powerful, Fully Managed, Petabyte-scale Data Warehouse Service
+- RDS   Managed Relational Database Service for MySQL, Oracle and SQL Server
+- DynamoDB   Fast, Predictable, Highly-scalable NoSQL data store
+- ElastiCache  In-Memory Caching Service
+- Redshift    Fast, Powerful, Fully Managed, Petabyte-scale Data Warehouse Service
 
 #### Application Services
-CloudSearch  Managed Search Service
-**SWF**   Workflow service for coordinating application components
-**SQS**   Message Queue Service
-**SES**    Email Sending Service
-**SNS**    Push Notification Service
-FPS    Amazon Flexible Payments Service (FPS) is an API based payment service
-Elastic Transcoder Easy-to-use scalable media transcoding
+- CloudSearch  Managed Search Service
+- **SWF**   Workflow service for coordinating application components
+- **SQS**   Message Queue Service
+- **SES**    Email Sending Service
+- **SNS**    Push Notification Service
+- FPS    Amazon Flexible Payments Service (FPS) is an API based payment service
+- Elastic Transcoder Easy-to-use scalable media transcoding
 
 #### Deployment & Management 
-Management Console Web-Based User Interface
-**IAM**      Identity and Access Management (IAM) configurable access controls
-**CloudWatch**   Resource and Application Monitoring
-Elastic Beanstalk  AWS Application Container
-CloudFormation  Templates for AWS Resource Creation
-Data Pipeline   Orchestration Service for Periodic, Data-Driven Workflows
-OpsWorks   DevOps Application Management Services
-CloudHSM   Hardware-based Key Storage for Regulatory Compliance
+- Management Console Web-Based User Interface
+- **IAM**      Identity and Access Management (IAM) configurable access controls
+- **CloudWatch**   Resource and Application Monitoring
+- Elastic Beanstalk  AWS Application Container
+- CloudFormation  Templates for AWS Resource Creation
+- Data Pipeline   Orchestration Service for Periodic, Data-Driven Workflows
+- OpsWorks   DevOps Application Management Services
+- CloudHSM   Hardware-based Key Storage for Regulatory Compliance
 
 The items above BOLDED are those we deemed important or critical to our project.
 
