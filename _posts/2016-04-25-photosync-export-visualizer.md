@@ -10,6 +10,8 @@ On the back-end the Photosynth web service does feature extraction on all the ph
 
 [![PhotoSynth](/assets/images/PhotoSynthPointCloud.png){:width="50%" height="50%"}](/assets/images/PhotoSynthPointCloud.png)
 
+
+
 What I found most interesting was the 3D data in one of the views they offered shown above. So working with this 3D data is what I picked for my final project in the class.
 
 {% include embed.html url="https://www.youtube.com/embed/WZPtuNnaqVc" width="75%" height="75%" %}
