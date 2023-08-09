@@ -1,10 +1,13 @@
-  ---
+---
 title:  "Compilation failures"
 layout: post
 categories: personal black_armor hardware nas seagate
 ---
 
 The problem is that I can get an ARM executable but not sure why the default system is not working to produce a basic HelloWorld.
+
+
+
 
 ```
 $ cat test.c
