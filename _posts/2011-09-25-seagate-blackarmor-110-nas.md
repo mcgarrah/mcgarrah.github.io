@@ -10,6 +10,9 @@ The Seagate NAS (Network Attached Storage) that I've been using at my house is r
 
 First steps is getting a functional toolchain and then build some trivial tools.  The goal would be to have a full set of GNU tools available in a package format for people to use.  I want to publish a full working OpenSSH with scp support and rsync for this thing as a starting point. Maybe add some features for NFS. Just digging around on this thing reminded me how much I enjoy hacking on hardware.
 
+
+
+
 A starting point is this gentleman who cracked open the hardware:
 http://crapnas.blogspot.com/
 
