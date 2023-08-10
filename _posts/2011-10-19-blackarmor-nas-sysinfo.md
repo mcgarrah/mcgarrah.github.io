@@ -31,7 +31,6 @@ D assoc         : 4
 D line length   : 32
 D sets          : 128
 
-
 Hardware        : Feroceon-KW
 Revision        : 0000
 Serial          : 0000000000000000
