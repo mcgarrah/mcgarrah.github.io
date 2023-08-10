@@ -47,4 +47,4 @@ comments:
 
 plugins:
  - jekyll-feed             # used for RSS XML feed
- - jekyll-paginate         # adding back from earlier implementation in upstream fork
+ # - jekyll-paginate         # adding back from earlier implementation in upstream fork
