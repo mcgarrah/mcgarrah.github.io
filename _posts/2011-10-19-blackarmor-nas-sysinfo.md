@@ -6,6 +6,9 @@ categories: personal black_armor hardware nas seagate
 
 Here is the beginning of a dump of information on the Black Armor device from the Linux kernel and environment.  From this I learned the processor type and features. I also got some pointers to cross-compiler options used. These will all be important later.
 
+
+
+
 ```
 $ uname -a
 Linux NAS3 2.6.22.18 #1 Thu Aug 26 12:26:10 CST 2010 v0.0.8 armv5tejl unknown
