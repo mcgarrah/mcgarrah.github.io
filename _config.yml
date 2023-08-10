@@ -15,14 +15,14 @@ show_frame: false         # adds a gray frame to the site
 show_sidebar: true        # show a sidebar instead of the usual header
 minimal: true             # use a dark header
 
-theme: jekyll-theme-modernist
+# theme: jekyll-theme-modernist
 
-# Theme Settings
-hide_title: false         # remove site heading in the header
-hide_footer: false        # hide the "previous" and "next" links at the end of each post
-dark_theme: true          # use the dark mode as default
-dark_header: true         # keep the header dark
-dark_footer: true         # keep the footer dark
+# # Theme Settings
+# hide_title: false         # remove site heading in the header
+# hide_footer: false        # hide the "previous" and "next" links at the end of each post
+# dark_theme: true          # use the dark mode as default
+# dark_header: true         # keep the header dark
+# dark_footer: true         # keep the footer dark
 
 # Menu
 
