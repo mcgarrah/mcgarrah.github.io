@@ -14,6 +14,9 @@ Aug 2010 - Dec 2010
 
 Summary: Develop a methodology for 10Gbps iSCSI that utilized RDMA and TOE to reduce primary CPU and memory usage. Document and managed the project as a team leader. The resulting iSER implementation was utilized in a related NetApp Phd project at the University of Bangalore India.
 
+
+
+
 ## NetApp iSER Performance Evaluation Project Continuation
 
 NetApp is a leading vendor of hardware and software to help customers store, manage, and protect data. NetApp clients have very high performance needs. They typically deal with petabytes of data and high-load systems. NetApp is constantly looking for ways to improve performance of their systems. Stated in simplest terms, this project is part of a continuing, year-long effort to evaluate a set of hardware and software technologies which promise to provide a more efficient mechanism to transfer data across a network. NetApp will use our analysis to determine value-added for different applications, which includes cloud computing and virtualization.
