@@ -68,3 +68,6 @@ This only gets you part of the way to the price.
 
 cable for direct connection
 
+- SFP+ Cable, 10G SFP+ DAC, 0.5M(1.64ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU0.5M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear, 0.25m-7m https://a.co/d/fuTFqlt
+
+- SFP+ Cable, 10G SFP+ DAC, 1M(3.3ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU1M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear and More https://a.co/d/9naZi3p
