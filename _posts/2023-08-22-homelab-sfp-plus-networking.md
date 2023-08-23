@@ -18,6 +18,8 @@ Power consumption and acoustic (noise) are others to consider.
 
 Maybe get Amazon affilitate links for pricing (small kick back to me) on MikroTik switches
 
+## Mikrotik switches
+
 - Mikrotik CRS310-1G-5S-4S+IN 10Gigabit Switch 1G port 5 x SFP ports 4 x SFP+ port
  - ~$200 USD
  - 5 SFP 1Gbps
@@ -39,15 +41,17 @@ Maybe get Amazon affilitate links for pricing (small kick back to me) on MikroTi
  - 1 1Gbps Ethernet
  - 16 SFP+ 10Gbps
 
+## ZL Chassis 
 - HP Procurve 5406zl Switch
   - crazy price range on ebay $350 to $4000
   - Plugin modules for functionality range widely
   - Six module slots
-  - 
+
+## ZL modules
 - J9309A - HP ProCurve 4-port 10GbE SFP+ ZL Module 2C3 (module)
   - 4 SFP+ 10Gbps
 - HP Procurve J9535A 20-Port 4-SFP Gig-T/SFP PoE V2 ZL Module for 5400zl Switch
-
+- HP ProCurve 24 Port Gig-T PoE+ V2 zl Module - J9534A
 
 This only gets you part of the way to the price.
 
