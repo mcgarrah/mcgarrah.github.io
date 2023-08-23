@@ -55,3 +55,16 @@ Maybe get Amazon affilitate links for pricing (small kick back to me) on MikroTi
 
 This only gets you part of the way to the price.
 
+
+## Dual NIC 10Gbps
+
+- 10Gb SFP+ PCI-E Network Card NIC, with Broadcom BCM57810S Chip, Dual SFP+ Port, PCI Express X8, Support Windows Server/Linux/VMware https://a.co/d/3iLT95r
+
+- 10Gb NIC SFP+ PCIE Network Card with Broadcom BCM57810S Controller, Dual SFP+ Ports, Fits for PCI-E X 8/x16, PCI Express LAN Card Support Windows Server/Windows/Linux/VMware https://a.co/d/2e8q0UF
+
+- 10Gb PCI-E NIC Network Card, with Broadcom BCM57810S Chipset, Dual SFP+ Port, PCI Express Ethernet Lan Adapter Support Windows Server/Windows/Linux/VMware https://a.co/d/aIRizA9
+
+## DAC 
+
+cable for direct connection
+
