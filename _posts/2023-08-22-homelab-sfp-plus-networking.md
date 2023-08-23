@@ -6,7 +6,7 @@ published: false
 
 1. Point to Point network
 
-
+if you buy Dual port NICs then you can run a ring network between each node as Direct connections. it complicates your network config but worth it. 
 
 2. Switched network
 
@@ -66,7 +66,7 @@ This only gets you part of the way to the price.
 
 ## DAC 
 
-cable for direct connection
+cable for direct connection without gbics in sfp ports
 
 - SFP+ Cable, 10G SFP+ DAC, 0.5M(1.64ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU0.5M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear, 0.25m-7m https://a.co/d/fuTFqlt
 
