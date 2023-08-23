@@ -46,6 +46,8 @@ Maybe get Amazon affilitate links for pricing (small kick back to me) on MikroTi
   - 
 - J9309A - HP ProCurve 4-port 10GbE SFP+ ZL Module 2C3 (module)
   - 4 SFP+ 10Gbps
+- HP Procurve J9535A 20-Port 4-SFP Gig-T/SFP PoE V2 ZL Module for 5400zl Switch
+
 
 This only gets you part of the way to the price.
 
