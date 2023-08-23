@@ -40,9 +40,12 @@ Maybe get Amazon affilitate links for pricing (small kick back to me) on MikroTi
  - 16 SFP+ 10Gbps
 
 - HP Procurve 5406zl Switch
- - crazy price range on ebay $350 to $4000
- - Plugin modules for functionality range widely
- - Six module slots
+  - crazy price range on ebay $350 to $4000
+  - Plugin modules for functionality range widely
+  - Six module slots
+  - 
+- J9309A - HP ProCurve 4-port 10GbE SFP+ ZL Module 2C3 (module)
+  - 4 SFP+ 10Gbps
 
 This only gets you part of the way to the price.
 
