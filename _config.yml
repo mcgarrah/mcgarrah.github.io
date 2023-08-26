@@ -12,7 +12,7 @@ paginate: 4
 # Layout
 show_excerpts: true       # show article excerpts on the home page
 show_frame: false         # adds a gray frame to the site
-show_sidebar: true        # show a sidebar instead of the usual header
+show_sidebar: false       # show a sidebar instead of the usual header
 minimal: true             # use a dark header
 
 # theme: jekyll-theme-modernist
@@ -28,8 +28,7 @@ minimal: true             # use a dark header
 
 navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {file: "index.html"}
-  - {file: "archive.html"}  
-  - {title: Resume, url: "/resume/"}
+  - {file: "archive.html"}
   - {file: "README.md"}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
