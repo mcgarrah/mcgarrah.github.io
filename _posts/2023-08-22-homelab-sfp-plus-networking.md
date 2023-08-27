@@ -4,6 +4,14 @@ layout: post
 published: false
 ---
 
+This is a project I've been thinking about for a long time...  how to get 10gbpe+ networking in a homelab without breaking the bank.
+
+First option is just getting some DAC Cables and dual port 10Gbpe NICs then build a point to point ring network. That is relatively cheap and would set me up for future switched networks.  DACs could be swapped out for GBics that use copper (thermal issues) or fiber (delicate).
+
+Next is a relatively cheap at a couple hundred dollars switch with likely a low number of SFP+ ports. This is ~$200-$500 with anywhere from 2 to 16 ports at 10Gbps. Often switches with 10Gbps advertised only have one or two ports at that speed so shop carefully. You still have the cost of the NICs and cabling but only need one port on the NIC.
+
+Lastly, you could go all in with an enterprise switch like the HP ProCurve 5406zl which is a module hosting monster of a switch. These are massively upgradable but come with a lot of complexity to setup and manage. They are also incrediably loud (indended for server rooms) and suck a ton of power which generates lots of heat (thermal load). These are getting cheaper but are heavy to ship and still usually several hundred dollars with modules that can cost thousands. Don't expect a warantee on these as they are being pushed out of enterprise usage as end of life. 
+
 1. Point to Point network
 
 if you buy Dual port NICs then you can run a ring network between each node as Direct connections. it complicates your network config but worth it. 

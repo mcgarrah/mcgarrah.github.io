@@ -4,22 +4,23 @@ layout: post
 categories: personal
 ---
 
-So it's been quite awhile since I posted anything to any blog. I posted a couple
-things as I did projects in grad school. The Wordpress site died and was hosted
-on a VMware ESXi server in my homelab. I didn't have time to fix it while in school
-so no postings since 2016.
+So it's been quite awhile since I posted anything to any blog. I did post a couple
+updates as I did projects in grad school. The Wordpress site I used for this earlier
+died and was hosted on a VMware ESXi server in my homelab. I didn't have time to fix 
+it while in school so no postings since mid-2016.
 
-I've since graduated with my Masters in Machine Learning from Georgia Tech in 2019
-and picked up a couple of jobs that consumed the bulk of my time. So resurrecting and
-running my hobby website just got shelved. I did do some work in NLP and wrote an 
-academic paper with a PhD Candidate who became a PhD in Linguistics. I have a couple
-YouTube videos, a conference presentation and some code from that work which I should
-add as an article as I pull from the past couple years work.
+I've since graduated with my Masters in Interactive Intelligence (Machine Learning)
+from Georgia Tech in 2019 and picked up a couple of jobs that consumed the bulk of my 
+time. So resurrecting and running my hobby website just got shelved. I did some work
+in NLP and wrote an academic paper with a PhD Candidate who became a PhD in Linguistics.
+I have a couple YouTube videos, a conference presentation and some code from that work 
+which I should write an article to share some of the experience and code.
 
 Part of the problem was trying to figure out the best way to get a relatively static
 website up and running that would not take too much effort to maintain and manage.
 Analysis paralysis took over for awhile as I looked into serverless options and
 various hosting providers.
+
 At one point, I considered building a WordPress site again on a Digital Ocean droplet 
 but I was facinated with the whole static website generated from YAML or MarkDown files
 but it seemed limited or challenging to maintain. After recently taking a quick
