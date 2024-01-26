@@ -1,7 +1,7 @@
 ---
 title:  "Buying a 10Gbps or higher network on a homelab budget"
 layout: post
-published: false
+published: true
 ---
 
 This is a project I've been thinking about for a long time...  how to get 10gbpe+ networking in a homelab without breaking the bank.
@@ -10,11 +10,11 @@ First option is just getting some DAC Cables and dual port 10Gbpe NICs then buil
 
 Next is a relatively cheap at a couple hundred dollars switch with likely a low number of SFP+ ports. This is ~$200-$500 with anywhere from 2 to 16 ports at 10Gbps. Often switches with 10Gbps advertised only have one or two ports at that speed so shop carefully. You still have the cost of the NICs and cabling but only need one port on the NIC.
 
-Lastly, you could go all in with an enterprise switch like the HP ProCurve 5406zl which is a module hosting monster of a switch. These are massively upgradable but come with a lot of complexity to setup and manage. They are also incrediably loud (indended for server rooms) and suck a ton of power which generates lots of heat (thermal load). These are getting cheaper but are heavy to ship and still usually several hundred dollars with modules that can cost thousands. Don't expect a warantee on these as they are being pushed out of enterprise usage as end of life. 
+Lastly, you could go all in with an enterprise switch like the HP ProCurve 5406zl which is a module hosting monster of a switch. These are massively upgradable but come with a lot of complexity to setup and manage. They are also incrediably loud (intended for server rooms) and suck a ton of power which generates lots of heat (thermal load). These are getting cheaper but are heavy to ship and still usually several hundred dollars with modules that can cost thousands. Don't expect a warranty on these as they are being pushed out of enterprise usage as end of life. 
 
 1. Point to Point network
 
-if you buy Dual port NICs then you can run a ring network between each node as Direct connections. it complicates your network config but worth it. 
+If you buy Dual port NICs then you can run a ring network between each node as direct connections. It significantly complicates your network config but may be worth it for the cost savings depending on your budget.
 
 2. Switched network
 
@@ -23,8 +23,6 @@ Here are a pile of network switches that are both new and ancient that could sup
 Price per SFP+ port is one metric.
 
 Power consumption and acoustic (noise) are others to consider.
-
-Maybe get Amazon affilitate links for pricing (small kick back to me) on MikroTik switches
 
 ## Mikrotik switches
 
@@ -74,8 +72,16 @@ This only gets you part of the way to the price.
 
 ## DAC 
 
-cable for direct connection without gbics in sfp ports
+Cable for direct connection without gbics in sfp ports
 
 - SFP+ Cable, 10G SFP+ DAC, 0.5M(1.64ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU0.5M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear, 0.25m-7m https://a.co/d/fuTFqlt
 
 - SFP+ Cable, 10G SFP+ DAC, 1M(3.3ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU1M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear and More https://a.co/d/9naZi3p
+
+# Summary
+
+I have no decision on any of this and have been just thinking about it a lot as I start my journey into using Proxmox and Ceph on a local network using small 4 to 8 port 1Gbps Netgear switches that I happened to have on a shelf. My HP ProCurve 2510g-24 j9279a switches are completely out of date with their 100Mbps ports and their two SPF (not SPF+) DAC capable 1Gbps cross-connector.
+
+Another options is 2.5Gbps switches with existing CAT5/6 cabling I have all over the place but it seems like a waste not to jump up to 10Gbps if I'm rebuilding stuff.
+
+So final word is no decision on this and I will limp along with multiple 1Gbps networks.
