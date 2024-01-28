@@ -59,12 +59,12 @@ Upgrade options:
 - [ ] ~~ Glass Trackpad replacement (from X1) ~~
 - [ ] ~~ Add Coral TPU M.2 Edge Accelerator B+M Key in WWAN ~~
 
-I bought the Glass X1 Trackpad replacement and the driver support was a pain to deal with when installed and it just wasn't the much of a difference. I ended up removing it and going back to the base trackpad without being bothered.
+I bought the Glass X1 Trackpad replacement on Aliexpress but found the driver support was a pain to deal with when installed and it just wasn't the much of a difference for my usage. I ended up removing it and going back to the base trackpad without being bothered.
 
-Changing out the Wifi or WWAN for a TPU or M2 SSD means missing out of those network features which I would rather have Cellular and Wifi63 than those features.
+Changing out the Wifi or WWAN for a TPU or M2 SSD means missing out of those network features which I would rather have the cellular option and Wifi 6E than those the extra hard drive or TPU.
 
 ## Summary
 
-I would do this again in a heartbeat. This new to me laptop is great and letting me do work I could not do on my older one. The addition of the twin 4K monitors, updated GPU and expanded memory all make for a better experience. Windows 11 support gives me another couple years. I have future options like adding an eGPU via Thunderbolt 3 that were not even options. A Hackintosh option for the T480s exist where the X1 trackpad may become useful with the second laptop I have for parts.
+I would do this again in a heartbeat. This _new to me_ laptop is great and letting me do work I could not do on my older one. The addition of the twin 4K monitors, updated GPU and expanded memory all make for a better experience. Windows 11 support gives me another couple years. I have future options like adding an eGPU via Thunderbolt 3 that were not even options. A Hackintosh option for the T480 exist where the X1 trackpad may become useful with the second laptop I have for parts.
 
 So this was worth the effort and I would do it again.
