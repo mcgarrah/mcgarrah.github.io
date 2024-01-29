@@ -8,13 +8,13 @@ published: false
 
 I have a problem with two separate networks and locations that I'd like to link up together seamlessly. For the purposes of the discussion it could be a corporation with a main headquarters and a satelite office. For me it is two residences separated by a three (3) hour drive with one in the city and one at the beach. Since remote work has become a real thing, I can seamlessly transition between my two houses for work... but not for my homelab hobby.
 
-In the business world, my two physical sites would be connected via a VPN to make the two networks seamlessly connected. This is called a site-to-site VPN which can come in several different implementations. I would want a split-tunnel so that public internet traffic at each site uses the closest network access and not back-haul all the internet traffic to one site. Corporations will often not do split-tunnel so they can monitor all public internet network traffic in one pipeline with security tools to protect from malicious ingress or egress traffic.
+In the business world, my two physical sites or locations would be connected via a VPN to make the two networks seamlessly connected. This is called a site-to-site VPN which can come in several different implementations. I would want a split-tunnel so that public internet traffic at each site uses the closest network access and not back-haul all the internet traffic to one site. Corporations will often not do split-tunnel so they can monitor all public internet network traffic in one pipeline with security tools to protect from malicious ingress or egress traffic.
 
 ## GL.iNet GL-AXT1800 (Slate AX) Pocket-Sized Wi-Fi 6 Gigabit Travel Router, Extender/Repeater for Hotel
 
 https://www.gl-inet.com/products/gl-axt1800/
 
-I bought a Slate-AX with a nice case back in Jan 2023 as part of being able to work remotely from hotels and jumping between wifi networks. Their product was really helpful in that use case and left me with a really good impression on this products. The price to value was pretty high at least for me. It made for a stable consistent network as I worked intermittantly from hotels for a year.
+I bought a Slate-AX with a nice case back in Jan 2023 as part of being able to work remotely from hotels and jumping between wifi networks. Their product was really helpful in that use case and left me with a really good impression on their products. The price to value was pretty high at least for me. It made for a stable consistent network as I worked intermittantly from hotels for about a year.
 
 ## GL.iNet MT2500A (Brume 2) Mini VPN Security Gateway
 
@@ -41,8 +41,10 @@ Two MT2500A that offer OpenVPN or WireGuard on the OpenWrt OS with 2.5Gbps WAN p
 
 Both locations have [Google Nest Wifi Pro 6e](https://store.google.com/us/product/nest_wifi_pro) and I have numerous extra older [Google Wifi](https://www.amazon.com/Google-WiFi-system-3-Pack-replacement/dp/B01MAW2294) units (non-6e) available.
 
-The city location has a ProxMox Cluster that I'll be writing about in a later post. I have aspirations of using it to host some public network services and my media library. The cluster is setup be workable as an HA capable LXC container host but would need a lot of work figuring out how to setup OpnSense/PiHole/etc... with the typical mess of LACP, CARP, VIP and other network acrynoms to get it working. Also, I'm not keen on virtual network devices being used without a lot of thought put into them. I don't want a reboot of a node in my cluster to drop all networking at my house.
+The city location has a ProxMox Cluster that I'll be writing about in a later post. I have aspirations of using it to host some public network services and my personal media library. The cluster is setup be workable as an HA capable LXC container host but would need a lot of work figuring out how to setup OpnSense/PiHole/etc... with the typical mess of LACP, CARP, VIP and other network acrynoms to get it working. Also, I'm not keen on virtual network devices being used without a lot of thought put into them. I don't want a reboot of a node in my cluster to drop all networking at my house.
 
-Each location has CAT5e or better cables pulled but not all of the cabling is punched down on a patch panel or wall jack for immediate usage.
+Each of the two locations have CAT5e or better network cables pulled but not all of the cabling is punched down on a patch panel or wall jack for immediate usage. So we have options in hauling around network devices at the locations.
+
+I thought ahead have have my two locations setup with different CIDR ranges of IP addresses in usage. The default CIDR for Google Wifi is 192.168.86.0/24 or the 255 IP addresses 192.168.86.1 - 192.168.86.255. Thinking ahead, I set those to different non-overlapping ranges and extended them from a /24 to a /23 so I get 512 IPs for each private subnet. I consisted moving from the non-routable 192.168.0.0/16 range to someplace in the 10.0.0.0/8 but corporate networks have sucked up those ranges and I don't want to overlap those if possible.  For private SAN networks, I've used the 10.0.0.0/8 in a couple places.
 
 more tbd here...
