@@ -55,9 +55,9 @@ Upgrade options:
 - [ ] LCD Rear cover magnesium (lighter case)
 - [ ] Replace internal LCD screen with lower power version
 - [ ] Replace internal LCD screen with 4k version
-- [ ] ~~ Add a M.2 2242 SSD hard disk module ~~
-- [ ] ~~ Glass Trackpad replacement (from X1) ~~
-- [ ] ~~ Add Coral TPU M.2 Edge Accelerator B+M Key in WWAN ~~
+- [ ] ~~Add a M.2 2242 SSD hard disk module~~
+- [ ] ~~Glass Trackpad replacement (from X1)~~
+- [ ] ~~Add Coral TPU M.2 Edge Accelerator B+M Key in WWAN~~
 
 I bought the Glass X1 Trackpad replacement on Aliexpress but found the driver support was a pain to deal with when installed and it just wasn't the much of a difference for my usage. I ended up removing it and going back to the base trackpad without being bothered.
 
