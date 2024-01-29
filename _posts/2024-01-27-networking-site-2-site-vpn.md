@@ -37,8 +37,12 @@ First things is first... I have to define the networks and my overall goals or r
 
 We have [Google Fiber](https://fiber.google.com/cities/triangle/) in the city and [Spectrum Cable](https://www.spectrum.com) at the beach location. The Google Fiber connection is by far the faster 1Gbps synchronous both up and down. Spectrum Cable struggles to do 250Mbps down and 15Mbps up on what is supposed to be a 1Gbps subscription line.
 
-Two MT2500A that offer OpenVPN or WireGuard on the OpenWrt OS with 2.5Gbps WAN ports. An extra AX1800 Wifi for portable testing.
+Two MT2500A that offer OpenVPN or WireGuard on the OpenWrt OS with 2.5Gbps WAN ports. An extra AX1800 Wifi for portable testing as a client.
 
 Both locations have [Google Nest Wifi Pro 6e](https://store.google.com/us/product/nest_wifi_pro) and I have numerous extra older [Google Wifi](https://www.amazon.com/Google-WiFi-system-3-Pack-replacement/dp/B01MAW2294) units (non-6e) available.
 
+The city location has a ProxMox Cluster that I'll be writing about in a later post. I have aspirations of using it to host some public network services and my media library. The cluster is setup be workable as an HA capable LXC container host but would need a lot of work figuring out how to setup OpnSense/PiHole/etc... with the typical mess of LACP, CARP, VIP and other network acrynoms to get it working. Also, I'm not keen on virtual network devices being used without a lot of thought put into them. I don't want a reboot of a node in my cluster to drop all networking at my house.
 
+Each location has CAT5e or better cables pulled but not all of the cabling is punched down on a patch panel or wall jack for immediate usage.
+
+more tbd here...
