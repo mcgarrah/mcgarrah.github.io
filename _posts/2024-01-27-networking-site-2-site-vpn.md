@@ -6,7 +6,7 @@ published: false
 
 ## VPN in a multi-site Home Network
 
-I have two separate networks and two physical locations that I'd like to link up together seamlessly. For the purposes of the discussion it could be a corporation with a main headquarters and a satelite office. For me it is two residences separated by a three (3) hour drive with one in the city and one at the beach. Since remote work has become a real thing, I can seamlessly transition between my two houses for work... but not for my homelab hobby.
+I have two separate networks and two physical locations that I'd like to link up together seamlessly. For the purposes of this post, those could be a corporation with a main headquarters and a satelite office. For me it is two residences separated by a three (3) hour drive with one in the city and one at the beach. Since remote work has become a real thing, I can seamlessly transition between my two houses for work... but not for my homelab hobby.
 
 In the business world, my two physical sites or locations would be connected via a VPN to make the two networks seamlessly connected. This is called a site-to-site VPN which can come in several different implementations. I would want a split-tunnel so that public internet traffic at each site uses the closest network access and not back-haul all the internet traffic to one site. Corporations will often not do split-tunnel so they can monitor all public internet network traffic in one pipeline with security tools to protect from malicious ingress or egress traffic.
 
