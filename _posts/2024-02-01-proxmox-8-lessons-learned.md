@@ -207,8 +207,18 @@ Filesystem      Size  Used Avail Use% Mounted on
 /dev/sdj2       4.6T  3.8T  800G  83% /mnt/sdj
 /dev/sdk2       4.6T  2.5T  2.2T  53% /mnt/sdk
 
+root@kovacs:~# df -h /mnt/sd[hijk] /mnt/pve/cephfs
+Filesystem                                   Size  Used Avail Use% Mounted on
+/dev/sdh2                                    4.6T  3.0T  1.7T  65% /mnt/sdh
+/dev/sdi2                                    4.6T  2.6T  2.1T  56% /mnt/sdi
+/dev/sdj2                                    4.6T  3.8T  800G  83% /mnt/sdj
+/dev/sdk2                                    4.6T  2.5T  2.2T  53% /mnt/sdk
+192.168.86.11,192.168.86.12,192.168.86.13:/  5.9T  4.5T  1.4T  78% /mnt/pve/cephfs
 
+Get a list of TV Show directories with full path:
+# find /mnt/sd?/?\ Drive/TVShows/ -mindepth 1 -maxdepth 1 -type d
 
+# find /mnt/sd?/?\ Drive/TVShows/ -mindepth 1 -maxdepth 1 -type d -exec du -msh {} \;
 
 Netgear GS108Ev2
 https://github.com/ckarrie/ckw-ha-gs108e

@@ -66,19 +66,19 @@ This only gets you part of the way to the price.
 
 ## Dual NIC 10Gbps
 
-- 10Gb SFP+ PCI-E Network Card NIC, with Broadcom BCM57810S Chip, Dual SFP+ Port, PCI Express X8, Support Windows Server/Linux/VMware https://a.co/d/3iLT95r
+- [10Gb SFP+ PCI-E Network Card NIC, with Broadcom BCM57810S Chip, Dual SFP+ Port, PCI Express X8, Support Windows Server/Linux/VMware](https://a.co/d/3iLT95r)
 
-- 10Gb NIC SFP+ PCIE Network Card with Broadcom BCM57810S Controller, Dual SFP+ Ports, Fits for PCI-E X 8/x16, PCI Express LAN Card Support Windows Server/Windows/Linux/VMware https://a.co/d/2e8q0UF
+- [10Gb NIC SFP+ PCIE Network Card with Broadcom BCM57810S Controller, Dual SFP+ Ports, Fits for PCI-E X 8/x16, PCI Express LAN Card Support Windows Server/Windows/Linux/VMware](https://a.co/d/2e8q0UF)
 
-- 10Gb PCI-E NIC Network Card, with Broadcom BCM57810S Chipset, Dual SFP+ Port, PCI Express Ethernet Lan Adapter Support Windows Server/Windows/Linux/VMware https://a.co/d/aIRizA9
+- [10Gb PCI-E NIC Network Card, with Broadcom BCM57810S Chipset, Dual SFP+ Port, PCI Express Ethernet Lan Adapter Support Windows Server/Windows/Linux/VMware](https://a.co/d/aIRizA9)
 
 ## DAC 
 
 Cable for direct connection without gbics in sfp ports
 
-- SFP+ Cable, 10G SFP+ DAC, 0.5M(1.64ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU0.5M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear, 0.25m-7m https://a.co/d/fuTFqlt
+- [SFP+ Cable, 10G SFP+ DAC, 0.5M(1.64ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU0.5M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear, 0.25m-7m](https://a.co/d/fuTFqlt)
 
-- SFP+ Cable, 10G SFP+ DAC, 1M(3.3ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU1M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear and More https://a.co/d/9naZi3p
+- [SFP+ Cable, 10G SFP+ DAC, 1M(3.3ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU1M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear and More](https://a.co/d/9naZi3p)
 
 # Summary
 
