@@ -220,5 +220,15 @@ Get a list of TV Show directories with full path:
 
 # find /mnt/sd?/?\ Drive/TVShows/ -mindepth 1 -maxdepth 1 -type d -exec du -msh {} \;
 
+~16.3TiB of storage to add to a Ceph Cluster
+9 x 5Tb OSDs which are 4.5TiB each
+
+movies   4.2 TiB
+tvshow  11.9 TiB
+------- -------
+all     16.2 TiB
+
+CephFS  20.4 TiB
+
 Netgear GS108Ev2
 https://github.com/ckarrie/ckw-ha-gs108e
