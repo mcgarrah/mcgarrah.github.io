@@ -5,3 +5,5 @@
 Gemfile.lock
 _site
 *.gem
+bin
+vendor
