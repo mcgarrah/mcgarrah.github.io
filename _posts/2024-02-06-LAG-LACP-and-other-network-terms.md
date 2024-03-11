@@ -8,6 +8,8 @@ This is a meandering post without an immediate happy outcome.
 
 I am working on a five node ProxMox 8.1 cluster with three nodes as a Ceph cluster to host my media collection. I'm learning a bunch about Ceph and Proxmox which I'll post about later. The media collection I am importing into Ceph is a little over 16Tb from ripping my VHS, DVD, BluRay collections of movies and tv shows. Movies end up being less than a third of that content.
 
+
+
 So the history runs with my wife deciding a long time ago to turn off our cable subscription in favor of buying VHS Tape and DVDs or other media. We raided our local Block Buster when it went out of business. We also kept doing this even into the era of streaming service which had grown to now include content you cannot get on them. On the server side, this journey started with what I thought was an incredibly massive 4Tb USB hard drive hung off a Dell Optiplex 390 SFF (small form factor) desktop running [Plex Media Server](https://www.plex.tv/media-server-downloads). I had a prior set of work with a [DLNA server](https://en.wikipedia.org/wiki/DLNA) hacked into a Seagate BlackArmor NAS that I used as an initial import for the media collection. The new server quickly grew as I kept importing content since it had a DVD drive to do the ripping and a USB device for importing the VHS content. I eventually got concerned about the USB Drives reliablity and wanted to setup a better storage solution. My decision was to use Ceph rather than a NAS which is the use of lots of cheap redundant hardware vs expensive DASD or RAID hardware.
 
 That is all to set the stage and I'll be writing about setting up Proxmox in a later post. Lots of lessons learned and problems along the way.

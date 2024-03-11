@@ -6,6 +6,8 @@ categories: personal
 
 My [_new to me_ Thinkpad T480](/new-but-old-laptop/) is doing great. The better processor and the upgraded Nvidia MX150 GPU are both getting a workout with several of the new LLM models. I maxed out the RAM, Wifi, Hard Drive, and swapped around adding all the best components/features to one laptop consolidated from several different junkers I purchased. Those components include IR Camera, WWAN, backlit keyboard, good batteries, and a nice case.
 
+
+
 WSLv2 with Ubuntu is taking advantage of the newer CPU and RAM. The NVMe is making the disk access fly.
 
 ```text
