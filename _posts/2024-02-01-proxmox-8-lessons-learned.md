@@ -232,3 +232,23 @@ CephFS  20.4 TiB
 
 Netgear GS108Ev2
 https://github.com/ckarrie/ckw-ha-gs108e
+
+root@kovacs:~# date && ceph osd df tree
+Wed Feb  7 11:34:16 PM EST 2024
+ID  CLASS  WEIGHT    REWEIGHT  SIZE     RAW USE  DATA     OMAP     META     AVAIL    %USE   VAR   PGS  STATUS  TYPE NAME      
+-1         40.93547         -   41 TiB   14 TiB   14 TiB  102 MiB   46 GiB   27 TiB  34.72  1.00    -          root default   
+-3         13.64516         -   14 TiB  4.8 TiB  4.8 TiB   37 MiB   17 GiB  8.8 TiB  35.24  1.02    -              host harlan
+ 0    hdd   4.54839   1.00000  4.5 TiB  3.9 TiB  3.9 TiB   17 MiB   12 GiB  691 GiB  85.15  2.45  121      up          osd.0  
+ 3    hdd   4.54839   1.00000  4.5 TiB  616 GiB  615 GiB  8.5 MiB  2.9 GiB  3.9 TiB  13.24  0.38   24      up          osd.3  
+ 6    hdd   4.54839   1.00000  4.5 TiB  342 GiB  341 GiB   12 MiB  2.1 GiB  4.2 TiB   7.34  0.21   16      up          osd.6  
+-7         13.64516         -   14 TiB  4.8 TiB  4.7 TiB   32 MiB   15 GiB  8.9 TiB  34.86  1.00    -              host kovacs
+ 2    hdd   4.54839   1.00000  4.5 TiB  3.6 TiB  3.6 TiB   11 MiB   11 GiB  944 GiB  79.74  2.30  111      up          osd.2  
+ 5    hdd   4.54839   1.00000  4.5 TiB  588 GiB  587 GiB   12 MiB  2.0 GiB  4.0 TiB  12.62  0.36   27      up          osd.5  
+ 8    hdd   4.54839   1.00000  4.5 TiB  570 GiB  569 GiB  8.1 MiB  1.5 GiB  4.0 TiB  12.23  0.35   23      up          osd.8  
+-5         13.64516         -   14 TiB  4.6 TiB  4.6 TiB   33 MiB   14 GiB  9.0 TiB  34.04  0.98    -              host poe   
+ 1    hdd   4.54839   1.00000  4.5 TiB  3.6 TiB  3.6 TiB  9.1 MiB   11 GiB  981 GiB  78.94  2.27  109      up          osd.1  
+ 4    hdd   4.54839   1.00000  4.5 TiB  680 GiB  679 GiB   14 MiB  2.0 GiB  3.9 TiB  14.60  0.42   30      up          osd.4  
+ 7    hdd   4.54839   1.00000  4.5 TiB  400 GiB  399 GiB  9.7 MiB  1.2 GiB  4.2 TiB   8.59  0.25   22      up          osd.7  
+                        TOTAL   41 TiB   14 TiB   14 TiB  102 MiB   46 GiB   27 TiB  34.72                                    
+MIN/MAX VAR: 0.21/2.45  STDDEV: 33.03
+
