@@ -25,7 +25,9 @@ This should also lets me test out new plugins, new versions and changes to templ
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundler install --binstubs --path vendor  
 ```
 
-This creates a ```./vendor``` and ```./bin``` in the local directory rather than install them into the OS libraries. I've not used RVM [Ruby Version Manager](https://rvm.io/) to manage the Ruby version which I'll leave for a later. I'm a fan of Python3 VirtualEnv and would like to see the Ruby equivalent.
+This creates a ```./vendor``` and ```./bin``` in the local directory rather than install them into the OS libraries. It also had to be run twice to get it to work correctly in one environment. Looks like a newer bundler version resolves the issue for the second run.
+
+I've not used RVM [Ruby Version Manager](https://rvm.io/) to manage the Ruby version which I'll leave for a later. I'm a fan of Python3 VirtualEnv and would like to see the Ruby equivalent.
 
 ### Run local Server (and fail)
 ```
