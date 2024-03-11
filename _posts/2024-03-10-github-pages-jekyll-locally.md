@@ -4,7 +4,7 @@ layout: post
 published: true
 ---
 
-How to run Github Pages locally in my Microsoft Windows 10 Pro [WSLv2](https://learn.microsoft.com/en-us/windows/wsl/about) [Ubuntu 22.04 LTS](https://ubuntu.com/desktop/wsl) environment and using [Visual Studio Code](https://code.visualstudio.com/) to modify the contents. I'm not a Ruby or Jekyll expert by any means but just wanted a quick guide on running my pages locally to review them before pushing to [this website](https://mcgarrah.org). Seemed like an easy enough thing but there were a couple of hiccups to sort out so thought I'd write them down for future me when I try this again.
+How to run Github Pages locally in my Microsoft Windows 10 Pro [WSLv2](https://learn.microsoft.com/en-us/windows/wsl/about) [Ubuntu 22.04 LTS](https://ubuntu.com/desktop/wsl) environment and using [Visual Studio Code](https://code.visualstudio.com/) to modify the contents. I'm not a [Ruby](https://www.ruby-lang.org/) or [Jekyll](https://jekyllrb.com/) expert by any means but just wanted a quick guide on running my Github Pages website locally to review them before pushing to [this website](https://mcgarrah.org). Seemed like an easy enough thing but there were a couple of hiccups to sort out so thought I'd write them down for future me when I try this again.
 
 This should also lets me test out new plugins, new versions and changes to templates without breaking the public website. I'm still sorting out how to do the abstracts and formatting of the archive pages correctly.
 
@@ -61,7 +61,7 @@ Try running it again
 
 Now I see the website on localhost port 4000 ```http://127.0.0.1:4000/```. It updates when I change files as well.
 
-My local machine has a copy of my [Github Pages repository](https://github.com/mcgarrah/mcgarrah.github.io) and I'm using VS Code to modify the raw files and manage the git check ins.
+My local machine has a copy of my [Github Pages repository](https://github.com/mcgarrah/mcgarrah.github.io) and I'm using VS Code to modify the raw Markdown files and manage the git check-ins.
 
 Running the server with "```--trace```" gave some insight into some out of date gem libraries as a bonus. I hope to use this to improve the website incrementally and adding a local copy makes it possible without public embarassments.
 
