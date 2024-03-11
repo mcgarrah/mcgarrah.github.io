@@ -8,6 +8,8 @@ How to run Github Pages locally in my Microsoft Windows 10 Pro [WSLv2](https://l
 
 This should also lets me test out new plugins, new versions and changes to templates without breaking the public website. I'm still sorting out how to do the abstracts and formatting of the archive pages correctly.
 
+
+
 ### Get Ruby
 ```
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ sudo apt install ruby-full
@@ -59,6 +61,6 @@ Now I see the website on localhost port 4000. It updates when I change files as 
 
 My local machine has a copy of my Github repository and I'm using VS Code to modify the raw files and manage the git check ins.
 
-Running the server with "--trace" gave some insight into some out of date gem libraries as a bonus. I hope to use this to improve the website incrementally and adding a local copy makes it possible without public embarassments.
+Running the server with "```--trace```" gave some insight into some out of date gem libraries as a bonus. I hope to use this to improve the website incrementally and adding a local copy makes it possible without public embarassments.
 
 Cheers from the Beach.
