@@ -4,7 +4,14 @@ layout: post
 published: false
 ---
 
-This post should follow the PROCURVE2 2800 setup post...
+The earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial setup of a switch and mentioned in passing that I got the Java WebUI working in a relatively safe manner.
+
+Basically, the HP ProCurve switches had a nice web interface that used Java Webstart in a browser to give you an interactive method to look at your switch status and update minor settings. The webui was never as powerful as the full console CLI but just a nice feature when debugging a network issue.
+
+My first thoughts were to build a Windows 7 Virtual Machine with that era of web browser and java installed and use it to access the switches. That seemed like a lot of work and prone to issues cropping up with the old unsupported OS.
+
+
+
 
 Java error with the HP ProCurve 2510-24 J9019B network switch web interface
 https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface

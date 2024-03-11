@@ -63,4 +63,7 @@ My local machine has a copy of my Github repository and I'm using VS Code to mod
 
 Running the server with "```--trace```" gave some insight into some out of date gem libraries as a bonus. I hope to use this to improve the website incrementally and adding a local copy makes it possible without public embarassments.
 
+## Reference
+
+* [Testing your GitHub Pages site locally with Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/testing-your-github-pages-site-locally-with-jekyll?platform=linux)
 Cheers from the Beach.
