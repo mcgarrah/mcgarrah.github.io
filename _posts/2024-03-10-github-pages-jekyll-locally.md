@@ -59,11 +59,13 @@ Try running it again
 
 Now I see the website on localhost port 4000. It updates when I change files as well.
 
-My local machine has a copy of my Github repository and I'm using VS Code to modify the raw files and manage the git check ins.
+My local machine has a copy of my [Github Pages repository](https://github.com/mcgarrah/mcgarrah.github.io) and I'm using VS Code to modify the raw files and manage the git check ins.
 
 Running the server with "```--trace```" gave some insight into some out of date gem libraries as a bonus. I hope to use this to improve the website incrementally and adding a local copy makes it possible without public embarassments.
 
 ## Reference
 
 * [Testing your GitHub Pages site locally with Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/testing-your-github-pages-site-locally-with-jekyll?platform=linux)
-Cheers from the Beach.
+* [GitHub Pages documentation](https://docs.github.com/en/pages)
+
+Cheers from the Beach
