@@ -34,6 +34,7 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@gmail.com"}
   - {title: Github, icon: github, url: "https://github.com/mcgarrah"}
+  - {title: Gitlab, icon: gitlab, url: "https://gitlab.com/mcgarrah"}
   - {title: Resume, icon: file, sidebaricon: file, url: "/resume/"}
   - {title: ResearchGate, icon: researchgate, url: "https://www.researchgate.net/profile/James-Mcgarrah"}
   - {title: ORCID, icon: orcid, url: "https://orcid.org/0000-0001-8935-1293"}

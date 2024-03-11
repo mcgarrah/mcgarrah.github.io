@@ -6,6 +6,8 @@ categories: vmware technical
 
 One of this issues I ran into with bouncing between VMware Player 6.0.3 and my VMware ESXi 5.5u1 server is the hardware level of the virtual machines. ESXi 5.5 without the vSphere licence will not manage the newer virtualHW.version = “10″ virtual machines.
 
+
+
 The simple solution is to modify the .vmx file for your virtual machine and change the line:
 
 {% highlight ini %}

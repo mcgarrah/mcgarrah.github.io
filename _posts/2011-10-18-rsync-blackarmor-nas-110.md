@@ -38,7 +38,8 @@ $ id
 $ rsync --progress --stats -v -t -r rsync://admin@/rsyncftp/* /shares/Public
 ```
   ... watch the good times roll ...
-Note: Add the "-n" option to rsync on the client side for the initial test connection to put it in test mode without data copy.  Remove "-n" when you actually want to copy data.
+
+*Note*: Add the "-n" option to rsync on the client side for the initial test connection to put it in test mode without data copy.  Remove "-n" when you actually want to copy data.
 
 The transfer speed between two BA-NAS110 devices across a dedicated switch is about 6-8MB/s. I've read some comments about performance on these devices being dogs and that there tweaks that might help.
 

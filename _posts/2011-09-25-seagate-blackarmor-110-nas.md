@@ -14,20 +14,18 @@ First steps is getting a functional toolchain and then build some trivial tools.
 
 
 A starting point is this gentleman who cracked open the hardware:
-http://crapnas.blogspot.com/
+* [http://crapnas.blogspot.com/](http://crapnas.blogspot.com/)
 
 The Seagate Support Forums are surprisingly useful:
-http://forums.seagate.com/t5/BlackArmor-NAS-Network-Storage/bd-p/BlackArmorNAS
+* [http://forums.seagate.com/t5/BlackArmor-NAS-Network-Storage/bd-p/BlackArmorNAS](http://forums.seagate.com/t5/BlackArmor-NAS-Network-Storage/bd-p/BlackArmorNAS)
 
 Hajo Noerenberg's work gives us root access and details on image format:
-http://www.noerenberg.de/hajo/pub/seagate-blackarmor-nas.txt
-http://www.noerenberg.de/hajo/pub/
+* [http://www.noerenberg.de/hajo/pub/seagate-blackarmor-nas.txt](http://www.noerenberg.de/hajo/pub/seagate-blackarmor-nas.txt)
+* [http://www.noerenberg.de/hajo/pub/](http://www.noerenberg.de/hajo/pub/)
 
 Debian Lenny installed on 220 NAS:
-http://forums.seagate.com/t5/BlackArmor-NAS-Network-Storage/Install-Debian-GNU-Linux-5-0-7-Lenny-on-the-Blackarmor-220-NAS/td-p/79422
+* [http://forums.seagate.com/t5/BlackArmor-NAS-Network-Storage/Install-Debian-GNU-Linux-5-0-7-Lenny-on-the-Blackarmor-220-NAS/td-p/79422](http://forums.seagate.com/t5/BlackArmor-NAS-Network-Storage/Install-Debian-GNU-Linux-5-0-7-Lenny-on-the-Blackarmor-220-NAS/td-p/79422)
 
 I don't think I want a full Linux install but just extend the existing environment with additional tools that are useful.  A full platform and OS would be too much hassle. Besides, someone else already has that glory.
 
 I'll post more if I get time to wack on this.
-POSTED BY UNKNOWN AT 7:35 PM 2 COMMENTS: 
-LABELS: 
