@@ -4,23 +4,14 @@ layout: post
 published: false
 ---
 
-The earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial setup of a switch and mentioned in passing that I got the Java WebUI working in a relatively safe manner.
+The earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial setup of a network switch and mentioned in passing that I got the Java WebUI working in a relatively safe manner.
 
-Basically, the HP ProCurve switches had a nice web interface that used Java Webstart in a browser to give you an interactive method to look at your switch status and update minor settings. The webui was never as powerful as the full console CLI but just a nice feature when debugging a network issue.
+Basically, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. The webui was never as powerful as the full console CLI but just a nice feature when debugging a network issue.
 
 My first thoughts were to build a Windows 7 Virtual Machine with that era of web browser and java installed and use it to access the switches. That seemed like a lot of work and prone to issues cropping up with the old unsupported OS.
 
 
 
-
-Java error with the HP ProCurve 2510-24 J9019B network switch web interface
-https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface
-    This post should be an answer to this question
-
-Read this... as well...
-https://www.reddit.com/r/sysadmin/comments/17a6jrg/managing_old_java_switches/
-https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md
-https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/
 
 
 Getting the WebUI up and running is a very nice to have feature if I can get a web browser capable of Java Web Start (NPAPI) JNLP... And this [Web Browsers supporting NPAPI plugins like JAVA](https://www.reddit.com/r/homelab/comments/11afd0p/comment/k5j47cr/?utm_source=share&utm_medium=web2x&context=3) link seems to be a good starting point.
@@ -77,7 +68,7 @@ https://portableapps.com/support/firefox_portable#plugins
     With Firefox Portable, plugins work a bit differently than they do in regular Firefox. Here's how to do some of the most common plugins:
 
     Java Runtime Environment - To use Java apps with Mozilla Firefox, Portable Edition, just install jPortable alongside. If Firefox Portable is in X:\PortableApps\FirefoxPortable, jPortable should install to X:\PortableApps\CommonFiles\Java. The Firefox Portable launcher will automatically detect and configure the Java plugin for use.
-    Flash Plugin - To install Flash, you can either try our easy to use Flash installer for Firefox Portable, or follow these steps:
+    <!-- Flash Plugin - To install Flash, you can either try our easy to use Flash installer for Firefox Portable, or follow these steps:
     Flash is available as an extension. Just click the link.
     You'll probably see a yellow bar across the top of the browser (if not, skip to Step 5), on that bar, click Edit Options
     In the popup window, click Allow to add PortableApps.com to your whitelist and then click close
@@ -94,11 +85,58 @@ https://portableapps.com/support/firefox_portable#plugins
     Install the plugin in a local copy of Firefox (on your hard drive)
     Locate your plugins directory (usually C:\Program Files\Mozilla Firefox\plugins\)
     Copy the plugin you need from there to your FirefoxPortable\Data\plugins directory (Some Exmaples: For Flash, copy NPSWF32.dll... for Shockwave, copy np32dsw.dll)
-    Notes: It should be noted that Adobe Flash does *not* officially support running in any portable configuration. And, as it is a closed source application, we can neither modify it nor package it into a more portable-friendly installer. It should also be noted that it is illegal to redistribute either flash or shockwave without the full installer.
+    Notes: It should be noted that Adobe Flash does *not* officially support running in any portable configuration. And, as it is a closed source application, we can neither modify it nor package it into a more portable-friendly installer. It should also be noted that it is illegal to redistribute either flash or shockwave without the full installer. -->
 
 
-From above:
+<!-- From above:
     EDIT: I got it working. Somehow the "Enable Java content in the browser" box wasn't checked in the Security tab of the Java Control Panel, and also I needed to have the port number along with the URL in the Exception Site List.
+
+    Here is the Java Control Panel from a PortableApp Installation of JPortable
+    "C:\PortableApps\CommonFiles\Java\bin\javacpl.exe"
+
+    Open and pick the third tab "Security" then the checkbox at the top "Enable Java content in the browser (Only disabled for this user)" needs to be checked.
+
+    I also added my URL of the switch by IP address to the Exception Site List as:
+        http://10.10.10.10 -->
+
+[![HP ProCurve 2810-24 Serial Console in PuTTY](/assets/images/hp-procurve-serial-console-putty.png){:width="50%" height="50%"}](/assets/images/hp-procurve-serial-console-putty.png){:target="_blank"}
+
+[![HP ProCurve 2810-24 Java Web Start WebUI in FireFox](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:width="50%" height="50%"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
+
+[![FirefoxPortable.ini](/assets/images/firefox-jnlp-ini-file.png){:width="35%" height="35%"}](/assets/images/firefox-jnlp-ini-file.png){:target="_blank"}
+
+{% highlight ini linenos %}
+[FirefoxPortable]
+FirefoxDirectory=App\firefox
+ProfileDirectory=Data\profile
+SettingsDirectory=Data\settings
+PluginsDirectory=Data\plugins
+FirefoxExecutable=firefox.exe
+AdditionalParameters=
+LocalHomepage=
+DisableSplashScreen=false
+# AllowMultipleInstances=false
+DisableIntelligentStart=false
+SkipCompregFix=false
+RunLocally=false
+
+AllowMultipleInstances=true
+AlwaysUse32Bit=true
+
+# The above options are explained in the included readme.txt
+# This INI file is an example only and is not used unless it is placed as described in the included readme.txt
+{% endhighlight %}
+
+Lines 10 and 15,16 are the lines to be changed in the file. This file was placed in my ```C:\PortableApps\FirefoxPortable``` directory next to the ```FirefoxPortable.exe``` file. I installed all my PortableApps into ```C:\PortableApps```
+
+[![FirefoxPortable Files](/assets/images/firefox-jnlp-file-location.png){:width="35%" height="35%"}](/assets/images/firefox-jnlp-file-location.png){:target="_blank"}
+
+You will need to run the Java Control Panel to enable
+```C:\PortableApps\CommonFiles\Java\bin```
+
+[![Firefox Java Portable Files](/assets/images/firefox-java-cpl-location.png){:width="35%" height="35%"}](/assets/images/firefox-java-cpl-location.png){:target="_blank"}
+
+You have to check the "Enable Java content in the browser" box in the Security tab of the Java Control Panel, and also have to add the port number along with the URL in the Exception Site List.
 
     Here is the Java Control Panel from a PortableApp Installation of JPortable
     "C:\PortableApps\CommonFiles\Java\bin\javacpl.exe"
@@ -108,7 +146,32 @@ From above:
     I also added my URL of the switch by IP address to the Exception Site List as:
         http://10.10.10.10
 
-[![HP ProCurve 2810-24 Serial Console in PuTTY](/assets/images/hp-procurve-serial-console-putty.png){:width="50%" height="50%"}](/assets/images/hp-procurve-serial-console-putty.png){:target="_blank"}
+
+[![Firefox Java Control Panel settings](/assets/images/firefox-java-cpl-security.png){:width="35%" height="35%"}](/assets/images/firefox-java-cpl-security.png){:target="_blank"}
+
+Those settings are stored in the text file at ```C:\Users\<username>\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites``` if you need to populate it with a longer list of IP Addresses. The star (*) format is untested. I've only tested with the "http://10.10.10.10" address entered.
 
 
-[![HP ProCurve 2810-24 Java Web Start WebUI in FireFox](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:width="50%" height="50%"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
+
+## Software
+
+[Java Portable](https://sourceforge.net/projects/portableapps/files/Java%20Portable/) and make sure to get the 32-bit version not the 64-bit version. To match the era with support for JNLP (Java Webstart) I picked Java 8 Update 121.
+
+[Mozilla Firefox, Portable Ed.](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./) and they are bundled for both 32-bit and 64-bit. The last version that supports JNLP (Java Webstart) are either Firefox 51.0 or 51.0.1. I have tested with 51.0.
+
+* [FirefoxPortable_51.0.1_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0.1/FirefoxPortable_51.0.1_English.paf.exe/download) [local](/assets/exes/FirefoxPortable_51.0.1_English.paf.exe)
+* [FirefoxPortable_51.0_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0/FirefoxPortable_51.0_English.paf.exe/download) [local](/assets/exes/FirefoxPortable_51.0_English.paf.exe)
+* [jPortable_8_Update_121.paf.exe](https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_121.paf.exe/download) [local](/assets/exes/jPortable_8_Update_121.paf.exe)
+
+# Reference
+
+
+Java error with the HP ProCurve 2510-24 J9019B network switch web interface
+https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface
+    This post should be an answer to this question
+
+Read this... as well...
+https://www.reddit.com/r/sysadmin/comments/17a6jrg/managing_old_java_switches/
+https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md
+https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/
+
