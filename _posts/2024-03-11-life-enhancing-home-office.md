@@ -4,7 +4,7 @@ layout: post
 published: true
 ---
 
-Recently, I have been bouncing between my two home office spaces, hotels and an occasional visit to a cubical in my companies building. My home office spaces are nicely equiped with dual 28" or larger monitors, full office desks and I went overboard on some high-end office chairs years ago as a business I worked for went under and sold off equipments and furniture. So my home office space is often nicer than what is provided at most businesses.
+Recently, I have been bouncing between my two home office spaces, hotels and an occasional visit to a cubical in my companies building. My home office spaces are nicely equiped with dual 28" or larger monitors (which I'll post about later), full office desks. I went overboard on some really nice high-end office chairs years ago as a business I worked for went under and sold off equipment and furniture. So my home office space is often nicer than what is provided at most businesses.
 
 [![Wheels](/assets/images/office-chair-wheels.png){:width="35%" height="35%"}](/assets/images/office-chair-wheels.png){:target="_blank"}
 [![Arms](/assets/images/office-chair-arms.png){:width="35%" height="35%"}](/assets/images/office-chair-arms.png){:target="_blank"}
@@ -17,7 +17,7 @@ You could pickup the wheels at Lowe's Home Improvement for $40 or more which is 
 
 # Affilitate Links
 
-So while doing this I'm also learning about Amazon Affilitate Links and their program for small monitization of purchases by folks that like my write up here. If you use these Amazon Affiliate Links below that I get a small bit of money towards a gift card. I figure it was something to learn about and maybe buy something fun.
+So while doing this I'm also learning about [Amazon Affilitate Links](https://affiliate-program.amazon.com/) and their program for small monitization of purchases by folks that like my write up here. If you use these Amazon Affiliate Links below that I get a small bit of money towards a gift card. I figure it was something to learn about and maybe buy something fun.
 
 These products were bought with my own money and I have no affiliation with the vendors below. I just liked their products and had a good experience with them.
 
