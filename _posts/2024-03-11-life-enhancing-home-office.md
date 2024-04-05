@@ -6,8 +6,8 @@ published: true
 
 Recently, I have been bouncing between my two home office spaces, hotels and an occasional visit to a cubical in my companies building. My home office spaces are nicely equiped with dual 28" or larger monitors (which I'll post about later), full office desks. I went overboard on some really nice high-end office chairs years ago as a business I worked for went under and sold off equipment and furniture. So my home office space is often nicer than what is provided at most businesses.
 
-[![Wheels](/assets/images/office-chair-wheels.png){:width="35%" height="35%"}](/assets/images/office-chair-wheels.png){:target="_blank"}
-[![Arms](/assets/images/office-chair-arms.png){:width="35%" height="35%"}](/assets/images/office-chair-arms.png){:target="_blank"}
+[![Wheels](/assets/images/office-chair-wheels.png){:width="25%" height="25%"}](/assets/images/office-chair-wheels.png){:target="_blank"}
+[![Arms](/assets/images/office-chair-arms.png){:width="32%" height="32%"}](/assets/images/office-chair-arms.png){:target="_blank"}
 
 
 
