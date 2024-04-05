@@ -1,5 +1,5 @@
 ---
-title:  "HP ProCurve Switch Admin WebUI"
+title:  "HP ProCurve Switch Java WebUI"
 layout: post
 published: false
 ---
@@ -8,8 +8,29 @@ The earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) disc
 
 Basically, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. The webui was never as powerful as the full console CLI but just a nice feature when debugging a network issue.
 
-My first thoughts were to build a Windows 7 Virtual Machine with that era of web browser and java installed and use it to access the switches. That seemed like a lot of work and prone to issues cropping up with the old unsupported OS.
+My first thoughts were to build a Windows 7 Virtual Machine with that era of web browser and java installed and use it to access the switches. That seemed like a lot of work, was resource intensive and prone to issues cropping up with an old unsupported OS. Thus entered the [PortableApps](https://portableapps.com/) idea to run a isolated local Web-browser and Java.
 
+
+
+## History
+
+So now for some related history. Back in the early Internet there were a limited number of webbrowsers.  Netscape which later became FireFox was one the major players. They had a plugin system for their web-browser called [Netscape Plugin Application Programming Interface (NPAPI)](https://en.wikipedia.org/wiki/NPAPI) that you could use to enable things like [Macromedia Flash](https://en.wikipedia.org/wiki/Adobe_Flash), [Sun Java](https://en.wikipedia.org/wiki/Java_(software_platform)) before Oracle, [Microsoft Silverlight](https://en.wikipedia.org/wiki/Microsoft_Silverlight) and other such extensions to the browser. This NSAPI capability was in most web-browsers until around 2015-2017 when it was removed due to security concerns. Other methods to handle support for custom content types evolved and became broadly supported.
+
+HP ProCurve switches implemented a webui using Java Webstart that requires the Java Runtime Engine in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led us down this rabbit hole of an older web-browser and older Java Runtime that supports these switches webui. I have picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the webui.
+
+**WARNING**: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be <ins>***hacked***</ins> without a doubt in seconds.
+
+## Download Software
+
+[Java Portable](https://sourceforge.net/projects/portableapps/files/Java%20Portable/) and make sure to get the 32-bit version not the 64-bit version. To match the era with support for JNLP (Java Webstart) I picked Java 8 Update 121. Also picked due to MD5 signing issues with later versions.
+
+[Mozilla Firefox, Portable Ed.](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./) and they are bundled for both 32-bit and 64-bit. The last version that supports JNLP (Java Webstart) are either Firefox 51.0 or 51.0.1. I have only tested with 51.0 so far. You must enable 32-bit only.
+
+* [FirefoxPortable_51.0.1_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0.1/FirefoxPortable_51.0.1_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0.1_English.paf.exe))
+* [FirefoxPortable_51.0_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0/FirefoxPortable_51.0_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0_English.paf.exe))
+* [jPortable_8_Update_121.paf.exe](https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_121.paf.exe/download) ([local](/assets/exes/jPortable_8_Update_121.paf.exe))
+
+## Setup
 
 
 
@@ -17,7 +38,7 @@ My first thoughts were to build a Windows 7 Virtual Machine with that era of web
 Getting the WebUI up and running is a very nice to have feature if I can get a web browser capable of Java Web Start (NPAPI) JNLP... And this [Web Browsers supporting NPAPI plugins like JAVA](https://www.reddit.com/r/homelab/comments/11afd0p/comment/k5j47cr/?utm_source=share&utm_medium=web2x&context=3) link seems to be a good starting point.
 
 
-WARNING: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the old Java Web App on the public internet. You will be hacked without a doubt in seconds.
+
 
 My first thoughts ran along the lines of a Windows 7 Pro virtual machine to run a really old version of the web browser but this seemed like a pile of work and prone to issues coming up. So I thought about PortableApps and remembered they had both Java and FireFox as supported applications. With that in mind, I started down the road to figuring out if this would work or not. Surprise, it worked but had a number of hurdles along the way that need documentation for future folks.
 
@@ -151,27 +172,10 @@ You have to check the "Enable Java content in the browser" box in the Security t
 
 Those settings are stored in the text file at ```C:\Users\<username>\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites``` if you need to populate it with a longer list of IP Addresses. The star (*) format is untested. I've only tested with the "http://10.10.10.10" address entered.
 
+# References
 
-
-## Software
-
-[Java Portable](https://sourceforge.net/projects/portableapps/files/Java%20Portable/) and make sure to get the 32-bit version not the 64-bit version. To match the era with support for JNLP (Java Webstart) I picked Java 8 Update 121.
-
-[Mozilla Firefox, Portable Ed.](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./) and they are bundled for both 32-bit and 64-bit. The last version that supports JNLP (Java Webstart) are either Firefox 51.0 or 51.0.1. I have tested with 51.0.
-
-* [FirefoxPortable_51.0.1_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0.1/FirefoxPortable_51.0.1_English.paf.exe/download) [local](/assets/exes/FirefoxPortable_51.0.1_English.paf.exe)
-* [FirefoxPortable_51.0_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0/FirefoxPortable_51.0_English.paf.exe/download) [local](/assets/exes/FirefoxPortable_51.0_English.paf.exe)
-* [jPortable_8_Update_121.paf.exe](https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_121.paf.exe/download) [local](/assets/exes/jPortable_8_Update_121.paf.exe)
-
-# Reference
-
-
-Java error with the HP ProCurve 2510-24 J9019B network switch web interface
-https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface
-    This post should be an answer to this question
-
-Read this... as well...
-https://www.reddit.com/r/sysadmin/comments/17a6jrg/managing_old_java_switches/
-https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md
-https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/
+* [Java error with the HP ProCurve 2510-24 J9019B network switch web interface](https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface)
+* [Managing old Java switches?](https://www.reddit.com/r/sysadmin/comments/17a6jrg/managing_old_java_switches/)
+* [Accessing legacy webpages requering NPAPI Java plugin](https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md)
+* [ProCurve Switch J9021A needs Java](https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/)
 
