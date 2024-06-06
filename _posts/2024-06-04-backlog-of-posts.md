@@ -28,6 +28,6 @@ I also need to configure and add another HP ProCurve 2800 to my SAN (storage are
 
 All those changes are in-front of getting my media server back up and running. That depends on the Ceph and Proxmox clusters. I think I have those mapped out with LXC for most of the container services and unprivileged rather than full access. Reading the [TRaSH Guide](https://trash-guides.info/) has been an amazing experience. Lots of really good content in there. I need to write a post about all the ARR tools that can be installed on LXC rather than via Docker Containers.
 
-My post on the PiKVM ended up getting shelved when I ran into new issues on the AMOS KVM interacting badly with the PiKVM after it worked well for a week. I thought I had the strange behavior sorted out but it returned and I'm still debugging it. I may bite the bullet and get the $300 KVM that is recommended instead of the cheap one that I have to hack to death.
+My post on the PiKVM ended up getting shelved when I ran into new issues on the AIMOS KVM interacting badly with the PiKVM after it worked well for a week. I thought I had the strange behavior sorted out but it returned and I'm still debugging it. I may bite the bullet and get the $300 KVM that is recommended instead of the cheap one that I have to hack to death.
 
 Those are blocking other fun projects I want to do with Machine Learning. Sadly, I have to sleep and work and cannot finish all these fun projects and posts.
