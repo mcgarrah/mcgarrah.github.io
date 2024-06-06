@@ -1,17 +1,3 @@
-
-My area of work for my masters was "perception systems" with focused work in autonomous vehicles. I expanded that to include acoustics modeling and cross-over with socio-linguistics research.
-https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Senior-Perception-Engineer_JR1981839
-
-Related to what I do today... and at BCBSNC... building models for medical and finacial services
-https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/US-CA-Remote/Solutions-Architect--Financial-Services_JR1979846
-
-This would need a coverletter... I did RDMA, and lots of data center buildouts with HPC adjacent
-https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Principal--Infrastructure-Performance-and-Development-Engineer_JR1981842
-
-
-
-
-
 As part of the VPN solution:
     Turn off DHCP on Google WiFi to use another DHCP Server
     https://www.reddit.com/r/GoogleWiFi/comments/p0h4wu/turn_off_dhcp_on_google_wifi_to_use_another_dhcp/
