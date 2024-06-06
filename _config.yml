@@ -47,4 +47,5 @@ comments:
 
 plugins:
  - jekyll-feed             # used for RSS XML feed
+ - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
  # - jekyll-paginate         # adding back from earlier implementation in upstream fork
