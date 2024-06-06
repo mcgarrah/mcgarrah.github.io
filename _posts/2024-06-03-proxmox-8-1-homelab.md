@@ -1,5 +1,5 @@
 ---
-title:  "ProxMox 8.1 for the Homelabs"
+title:  "ProxMox 8.2 for the Homelabs"
 layout: post
 published: true
 ---
