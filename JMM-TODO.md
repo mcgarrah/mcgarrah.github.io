@@ -1,3 +1,18 @@
+
+Jekyll Plugins
+    https://jekyllrb.com/docs/plugins/your-first-plugin/
+
+    https://github.com/bdesham/reading_time
+
+    https://github.com/hendrikschneider/jekyll-analytics
+
+    https://github.com/jekyll/jekyll-seo-tag
+    https://github.com/pmarsceill/jekyll-seo-gem
+
+    https://github.com/jekyll/jekyll-admin
+    https://github.com/erikw/jekyll-google_search_console_verification_file
+
+
 As part of the VPN solution:
     Turn off DHCP on Google WiFi to use another DHCP Server
     https://www.reddit.com/r/GoogleWiFi/comments/p0h4wu/turn_off_dhcp_on_google_wifi_to_use_another_dhcp/
