@@ -4,7 +4,7 @@ layout: post
 published: false
 ---
 
-I just added a fourth set of three 5tb hard drives to my Ceph cluster on Proxmox 8.2.2.  So I'm up to about 20tb of highly available storage with no means of serving it out. So the plan is to build my multi-media services platform on a Proxmox Clusters with CephFS for the storage using LXC containers as a first options over VMs.
+After adding fourth (4) set of three (3) 5tb hard drives to my Ceph cluster on Proxmox 8.2.2, I'm up to about 20tb of highly available storage with no means of serving media out of it. So the plan is to build my multi-media services platform on a Proxmox Clusters with CephFS for the storage using LXC containers as a first options over VMs.
 
 NovaSpirit Youtube channel had a great series on doing this but not in a HA Cluster.
 TODO: Add Don's list of youtube videos here... and and outline of why I think they are really interesting for my use-case.

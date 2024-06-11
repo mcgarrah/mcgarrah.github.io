@@ -6,35 +6,64 @@ published: false
 
 # Lessons Learned
 
-Ceph Shutdowns
-https://forum.proxmox.com/threads/shutdown-of-the-hyper-converged-cluster-ceph.68085/post-619620
+I've learned a lot over the upgrades and scaling up since Proxmox 7.4 to the current Proxmox 8.2.2.
 
+## Ceph Stuff
+
+Ceph is really complicated but Proxmox makes it incredibly easy to setup the initial cluster with auto-magic under the covers. When the auto-magic fails, you have a very heavy lift to understand all the automation that just made things work.
+
+### How to shutdown Ceph cleanly
+
+[Ceph Shutdowns](https://forum.proxmox.com/threads/shutdown-of-the-hyper-converged-cluster-ceph.68085/post-619620) has nice notes on how to shutdown cleanly.
+
+### Sane defaults for Ceph
 
 Weekly deep scrubs are going to burn out my SSD and HDD
 
-osd_deep_scrub_interval 604800.000000
+```osd_deep_scrub_interval 604800.000000
 Description The interval for “deep” scrubbing (fully reading all data). The osd scrub load threshold does not affect this setting.
 Type        Float
 Default     Once per week. 60*60*24*7
 
 root@harlan:~# ceph config show-with-defaults osd.0 | grep deep | grep scrub | less
+osd_deep_scrub_interval    604800.000000    default
 
+```
 
-##
+#### How to set a Deep-Scrub Interval
+
+[How to set a Deep-Scrub Interval](https://silvenga.com/posts/ceph-and-deep-scrubs/)
+
+Note: This is in the global namespace, not the osd namespace. This is important because the monitors that emit the PG_NOT_DEEP_SCRUBBED warning based on this OSD setting, so it needs to match between the osd and mon namespaces, or just use global.
+
+```
+# Schedule the next normal scrub in between 1-7 days.
+ceph config set global osd_scrub_min_interval 86400 # 1 day
+ceph config set global osd_scrub_interval_randomize_ratio 7 # 700%
+
+# No more delays, normal scrub after 14 days.
+ceph config set global osd_scrub_max_interval 1209600 # 14 days
+
+# No more waiting on a random 15% chance to deep-scrub, just deep-scrub.
+ceph config set global osd_deep_scrub_interval 2419200 # 28 days
+```
+
+### Ceph calculation for OSDs
 
 https://florian.ca/ceph-calculator/
 
-## Seagate Shitshow
+## Seagate USB Shitshow
 
 https://www.smartmontools.org/wiki/SAT-with-UAS-Linux
 
+```
 root@kovacs:~# find /mnt/sdf/?\ Drive/Movies/ -type d -maxdepth 1 -name "[!a-tA-T]*" 2> /dev/null | wc -l
 190
 root@kovacs:~# find /mnt/sdf/?\ Drive/Movies/ -type d -maxdepth 1 -name "[a-tA-T]*" 2> /dev/null | wc -l
 1856
 root@kovacs:~# find /mnt/sdf/?\ Drive/Movies/ -type d -maxdepth 1  2> /dev/null | wc -l
 2046
-
+```
 
 
 ```
@@ -121,24 +150,26 @@ Class = "scsi_host"
       uevent              = "DEVTYPE=scsi_host"
 ...
 
-
 ``` 
 
 
-### PVE Scripting
+## PVE Scripting
 
-  125  pvesh get /nodes
-  126  pvesh get /nodes/status
-  127* pvesh get /nodes/statu
-  128  pvesh get /nodes/status/time
-  129  pvesh get /nodes
-  130  pvesh get /cluster
-  131  pvesh get /cluster/ceph
-  132  pvesh get /cluster/ceph/status
-  133  pvesh get /cluster/ceph/flags
 
+```
+pvesh get /nodes
+pvesh get /nodes/status
+pvesh get /nodes/statu
+pvesh get /nodes/status/time
+pvesh get /nodes
+pvesh get /cluster
+pvesh get /cluster/ceph
+pvesh get /cluster/ceph/status
+pvesh get /cluster/ceph/flags
+```
 https://192.168.86.15:8006/pve-docs/api-viewer/index.html
 
+```
 root@tanaka:~# cat cssh 
 #!/bin/bash
 
@@ -149,12 +180,12 @@ root@tanaka:~# cat cssh
 for node in $(pvesh get /cluster/status --output-format json | jq -r '.[].ip' | grep -v null); do
   ssh root@$node "$*"
 done
+```
 
 
+### look at changes in two directories
 
-# look at changes in two directories
-
-
+```
 root@kovacs:~# rsync -nrv /mnt/sd?/?\ Drive/TVShows/ /mnt/pve/cephfs/tvshows/
 
 root@kovacs:~# df -h /mnt/sd[hijk]
@@ -171,25 +202,33 @@ Filesystem                                   Size  Used Avail Use% Mounted on
 /dev/sdj2                                    4.6T  3.8T  800G  83% /mnt/sdj
 /dev/sdk2                                    4.6T  2.5T  2.2T  53% /mnt/sdk
 192.168.86.11,192.168.86.12,192.168.86.13:/  5.9T  4.5T  1.4T  78% /mnt/pve/cephfs
+```
 
 Get a list of TV Show directories with full path:
+```
 # find /mnt/sd?/?\ Drive/TVShows/ -mindepth 1 -maxdepth 1 -type d
 
 # find /mnt/sd?/?\ Drive/TVShows/ -mindepth 1 -maxdepth 1 -type d -exec du -msh {} \;
-
+```
 ~16.3TiB of storage to add to a Ceph Cluster
+
 9 x 5Tb OSDs which are 4.5TiB each
 
+```
 movies   4.2 TiB
 tvshow  11.9 TiB
 ------- -------
 all     16.2 TiB
 
 CephFS  20.4 TiB
+```
 
-Netgear GS108Ev2
+
+### Netgear GS108Ev2
 https://github.com/ckarrie/ckw-ha-gs108e
 
+### Ceph OSD sizes
+```
 root@kovacs:~# date && ceph osd df tree
 Wed Feb  7 11:34:16 PM EST 2024
 ID  CLASS  WEIGHT    REWEIGHT  SIZE     RAW USE  DATA     OMAP     META     AVAIL    %USE   VAR   PGS  STATUS  TYPE NAME      
@@ -208,4 +247,4 @@ ID  CLASS  WEIGHT    REWEIGHT  SIZE     RAW USE  DATA     OMAP     META     AVAI
  7    hdd   4.54839   1.00000  4.5 TiB  400 GiB  399 GiB  9.7 MiB  1.2 GiB  4.2 TiB   8.59  0.25   22      up          osd.7  
                         TOTAL   41 TiB   14 TiB   14 TiB  102 MiB   46 GiB   27 TiB  34.72                                    
 MIN/MAX VAR: 0.21/2.45  STDDEV: 33.03
-
+```
