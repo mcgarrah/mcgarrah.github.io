@@ -35,7 +35,10 @@ external:                  # shows a footer with social links - for available ic
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@gmail.com"}
   - {title: Github, icon: github, url: "https://github.com/mcgarrah"}
   - {title: Gitlab, icon: gitlab, url: "https://gitlab.com/mcgarrah"}
+  - {title: StackOverflow, icon: stack-overflow, url: "https://stackoverflow.com/users/2452678/michael-mcgarrah"}
+  - {title: Discord, icon: discord, url: "https://discord.com/users/914581392740995073"}
   - {title: Resume, icon: file, sidebaricon: file, url: "/resume/"}
+  - {title: LinkedIn, icon: linkedin, url: "https://www.linkedin.com/in/michaelmcgarrah/"}
   - {title: ResearchGate, icon: researchgate, url: "https://www.researchgate.net/profile/James-Mcgarrah"}
   - {title: ORCID, icon: orcid, url: "https://orcid.org/0000-0001-8935-1293"}
   - {title: Google Scholar, icon: graduation-cap, url: "https://scholar.google.com/citations?user=Lt7T2SwAAAAJ"}
