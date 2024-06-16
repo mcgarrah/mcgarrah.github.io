@@ -13,24 +13,24 @@ There are some hard *NO*s on my list which include GoDaddy and Register.com / Ne
 
 ## NameCheap
 
-When I had had enough of GoDaddy's constantly increasing prices and buggy interface a few years ago, I transferred most of my domains to NameCheap and I never looked back.
+~~When I had had enough of GoDaddy's constantly increasing prices and buggy interface a few years ago, I transferred most of my domains to NameCheap and I never looked back.~~
 
-NameCheap is the world's second domain registrar in terms of size (after GoDaddy), but in terms of pricing and support, NC comes out on top based on my experience with them so far.
+~~NameCheap is the world's second domain registrar in terms of size (after GoDaddy), but in terms of pricing and support, NC comes out on top based on my experience with them so far.~~
 
-Another reason NameCheap is a great place to buy your domain names from is the additional services they offer at an affordable price, especially SSL certificates and premium DNS (100% uptime with DDoS protection).
+~~Another reason NameCheap is a great place to buy your domain names from is the additional services they offer at an affordable price, especially SSL certificates and premium DNS (100% uptime with DDoS protection).~~
 
 
 ## Dynadot
 
-Dynadot may not have the recognition of the top names in the industry, but the company has been around for many years and it is particularly favored by domainers and developers here on Reddit and other tech forums.
+~~Dynadot may not have the recognition of the top names in the industry, but the company has been around for many years and it is particularly favored by domainers and developers here on Reddit and other tech forums.~~
 
-I've been registering some of my domains at Dynadot for several years and I'm absolutely satisfied with their good service and simple platform. There aren't many other registrars that beat the low renewal prices Dynadot offers.
+~~I've been registering some of my domains at Dynadot for several years and I'm absolutely satisfied with their good service and simple platform. There aren't many other registrars that beat the low renewal prices Dynadot offers.~~
 
 ## Cloudflare
 
-If you plan on using Cloudflare's DNS or CDN services, you may as well register your domain with them. They sell domains at cost, so you can get most TLDs at the lowest price on the market.
+~~If you plan on using Cloudflare's DNS or CDN services, you may as well register your domain with them. They sell domains at cost, so you can get most TLDs at the lowest price on the market.~~
 
-But beware, you must use Cloudflare's DNS with any domain name your register with them. They don't allow you to change the domain's nameservers.
+~~But beware, you must use Cloudflare's DNS with any domain name your register with them. They don't allow you to change the domain's nameservers.~~
 
 ## SquareSpace
 
@@ -43,7 +43,7 @@ Ick and costly.
 
 ## Google Domains Will Be Missed!
 
-Another trustworthy domain registrar that used to be highly recommended on Reddit is Google Domains. I say "used to be" because Google abruptly decided to shut down their domain registration business and sell it to Squarespace. 
+~~Another trustworthy domain registrar that used to be highly recommended on Reddit is Google Domains. I say "used to be" because Google abruptly decided to shut down their domain registration business and sell it to Squarespace.~~
 
 --
 
