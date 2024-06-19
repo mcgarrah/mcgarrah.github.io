@@ -1,15 +1,18 @@
 # Setting up on Ubuntu 22.04 LTS
 #
 # sudo apt -y install make build-essential ruby ruby-dev
-# echo "" >> $HOME/.bashrc
-# echo "# Ruby Jekyll Gems" >> $HOME/.bashrc
-# echo "if [ ! -d $HOME/gems ]; then" >> $HOME/.bashrc
-# echo "  mkdir $HOME/gems" >> $HOME/.bashrc"
-# echo "fi" >> $HOME/.bashrc"
-# echo "export GEM_HOME=$HOME/gems" >> $HOME/.bashrc
-# echo "export PATH=$HOME/gems/bin:$PATH" >> $HOME/.bashrc
-# source $HOME/.bashrc
+
+# Update ~/.bashrc and ~/.zshrc with this:
+#
+# # Ruby Jekyll Gems
+# if [ ! -d $HOME/gems ]; then
+#   mkdir $HOME/gems
+# fi
+# export GEM_HOME=$HOME/gems
+# export PATH=$HOME/gems/bin:$PATH
+#
 # gem install jekyll bundler
+# bundle install
 
 # VS Code Extension
 #
