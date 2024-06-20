@@ -11,3 +11,5 @@ I just updated my primary Ceph Cluster with another batch of three (3) 5Tb drive
 With the addition of that last set of drives, I jumped to needing 20Tb of external storage to meet my one (1) offsite copy of data for my modified [3-2-1 backup strategy](https://www.backblaze.com/blog/the-3-2-1-backup-strategy/). I remembered that jumping from sub-14Tb to above 20Tb was a big jump in price. Those big drives were a lot more expensive earlier just this year and these renewed ones seem like too good a deal especially with a 5-year warranty. I'm going to have to grab one and try it out.
 
 What a world?
+
+Updated on June 19th 2024 - The price dropped $10 on the USB-C enclosure drive and I bought it. So I'll be figuring out how to replica a CephFS to ZFS enabled 20Tb drive in the near future as an active offsite read-only backup.
