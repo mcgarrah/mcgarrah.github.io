@@ -12,7 +12,7 @@ The Dell Wyse 3040 is a nifty little machine that is extremely small and a low p
 
 First was to find a a working DVI to DP converter for my old Dell 14" LCD monitor. There is something about active and passive DisplayPort adapters which I was not aware. The impact was the DisplayPort to DVI auto-detect on my older Dell LCD monitor failed horribly. I had to set it to the Digital (DVI) output or it would go blank and power down. Occasionally, I had to unplug and plug it back in until I got signal again. This was frustrating at first because the behavior was like these little boxes were dying right after bootup. Turning off the monitor and back on again, showed me the same BIOS screen so I could see the units were not rebooting but something wrong with the monitor or display output.
 
-Finally in got into BIOS...
+Finally got into BIOS...
 
 (screen of the options for F1/F2/F5 and F12)
 
