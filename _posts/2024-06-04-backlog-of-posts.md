@@ -6,7 +6,7 @@ published: true
 
 I've got a backlog of posts I want to do on various topics. A couple of recent posts, I figured getting out something rough was better than not getting it out and just posted soemthing that felt like it needed another draft or two. I'll likely review those quickly posted items and update them as time permits.
 
-
+<!-- excerpt-end -->
 
 Here is a dump of my unpublished posts that need polishing to release:
 

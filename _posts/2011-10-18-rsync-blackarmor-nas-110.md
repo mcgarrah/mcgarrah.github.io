@@ -12,8 +12,7 @@ So, the BA-NAS110 is capable of using ```rsync``` from the command line to repli
 
 You have to create a rsyncd.conf file since there isn't one pre-built. Syntax is common to the typical rsync 3.0.4 version.
 
-
-
+<!-- excerpt-end -->
 
 Hosting system
 ```

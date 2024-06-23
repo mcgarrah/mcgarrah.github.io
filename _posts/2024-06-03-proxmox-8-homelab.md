@@ -10,8 +10,7 @@ Over the COVID lockdown, I was running a [Plex Media Server (PMS)](https://www.p
 
 For about ten (10) years, I had run an VMWare ESXi server that let me play with new technology and host some content and services. I let it go awhile back while I was in graduate school and working full-time but have missed this as an option ever since. So adding a homelab server or cluster will let me get some of that back.
 
-
-
+<!-- excerpt-end -->
 
 The background is that I'm updating from an older Plex Media Server hosted on Microsoft Windows 10 Pro 64-bit with several Portable Seagate USB Hard Drives attached to it and planning to reuse those drives. I hit a wall on disks for this system and tried out Windows Spaces on the portable USB drives to no avail. RAID5 or better is just too time intensive and prone to issues. If I had added a JBOD, RAID controller or some other server style stuff to the mix, I might have gotten it working but at a good bit of cost and complexity.
 

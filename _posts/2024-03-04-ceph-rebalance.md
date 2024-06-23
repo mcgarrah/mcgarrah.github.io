@@ -14,7 +14,7 @@ Something that I'm navigating is Ceph will go into read-only mode when you appro
 
 [![Ceph OSD Status](/assets/images/ProxMox-Ceph-OSD-usage.png){:width="50%" height="50%"}](/assets/images/ProxMox-Ceph-OSD-usage.png){:target="_blank"}
 
-
+<!-- excerpt-end -->
 
 ProxMox 8.1 with Ceph Reef by default has the Balancer feature enabled. It is also setup to protect the accessiblity of the cluster contents against overuse from rebalancing and recovery activities. In my case, I want the cluster to be less responsive so I can get this rebalanced faster. Often rebalancing and recovery go hand-in-hand but my case only has rebalancing.
 

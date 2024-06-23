@@ -6,8 +6,7 @@ categories: personal black_armor hardware nas seagate
 
 Two full toolchains built and a third that I still think might be made to work.  The first is using older versions of everything and was mostly done as a test to get the build environment working against known sources that are known to build. Even this known build process required some effort to get working in a current OS environment. Those docs, notes and scripts will be coming in the near future.
 
-
-
+<!-- excerpt-end -->
 
 So to outline what works and not, I give you the following.
 

@@ -16,8 +16,7 @@ This is the ProCurve 2810-24 that is all 1Gbps ports with four SFP (not SFP+) po
 
 [![HP ProCurve 2810-24 Front View](/assets/images/ProCurve-2810-24G-front-view.jpg){:width="50%" height="50%"}](/assets/images/ProCurve-2810-24G-front-view.jpg){:target="_blank"}
 
-
-
+<!-- excerpt-end -->
 
 Getting plugged in and accessing the console requires some patience.
 

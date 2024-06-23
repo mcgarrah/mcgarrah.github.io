@@ -6,11 +6,11 @@ categories: technical
 
 I’m working on a problem with Windows 2012 RTM server running an IIS web service. To load balance it, we decided to use Rackspace Cloud Load Balancers. Periodically we receive some errors that appear in the system event logs.
 
-```
+``` shell
 "A fatal alert was generated and sent to the remote endpoint. This may result in termination of the connection. The TLS protocol defined fatal error code is 40. The Windows SChannel error state is 1205."
 ```
 
-
+<!-- excerpt-end -->
 
 My guess is that the Rackspace Load Balancer is actually an F5. The LBs are trying to encrypt the communication to the web servers using TLSv1.2 for the connection checks but by default Windows 2012 does not have TLSv1.2 enabled.
 

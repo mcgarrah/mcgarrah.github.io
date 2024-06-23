@@ -6,8 +6,7 @@ categories: personal aws cloudstack eucalyptus openstack virtualization
 
 My first step was to review the major services we wanted to use on Amazon. They have a massive set of services available for use and some are not easily replicated without a major infrastructure and skill set to manage it. To give you some idea of the number of services here is a summary of the services and a quick reference as of August 2013.
 
-
-
+<!-- excerpt-end -->
 
 ### Amazon Web Services (AWS) as of August 2013
 

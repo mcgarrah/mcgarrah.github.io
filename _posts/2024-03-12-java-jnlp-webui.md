@@ -10,7 +10,7 @@ Basically, the HP ProCurve switches had a convenient web interface that used [Ja
 
 My first thoughts were to build a Windows 7 Virtual Machine with that era of web browser and java installed and use it to access the switches. That seemed like a lot of work, was resource intensive and prone to issues cropping up with an old unsupported OS. Thus entered the [PortableApps](https://portableapps.com/) idea to run a isolated local Web-browser and Java.
 
-
+<!-- excerpt-end -->
 
 ## History
 

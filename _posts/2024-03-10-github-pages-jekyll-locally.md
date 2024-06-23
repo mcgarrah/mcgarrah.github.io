@@ -8,7 +8,7 @@ How to run Github Pages locally in my Microsoft Windows 10 Pro [WSLv2](https://l
 
 This should also lets me test out new plugins, new versions and changes to templates without breaking the public website. I'm still sorting out how to do the abstracts and formatting of the archive pages correctly.
 
-
+<!-- excerpt-end -->
 
 ### Get Ruby
 ```

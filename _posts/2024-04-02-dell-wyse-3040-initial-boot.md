@@ -6,7 +6,7 @@ published: false
 
 The Dell Wyse 3040 is a nifty little machine that is extremely small and a low power consumer. They are however not without issues. This is my foray into trying to get a couple of them working on my network. I've had these for about XXX months in a drawer waiting for a use.
 
-
+<!-- excerpt-end -->
 
 (TODO: Pull images from cell phone from 2024-04-02 in the afternoon ... lots of pictures to show the progress)
 

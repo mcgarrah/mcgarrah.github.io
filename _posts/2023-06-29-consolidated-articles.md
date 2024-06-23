@@ -9,7 +9,7 @@ updates as I did projects in grad school. The Wordpress site I used for this ear
 died and was hosted on a VMware ESXi server in my homelab. I didn't have time to fix 
 it while in school so no postings since mid-2016.
 
-
+<!-- excerpt-end -->
 
 I've since graduated with my Masters in Interactive Intelligence (Machine Learning)
 from Georgia Tech in 2019 and picked up a couple of jobs that consumed the bulk of my 

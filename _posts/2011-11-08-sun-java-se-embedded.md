@@ -6,8 +6,7 @@ categories: personal black_armor hardware nas seagate arm armv5
 
 Earlier I mentioned a technology called "Jazelle DBX" for the ARM processor that allows for Java Bytecode eXecution (JBX) directly in the ARM hardware which should make it run faster. That DBX technology is being phased out with newer Thumb-2 instruction set being the new preference by ARM for acceleration.  However, the processor in the BlackArmor NAS was the first processor to have this Jazelle DBX feature and I want to see if it has any merit. I did some digging around, like I mentioned I would, and found that Sun had produced a version of Java that may have this technology.
 
-
-
+<!-- excerpt-end -->
 
 Sun has two small version of Java.  Once is called Java ME (micro-edition) and the other is Java SE for Embedded. The micro-edition was only for really tightly constrained environments like older cell phones that only had 8MB to 16MB of RAM. It was a feature reduced subset of Java with lots of limitations to make it work in that environment. Remember my old Motorola Razor cellphone from earlier posts and that is where this version of Java lived. That version of Java was crippled and never really seemed to take off.  On the other hand that version of Java is in some of our BlueRay players so it wasn't all bad. We just don't want this version of Java on the BlackArmor as it doesn't give us any interesting things other than cell phone Tetris.
 

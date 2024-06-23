@@ -8,7 +8,7 @@ I’ve been back to the toolchain for ESXi again and had some success.
 
 I was really getting frustrated with my lack of success in building the VMware ESXi 5.5 toolchain and compilers. It was a multi-week effort and I’m usually able to get something like that working eventually. I took a couple of month break from it while I worked on some other things including this website(WordPress) and my email servers. This gave me some perspective.
 
-
+<!-- excerpt-end -->
 
 The real frustration was that the ESXi 5.0 version that everyone else was writing about seemed like it was easy to get done. I never tried it so didn’t have a gauge on how easy or hard it would be. Now I’ve tried the 5.0 OSS download and it is simple in comparison. In the 5.0 version they provide binary toolchain files to jump start the build. These are not provided in the 5.5 series. So you have a larger footprint to dig through before you even get started. Toolchains builds are never easy in my experience. There is always something to figure out. The 5.5 build included some dependencies on several environments all the way back to Redhat 7.3. This was not simple to setup quickly.
 

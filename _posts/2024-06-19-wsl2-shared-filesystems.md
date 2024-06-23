@@ -6,7 +6,7 @@ published: false
 
 I have a significant investment in my WSLv2 [Ubuntu 22.04.3 LTS](https://www.microsoft.com/store/productId/9PN20MSR04DW?ocid=pdpshare) installation. It has my nvidia GPU setup nicely and several machine learning demos and tests I've built and use for keeping current on machine learning.  With [Ubuntu 24.04 LTS](https://www.microsoft.com/store/productId/9NZ3KLHXDJP5?ocid=pdpshare) released, I now want to play around in the newer version but don't want to move or worse copy my entire set of models and repositories across. I have well over 500Gb of content and absolutely don't want two copies of those floating around. I'm looking for a solution to this and figure others have encountered it.
 
-
+<!-- excerpt-end -->
 
 The first option is that you can use Windows Explorer to copy between the two WSLv2 instances. I did a bit of that while moving some small custom bits between the two linux instances. It was super easy to do but misses the direct sharing that I'd like to do between them especially for larger files and repos.
 

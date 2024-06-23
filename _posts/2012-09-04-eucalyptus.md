@@ -9,8 +9,7 @@ I'm not going to give a full run down of what Eucalyptus is but just point you t
 
 Building one of these using their pre-packaged images is dead simple. I'm not one to do anything the simple way and decided to build everything from the source directly from their [Github repository](https://github.com/eucalyptus/eucalyptus). This was not an easy task but definitely taught me a lot about their software and the components of the system.  I would recommend a first-time user to not take my route and just take their binary builds from RPM or their ISO image. Fedora Core has these as well and the guy who supports it is a great guy. Please take the path of least resistance first to get familiar with the software.
 
-
-
+<!-- excerpt-end -->
 
 In my configuration, I have a couple five to seven year old servers that used to be production. I've got a system with a twelve (12) core CPU and forty-eight (48) GB of RAM and a second system with dual-core and 4GB of RAM. They are an old database server and an old web-server. The heavy-weight system with the better memory and processor was dedicated to serving out virtual machines and the lower-end system is the web services provider. I had a third system that is just a desktop box that is acting as my SAN device with FreeNAS 8.3.
 

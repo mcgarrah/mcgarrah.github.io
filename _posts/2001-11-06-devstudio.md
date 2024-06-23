@@ -6,8 +6,7 @@ categories: technical
 
 This is a very old set of notes but might be useful for a developer dealling with Microsoft Visual Studio 6.0 for DOS and Windows 16-bit coding. This is from the era of Borland and Zortech Compilers being in play. I migrated this from my darkmagic.org website.
 
-
-
+<!-- excerpt-end -->
 
 ---
 

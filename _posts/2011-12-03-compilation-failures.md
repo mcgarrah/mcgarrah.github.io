@@ -6,10 +6,9 @@ categories: personal black_armor hardware nas seagate
 
 The problem is that I can get an ARM executable but not sure why the default system is not working to produce a basic HelloWorld.
 
+<!-- excerpt-end -->
 
-
-
-```
+``` shell
 $ cat test.c
 int main (){return 0;}
 $ arm-elf-gcc test.c -o test
@@ -23,7 +22,7 @@ $ arm-elf-gcc test.c -o test -v
 
 This spews a couple of pages of additional output which points me to something called the "Using built-in specs" and lots of directory path information for various things like include files and libraries. These all look about right. A directory /DevelToolbin/binaries/arm-4.4.6/arm-elf/lib has some interesting lib files in it.
 
-```
+``` shell
 $ arm-elf-gcc test.c -o test ~/DevelToolbin/binaries/arm-4.4.6/arm-elf/lib/redboot-syscalls.o
 $ file test
 test: ELF 32-bit LSB executable, ARM, version 1, statically linked, not stripped
@@ -38,21 +37,24 @@ While finding the above syscall libraries, I noticed some files called specs fil
 * redboot.specs
 
 RDP, RDI, RedBoot and Linux are all syscall (system call) protocols. A syscall protocol describes how a libc (standard C library) communicates with the operating system kernel. For our case this library is newlib which uses another syscall protocol called libgloss as an interface between libc and the above syscall protocols.  I'm not sure which protocols are the default but something is not right about this combination.
-```
+
+``` shell
 $ arm-elf-gcc -dumpspecs
 ```
 
 This dumps even more output that is even more cryptic but looks important when taken with the above information. There are built-in defaults for GCC that are being overridden by these specs files.
 
 There is an options to change the specs entries from the GCC command line which I use to identify what is happening.
-```
+
+``` shell
 $ arm-elf-gcc test.c -o test -specs=redboot.specs
 $ arm-elf-gcc test.c -o test -specs=pid.specs
 $ arm-elf-gcc test.c -o test -specs=linux.specs
 ```
 
 The pids and redboot files are a very minor difference in a setting so are essentially the same.  Linux is significantly different as a system call interface.
-```
+
+``` shell
 $ arm-elf-gcc test.c -o test -specs=rdimon.specs
 $ arm-elf-gcc test.c -o test -specs=rdpmon.specs
 ```

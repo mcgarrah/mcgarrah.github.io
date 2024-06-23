@@ -12,7 +12,7 @@ Next is a relatively cheap at a couple hundred dollars switch with likely a low 
 
 Lastly, you could go all in with an enterprise switch like the HP ProCurve 5406zl which is a module hosting monster of a switch. These are massively upgradable but come with a lot of complexity to set up and manage. They are also incredibly loud (intended for server rooms) and suck a ton of power which generates lots of heat (thermal load). These are getting cheaper but are heavy to ship and still usually several hundred dollars with modules that can cost thousands. Don't expect a warranty on these as they are being pushed out of enterprise usage as end of life. 
 
-
+<!-- excerpt-end -->
 
 ## 1. Point to Point network
 

@@ -14,8 +14,7 @@ Aug 2010 - Dec 2010
 
 Summary: Develop a methodology for 10Gbps iSCSI that utilized RDMA and TOE to reduce primary CPU and memory usage. Document and managed the project as a team leader. The resulting iSER implementation was utilized in a related NetApp Phd project at the University of Bangalore India.
 
-
-
+<!-- excerpt-end -->
 
 ## NetApp iSER Performance Evaluation Project Continuation
 

@@ -6,6 +6,7 @@ published: false
 
 Setting up my [PiKVM v3](https://docs.pikvm.org/v3/) has been a journey spanning well over a year to get it the way I wanted. The goal was to get a ~cheap~ frugal setup that let me manage more than just one or a couple machines and both have the PiKVM WebUI and local KVM (keyboard / video / mouse). So I have a local keyboard/video/mouse on the test bench that functions when sitting near the servers and also the remote PiKVM WebUI with keyboard/video/mouse when remotely accessing or just across the house. That was a trippy path to get it all working cleanly. Hopefully, my final setup and failures along hte way are useful to someone else heading down this path.
 
+<!-- excerpt-end -->
 
 To start off, below are all the parts I collected over the fifteen (15) months while figuring this out. Some of that time was me just not finishing or having other projects to sort out. I used the PiKVM on single machines along they way but it didn't feel like the best use of the expensive unit.
 

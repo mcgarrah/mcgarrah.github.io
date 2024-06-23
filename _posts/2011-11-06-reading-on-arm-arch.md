@@ -16,8 +16,7 @@ Processor       : ARM926EJ-S rev 1 (v5l)
 
 To rectify my lack of knowledge I started reading on Wikipedia and found the [ARM architecture](http://en.wikipedia.org/wiki/ARM_architecture) which made me realize that I've been missing out on an entirely different ecology of technologic innovation.  The features that are available for each processor was an interesting ride down memory lane with my memory of Intel CPU features, that I'm familiar with, running parallel to the ARM decisions in the same areas. They have two completely different paths but seem to have interchange between the two. ARM has an interesting history as a company as well.
 
-
-
+<!-- excerpt-end -->
 
 So, I found information on the processor on the Wikipedia page for [List of ARM Cores](http://en.wikipedia.org/wiki/List_of_ARM_microprocessor_cores) and the earlier reading on architecture helped me understand the differences between the Family, Arch and Core. Again, interesting ecology of processor technology.
 

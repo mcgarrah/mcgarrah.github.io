@@ -5,7 +5,8 @@ lang: "en"
 
 # Page Settings
 permalink: /:title/
-excerpt_separator: "\n\n\n"
+#excerpt_separator: "\n\n\n"
+excerpt_separator: <!-- excerpt-end -->
 date_format: "%B %d, %Y"
 paginate: 4
 
