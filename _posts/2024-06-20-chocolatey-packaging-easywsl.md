@@ -13,4 +13,3 @@ So first I need to setup an account on [Chocolatey](https://community.chocolatey
 Next, I need to start reading the [Quick Start for Package Creation](https://docs.chocolatey.org/en-us/create/create-packages-quick-start/) and get a basic idea of what you need to manage a package. In my case, I already have an existing Github (and Gitlab) accounts and been contributing to other stuff for awhile.
 
 Now, I'm looking for an existing utility that installs off Github releases. I will also need to learn a bit about how to install dependencies since the package I want to setup [easyWSL](https://github.com/redcode-labs/easyWSL) depends on [.NET Desktop Runtime 6.0.3 x64](https://community.chocolatey.org/packages/dotnet-6.0-desktopruntime) which is an already packaged in ```choco```.
-
