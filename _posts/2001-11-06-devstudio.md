@@ -26,7 +26,7 @@ Workspace -- "Display clock on status bar" and "Reload last workspace at startup
 
 ---
 
-## Running DevStudio 6.0 builds in low priority.
+## Running DevStudio 6.0 builds in low priority
 
 Original article was written by Leigh Stivers.
 
@@ -108,7 +108,7 @@ Article was written by Michael McGarrah
 
 Here are my common settings as a registry file. I like spaces and not hard tabs in my code. I also like a few other settings that are reflected in this file.
 
-```
+```regedit
 REGEDIT4
 
 ; Microsoft Visual Studio 6.0 settings
@@ -167,7 +167,7 @@ by Michael McGarrah
 
 Here are two common problems I run into with the linker that I have to figure out everytime I run into them. Hope this saves someone some time.
 
-```
+```shell
 "LNK2001: unresolved external symbol _main" error
 generally mean you need to:
 enable the checkbox in

@@ -15,7 +15,8 @@ You have to create a rsyncd.conf file since there isn't one pre-built. Syntax is
 <!-- excerpt-end -->
 
 Hosting system
-```
+
+```shell
 $ id
 (root)
 $ cat /root/rsyncd.conf
@@ -31,11 +32,13 @@ $ rsync --daemon --config=/root/rsyncd.conf
 ```
 
 Client system (could be another BA-NAS110 or Linux)
-```
+
+```shell
 $ id
 (root)
 $ rsync --progress --stats -v -t -r rsync://admin@/rsyncftp/* /shares/Public
 ```
+
   ... watch the good times roll ...
 
 *Note*: Add the "-n" option to rsync on the client side for the initial test connection to put it in test mode without data copy.  Remove "-n" when you actually want to copy data.

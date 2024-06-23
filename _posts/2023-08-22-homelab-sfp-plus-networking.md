@@ -10,7 +10,7 @@ First option is just getting some DAC Cables and dual port 10Gbpe NICs then buil
 
 Next is a relatively cheap at a couple hundred dollars switch with likely a low number of SFP+ ports. This is ~$200-$500 with anywhere from 2 to 16 ports at 10Gbps. Often switches with 10Gbps advertised only have one or two ports at that speed so shop carefully. You still have the cost of the NICs and cabling but only need one port on the NIC.
 
-Lastly, you could go all in with an enterprise switch like the HP ProCurve 5406zl which is a module hosting monster of a switch. These are massively upgradable but come with a lot of complexity to set up and manage. They are also incredibly loud (intended for server rooms) and suck a ton of power which generates lots of heat (thermal load). These are getting cheaper but are heavy to ship and still usually several hundred dollars with modules that can cost thousands. Don't expect a warranty on these as they are being pushed out of enterprise usage as end of life. 
+Lastly, you could go all in with an enterprise switch like the HP ProCurve 5406zl which is a module hosting monster of a switch. These are massively upgradable but come with a lot of complexity to set up and manage. They are also incredibly loud (intended for server rooms) and suck a ton of power which generates lots of heat (thermal load). These are getting cheaper but are heavy to ship and still usually several hundred dollars with modules that can cost thousands. Don't expect a warranty on these as they are being pushed out of enterprise usage as end of life.
 
 <!-- excerpt-end -->
 
@@ -29,29 +29,34 @@ Power consumption and acoustic (noise) are others to consider.
 ## Mikrotik switches
 
 ### Mikrotik CRS310-1G-5S-4S+IN 10Gigabit Switch 1G port 5 x SFP ports 4 x SFP+ port
+
  - ~$200 USD
  - 5 SFP 1Gbps
  - 4 SFP+ 10Gbps
  - 1 1Gbps Ethernet
 
 ### MikroTik CRS309-1G-8S+IN Switch Gigabit Ethernet Port and 8x SFP 10 Gbps Ports
+
  - ~$270 USD
  - 1 1Gbps Ethernet
  - 8 SFP+ 10Gbps
 
 ### MikroTik CRS305-1G-4S+IN 5-port Network Switch 10Gbps Gigabit Dual System
+
  - ~$200 USD
  - 1 1Gbps Ethernet
  - 4 SFP+ 10Gbps
 
 ### MikroTik CRS317-1G-16S+RM Cloud Router Switch Rack-mountable Manageable Switch with Layer 3 Features
+
  - ~$480 USD
  - 1 1Gbps Ethernet
  - 16 SFP+ 10Gbps
 
-## ZL Chassis 
+## ZL Chassis
 
 #### HP Procurve 5406zl Switch
+
   - crazy price range on ebay $350 to $4000
   - Plugin modules for functionality range widely
   - Six module slots
@@ -59,7 +64,9 @@ Power consumption and acoustic (noise) are others to consider.
 ## ZL modules
 
 #### J9309A - HP ProCurve 4-port 10GbE SFP+ ZL Module 2C3 (module)
+
   - 4 SFP+ 10Gbps
+
 #### HP Procurve J9535A 20-Port 4-SFP Gig-T/SFP PoE V2 ZL Module for 5400zl Switch
 #### HP ProCurve 24 Port Gig-T PoE+ V2 zl Module - J9534A
 
@@ -74,7 +81,7 @@ This only gets you part of the way to the price.
 
 - [10Gb PCI-E NIC Network Card, with Broadcom BCM57810S Chipset, Dual SFP+ Port, PCI Express Ethernet Lan Adapter Support Windows Server/Windows/Linux/VMware](https://a.co/d/aIRizA9)
 
-## DAC 
+## DAC
 
 Cable for direct connection without gbics in sfp ports
 

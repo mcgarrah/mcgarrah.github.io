@@ -13,7 +13,7 @@ My first step was to review the major services we wanted to use on Amazon. They 
 #### Compute & Networking
 
 - **EC2**    Virtual Servers in the Cloud
-- ELB    Elastic Load Balancing or Auto Scaling of services 
+- ELB    Elastic Load Balancing or Auto Scaling of services
 - EMR   Hosted Hadoop Framework
 - VPC    Isolated Cloud Resources
 - Route 53   Scalable Domain Name System (DNS)
@@ -29,12 +29,14 @@ My first step was to review the major services we wanted to use on Amazon. They 
 - CloudFront  Global Content Delivery Network (CDN)
 
 #### Database
+
 - RDS   Managed Relational Database Service for MySQL, Oracle and SQL Server
 - DynamoDB   Fast, Predictable, Highly-scalable NoSQL data store
 - ElastiCache  In-Memory Caching Service
 - Redshift    Fast, Powerful, Fully Managed, Petabyte-scale Data Warehouse Service
 
 #### Application Services
+
 - CloudSearch  Managed Search Service
 - **SWF**   Workflow service for coordinating application components
 - **SQS**   Message Queue Service
@@ -43,7 +45,8 @@ My first step was to review the major services we wanted to use on Amazon. They 
 - FPS    Amazon Flexible Payments Service (FPS) is an API based payment service
 - Elastic Transcoder Easy-to-use scalable media transcoding
 
-#### Deployment & Management 
+#### Deployment & Management
+
 - Management Console Web-Based User Interface
 - **IAM**      Identity and Access Management (IAM) configurable access controls
 - **CloudWatch**   Resource and Application Monitoring

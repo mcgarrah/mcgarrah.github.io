@@ -31,6 +31,7 @@ test: ELF 32-bit LSB executable, ARM, version 1, statically linked, not stripped
 When you are facing a missing library like the above issue, you typically just have to find the right library and add it to your build.  In this case we are missing something so fundamental that we need to figure out why it is broken or will hit future issues.
 
 While finding the above syscall libraries, I noticed some files called specs files which are:
+
 * linux.specs
 * rdimon.specs
 * rdpmon.specs
@@ -38,7 +39,7 @@ While finding the above syscall libraries, I noticed some files called specs fil
 
 RDP, RDI, RedBoot and Linux are all syscall (system call) protocols. A syscall protocol describes how a libc (standard C library) communicates with the operating system kernel. For our case this library is newlib which uses another syscall protocol called libgloss as an interface between libc and the above syscall protocols.  I'm not sure which protocols are the default but something is not right about this combination.
 
-``` shell
+```shell
 $ arm-elf-gcc -dumpspecs
 ```
 
@@ -46,7 +47,7 @@ This dumps even more output that is even more cryptic but looks important when t
 
 There is an options to change the specs entries from the GCC command line which I use to identify what is happening.
 
-``` shell
+```shell
 $ arm-elf-gcc test.c -o test -specs=redboot.specs
 $ arm-elf-gcc test.c -o test -specs=pid.specs
 $ arm-elf-gcc test.c -o test -specs=linux.specs
@@ -54,7 +55,7 @@ $ arm-elf-gcc test.c -o test -specs=linux.specs
 
 The pids and redboot files are a very minor difference in a setting so are essentially the same.  Linux is significantly different as a system call interface.
 
-``` shell
+```shell
 $ arm-elf-gcc test.c -o test -specs=rdimon.specs
 $ arm-elf-gcc test.c -o test -specs=rdpmon.specs
 ```

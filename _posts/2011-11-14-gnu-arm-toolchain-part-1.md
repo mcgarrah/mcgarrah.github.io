@@ -17,5 +17,4 @@ For 4.0, we have an error in GCC "fcntl2.h:51: error: call to â__open_missing_m
 
 Building the toolchain makes it easier to understand the toolchain provided by Seagate even if it is an older version. Once I get done, I'll write up some details on a the process when I get it working right.
 
-
 We'll see what happens with building the toolchains over the next day or so.

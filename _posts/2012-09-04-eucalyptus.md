@@ -36,8 +36,8 @@ I'm not going to sugar coat it, there were issues along the way.  Here is a list
 3. iSCSI is never fun to configure (but no harder than the regular iSCSI fun)
 4. The S3 support is hit and miss (DeleteObjects and multi-part POST API fail) some are fixed in version 3.4 and a major update is coming in 4.0 (Ceph and Riak CS). They are addresssing this actively.
 5. iSCSI volumes has strange behavior with KVM virtual machines
-  1. cache=writethrough necessary for kvm images
-  2. DAS configuration of Storage Controller takes a couple tries and is a one-way trip
+  A. cache=writethrough necessary for kvm images
+  B. DAS configuration of Storage Controller takes a couple tries and is a one-way trip
 6. I'm still working on windows imaging (painful but getting better) and the 3.4 will have significant improvement in this area. Eustore may be on option soon.
 7. They are still working on bfEBS (bootable EBS) but check the IRC channel for help. It works with caveats.
 

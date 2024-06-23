@@ -19,7 +19,8 @@ Something that I'm navigating is Ceph will go into read-only mode when you appro
 ProxMox 8.1 with Ceph Reef by default has the Balancer feature enabled. It is also setup to protect the accessiblity of the cluster contents against overuse from rebalancing and recovery activities. In my case, I want the cluster to be less responsive so I can get this rebalanced faster. Often rebalancing and recovery go hand-in-hand but my case only has rebalancing.
 
 How to get default values for Recovery Settings
-```
+
+``` shell
 # ceph-conf --show-config | egrep "osd_recovery_max_active|osd_recovery_op_priority"
 osd_recovery_max_active = 0
 osd_recovery_max_active_hdd = 3
@@ -28,14 +29,15 @@ osd_recovery_op_priority = 3
 ```
 
 How to get default values for Backfill Settings
-```
+
+``` shell
 # ceph-conf --show-config | egrep "osd_max_backfills"
 osd_max_backfills = 1
 ```
 
 Moving those above values up too high can cause OSDs to become overburdened and they could just restart to protect the cluster so you should take it in steps when changing these to higher values.  Restart of an OSD from overburden activities may actually cause the recovery or rebalance to take longer so monitor for issues when making these changes.
 
-```
+``` shell
 # ceph tell 'osd.*' injectargs --osd-max-backfills=3
 osd.0: {}
 osd.0: osd_max_backfills = '3' 
@@ -46,14 +48,14 @@ osd.2: osd_max_backfills = '3'
 ...
 ```
 
-```
+``` shell
 # ceph daemon osd.2 config get osd_max_backfills
 {
     "osd_max_backfills": "3"
 }
 ```
 
-```
+``` shell
 root@kovacs:~# ceph tell 'osd.*' injectargs --osd-max-backfills=5
 osd.0: {}
 osd.0: osd_max_backfills = '5' 
@@ -64,7 +66,7 @@ osd.2: osd_max_backfills = '5'
 ...
 ```
 
-```
+``` shell
 root@kovacs:~# ceph tell 'osd.*' injectargs --osd-max-backfills=7
 osd.0: {}
 osd.0: osd_max_backfills = '7' 
@@ -77,7 +79,7 @@ osd.2: osd_max_backfills = '7'
 
 Bumped up the Recovery Max for both HDD and SSD
 
-```
+``` shell
 root@kovacs:~# ceph tell 'osd.*' injectargs --osd-max-backfills=7 --osd_recovery_max_active=10
 osd.0: {}
 osd.0: osd_recovery_max_active = '10' 
@@ -90,7 +92,7 @@ osd.2: osd_recovery_max_active = '10'
 
 I considered turning off the Ceph Balancer and manually setting an OSD remapping script. This is my setup for doing that operation but I ended up not using it. I may revisit this once my cluster is balanced to double check if it is as good as it can be.
 
-```
+``` shell
 root@harlan:~/rebalance# ceph balancer status
 {
     "active": true,
@@ -119,59 +121,59 @@ root@harlan:~/rebalance# bash ./upmap.sh
 
 When we are done I need to change back to the defaults in each OSD
 
-```
+``` shell
 ceph tell 'osd.*' injectargs --osd-max-backfills=1 --osd_recovery_max_active=0
 ```
 
 Turn back on the Balancer (if I turn it off which I did not)
 
-```
+``` shell
 root@harlan:~/rebalance# ceph balancer on
 ```
 
 Turn back on scrubbing and deep-scrubbing
 
-```
+``` shell
 ceph osd unset noscrub
 ceph osd unset nodeep-scrub
 ```
 
 This appears to have accelerated my recovery time and the above mess of commands and attempts may help someone someday.
 
-
 ## References
 
 Here is a reference of things I read or found that seemed to be useful.
 
-https://docs.ceph.com/en/latest/rados/operations/monitoring-osd-pg/#back-filling
+[Ceph Back Filling](https://docs.ceph.com/en/latest/rados/operations/monitoring-osd-pg/#back-filling)
 
 ### Getting config values from OSD
 
 These can only happen on the node that has the OSD.
 
-https://www.suse.com/support/kb/doc/?id=000019693
+[SUSE Linux Support](https://www.suse.com/support/kb/doc/?id=000019693)
 
-```
+``` shell
 ceph daemon osd.<insert_id> config get osd_max_backfills
 ```
 
-```
+``` shell
 root@kovacs:~# ceph daemon osd.2 config get osd_max_backfills
 {
     "osd_max_backfills": "5"
 }
 ```
 
-
 ### Turned off Scrubbing and Deep Scrubbing on the Cluster
 
 You can disable deep and regular scrubbing but it will cost you later in catchup after the balancing is finished.
 
+```shell
 __noscrub,nodeep-scrub flag(s) set__
+```
 
 This might help with the utlization of the disk bandwidth and I did it out of desparation.
 
-```
+``` shell
 # ceph osd set noscrub
 # ceph osd set nodeep-scrub
 ```

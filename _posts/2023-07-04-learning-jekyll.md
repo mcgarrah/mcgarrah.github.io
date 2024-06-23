@@ -28,4 +28,3 @@ Making images clickable for larger versions
 Making links open new pages...
 
 Resume separate repository
-

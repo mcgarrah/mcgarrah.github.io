@@ -13,6 +13,7 @@ One of interest is the OpenHardware [Building the ARM GNU 4.3.2](http://openhard
 So I lost some time with old versions but learned a good bit about the software in the process.
 
 The tools for the toolchain are:
+
 * binutil: low level tools for manipulating object code such as the assembler and linker tools
 * gcc: GNU compilers which has C/C++ and other tools related to compilation of code to object code
 * gdb & insight: debugger allowing for finding problems in code
