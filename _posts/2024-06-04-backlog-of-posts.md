@@ -32,4 +32,4 @@ All those changes are in-front of getting my **media server** back up and runnin
 
 My post on the PiKVM ended up getting shelved when I ran into new issues on the AIMOS KVM interacting badly with the PiKVM after it worked well for a week. I thought I had the strange behavior sorted out but it returned and I'm still debugging it. I may bite the bullet and get the $300 KVM that is recommended instead of the cheap one that I have to hack to death. My write up included a section on how to add shortcuts to the PiKVM WebUI which I could probably break out and post for others.
 
-Those are blocking other fun projects I want to do with Machine Learning. Sadly, I have to sleep and work and cannot finish all these fun projects and posts.
+Those are blocking other fun projects I want to do with Machine Learning. Sadly, I have to sleep and work and cannot finish all these fun projects and posts

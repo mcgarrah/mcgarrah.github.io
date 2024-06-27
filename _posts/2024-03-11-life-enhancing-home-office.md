@@ -15,7 +15,7 @@ That said, I recently found a couple items that while seemingly trivial were rea
 
 You could pickup the wheels at Lowe's Home Improvement for $40 or more which is were I got the original idea for swapping them out. They are in the furniture parts area last check. I of course, checked on Amazon found them for about $25 with a pretty good rating. The arm rests were something I have been thinking about for awhile but could not find ones that fit. These looked like something to try out and see as well.
 
-# Affilitate Links
+## Affilitate Links
 
 So while doing this I'm also learning about [Amazon Affilitate Links](https://affiliate-program.amazon.com/) and their program for small monitization of purchases by folks that like my write up here. If you use these Amazon Affiliate Links below that I get a small bit of money towards a gift card. I figure it was something to learn about and maybe buy something fun.
 

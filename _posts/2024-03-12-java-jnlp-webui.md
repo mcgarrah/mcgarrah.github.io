@@ -18,7 +18,7 @@ So now for some related history. Back in the early Internet there were a limited
 
 HP ProCurve switches implemented a webui using Java Webstart that requires the Java Runtime Engine in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led us down this rabbit hole of an older web-browser and older Java Runtime that supports these switches webui. I have picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the webui.
 
-**WARNING**: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be <ins>***hacked***</ins> without a doubt in seconds.
+**WARNING**: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be ***hacked*** without a doubt in seconds.
 
 ## Download Software
 
@@ -32,17 +32,9 @@ HP ProCurve switches implemented a webui using Java Webstart that requires the J
 
 ## Setup
 
-
-
-
 Getting the WebUI up and running is a very nice to have feature if I can get a web browser capable of Java Web Start (NPAPI) JNLP... And this [Web Browsers supporting NPAPI plugins like JAVA](https://www.reddit.com/r/homelab/comments/11afd0p/comment/k5j47cr/?utm_source=share&utm_medium=web2x&context=3) link seems to be a good starting point.
 
-
-
-
 My first thoughts ran along the lines of a Windows 7 Pro virtual machine to run a really old version of the web browser but this seemed like a pile of work and prone to issues coming up. So I thought about PortableApps and remembered they had both Java and FireFox as supported applications. With that in mind, I started down the road to figuring out if this would work or not. Surprise, it worked but had a number of hurdles along the way that need documentation for future folks.
-
-
 
 https://portableapps.com/node/58831
     If security is not an issue, and I recall correctly, some older versions were distributed complete and not as online installers. So you might be able to find what you want in the older files:
@@ -178,4 +170,3 @@ Those settings are stored in the text file at ```C:\Users\<username>\AppData\Loc
 * [Managing old Java switches?](https://www.reddit.com/r/sysadmin/comments/17a6jrg/managing_old_java_switches/)
 * [Accessing legacy webpages requering NPAPI Java plugin](https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md)
 * [ProCurve Switch J9021A needs Java](https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/)
-

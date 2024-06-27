@@ -47,7 +47,6 @@ Misc Parts laying around:
 | $20 | [Desk Clamp Power Strip Individual Switches](https://amzn.to/3J5YhoR) |
 | $21 | 3 x [2 Pack - DVI to HDMI, Bidirectional DVI (DVI-D) to HDMI Male to Female Adapter](https://amzn.to/4cInJ1i) |
 | $24 | 3 x [Mini DisplayPort to DVI, Mini DP to DVI Male to Female Adapter](https://amzn.to/3vEvdBL) |
-| $xx | []() |
 | **$65** | **Total** |
 
 All in I'm at about at about **$520 USD** on this configuration and setup.  That has me at about **$65** per machine supported.

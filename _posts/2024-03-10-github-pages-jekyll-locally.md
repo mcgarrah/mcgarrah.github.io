@@ -11,17 +11,20 @@ This should also lets me test out new plugins, new versions and changes to templ
 <!-- excerpt-end -->
 
 ### Get Ruby
-```
+
+```console
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ sudo apt install ruby-full
 ```
 
 ### Install Bundler
-```
+
+```console
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ sudo gem install bundler   
 ```
 
 ### Install GHP dependencies locally rather than into global OS libraries
-```
+
+```console
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundler install --binstubs --path vendor  
 ```
 
@@ -30,30 +33,37 @@ This creates a ```./vendor``` and ```./bin``` in the local directory rather than
 I've not used RVM [Ruby Version Manager](https://rvm.io/) to manage the Ruby version which I'll leave for a later. I'm a fan of Python3 VirtualEnv and would like to see the Ruby equivalent.
 
 ### Run local Server (and fail)
-```
+
+```console
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundle exec jekyll serve
 ```
+
 FAILED with non-specific error.
 
 ### Run local server with debug tracing
+
 So I turned on more detailed debug tracing
-```
+
+```console
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundle exec jekyll serve --trace
 ...
 /home/mcgarrah/Github/mcgarrah.github.io/vendor/ruby/3.0.0/gems/jekyll-4.2.2/lib/jekyll/commands/serve/servlet.rb:3:in `require': cannot load such file -- webrick (LoadError)
 ...
 ```
+
 ### Add missing library
 
 Found a note in the MacOS Homebrew section about a missing library which is the same one *webrick*. So if you are on Ruby 3.0 or higher be aware it does not come with Webrick by default... so I had to install it.
-```
+
+```console
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundler add webrick
 ```
 
 ### Run local server
 
 Try running it again
-```
+
+```console
 ➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundle exec jekyll serve
 ```
 

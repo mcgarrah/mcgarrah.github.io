@@ -37,7 +37,8 @@ To do a hard reset of the switch and clear the passwords. Just a reset does not 
 After the clear/reset you should have a console session that has both passwords cleared and you have full access to the switch. All five of my switches still had their enabled passwords set and had to be cleared this way.
 
 ## Basic setup of switch
-```
+
+``` console
 NO default password is set when the switch is new.
 
 The default configuration is quit simple:
@@ -60,7 +61,7 @@ Press enter twice on the serial terminal to get the automatic serial detect to e
 
 NOTE: I set in Windows Device Manager the COM8 port to be 115200 baud rather than the default 9600 to make it snappier.  Dunno if that can be made automatic or if the COM port is hard wired during setup.
 
-```
+```console
 ProCurve J9021A Switch 2810-24G
 Software revision N.11.15
 
@@ -89,7 +90,7 @@ Press any key to continue
 
 So that has me on the serial console and able to get to the __enabled__ mode so I can set DHCP or manually set the IP address of the switch. I'm also digging around for the firmware to see about upgrading the most current options available.
 
-```
+``` console
 SAN Procurve 2810-24G                                       1-Jan-1990   2:20:28
 ==========================- CONSOLE - MANAGER MODE -============================
                                   Switch Setup
@@ -117,7 +118,8 @@ and <Enter> to go to Actions.
 ```
 
 Setting the time/date from CLI
-```
+
+``` console
 SAN Procurve 2810-24G   > enable
 Password: ********
 SAN Procurve 2810-24G   # configure
@@ -132,7 +134,7 @@ SAN Procurve 2810-24G   >
 
 Setting up SNTP
 
-```
+```console
 SAN Procurve 2810-24G   > enable
 Password: ********
 SAN Procurve 2810-24G   # setup
@@ -184,6 +186,7 @@ I also want to get the Java WebUI working but this is locked out because of Java
 ## Documentation
 
 For my ProCurve 2810 switches I have a list of PDFs documentation well worth grabbing and keeping around as references as these are extremely complex and powerful devices.
+
 * [Quick Installation Guide](https://ftp.hp.com/pub/networking/software/2810-QIG-June2006-59913844.pdf)
 * [Installation and Getting Started Guide](https://ftp.hp.com/pub/networking/software/2810-Install-May2006-59913843.pdf)
 * [Management and Configuration Guide](https://ftp.hp.com/pub/networking/software/2810-MgmtCfg-July2007-59914732.pdf)

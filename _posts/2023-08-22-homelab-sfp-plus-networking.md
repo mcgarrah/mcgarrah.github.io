@@ -30,48 +30,48 @@ Power consumption and acoustic (noise) are others to consider.
 
 ### Mikrotik CRS310-1G-5S-4S+IN 10Gigabit Switch 1G port 5 x SFP ports 4 x SFP+ port
 
- - ~$200 USD
- - 5 SFP 1Gbps
- - 4 SFP+ 10Gbps
- - 1 1Gbps Ethernet
+- ~$200 USD
+- 5 SFP 1Gbps
+- 4 SFP+ 10Gbps
+- 1 1Gbps Ethernet
 
 ### MikroTik CRS309-1G-8S+IN Switch Gigabit Ethernet Port and 8x SFP 10 Gbps Ports
 
- - ~$270 USD
- - 1 1Gbps Ethernet
- - 8 SFP+ 10Gbps
+- ~$270 USD
+- 1 1Gbps Ethernet
+- 8 SFP+ 10Gbps
 
 ### MikroTik CRS305-1G-4S+IN 5-port Network Switch 10Gbps Gigabit Dual System
 
- - ~$200 USD
- - 1 1Gbps Ethernet
- - 4 SFP+ 10Gbps
+- ~$200 USD
+- 1 1Gbps Ethernet
+- 4 SFP+ 10Gbps
 
 ### MikroTik CRS317-1G-16S+RM Cloud Router Switch Rack-mountable Manageable Switch with Layer 3 Features
 
- - ~$480 USD
- - 1 1Gbps Ethernet
- - 16 SFP+ 10Gbps
+- ~$480 USD
+- 1 1Gbps Ethernet
+- 16 SFP+ 10Gbps
 
 ## ZL Chassis
 
-#### HP Procurve 5406zl Switch
+### HP Procurve 5406zl Switch
 
-  - crazy price range on ebay $350 to $4000
-  - Plugin modules for functionality range widely
-  - Six module slots
+- crazy price range on ebay $350 to $4000
+- Plugin modules for functionality range widely
+- Six module slots
 
 ## ZL modules
 
-#### J9309A - HP ProCurve 4-port 10GbE SFP+ ZL Module 2C3 (module)
+### J9309A - HP ProCurve 4-port 10GbE SFP+ ZL Module 2C3 (module)
 
-  - 4 SFP+ 10Gbps
+- 4 SFP+ 10Gbps
 
-#### HP Procurve J9535A 20-Port 4-SFP Gig-T/SFP PoE V2 ZL Module for 5400zl Switch
-#### HP ProCurve 24 Port Gig-T PoE+ V2 zl Module - J9534A
+### HP Procurve J9535A 20-Port 4-SFP Gig-T/SFP PoE V2 ZL Module for 5400zl Switch
+
+### HP ProCurve 24 Port Gig-T PoE+ V2 zl Module - J9534A
 
 This only gets you part of the way to the price.
-
 
 ## Dual NIC 10Gbps
 
@@ -89,7 +89,7 @@ Cable for direct connection without gbics in sfp ports
 
 - [SFP+ Cable, 10G SFP+ DAC, 1M(3.3ft), Passive Direct Attach Copper Twinax Cable for Cisco SFP-H10GB-CU1M, Ubiquiti UniFi UC-DAC-SFP+, Meraki, Mikrotik, Intel, Fortinet, Netgear and More](https://a.co/d/9naZi3p)
 
-# Summary
+## Summary
 
 I have no decision on any of this and have been just thinking about it a lot as I start my journey into using Proxmox and Ceph on a local network using small 4 to 8 port 1Gbps Netgear switches that I happened to have on a shelf. My HP ProCurve 2510g-24 j9279a switches are completely out of date with their 100Mbps ports and their two SPF (not SPF+) DAC capable 1Gbps cross-connector.
 

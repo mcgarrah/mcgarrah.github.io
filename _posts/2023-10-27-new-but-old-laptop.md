@@ -42,7 +42,7 @@ A brief perusal brought the Lenovo Thinkpad T480 to my attention. The T480 as a 
 
 Some key features are the T480 have an Intel i5 or i7 options in a Gen 8 CPU with and without a Nvidia GPU. It is the last generation of the T-series with removable batteries and has dual SODIMMs not soldered to the motherboard if you stay away from the slimline Ts-series.
 
-Lenovo ThinkPad T480 https://www.ebay.com/itm/204515238921
+Lenovo ThinkPad T480 [ebay listing](https://www.ebay.com/itm/204515238921)
 
 ```text
 Screen Size                 14 in
@@ -100,7 +100,7 @@ So I'm getting the following components used and new.
 | Amazon | New | $100  | Elite DDR4 64GB Kit (2 x 32GB) - TED464G3200C22DC-S01 |
 | Amazon | New |  $20  | Intel AX210 IEEE 802.11ax Bluetooth 5.2 Tri Band Wi-Fi/Bluetooth Combo Adapter |
 | Amazon | New | $165  | Crucial P3 4TB PCIe Gen3 3D NAND NVMe M.2 SSD, up to 3500MB/s - CT4000P3SSD8 |
-| -  | **$670** | **Total** |
+| - | **$670** | **Total** | |
 
 List of stuff to do to my T480
 
@@ -140,7 +140,7 @@ Advantages:
 - WWAN port open to SSD for relatively cheap per Tb storage
 - Coral TPU M.2 Edge Accelerator B+M Key in WWAN
 - External eGPU with Thunderbolt 3 at 2x (pcie 2 channel not 4x)
-  - https://egpu.io/best-egpu-buyers-guide/
+  - [eGPU.io](https://egpu.io/best-egpu-buyers-guide/)
 - eGPU via USB-C/Thunderbolt is possible
 - Can add a lighted keyboard if I want too...
 
@@ -159,14 +159,14 @@ Additional Options:
 - External Battery 72Wh extended runtime
 - M.2 2242 SSD hard disk module (key type needed)
 - Magnesium LCD Rear panel
-  - https://www.aliexpress.us/item/2255801116060677.html
-  - https://www.aliexpress.us/item/2255799959119176.html
+  - [aliexpress link 1](https://www.aliexpress.us/item/2255801116060677.html)
+  - [aliexpress link 2](https://www.aliexpress.us/item/2255799959119176.html)
 - 4k LCD screen replacement (DO NOT CARE ???)
 - Lowpower LCD Screen replacement
   - N140HCG-GQ2
   - N140HCA-GA3
 - Glass trackpad (from X1)
-  - https://www.aliexpress.us/item/3256804384345671.html
+  - [aliexpress link](https://www.aliexpress.us/item/3256804384345671.html)
 - Backlight Keyboard
-  - keyboard: https://www.aliexpress.com/item/4000321778497.html?spm=a2g0o.order_list.0.0.21ef1802zMF0vd
-  - mousepad: https://www.aliexpress.com/item/1005003895081080.html?spm=a2g0o.order_list.0.0.21ef1802zMF0vd
+  - keyboard: [aliexpress](https://www.aliexpress.com/item/4000321778497.html?spm=a2g0o.order_list.0.0.21ef1802zMF0vd)
+  - mousepad: [aliexpress](https://www.aliexpress.com/item/1005003895081080.html?spm=a2g0o.order_list.0.0.21ef1802zMF0vd)

@@ -38,7 +38,7 @@ I also bought a couple [HP ProCurve 2800](/procurve-2800-switches/) that I menti
 
 My legacy pile also includes a couple of decent residencial APC Back-UPS 550 and similar battery backups along with the USB/Serial cables. The APC SMX1500 2u rack mount UPS is tested with new batteries as the big boy for my core network devices.
 
-Along the way, I got a couple other nifty pieces of hardware like a four (4) port KVM with hot-key support, a fully built out PiKVM v3, an IP (network) enabled remote power switch, 
+Along the way, I got a couple other nifty pieces of hardware like a four (4) port KVM with hot-key support, a fully built out PiKVM v3, an IP (network) enabled remote power switch.
 
 I'm also not including my WAN/LAN network configuration or devices but those are in a separate post. Just consider those as existing and mostly working.
 
