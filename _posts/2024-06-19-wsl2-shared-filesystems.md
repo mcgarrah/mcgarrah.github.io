@@ -1,16 +1,18 @@
 ---
 title:  "Sharing file systems betwen WSLv2 instances"
 layout: post
-published: false
+published: true
 ---
 
 I have a significant investment in my WSLv2 [Ubuntu 22.04.3 LTS](https://www.microsoft.com/store/productId/9PN20MSR04DW?ocid=pdpshare) installation. It has my nvidia GPU setup nicely and several machine learning demos and tests I've built and use for keeping current on machine learning.  With [Ubuntu 24.04 LTS](https://www.microsoft.com/store/productId/9NZ3KLHXDJP5?ocid=pdpshare) released, I now want to play around in the newer version but don't want to move or worse copy my entire set of models and repositories across. I have well over 500Gb of content and absolutely don't want two copies of those floating around. I'm looking for a solution to this and figure others have encountered it.
+
+[![Explorer WSL Filesystems](/assets/images/wsl2-windows-explorer.png){:width="30%" height="30%"}](/assets/images/wsl2-windows-explorer.png){:target="_blank"}
 
 <!-- excerpt-end -->
 
 The first option is that you can use Windows Explorer to copy between the two WSLv2 instances. I did a bit of that while moving some small custom bits between the two linux instances. It was super easy to do but misses the direct sharing that I'd like to do between them especially for larger files and repos.
 
-[PICTURE]
+[![Explorer WSL Filesystems](/assets/images/wsl2-windows-explorer-two-views.png){:width="30%" height="30%"}](/assets/images/wsl2-windows-explorer-two-views.png){:target="_blank"}
 
 Enter a nifty SuperUser Stack Overflow question "[Is there a way to access files from one WSL 2 distro/image in another one?](https://superuser.com/q/1659218/247426)" and the interesting set of answers that took a couple of tries for me to get right.
 
@@ -24,7 +26,7 @@ sudo mkdir -p /mnt/wsl/instances/$WSL_DISTRO_NAME
 Update your ```wsl.conf``` file to delay mounting from ```/etc/fstab``` entries until ```/mnt/wsl``` is ready for the sub-mount point to occur.
 
 ``` shell
-nano /etc/wsl.conf
+$ nano /etc/wsl.conf
 ```
 
 ``` config
@@ -50,7 +52,7 @@ I personally use the [easyWSL](https://www.microsoft.com/store/productId/9NHBTMK
 C:\> choco install dotnet-6.0-desktopruntime
 ```
 
-[PICTURE]
+[![EasyWSL Utility](/assets/images/wsl2-windows-easywsl.png){:width="30%" height="30%"}](/assets/images/wsl2-windows-easywsl.png){:target="_blank"}
 
 Restart the distro using the easyWSL "Stop distro" for each one and you should see both the file systems between the instances of WSLv2 after restarting them.
 
