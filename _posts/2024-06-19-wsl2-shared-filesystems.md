@@ -26,7 +26,7 @@ sudo mkdir -p /mnt/wsl/instances/$WSL_DISTRO_NAME
 Update your ```wsl.conf``` file to delay mounting from ```/etc/fstab``` entries until ```/mnt/wsl``` is ready for the sub-mount point to occur.
 
 ``` shell
-$ nano /etc/wsl.conf
+nano /etc/wsl.conf
 ```
 
 ``` config
@@ -83,3 +83,5 @@ I was able to work around this for a simple check like a ```diff``` between two 
 ```
 
 This is not a perfect solution but it gets me closer to what I wanted. I can share the machine learning models between the two instances with decent performance. I'll likely work on getting the UID and GID synchronized between the different instances to make this work more easily.
+
+I hope this helps someone else in my same boat as they upgrade WSLv2 instances.
