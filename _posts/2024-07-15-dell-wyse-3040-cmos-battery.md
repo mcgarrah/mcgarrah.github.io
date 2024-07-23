@@ -27,4 +27,4 @@ List of 3040s:
 - tailscale wilson (wilson)
 - 2 x WIFI enabled 5v 3a
 - 1 x 5v 3a with broken plug (hacked in USB cable)
-- - 2 x 12v 2a
+- 2 x 12v 2a
