@@ -12,7 +12,7 @@ Adding them in pieces as I also loaded up the CephFS with media content is what 
 
 Something that I'm navigating is Ceph will go into read-only mode when you approach the fill limits which is typically 95% of space available. It starts alerting like crazy at 85% filled with warning of dire things coming. Notice in my OSD status below that I have massive imbalances between the initial OSDs 0,1,2 versus 3,4,5 and 6,7,8.
 
-[![Ceph OSD Status](/assets/images/ProxMox-Ceph-OSD-usage.png){:width="50%" height="50%"}](/assets/images/ProxMox-Ceph-OSD-usage.png){:target="_blank"}
+[![Ceph OSD Status](/assets/images/ProxMox-Ceph-OSD-usage.png){:width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ProxMox-Ceph-OSD-usage.png){:target="_blank"}
 
 <!-- excerpt-end -->
 

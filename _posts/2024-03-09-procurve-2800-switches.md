@@ -8,13 +8,13 @@ published: true
 
 You will need a console serial cable to get into your HP ProCurve 2800 switch.
 
-[![HP ProCurve 2810-24 Console Cable](/assets/images/ProCurve-2810-24G-console-cable.jpg){:width="35%" height="35%"}](/assets/images/ProCurve-2810-24G-console-cable.jpg){:target="_blank"}
+[![HP ProCurve 2810-24 Console Cable](/assets/images/ProCurve-2810-24G-console-cable.jpg){:width="35%" height="35%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ProCurve-2810-24G-console-cable.jpg){:target="_blank"}
 
 Here is the one I bought from Amazon [OIKWAN - USB Cisco Console Cable, USB to RJ45 Console Cable](https://www.amazon.com/dp/B07RFLKJ54?&_encoding=UTF8&tag=mcgarrah-20&linkCode=ur2&linkId=f6db60a50d79fb1d22c8e3190d1e4d80&camp=1789&creative=9325) which has been useful on some other project as well. I have a break out for the RJ45 to let me use this on an old BlackArmor NAS and to interface with some robotics equipment. You mileage may vary but this one works great for me.
 
 This is the ProCurve 2810-24 that is all 1Gbps ports with four SFP (not SFP+) ports that you can use with fiber or DACs. I bought three of these so I have a SAN and two home networks... then I picked up another one as a spare because it was less than $25 on eBay. So I'm all in on this switch for my home networks.
 
-[![HP ProCurve 2810-24 Front View](/assets/images/ProCurve-2810-24G-front-view.jpg){:width="50%" height="50%"}](/assets/images/ProCurve-2810-24G-front-view.jpg){:target="_blank"}
+[![HP ProCurve 2810-24 Front View](/assets/images/ProCurve-2810-24G-front-view.jpg){:width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ProCurve-2810-24G-front-view.jpg){:target="_blank"}
 
 <!-- excerpt-end -->
 

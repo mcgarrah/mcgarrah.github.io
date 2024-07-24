@@ -6,7 +6,7 @@ published: true
 
 I have collected nine (9) mostly functional [Dell Wyse 3040 thin clients](https://www.parkytowers.me.uk/thin/wyse/3040/) for use in my experimentation with [Proxmox Clusters and SDN](https://www.proxmox.com) and Site-2-Site VPN configurations with [Tailscale](https://tailscale.com/). Yes, I know I have a problem. :)
 
-[![Dell Wyse 3040 with bad cmos battery](/assets/images/wyse3040-cmos/wyse-3040-bad-cmos-00.png){:width="50%" height="50%"}](/assets/images/wyse3040-cmos/wyse-3040-bad-cmos-00.png){:target="_blank"}
+[![Dell Wyse 3040 with bad cmos battery](/assets/images/wyse3040-cmos/wyse-3040-bad-cmos-00.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/wyse3040-cmos/wyse-3040-bad-cmos-00.png){:target="_blank"}
 
 On the upside, they are very small low power consuming Debian 12 servers that have a 1Gbps NIC and run headless nicely once you fix the BIOS settings and Debian configuration correctly. What is not nice is their CMOS batteries are all mostly dying on me and their connector is a odd type that is not supported by many vendors and are between $8-$12 USD to replace. For example the [Rome Tech CR2032 CMOS BIOS Battery for Dell Wyse 3040](https://amzn.to/3LzGnfg) is about $9.89 USD as of posting this. This bothers me intensely as the actual CR2032 can be picked up for well under a dollar ($1 USD) each at [LiCB CR2032 3V Lithium Battery(10-pack)](https://amzn.to/4bJTSUx) for a pack of 10 for $6 USD. Also, I'm picking these units up with power adapter for between $20 and $45 on eBay and the $10 bite jacks my price per unit up a good bit. So what to do?
 
