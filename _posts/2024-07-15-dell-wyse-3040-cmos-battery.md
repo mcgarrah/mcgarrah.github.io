@@ -16,7 +16,7 @@ On the upside, they are very small low power consuming Debian 12 servers that ha
 
 I thought originally that I would figure out how to solder the wire connectors to the CR2032 but I am horrible at soldering and absolutely hate doing it. A small arc welder to spot weld came to mind as well after I disassembled one of the batteries and saw how they spot welded thin pieces of metal to the wire and battery. Then I came to my senses and told myself ***no new projects***. Spot welding is a whole project and I have too many languishing right now.
 
-Thus my first jack-rigged attempt at replacing the CMOS batteries was just using heat shrink with the original wires and thin pieces of metal. Surprisingly enough, it worked the first time, and the several other times I've had to replace the CMOS batteries. This will hopefully help someone else in the same bind that wants a cheap way out.
+Thus my first jerry-rigged attempt at replacing the CMOS batteries was just using heat shrink with the original wires and thin pieces of metal. Surprisingly enough, it worked the first time, and the several other times I've had to replace the CMOS batteries. This will hopefully help someone else in the same bind that wants a cheap way out.
 
 Below are some pictures of the process. You will need CR2032 batteries, some ~39/64" heat shrink, a heat source, double sided mounting tape, and a pair of needle-nose like plyers to do this.
 
