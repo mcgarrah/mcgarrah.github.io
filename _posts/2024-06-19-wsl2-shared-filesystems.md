@@ -4,7 +4,9 @@ layout: post
 published: true
 ---
 
-I have a significant investment in my WSLv2 [Ubuntu 22.04.3 LTS](https://www.microsoft.com/store/productId/9PN20MSR04DW?ocid=pdpshare) installation. It has my Nvidia GPU setup nicely integrated and several machine learning demos and tests I've built and use for keeping current on machine learning.  With [Ubuntu 24.04 LTS](https://www.microsoft.com/store/productId/9NZ3KLHXDJP5?ocid=pdpshare) released, I now want to play around in the newer version but don't want to move or worse copy my entire set of models and repositories across. I have well over 500Gb of content and absolutely don't want two copies of those floating around. I'm looking for a solution to this and figure others have encountered it.
+*[WSLv2]: Windows Subsystem for Linux
+
+I have a significant investment in my [WSLv2](https://learn.microsoft.com/en-us/windows/wsl/about) [Ubuntu 22.04.3 LTS](https://www.microsoft.com/store/productId/9PN20MSR04DW?ocid=pdpshare) installation. It has my Nvidia GPU setup nicely integrated and several machine learning demos and tests I've built and use for keeping current on machine learning.  With [Ubuntu 24.04 LTS](https://www.microsoft.com/store/productId/9NZ3KLHXDJP5?ocid=pdpshare) released, I now want to play around in the newer version but don't want to move or worse copy my entire set of models and repositories across. I have well over 500Gb of content and absolutely don't want two copies of those floating around. I'm looking for a solution to this and figure others have encountered it.
 
 [![Explorer WSL Filesystems](/assets/images/wsl2-windows-explorer.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/wsl2-windows-explorer.png){:target="_blank"}
 
