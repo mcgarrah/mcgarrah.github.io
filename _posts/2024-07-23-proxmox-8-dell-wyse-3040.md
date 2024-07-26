@@ -150,7 +150,7 @@ mcgarrah@pve1:~$
 
 During the install, I picked "Local Only" for Postfix and regretted it later. YMMV.
 
-Later I found we were missing the ksmtuned, dnsmasq and FRR tools.
+Later I found we were missing the ```ksmtuned```, ```dnsmasq``` and **FRR tools**.
 
 ``` shell
 mcgarrah@pve1:~$ su -
@@ -161,11 +161,11 @@ root@pve1:~# exit
 mcgarrah@pve1:~$
 ```
 
-Adding ksmtuned enables Kernel Samepage Merging to help with memory utilization. Adding dnsmasq and frr are for DNS and routing support in SDN.
+Adding ```ksmtuned``` enables Kernel Samepage Merging to help with memory utilization. Adding ```dnsmasq``` and **FRR Tools** are for DNS and routing support in SDN.
 
 ### Remove Debian Kernel and OS-Prober
 
-Reduce complexity and future issues by removing the default Debian Kernel from the PVE system. OS-Prober can conflict with VM hosts are worth removing early.
+Reduce complexity and future issues by removing the default Debian Kernel from the PVE system. **OS-Prober** can conflict with VM hosts are worth removing early.
 
 ``` shell
 mcgarrah@pve1:~$ su -
