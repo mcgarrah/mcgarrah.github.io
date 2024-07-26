@@ -67,9 +67,7 @@ You will need to read the earlier post [Debian 12 on Dell Wyse 3040s](/dell-wyse
 
 The [Proxmox Documentation Wiki](https://pve.proxmox.com/) has a page called [Install Proxmox VE on Debian 12 Bookworm](https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_Debian_12_Bookworm) that walks thru the steps to update a Debian 12 system to Proxmox 8. You should read and reference it when doing this process. It has more details on each step. I will note where the Dell Wyse 3040 has differences or minor issues I encountered as I run thru the steps I took to get my cluster running.
 
-[Dell Wyse 3040 Setup - Proxmox 8.2...](https://docs.google.com/document/d/1hh4MRKJUzw_5WS3MmALou0zgU7uNoSleq9m0pZ3wYT8/edit?usp=sharing)
-
-Debian 12 likes to setup a user account (mine is **mcgarrah**) and a **root** account that is separate. Proxmox only creates a **root** account and configures everything to use it. You will need to fix OpenSSH to allow **root** access if you want it to reflect a Proxmox system install. I also use the ```sudo``` command extensively which is not a norm with Proxmox.
+Debian 12 likes to setup a user account (mine is just **mcgarrah**) and a **root** account that is separate. Proxmox only creates a **root** account and configures everything to use it. You will need to fix OpenSSH to allow **root** access if you want it to reflect a Proxmox system install. I also use the ```sudo``` command extensively which is not a norm with Proxmox.
 
 To get to a **root** session on a default Debian 12 setup, you can login remotely via the user account, then run ```su -``` and enter the **root** password. You will now be in a **root** session.
 
