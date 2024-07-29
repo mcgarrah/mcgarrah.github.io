@@ -254,7 +254,7 @@ root@pve1:~# exit
 mcgarrah@pve1:~$ exit
 ```
 
-Here are some tools I just install everywhere because they are useful. You can add them or now.
+Here are some tools I just install everywhere because they are useful. You can add them or not.
 
 ``` shell
 mcgarrah@pve1:~$ sudo apt install vim curl tmux -y
