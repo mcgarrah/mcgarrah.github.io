@@ -4,31 +4,65 @@ layout: post
 published: false
 ---
 
-The earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial setup of a network switch and mentioned in passing that I got the Java WebUI working in a relatively safe manner.
+*[NPAPI]: Netscape Plugin Application Programming Interface
+*[JNLP]: Java Network Launch Protocol
+*[lede]: introductory section in journalism
+*[CLI]: command line interface
 
-Basically, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. The webui was never as powerful as the full console CLI but just a nice feature when debugging a network issue.
+> "Don't bury the lede"
 
-My first thoughts were to build a Windows 7 Virtual Machine with that era of web browser and java installed and use it to access the switches. That seemed like a lot of work, was resource intensive and prone to issues cropping up with an old unsupported OS. Thus entered the [PortableApps](https://portableapps.com/) idea to run a isolated local Web-browser and Java.
+A working HP ProCurve Java WebUI screenshot to show it works.
+
+[![Procurve WebUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png "Procurve Java WebUI"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
+
+My earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial configuration of a network switch and mentioned in passing that I got the Java WebUI working in a relatively safe manner. Here is how I put that together on a modern machine running Windows 10 Professional 64-bit.
 
 <!-- excerpt-end -->
 
+## Summary
+
+Back in the day, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. This webui was never as powerful as the full console CLI but just a nice feature when debugging a network issue. It was also very useful to hand out to support folks for a quick an easy way to verify a switch or port on a switch was functional. I like quick and easy so I wanted this functionality back.
+
+Honestly, my first thoughts were to build a Virtual Machine using a Microsoft Windows 7 installation with that era of web-browser and java installed and use it to access the switches. After some consideration that seemed like a lot of work, was resource intensive and probably prone to issues cropping up with an incredibly old and unsupported OS. Thus entered the [PortableApps](https://portableapps.com/) idea to run an older isolated Web-browser and Java.
+
 ## History
 
-So now for some related history. Back in the early Internet there were a limited number of webbrowsers.  Netscape which later became FireFox was one the major players. They had a plugin system for their web-browser called [Netscape Plugin Application Programming Interface (NPAPI)](https://en.wikipedia.org/wiki/NPAPI) that you could use to enable things like [Macromedia Flash](https://en.wikipedia.org/wiki/Adobe_Flash), [Sun Java](https://en.wikipedia.org/wiki/Java_(software_platform)) before Oracle, [Microsoft Silverlight](https://en.wikipedia.org/wiki/Microsoft_Silverlight) and other such extensions to the browser. This NSAPI capability was in most web-browsers until around 2015-2017 when it was removed due to security concerns. Other methods to handle support for custom content types evolved and became broadly supported.
+So now for some quick related history as to why we have this problem. You can skip down a section to avoid learning about it without any issues. Back in the early Internet there were a limited number of web-browsers. Netscape which later became FireFox was one the major players. They had a plugin system for their web-browser called [Netscape Plugin Application Programming Interface (NPAPI)](https://en.wikipedia.org/wiki/NPAPI) that you could use to enable things like [Macromedia Flash](https://en.wikipedia.org/wiki/Adobe_Flash), [Sun Java](https://en.wikipedia.org/wiki/Java_(software_platform)) (before Oracle), [Microsoft Silverlight](https://en.wikipedia.org/wiki/Microsoft_Silverlight) and other such extensions to the browser. This NPAPI capability was in most web-browsers until around 2015-2017 when it was removed due to security concerns. Other methods to handle support for custom content types evolved and became broadly supported. Thus the NPAPI depreciated leaving folks with java apps abandoned.
 
-HP ProCurve switches implemented a webui using Java Webstart that requires the Java Runtime Engine in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led us down this rabbit hole of an older web-browser and older Java Runtime that supports these switches webui. I have picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the webui.
-
-**WARNING**: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be ***hacked*** without a doubt in seconds.
+HP ProCurve switches implemented a webui using Java Webstart that requires the Java Runtime Engine in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led me down this rabbit hole of an older web-browser and older Java Runtime that supports these switches webui. I picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the webui.
 
 ## Download Software
 
-[Java Portable](https://sourceforge.net/projects/portableapps/files/Java%20Portable/) and make sure to get the 32-bit version not the 64-bit version. To match the era with support for JNLP (Java Webstart) I picked Java 8 Update 121. Also picked due to MD5 signing issues with later versions.
+You will need to download two pieces of software. A specific version of **Firefox Portable Edition** with NPAPI support and **Java Portable** that is supported in that web-browser. I have pulled copies locally and have links to where I pulled them for your inspection.
 
-[Mozilla Firefox, Portable Ed.](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./) and they are bundled for both 32-bit and 64-bit. The last version that supports JNLP (Java Webstart) are either Firefox 51.0 or 51.0.1. I have only tested with 51.0 so far. You must enable 32-bit only.
+Here is the link to [Java Portable](https://sourceforge.net/projects/portableapps/files/Java%20Portable/) download website. You will need the 32-bit version _not_ the 64-bit version. To match the era with support for JNLP (Java Webstart) I picked "Java 8 Update 121". Also picked due to MD5 signing issues with later versions.
 
-* [FirefoxPortable_51.0.1_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0.1/FirefoxPortable_51.0.1_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0.1_English.paf.exe))
-* [FirefoxPortable_51.0_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0/FirefoxPortable_51.0_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0_English.paf.exe))
-* [jPortable_8_Update_121.paf.exe](https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_121.paf.exe/download) ([local](/assets/exes/jPortable_8_Update_121.paf.exe))
+Here is the link to [Mozilla Firefox, Portable Ed.](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./) download website and they are bundled for both 32-bit and 64-bit. The last version that supports JNLP (Java Webstart) are either Firefox 51.0 or 51.0.1. I have tested with 51.0 and 51.0.1 and both seem to work fine. You **must** enable 32-bit only.
+
+For the directly links to the versions you need:
+
+* Direct Download Link --> [FirefoxPortable_51.0.1_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0.1/FirefoxPortable_51.0.1_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0.1_English.paf.exe))
+* Direct Download Link --> [jPortable_8_Update_121.paf.exe](https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_121.paf.exe/download) ([local](/assets/exes/jPortable_8_Update_121.paf.exe))
+
+<!-- * [FirefoxPortable_51.0_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0/FirefoxPortable_51.0_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0_English.paf.exe)) -->
+
+<!--
+
+Firefox-ESR 52.7.3 (32-bit)
+Oracle Java Version 8 Update 231
+
+Extended Support Release (check these for support)
+https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%20ESR%2C%20Portable%20Edition%2052.7.3/ *** likely works ***
+https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%20ESR%2C%20Portable%20Edition%2052.7.4/
+https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%20ESR%2C%20Portable%20Edition%2052.8.0/
+
+https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_231_online.paf.exe/download *** likely works with 52.7.3 ***
+-->
+
+## Installing
+
+**WARNING**: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be ***hacked*** without a doubt in seconds. These are completely unpatched versions of two very old pieces of software.
+
 
 ## Setup
 
@@ -41,7 +75,7 @@ https://portableapps.com/node/58831
     https://sourceforge.net/projects/portableapps/files/
 
 
-PortableApps FireFox 51.0 NSAPI enabled version...
+PortableApps FireFox 51.0 NPAPI enabled version...
     https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./
 
 Get the 32-bit versions as I pulled the 64-bit for both FireFox and JPortable which will not work.

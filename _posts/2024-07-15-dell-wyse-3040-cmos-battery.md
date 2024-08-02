@@ -4,6 +4,8 @@ layout: post
 published: true
 ---
 
+*[CMOS]: Complementary Metal-Oxide-Semiconductor - A CMOS chip stores the settings like date & time, fan speed, booting sequence.
+
 I have collected nine (9) mostly functional [Dell Wyse 3040 thin clients](https://www.parkytowers.me.uk/thin/wyse/3040/) for use in my experimentation with [Proxmox Clusters and SDN](https://www.proxmox.com) and Site-2-Site VPN configurations with [Tailscale](https://tailscale.com/). Yes, I know I have a problem. :)
 
 [![Dell Wyse 3040 with bad cmos battery](/assets/images/wyse3040-cmos/wyse-3040-bad-cmos-00.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/wyse3040-cmos/wyse-3040-bad-cmos-00.png){:target="_blank"}
