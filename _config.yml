@@ -6,6 +6,9 @@ lang: "en"
 # Google Analytics
 google_analytics: G-F90DVB199P
 
+# Google Adsense
+google_adsense: ca-pub-2421538118074948
+
 # Page Settings
 permalink: /:title/
 #excerpt_separator: "\n\n\n"

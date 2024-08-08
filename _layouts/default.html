@@ -30,6 +30,11 @@
 <header>
   <a href="{{ "/" | relative_url }}" class="title">{{ site.title | escape }}</a>
   {% include menu.html menu=pages %}
+
+  {% if site.google_adsense %}
+  {% include adsense.html %}
+  {% endif %}
+
 </header>
 
 {% if site.google_analytics %}
