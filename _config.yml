@@ -1,7 +1,10 @@
-title: "Technical Blog"
+title: "McGarrah Technical Blog"
 author: "Michael McGarrah"
 description: "Michael McGarrah's Technical Blog"
 lang: "en"
+
+# Google Analytics
+google_analytics: G-F90DVB199P
 
 # Page Settings
 permalink: /:title/
