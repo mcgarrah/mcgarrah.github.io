@@ -9,3 +9,5 @@ end
 gem "webrick", "~> 1.8"
 
 gem "jekyll-sitemap", "~> 1.4.0"
+
+gem "jekyll-paginate", "~> 1.1.0"
