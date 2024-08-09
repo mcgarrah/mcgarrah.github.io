@@ -24,3 +24,7 @@
 # VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run
 
 bundle exec jekyll serve
+
+# For Debug
+
+bundle exec jekyll serve --trace
