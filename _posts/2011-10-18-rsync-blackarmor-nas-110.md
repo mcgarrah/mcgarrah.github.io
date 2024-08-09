@@ -12,8 +12,11 @@ So, the BA-NAS110 is capable of using ```rsync``` from the command line to repli
 
 You have to create a rsyncd.conf file since there isn't one pre-built. Syntax is common to the typical rsync 3.0.4 version.
 
+<!-- excerpt-end -->
+
 Hosting system
-```
+
+```shell
 $ id
 (root)
 $ cat /root/rsyncd.conf
@@ -29,13 +32,16 @@ $ rsync --daemon --config=/root/rsyncd.conf
 ```
 
 Client system (could be another BA-NAS110 or Linux)
-```
+
+```shell
 $ id
 (root)
 $ rsync --progress --stats -v -t -r rsync://admin@/rsyncftp/* /shares/Public
 ```
+
   ... watch the good times roll ...
-Note: Add the "-n" option to rsync on the client side for the initial test connection to put it in test mode without data copy.  Remove "-n" when you actually want to copy data.
+
+*Note*: Add the "-n" option to rsync on the client side for the initial test connection to put it in test mode without data copy.  Remove "-n" when you actually want to copy data.
 
 The transfer speed between two BA-NAS110 devices across a dedicated switch is about 6-8MB/s. I've read some comments about performance on these devices being dogs and that there tweaks that might help.
 

@@ -8,7 +8,7 @@ I have two new quick projects that I need for my Black Armor NAS 110 in the imme
 
 First I need the UPS functionality for this device as I'm taking power hits at my residence and my old UPS' are just way too old and not working to keep the NAS running after a power blip. I bought an APC Back-UPS ES BE550G 550 VA 330 Watts at CostCo with one of their specials. The Black Armor NAS documentation said it only works with APC UPS so I thought I was okay but with further reading in the forums they say results vary with APC devices. So time to see if my new APC UPS will work with the built-in software or if the software needs improvements. So I hope to have a smart UPS running but just the dumb UPS functionality without a shutdown mode will have to do if I cannot get it working. The smart UPS depends on apcupsd 3.12.2 according to a post.
 
-```
+``` shell
 $ /usr/sbin/apcupsd --version
 apcupsd 3.12.2 (18 January 2006) redhat
 ```

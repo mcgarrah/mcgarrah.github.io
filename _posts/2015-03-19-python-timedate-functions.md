@@ -6,8 +6,7 @@ categories: python technical
 
 I needed a quick understanding of the Python 3.3.0 datetime functionality to do a difference in times across days. Python make it amazingly easy.
 
-{% highlight python %}
-
+```python
 import datetime
 from datetime import timedelta
 
@@ -33,12 +32,11 @@ elif now < yesterday:
  print "now < yesterday"
 else:
  print "now = yesterday"
-
-{% endhighlight %}
+```
 
 The expected results are:
 
-```
+```shell
 CMD> python time.py
 now: 2015-03-19 14:30:31.083000
 tomorrow: 2015-03-20 14:30:31.083000

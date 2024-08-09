@@ -1,37 +1,61 @@
-title: "Technical Blog"
+title: "McGarrah Technical Blog"
 author: "Michael McGarrah"
-description: "Technical Blog"
-permalink: /:title/
+description: "Michael McGarrah's Technical Blog"
 lang: "en"
-excerpt_separator: "\n\n\n"
+
+# Google Analytics
+google_analytics: G-F90DVB199P
+
+# Google Adsense
+google_adsense: ca-pub-2421538118074948
+
+# Page Settings
+permalink: /:title/
+#excerpt_separator: "\n\n\n"
+excerpt_separator: <!-- excerpt-end -->
 date_format: "%B %d, %Y"
+paginate: 4
 
 # Layout
-
-show_excerpts: false        # show article excerpts on the home page
-show_frame: false          # adds a gray frame to the site
+show_excerpts: true       # show article excerpts on the home page
+show_frame: false         # adds a gray frame to the site
 show_sidebar: true        # show a sidebar instead of the usual header
-minimal: true              # use a dark header
+minimal: true             # use a dark header
+
+# theme: jekyll-theme-modernist
+
+# # Theme Settings
+# hide_title: false         # remove site heading in the header
+# hide_footer: false        # hide the "previous" and "next" links at the end of each post
+# dark_theme: true          # use the dark mode as default
+# dark_header: true         # keep the header dark
+# dark_footer: true         # keep the footer dark
 
 # Menu
 
 navigation:                # accepts {file, title, url, icon, sidebaricon}
-  - {file: "index.html"}
-  - {title: Resume, url: "/resume/"}
-  - {file: "README.md"}
+  - {file: "index.html", icon: blog}
+  - {file: "archive.html", icon: list}
+  - {file: "README.md", icon: user}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@gmail.com"}
   - {title: Github, icon: github, url: "https://github.com/mcgarrah"}
-  - {title: Resume, icon: file, url: "/resume/"}
+  - {title: Gitlab, icon: gitlab, url: "https://gitlab.com/mcgarrah"}
+  - {title: StackOverflow, icon: stack-overflow, url: "https://stackoverflow.com/users/2452678/michael-mcgarrah"}
+  - {title: Discord, icon: discord, url: "https://discord.com/users/914581392740995073"}
+  - {title: Resume, icon: file, sidebaricon: file, url: "/resume/"}
+  - {title: LinkedIn, icon: linkedin, url: "https://www.linkedin.com/in/michaelmcgarrah/"}
   - {title: ResearchGate, icon: researchgate, url: "https://www.researchgate.net/profile/James-Mcgarrah"}
   - {title: ORCID, icon: orcid, url: "https://orcid.org/0000-0001-8935-1293"}
   - {title: Google Scholar, icon: graduation-cap, url: "https://scholar.google.com/citations?user=Lt7T2SwAAAAJ"}
   - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 comments:
-#  disqus_shortname: ""    # see https://disqus.com/
-#  isso_domain: ""         # see https://posativ.org/isso/
+#  disqus_shortname: ""    # see https://disqus.com/        - needs money or ad-verts
+#  isso_domain: ""         # see https://posativ.org/isso/  - python hosted service with sqlite (money for hosting server)
 
 plugins:
- - jekyll-feed
+ - jekyll-feed             # used for RSS XML feed
+ - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
+ # - jekyll-paginate         # adding back from earlier implementation in upstream fork

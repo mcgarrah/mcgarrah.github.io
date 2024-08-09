@@ -6,21 +6,26 @@ categories: personal black_armor hardware nas seagate
 
 Two full toolchains built and a third that I still think might be made to work.  The first is using older versions of everything and was mostly done as a test to get the build environment working against known sources that are known to build. Even this known build process required some effort to get working in a current OS environment. Those docs, notes and scripts will be coming in the near future.
 
+<!-- excerpt-end -->
+
 So to outline what works and not, I give you the following.
 
 Toolchain that comes from older versions of software and the docs from [Tom Walsh](http://openhardware.net/Embedded_ARM/Toolchain/):
+
 * binutils-2.19.1a.tar.bz2
 * gcc-4.3.2.tar.bz2 (with a patch from Tom)
 * newlib-1.16.0.tar.gz (with a patch from Tom)
 * insight-weekly-CVS-7.0.50-20091130.tar.bz2
 
 Newest versions that compiled based on Tom's scripts:
+
 * binutils-2.22.tar.bz2
 * gcc-4.4.6.tar.bz2
 * newlib-1.19.0.tar.gz
 * insight-CVS-20111130.tar.bz2 (pulled from CVS head and required patching by me)
 
 Newest versions that fails to compile in GCC in zlib:
+
 * binutils-2.22.tar.bz2
 * gcc-4.6.2.tar.bz2
 * newlib-1.19.0.tar.gz
@@ -31,7 +36,8 @@ The issue in GCC is well documented (if you know what you are looking for) as a 
 The more exciting thing is that it looks like both GCC versions that compiled will compile code to an intermediate state.  That is not proof that it generates a working executable but it is a step in the right direction.
 
 For the GCC 4.3.2 version here is a test showing it compiling a quick test.
-```
+
+```shell
 $ cat > test.c
 int main (){return 0;}
 Ctrl-D
@@ -55,7 +61,8 @@ main:
 ```
 
 For the GCC 4.4.6 version here is a test showing it compiling a quick test.
-```
+
+```shell
 $ cat > test.c
 int main (){return 0;}
 Ctrl-D

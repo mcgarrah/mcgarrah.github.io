@@ -18,6 +18,6 @@ Thus started my journey into [Cygport](http://cygwinports.blogspot.com/).  I fou
 
 I've got two packages done so far.  vBinDiff is the first and I am still polishing that install as I learn more along the way. vbindiff is currently working great as a package on my local system. Wy60 is another tool from years back when I worked on UniData/Universe systems and needed access to their Wyse 60 PICK interfaces. This makes for two packages and I have used several features to make these work.  I'll have to learn how to submit a request for inclusion into the main Cygwin package group.  There is a mailing list and a set of questions to answer.  I'll just need to put some time aside for it. :)
 
-## Interests 
+## Interests
 
 So those are my current interests in the world of technology.  I keep playing around with the BlackArmor NAS devices occasionally and would like to find the time to get the USB to serial interface setup on my second unit. The ARM gcc tool-chain languishes for lack of time as well. The DLNA server ended up being too much of a pain without a decent tool-chain so I knuckled under and installed Microsoft Media Center on an old laptop to feed my digital media to my xbox360. I really want to revisit that particular issue and get a low-power digital media server working.  Maybe I'll find the time and pick those back up.
