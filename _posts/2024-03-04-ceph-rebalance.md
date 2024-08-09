@@ -4,7 +4,7 @@ layout: post
 published: true
 ---
 
-This is rough draft that I'm just pushing out as it might be useful to someone not stay in my drafts folder forever...  Good enough beats Perfect that never ships everytime.
+This is rough draft that I'm just pushing out as it might be useful to someone not stay in my drafts folder forever...  Good enough beats Perfect that never ships every time.
 
 I think I have mentioned my ProxMox/Ceph combo cluster in an earlier post. A quick summary is it consists of a five (5) node cluster for ProxMox HA and three of those nodes have Ceph with three (3) OSDs each for a total of nine (9) 5Tb OSDs. They are in a 3/2 ceph configuration with three copies of each piece of data allowing for running if two nodes are active. Those OSD / hard drives have been added in batches of three (3) with one added on each node as I could get drives cleaned and available. So I added them piece meal in a sets of three OSDs, then three more and finally the last batch of three. I'm also committing the sin of not using 10Gbps SAN networking for the Ceph cluster and using 1Gbps so performance is impacted.
 
@@ -171,7 +171,7 @@ You can disable deep and regular scrubbing but it will cost you later in catchup
 __noscrub,nodeep-scrub flag(s) set__
 ```
 
-This might help with the utlization of the disk bandwidth and I did it out of desparation.
+This might help with the utilization of the disk bandwidth and I did it out of desperation.
 
 ``` shell
 # ceph osd set noscrub

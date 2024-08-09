@@ -4,7 +4,7 @@ layout: post
 published: true
 ---
 
-I've got a backlog of posts I want to do on various topics. A couple of recent posts, I figured getting out something rough was better than not getting it out and just posted soemthing that felt like it needed another draft or two. I'll likely review those quickly posted items and update them as time permits.
+I've got a backlog of posts I want to do on various topics. A couple of recent posts, I figured getting out something rough was better than not getting it out and just posted something that felt like it needed another draft or two. I'll likely review those quickly posted items and update them as time permits.
 
 <!-- excerpt-end -->
 
@@ -14,7 +14,7 @@ Here is a dump of my unpublished posts that need polishing to release:
 * Site to Site VPN for the Homelabs
 * Link Aggregated (LAG) and LACP NIC Bonding
 * HP ProCurve Switch Java WebUI (Java JNLP WebStart)
-* Dell Wyse 3040 Initial Setup (tailscale endpoints)
+* ~~Dell Wyse 3040 Initial Setup (tailscale endpoints)~~ [Debian 12 on Dell Wyse 3040s](/dell-wyse-3040-debian12/)
 * PiKVM v3 and AIMOS 8-port KVM Setup (hacking the webui)
 * ProxMox 8 Lessons Learned in the Homelabs (pain points and solutions)
 
