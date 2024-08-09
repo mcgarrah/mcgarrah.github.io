@@ -60,6 +60,8 @@ root@harlan:~# ceph config get osd.0 osd_scrub_min_interval
 86400.000000
 root@harlan:~# ceph config get osd.0 osd_scrub_interval_randomize_ratio
 0.500000
+root@harlan:~# ceph config get osd.0 osd_scrub_max_interval
+604800.000000
 ```
 
 ``` shell
@@ -87,20 +89,11 @@ ceph config set global osd_scrub_max_interval 1209600 # 14 days
 ceph config set global osd_deep_scrub_interval 2419200 # 28 days 
 ```
 
-You can run the above commands on any of your PVE Ceph nodes from the shell. They are global settings so should take effect across all the OSDs at the global cluster level. No restart should be needed but I'll test and report back here...
+You can run the above commands on any of your PVE Ceph nodes from the shell. They are global settings so they will take effect across all the OSDs at the global cluster level. No restart should be needed.
 
-### Storage NearFull
+So far I have tried this across my test Proxmox Ceph Cluster and the semi-production cluster that is currently rebalancing the removal of three (3) 5Tb OSDs that I am migrating to a new forth ceph cluster node. The reduction in `deep scrubs` is helping things along.
 
-[Storage Capacity](https://docs.ceph.com/en/latest/rados/configuration/mon-config-ref/#storage-capacity)
-
-These settings are changed in the OSDMap using `ceph osd set-nearfull-ratio` and `ceph osd set-full-ratio` and are to be determined based on your specific configuration.
-
-Identify two numbers for your cluster:
-
-1. The number of OSDs.
-2. The total capacity of the cluster
-
-If you divide the total capacity of your cluster by the number of OSDs in your cluster, you will find the mean average capacity of an OSD within your cluster. Consider multiplying that number by the number of OSDs you expect will fail simultaneously during normal operations (a relatively small number). Finally multiply the capacity of the cluster by the full ratio to arrive at a maximum operating capacity; then, subtract the number of amount of data from the OSDs you expect to fail to arrive at a reasonable full ratio. Repeat the foregoing process with a higher number of OSD failures (e.g., a rack of OSDs) to arrive at a reasonable number for a near full ratio.
+As always, I hope this helps somebody in a similar situation. Cheers.
 
 ### Reference
 
