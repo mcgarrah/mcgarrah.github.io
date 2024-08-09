@@ -112,6 +112,31 @@ USB 3.0 speed and media... https://qr.ae/p2NAQe https://qr.ae/p2NAdw
 
 [![Ceph Recovery and Rebalance](/assets/images/ceph-recovery-rebalance-homelab.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ceph-recovery-rebalance-homelab.png){:target="_blank"}
 
+```console
+root@harlan:~# ceph config dump
+WHO    MASK  LEVEL     OPTION                                             VALUE      RO
+mon          advanced  auth_allow_insecure_global_id_reclaim              false
+mgr          advanced  mgr/dashboard/PWD_POLICY_CHECK_COMPLEXITY_ENABLED  false      *
+mgr          advanced  mgr/dashboard/PWD_POLICY_ENABLED                   false      *
+mgr          advanced  mgr/dashboard/ssl                                  true       *
+osd.0        basic     osd_mclock_max_capacity_iops_hdd                   86.136079
+osd.1        basic     osd_mclock_max_capacity_iops_hdd                   87.204995
+osd.4        basic     osd_mclock_max_capacity_iops_hdd                   89.152214
+```
+
+```console
+root@harlan:~# ceph tell osd.0 bench 12288000 4096 4194304 100
+{
+    "bytes_written": 12288000,
+    "blocksize": 4096,
+    "elapsed_sec": 2.868101647,
+    "bytes_per_sec": 4284366.9828972416,
+    "iops": 1045.9880329338969
+}
+```
+
+I may have a bottle neck in performance on the first node in hte ceph cluster.
+
 
 ### Reference
 
