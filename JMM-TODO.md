@@ -4,7 +4,11 @@ Google
     https://www.google.com/adsense/new/u/0/pub-2421538118074948/onboarding
 
 Comments for engagement is important
-Search on site is important
+Search on site is important but we need a Google Scan to make that work.
+
+Multi-lingual will separate me out...
+    https://github.com/untra/polyglot/ try ES and EN initially.
+    https://leo3418.github.io/collections/multilingual-jekyll-site/
 
 https://jekyllcodex.org/without-plugins/
     https://jekyllcodex.org/without-plugin/search-google/#
