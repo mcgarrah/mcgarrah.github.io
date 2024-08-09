@@ -12,6 +12,7 @@ Jekyll Plugins
     https://github.com/jekyll/jekyll-admin
     https://github.com/erikw/jekyll-google_search_console_verification_file
 
+Merge the Jekyll-Plugin branch to main
 
 As part of the VPN solution:
     Turn off DHCP on Google WiFi to use another DHCP Server

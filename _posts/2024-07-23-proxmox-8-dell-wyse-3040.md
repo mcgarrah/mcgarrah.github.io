@@ -4,7 +4,7 @@ layout: post
 published: true
 ---
 
-I want a place to test and try out new features and capabilities in [Proxmox 8.2.2 SDN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html) ([Software Defined Networking](https://en.wikipedia.org/wiki/Software-defined_networking)). I would also like to be able to test some Ceph Cluster configuration changes that are risky as well. I do not want to do it on my semi-production Proxmox 8.2.2 Ceph enabled Cluster that I have mentioned in earlier posts. With 55TiB of raw storage and 29TiB of it loaded up with content, that would be painful to rebuild or reload if I made a mistake during my testing of SDN or Ceph capabilies.
+I want a place to test and try out new features and capabilities in [Proxmox 8.2.2 SDN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html) ([Software Defined Networking](https://en.wikipedia.org/wiki/Software-defined_networking)). I would also like to be able to test some Ceph Cluster configuration changes that are risky as well. I do not want to do it on my semi-production Proxmox 8.2.2 Ceph enabled Cluster that I have mentioned in earlier posts. With 55TiB of raw storage and 29TiB of it loaded up with content, that would be painful to rebuild or reload if I made a mistake during my testing of SDN or Ceph capabilities.
 
 [![Test in Prod, what could go wrong?](/assets/images/what-could-go-wrong.jpg){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/what-could-go-wrong.jpg){:target="_blank"}
 
@@ -18,7 +18,7 @@ Also fortunately, I happen to have an extra three (3) [Dell Wyse 3040s](https://
 
 For an extra bit of fun, I added three (3) [Amazon Basics USB 3.0 to 10/100/1000 Gigabit Ethernet Internet Adapter](https://amzn.to/3ybtOUw) so I can have more than a single network interfaces to make testing more expansive and interesting. I also scrounged around and pulled out three old 8GB USB2 Thumbdrives from an old box to use as the Ceph OSD media and then found a three pack of [SanDisk 32GB 3-Pack Ultra Fit USB 3.1 Flash Drive (3x32GB)](https://amzn.to/3YesqLq) for under $20 on Amazon to upgrade that Ceph storage and offers an opportunity to learn about transitioning between media in Ceph Clusters. I'd like to test moving an OSD that contains active data between nodes and recover it on the fly.
 
-One area I will probably miss options for testing are the shared or passthru IOMMU devices. From the ```lspci``` results below, I might be able to do something with the **iGPU** and the **Built-in NIC** and we can maybe do something with a **USB Device** as seen in the ```lsusb``` results. The SDIO Controller on some of the units have a Wifi card. I'm not sure what I can do there but I'll explore it later.
+One area I will probably miss options for testing are the shared or passthru IOMMU devices. From the ```lspci``` results below, I might be able to do something with the **iGPU** and the **Built-in NIC** and we can maybe do something with a **USB Device** as seen in the `lsusb` results. The SDIO Controller on some of the units have a Wifi card. I'm not sure what I can do there but I'll explore it later.
 
 ``` shell
 root@pve1:~# uname -a
@@ -57,7 +57,7 @@ root@pve1:~# lsusb -tv
         ID 0b95:1790 ASIX Electronics Corp. AX88179 Gigabit Ethernet
 ```
 
-The Wyse 3040 hardware specs of 2GB RAM, 8GB of eMMC storage, and 4-core Atom CPU are extremely limiting. The 2GB of RAM makes you think about every bit of additional CT/VM workload you are adding along with OS system services. The 6GB of available eMMC storage makes you consider each software package installed to the OS drive. So this makes the environment both frustrating and interesting at the same time. You really think about every bit of the system where on my main cluster I just install whatever and add however many CT or VM to a node.
+The Dell Wyse 3040 hardware specs of 2GB RAM, 8GB of eMMC storage, and 4-core Atom CPU are extremely limiting. The 2GB of RAM makes you think about every bit of additional CT/VM workload you are adding along with OS system services. The 6GB of available eMMC storage makes you consider each software package installed to the OS drive. So this makes the environment both frustrating and interesting at the same time. You really think about every bit of the system where on my main cluster I just install whatever and add however many CT or VM to a node.
 
 ## Debian 12 on Wyse 3040
 
@@ -67,9 +67,9 @@ You will need to read the earlier post [Debian 12 on Dell Wyse 3040s](/dell-wyse
 
 The [Proxmox Documentation Wiki](https://pve.proxmox.com/) has a page called [Install Proxmox VE on Debian 12 Bookworm](https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_Debian_12_Bookworm) that walks thru the steps to update a Debian 12 system to Proxmox 8. You should read and reference it when doing this process. It has more details on each step. I will note where the Dell Wyse 3040 has differences or minor issues I encountered as I run thru the steps I took to get my cluster running.
 
-Debian 12 likes to setup a user account (mine is just **mcgarrah**) and a **root** account that is separate. Proxmox only creates a **root** account and configures everything to use it. You will need to fix OpenSSH to allow **root** access if you want it to reflect a Proxmox system install. I also use the ```sudo``` command extensively which is not a norm with Proxmox.
+Debian 12 likes to setup a user account (mine is just **mcgarrah**) and a **root** account that is separate. Proxmox only creates a **root** account and configures everything to use it. You will need to fix OpenSSH to allow **root** access if you want it to reflect a Proxmox system install. I also use the `sudo` command extensively which is not a norm with Proxmox.
 
-To get to a **root** session on a default Debian 12 setup, you can login remotely via the user account, then run ```su -``` and enter the **root** password. You will now be in a **root** session.
+To get to a **root** session on a default Debian 12 setup, you can login remotely via the user account, then run `su -` and enter the **root** password. You will now be in a **root** session.
 
 ### Update Debian 12
 
@@ -150,7 +150,7 @@ mcgarrah@pve1:~$
 
 During the install, I picked "Local Only" for Postfix and regretted it later. YMMV.
 
-Later I found we were missing the ```ksmtuned```, ```dnsmasq``` and **FRR tools**.
+Later I found we were missing the `ksmtuned`, `dnsmasq` and **FRR tools**.
 
 ``` shell
 mcgarrah@pve1:~$ su -
@@ -161,7 +161,7 @@ root@pve1:~# exit
 mcgarrah@pve1:~$
 ```
 
-Adding ```ksmtuned``` enables Kernel Samepage Merging to help with memory utilization. Adding ```dnsmasq``` and **FRR Tools** are for DNS and routing support in SDN.
+Adding `ksmtuned` enables Kernel Samepage Merging to help with memory utilization. Adding `dnsmasq` and **FRR Tools** are for DNS and routing support in SDN.
 
 ### Remove Debian Kernel and OS-Prober
 
