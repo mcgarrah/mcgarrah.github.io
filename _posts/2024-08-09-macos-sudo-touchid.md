@@ -66,4 +66,3 @@ The excellent posts from *sixcolors* by Dan Moren
 - [Quick Tip: Enable Touch ID for sudo](https://sixcolors.com/post/2020/11/quick-tip-enable-touch-id-for-sudo/) before macOS Sonoma.
 
 [Touch ID on Mac in iTerm](https://apple.stackexchange.com/a/355880) had useful information needed.
-

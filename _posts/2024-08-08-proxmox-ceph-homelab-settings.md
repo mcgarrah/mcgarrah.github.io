@@ -1,7 +1,7 @@
 ---
 title:  "Proxmox Ceph settings for the Homelab"
 layout: post
-published: false
+published: true
 ---
 
 What is Ceph? Ceph is an open source software-defined storage system designed and built to address block, file and object storage needs for a modern homelab. [Proxmox Virtual Environment (PVE)](https://pve.proxmox.com/) makes creating and managing a [Hyper-Converged Ceph Cluster](https://pve.proxmox.com/pve-docs/chapter-pveceph.html) relatively easy for initially configuring and setting it up.
@@ -50,7 +50,7 @@ I am ignoring ~~randomizing the execution times~~, setting begin and end hours, 
 
 **`osd_deep_scrub_randomize_ratio`**
 : Default: 0.15 or 15%.
-: Description: The rate at which scrubs will randomly become deep scrubs (even before osd_deep_scrub_interval has past).  Note that this option has been around for awhile but not documented in the open source release very well. You can find it in RedHat and IBM docsets.
+: Description: The rate at which scrubs will randomly become deep scrubs (even before osd_deep_scrub_interval has past).  Note that this option has been around for awhile but not documented in the open source release very well. You can find it in RedHat and IBM documentation.
 : Code: [osd: randomize deep scrubbing](https://github.com/ceph/ceph/pull/6550/files#diff-dfb9ddca0a3ee32b266623e8fa489626R3247)
 
 ### Retrieve Current Defaults
@@ -101,42 +101,6 @@ Identify two numbers for your cluster:
 2. The total capacity of the cluster
 
 If you divide the total capacity of your cluster by the number of OSDs in your cluster, you will find the mean average capacity of an OSD within your cluster. Consider multiplying that number by the number of OSDs you expect will fail simultaneously during normal operations (a relatively small number). Finally multiply the capacity of the cluster by the full ratio to arrive at a maximum operating capacity; then, subtract the number of amount of data from the OSDs you expect to fail to arrive at a reasonable full ratio. Repeat the foregoing process with a higher number of OSD failures (e.g., a rack of OSDs) to arrive at a reasonable number for a near full ratio.
-
-### Performance
-
-TODO: SPIN this off to another POST.
-
-Why am I getting 10-16 MiB/s transfer rates on my USB 3.0 USB Hard Drives? I have a 1Gbps switch for the network transfer portion.
-
-USB 3.0 speed and media... https://qr.ae/p2NAQe https://qr.ae/p2NAdw
-
-[![Ceph Recovery and Rebalance](/assets/images/ceph-recovery-rebalance-homelab.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ceph-recovery-rebalance-homelab.png){:target="_blank"}
-
-```console
-root@harlan:~# ceph config dump
-WHO    MASK  LEVEL     OPTION                                             VALUE      RO
-mon          advanced  auth_allow_insecure_global_id_reclaim              false
-mgr          advanced  mgr/dashboard/PWD_POLICY_CHECK_COMPLEXITY_ENABLED  false      *
-mgr          advanced  mgr/dashboard/PWD_POLICY_ENABLED                   false      *
-mgr          advanced  mgr/dashboard/ssl                                  true       *
-osd.0        basic     osd_mclock_max_capacity_iops_hdd                   86.136079
-osd.1        basic     osd_mclock_max_capacity_iops_hdd                   87.204995
-osd.4        basic     osd_mclock_max_capacity_iops_hdd                   89.152214
-```
-
-```console
-root@harlan:~# ceph tell osd.0 bench 12288000 4096 4194304 100
-{
-    "bytes_written": 12288000,
-    "blocksize": 4096,
-    "elapsed_sec": 2.868101647,
-    "bytes_per_sec": 4284366.9828972416,
-    "iops": 1045.9880329338969
-}
-```
-
-I may have a bottle neck in performance on the first node in hte ceph cluster.
-
 
 ### Reference
 
