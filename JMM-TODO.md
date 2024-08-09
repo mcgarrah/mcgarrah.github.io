@@ -1,3 +1,29 @@
+Google
+    https://search.google.com/search-console?resource_id=sc-domain%3Amcgarrah.org
+    https://analytics.google.com/analytics/web/#/p453618033/reports/intelligenthome
+    https://www.google.com/adsense/new/u/0/pub-2421538118074948/onboarding
+
+Comments for engagement is important
+Search on site is important
+
+https://jekyllcodex.org/without-plugins/
+    https://jekyllcodex.org/without-plugin/search-google/#
+
+    https://jekyllcodex.org/without-plugin/comments/
+        https://jekyllcodex.org/blog/gdpr-compliant-comment/
+        https://www.aleksandrhovhannisyan.com/blog/jekyll-comment-system-github-issues/
+        https://github.com/giscus/giscus/blob/main/SELF-HOSTING.md
+            https://bartoszgorka.com/github-discussion-comments-for-jekyll-blog
+        https://github.com/utterance/utterances
+    https://aristath.github.io/blog/static-site-comments-using-github-issues-api
+
+    https://jekyllcodex.org/without-plugin/reading-time-indicator/
+    https://jekyllcodex.org/without-plugin/cookie-consent/
+    https://jekyllcodex.org/without-plugin/breadcrumbs/
+    https://jekyllcodex.org/without-plugin/seo/#
+    https://jekyllcodex.org/without-plugin/share-buttons/#
+    https://jekyllcodex.org/without-plugin/text-expand/#
+
 
 Jekyll Plugins
     https://jekyllrb.com/docs/plugins/your-first-plugin/
