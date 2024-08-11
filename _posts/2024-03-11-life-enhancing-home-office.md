@@ -4,7 +4,7 @@ layout: post
 published: true
 ---
 
-Recently, I have been bouncing between my two home office spaces, hotels and an occasional visit to a cubical in my companies building. My home office spaces are nicely equiped with dual 28" or larger monitors (which I'll post about later), full office desks. I went overboard on some really nice high-end office chairs years ago as a business I worked for went under and sold off equipment and furniture. So my home office space is often nicer than what is provided at most businesses.
+Recently, I have been bouncing between my two home office spaces, hotels and an occasional visit to a cubical in my companies building. My home office spaces are nicely equipped with dual 28" or larger monitors (which I'll post about later), full office desks. I went overboard on some really nice high-end office chairs years ago as a business I worked for went under and sold off equipment and furniture. So my home office space is often nicer than what is provided at most businesses.
 
 [![Wheels](/assets/images/office-chair-wheels.png){:width="25%" height="25%"}](/assets/images/office-chair-wheels.png){:target="_blank"}
 [![Arms](/assets/images/office-chair-arms.png){:width="32%" height="32%"}](/assets/images/office-chair-arms.png){:target="_blank"}
@@ -15,9 +15,9 @@ That said, I recently found a couple items that while seemingly trivial were rea
 
 You could pickup the wheels at Lowe's Home Improvement for $40 or more which is were I got the original idea for swapping them out. They are in the furniture parts area last check. I of course, checked on Amazon found them for about $25 with a pretty good rating. The arm rests were something I have been thinking about for awhile but could not find ones that fit. These looked like something to try out and see as well.
 
-## Affilitate Links
+## Affiliate Links
 
-So while doing this I'm also learning about [Amazon Affilitate Links](https://affiliate-program.amazon.com/) and their program for small monitization of purchases by folks that like my write up here. If you use these Amazon Affiliate Links below that I get a small bit of money towards a gift card. I figure it was something to learn about and maybe buy something fun.
+So while doing this I'm also learning about [Amazon Affiliate Links](https://affiliate-program.amazon.com/) and their program for small monetization of purchases by folks that like my write up here. If you use these Amazon Affiliate Links below that I get a small bit of money towards a gift card. I figure it was something to learn about and maybe buy something fun.
 
 These products were bought with my own money and I have no affiliation with the vendors below. I just liked their products and had a good experience with them.
 

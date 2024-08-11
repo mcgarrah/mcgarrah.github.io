@@ -4,7 +4,7 @@ layout: post
 categories: technical
 ---
 
-This is a very old set of notes but might be useful for a developer dealling with Microsoft Visual Studio 6.0 for DOS and Windows 16-bit coding. This is from the era of Borland and Zortech Compilers being in play. I migrated this from my darkmagic.org website.
+This is a very old set of notes but might be useful for a developer dealing with Microsoft Visual Studio 6.0 for DOS and Windows 16-bit coding. This is from the era of Borland and Zortech Compilers being in play. I migrated this from my defunct [darkmagic.org](https://darkmagic.org) website.
 
 <!-- excerpt-end -->
 
@@ -42,7 +42,7 @@ For VC++ 5.0 vcspawn.exe, you can do the same type of change at address 0x0e49, 
 
 For VC++ 4.2b vcspawn.exe, you can do the same type of change at address 0x0d24, changing the byte from 00 to 40.
 
-JMM: There was some talk on a forum about writing a replacement program for vcspawn.exe that would execute the Microsoft vcspawn.exe program but run at a lower priority. This program would just have to forward the commandline and execute vcspawn.exe. Don't see what would be so hard about it except for possible problems with process ID numbers of vcspawn versus the custom vcspawn.
+JMM: There was some talk on a forum about writing a replacement program for vcspawn.exe that would execute the Microsoft vcspawn.exe program but run at a lower priority. This program would just have to forward the command line and execute vcspawn.exe. Don't see what would be so hard about it except for possible problems with process ID numbers of vcspawn versus the custom vcspawn.
 
 JMM: I have the old code for ShellEx.exe that I wrote from my Ziff-Davis days that might give me a quick leg up on the work. There were additional issues that were solved by that code for Win31 environments.
 
@@ -52,7 +52,7 @@ JMM: I have the old code for ShellEx.exe that I wrote from my Ziff-Davis days th
 
 Article was written by Michael McGarrah
 
-Tired of BASETSD.H being added as a dependacy of every project. Add it to the x:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin\Sysincl.dat file and it will no longer be listed as a dependancy.
+Tired of BASETSD.H being added as a dependency of every project. Add it to the x:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin\Sysincl.dat file and it will no longer be listed as a dependency.
 
 ---
 
@@ -60,7 +60,7 @@ Tired of BASETSD.H being added as a dependacy of every project. Add it to the x:
 
 Article was written by Michael McGarrah
 
-Below are some modifications to x:\Program Files\Microsoft Visual Studio\VC98\Include\Xstring that remove a persistant warning for a unit to int conversion. Check for the lines with JMMFIX and add them.
+Below are some modifications to x:\Program Files\Microsoft Visual Studio\VC98\Include\Xstring that remove a persistent warning for a unit to int conversion. Check for the lines with JMMFIX and add them.
 
 ```C
 // xstring internal header (from <string>)

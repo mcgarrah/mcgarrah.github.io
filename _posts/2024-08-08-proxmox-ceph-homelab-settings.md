@@ -36,13 +36,13 @@ To reduce the impact on our cluster, we can try both scheduling **scrubbing** an
 
 I am ignoring ~~randomizing the execution times~~, setting begin and end hours, and sleep periods. I just want this to be spread out over a longer period of time and reduce wear on the *spinning rust* hard drives.
 
-**[`osd_scrub_min_interval`](https://docs.ceph.com/en/reef/rados/configuration/osd-config-ref/#confval-osd_scrub_min_interval)** 
+**[`osd_scrub_min_interval`](https://docs.ceph.com/en/reef/rados/configuration/osd-config-ref/#confval-osd_scrub_min_interval)**
 : Default: 86400 (1 day)
 : Description: The minimal interval in seconds for scrubbing the Ceph OSD Daemon when the Ceph Storage Cluster load is low.
 
 **[`osd_scrub_interval_randomize_ratio`](https://docs.ceph.com/en/reef/rados/configuration/osd-config-ref/#confval-osd_scrub_interval_randomize_ratio)**
 : Default: 0.5 (1/2 day)
-: Description: Add a random delay to `osd_scrub_min_interval` when scheduling the next scrub job for a PG. The delay is a random value less than `osd_scrub_min_interval` * `osd_scrub_interval_randomized_ratio`. The default setting spreads scrubs throughout the allowed time window of `[1, 1.5]` * `osd_scrub_min_interval`.
+: Description: Add a random delay to `osd_scrub_min_interval` when scheduling the next scrub job for a PG. The delay is a random value less than `osd_scrub_min_interval` \* `osd_scrub_interval_randomized_ratio`. The default setting spreads scrubs throughout the allowed time window of `[1, 1.5]` \* `osd_scrub_min_interval`.
 
 **[`osd_deep_scrub_interval`](https://docs.ceph.com/en/reef/rados/configuration/osd-config-ref/#confval-osd_deep_scrub_interval)**
 : Default: 604800 (7 days)

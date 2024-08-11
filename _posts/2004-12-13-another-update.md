@@ -5,7 +5,7 @@ layout: post
 
 ## TabletPC Research
 
-Been digging into Windows Tablet PC and have a copy of the most upto date SDK on CD. Been digging around the 2002 edition and it's strange stuff. Finding it either incredible detailed or very vague. I may just "not be getting" it yet. Won't be the first time and not having a TabletPC to work with probably isn't helping. Something popped and a friend of mine has a Tablet PC that they want help learning to use. So I've got a place to test out things once I build the test framework built.
+Been digging into Windows Tablet PC and have a copy of the most up to date SDK on CD. Been digging around the 2002 edition and it's strange stuff. Finding it either incredible detailed or very vague. I may just "not be getting" it yet. Won't be the first time and not having a TabletPC to work with probably isn't helping. Something popped and a friend of mine has a Tablet PC that they want help learning to use. So I've got a place to test out things once I build the test framework built.
 
 ## Job related news
 

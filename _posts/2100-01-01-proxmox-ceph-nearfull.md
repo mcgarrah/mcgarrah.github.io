@@ -13,11 +13,12 @@ full_ratio 0.95
 backfillfull_ratio 0.9
 nearfull_ratio 0.85
 ```
+
 By default, when OSDs reach 85% capacity, `nearfull_ratio` warning is triggered.
 
 By default when OSDs reach 90% capacity, `backfillfull_ratio` warning is triggered.  At this point the cluster will deny backfilling to the OSD in question.
 
-By default when OSDs reach 95% capacity, `full_ratio` is triggered, all PGs (Placement Groups) on the OSDs in question will be marked Read Only, as well as all pools which are associated with the PGs on the OSD. The cluster is marked Read Only, to prevent corruption from occurring.    
+By default when OSDs reach 95% capacity, `full_ratio` is triggered, all PGs (Placement Groups) on the OSDs in question will be marked Read Only, as well as all pools which are associated with the PGs on the OSD. The cluster is marked Read Only, to prevent corruption from occurring.
 
 These settings are changed in the OSDMap using `ceph osd set-nearfull-ratio` and `ceph osd set-full-ratio` and are to be determined based on your specific configuration.
 

@@ -14,16 +14,16 @@ I have a couple YouTube videos, a conference presentation and some code from tha
 
 Part of the problem was trying to figure out the best way to get a relatively static website up and running that would not take too much effort to maintain and manage. Analysis paralysis took over for awhile as I looked into serverless options and various hosting providers.
 
-At one point, I considered building a WordPress site again on a Digital Ocean droplet but I was facinated with the whole static website generated from YAML or MarkDown files
+At one point, I considered building a WordPress site again on a Digital Ocean droplet but I was fascinated with the whole static website generated from YAML or MarkDown files
 but it seemed limited or challenging to maintain. After recently taking a quick
 Jekyll online lesson on Github and doing some digging around, this seemed like a
 path forward that offers a lot of options. This requires learning from gray areas
 of development I've avoided but I'm coming up to speed on this stuff which is a
 good thing.
 
-The Github Actions component of this website build is facinating and I'm still
+The Github Actions component of this website build is fascinating and I'm still
 wrapping my brain around what I can do with it. I did some side project work on
-OpenLens custom builds for awhile to support a work initative and it was very
+OpenLens custom builds for awhile to support a work imitative and it was very
 powerful.
 
 So I've dug out my old WordPress website archives, some articles from my Google Blogging and even older archives for DarkMagic.org that includes

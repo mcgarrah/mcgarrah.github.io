@@ -22,7 +22,7 @@ Thus my first jerry-rigged attempt at replacing the CMOS batteries was just usin
 
 Below are some pictures of the process. You will need CR2032 batteries, some ~39/64" heat shrink, a heat source, double sided mounting tape, and a pair of needle-nose like plyers to do this.
 
-Some of the Investory and Costs
+Some of the Inventory and Costs
 
 | Price | Description / Link |
 | -----:| ------- |

@@ -25,8 +25,7 @@ My understanding of network bonding is that you cannot exceed the link speed of 
 However, connections are now split between the two interfaces. If you were to have two connections running from server A to server B, then the connections shouldn't start bottle-necking each other as far as bandwidth goes because they will be traveling across different interfaces. Your total bandwidth using multiple connections should be 2Gb/s, but each connection will be limited to a maximum of 1Gb/s.
 
 [ServerFault Article](https://serverfault.com/questions/569060/link-aggregation-lacp-802-3ad-max-throughput/569125#569125)
-    
+
 A quick and dirty explanation is that a single line of communication using LACP will not split packets over multiple interfaces. For example, if you have a single TCP connection streaming packets from HostA to HostB it will not span interfaces to send those packets. I've been looking at LACP a lot here lately for a solution we are working on and this is a common misconception that 'bonding' or 'trunking' multiple network interfaces with LACP gives you a "throughput" of the combined interfaces. Some vendors have made proprietary drivers that will route over multiple interfaces but the LACP standard does not from what I've read. Here's a link to a decent diagram and explanation I found from HP while searching on similar issues: http://www.hp.com/rnd/library/pdf/59692372.pdf
 
 https://community.hpe.com/t5/aruba-provision-based/procurve-2810-24g-trunking-lacp-setup-for-newbie/td-p/5899089
-
