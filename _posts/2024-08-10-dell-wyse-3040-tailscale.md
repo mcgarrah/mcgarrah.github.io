@@ -14,7 +14,7 @@ For this install I will assume you have read the earlier post [Debian 12 on Dell
 
 - I also in the BIOS set these up to automatically startup every night at 2:00am in case they shutdown.
 - I also in the BIOS configure them to always Power-On after restart.
-- I have also found that setting a 5-second delay in the BIOS bootup seems to help them as well.
+- I have also found that setting a 5-second delay in the BIOS boot sequence seems to help them as well.
 
 I would recommend you also update your CMOS battery maybe using the post [Dell Wyse 3040 CMOS CR2032 Battery Replacement](/dell-wyse-3040-cmos-battery/) to make sure the units stay up and running.
 
@@ -93,6 +93,7 @@ wyse3040-ral.tailca1b2.ts.net
 100.118.211.111
 
 ```
+
 ## Configure Tailscale
 
 These are some steps post-installation that I've standardized for my systems that might be useful for you.

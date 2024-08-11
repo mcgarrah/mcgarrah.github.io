@@ -53,7 +53,7 @@ brew install pam-reattach
 
 ### iTerm2
 
-[Touch ID on Mac in iTerm](https://apple.stackexchange.com/questions/259093/can-touch-id-on-mac-authenticate-sudo-in-terminal/355880#355880) has some configuration settings that you will need to change. 
+[Touch ID on Mac in iTerm](https://apple.stackexchange.com/questions/259093/can-touch-id-on-mac-authenticate-sudo-in-terminal/355880#355880) has some configuration settings that you will need to change.
 **iTerm2 -> Preferences -> Advanced -> (Goto the Session heading) -> Allow sessions** and change from "Yes" to "No".
 
 [![macOS iTerm2 dialog](/assets/images/macos-iterm2-sudo.png "macOS iTerm2 dialog"){:width="55%" height="55%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/macos-iterm2-sudo.png){:target="_blank"}
