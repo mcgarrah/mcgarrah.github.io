@@ -1,3 +1,5 @@
+
+
 Google
     https://search.google.com/search-console?resource_id=sc-domain%3Amcgarrah.org
     https://analytics.google.com/analytics/web/#/p453618033/reports/intelligenthome
@@ -42,7 +44,28 @@ Jekyll Plugins
     https://github.com/jekyll/jekyll-admin
     https://github.com/erikw/jekyll-google_search_console_verification_file
 
-Merge the Jekyll-Plugin branch to main
+~~Merge the Jekyll-Plugin branch to main~~
+
+➜  mcgarrah.github.io git:(main) ✗ grep "^\*\[" _posts/*.md | cut -d":" -f 2- | sort | uniq
+*[BIOS]: Basic Input/Output System, is a type of firmware that is embedded in a computer motherboard and is responsible for starting up the system.
+*[CLI]: command line interface
+*[CMOS]: Complementary Metal-Oxide-Semiconductor - A CMOS chip stores the settings like date & time, fan speed, booting sequence.
+*[CT]: Container
+*[DVI]: Digital Visual Interface
+*[Gbps]: Gigabits per second is a unit of measurement for data transfer rate. Typically used to describe internet speed or the capacity of network connections.
+*[HA]: High Availability
+*[IOMMU]: Input-Output Memory Management Unit
+*[ISP]: Internet Service Provider which is a company that provides customers access to the internet.
+*[JNLP]: Java Network Launch Protocol
+*[NIC]: Network Interface Card is a component of a computer that connects it to the network.
+*[NPAPI]: Netscape Plugin Application Programming Interface
+*[PVE]: Proxmox Virtual Environment
+*[SDN]: Software Defined Networking
+*[VM]: Virtual Machine
+*[WSLv2]: Windows Subsystem for Linux
+*[eMMC]: embedded MultiMediaCard (embedded flash memory)
+*[lede]: introductory section in journalism
+➜  mcgarrah.github.io git:(main) ✗                                  
 
 As part of the VPN solution:
     Turn off DHCP on Google WiFi to use another DHCP Server

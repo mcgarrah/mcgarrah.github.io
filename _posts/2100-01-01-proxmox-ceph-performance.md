@@ -14,6 +14,8 @@ Why am I getting 10-16 MiB/s transfer rates on my USB 3.0 USB Hard Drives? I hav
 
 USB 3.0 speed and media... https://qr.ae/p2NAQe https://qr.ae/p2NAdw
 
+The difference between USB 3.0, 3.1, and 3.2 is that USB 3.0 is 5Gb/s, USB 3.1 is 10Gb/s, and USB 3.2 is the fastest at 20Gb/s. You may have seen them branded as SuperSpeed USB 5Gbps/10Gbps/20Gbps.
+
 [![Ceph Recovery and Rebalance](/assets/images/ceph-recovery-rebalance-homelab.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ceph-recovery-rebalance-homelab.png){:target="_blank"}
 
 #### mclock iops
@@ -51,6 +53,31 @@ The second could have been when I overloaded the cluster with content and had th
 
 Lastly, I might have setup a subpar interface for the hard drives that was exceptionally slow and then fixed it.
 
+---
+
+On the node PVE1 of the test cluster with limited performance...
+
+```console
+root@pve1:~# ceph tell osd.0 bench 12288000 4096 4194304 100
+{
+    "bytes_written": 12288000,
+    "blocksize": 4096,
+    "elapsed_sec": 18.758997973,
+    "bytes_per_sec": 655045.64890332799,
+    "iops": 159.92325412678906
+}
+root@pve1:~# ceph config dump
+WHO     MASK  LEVEL     OPTION                                 VALUE           RO
+global        advanced  osd_deep_scrub_interval                2419200.000000    
+global        advanced  osd_scrub_interval_randomize_ratio     7.000000          
+global        advanced  osd_scrub_max_interval                 1209600.000000    
+global        advanced  osd_scrub_min_interval                 86400.000000      
+mon           advanced  auth_allow_insecure_global_id_reclaim  false             
+osd.0         basic     osd_mclock_max_capacity_iops_hdd       194.542100        
+osd.1         basic     osd_mclock_max_capacity_iops_hdd       192.359779        
+osd.2         basic     osd_mclock_max_capacity_iops_hdd       205.899236        
+root@pve1:~# 
+```
 
 #### [IOSTAT](https://docs.ceph.com/en/latest/mgr/iostat/)
 
