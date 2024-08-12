@@ -4,16 +4,96 @@ permalink: "/about/"
 layout: page
 ---
 
-Hello, my name is Michael McGarrah and I am a technologist at heart. This is my hobby and personal website combination.
+## Installation
 
-My [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/) page cover my professional career. For insanely detailed version you can go [here](/resume/print). I have been fortunate by having very diverse professional experiences. I attended both [NC State University](https://www.ncsu.edu/) for my [Bachelors of Science in Computer Science](https://www.csc.ncsu.edu/) and later the [Georgia Institution of Technology](https://www.gatech.edu/) for my [Masters of Science in Computer Science](https://www.cc.gatech.edu/) with a focus in [Interactive Intelligence](https://omscs.gatech.edu/specialization-interactive-intelligence) the new name for Artificial Intelligence and Machine Learning. My research areas included perception systems, natural language processing, and computer vision using Machine Learning.
+Just fork this [repository](https://github.com/niklasbuschmann/contrast) and adjust the `_config.yml` to use with [Github Pages](https://pages.github.com/) and your page is done.
 
-I am primarily working in Cloud Architecture for enterprise infrastructure with a mixture of Machine Learning or other domain expertise I have picked up over the years. I'm a jack of all trades and master of some. Part of what makes my jobs interesting is gathering up domain expertise in lots of areas.
+## Features
 
-On the personal side, I am married with two great kids. I recently have a grandson who keeps me on the move. [My wife](https://www.linkedin.com/in/lynnmcgarrah/) is also in computing as a programmer and database analyst. She is wonderful and keeps me both sane and grounded. My son is a computer science major and daughter is an industrial engineer in the aerospace industry. We are a technical family. Computers vastly outnumber people in our households.
+ - supports dark mode on macOS Mojave
+ - optional sidebar
+ - MathJax support
+ - no external ressources
+ - included archive page
+ - supports pagination
+ - feed generation
+ - responsive
+ - syntax highlighting
+ - supports comments via [disqus](https://disqus.com/) or [isso](http://posativ.org/isso/)
 
-I have two brothers, one of whom was a computer professional and worked for a major distribution company. My other brother is in the medical profession for the military. My father is a retired Lt. Colonel in the United States Army and mom is a home maker.
+## Based on
 
-You can review our [Privacy Policy](/privacy/) at your convenience.
+- [Hyde](https://github.com/poole/hyde)
+- [Minima](https://github.com/jekyll/minima)
+- [Lagrange](https://github.com/LeNPaul/Lagrange)
+- [Font Awesome](http://fontawesome.io/)
+- [KaTeX](https://katex.org/)
+- [Pygments](https://github.com/richleland/pygments-css)
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwww.mcgarrah.org%2Fabout%2F&count_bg=%2314285C&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+## Installation (jekyll-remote-theme method)
+
+You can use this theme with the `jekyll-remote-theme` plugin. Just create an empty repo, copy over the `index.html` file and add this to your `_config.yml`:
+
+```yaml
+remote_theme: niklasbuschmann/contrast@v2.11
+
+plugins:
+  - jekyll-remote-theme
+```
+
+Note: to enable icons you also need to copy over the `_data` folder.
+
+## Config
+
+Your `_config.yml` could for example look like this:
+
+```yaml
+title: "Blog Title"
+author: "Blog Author"
+description: "My personal blog about ... something"
+permalink: /:title/
+lang: "en"
+excerpt_separator: "\n\n\n"
+date_format: "%B %d, %Y"
+
+# Layout
+
+show_excerpts: true        # show article excerpts on the home page
+show_frame: true           # adds a gray frame to the site
+show_sidebar: false        # show a sidebar instead of the usual header
+
+# Menu
+
+navigation:                # accepts {file, title, url, icon, sidebaricon}
+  - {file: "index.html"}
+  - {file: "README.md"}
+
+external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
+  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
+  - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/contrast"}
+  - {title: Subscribe, icon: rss, url: "/feed.xml"}
+
+comments:
+#  disqus_shortname: ""    # see https://disqus.com/
+#  isso_domain: ""         # see https://posativ.org/isso/
+
+plugins:
+ - jekyll-feed
+
+```
+
+## MathJax
+
+Contrast comes preinstalled with a leightweight alternative to MathJax called [KaTeX](https://katex.org/). To display equations in a post simply set `mathjax: true` in the article's front matter.
+
+## License
+
+[public domain](http://unlicense.org/)
+
+## Screenshots
+
+![screenshot](https://user-images.githubusercontent.com/4943215/109431850-cd711780-7a08-11eb-8601-2763f2ee6bb4.png)
+
+![screenshot](https://user-images.githubusercontent.com/4943215/109431832-b6cac080-7a08-11eb-9c5e-a058680c23a1.png)
+
+![screenshot](https://user-images.githubusercontent.com/4943215/73125194-5f0b8b80-3fa4-11ea-805c-8387187503ad.png)
