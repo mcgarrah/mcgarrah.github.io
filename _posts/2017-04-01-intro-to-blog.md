@@ -1,12 +1,13 @@
 ---
 title: "Installation and Configuration of Blog"
 layout: post
-published: false
 ---
 
 ## Installation
 
 Just fork this [repository](https://github.com/niklasbuschmann/contrast) and adjust the `_config.yml` to use with [Github Pages](https://pages.github.com/) and your page is done.
+
+
 
 ## Features
 
