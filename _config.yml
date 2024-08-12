@@ -37,9 +37,6 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {file: "index.html"}
   - {file: "archive.html"}
   - {file: "README.md"}
-  # - {file: "index.html", icon: blog}
-  # - {file: "archive.html", icon: list}
-  # - {file: "README.md", icon: user}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
