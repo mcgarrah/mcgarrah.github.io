@@ -55,6 +55,7 @@ comments:
 #  disqus_shortname: ""    # see https://disqus.com/        - needs money or ad-verts
 #  isso_domain: ""         # see https://posativ.org/isso/  - python hosted service with sqlite (money for hosting server)
 
+# Make sure Gemfile has these in the plugin section
 plugins:
  - jekyll-feed             # used for RSS XML feed
  - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
