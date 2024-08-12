@@ -1,6 +1,7 @@
 ---
 title:  "HP ProCurve 2800 initial setup"
 layout: post
+tags: technical procurve networking
 published: true
 ---
 

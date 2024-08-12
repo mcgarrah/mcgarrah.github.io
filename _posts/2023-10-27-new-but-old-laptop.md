@@ -1,7 +1,7 @@
 ---
 title:  "A new to me but old laptop"
 layout: post
-categories: personal
+tags: technical thinkpad t480
 ---
 
 I've been using an older Lenovo Thinkpad T460p laptop that I bought brand new May 2017 for $2210 USD with a pretty impressive discount for the time. The Thinkpad T460p released April 2016 over a year earlier from when I bought it. I over bought on the CPU/processor and bought extra power adapters and batteries upfront. It has been a great laptop but starting to show its age and I've been looking for a new laptop with a little more pep. Older USB is starting to be limiting and I'd like to go beyond 32Gb RAM.

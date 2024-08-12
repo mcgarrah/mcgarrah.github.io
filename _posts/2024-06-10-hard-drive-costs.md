@@ -1,6 +1,7 @@
 ---
 title:  "Hard Drives for the Homelabs"
 layout: post
+tags: technical homelab storage
 published: true
 ---
 

@@ -1,6 +1,7 @@
 ---
 title:  "Dell Wyse 3040 CMOS CR2032 Battery Replacement"
 layout: post
+tags: technical wyse3040 cmos
 published: true
 ---
 

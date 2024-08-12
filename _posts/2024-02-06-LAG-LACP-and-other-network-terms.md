@@ -1,6 +1,7 @@
 ---
 title:  "Aggregated Network Connections with LAG/LACP"
 layout: post
+tags: technical networking lacp
 published: true
 ---
 

@@ -1,4 +1,14 @@
 
+
+Tags and Categories
+    https://longqian.me/2017/02/09/github-jekyll-tag/
+    https://www.untangled.dev/2020/06/02/tag-management-jekyll/
+    https://jekyllrb.com/docs/posts/#tags
+    https://github.com/pattex/jekyll-tagging
+
+SEO and Tags are related
+    https://github.com/jekyll/jekyll-seo-tag
+
 Scheduled builds with future dated posts
     https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
     Has anyone confirmed adding `future: true` to the config actually works? I can't get the posts to render locally unless I run the server with the `--future` flag set.

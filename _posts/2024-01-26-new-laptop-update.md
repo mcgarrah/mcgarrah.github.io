@@ -1,6 +1,7 @@
 ---
 title:  "New Laptop update"
 layout: post
+tags: technical thinkpad t480
 categories: personal
 ---
 

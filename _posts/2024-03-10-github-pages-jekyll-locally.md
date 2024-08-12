@@ -1,6 +1,7 @@
 ---
 title:  "Running Github Pages locally"
 layout: post
+tags: technical github_pages jekyll
 published: true
 ---
 

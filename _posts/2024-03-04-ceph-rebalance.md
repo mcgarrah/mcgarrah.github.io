@@ -1,6 +1,7 @@
 ---
 title:  "Ceph Cluster rebalance issue"
 layout: post
+tags: technical ceph proxmox
 published: true
 ---
 

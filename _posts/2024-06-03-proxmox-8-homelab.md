@@ -1,6 +1,7 @@
 ---
 title:  "ProxMox 8.2 for the Homelabs"
 layout: post
+tags: technical proxmox homelab
 published: true
 ---
 

@@ -1,6 +1,7 @@
 ---
 title:  "MacOS Touch ID for Sudo with TMUX and DisplayLink"
 layout: post
+tags: technical macos sudo
 published: true
 ---
 

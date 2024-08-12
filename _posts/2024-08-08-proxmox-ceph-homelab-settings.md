@@ -1,6 +1,7 @@
 ---
 title:  "Proxmox Ceph settings for the Homelab"
 layout: post
+tags: technical homelab proxmox ceph
 published: true
 ---
 

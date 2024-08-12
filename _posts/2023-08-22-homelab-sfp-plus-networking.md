@@ -1,6 +1,7 @@
 ---
 title:  "Buying a 10Gbps or higher network on a homelab budget"
 layout: post
+tags: technical networking homelab
 published: true
 ---
 

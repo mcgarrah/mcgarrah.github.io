@@ -1,6 +1,7 @@
 ---
 title:  "Life Enhancing Home Office Items"
 layout: post
+tags: personal
 published: true
 ---
 

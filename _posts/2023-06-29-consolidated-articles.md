@@ -2,6 +2,7 @@
 title:  "Along time between posts"
 layout: post
 categories: personal
+published: true
 ---
 
 So it's been quite awhile since I posted anything to any blog. I did post a couple updates as I did projects in grad school. The Wordpress site I used for this earlier died and was hosted on a VMware ESXi server in my homelab. I didn't have time to fix it while in school so no postings since mid-2016.

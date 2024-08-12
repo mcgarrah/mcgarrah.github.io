@@ -1,6 +1,7 @@
 ---
 title:  "Thinkpad T480 WWAN SSD"
 layout: post
+tags: technical thinkpad t480
 published: true
 ---
 

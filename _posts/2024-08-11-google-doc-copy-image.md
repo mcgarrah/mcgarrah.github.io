@@ -1,6 +1,7 @@
 ---
 title:  "Google Documents - copy an image"
 layout: post
+tags: technical
 published: true
 ---
 

@@ -1,6 +1,7 @@
 ---
 title:  "Tailscale on Dell Wyse 3040 with Debian 12"
 layout: post
+tags: technical debian wyse3040 tailscale
 published: true
 ---
 

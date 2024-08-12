@@ -1,6 +1,7 @@
 ---
 title:  "ProxMox 8.2.2 Cluster on Dell Wyse 3040s"
 layout: post
+tags: technical proxmox wyse3040
 published: true
 ---
 

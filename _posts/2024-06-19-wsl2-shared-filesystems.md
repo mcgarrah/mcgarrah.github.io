@@ -1,6 +1,7 @@
 ---
 title:  "Sharing file systems between WSLv2 instances"
 layout: post
+tags: technical wsl
 published: true
 ---
 
