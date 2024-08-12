@@ -1,4 +1,18 @@
+# Michael's ToDo List
 
+Github Comments for Jekyll Blog site
+    https://www.aleksandrhovhannisyan.com/blog/jekyll-comment-system-github-issues/
+
+Checking between upstream and clean branches in my Github
+    https://github.com/mcgarrah/mcgarrah.github.io/compare/upstream...mcgarrah:mcgarrah.github.io:clean?expand=1
+    Unfortunately, I have several changes all up in there at once...
+    I need to break these into separate Merge Requests
+    1. Pagination with archives in page counts
+    2. Jekyll upgrade to 4.3 (does this depend on #3)
+    3. New Github Action Workflow
+    4. Embedded features for sizing images
+    5. Conditional Google Analytics and Google Adsense
+    6. RSS Sitemaps
 
 Tags and Categories
     https://longqian.me/2017/02/09/github-jekyll-tag/
@@ -78,7 +92,7 @@ Jekyll Plugins
 *[WSLv2]: Windows Subsystem for Linux
 *[eMMC]: embedded MultiMediaCard (embedded flash memory)
 *[lede]: introductory section in journalism
-➜  mcgarrah.github.io git:(main) ✗                                  
+➜  mcgarrah.github.io git:(main) ✗
 
 As part of the VPN solution:
     Turn off DHCP on Google WiFi to use another DHCP Server
