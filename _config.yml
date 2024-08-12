@@ -6,15 +6,14 @@ excerpt_separator: "\n\n\n"
 
 # Page Settings
 date_format: "%B %d, %Y"
-permalink: /:title/
+#permalink: /:title/
 paginate: 4
 
 # Google Analytics
-google_analytics: G-F90DVB199P
+#google_analytics: G-F80DVB221P
 
 # Google Adsense
-google_adsense: ca-pub-2421538118074948
-
+#google_adsense: ca-pub-1234567890123456
 
 # Layout
 
