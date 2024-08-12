@@ -98,3 +98,7 @@ root@harlan:~# ceph iostat -p 5
 |                   0 B/s |                   0 B/s |                   0 B/s |                       0 |                       0 |                       0 |
 ^CInterrupted
 ```
+
+SCRIPT https://forum.proxmox.com/threads/ceph-uses-false-osd_mclock_max_capacity_iops_ssd-value.117382/post-521313
+https://docs.ceph.com/en/latest/rados/configuration/mclock-config-ref/#index-6
+https://www.ibm.com/docs/en/storage-ceph/7?topic=scheduler-ceph-osd-capacity-determination

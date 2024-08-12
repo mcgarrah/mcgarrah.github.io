@@ -1,4 +1,7 @@
 
+Scheduled builds with future dated posts
+    https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+    Has anyone confirmed adding `future: true` to the config actually works? I can't get the posts to render locally unless I run the server with the `--future` flag set.
 
 Google
     https://search.google.com/search-console?resource_id=sc-domain%3Amcgarrah.org
