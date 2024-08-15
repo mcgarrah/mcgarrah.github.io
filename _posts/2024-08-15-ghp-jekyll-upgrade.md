@@ -1,12 +1,18 @@
 ---
-title:  "NEXT POSTS for the Homelabs"
+title:  "Github Pages Upgrading Jekyll and Workflow"
 layout: post
 published: false
 ---
 
-Example of two images in grid with Titles below
+Summary
+
+Jekyll Theme from https://github.com/niklasbuschmann/contrast is really nice as a starting point for Jekyll on Github Pages.
+It was last updated on March 13 of 2021.
+
 
 <!-- excerpt-end -->
+
+Example of two images in grid with Titles below
 
 | ![](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png) | ![](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png) |
 |:--:|:--:|

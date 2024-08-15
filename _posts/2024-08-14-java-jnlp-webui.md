@@ -13,23 +13,25 @@ published: false
 
 A working HP ProCurve Java WebUI screenshot to show it works.
 
-[![Procurve WebUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png "Procurve Java WebUI"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
+[![ProCurve WebUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png "ProCurve Java WebUI"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
 
-My earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial configuration of a network switch and mentioned in passing that I got the Java WebUI working in a relatively safe manner. Here is how I put that together on a modern machine running Windows 10 Professional 64-bit.
+My earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial configuration of a network switch and mentioned in passing that I got the ProCurve Java WebUI working in a relatively safe manner. Here is how I put that together on a modern machine running Windows 10 Professional 64-bit.
+
+_**WARNING**_: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be _**hacked**_ without a doubt in seconds. These are completely unpatched versions of two _very_ _very_ old pieces of software.
 
 <!-- excerpt-end -->
 
 ## Summary
 
-Back in the day, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. This webui was never as powerful as the full console CLI but just a nice feature when debugging a network issue. It was also very useful to hand out to support folks for a quick an easy way to verify a switch or port on a switch was functional. I like quick and easy so I wanted this functionality back.
+Back in the day, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. This WebUI was never as powerful as the full console CLI but just a nice feature when debugging a network issue. It was also very useful to hand out to support folks for a quick an easy way to verify a switch or port on a switch was functional. I like quick and easy so I wanted this functionality back.
 
-Honestly, my first thoughts were to build a Virtual Machine using a Microsoft Windows 7 installation with that era of web-browser and java installed and use it to access the switches. After some consideration that seemed like a lot of work, was resource intensive and probably prone to issues cropping up with an incredibly old and unsupported OS. Thus entered the [PortableApps](https://portableapps.com/) idea to run an older isolated Web-browser and Java.
+Honestly, my first thoughts were to build a Virtual Machine using a Microsoft Windows 7 installation with that era of web-browser and java installed and use it to access the switches. After some consideration that seemed like a lot of work, was resource intensive and probably prone to issues cropping up with an incredibly old and unsupported OS. Thus entered the [PortableApps](https://portableapps.com/) idea to run an older isolated web browser and Java.
 
 ## History
 
 So now for some quick related history as to why we have this problem. You can skip down a section to avoid learning about it without any issues. Back in the early Internet there were a limited number of web-browsers. Netscape which later became FireFox was one the major players. They had a plugin system for their web-browser called [Netscape Plugin Application Programming Interface (NPAPI)](https://en.wikipedia.org/wiki/NPAPI) that you could use to enable things like [Macromedia Flash](https://en.wikipedia.org/wiki/Adobe_Flash), [Sun Java](https://en.wikipedia.org/wiki/Java_(software_platform)) (before Oracle), [Microsoft Silverlight](https://en.wikipedia.org/wiki/Microsoft_Silverlight) and other such extensions to the browser. This NPAPI capability was in most web-browsers until around 2015-2017 when it was removed due to security concerns. Other methods to handle support for custom content types evolved and became broadly supported. Thus the NPAPI depreciated leaving folks with java apps abandoned.
 
-HP ProCurve switches implemented a webui using Java Webstart that requires the Java Runtime Engine in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led me down this rabbit hole of an older web-browser and older Java Runtime that supports these switches webui. I picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the webui.
+HP ProCurve switches implemented a WebUI using Java Webstart that requires the Java Runtime Engine in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led me down this rabbit hole of an older web-browser and older Java Runtime that supports these switches WebUI. I picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the WebUI.
 
 ## Download Software
 
@@ -41,8 +43,8 @@ Here is the link to [Mozilla Firefox, Portable Ed.](https://sourceforge.net/proj
 
 For the directly links to the versions you need:
 
-* Direct Download Link --> [FirefoxPortable_51.0.1_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0.1/FirefoxPortable_51.0.1_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0.1_English.paf.exe))
-* Direct Download Link --> [jPortable_8_Update_121.paf.exe](https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_121.paf.exe/download) ([local](/assets/exes/jPortable_8_Update_121.paf.exe))
+* Direct Download Link --> [FirefoxPortable_51.0.1_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0.1/FirefoxPortable_51.0.1_English.paf.exe/download) (and [local](/assets/exes/FirefoxPortable_51.0.1_English.paf.exe))
+* Direct Download Link --> [jPortable_8_Update_121.paf.exe](https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_121.paf.exe/download) (and [local](/assets/exes/jPortable_8_Update_121.paf.exe))
 
 <!-- * [FirefoxPortable_51.0_English.paf.exe](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./Mozilla%20Firefox%2C%20Portable%20Edition%2051.0/FirefoxPortable_51.0_English.paf.exe/download) ([local](/assets/exes/FirefoxPortable_51.0_English.paf.exe)) -->
 
@@ -59,39 +61,77 @@ https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Porta
 https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_231_online.paf.exe/download *** likely works with 52.7.3 ***
 -->
 
-## Installing
+Pull down copies of these two files to your local system.
 
-**WARNING**: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be ***hacked*** without a doubt in seconds. These are completely unpatched versions of two very old pieces of software.
+## Install Software
 
+Install the Firefox web browser first then follow with hte Java Portable installation. Doing this in that order configures everything correctly.
 
-## Setup
+### Firefox install
 
-Getting the WebUI up and running is a very nice to have feature if I can get a web browser capable of Java Web Start (NPAPI) JNLP... And this [Web Browsers supporting NPAPI plugins like JAVA](https://www.reddit.com/r/homelab/comments/11afd0p/comment/k5j47cr/?utm_source=share&utm_medium=web2x&context=3) link seems to be a good starting point.
+Using the above downloaded files, install the "Mozilla Firefox, Portable Ed. version 51.0.1" on your local Windows system. I used all defaults.
 
-My first thoughts ran along the lines of a Windows 7 Pro virtual machine to run a really old version of the web browser but this seemed like a pile of work and prone to issues coming up. So I thought about PortableApps and remembered they had both Java and FireFox as supported applications. With that in mind, I started down the road to figuring out if this would work or not. Surprise, it worked but had a number of hurdles along the way that need documentation for future folks.
+[![procurve image](/assets/images/procurve-webui-install-001.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-001.png){:target="_blank"}
 
-https://portableapps.com/node/58831
-    If security is not an issue, and I recall correctly, some older versions were distributed complete and not as online installers. So you might be able to find what you want in the older files:
-    https://sourceforge.net/projects/portableapps/files/
+[![procurve image](/assets/images/procurve-webui-install-002.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-002.png){:target="_blank"}
 
+Notice that I changed my default install location from `"C:\Users\<username>\Downloads\Firefox_51.0.1_Portable"` to `"C:\PortableApps\FirefoxPortable"`. This is helpful later.
 
-PortableApps FireFox 51.0 NPAPI enabled version...
-    https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./
+[![procurve image](/assets/images/procurve-webui-install-003.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-003.png){:target="_blank"}
 
-Get the 32-bit versions as I pulled the 64-bit for both FireFox and JPortable which will not work.
-Note, there is only a 32/64 version of FireFox and you have to set a flag to only use the 32-bit version.
-Java on the other hand is 32 or 64-bit downloads
+[![procurve image](/assets/images/procurve-webui-install-004.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-004.png){:target="_blank"}
 
+[![procurve image](/assets/images/procurve-webui-install-005.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-005.png){:target="_blank"}
+
+This is the installed Firefox that I have setup at this point.
+
+### Java Portable install
+
+Using the above downloaded files, install the "Java Portable 32-bit version 8 update 121" on your local Windows system. I used all defaults.
+
+[![procurve image](/assets/images/procurve-webui-install-011.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-011.png){:target="_blank"}
+
+[![procurve image](/assets/images/procurve-webui-install-012.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-012.png){:target="_blank"}
+
+[![procurve image](/assets/images/procurve-webui-install-013.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-013.png){:target="_blank"}
+
+[![procurve image](/assets/images/procurve-webui-install-014.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-014.png){:target="_blank"}
+
+Default if you used above will be `C:\PortableApps\CommonFiles\Java`.
+
+[![procurve image](/assets/images/procurve-webui-install-015.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-015.png){:target="_blank"}
+
+[![procurve image](/assets/images/procurve-webui-install-016.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-016.png){:target="_blank"}
+
+[![procurve image](/assets/images/procurve-webui-install-017.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-017.png){:target="_blank"}
+
+This is the installed but not configured Java at this point.
+
+**Note**: In my testing, using the 64-bit versions did not work for various reasons I could not resolve. Use the 32-bit configuration and versions to reproduce my results.
+
+## Configure Software
+
+[![procurve image](/assets/images/procurve-webui-install-005.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-005.png){:target="_blank"}
+
+`"C:\PortableApps\FirefoxPortable\Other\Source\FirefoxPortable.ini"`
+
+[![procurve image](/assets/images/procurve-webui-install-017.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-017.png){:target="_blank"}
+
+ `C:\PortableApps\CommonFiles\Java`.
+
+<!-- 
 Java plugin doesn't work in Firefox Portable
 https://portableapps.com/node/57250
 
     I need to access a corporate application that has a web interface and a Java applet.
 
     I read that Firefox 52 and later don't allow the Java plugin anymore. So I installed Firefox Portable 51.0.1 into C:\users\username\Downloads\Firefox_51.0.1_Portable\FirefoxPortable. Then I copied the FirefoxPortable.ini file from the Other\Source directory and put it in the same directory as FirefoxPortable.exe. I edited the file to have the following:
+
 ```
     AllowMultipleInstances=true
     AlwaysUse32Bit=true
 ```
+
     Then I read that Java 8u131 and later don't allow MD5 signed jar files which the corporate application uses. So I installed the 32-bit version of JPortable 8u121 into C:\Users\username\Downloads\Firefox_51.0.1_Portable\CommonFiles\Java. (followed the instructions at https://portableapps.com/support/firefox_portable#plugins)
 
     I launched FirefoxPortable.exe, and checked the Tools->Add-ons->Plugins, and I saw that it had the Java(TM) Platform SE 8 U121 plugin. Looks like I installed everything correctly.
@@ -105,7 +145,9 @@ https://portableapps.com/node/57250
     I also went into the Java Control Panel, to the Security tab, made sure "High" was selected, and then added "https://www.java.com/" into the Exception Site List, but that didn't help.
 
     EDIT: I got it working. Somehow the "Enable Java content in the browser" box wasn't checked in the Security tab of the Java Control Panel, and also I needed to have the port number along with the URL in the Exception Site List.
+-->
 
+<!--
 Installing Plugins (Java, Flash, Shockwave, etc.)
 https://portableapps.com/support/firefox_portable#plugins
 
@@ -132,10 +174,11 @@ https://portableapps.com/support/firefox_portable#plugins
     Install the plugin in a local copy of Firefox (on your hard drive)
     Locate your plugins directory (usually C:\Program Files\Mozilla Firefox\plugins\)
     Copy the plugin you need from there to your FirefoxPortable\Data\plugins directory (Some Exmaples: For Flash, copy NPSWF32.dll... for Shockwave, copy np32dsw.dll)
-    Notes: It should be noted that Adobe Flash does *not* officially support running in any portable configuration. And, as it is a closed source application, we can neither modify it nor package it into a more portable-friendly installer. It should also be noted that it is illegal to redistribute either flash or shockwave without the full installer. -->
+    Notes: It should be noted that Adobe Flash does *not* officially support running in any portable configuration. And, as it is a closed source application, we can neither modify it nor package it into a more portable-friendly installer. It should also be noted that it is illegal to redistribute either flash or shockwave without the full installer. 
+-->
 
-
-<!-- From above:
+<!-- 
+From above:
     EDIT: I got it working. Somehow the "Enable Java content in the browser" box wasn't checked in the Security tab of the Java Control Panel, and also I needed to have the port number along with the URL in the Exception Site List.
 
     Here is the Java Control Panel from a PortableApp Installation of JPortable
@@ -144,7 +187,8 @@ https://portableapps.com/support/firefox_portable#plugins
     Open and pick the third tab "Security" then the checkbox at the top "Enable Java content in the browser (Only disabled for this user)" needs to be checked.
 
     I also added my URL of the switch by IP address to the Exception Site List as:
-        http://10.10.10.10 -->
+        http://10.10.10.10
+-->
 
 [![HP ProCurve 2810-24 Serial Console in PuTTY](/assets/images/hp-procurve-serial-console-putty.png){:width="50%" height="50%"}](/assets/images/hp-procurve-serial-console-putty.png){:target="_blank"}
 
@@ -174,12 +218,12 @@ AlwaysUse32Bit=true
 # This INI file is an example only and is not used unless it is placed as described in the included readme.txt
 {% endhighlight %}
 
-Lines 10 and 15,16 are the lines to be changed in the file. This file was placed in my ```C:\PortableApps\FirefoxPortable``` directory next to the ```FirefoxPortable.exe``` file. I installed all my PortableApps into ```C:\PortableApps```
+Lines 10 and 15,16 are the lines to be changed in the file. This file was placed in my `C:\PortableApps\FirefoxPortable` directory next to the `FirefoxPortable.exe` file. I installed all my PortableApps into `C:\PortableApps`
 
 [![FirefoxPortable Files](/assets/images/firefox-jnlp-file-location.png){:width="35%" height="35%"}](/assets/images/firefox-jnlp-file-location.png){:target="_blank"}
 
 You will need to run the Java Control Panel to enable
-```C:\PortableApps\CommonFiles\Java\bin```
+`C:\PortableApps\CommonFiles\Java\bin`
 
 [![Firefox Java Portable Files](/assets/images/firefox-java-cpl-location.png){:width="35%" height="35%"}](/assets/images/firefox-java-cpl-location.png){:target="_blank"}
 
@@ -193,14 +237,14 @@ You have to check the "Enable Java content in the browser" box in the Security t
     I also added my URL of the switch by IP address to the Exception Site List as:
         http://10.10.10.10
 
-
 [![Firefox Java Control Panel settings](/assets/images/firefox-java-cpl-security.png){:width="35%" height="35%"}](/assets/images/firefox-java-cpl-security.png){:target="_blank"}
 
 Those settings are stored in the text file at ```C:\Users\<username>\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites``` if you need to populate it with a longer list of IP Addresses. The star (*) format is untested. I've only tested with the "http://10.10.10.10" address entered.
 
-# References
+## References
 
 * [Java error with the HP ProCurve 2510-24 J9019B network switch web interface](https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface)
 * [Managing old Java switches?](https://www.reddit.com/r/sysadmin/comments/17a6jrg/managing_old_java_switches/)
 * [Accessing legacy webpages requering NPAPI Java plugin](https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md)
 * [ProCurve Switch J9021A needs Java](https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/)
+* [FireFox Portable - Installing Plugins (Java, Flash, Shockwave, etc.)](https://portableapps.com/support/firefox_portable#plugins)

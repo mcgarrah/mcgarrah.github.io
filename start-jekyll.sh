@@ -1,16 +1,16 @@
-# Setting up on Ubuntu 22.04 LTS
+# Setting up on Ubuntu 22.04 LTS / 24.04 LTS
 #
 # sudo apt -y install make build-essential ruby ruby-dev
 
 # Update ~/.bashrc and ~/.zshrc with this:
 #
 # # Ruby Jekyll Gems
-# if [ ! -d $HOME/gems ]; then
-#   mkdir $HOME/gems
+# if [ ! -d $HOME/.gems ]; then
+#   mkdir $HOME/.gems
 # fi
-# export GEM_HOME=$HOME/gems
-# export PATH=$HOME/gems/bin:$PATH
-#
+# export GEM_HOME=$HOME/.gems
+# export PATH=$HOME/.gems/bin:$PATH
+
 # gem install jekyll bundler
 # bundle install
 
@@ -23,7 +23,7 @@
 # Publisher: Dedsec727
 # VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run
 
-bundle exec jekyll serve
+# bundle exec jekyll serve
 
 # For Debug
 

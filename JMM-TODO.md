@@ -1,5 +1,8 @@
 # Michael's ToDo List
 
+https://devhints.io/jekyll
+
+
 Github Comments for Jekyll Blog site
     https://www.aleksandrhovhannisyan.com/blog/jekyll-comment-system-github-issues/
 
