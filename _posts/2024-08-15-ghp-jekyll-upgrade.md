@@ -9,8 +9,19 @@ Summary
 Jekyll Theme from https://github.com/niklasbuschmann/contrast is really nice as a starting point for Jekyll on Github Pages.
 It was last updated on March 13 of 2021.
 
-
 <!-- excerpt-end -->
+
+I have a `clean` branch that I'm getting down to just the basic changes I want to release back upstream to Niklas and his original template.
+
+I have an upstream branch that I synced with `master` from https://github.com/niklasbuschmann/contrast so I can check the difference between my `main` branch changes as well.
+
+```console
+➜  mcgarrah.github.io git:(main) git diff clean upstream
+```
+
+This is an interesting problem to solve for me since I have multiple changes in play.
+
+
 
 Example of two images in grid with Titles below
 
