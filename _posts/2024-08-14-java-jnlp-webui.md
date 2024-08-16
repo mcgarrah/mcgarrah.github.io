@@ -196,7 +196,7 @@ From above:
 
 [![FirefoxPortable.ini](/assets/images/firefox-jnlp-ini-file.png){:width="35%" height="35%"}](/assets/images/firefox-jnlp-ini-file.png){:target="_blank"}
 
-{% highlight ini linenos %}
+{% highlight ini linenos mark_lines="10 15 16" %}
 [FirefoxPortable]
 FirefoxDirectory=App\firefox
 ProfileDirectory=Data\profile
