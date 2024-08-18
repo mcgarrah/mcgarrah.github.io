@@ -1,7 +1,7 @@
 ---
 title:  "ZFS Boot Mirrors on Proxmox 8.2 for the Homelab - Part 1"
 layout: post
-published: true
+published: false
 ---
 
 From my earlier post [ProxMox 8.2 for the Homelabs](/proxmox-8-homelab/), I offhandedly mentioned that using the Proxmox ZFS boot drive mirrors saved my bacon a couple times. Me, not being a complete idiot, and having been burned multiple times in the past, setup email alerting for major failures including ZFS issues. Well we have disk number four of twelve dropping out of the race into a FAULTED state and I have to deal with recovering a boot mirror again. So I'm still ONLINE but in a DEGRADED state for the bootable ZFS pool for one of the nodes.
