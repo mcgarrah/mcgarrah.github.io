@@ -345,6 +345,9 @@ This is likely what I want to do when I get the new HDD physically installed to 
 McGarrah Google Docs [ZFS Mirror Disk Failure & Recovery](https://docs.google.com/document/d/1HZC7l1HJ5mHE6YmRkhHQyvYGMPtRPE5SDIZDBgg0t5E/edit?usp=sharing)
 
 ```console
+zpool remove rpool ata-ST9500325AS_5VE0S1MT
+zpool detach rpool ata-ST9500325AS_5VE0S1MT
+zpool status
 sfdisk -d /dev/sda | sfdisk /dev/sdc
 
 ```
