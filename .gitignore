@@ -7,3 +7,6 @@ _site
 *.gem
 bin
 vendor
+
+# For Weird WSLv2 issue
+*Zone.Identifier
