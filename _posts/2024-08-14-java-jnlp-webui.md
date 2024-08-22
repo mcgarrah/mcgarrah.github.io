@@ -4,20 +4,15 @@ layout: post
 published: false
 ---
 
-*[NPAPI]: Netscape Plugin Application Programming Interface
-*[JNLP]: Java Network Launch Protocol
-*[lede]: introductory section in journalism
-*[CLI]: command line interface
-
 > "Don't bury the lede"
 
-A working HP ProCurve Java WebUI screenshot to show it works.
+A working HP ProCurve Java WebUI screenshot to showing that I got it working.
 
 [![ProCurve WebUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png "ProCurve Java WebUI"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
 
 My earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discussed an initial configuration of a network switch and mentioned in passing that I got the ProCurve Java WebUI working in a relatively safe manner. Here is how I put that together on a modern machine running Windows 10 Professional 64-bit.
 
-_**WARNING**_: It should go without saying that you should not use the FireFox Web Browser we are setting up here for the very old Java Web App on the public internet. You will be _**hacked**_ without a doubt in seconds. These are completely unpatched versions of two _very_ _very_ old pieces of software.
+<sup><sub>_**WARNING**_: It should go without saying that you should not use the FireFox Web Browser from January 2017 that we are setting up here for the very old Java Web App supported on hardware released in 2004 and EOL in 2013 on the public internet. You will be _**hacked**_ without a doubt in seconds. These are completely unpatched versions of two _very_ **very** _**very**_ old pieces of software. You have been duly warned.</sub></sup>
 
 <!-- excerpt-end -->
 
@@ -31,7 +26,17 @@ Honestly, my first thoughts were to build a Virtual Machine using a Microsoft Wi
 
 So now for some quick related history as to why we have this problem. You can skip down a section to avoid learning about it without any issues. Back in the early Internet there were a limited number of web-browsers. Netscape which later became FireFox was one the major players. They had a plugin system for their web-browser called [Netscape Plugin Application Programming Interface (NPAPI)](https://en.wikipedia.org/wiki/NPAPI) that you could use to enable things like [Macromedia Flash](https://en.wikipedia.org/wiki/Adobe_Flash), [Sun Java](https://en.wikipedia.org/wiki/Java_(software_platform)) (before Oracle), [Microsoft Silverlight](https://en.wikipedia.org/wiki/Microsoft_Silverlight) and other such extensions to the browser. This NPAPI capability was in most web-browsers until around 2015-2017 when it was removed due to security concerns. Other methods to handle support for custom content types evolved and became broadly supported. Thus the NPAPI depreciated leaving folks with java apps abandoned.
 
-HP ProCurve switches implemented a WebUI using Java Webstart that requires the Java Runtime Engine in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led me down this rabbit hole of an older web-browser and older Java Runtime that supports these switches WebUI. I picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the WebUI.
+TODO: Explain JWS/Applet/ certs...
+
+The idea behind JWS (Java Web Start) and JNLP (Java Network Launching Protocol) was to use your web browser to download a small JNLP text file and passes the contents of the file as argument to the locally installed Java Web Start executable. The JWS would read the JNLP file contents, download the java application along with any dependencies and fire it up. This could fire up the java application as a Applet in the web browser or as a stand alone Java GUI Application.
+
+For our ProCurve case, this would be the Java Applet in the web browser.
+
+JWS initially just launched Java GUI Applications on your local machine using a local Java Runtime. Later it added support for launching java applets in web browsers. This caused lots of confusion as to what JWS was in play at any given point. More insanity ensures when you add certificate signing to various pieces of this hodge-podge. 
+
+Early versions of JWS allowed for self-signed certificates to sign your application. This was later removed and code signing certificates which costed serious money (a couple hundred USD) became a requirements for JWS. This was not a SSL/TLS certificate for your website but a code signing certificate. Those are completely separate certificates. So you Java Applet and your Java Application would both need to be signed. For fun, read up on JKS (Java Key Stores) if you have a chunk of free time. I was an expert at this at one time and blessedly no longer need to know it unless supporting very old software.
+
+HP ProCurve switches implemented a WebUI using Java Webstart that requires the Java Runtime Engine installed in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led me down this rabbit hole of an older web-browser and older Java Runtime that supports these switches WebUI. I picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the WebUI.
 
 ## Download Software
 
@@ -61,7 +66,9 @@ https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Porta
 https://sourceforge.net/projects/portableapps/files/Java%20Portable/jPortable_8_Update_231_online.paf.exe/download *** likely works with 52.7.3 ***
 -->
 
-Pull down copies of these two files to your local system.
+Pull down copies of these two files to your local system someplace you can find them to install in the next steps.
+
+_**Note**_: There is something called the "Extended Support Release (ESR)" of Firefox that claimed to maintain support for plugins thru "Firefox-ESR 52.7.3 (32-bit)" along with "Oracle Java Version 8 Update 231" version that might also be supportable but I have not tested them.
 
 ## Install Software
 
@@ -107,17 +114,34 @@ Default if you used above will be `C:\PortableApps\CommonFiles\Java`.
 
 This is the installed but not configured Java at this point.
 
-**Note**: In my testing, using the 64-bit versions did not work for various reasons I could not resolve. Use the 32-bit configuration and versions to reproduce my results.
+TODO: Fix below note with reason for 64-bit fails...
+
+**Note**: In my testing, using the 64-bit versions did not work for various reasons ~~~I could not resolve~~~ something about MD5 signed Java deployments. Use the 32-bit configuration and versions to reproduce my results.
 
 ## Configure Software
 
+You should have two installed PortableApps: CommonFiles/Java and Firefox. The next two sections will describe what we are doing to each and then a detailed set of steps for each.
+
+---
+
+To confirm the Firefox installation you should see something that looks like below.
+
 [![procurve image](/assets/images/procurve-webui-install-005.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-005.png){:target="_blank"}
 
-`"C:\PortableApps\FirefoxPortable\Other\Source\FirefoxPortable.ini"`
+We will be adding the file `C:\PortableApps\FirefoxPortable\Other\Source\FirefoxPortable.ini` to the location `C:\PortableApps\FirefoxPortable\` next to the `FirefoxPortable.exe` file and modifying it to run only in 32-bit mode and allow multiple instances of Firefox to run.
+
+---
+
+To confirm the PortableJava installation you should see something like this below.
 
 [![procurve image](/assets/images/procurve-webui-install-017.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-017.png){:target="_blank"}
 
- `C:\PortableApps\CommonFiles\Java`.
+You will run the Java Control Panel to configure for enabling java in the web browser and the website or IP address of switch allowed to run java applications.
+
+---
+
+### FirefoxPortable Configuration
+
 
 <!-- 
 Java plugin doesn't work in Firefox Portable
@@ -196,6 +220,33 @@ From above:
 
 [![FirefoxPortable.ini](/assets/images/firefox-jnlp-ini-file.png){:width="35%" height="35%"}](/assets/images/firefox-jnlp-ini-file.png){:target="_blank"}
 
+<details>
+<summary>Click to see fully INI file</summary>
+{% highlight ini linenos %}
+[FirefoxPortable]
+FirefoxDirectory=App\firefox
+ProfileDirectory=Data\profile
+SettingsDirectory=Data\settings
+PluginsDirectory=Data\plugins
+FirefoxExecutable=firefox.exe
+AdditionalParameters=
+LocalHomepage=
+DisableSplashScreen=false
+# AllowMultipleInstances=false
+DisableIntelligentStart=false
+SkipCompregFix=false
+RunLocally=false
+
+AllowMultipleInstances=true
+AlwaysUse32Bit=true
+
+# The above options are explained in the included readme.txt
+# This INI file is an example only and is not used unless it is placed as described in the included readme.txt
+{% endhighlight %}
+</details>
+
+<!-- With Jekyll 4.4 we have mark_lines available -->
+<!--
 {% highlight ini linenos mark_lines="10 15 16" %}
 [FirefoxPortable]
 FirefoxDirectory=App\firefox
@@ -217,10 +268,11 @@ AlwaysUse32Bit=true
 # The above options are explained in the included readme.txt
 # This INI file is an example only and is not used unless it is placed as described in the included readme.txt
 {% endhighlight %}
+-->
 
-Lines 10 and 15,16 are the lines to be changed in the file. This file was placed in my `C:\PortableApps\FirefoxPortable` directory next to the `FirefoxPortable.exe` file. I installed all my PortableApps into `C:\PortableApps`
+If your install mirrors mine with a root of `C:\PortableApps` then you can find the original file shown above in `C:\PortableApps\FirefoxPortable\Other\Source\FirefoxPortable.ini`. You will copy this file to `C:\PortableApps\FirefoxPortable` next to the `FirefoxPortable.exe` file and modify it with three changes. On lines 10 and 15, 16 modify the file to match entries to comment out `#AllowMultipleInstances=false` and add the two lines for `AllowMultipleInstances=true` and `AlwaysUse32Bit=true`.
 
-[![FirefoxPortable Files](/assets/images/firefox-jnlp-file-location.png){:width="35%" height="35%"}](/assets/images/firefox-jnlp-file-location.png){:target="_blank"}
+[![FirefoxPortable Files](/assets/images/firefox-jnlp-file-location.png){:width="55%" height="55%"}](/assets/images/firefox-jnlp-file-location.png){:target="_blank"}
 
 You will need to run the Java Control Panel to enable
 `C:\PortableApps\CommonFiles\Java\bin`
@@ -241,6 +293,22 @@ You have to check the "Enable Java content in the browser" box in the Security t
 
 Those settings are stored in the text file at ```C:\Users\<username>\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites``` if you need to populate it with a longer list of IP Addresses. The star (*) format is untested. I've only tested with the "http://10.10.10.10" address entered.
 
+## Working Interface
+
+| ![](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png) | ![](/assets/images/hp-procurve-serial-console-putty.png) |
+|:--:|:--:|
+| Java WebGUI | Serial Console |
+
+Pick your poison. I happen to like having both options available. The serial console has all the options and is easy to repeat the steps with code. The WebUI gives you a quick visual of what is happening and for some operations a quick way to make changes. 
+
+## Things I could have tried
+
+Try a modern or open source JWS called [OpenWebStart](https://github.com/karakun/OpenWebStart). I just dodged this entirely as I could see it being a time sink. Somebody else might want to try this.
+
+Using a Virtual Machine with an older OS and Web Browser of that era. Plenty of folks have done this in other places for applications. Heck I used this method to support a plasma injection molding system at a manufacturing job several years back. Definitely an option but more weight than I wanted.
+
+I could also have tried using the Firefox ESR (Extended Support Release) that kept the NSAPI support longer and kept it patched up longer. As I wasn't sure of when that release dumped NSAPI support, I just avoided it in this first test.
+
 ## References
 
 * [Java error with the HP ProCurve 2510-24 J9019B network switch web interface](https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface)
@@ -248,3 +316,9 @@ Those settings are stored in the text file at ```C:\Users\<username>\AppData\Loc
 * [Accessing legacy webpages requering NPAPI Java plugin](https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md)
 * [ProCurve Switch J9021A needs Java](https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/)
 * [FireFox Portable - Installing Plugins (Java, Flash, Shockwave, etc.)](https://portableapps.com/support/firefox_portable#plugins)
+
+*[NPAPI]: Netscape Plugin Application Programming Interface
+*[JWS]: Java Web Start
+*[JNLP]: Java Network Launch Protocol
+*[lede]: introductory section in journalism
+*[CLI]: command line interface

@@ -2,6 +2,7 @@
 
 https://devhints.io/jekyll
 
+Jekyll code copy to clipboard button - super handy if we can get this conditional
 
 Github Comments for Jekyll Blog site
     https://www.aleksandrhovhannisyan.com/blog/jekyll-comment-system-github-issues/
@@ -74,8 +75,9 @@ Jekyll Plugins
     https://github.com/jekyll/jekyll-admin
     https://github.com/erikw/jekyll-google_search_console_verification_file
 
-~~Merge the Jekyll-Plugin branch to main~~
+~~Merge the Jekyll-Plugin branch to main~~ DONE
 
+```
 ➜  mcgarrah.github.io git:(main) ✗ grep "^\*\[" _posts/*.md | cut -d":" -f 2- | sort | uniq
 *[BIOS]: Basic Input/Output System, is a type of firmware that is embedded in a computer motherboard and is responsible for starting up the system.
 *[CLI]: command line interface
@@ -96,6 +98,7 @@ Jekyll Plugins
 *[eMMC]: embedded MultiMediaCard (embedded flash memory)
 *[lede]: introductory section in journalism
 ➜  mcgarrah.github.io git:(main) ✗
+```
 
 As part of the VPN solution:
     Turn off DHCP on Google WiFi to use another DHCP Server
