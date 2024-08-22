@@ -32,7 +32,7 @@ The idea behind JWS (Java Web Start) and JNLP (Java Network Launching Protocol) 
 
 For our ProCurve case, this would be the Java Applet in the web browser.
 
-JWS initially just launched Java GUI Applications on your local machine using a local Java Runtime. Later it added support for launching java applets in web browsers. This caused lots of confusion as to what JWS was in play at any given point. More insanity ensures when you add certificate signing to various pieces of this hodge-podge. 
+JWS initially just launched Java GUI Applications on your local machine using a local Java Runtime. Later it added support for launching java applets in web browsers. This caused lots of confusion as to what JWS was in play at any given point. More insanity ensures when you add certificate signing to various pieces of this hodge-podge.
 
 Early versions of JWS allowed for self-signed certificates to sign your application. This was later removed and code signing certificates which costed serious money (a couple hundred USD) became a requirements for JWS. This was not a SSL/TLS certificate for your website but a code signing certificate. Those are completely separate certificates. So you Java Applet and your Java Application would both need to be signed. For fun, read up on JKS (Java Key Stores) if you have a chunk of free time. I was an expert at this at one time and blessedly no longer need to know it unless supporting very old software.
 
@@ -141,7 +141,6 @@ You will run the Java Control Panel to configure for enabling java in the web br
 ---
 
 ### FirefoxPortable Configuration
-
 
 <!-- 
 Java plugin doesn't work in Firefox Portable
@@ -295,11 +294,11 @@ Those settings are stored in the text file at ```C:\Users\<username>\AppData\Loc
 
 ## Working Interface
 
-| ![](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png) | ![](/assets/images/hp-procurve-serial-console-putty.png) |
+| ![Java WebGUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png) | ![Serial Console](/assets/images/hp-procurve-serial-console-putty.png) |
 |:--:|:--:|
 | Java WebGUI | Serial Console |
 
-Pick your poison. I happen to like having both options available. The serial console has all the options and is easy to repeat the steps with code. The WebUI gives you a quick visual of what is happening and for some operations a quick way to make changes. 
+Pick your poison. I happen to like having both options available. The serial console has all the options and is easy to repeat the steps with code. The WebUI gives you a quick visual of what is happening and for some operations a quick way to make changes.
 
 ## Things I could have tried
 

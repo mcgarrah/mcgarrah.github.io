@@ -331,6 +331,7 @@ SOME COMMAND RESULTS
 {% endhighlight %}
 </details>
 
+
 <details>
 <summary>Click to see below command details {% highlight console %}root@tanaka:~# SOME COMMAND{% endhighlight %}</summary>
 {% highlight console %}
