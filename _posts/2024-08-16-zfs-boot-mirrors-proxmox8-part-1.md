@@ -346,12 +346,541 @@ This is likely what I want to do when I get the new HDD physically installed to 
 McGarrah Google Docs [ZFS Mirror Disk Failure & Recovery](https://docs.google.com/document/d/1HZC7l1HJ5mHE6YmRkhHQyvYGMPtRPE5SDIZDBgg0t5E/edit?usp=sharing)
 
 ```console
-zpool remove rpool ata-ST9500325AS_5VE0S1MT
 zpool detach rpool ata-ST9500325AS_5VE0S1MT
 zpool status
 sfdisk -d /dev/sda | sfdisk /dev/sdc
+```
+
+Status after pulling the bad disk physically
+
+```console
+root@tanaka:~# zpool status
+  pool: rpool
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+        invalid.  Sufficient replicas exist for the pool to continue
+        functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J
+  scan: scrub repaired 0B in 00:01:30 with 0 errors on Sat Aug 17 16:27:50 2024
+config:
+
+        NAME                                                    STATE     READ WRITE CKSUM
+        rpool                                                   DEGRADED     0     0     0
+          mirror-0                                              DEGRADED     0     0     0
+            ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3  ONLINE       0     0     0
+            17972357130737311890                                UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST9500325AS_5VE0S1MT-part3
+
+errors: No known data errors
+root@tanaka:~# zpool detach rpool 17972357130737311890
+root@tanaka:~# zpool status
+  pool: rpool
+ state: ONLINE
+  scan: scrub repaired 0B in 00:01:30 with 0 errors on Sat Aug 17 16:27:50 2024
+config:
+
+        NAME                                                  STATE     READ WRITE CKSUM
+        rpool                                                 ONLINE       0     0     0
+          ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3  ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+Fix the boot
 
 ```
+root@tanaka:~# proxmox-boot-tool status
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+System currently booted with legacy bios
+1FDB-C48E is configured with: grub (versions: 6.8.12-1-pve, 6.8.4-3-pve)
+WARN: /dev/disk/by-uuid/1FDE-91BC does not exist - clean '/etc/kernel/proxmox-boot-uuids'! - skipping
+root@tanaka:~# proxmox-boot-tool clean
+Checking whether ESP '1FDB-C48E' exists.. Found!
+Checking whether ESP '1FDE-91BC' exists.. Not found!
+Sorting and removing duplicate ESPs..
+```
+
+How to find the new hard drive
+
+```
+root@tanaka:~# fdisk -l
+Disk /dev/sda: 465.76 GiB, 500107862016 bytes, 976773168 sectors
+Disk model: ST3500418AS     
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x412c7110
+
+Device     Boot     Start       End   Sectors   Size Id Type
+/dev/sda1  *         2048   1026047   1024000   500M  7 HPFS/NTFS/exFAT
+/dev/sda2         1026048 975787206 974761159 464.8G  7 HPFS/NTFS/exFAT
+/dev/sda3       975788032 976769023    980992   479M 27 Hidden NTFS WinRE
+
+
+Disk /dev/sdb: 2.73 TiB, 3000592982016 bytes, 5860533168 sectors
+Disk model: ST3000DM001-1CH1
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: EC398D2C-9604-4553-B4DC-38EB57AB3162
+
+
+Disk /dev/sdc: 465.76 GiB, 500107862016 bytes, 976773168 sectors
+Disk model: APPLE HDD HTS547
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: B61233E8-D407-4AF2-9958-55BB3A77E732
+
+Device       Start       End   Sectors   Size Type
+/dev/sdc1       34      2047      2014  1007K BIOS boot
+/dev/sdc2     2048   2099199   2097152     1G EFI System
+/dev/sdc3  2099200 976773134 974673935 464.8G Solaris /usr & Apple ZFS
+
+Partition 1 does not start on physical sector boundary.
+```
+
+```
+root@tanaka:/dev/disk/by-id# ls -al
+total 0
+drwxr-xr-x 2 root root 420 Aug 22 21:43 .
+drwxr-xr-x 8 root root 160 Aug 22 21:42 ..
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C -> ../../sdc
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part1 -> ../../sdc1
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part2 -> ../../sdc2
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3 -> ../../sdc3
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 ata-HL-DT-ST_DVD+_-RW_GH70N_K1NBANG1500 -> ../../sr0
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 ata-ST3000DM001-1CH166_Z1F43C4V -> ../../sdb
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN -> ../../sda
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part1 -> ../../sda1
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part2 -> ../../sda2
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part3 -> ../../sda3
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 wwn-0x5000c5002fb4f383 -> ../../sda
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000c5002fb4f383-part1 -> ../../sda1
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000c5002fb4f383-part2 -> ../../sda2
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000c5002fb4f383-part3 -> ../../sda3
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 wwn-0x5000c50065365276 -> ../../sdb
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 wwn-0x5000cca70fc8e018 -> ../../sdc
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000cca70fc8e018-part1 -> ../../sdc1
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000cca70fc8e018-part2 -> ../../sdc2
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000cca70fc8e018-part3 -> ../../sdc3
+```
+
+New Disk
+
+```
+Disk /dev/sda: 465.76 GiB, 500107862016 bytes, 976773168 sectors
+Disk model: ST3500418AS     
+(also NTFS)
+
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN -> ../../sda
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part1 -> ../../sda1
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part2 -> ../../sda2
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part3 -> ../../sda3
+```
+
+Current boot disk
+
+```
+Disk /dev/sdc: 465.76 GiB, 500107862016 bytes, 976773168 sectors
+Disk model: APPLE HDD HTS547
+
+lrwxrwxrwx 1 root root   9 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C -> ../../sdc
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part1 -> ../../sdc1
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part2 -> ../../sdc2
+lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3 -> ../../sdc3
+```
+
+We want to copy the configuration of the current boot disk to the new disk.
+
+```console
+sfdisk -d /dev/sdc | sfdisk /dev/sda
+```
+
+```
+root@tanaka:~# sfdisk -d /dev/sdc
+label: gpt
+label-id: B61233E8-D407-4AF2-9958-55BB3A77E732
+device: /dev/sdc
+unit: sectors
+first-lba: 34
+last-lba: 976773134
+sector-size: 512
+
+/dev/sdc1 : start=          34, size=        2014, type=21686148-6449-6E6F-744E-656564454649, uuid=76368201-C41E-4138-BE10-B0F325DC27D5
+/dev/sdc2 : start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=02C96126-2D57-449A-BAD2-EF22A9788203
+/dev/sdc3 : start=     2099200, size=   974673935, type=6A898CC3-1DD2-11B2-99A6-080020736631, uuid=A3943407-F950-4977-9E50-82C37F9FAF16
+root@tanaka:~# sfdisk -d /dev/sdc | sfdisk /dev/sda
+Checking that no-one is using this disk right now ... OK
+
+Disk /dev/sda: 465.76 GiB, 500107862016 bytes, 976773168 sectors
+Disk model: ST3500418AS     
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x412c7110
+
+Old situation:
+
+Device     Boot     Start       End   Sectors   Size Id Type
+/dev/sda1  *         2048   1026047   1024000   500M  7 HPFS/NTFS/exFAT
+/dev/sda2         1026048 975787206 974761159 464.8G  7 HPFS/NTFS/exFAT
+/dev/sda3       975788032 976769023    980992   479M 27 Hidden NTFS WinRE
+
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Created a new GPT disklabel (GUID: B61233E8-D407-4AF2-9958-55BB3A77E732).
+/dev/sda1: Created a new partition 1 of type 'BIOS boot' and of size 1007 KiB.
+/dev/sda2: Created a new partition 2 of type 'EFI System' and of size 1 GiB.
+Partition #2 contains a ntfs signature.
+/dev/sda3: Created a new partition 3 of type 'Solaris /usr & Apple ZFS' and of size 464.8 GiB.
+/dev/sda4: Done.
+
+New situation:
+Disklabel type: gpt
+Disk identifier: B61233E8-D407-4AF2-9958-55BB3A77E732
+
+Device       Start       End   Sectors   Size Type
+/dev/sda1       34      2047      2014  1007K BIOS boot
+/dev/sda2     2048   2099199   2097152     1G EFI System
+/dev/sda3  2099200 976773134 974673935 464.8G Solaris /usr & Apple ZFS
+
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+```
+
+```
+root@tanaka:~# proxmox-boot-tool format /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2
+UUID="" SIZE="1073741824" FSTYPE="" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sda" MOUNTPOINT=""
+Formatting '/dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2' as vfat..
+mkfs.fat 4.2 (2021-01-31)
+Done.
+```
+
+```
+root@tanaka:~# proxmox-boot-tool init /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2 grub
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+UUID="9BB0-3E21" SIZE="1073741824" FSTYPE="vfat" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sda" MOUNTPOINT=""
+Mounting '/dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2' on '/var/tmp/espmounts/9BB0-3E21'.
+Installing grub i386-pc target..
+Installing for i386-pc platform.
+Installation finished. No error reported.
+Unmounting '/dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2'.
+Adding '/dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2' to list of synced ESPs..
+Refreshing kernels and initrds..
+Running hook script 'proxmox-auto-removal'..
+Running hook script 'zz-proxmox-boot'..
+Copying and configuring kernels on /dev/disk/by-uuid/1FDB-C48E
+        Copying kernel 6.8.12-1-pve
+        Copying kernel 6.8.4-3-pve
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.8.12-1-pve
+Found initrd image: /boot/initrd.img-6.8.12-1-pve
+Found linux image: /boot/vmlinuz-6.8.4-3-pve
+Found initrd image: /boot/initrd.img-6.8.4-3-pve
+done
+Copying and configuring kernels on /dev/disk/by-uuid/9BB0-3E21
+        Copying kernel 6.8.12-1-pve
+        Copying kernel 6.8.4-3-pve
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.8.12-1-pve
+Found initrd image: /boot/initrd.img-6.8.12-1-pve
+Found linux image: /boot/vmlinuz-6.8.4-3-pve
+Found initrd image: /boot/initrd.img-6.8.4-3-pve
+done
+```
+
+```
+root@tanaka:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub repaired 0B in 00:01:48 with 0 errors on Thu Aug 22 22:18:33 2024
+remove: Removal of vdev 3 copied 3.14G in 0h1m, completed on Thu Aug 22 22:54:20 2024
+        183K memory used for removed device mappings
+config:
+
+        NAME                                                  STATE     READ WRITE CKSUM
+        rpool                                                 ONLINE       0     0     0
+          ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3  ONLINE       0     0     0
+```
+
+```
+root@tanaka:~# zpool attach rpool ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3 /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part3
+root@tanaka:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Thu Aug 22 22:57:00 2024
+        3.14G / 3.14G scanned, 69.1M / 3.14G issued at 9.88M/s
+        37.3M resilvered, 2.15% done, no estimated completion time
+remove: Removal of vdev 3 copied 3.14G in 0h1m, completed on Thu Aug 22 22:54:20 2024
+        183K memory used for removed device mappings
+config:
+
+        NAME                                                    STATE     READ WRITE CKSUM
+        rpool                                                   ONLINE       0     0     0
+          mirror-4                                              ONLINE       0     0     0
+            ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3  ONLINE       0     0     0
+            ata-ST3500418AS_5VMQF6GN-part3                      ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+```
+
+```
+root@tanaka:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: resilvered 3.21G in 00:02:23 with 0 errors on Thu Aug 22 22:59:23 2024
+remove: Removal of vdev 3 copied 3.14G in 0h1m, completed on Thu Aug 22 22:54:20 2024
+        183K memory used for removed device mappings
+config:
+
+        NAME                                                    STATE     READ WRITE CKSUM
+        rpool                                                   ONLINE       0     0     0
+          mirror-4                                              ONLINE       0     0     0
+            ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3  ONLINE       0     0     0
+            ata-ST3500418AS_5VMQF6GN-part3                      ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+
+```
+root@tanaka:~# zpool scrub rpool
+root@tanaka:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub in progress since Thu Aug 22 23:00:16 2024
+        3.14G / 3.14G scanned, 458M / 3.14G issued at 41.7M/s
+        0B repaired, 14.24% done, 00:01:06 to go
+remove: Removal of vdev 3 copied 3.14G in 0h1m, completed on Thu Aug 22 22:54:20 2024
+        183K memory used for removed device mappings
+config:
+
+        NAME                                                    STATE     READ WRITE CKSUM
+        rpool                                                   ONLINE       0     0     0
+          mirror-4                                              ONLINE       0     0     0
+            ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3  ONLINE       0     0     0
+            ata-ST3500418AS_5VMQF6GN-part3                      ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+```
+root@tanaka:~# proxmox-boot-tool status
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+System currently booted with legacy bios
+1FDB-C48E is configured with: grub (versions: 6.8.12-1-pve, 6.8.4-3-pve)
+9BB0-3E21 is configured with: grub (versions: 6.8.12-1-pve, 6.8.4-3-pve)
+```
+
+---
+
+Oh shit, we don't have a mirror on a primary ceph node...
+
+```
+root@harlan:~# zpool status
+  pool: rpool
+ state: ONLINE
+  scan: scrub repaired 0B in 00:01:49 with 0 errors on Sun Aug 11 00:25:50 2024
+remove: Removal of vdev 1 copied 2.59M in 0h0m, completed on Mon Jan 15 20:01:38 2024
+        1.95K memory used for removed device mappings
+config:
+
+        NAME                                    STATE     READ WRITE CKSUM
+        rpool                                   ONLINE       0     0     0
+          ata-ST500DM002-1BD142_Z3TGX1AS-part3  ONLINE       0     0     0
+          ata-ST500DM002-1SB10A_ZA45K50E-part3  ONLINE       0     0     0
+
+errors: No known data errors
+root@harlan:~# zpool remove rpool ata-ST500DM002-1SB10A_ZA45K50E-part3
+root@harlan:~# proxmox-boot-tool status
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+System currently booted with legacy bios
+EAD4-484A is configured with: grub (versions: 6.8.12-1-pve, 6.8.4-3-pve)
+WARN: /dev/disk/by-uuid/EAD6-7F83 does not exist - clean '/etc/kernel/proxmox-boot-uuids'! - skipping
+root@harlan:~# ls -al /dev/disk/by-uuid/
+total 0
+drwxr-xr-x 2 root root  80 Aug 22 12:31 .
+drwxr-xr-x 8 root root 160 Aug 22 12:30 ..
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 16326331070668978925 -> ../../sda3
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 EAD4-484A -> ../../sda2
+
+root@harlan:~# ls -al /dev/disk/by-id/
+total 0
+drwxr-xr-x 2 root root 900 Aug 22 13:10 .
+drwxr-xr-x 8 root root 160 Aug 22 12:30 ..
+lrwxrwxrwx 1 root root   9 Aug 22 12:40 ata-CT500MX500SSD1_2204E6009C80 -> ../../sdc
+lrwxrwxrwx 1 root root   9 Aug 22 12:31 ata-HL-DT-ST_DVDRAM_GH22NS50_K0022SM5854 -> ../../sr0
+lrwxrwxrwx 1 root root   9 Aug 22 12:31 ata-ST5000LM000-2AN170_WCJ1YNBJ -> ../../sdf
+lrwxrwxrwx 1 root root   9 Aug 22 12:31 ata-ST5000LM000-2AN170_WCJ62JB9 -> ../../sdd
+lrwxrwxrwx 1 root root   9 Aug 22 12:31 ata-ST500DM002-1BD142_Z3TGX1AS -> ../../sda
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 ata-ST500DM002-1BD142_Z3TGX1AS-part1 -> ../../sda1
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 ata-ST500DM002-1BD142_Z3TGX1AS-part2 -> ../../sda2
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 ata-ST500DM002-1BD142_Z3TGX1AS-part3 -> ../../sda3
+lrwxrwxrwx 1 root root   9 Aug 22 12:31 ata-ST500DM002-1SB10A_ZA45K50E -> ../../sdb
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 ata-ST500DM002-1SB10A_ZA45K50E-part1 -> ../../sdb1
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 ata-ST500DM002-1SB10A_ZA45K50E-part2 -> ../../sdb2
+lrwxrwxrwx 1 root root  10 Aug 22 12:31 ata-ST500DM002-1SB10A_ZA45K50E-part3 -> ../../sdb3
+...
+```
+
+```
+root@harlan:~# proxmox-boot-tool clean
+Checking whether ESP 'EAD4-484A' exists.. Found!
+Checking whether ESP 'EAD6-7F83' exists.. Not found!
+Sorting and removing duplicate ESPs..
+root@harlan:~# proxmox-boot-tool format /dev/disk/by-id/ata-ST500DM002-1SB10A_ZA45K50E-part2
+UUID="" SIZE="1073741824" FSTYPE="" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sdb" MOUNTPOINT=""
+Formatting '/dev/disk/by-id/ata-ST500DM002-1SB10A_ZA45K50E-part2' as vfat..
+mkfs.fat 4.2 (2021-01-31)
+Done.
+root@harlan:~# proxmox-boot-tool init /dev/disk/by-id/ata-ST500DM002-1SB10A_ZA45K50E-part2 grub
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+UUID="D72B-D02D" SIZE="1073741824" FSTYPE="vfat" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sdb" MOUNTPOINT=""
+Mounting '/dev/disk/by-id/ata-ST500DM002-1SB10A_ZA45K50E-part2' on '/var/tmp/espmounts/D72B-D02D'.
+Installing grub i386-pc target..
+Installing for i386-pc platform.
+Installation finished. No error reported.
+Unmounting '/dev/disk/by-id/ata-ST500DM002-1SB10A_ZA45K50E-part2'.
+Adding '/dev/disk/by-id/ata-ST500DM002-1SB10A_ZA45K50E-part2' to list of synced ESPs..
+Refreshing kernels and initrds..
+Running hook script 'proxmox-auto-removal'..
+Running hook script 'zz-proxmox-boot'..
+Copying and configuring kernels on /dev/disk/by-uuid/D72B-D02D
+        Copying kernel 6.8.12-1-pve
+        Copying kernel 6.8.4-3-pve
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.8.12-1-pve
+Found initrd image: /boot/initrd.img-6.8.12-1-pve
+Found linux image: /boot/vmlinuz-6.8.4-3-pve
+Found initrd image: /boot/initrd.img-6.8.4-3-pve
+done
+Copying and configuring kernels on /dev/disk/by-uuid/EAD4-484A
+        Copying kernel 6.8.12-1-pve
+        Copying kernel 6.8.4-3-pve
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.8.12-1-pve
+Found initrd image: /boot/initrd.img-6.8.12-1-pve
+Found linux image: /boot/vmlinuz-6.8.4-3-pve
+Found initrd image: /boot/initrd.img-6.8.4-3-pve
+done
+root@harlan:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub repaired 0B in 00:01:49 with 0 errors on Sun Aug 11 00:25:50 2024
+remove: Removal of vdev 2 copied 1.95G in 0h0m, completed on Thu Aug 22 23:04:04 2024
+        248K memory used for removed device mappings
+config:
+
+        NAME                                    STATE     READ WRITE CKSUM
+        rpool                                   ONLINE       0     0     0
+          ata-ST500DM002-1BD142_Z3TGX1AS-part3  ONLINE       0     0     0
+
+errors: No known data errors
+root@harlan:~# zpool attach rpool ata-ST500DM002-1BD142_Z3TGX1AS-part3 /dev/disk/by-id/ata-ST500
+ata-ST5000LM000-2AN170_WCJ1YNBJ       ata-ST500DM002-1BD142_Z3TGX1AS-part2  ata-ST500DM002-1SB10A_ZA45K50E-part2
+ata-ST5000LM000-2AN170_WCJ62JB9       ata-ST500DM002-1BD142_Z3TGX1AS-part3  ata-ST500DM002-1SB10A_ZA45K50E-part3
+ata-ST500DM002-1BD142_Z3TGX1AS        ata-ST500DM002-1SB10A_ZA45K50E        
+ata-ST500DM002-1BD142_Z3TGX1AS-part1  ata-ST500DM002-1SB10A_ZA45K50E-part1  
+root@harlan:~# zpool attach rpool ata-ST500DM002-1BD142_Z3TGX1AS-part3 /dev/disk/by-id/ata-ST500DM002-1SB10A_ZA45K50E-part3
+root@harlan:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Thu Aug 22 23:11:26 2024
+        165M / 5.14G scanned at 8.70M/s, 0B / 5.14G issued
+        0B resilvered, 0.00% done, no estimated completion time
+remove: Removal of vdev 2 copied 1.95G in 0h0m, completed on Thu Aug 22 23:04:04 2024
+        248K memory used for removed device mappings
+config:
+
+        NAME                                      STATE     READ WRITE CKSUM
+        rpool                                     ONLINE       0     0     0
+          mirror-0                                ONLINE       0     0     0
+            ata-ST500DM002-1BD142_Z3TGX1AS-part3  ONLINE       0     0     0
+            ata-ST500DM002-1SB10A_ZA45K50E-part3  ONLINE       0     0     0
+
+errors: No known data errors
+root@harlan:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Thu Aug 22 23:11:26 2024
+        5.14G / 5.14G scanned, 407M / 5.14G issued at 25.4M/s
+        387M resilvered, 7.74% done, 00:03:10 to go
+remove: Removal of vdev 2 copied 1.95G in 0h0m, completed on Thu Aug 22 23:04:04 2024
+        248K memory used for removed device mappings
+config:
+
+        NAME                                      STATE     READ WRITE CKSUM
+        rpool                                     ONLINE       0     0     0
+          mirror-0                                ONLINE       0     0     0
+            ata-ST500DM002-1BD142_Z3TGX1AS-part3  ONLINE       0     0     0
+            ata-ST500DM002-1SB10A_ZA45K50E-part3  ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+root@harlan:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: resilvered 5.34G in 00:04:45 with 0 errors on Thu Aug 22 23:16:11 2024
+remove: Removal of vdev 2 copied 1.95G in 0h0m, completed on Thu Aug 22 23:04:04 2024
+        248K memory used for removed device mappings
+config:
+
+        NAME                                      STATE     READ WRITE CKSUM
+        rpool                                     ONLINE       0     0     0
+          mirror-0                                ONLINE       0     0     0
+            ata-ST500DM002-1BD142_Z3TGX1AS-part3  ONLINE       0     0     0
+            ata-ST500DM002-1SB10A_ZA45K50E-part3  ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+Scrub check
+
+```
+root@harlan:~# zpool scrub rpool 
+root@harlan:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub in progress since Thu Aug 22 23:16:58 2024
+        5.14G / 5.14G scanned, 89.7M / 5.14G issued at 44.9M/s
+        0B repaired, 1.70% done, 00:01:55 to go
+remove: Removal of vdev 2 copied 1.95G in 0h0m, completed on Thu Aug 22 23:04:04 2024
+        248K memory used for removed device mappings
+config:
+
+        NAME                                      STATE     READ WRITE CKSUM
+        rpool                                     ONLINE       0     0     0
+          mirror-0                                ONLINE       0     0     0
+            ata-ST500DM002-1BD142_Z3TGX1AS-part3  ONLINE       0     0     0
+            ata-ST500DM002-1SB10A_ZA45K50E-part3  ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+THIS BIG MISTAKE on my part...
+
+`zpool remove` and `zpool add` are not the same as `zpool attach` or `zpool replace`. The former are to extend a zpool to be larger without redundancy. The later are to extend a mirror.
+
+PICTURE FROM HARDWARE - 2024-08-22 on Cell Phone
 
 ## References
 
