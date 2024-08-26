@@ -22,6 +22,11 @@ https://forum.proxmox.com/threads/when-adding-a-new-osd-to-ceph-the-osd_mclock_m
 
 TODO: SPIN this off to another POST.
 
+```console
+root@pve1:~# ceph daemon mon.`hostname -s` perf dump
+root@pve1:~# ceph daemon osd.0 perf dump
+```
+
 #### mClock config
 
 [mClock Config Reference](https://docs.ceph.com/en/reef/rados/configuration/mclock-config-ref/#mclock-config-reference) is a great reference for how Ceph implements [dmClock algorithm](https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Gulati.pdf) for scheduling storage activities.

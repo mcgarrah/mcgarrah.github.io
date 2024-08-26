@@ -3,6 +3,8 @@ title:  "Advanced Posts Examples"
 layout: post
 categories: draft jekyll
 tags: draft jekyll
+date: 2024-01-01
+published: false
 ---
 
 ## Drafts and Published

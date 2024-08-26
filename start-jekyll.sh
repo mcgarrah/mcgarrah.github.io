@@ -23,6 +23,11 @@
 # Publisher: Dedsec727
 # VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run
 
+# File -> Perferences -> Settings (Ctrl+,)
+#  Scroll to "Jekyll Run - Configuration"
+#  Add "--trace" for more detailed error message on build
+#  Add "--drafts" to see the "_drafts" folder posts
+
 # bundle exec jekyll serve
 
 # For Debug
