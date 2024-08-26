@@ -86,7 +86,7 @@ mcgarrah@pve1:~$
 
 ### Verify hosts file
 
-Verify /etc/hosts has an IPv4 for hostname
+Verify `/etc/hosts` has an IPv4 for hostname
 
 ``` shell
 mcgarrah@pve1:~$ hostname --ip-address

@@ -4,6 +4,10 @@ layout: post
 published: false
 ---
 
+My post on Proxmox Forums:
+
+https://forum.proxmox.com/threads/when-adding-a-new-osd-to-ceph-the-osd_mclock_max_capacity_iops_-hdd-ssd-values-do-not-appear-in-the-configuration-database.129132/post-697088
+
 ### Performance
 
 TODO: SPIN this off to another POST.
@@ -17,6 +21,8 @@ USB 3.0 speed and media... https://qr.ae/p2NAQe https://qr.ae/p2NAdw
 The difference between USB 3.0, 3.1, and 3.2 is that USB 3.0 is 5Gb/s, USB 3.1 is 10Gb/s, and USB 3.2 is the fastest at 20Gb/s. You may have seen them branded as SuperSpeed USB 5Gbps/10Gbps/20Gbps.
 
 [![Ceph Recovery and Rebalance](/assets/images/ceph-recovery-rebalance-homelab.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ceph-recovery-rebalance-homelab.png){:target="_blank"}
+
+Theoretical vs real speeds that include overhead is important to remember.
 
 #### mclock iops
 
@@ -79,6 +85,25 @@ osd.2         basic     osd_mclock_max_capacity_iops_hdd       205.899236
 root@pve1:~# 
 ```
 
+Later when I added the three new 32Gb USB drives on the blue USB3 interfaces...
+
+OSD 3,5,6 are the new ones. 0,1,2 are the older ones.
+
+```console
+root@pve1:~# ceph config dump
+WHO     MASK  LEVEL     OPTION                                 VALUE           RO
+global        advanced  osd_deep_scrub_interval                2419200.000000    
+global        advanced  osd_scrub_interval_randomize_ratio     7.000000          
+global        advanced  osd_scrub_max_interval                 1209600.000000    
+global        advanced  osd_scrub_min_interval                 86400.000000      
+mon           advanced  auth_allow_insecure_global_id_reclaim  false             
+osd.0         basic     osd_mclock_max_capacity_iops_hdd       194.542100        
+osd.1         basic     osd_mclock_max_capacity_iops_hdd       192.359779        
+osd.2         basic     osd_mclock_max_capacity_iops_hdd       205.899236        
+osd.3         basic     osd_mclock_max_capacity_iops_hdd       339.211615        
+osd.5         basic     osd_mclock_max_capacity_iops_hdd       340.816549        
+osd.6         basic     osd_mclock_max_capacity_iops_hdd       326.667183        
+```
 #### [IOSTAT](https://docs.ceph.com/en/latest/mgr/iostat/)
 
 No output during a rebalance event when I'm not hitting the ceph cluster for content or loading content into it.

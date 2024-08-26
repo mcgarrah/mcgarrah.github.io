@@ -386,6 +386,8 @@ config:
 errors: No known data errors
 ```
 
+**Note**: My mistake above was to `zpool detach rpool xxx` rather than replace it with `zpool replace rpool xxx with /dev/disk/by-id/newdisk` and everything would work in the mirror. I also made this mistake on another system and broke the boot mirror.
+
 Fix the boot
 
 ```
