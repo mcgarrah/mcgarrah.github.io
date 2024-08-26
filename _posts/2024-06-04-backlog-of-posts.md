@@ -14,7 +14,10 @@ Here is a dump of my unpublished posts that need polishing to release:
 * Site to Site VPN for the Homelabs
 * Link Aggregated (LAG) and LACP NIC Bonding
 * HP ProCurve Switch Java WebUI (Java JNLP WebStart)
-* ~~Dell Wyse 3040 Initial Setup (tailscale endpoints)~~ [Debian 12 on Dell Wyse 3040s](/dell-wyse-3040-debian12/)
+* ~~Dell Wyse 3040 Initial Setup (tailscale endpoints)~~
+  * [Debian 12 on Dell Wyse 3040s](/dell-wyse-3040-debian12/)
+  * [ProxMox 8.2.2 Cluster on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040/)
+  * [Tailscale on Dell Wyse 3040 with Debian 12](/dell-wyse-3040-tailscale/)
 * PiKVM v3 and AIMOS 8-port KVM Setup (hacking the webui)
 * ProxMox 8 Lessons Learned in the Homelabs (pain points and solutions)
 
