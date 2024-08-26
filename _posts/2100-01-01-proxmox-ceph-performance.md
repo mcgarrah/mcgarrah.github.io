@@ -4,6 +4,16 @@ layout: post
 published: false
 ---
 
+I have two things happening at once with Ceph that need to get resolved and they are both related to performance. First, I'm dealing with an oddity with the `osd_mclock_max_capacity_iops_hdd` settings not being set for all OSDs. Second, I'm in the middle of a major rebalance of the cluster when I took three OSDs offline with one on each of the three Ceph nodes, waited for them to rebalance, destroyed the OSDs and then added all three OSDs to a new node in my cluster. So I'm now a four (4) node ceph cluster with three OSDs each. I want greater redundancy based on more ceph nodes. Now I can take more disk failures and node failures before loosing access to the content.
+
+[![Ceph Performance and Rebalance](/assets/images/ceph-performance-osds-new-node.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ceph-performance-osds-new-node.png){:target="_blank"}
+
+<!-- excerpt-end -->
+
+I have some worries that the missing and bad `osd_mclock_max_capacity_iops_hdd` settings are hampering my rebalance. Those values on the main cluster are really low when compared to my testbed cluster. Also the missing ones seem like a possible issue as well.
+
+I'd like to add another fifth ceph node and even have the node configured and ready to take the disk.  But three more hard drives are not in the budget at this time.
+
 My post on Proxmox Forums:
 
 https://forum.proxmox.com/threads/when-adding-a-new-osd-to-ceph-the-osd_mclock_max_capacity_iops_-hdd-ssd-values-do-not-appear-in-the-configuration-database.129132/post-697088
@@ -11,6 +21,18 @@ https://forum.proxmox.com/threads/when-adding-a-new-osd-to-ceph-the-osd_mclock_m
 ### Performance
 
 TODO: SPIN this off to another POST.
+
+#### mClock config
+
+[mClock Config Reference](https://docs.ceph.com/en/reef/rados/configuration/mclock-config-ref/#mclock-config-reference) is a great reference for how Ceph implements [dmClock algorithm](https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Gulati.pdf) for scheduling storage activities.
+
+My earlier post on [Ceph Cluster rebalance issue](/ceph-rebalance/) should have used the mClock Profiles rather than hacking the values directly.
+
+> A mclock profile is “a configuration setting that when applied on a running Ceph cluster enables the throttling of the operations(IOPS) belonging to different client classes (background recovery, scrub, snaptrim, client op, osd subop)”.
+
+[Enabling mClock Profiles](https://docs.ceph.com/en/reef/rados/configuration/mclock-config-ref/#steps-to-enable-mclock-profile) allows for picking one of the three defaults profiles: `balanced` (default), `high_client_ops`, and `high_recovery_ops`. For my needs earlier, I should have enabled the `high_recovery_ops` and reverted to the `balanced` after completing the recovery.
+
+Lessons learned as you go along.
 
 #### Limits of NIC and USB
 
@@ -104,6 +126,7 @@ osd.3         basic     osd_mclock_max_capacity_iops_hdd       339.211615
 osd.5         basic     osd_mclock_max_capacity_iops_hdd       340.816549        
 osd.6         basic     osd_mclock_max_capacity_iops_hdd       326.667183        
 ```
+
 #### [IOSTAT](https://docs.ceph.com/en/latest/mgr/iostat/)
 
 No output during a rebalance event when I'm not hitting the ceph cluster for content or loading content into it.
