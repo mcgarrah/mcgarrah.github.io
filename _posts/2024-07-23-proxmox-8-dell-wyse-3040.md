@@ -184,7 +184,34 @@ mcgarrah@pve1:~$ uname -a
 Linux pve1 6.8.8-2-pve #1 SMP PREEMPT_DYNAMIC PMX 6.8.8-2 (2024-06-24T09:00Z) x86_64 GNU/Linux
 ```
 
-You should see the PVE kernel which is newer than the Debian default of 6.1.
+When you come back up, you should see the PVE kernel 6.8 which is newer than the Debian default of 6.1.
+
+---
+
+Section of post updated 2024-08-26.
+
+Following up after [ProxMox 8.2.4 Upgrade on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040-upgrade/) where I needed some addtional work to clean the Debian Kernal Images.
+
+First be very sure you are running the PVE kernel.
+
+``` shell
+mcgarrah@pve1:~$ uname -a
+Linux pve1 6.8.8-2-pve #1 SMP PREEMPT_DYNAMIC PMX 6.8.8-2 (2024-06-24T09:00Z) x86_64 GNU/Linux
+```
+
+Next **purge** the kernel image packages and not just remove them to really clean them out. This command will remove the meta-package and the individual linux images.
+
+``` shell
+apt purge -y $(dpkg --list | grep -Ei 'linux-image|linux-headers' | awk '{print $2}' | grep -v "$(uname -r)" | sort -V)
+```
+
+``` shell
+update-grub
+```
+
+Return to the original post.
+
+---
 
 ### Proxmox Helper Scripts
 
@@ -264,8 +291,10 @@ mcgarrah@pve1:~$ sudo apt install vim curl tmux -y
 Here are several tools worth having for diagnosing issues with performance.
 
 ``` shell
-mcgarrah@pve1:~$ sudo apt install htop iftop iptraf dstat atop ioping iotop -y
+mcgarrah@pve1:~$ sudo apt install htop iftop iptraf dstat ioping iotop -y
 ```
+
+**Note**: I removed the `atop` command later in my post [ProxMox 8.2.4 Upgrade on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040-upgrade/) as it stores logs daily which ties up disk space I cannot afford on these small boxes. It is a great tool but not for these SFF systems.
 
 Add these for grabbing information on the disk and cpu temperatures and other contents.
 

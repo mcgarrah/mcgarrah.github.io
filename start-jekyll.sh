@@ -30,6 +30,6 @@
 
 # bundle exec jekyll serve
 
-# For Debug
+# For Debug and Drafts
 
-bundle exec jekyll serve --trace
+bundle exec jekyll serve --trace --drafts
