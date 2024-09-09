@@ -3,7 +3,17 @@ title:  "Proxmox Ceph Nearfull for the Homelab"
 layout: post
 published: false
 ---
-### Storage NearFull
+### Ceph Mon
+
+This warning starts at the root partition for OS being full. For Dell Wyse 3040, this is set to high and needs to be reset down.
+
+```
+HEALTH_WARN: mons pve2,pve3 are low on available space
+mon.pve2 has 27% avail
+mon.pve3 has 25% avail
+```
+
+### Ceph Storage NearFull
 
 [Storage Capacity](https://docs.ceph.com/en/latest/rados/configuration/mon-config-ref/#storage-capacity)
 
