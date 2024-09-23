@@ -77,7 +77,7 @@ While going thru the BIOS settings, I remembered something I saw in my rummaging
 
 Enabling this "Multi-Display" option in the BIOS, made it so that I could use the built-in motherboard iGPU as well as the Nvidia GPU at the same time. This opens up options for me to fully virtualize the Nvidia GPU and making it available only for a VM or LXC while maintaining a console session. Keeping the option of a boot up session for cases like the BIOS issue I hit are important to me long term.
 
-![](/assets/images/proxmox-upgrade-video-003.png){:width="55%" height="55%" style="display:block; margin-left:auto; margin-right:auto"}
+![SAN switch video](/assets/images/proxmox-upgrade-video-003.webp){:width="55%" height="55%" style="display:block; margin-left:auto; margin-right:auto"}
 
 My next to last issue, was a bad CAT5 network cable on my SAN Network Switch that intermittantly fails when jiggled. I have been chasing this issue and finally found it while moving around the cluster nodes when I saw one of the ports go and stay dark occasionally. This has been immensely frustrating to find and should improve my Ceph stability. To add to the mess, I have a rats nest of cabling hooking this all together which is painful when I have to dig into the hardware.
 
