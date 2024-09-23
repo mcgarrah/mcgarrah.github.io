@@ -75,9 +75,11 @@ Jekyll Plugins
     https://github.com/jekyll/jekyll-admin
     https://github.com/erikw/jekyll-google_search_console_verification_file
 
+    https://github.com/jekyll/jemoji (Emoji)
+
 ~~Merge the Jekyll-Plugin branch to main~~ DONE
 
-```
+``` shell
 ➜  mcgarrah.github.io git:(main) ✗ grep "^\*\[" _posts/*.md | cut -d":" -f 2- | sort | uniq
 *[BIOS]: Basic Input/Output System, is a type of firmware that is embedded in a computer motherboard and is responsible for starting up the system.
 *[CLI]: command line interface

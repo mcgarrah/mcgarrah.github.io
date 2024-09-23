@@ -28,8 +28,6 @@ root@pve2:/usr/share/lxc/config# ls -l openwrt.common.conf
 
 `root@pve2:/usr/share/lxc` templates has some interesting stuff in there. `lxc-download` in particular.
 
-
-
 ### Hookscripts
 
 LXC Hookscripts are one thing... to help out... `/usr/share/pve-docs/examples` with only one example.
