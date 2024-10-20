@@ -18,33 +18,31 @@ My earlier post [HP ProCurve 2800 initial setup](/procurve-2800-switches/) discu
 
 ## Summary
 
-Back in the day, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. This WebUI was never as powerful as the full console CLI but just a nice feature when debugging a network issue. It was also very useful to hand out to support folks for a quick an easy way to verify a switch or port on a switch was functional. I like quick and easy so I wanted this functionality back.
+Back in the day, the HP ProCurve switches had a convenient web interface that used [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) in a browser to give you an interactive method to look at your switch status and update minor settings. This WebUI was never as powerful as the full console CLI but just a nice feature when debugging a network issue. It was also very useful to hand out to support folks for a quick and easy way to verify a switch or port on a switch was functional. I like quick and easy so I wanted this functionality back.
 
 Honestly, my first thoughts were to build a Virtual Machine using a Microsoft Windows 7 installation with that era of web-browser and java installed and use it to access the switches. After some consideration that seemed like a lot of work, was resource intensive and probably prone to issues cropping up with an incredibly old and unsupported OS. Thus entered the [PortableApps](https://portableapps.com/) idea to run an older isolated web browser and Java.
 
-## History
+## History (optional)
 
-So now for some quick related history as to why we have this problem. You can skip down a section to avoid learning about it without any issues. Back in the early Internet there were a limited number of web-browsers. Netscape which later became FireFox was one the major players. They had a plugin system for their web-browser called [Netscape Plugin Application Programming Interface (NPAPI)](https://en.wikipedia.org/wiki/NPAPI) that you could use to enable things like [Macromedia Flash](https://en.wikipedia.org/wiki/Adobe_Flash), [Sun Java](https://en.wikipedia.org/wiki/Java_(software_platform)) (before Oracle), [Microsoft Silverlight](https://en.wikipedia.org/wiki/Microsoft_Silverlight) and other such extensions to the browser. This NPAPI capability was in most web-browsers until around 2015-2017 when it was removed due to security concerns. Other methods to handle support for custom content types evolved and became broadly supported. Thus the NPAPI depreciated leaving folks with java apps abandoned.
+So now for some quick related history as to why we have this problem. You can safely skip down to the [Download Software](#download-software) section to avoid learning about it without any issues.
 
-TODO: Explain JWS/Applet/ certs...
+Back in the early Internet there were a limited number of web-browsers. Netscape which later became FireFox was one the major players. They had a plugin system for their web-browser called [Netscape Plugin Application Programming Interface (NPAPI)](https://en.wikipedia.org/wiki/NPAPI) that you could use to enable things like [Macromedia Flash](https://en.wikipedia.org/wiki/Adobe_Flash), [Sun Java](https://en.wikipedia.org/wiki/Java_(software_platform)) (before Oracle), [Microsoft Silverlight](https://en.wikipedia.org/wiki/Microsoft_Silverlight) and other such extensions to the browser. This NPAPI capability was in most web-browsers until around 2015-2017 when it was removed due to security concerns. Other methods to handle support for custom content types evolved and became broadly supported. Thus the NPAPI depreciated leaving folks with their java apps abandoned.
 
-The idea behind JWS (Java Web Start) and JNLP (Java Network Launching Protocol) was to use your web browser to download a small JNLP text file and passes the contents of the file as argument to the locally installed Java Web Start executable. The JWS would read the JNLP file contents, download the java application along with any dependencies and fire it up. This could fire up the java application as a Applet in the web browser or as a stand alone Java GUI Application.
-
-For our ProCurve case, this would be the Java Applet in the web browser.
+The idea behind JWS (Java Web Start) and JNLP (Java Network Launching Protocol) was to use your web browser to download a small JNLP text file and passes the contents of the file as argument to the locally installed Java Web Start (JWS) executable. The JWS would read the JNLP file contents, download the java application along with any dependencies and fire it up. This could fire up the java application as a Applet in the web browser or as a stand alone Java Desktop Client GUI Application. For our ProCurve case, this would be the Java Applet in the web browser.
 
 JWS initially just launched Java GUI Applications on your local machine using a local Java Runtime. Later it added support for launching java applets in web browsers. This caused lots of confusion as to what JWS was in play at any given point. More insanity ensures when you add certificate signing to various pieces of this hodge-podge.
 
-Early versions of JWS allowed for self-signed certificates to sign your application. This was later removed and code signing certificates which costed serious money (a couple hundred USD) became a requirements for JWS. This was not a SSL/TLS certificate for your website but a code signing certificate. Those are completely separate certificates. So you Java Applet and your Java Application would both need to be signed. For fun, read up on JKS (Java Key Stores) if you have a chunk of free time. I was an expert at this at one time and blessedly no longer need to know it unless supporting very old software.
+Early versions of JWS allowed for self-signed certificates to sign your application. This was later removed and code signing certificates which costed serious money (a couple hundred USD) became a requirements for JWS. This was not a SSL/TLS certificate for your website but a code signing certificate. Those are completely separate certificates. So you Java Applet and your Java Application would both need to be signed. For fun, read up on [JKS (Java Key Stores)](https://en.wikipedia.org/wiki/Java_KeyStore) if you have a chunk of free time. I was an expert at this at one time and blessedly no longer need to know it unless supporting very old software.
 
 HP ProCurve switches implemented a WebUI using Java Webstart that requires the Java Runtime Engine installed in the web-browser. This is the [Java Webstart](https://en.wikipedia.org/wiki/Java_Web_Start) requirement that led me down this rabbit hole of an older web-browser and older Java Runtime that supports these switches WebUI. I picked FireFox as the web-browser due to familiarity with it and the JRE version is dictated by what supports FireFox and Java Web Start. I want the last version of each piece of software that had support to run the WebUI.
 
-## Download Software
+## Download Software {#download-software}
 
 You will need to download two pieces of software. A specific version of **Firefox Portable Edition** with NPAPI support and **Java Portable** that is supported in that web-browser. I have pulled copies locally and have links to where I pulled them for your inspection.
 
-Here is the link to [Java Portable](https://sourceforge.net/projects/portableapps/files/Java%20Portable/) download website. You will need the 32-bit version _not_ the 64-bit version. To match the era with support for JNLP (Java Webstart) I picked "Java 8 Update 121". Also picked due to MD5 signing issues with later versions.
+Here is the link to [Java Portable](https://sourceforge.net/projects/portableapps/files/Java%20Portable/) download website. You will need the 32-bit version and _not_ the 64-bit version. To match the era with support for JNLP (Java Webstart) I picked "Java 8 Update 121". Also there is an issue with MD5 signing issues with later versions of Java to contend with which also impacts the 64-bit versions.
 
-Here is the link to [Mozilla Firefox, Portable Ed.](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./) download website and they are bundled for both 32-bit and 64-bit. The last version that supports JNLP (Java Webstart) are either Firefox 51.0 or 51.0.1. I have tested with 51.0 and 51.0.1 and both seem to work fine. You **must** enable 32-bit only.
+Here is the link to [Mozilla Firefox, Portable Ed.](https://sourceforge.net/projects/portableapps/files/Mozilla%20Firefox%2C%20Portable%20Ed./) download website and they are bundled for both 32-bit and 64-bit. The last version that supports JNLP (Java Webstart) are either Firefox 51.0 or 51.0.1. I have tested with 51.0 and 51.0.1 and both seem to work fine. You **must** enable 32-bit only or this will fail to work.
 
 For the directly links to the versions you need:
 
@@ -72,7 +70,7 @@ _**Note**_: There is something called the "Extended Support Release (ESR)" of Fi
 
 ## Install Software
 
-Install the Firefox web browser first then follow with hte Java Portable installation. Doing this in that order configures everything correctly.
+Install the Firefox web browser first then follow with the Java Portable installation. Doing this in that order configures everything correctly. The other way you will encounter issues.
 
 ### Firefox install
 
@@ -112,15 +110,13 @@ Default if you used above will be `C:\PortableApps\CommonFiles\Java`.
 
 [![procurve image](/assets/images/procurve-webui-install-017.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-017.png){:target="_blank"}
 
-This is the installed but not configured Java at this point.
+This is now installed but not a fully configured useful Java at this point.
 
-TODO: Fix below note with reason for 64-bit fails...
-
-**Note**: In my testing, using the 64-bit versions did not work for various reasons ~~~I could not resolve~~~ something about MD5 signed Java deployments. Use the 32-bit configuration and versions to reproduce my results.
+**Note**: In my testing, using the 64-bit versions did not work for something related to MD5 signed Java deployments. Use the 32-bit configuration and versions to reproduce my results.
 
 ## Configure Software
 
-You should have two installed PortableApps: CommonFiles/Java and Firefox. The next two sections will describe what we are doing to each and then a detailed set of steps for each.
+You should have two installed PortableApps: `CommonFiles/Java` and `Firefox`. The next two sections will describe what we are doing to each and then a detailed set of steps for each.
 
 ---
 
@@ -132,7 +128,7 @@ We will be adding the file `C:\PortableApps\FirefoxPortable\Other\Source\Firefox
 
 ---
 
-To confirm the PortableJava installation you should see something like this below.
+To confirm the Portable Java installation you should see something like this below.
 
 [![procurve image](/assets/images/procurve-webui-install-017.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-017.png){:target="_blank"}
 
