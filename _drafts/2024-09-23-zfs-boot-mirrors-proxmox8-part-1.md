@@ -324,26 +324,9 @@ sector-size: 512
 {% endhighlight %}
 </details>
 
-<details>
-<summary>Click to see below command details {% highlight console %}root@tanaka:~# SOME COMMAND{% endhighlight %}</summary>
-{% highlight console %}
-SOME COMMAND RESULTS
-{% endhighlight %}
-</details>
+### Replace Disk and a mistake
 
-
-<details>
-<summary>Click to see below command details {% highlight console %}root@tanaka:~# SOME COMMAND{% endhighlight %}</summary>
-{% highlight console %}
-SOME COMMAND RESULTS
-{% endhighlight %}
-</details>
-
-TODO: stuff when back physically near the machines...
-
-This is likely what I want to do when I get the new HDD physically installed to copy the partition tables.
-
-McGarrah Google Docs [ZFS Mirror Disk Failure & Recovery](https://docs.google.com/document/d/1HZC7l1HJ5mHE6YmRkhHQyvYGMPtRPE5SDIZDBgg0t5E/edit?usp=sharing)
+I'm going to show what I did and the mistake in order. Below is what I wanted to do when I get the new HDD physically installed to copy the partition tables.
 
 ```console
 zpool detach rpool ata-ST9500325AS_5VE0S1MT
@@ -351,7 +334,7 @@ zpool status
 sfdisk -d /dev/sda | sfdisk /dev/sdc
 ```
 
-Status after pulling the bad disk physically
+Here is the status after pulling the bad disk physically.
 
 ```console
 root@tanaka:~# zpool status
@@ -372,6 +355,9 @@ config:
             17972357130737311890                                UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST9500325AS_5VE0S1MT-part3
 
 errors: No known data errors
+```
+
+```console
 root@tanaka:~# zpool detach rpool 17972357130737311890
 root@tanaka:~# zpool status
   pool: rpool
@@ -386,9 +372,9 @@ config:
 errors: No known data errors
 ```
 
-**Note**: My mistake above was to `zpool detach rpool xxx` rather than replace it with `zpool replace rpool xxx with /dev/disk/by-id/newdisk` and everything would work in the mirror. I also made this mistake on another system and broke the boot mirror.
+**Note**: My mistake above was to `zpool detach rpool xxx` rather than replace it with `zpool replace rpool xxx with /dev/disk/by-id/newdisk` and everything would work in the mirror. I also made this mistake on another system and broke the boot mirror. You can see the issue below in the section on recovering a failed mirror. 
 
-Fix the boot
+Fix the boot for Proxmox
 
 ```
 root@tanaka:~# proxmox-boot-tool status
@@ -445,6 +431,8 @@ Device       Start       End   Sectors   Size Type
 Partition 1 does not start on physical sector boundary.
 ```
 
+From `fdisk` we have an idea of which drives are existing ZFS and not.
+
 ```
 root@tanaka:/dev/disk/by-id# ls -al
 total 0
@@ -471,9 +459,9 @@ lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000cca70fc8e018-part2 -> ../../sd
 lrwxrwxrwx 1 root root  10 Aug 22 21:43 wwn-0x5000cca70fc8e018-part3 -> ../../sdc3
 ```
 
-New Disk
+The new disk is found in the above... as `/dev/sda` with paritions.
 
-```
+```console
 Disk /dev/sda: 465.76 GiB, 500107862016 bytes, 976773168 sectors
 Disk model: ST3500418AS     
 (also NTFS)
@@ -484,7 +472,7 @@ lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part2 -> ../../
 lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part3 -> ../../sda3
 ```
 
-Current boot disk
+This is the current boot disk from the above... as `/dev/sdc` also with parititions.
 
 ```
 Disk /dev/sdc: 465.76 GiB, 500107862016 bytes, 976773168 sectors
@@ -496,13 +484,18 @@ lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GM
 lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3 -> ../../sdc3
 ```
 
-We want to copy the configuration of the current boot disk to the new disk.
+**Note**: These devices will be different on every system so don't just copy/paste my commands.
+
+This is the big next step which is to copy the partitions and configuration to the new disk.
+This command will extract and copy the configuration of the current boot disk to the new disk.
 
 ```console
 sfdisk -d /dev/sdc | sfdisk /dev/sda
 ```
 
-```
+Run a test of the extract command to console.
+
+```console
 root@tanaka:~# sfdisk -d /dev/sdc
 label: gpt
 label-id: B61233E8-D407-4AF2-9958-55BB3A77E732
@@ -515,6 +508,11 @@ sector-size: 512
 /dev/sdc1 : start=          34, size=        2014, type=21686148-6449-6E6F-744E-656564454649, uuid=76368201-C41E-4138-BE10-B0F325DC27D5
 /dev/sdc2 : start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=02C96126-2D57-449A-BAD2-EF22A9788203
 /dev/sdc3 : start=     2099200, size=   974673935, type=6A898CC3-1DD2-11B2-99A6-080020736631, uuid=A3943407-F950-4977-9E50-82C37F9FAF16
+```
+
+Now run the above extract and pipe to the new disk.
+
+```console
 root@tanaka:~# sfdisk -d /dev/sdc | sfdisk /dev/sda
 Checking that no-one is using this disk right now ... OK
 
@@ -561,6 +559,8 @@ Calling ioctl() to re-read partition table.
 Syncing disks.
 ```
 
+Format the Proxmox Boot Partition for the new disk and be sure to use the partition not the full device.
+
 ```
 root@tanaka:~# proxmox-boot-tool format /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2
 UUID="" SIZE="1073741824" FSTYPE="" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sda" MOUNTPOINT=""
@@ -568,6 +568,8 @@ Formatting '/dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2' as vfat..
 mkfs.fat 4.2 (2021-01-31)
 Done.
 ```
+
+Initialize the new partition with GRUB if that is what you are using.
 
 ```
 root@tanaka:~# proxmox-boot-tool init /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2 grub
@@ -602,7 +604,9 @@ Found initrd image: /boot/initrd.img-6.8.4-3-pve
 done
 ```
 
-```
+Do a status on the zfs pools... and you see no mirrors.
+
+```console
 root@tanaka:~# zpool status -v
   pool: rpool
  state: ONLINE
@@ -615,6 +619,8 @@ config:
         rpool                                                 ONLINE       0     0     0
           ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3  ONLINE       0     0     0
 ```
+
+Now attach the new prepared disk to the existing `rpool` and notice I used parition 3 from the new disk. Immediately do a zfs pool status and see the resilving process kick off.
 
 ```
 root@tanaka:~# zpool attach rpool ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3 /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part3
@@ -640,6 +646,8 @@ config:
 errors: No known data errors
 ```
 
+Check the status again shortly and it should be complete pretty quickly if you don't have a lot of data.
+
 ```
 root@tanaka:~# zpool status -v
   pool: rpool
@@ -658,8 +666,9 @@ config:
 errors: No known data errors
 ```
 
+Run a zfs scrub against the rpool to do the equivolant of a CHKDSK on the file system and devices.
 
-```
+```console
 root@tanaka:~# zpool scrub rpool
 root@tanaka:~# zpool status -v
   pool: rpool
@@ -680,7 +689,9 @@ config:
 errors: No known data errors
 ```
 
-```
+Double check the Proxmox Boot has both disks and for my case the `grub` boot initialized and ready.
+
+```console
 root@tanaka:~# proxmox-boot-tool status
 Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
 System currently booted with legacy bios
@@ -688,9 +699,17 @@ System currently booted with legacy bios
 9BB0-3E21 is configured with: grub (versions: 6.8.12-1-pve, 6.8.4-3-pve)
 ```
 
+We now have a fully working mirrored zfs boot for Proxmox.
+
+
+
+
+
+
+
 ---
 
-Oh shit, we don't have a mirror on a primary ceph node...
+My "oh, crap" moment... I don't have a mirror on a primary ceph node...
 
 ```
 root@harlan:~# zpool status
