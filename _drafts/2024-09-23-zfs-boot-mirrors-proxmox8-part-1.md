@@ -376,7 +376,7 @@ errors: No known data errors
 
 Fix the boot for Proxmox
 
-```
+```console
 root@tanaka:~# proxmox-boot-tool status
 Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
 System currently booted with legacy bios
@@ -390,7 +390,7 @@ Sorting and removing duplicate ESPs..
 
 How to find the new hard drive
 
-```
+```console
 root@tanaka:~# fdisk -l
 Disk /dev/sda: 465.76 GiB, 500107862016 bytes, 976773168 sectors
 Disk model: ST3500418AS     
@@ -433,7 +433,7 @@ Partition 1 does not start on physical sector boundary.
 
 From `fdisk` we have an idea of which drives are existing ZFS and not.
 
-```
+```console
 root@tanaka:/dev/disk/by-id# ls -al
 total 0
 drwxr-xr-x 2 root root 420 Aug 22 21:43 .
@@ -474,7 +474,7 @@ lrwxrwxrwx 1 root root  10 Aug 22 21:43 ata-ST3500418AS_5VMQF6GN-part3 -> ../../
 
 This is the current boot disk from the above... as `/dev/sdc` also with parititions.
 
-```
+```console
 Disk /dev/sdc: 465.76 GiB, 500107862016 bytes, 976773168 sectors
 Disk model: APPLE HDD HTS547
 
@@ -561,7 +561,7 @@ Syncing disks.
 
 Format the Proxmox Boot Partition for the new disk and be sure to use the partition not the full device.
 
-```
+```console
 root@tanaka:~# proxmox-boot-tool format /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2
 UUID="" SIZE="1073741824" FSTYPE="" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sda" MOUNTPOINT=""
 Formatting '/dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2' as vfat..
@@ -571,7 +571,7 @@ Done.
 
 Initialize the new partition with GRUB if that is what you are using.
 
-```
+```console
 root@tanaka:~# proxmox-boot-tool init /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part2 grub
 Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
 UUID="9BB0-3E21" SIZE="1073741824" FSTYPE="vfat" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sda" MOUNTPOINT=""
@@ -622,7 +622,7 @@ config:
 
 Now attach the new prepared disk to the existing `rpool` and notice I used parition 3 from the new disk. Immediately do a zfs pool status and see the resilving process kick off.
 
-```
+```console
 root@tanaka:~# zpool attach rpool ata-APPLE_HDD_HTS547550A9E384_J2250055GMJ83C-part3 /dev/disk/by-id/ata-ST3500418AS_5VMQF6GN-part3
 root@tanaka:~# zpool status -v
   pool: rpool
@@ -648,7 +648,7 @@ errors: No known data errors
 
 Check the status again shortly and it should be complete pretty quickly if you don't have a lot of data.
 
-```
+```console
 root@tanaka:~# zpool status -v
   pool: rpool
  state: ONLINE
@@ -711,7 +711,7 @@ We now have a fully working mirrored zfs boot for Proxmox.
 
 My "oh, crap" moment... I don't have a mirror on a primary ceph node...
 
-```
+```console
 root@harlan:~# zpool status
   pool: rpool
  state: ONLINE
@@ -758,7 +758,7 @@ lrwxrwxrwx 1 root root  10 Aug 22 12:31 ata-ST500DM002-1SB10A_ZA45K50E-part3 -> 
 ...
 ```
 
-```
+```console
 root@harlan:~# proxmox-boot-tool clean
 Checking whether ESP 'EAD4-484A' exists.. Found!
 Checking whether ESP 'EAD6-7F83' exists.. Not found!
@@ -876,7 +876,7 @@ errors: No known data errors
 
 Scrub check
 
-```
+```console
 root@harlan:~# zpool scrub rpool 
 root@harlan:~# zpool status -v
   pool: rpool
