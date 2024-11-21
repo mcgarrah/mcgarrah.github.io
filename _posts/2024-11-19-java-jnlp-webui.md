@@ -116,9 +116,11 @@ These are now installed but not a fully configured useful Java at this point.
 
 ## Configure Software
 
-You should have two installed PortableApps: `CommonFiles/Java` and `Firefox`. The next two sections will describe what we are doing to each and then a detailed set of steps for each.
+You should have two installed PortableApps for Firefox and JPortable(Java) in sub-folders: `CommonFiles/Java` and `Firefox`. The next two sections will describe what we are doing to each and then a detailed set of steps for each.
 
----
+Before going to the configuration, we will confirm they are installed appropriately.
+
+### Firefox install confirmation
 
 To confirm the Firefox installation you should see something that looks like below.
 
@@ -126,15 +128,13 @@ To confirm the Firefox installation you should see something that looks like bel
 
 We will be adding the file `C:\PortableApps\FirefoxPortable\Other\Source\FirefoxPortable.ini` to the location `C:\PortableApps\FirefoxPortable\` next to the `FirefoxPortable.exe` file and modifying it to run only in 32-bit mode and allow multiple instances of Firefox to run.
 
----
+### Java install confirmation
 
 To confirm the Portable Java installation you should see something like this below.
 
 [![procurve image](/assets/images/procurve-webui-install-017.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-017.png){:target="_blank"}
 
 You will run the Java Control Panel to configure for enabling java in the web browser and the website or IP address of switch allowed to run java applications.
-
----
 
 ### FirefoxPortable Configuration
 
@@ -216,7 +216,7 @@ If your install mirrors mine with a root of `C:\PortableApps` then you can find 
 [![FirefoxPortable.ini](/assets/images/firefox-jnlp-ini-file.png){:width="35%" height="35%"}](/assets/images/firefox-jnlp-ini-file.png){:target="_blank"}
 
 <details>
-<summary>Click to see fully INI file</summary>
+<summary>Click to see the INI file as text</summary>
 {% highlight ini linenos %}
 [FirefoxPortable]
 FirefoxDirectory=App\firefox
