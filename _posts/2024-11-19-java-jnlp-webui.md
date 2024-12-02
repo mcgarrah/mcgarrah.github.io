@@ -92,7 +92,7 @@ This is the installed Firefox that I have setup at this point.
 
 ### Java Portable install
 
-Using the above downloaded files, install the "Java Portable 32-bit version 8 update 121" on your local Windows system. I used all defaults.
+Using the above downloaded files, install the "Java Portable 32-bit version 8 update 121" on your local Windows system. I used all defaults which picked up the FireFox install location.
 
 [![procurve image](/assets/images/procurve-webui-install-011.png "procurve image"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/procurve-webui-install-011.png){:target="_blank"}
 
