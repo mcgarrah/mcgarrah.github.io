@@ -36,3 +36,10 @@ I need something that is a break from studying and this little project might be 
 second thing that keeps my brain from imploding. I cannot use my proxmox cluster or ceph or networking
 as those spiral out of control at every chance. It has to be something infinitely interruptable.
 
+AI Agents for coding:
+
+- https://poe.com/
+- https://chatgpt.com/
+- https://www.perplexity.ai/
+- https://gemini.google.com/
+- https://copilot.microsoft.com/
