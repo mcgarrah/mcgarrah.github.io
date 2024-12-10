@@ -1,7 +1,7 @@
 ---
 title:  "HP ProCurve Switch Java WebUI"
 layout: post
-published: false
+published: true
 ---
 
 > "Don't bury the lede"
@@ -138,77 +138,6 @@ You will run the Java Control Panel to configure for enabling java in the web br
 
 ### FirefoxPortable Configuration
 
-<!-- 
-Java plugin doesn't work in Firefox Portable
-https://portableapps.com/node/57250
-
-    I need to access a corporate application that has a web interface and a Java applet.
-
-    I read that Firefox 52 and later don't allow the Java plugin anymore. So I installed Firefox Portable 51.0.1 into C:\users\username\Downloads\Firefox_51.0.1_Portable\FirefoxPortable. Then I copied the FirefoxPortable.ini file from the Other\Source directory and put it in the same directory as FirefoxPortable.exe. I edited the file to have the following:
-
-```
-    AllowMultipleInstances=true
-    AlwaysUse32Bit=true
-```
-
-    Then I read that Java 8u131 and later don't allow MD5 signed jar files which the corporate application uses. So I installed the 32-bit version of JPortable 8u121 into C:\Users\username\Downloads\Firefox_51.0.1_Portable\CommonFiles\Java. (followed the instructions at https://portableapps.com/support/firefox_portable#plugins)
-
-    I launched FirefoxPortable.exe, and checked the Tools->Add-ons->Plugins, and I saw that it had the Java(TM) Platform SE 8 U121 plugin. Looks like I installed everything correctly.
-
-    But when I go to https://www.java.com/verify/ and click on "Verify Java Version" to make sure the Java plugin is working, it says "Detecting Java on your computer" and "The Java detection app will ask for permission to run. Click Run to allow the verification process to continue. Depending on your system settings, you may need to respond to prompts to allow the verification to continue."
-
-    But it doesn't prompt me at all. After about 2 minutes, it finally says:
-
-    "We are unable to verify if Java is currently installed and enabled in your browser."
-
-    I also went into the Java Control Panel, to the Security tab, made sure "High" was selected, and then added "https://www.java.com/" into the Exception Site List, but that didn't help.
-
-    EDIT: I got it working. Somehow the "Enable Java content in the browser" box wasn't checked in the Security tab of the Java Control Panel, and also I needed to have the port number along with the URL in the Exception Site List.
--->
-
-<!--
-Installing Plugins (Java, Flash, Shockwave, etc.)
-https://portableapps.com/support/firefox_portable#plugins
-
-    Installing Plugins (Java, Flash, Shockwave, etc.)
-    Note that all plugins except Flash require Firefox to run in 32-bit mode, which you can force with AlwaysUse32Bit. Like many browsers, Firefox will be dropping support for all plugins except Flash by the end of 2016.
-
-    With Firefox Portable, plugins work a bit differently than they do in regular Firefox. Here's how to do some of the most common plugins:
-
-    Java Runtime Environment - To use Java apps with Mozilla Firefox, Portable Edition, just install jPortable alongside. If Firefox Portable is in X:\PortableApps\FirefoxPortable, jPortable should install to X:\PortableApps\CommonFiles\Java. The Firefox Portable launcher will automatically detect and configure the Java plugin for use.
-    <!-- Flash Plugin - To install Flash, you can either try our easy to use Flash installer for Firefox Portable, or follow these steps:
-    Flash is available as an extension. Just click the link.
-    You'll probably see a yellow bar across the top of the browser (if not, skip to Step 5), on that bar, click Edit Options
-    In the popup window, click Allow to add PortableApps.com to your whitelist and then click close
-    Now try the link again
-    You'll see a popup asking if you would like to install, click OK after the countdown and follow along the prompts
-    Shockwave Plugin - To install Shockwave, follow these steps:
-    Download the free Shockwave Player from the Macromedia website
-    Run the installation routine and, instead of letting it install to a local browser, select to choose your browser
-    Browse to X:\FirefoxPortable\App\firefox (where X is your device's driver letter) and continue with the installation
-    You may need to restart Firefox Portable for the changes to take effect
-    Other Plugins - Other plugin directions are coming soon...
-    If the above fails, try the alternate (and more geeky) method:
-
-    Install the plugin in a local copy of Firefox (on your hard drive)
-    Locate your plugins directory (usually C:\Program Files\Mozilla Firefox\plugins\)
-    Copy the plugin you need from there to your FirefoxPortable\Data\plugins directory (Some Exmaples: For Flash, copy NPSWF32.dll... for Shockwave, copy np32dsw.dll)
-    Notes: It should be noted that Adobe Flash does *not* officially support running in any portable configuration. And, as it is a closed source application, we can neither modify it nor package it into a more portable-friendly installer. It should also be noted that it is illegal to redistribute either flash or shockwave without the full installer. 
--->
-
-<!-- 
-From above:
-    EDIT: I got it working. Somehow the "Enable Java content in the browser" box wasn't checked in the Security tab of the Java Control Panel, and also I needed to have the port number along with the URL in the Exception Site List.
-
-    Here is the Java Control Panel from a PortableApp Installation of JPortable
-    "C:\PortableApps\CommonFiles\Java\bin\javacpl.exe"
-
-    Open and pick the third tab "Security" then the checkbox at the top "Enable Java content in the browser (Only disabled for this user)" needs to be checked.
-
-    I also added my URL of the switch by IP address to the Exception Site List as:
-        http://10.10.10.10
--->
-
 If your install mirrors mine with a root of `C:\PortableApps` then you can find the original file shown above in `C:\PortableApps\FirefoxPortable\Other\Source\FirefoxPortable.ini`. You will copy this file to `C:\PortableApps\FirefoxPortable` next to the `FirefoxPortable.exe` file and modify it with three changes. On lines 10 and 15, 16 modify the file to match entries to comment out `#AllowMultipleInstances=false` and add the two lines for `AllowMultipleInstances=true` and `AlwaysUse32Bit=true`.
 
 [![FirefoxPortable Files](/assets/images/firefox-jnlp-file-location.png){:width="55%" height="55%"}](/assets/images/firefox-jnlp-file-location.png){:target="_blank"}
@@ -267,33 +196,19 @@ AlwaysUse32Bit=true
 
 ### Java Portable Configuration
 
-Again, if your install mirrors mine with a root of `C:\PortableApps` then you will find the Java Control Panel in `C:\PortableApps\CommonFiles\Java\bin` and you will open the file `javacpl.exe`.
+Again, if your installation of Firefox and JPortable mirrors what I did above with a root of `C:\PortableApps` then you will find the Java Control Panel in `C:\PortableApps\CommonFiles\Java\bin` and you will open the file `javacpl.exe`.
 
 [![Firefox Java Portable Files](/assets/images/firefox-java-cpl-location.png){:width="35%" height="35%"}](/assets/images/firefox-java-cpl-location.png){:target="_blank"}
 
-You have to check the "Enable Java content in the browser" box in the Security tab of the Java Control Panel, and also have to add the port number along with the URL in the Exception Site List.
-
-    Here is the Java Control Panel from a PortableApp Installation of JPortable
-    "C:\PortableApps\CommonFiles\Java\bin\javacpl.exe"
-
-    Open and pick the third tab "Security" then the checkbox at the top "Enable Java content in the browser (Only disabled for this user)" needs to be checked.
-
-    I also added my URL of the switch by IP address to the Exception Site List as:
-        http://10.10.10.10
+Open the `javacpl.exe`, Java Control Panel, so you can configure it as follows. At the top of the dialog, check the "Enable Java content in the browser" box in the "Security" tab of the Java Control Panel. 
 
 [![Firefox Java Control Panel settings](/assets/images/firefox-java-cpl-security.png){:width="35%" height="35%"}](/assets/images/firefox-java-cpl-security.png){:target="_blank"}
 
-Those settings are stored in the text file at ```C:\Users\<username>\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites``` if you need to populate it with a longer list of IP Addresses. The star (*) format is untested. I've only tested with the "http://10.10.10.10" address entered.
+Next, you need to add the complete URL of you network switch to the "Exception Site List" found at the bottom of the dialog. For my testing, I've only tried this with the non-security HTTP to my switch  with the entry "http://10.10.10.10" address entered. This worked for me successfully. Some people with similar setups, mentioned they also I needed to have the port number along with the URL in the Exception Site List with something like "http://10.10.10.10:80" for it to work. For my test, I did not encounter this issue.
 
-## Working Interface
+For people that want to dive deeper, those exception list settings are stored in a text file at `C:\Users\<username>\AppData\LocalLow\Sun\Java\Deployment\security\exception.sites` if you need to populate it with a longer list of IP Addresses. The star (*) syntax and format is untested shown in the dialog is an untested option I found in the documentation.
 
-| ![Java WebGUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png) | ![Serial Console](/assets/images/hp-procurve-serial-console-putty.png) |
-|:--:|:--:|
-| Java WebGUI | Serial Console |
-
-Pick your poison. I happen to like having both options available. The serial console has all the options and is easy to repeat the steps with code. The WebUI gives you a quick visual of what is happening and for some operations a quick way to make changes.
-
-## Things I could have tried
+## Other thoughts
 
 Try a modern or open source JWS called [OpenWebStart](https://github.com/karakun/OpenWebStart). I just dodged this entirely as I could see it being a time sink. Somebody else might want to try this.
 
@@ -301,17 +216,25 @@ Using a Virtual Machine with an older OS and Web Browser of that era. Plenty of 
 
 I could also have tried using the Firefox ESR (Extended Support Release) that kept the NSAPI support longer and kept it patched up longer. As I wasn't sure of when that release dumped NSAPI support, I just avoided it in this first test.
 
-[![HP ProCurve 2810-24 Serial Console in PuTTY](/assets/images/hp-procurve-serial-console-putty.png){:width="50%" height="50%"}](/assets/images/hp-procurve-serial-console-putty.png){:target="_blank"}
-
-[![HP ProCurve 2810-24 Java Web Start WebUI in FireFox](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:width="50%" height="50%"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
+I could have automated the JPortable setup further but this is just a quick side project to get those switches up easily with a WebUI.
 
 ## References
+
+This list of articles and posts were instrumental in getting this working.
 
 * [Java error with the HP ProCurve 2510-24 J9019B network switch web interface](https://superuser.com/questions/1787945/java-error-with-the-hp-procurve-2510-24-j9019b-network-switch-web-interface)
 * [Managing old Java switches?](https://www.reddit.com/r/sysadmin/comments/17a6jrg/managing_old_java_switches/)
 * [Accessing legacy webpages requering NPAPI Java plugin](https://github.com/jarleven/NetworkHOWTO/blob/master/Java.md)
 * [ProCurve Switch J9021A needs Java](https://www.reddit.com/r/homelab/comments/11afd0p/procurve_switch_j9021a_needs_java/)
 * [FireFox Portable - Installing Plugins (Java, Flash, Shockwave, etc.)](https://portableapps.com/support/firefox_portable#plugins)
+
+## Final Thoughts and Working Interface
+
+| ![Java WebGUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png) | ![Serial Console](/assets/images/hp-procurve-serial-console-putty.png) |
+|:--:|:--:|
+| Java WebGUI | Serial Console |
+
+Pick your poison, I just happen to like having both options available. The serial console has all the options and is easy to repeat the steps with code. The WebUI gives you a quick visual of what is happening and for some operations a quick way to make changes. I hope this helps somebody else trying to keep some older equipment out of a land-fill and working fully.
 
 *[NPAPI]: Netscape Plugin Application Programming Interface
 *[JWS]: Java Web Start
