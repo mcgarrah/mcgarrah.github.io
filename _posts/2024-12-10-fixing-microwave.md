@@ -38,4 +38,4 @@ Here is the back panel with my manufacturer, model and serial numbers. It includ
 
 Amazon search for "Microwave Diode High Voltage Diode CL01-12" found me several vendors including one that had a complete [Home Microwave Oven Repair Replacement Parts Kits](https://www.amazon.com/KOKISO-Microwave-Replacement-Capacitor-CL01-12/dp/B0B7WTRY7G/) with the capacitor, multiple fuses, and diodes including shrink wrap. I was tempted to buy the full kit, but decided to save my shelf space the extra parts that I'll never find when I need them in the future.
 
-More to come in Part 2... after the diode to shows up.
+More to come in Part 2... after the diode shows up.
