@@ -8,7 +8,7 @@ My relatively new microwave just stopped heating things for no apparent reason o
 
 That video said it was likely a fuse or diode which are both cheap enough that they are worth an attempt at fixing. That will give me an extra microwave for the kids to use upstairs if I can fix it and save some landfill space.
 
-| ![](/assets/images/microwave-fuse-closeup.jpg){:width="75%" height="75%"} | ![](/assets/images/microwave-diode-closeup.jpg) |
+| ![fuse](/assets/images/microwave-fuse-closeup.jpg){:width="75%" height="75%"} | ![diode](/assets/images/microwave-diode-closeup.jpg) |
 |:--:|:--:|
 | Fuse | Diode |
 
