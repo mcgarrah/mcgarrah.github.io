@@ -1,5 +1,5 @@
 ---
-title:  "Diagnosing a broken microwave - Part 1"
+title:  "Diagnosing a broken microwave"
 layout: post
 published: true
 ---
@@ -38,4 +38,16 @@ Here is the back panel with my manufacturer, model and serial numbers. It includ
 
 Amazon search for "Microwave Diode High Voltage Diode CL01-12" found me several vendors including one that had a complete [Home Microwave Oven Repair Replacement Parts Kits](https://www.amazon.com/KOKISO-Microwave-Replacement-Capacitor-CL01-12/dp/B0B7WTRY7G/) with the capacitor, multiple fuses, and diodes including shrink wrap. I was tempted to buy the full kit, but decided to save my shelf space the extra parts that I'll never find when I need them in the future.
 
-More to come in Part 2... after the diode shows up.
+---
+
+**Update**: 2024-12-12
+
+The "CL01-12 Microwave Oven High Voltage Diode Rectifier" two pack showed up from Amazon and
+I swapped the new ones in for the known bad one.
+In my testing, the microwave is still running but also not heating up things exactly as before.
+So next pieces that could be faulty are the high voltage transformer, high voltage capacitor, the magnetron, along with other bits along the way.
+I've tested the majority of the connectors for continuity and cursory testing on a few of the common sensors that fail.
+The next steps on this unit are more than I want to dig into and likely more costly than it is worth.
+So the whole thing is going into a recycle bin.
+
+Not all stories have a happy ending but I learned a good bit along the way which is its own sort of fun.
