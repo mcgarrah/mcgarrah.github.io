@@ -2,32 +2,36 @@
 title:  "Online Quiz Software for Certifications"
 layout: post
 published: false
+date: 2024-12-23
 ---
 
-While pushing for several certifications, I found myself needing a way to study in a way that replicates the certification exam process. A quiz or test web application that lets me plugin a pile of questions and multiple-choice answers with a timer was a baseline. Digging around did not find much in a first search.
+I am studying for several technical certifications and I want to study using an application that replicates the certification exam process. With that in mind, I started looking around for a simple test or quiz web application that lets me plugin a pile of questions in multiple-choice format with a timer as a baseline.
 
-[Web Application for Simulating Certification Exams](https://github.com/mcgarrah/nzarttrainer)
-
-[Quiz Survey Test - QST](https://sourceforge.net/projects/qstonline/) with a Docker version [Docker QST](https://github.com/elquimista/qst-docker)
-
-[ClassQuiz is a quiz-application](https://github.com/mawoka-myblock/ClassQuiz) ([fork](https://github.com/mcgarrah/ClassQuiz)) with a [website](https://classquiz.de/). Python code with all the bells and whistles.
-
-https://www.reddit.com/r/selfhosted/comments/fwy250/looking_for_selfhosted_live_quiz/
+I found a couple of promising projects but each had some downside or gaps that would require a good bit of work to make them usable for what I wanted to accomplish. A secondary requirement is to have a somewhat modern web interface and tech stack that I can refresh my fullstack programming skills with modern tools. I would also like to experiment with some of the new LLM assisted programming tooling along the way as well.
 
 <!-- excerpt-end -->
 
-This all led to grabbing requirements for each of the project.  Then I found myself hating the applications
-that all needed small extensions.
+Here is what I found in my research:
+
+* [Web Application for Simulating Certification Exams](https://github.com/mcgarrah/nzarttrainer)
+
+* [Quiz Survey Test - QST](https://sourceforge.net/projects/qstonline/) with a Docker version [Docker QST](https://github.com/elquimista/qst-docker)
+
+* [ClassQuiz is a quiz-application](https://github.com/mawoka-myblock/ClassQuiz) ([fork](https://github.com/mcgarrah/ClassQuiz)) with a [website](https://classquiz.de/). Python code with all the bells and whistles.
+
+* [Reddit: Looking for self-hosted live quiz](https://www.reddit.com/r/selfhosted/comments/fwy250/looking_for_selfhosted_live_quiz/)
+
+This all led to grabbing requirements for each of the project.  Then I found myself finding faults or limitations in each of the applications as they all needed some larger or smaller extensions to do what I needed.
 
 Enter ChatGPT and a few other AI agents and my recent work in Flask and Django that needed a refresh.
 
 When building something in Python for a webapp
 
 Flask:
- Simplicity, flexibility, small projects, prototyping, learning, APIs, microservices, high performance.
+  Simplicity, flexibility, small projects, prototyping, learning, APIs, microservices, high performance.
 
 Django:
- Complex projects, rapid development, structure, built-in features, "batteries included" approach.
+  Complex projects, rapid development, structure, built-in features, "batteries included" approach.
 
 No MySQL or PostgreSQL required. Figure out how to use Docker (Rancher) to support the work.
 SQLite and JSON are my picks for storage.

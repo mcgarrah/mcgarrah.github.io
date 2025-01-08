@@ -6,7 +6,7 @@ published: true
 
 > "Don't bury the lede"
 
-A working HP ProCurve Java WebUI screenshot to showing that I got it working.
+A working HP ProCurve Java WebUI screenshot to show that I got it working.
 
 [![ProCurve WebUI](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png "ProCurve Java WebUI"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/hp-procurve-java-web-start-jnlp-webui-in-firefox.png){:target="_blank"}
 
