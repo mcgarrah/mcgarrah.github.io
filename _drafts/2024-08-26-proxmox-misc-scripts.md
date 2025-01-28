@@ -8,8 +8,10 @@ A couple of useful scripts I've found or created to help manage my Proxmox 8.2 w
 
 <!-- excerpt-end -->
 
+This is a list of the commands sitting ready in my Ceph shared storage. I have three nodes in the Proxmox HA cluster.  PVE1, PVE2, and PVE3 which has their shared storage on three USB Thumbdrives.
+
 ```console
-root@harlan:/mnt/pve/cephfs/bin# ls
+root@pve1:/mnt/pve/cephfs/bin# ls
 ceph-down.sh  cssh                osd-optimize.md     rsync-drive-tvshows.sh
 ceph-up.sh    dev-host-rescan.sh  rsync-drive-sdg.sh  set-osd-mclock-max-cap-iops.sh
 ```
