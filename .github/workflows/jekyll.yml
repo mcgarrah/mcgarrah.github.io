@@ -1,9 +1,11 @@
 # This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+#
+# Specifically, it does not use the `actions/jekyll-build-pages` action.
+#
+# https://github.com/actions/jekyll-build-pages?tab=readme-ov-file#usage is 
+# the official action for deploying Jekyll sites to GitHub Pages.
+#
 
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
 name: Deploy Jekyll site to Pages
 
 on:
@@ -34,10 +36,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Ruby
-        #uses: ruby/setup-ruby@8575951200e472d5f2d95c625da0c7bec8217c42 # v1.161.0
-        uses: ruby/setup-ruby@v1.198.0
+        uses: ruby/setup-ruby@v1.198.0    # https://github.com/ruby/setup-ruby/releases/tag/v1.198.0
         with:
-          #ruby-version: '3.1' # Not needed with a .ruby-version file
           ruby-version: '3.2' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
@@ -64,3 +64,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+#
+# https://github.com/actions/deploy-pages/releases/tag/v4
+# https://github.com/actions/upload-pages-artifact/releases/tag/v3
+# https://github.com/actions/configure-pages/releases/tag/v5
+# https://github.com/actions/checkout/releases/tag/v4
+#
+# https://github.com/ruby/setup-ruby/releases/tag/v1.198.0
+#
