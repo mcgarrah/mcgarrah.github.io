@@ -4,9 +4,9 @@ layout: post
 published: false
 ---
 
-Why do I install **OMZ** on just about every system I use now? Because it just works out of the box and improves the command line experience without getting in the way. The other part of why is that I started using the terminal in MacOS a good bit, and it defaults to **zsh** and not **bash**.
+Why do I install **OMZ** on just about every system I use now? Because it just works out of the box and improves the command line experience without getting in the way. The other part of why is that I started using the iTerm2 (a terminal) in MacOS a good bit, and it defaults to **zsh** and not **bash**.
 
-## What is Oh My Zsh
+## What is "Oh My Zsh"
 
 [Oh My Zsh](https://ohmyz.sh/#install)
 
