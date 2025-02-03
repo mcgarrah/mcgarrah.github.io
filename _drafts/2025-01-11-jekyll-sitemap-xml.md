@@ -4,15 +4,17 @@ layout: post
 published: false
 ---
 
-Adding a `sitemap.xml` for the posts of a Jekyll website is an important part of getting Google Seach to index your website appropriately. I have an interest in this working well so I can use the Google Indices for a local search bar to find things on my Jekyll website. It would also be nice to have it indexed so people can find my posts.
+Adding a `sitemap.xml` for the posts of a Jekyll website is an important part of getting Google Search to index your website appropriately. I have an interest in this working well so I can use the Google Indices for a local search bar to find things on my Jekyll website. It would also be nice to have it indexed so people can find my posts.
 
-Google Search Console says the [sitemaps.xml](https://www.mcgarrah.org/sitemap.xml) is invalid
+The Google Search Console says the automagically generated [sitemaps.xml](https://www.mcgarrah.org/sitemap.xml) is invalid for this website.
 
+``` text
 Sitemap can be read, but has errors
 Invalid URL 115 instances
 This is not a valid URL. Please correct it and resubmit.
 Examples
     URL: /devstudio/
+```
 
 jekyll-sitemaps is missing `baseurl` or `url` in config
 
@@ -24,7 +26,7 @@ https://github.com/orgs/community/discussions/23341
 
 Three approaches are available...
 
-1. Generate a the file myself with code (no plugins)
+1. Generate a the file myself with code (no plugins).
 2. Modify the plugin `jekyll-sitemap` or pickup changes coming for it.
 3. Generate the `sitemap.xml` using an external process like Github Workflow
 
@@ -36,7 +38,7 @@ Three approaches are available...
 
 I have a problem with multiple Github Websites under one domain
 
-**mcgarrah.github.io** and **resume** are both under root **mcgarrah.org** and **mcgarrah.org/resume** which was hard to initially setup...
+**mcgarrah.github.io** and **resume** are both under root **mcgarrah.org** and **mcgarrah.org/resume** which was challenging to initially setup...
 
 So the https://mcgarrah.org/resume is a different github website and Jekyll instance from https://mcgarrah.org site.
 
