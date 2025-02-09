@@ -8,6 +8,8 @@ We have all done it if you work long enough. I blew up my Debian Linux system wi
 
 I renamed my `/usr` directory to `/usr-root` with a `mv /usr /usr-root` as the root user. I knew I was treading on dangerous ground so I fortunately had two ssh console sessions up and both running as `root`. The goal was to migrate the `/usr` to separate storage to recover space for the very full root disk.
 
+--MY POST ON PROXMOX 8.2 UPGRADE LINK HERE--
+
 ``` shell
 root@pve1:/mnt/pve/osdisk# mkdir /usr-new
 root@pve1:/mnt/pve/osdisk# mount /usr-new
@@ -21,13 +23,15 @@ root@pve1:/# /usr-root/bin/mv /usr-new /usr
 
 This was the **oh crap** moment for me when I realized how badly I had screwed up. When you break stuff this bad, it is time to stop for a minute and take stock. My absolutely worst case scenerio is a 150 mile drive to the box in question and a USB Boot Drive. But I have been doing this long enough that I had left myself options with the two active root sessions if I worked carefully.
 
-... and then I really fudged it up with a bad `/etc/fstab` bind mount entry ...
-
 <!-- excerpt-end -->
 
-Other things I missed... [The Debian /usr Merge](https://wiki.debian.org/UsrMerge) where `/lib`, `/sbin` and `/bin` are symlinks to `/usr/lib`, `/usr/sbin` and `/usr/bin`.
+Another things I missed which impact this situation... [The Debian /usr Merge](https://wiki.debian.org/UsrMerge) where `/lib`, `/sbin` and `/bin` are symlinks to `/usr/lib`, `/usr/sbin` and `/usr/bin`.
 
 https://hackaday.com/2020/09/03/linux-fu-moving-usr/
+
+I completely missed this major change in the Debian file systems changing over to a root centric partitioning. I'm slightly old school UNIX where you are able to break up all the major volumes/parititions (var, usr, home, etc...) to different disks or partitions on a disk. This trend is falling off with a merged root volume.
+
+
 
 First off what do you have with a root session when the base `/bin` commands are toast? You have the built-in commands of the shell.
 
@@ -347,3 +351,9 @@ root@pve1:/# ls
 bin   dev  home        initrd.img.old  lib64       media  opt   root  sbin  sys  usr      var      vmlinuz.old
 boot  etc  initrd.img  lib             lost+found  mnt    proc  run   srv   tmp  usr-new  vmlinuz
 ```
+
+Full disclosure ... along the way ... I dorked up again with a bad `/etc/fstab` bind mount entry ... that meant I had to do the 150 mile drive to get past this screen...
+
+-- PICTURE FROM CELL PHONE --
+
+Lesson learned on that one was forgetting to add the `nowaitboot` which I had learned at some point in the past but had to re-learn.
