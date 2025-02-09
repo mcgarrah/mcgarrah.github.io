@@ -21,17 +21,21 @@ root@pve1:/# /usr-root/bin/mv /usr-new /usr
 -bash: /usr-root/bin/mv: cannot execute: required file not found
 ```
 
-This was the **oh crap** moment for me when I realized how badly I had screwed up. When you break stuff this bad, it is time to stop for a minute and take stock. My absolutely worst case scenerio is a 150 mile drive to the box in question and a USB Boot Drive. But I have been doing this long enough that I had left myself options with the two active root sessions if I worked carefully.
+This was the **oh crap** moment for me when I realized how badly I had just screwed up. When you break stuff this bad, it is time to stop for a minute and take stock. My absolutely worst case scenerio is a 150 mile drive to the box in question and a USB Recovery Boot Drive with my [***trash can*** **crash cart** (TC<sup>3</sup>)](https://www.mcgarrah.org/proxmox-upgrade-issues/). But I have been doing this long enough that I had left myself options with the two active root sessions *if* I worked carefully.
 
 <!-- excerpt-end -->
+
+The above mistake was me just being hasty trying to get to my Proxmox 8.3 upgrades on the main cluster and doing this a little after 1:00am in the morning. That is usually when I screw things up... when I'm in a hurry and a bit tired. There is probably a life lesson in there someplace that I need to think about.
+
+
+
+
 
 Another things I missed which impact this situation... [The Debian /usr Merge](https://wiki.debian.org/UsrMerge) where `/lib`, `/sbin` and `/bin` are symlinks to `/usr/lib`, `/usr/sbin` and `/usr/bin`.
 
 https://hackaday.com/2020/09/03/linux-fu-moving-usr/
 
 I completely missed this major change in the Debian file systems changing over to a root centric partitioning. I'm slightly old school UNIX where you are able to break up all the major volumes/parititions (var, usr, home, etc...) to different disks or partitions on a disk. This trend is falling off with a merged root volume.
-
-
 
 First off what do you have with a root session when the base `/bin` commands are toast? You have the built-in commands of the shell.
 
@@ -68,7 +72,7 @@ For a list of built-in `bash` commands:
 enable
 ```
 
-I'll call out some useful ones like `echo`, `cd`, `export`, `type`
+I'll call out some useful ones like `echo`, `cd`, `export`, `type`, `read`
 
 ``` console
 root@pve1:~# enable
@@ -184,6 +188,7 @@ A star (*) next to a name means that the command is disabled.
  hash [-lr] [-p pathname] [-dt] [name ...]                     while COMMANDS; do COMMANDS-2; done
  help [-dms] [pattern ...]                                     { COMMANDS ; }
 ```
+
 ---
 
 https://www.qfbox.info/bashcp
@@ -352,8 +357,10 @@ bin   dev  home        initrd.img.old  lib64       media  opt   root  sbin  sys 
 boot  etc  initrd.img  lib             lost+found  mnt    proc  run   srv   tmp  usr-new  vmlinuz
 ```
 
+## Boot Failure
+
 Full disclosure ... along the way ... I dorked up again with a bad `/etc/fstab` bind mount entry ... that meant I had to do the 150 mile drive to get past this screen...
 
 -- PICTURE FROM CELL PHONE --
 
-Lesson learned on that one was forgetting to add the `nowaitboot` which I had learned at some point in the past but had to re-learn.
+Lesson learned on that one was forgetting to add the `nofail` or `nowaitboot` which I had learned at some point in the past but had to re-learn. Also, those options impacts have changed since **SystemD** transitions in the last couple years so another thing to re-re-learn.
