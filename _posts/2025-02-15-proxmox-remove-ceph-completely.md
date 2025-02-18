@@ -65,6 +65,98 @@ rm -rf /var/lib/ceph
 rm -rf /var/log/ceph
 ```
 
+## Unlocking the OSD media
+
+Error when trying to wipe the old Ceph OSD media came up when trying to setup the new Ceph Cluster.
+
+``` text
+Error
+disk/partition '/dev/sda' has a holder (500)
+```
+
+You need the long label name for the Ceph partition. You can get this from a `lsblk` call.
+
+``` console
+root@pve3:~# lsblk
+NAME                                                        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda                                                           8:0    1  28.7G  0 disk
+└─sda1                                                        8:1    1  28.7G  0 part /mnt/pve/osdisk-usr
+                                                                                      /usr
+sdb                                                           8:16   1 117.2G  0 disk
+└─ceph--553fe20d--4cc0--4e58--9f9e--914b40d3403d-osd--block--57263386--2463--4f23--9848--6e7dee2c129d
+                                                            252:0    0 117.2G  0 lvm
+mmcblk0                                                     179:0    0   7.3G  0 disk
+├─mmcblk0p1                                                 179:1    0   512M  0 part /boot/efi
+├─mmcblk0p2                                                 179:2    0   5.8G  0 part /
+└─mmcblk0p3                                                 179:3    0   976M  0 part [SWAP]
+mmcblk0boot0                                                179:8    0     4M  1 disk
+mmcblk0boot1                                                179:16   0     4M  1 disk
+```
+
+Pass that value to the `dmsetup remove xxxx` to remove the hold.
+
+``` console
+root@pve3:~# dmsetup remove ceph--553fe20d--4cc0--4e58--9f9e--914b40d3403d-osd--block--57263386--2463--4f23--9848--6e7dee2c129d
+```
+
+Now you can use the Disks "Wipe Disk" option on that media before setting Ceph back up.
+
+Found this in [Proxmox Forum sda has a holder...](https://forum.proxmox.com/threads/sda-has-a-holder.97771/post-513875) from 2021.
+
+## Clear out shared storage entries
+
+Notice the question marks next to the `cephrbd` and `cephfs` storage entries.
+
+[![Shared Storage](/assets/images/proxmox-ceph-storage-cleanup.png "Shared Storage"){:width="25%" height="25%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/proxmox-ceph-storage-cleanup.png){:target="_blank"}
+
+You need to remove these from the `/etc/pve/storage.cfg` file that is in the shared PVE location used by the Proxmox Cluster to share configuration settings.
+
+``` text
+dir: local
+        path /var/lib/vz
+        content snippets,images,rootdir,backup,vztmpl,iso
+        prune-backups keep-all=1
+
+cephfs: cephfs
+        path /mnt/pve/cephfs
+        content iso,vztmpl,backup
+        fs-name cephfs
+
+rbd: cephrbd
+        content rootdir,images
+        krbd 0
+        pool cephrbd
+
+dir: osdisk-usr
+        path /mnt/pve/osdisk-usr
+        content rootdir
+        is_mountpoint 1
+        nodes pve2,pve3,pve1
+```
+
+We need to remove the two sections with `ceph` RBD and FS in the name. You should only need to do this once and the cluster will share the file to the other nodes in the cluster.
+
+``` text
+dir: local
+        path /var/lib/vz
+        content snippets,images,rootdir,backup,vztmpl,iso
+        prune-backups keep-all=1
+```
+
+*Note*: You will probably not have a section called `osdisk-usr` as that is my special volume used when I migrated the `/usr` from root to external USB storage.
+
+## Orphan LXC and VM
+
+I had a couple of orphaned VMs and LXCs that would not allow themselves to be deleted because their disk images were in shared Ceph RBD storage. So out comes the `rm` command.
+
+I navigated to `/etc/pve/qemu-server` for the VMs on the node hosting it in the cluster. Once there, I found the VM ID which was `1001`. I just did a `rm 1001.conf` on the file to clear it out. It will be reflected in the Proxmox webui almost immediately.
+
+If it was a LXC that was locked, I would go to `/etc/pve/lxc` and find the file by LCX ID. Then do the same `rm` on that file.
+
+You'll have to go to each node that is hosting your VM or LXC to remove them.
+
+Something that came up later, if you have Cluster level HA Resources configured for your VM or LXC, you will also need to remove them from it before doing this or face problems with it later.
+
 ## Last thoughts
 
 This was what I needed to get my test cluster back where I needed it after really screwing up my `cephfs` and `cephrbd` by tearing out external storage used for OSDs and remapping my `/usr` to separate external storage. This test system is highly constrained on RAM and Storage so I have had to play games to keep it working and being useful. You can see some of those challenges in [ProxMox 8.2.2 Cluster on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040/) and again in [ProxMox 8.2.4 Upgrade on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040-upgrade/). I am sharing this with the best intentions and hope you find it useful.
