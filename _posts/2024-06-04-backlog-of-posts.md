@@ -11,15 +11,20 @@ I've got a backlog of posts I want to do on various topics. A couple of recent p
 Here is a dump of my unpublished posts that need polishing to release:
 
 * Learning Jekyll
-* Site to Site VPN for the Homelabs
+* ~~Site to Site VPN for the Homelabs~~
+  * [Tailscale on Dell Wyse 3040 with Debian 12](https://www.mcgarrah.org/dell-wyse-3040-tailscale/) solves a lot
 * Link Aggregated (LAG) and LACP NIC Bonding
-* HP ProCurve Switch Java WebUI (Java JNLP WebStart)
+* ~~HP ProCurve Switch Java WebUI (Java JNLP WebStart)~~
+  * [HP ProCurve Switch Java WebUI](/java-jnlp-webui/)
 * ~~Dell Wyse 3040 Initial Setup (tailscale endpoints)~~
   * [Debian 12 on Dell Wyse 3040s](/dell-wyse-3040-debian12/)
   * [ProxMox 8.2.2 Cluster on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040/)
   * [Tailscale on Dell Wyse 3040 with Debian 12](/dell-wyse-3040-tailscale/)
 * PiKVM v3 and AIMOS 8-port KVM Setup (hacking the webui)
-* ProxMox 8 Lessons Learned in the Homelabs (pain points and solutions)
+* ~~ProxMox 8 Lessons Learned in the Homelabs (pain points and solutions)~~
+  * [Proxmox VE 8.1 to 8.2 upgrade issues in the Homelabs](/proxmox-upgrade-issues/)
+  * [ProxMox 8.2.4 Upgrade on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040-upgrade/)
+  * [ProxMox 8.2.2 Cluster on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040/)
 
 I am still working on the WireGuard VPN setup with [GL.iNet Brume 2 VPN Servers](https://www.gl-inet.com/products/gl-mt2500/) to link all my varies homelab networks. Those networks now include another physical location with fiber being installed next week. I'm waiting for fiber to be available at the beach house which will change my life. A triangle of linked networks makes for a more interesting configuration and I hope to get those done shortly and write about it.
 
