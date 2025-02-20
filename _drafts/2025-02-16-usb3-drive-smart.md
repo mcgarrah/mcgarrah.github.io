@@ -1,3 +1,8 @@
+---
+title:  "USB3 Thumbdrive and SMART for the Homelab"
+layout: post
+published: false
+---
 
 Auto device detect fails on my USB Drives
 
