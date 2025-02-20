@@ -57,13 +57,15 @@ apt clean
 Finally this last step goes thru and completely removes all remnants of ceph from your system. These are the pieces I determined as safe to remove for my system.
 
 ``` console
-rm -rf /etc/ceph
+rm -rf /etc/ceph/*
 rm -rf /etc/pve/ceph.conf
 rm -rf /etc/pve/ceph
 rm -rf /etc/pve/priv/ceph
 rm -rf /var/lib/ceph
 rm -rf /var/log/ceph
 ```
+
+*Note*: Leaving the `/etc/ceph` directory in place as it is needed later when reinstalling Ceph on the system. The error "command 'cp /etc/pve/priv/ceph.client.admin.keyring /etc/ceph/ceph.client.admin.keyring' failed: exit code 1 (500)" requires the directory to exist.
 
 ## Unlocking the OSD media
 
