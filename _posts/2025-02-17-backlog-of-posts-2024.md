@@ -33,9 +33,9 @@ Here is a list of my unpublished draft posts that need time and polishing to rel
   * Adding interactive commenting system to GHP Jekyll
   * Borken Linux Root Boot failure amd recovery
   * Oracle Cloud Infrastructure (OCI) learning
-  * Portfolio Project: Fullstack Quick WebApp
-  * Portfolio Project: Terraform for AWS QuickSight
-  * Portfolio Project: Terraform for Serverless URL Redirector
+  * Portfolio Project: [Fullstack Quick Quiz WebApp](https://github.com/mcgarrah/legendary_quick_quiz)
+  * Portfolio Project: [Terraform for AWS QuickSight](https://github.com/mcgarrah/quicksight_demo)
+  * Portfolio Project: *Terraform for Serverless URL Redirector*
 
 I have learned a lot of lessons along the way building this website and my online resume. Jekyll on the Github Pages with Github Workflows come to mind immediately as things I want to write about to figure out what I have learned. Those are really powerful tool combinations for your tool box. Along the way, I had ideas I want to explore further and often drop a draft post that I keep my notes and thoughts at the time so I can revisit it as I have time later. I've collected a number of those in the backlog.
 
