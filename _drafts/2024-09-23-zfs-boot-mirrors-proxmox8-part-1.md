@@ -14,6 +14,376 @@ So I need to figure out how to migrate the content from the existing single good
 
 <!-- excerpt-end -->
 
+## WORKING EXAMPLE IN ORDER
+
+Here is a complete working session with a replacement of a bad disk in a ZFS Boot Mirror. I pulled the bad drive and replaced with a new wiped drive of the same size.
+
+The steps at a high-level:
+
+1. copy the existing partition structures from the working bootdisk to the new disk
+2. replace the old disk with the new disk in the zfs rpool mirror
+3. verify the disk is resilvering (copy data from good disk)
+4. verify bootloader on good disk and error on new disk
+5. initialize the new disk for proxmox booting and setup boot loader
+6. verify both disks are now proxmox bootable drives
+7. start a zfs scrub operation on the mirror (chkdsk for zfs)
+8. verify no errors on scrub
+
+``` console
+Linux edgar 6.8.12-8-pve #1 SMP PREEMPT_DYNAMIC PMX 6.8.12-8 (2025-01-24T12:32Z) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Feb 25 12:28:43 EST 2025 from 192.168.86.12 on pts/0
+root@edgar:~# zpool status
+  pool: rpool
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+        invalid.  Sufficient replicas exist for the pool to continue
+        functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J
+  scan: scrub repaired 0B in 00:02:38 with 0 errors on Sun Feb  9 00:26:39 2025
+config:
+
+        NAME                                 STATE     READ WRITE CKSUM
+        rpool                                DEGRADED     0     0     0
+          mirror-0                           DEGRADED     0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3  ONLINE       0     0     0
+            12573010284538016996             UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST31000528AS_5VP07Z06-part3
+
+errors: No known data errors
+root@edgar:~# fdisk -l
+The backup GPT table is corrupt, but the primary appears OK, so that will be used.
+Disk /dev/sda: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors
+Disk model: ST31000524AS    
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: E42473C4-29C7-4AA9-9DC9-383904626EAA
+
+Device       Start        End    Sectors   Size Type
+/dev/sda1       34       2047       2014  1007K BIOS boot
+/dev/sda2     2048    2099199    2097152     1G EFI System
+/dev/sda3  2099200 1953525134 1951425935 930.5G Solaris /usr & Apple ZFS
+
+
+Disk /dev/sdb: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors
+Disk model: TOSHIBA MQ01ABD1
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+Disk /dev/sdc: 476.94 GiB, 512110190592 bytes, 1000215216 sectors
+Disk model: SAMSUNG MZ7LN512
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/ceph--aab6474c--ecbf--4f91--b894--b5401452a200-osd--wal--4b062820--ad60--4417--aa62--d7a920b6cd6a: 100 GiB, 107374182400 bytes, 209715200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/ceph--aab6474c--ecbf--4f91--b894--b5401452a200-osd--wal--11933296--4c24--4e3b--a34e--63170f3db9f7: 100 GiB, 107374182400 bytes, 209715200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/ceph--aab6474c--ecbf--4f91--b894--b5401452a200-osd--wal--42e93a7e--3c6c--48d1--928b--3f4f76cf9f83: 100 GiB, 107374182400 bytes, 209715200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sdd: 4.55 TiB, 5000981077504 bytes, 9767541167 sectors
+Disk model: Portable        
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+Disk /dev/mapper/ceph--d0c78e31--167c--44a6--afa4--95b4947ef5f8-osd--block--74d21c73--a133--49d6--9127--72cf18a04dcf: 4.55 TiB, 5000977711104 bytes, 9767534592 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+Disk /dev/sde: 4.55 TiB, 5000981077504 bytes, 9767541167 sectors
+Disk model: Portable        
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+Disk /dev/mapper/ceph--19c9343e--24f7--47ea--a33c--f5451f8444bc-osd--block--0d2ea87f--04c1--4cc4--83ce--b4d9de60afbb: 4.55 TiB, 5000977711104 bytes, 9767534592 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+Disk /dev/sdf: 4.55 TiB, 5000981077504 bytes, 9767541167 sectors
+Disk model: BUP Portable    
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+Disk /dev/mapper/ceph--20ba9f5a--0e68--4462--b4d8--c68768e7fc10-osd--block--21efa385--b8e0--4ffc--ab69--da6d79fd46d8: 4.55 TiB, 5000977711104 bytes, 9767534592 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+root@edgar:~# sfdisk -d /dev/sda
+The backup GPT table is corrupt, but the primary appears OK, so that will be used.
+label: gpt
+label-id: E42473C4-29C7-4AA9-9DC9-383904626EAA
+device: /dev/sda
+unit: sectors
+first-lba: 34
+last-lba: 1953525134
+sector-size: 512
+
+/dev/sda1 : start=          34, size=        2014, type=21686148-6449-6E6F-744E-656564454649, uuid=D3D66523-CAA8-4D34-A4C3-94F5BBF3551B
+/dev/sda2 : start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=14CD0815-2A97-4E42-8B21-687ADD2FF4B2
+/dev/sda3 : start=     2099200, size=  1951425935, type=6A898CC3-1DD2-11B2-99A6-080020736631, uuid=2CC1871D-E802-4C79-969E-3931961FB1E9
+root@edgar:~# sfdisk -d /dev/sdb
+sfdisk: /dev/sdb: does not contain a recognized partition table
+root@edgar:~# sfdisk -d /dev/sda | sfdisk /dev/sdb
+The backup GPT table is corrupt, but the primary appears OK, so that will be used.
+Checking that no-one is using this disk right now ... OK
+
+Disk /dev/sdb: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors
+Disk model: TOSHIBA MQ01ABD1
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Script header accepted.
+>>> Created a new GPT disklabel (GUID: E42473C4-29C7-4AA9-9DC9-383904626EAA).
+/dev/sdb1: Created a new partition 1 of type 'BIOS boot' and of size 1007 KiB.
+/dev/sdb2: Created a new partition 2 of type 'EFI System' and of size 1 GiB.
+/dev/sdb3: Created a new partition 3 of type 'Solaris /usr & Apple ZFS' and of size 930.5 GiB.
+/dev/sdb4: Done.
+
+New situation:
+Disklabel type: gpt
+Disk identifier: E42473C4-29C7-4AA9-9DC9-383904626EAA
+
+Device       Start        End    Sectors   Size Type
+/dev/sdb1       34       2047       2014  1007K BIOS boot
+/dev/sdb2     2048    2099199    2097152     1G EFI System
+/dev/sdb3  2099200 1953525134 1951425935 930.5G Solaris /usr & Apple ZFS
+
+Partition 1 does not start on physical sector boundary.
+
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+root@edgar:~# zpool status
+  pool: rpool
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+        invalid.  Sufficient replicas exist for the pool to continue
+        functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J
+  scan: scrub repaired 0B in 00:02:38 with 0 errors on Sun Feb  9 00:26:39 2025
+config:
+
+        NAME                                 STATE     READ WRITE CKSUM
+        rpool                                DEGRADED     0     0     0
+          mirror-0                           DEGRADED     0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3  ONLINE       0     0     0
+            12573010284538016996             UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST31000528AS_5VP07Z06-part3
+
+errors: No known data errors
+root@edgar:~# zpool status
+  pool: rpool
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+        invalid.  Sufficient replicas exist for the pool to continue
+        functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J
+  scan: scrub repaired 0B in 00:02:38 with 0 errors on Sun Feb  9 00:26:39 2025
+config:
+
+        NAME                                 STATE     READ WRITE CKSUM
+        rpool                                DEGRADED     0     0     0
+          mirror-0                           DEGRADED     0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3  ONLINE       0     0     0
+            12573010284538016996             UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST31000528AS_5VP07Z06-part3
+
+errors: No known data errors
+root@edgar:~# ls /dev/disk/by-id/*-part3
+/dev/disk/by-id/ata-ST31000524AS_5VPD6EX2-part3         /dev/disk/by-id/wwn-0x5000039743e86194-part3
+/dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3  /dev/disk/by-id/wwn-0x5000c5005c9344c7-part3
+root@edgar:~# zpool replace rpool /dev/disk/by-id/ata-ST31000528AS_5VP07Z06-part3 /dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3
+root@edgar:~# zpool status
+  pool: rpool
+ state: DEGRADED
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Tue Feb 25 15:33:38 2025
+        6.73G / 6.73G scanned, 40.7M / 6.73G issued at 40.7M/s
+        25.2M resilvered, 0.59% done, 00:02:48 to go
+config:
+
+        NAME                                          STATE     READ WRITE CKSUM
+        rpool                                         DEGRADED     0     0     0
+          mirror-0                                    DEGRADED     0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3           ONLINE       0     0     0
+            replacing-1                               DEGRADED     0     0     0
+              12573010284538016996                    UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST31000528AS_5VP07Z06-part3
+              ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3  ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+root@edgar:~# ls /dev/disk/by-id/*-part2
+/dev/disk/by-id/ata-ST31000524AS_5VPD6EX2-part2         /dev/disk/by-id/wwn-0x5000039743e86194-part2
+/dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part2  /dev/disk/by-id/wwn-0x5000c5005c9344c7-part2
+root@edgar:~# proxmox-boot-tool status
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+System currently booted with legacy bios
+EEC6-6947 is configured with: grub (versions: 6.8.12-1-pve, 6.8.12-8-pve)
+WARN: /dev/disk/by-uuid/EEC8-2CDA does not exist - clean '/etc/kernel/proxmox-boot-uuids'! - skipping
+root@edgar:~# proxmox-boot-tool clean
+Checking whether ESP 'EEC6-6947' exists.. Found!
+Checking whether ESP 'EEC8-2CDA' exists.. Not found!
+Sorting and removing duplicate ESPs..
+root@edgar:~# proxmox-boot-tool format /dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part2
+UUID="" SIZE="1073741824" FSTYPE="" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sdb" MOUNTPOINT=""
+Formatting '/dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part2' as vfat..
+mkfs.fat 4.2 (2021-01-31)
+Done.
+root@edgar:~# proxmox-boot-tool init /dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part2 grub
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+UUID="A4AA-5148" SIZE="1073741824" FSTYPE="vfat" PARTTYPE="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" PKNAME="sdb" MOUNTPOINT=""
+Mounting '/dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part2' on '/var/tmp/espmounts/A4AA-5148'.
+Installing grub i386-pc target..
+Installing for i386-pc platform.
+Installation finished. No error reported.
+Unmounting '/dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part2'.
+Adding '/dev/disk/by-id/ata-TOSHIBA_MQ01ABD100_96EOC9BST-part2' to list of synced ESPs..
+Refreshing kernels and initrds..
+Running hook script 'proxmox-auto-removal'..
+Running hook script 'zz-proxmox-boot'..
+Copying and configuring kernels on /dev/disk/by-uuid/A4AA-5148
+        Copying kernel 6.8.12-1-pve
+        Copying kernel 6.8.12-8-pve
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.8.12-8-pve
+Found initrd image: /boot/initrd.img-6.8.12-8-pve
+Found linux image: /boot/vmlinuz-6.8.12-1-pve
+Found initrd image: /boot/initrd.img-6.8.12-1-pve
+done
+Copying and configuring kernels on /dev/disk/by-uuid/EEC6-6947
+        Copying kernel 6.8.12-1-pve
+        Copying kernel 6.8.12-8-pve
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.8.12-8-pve
+Found initrd image: /boot/initrd.img-6.8.12-8-pve
+Found linux image: /boot/vmlinuz-6.8.12-1-pve
+Found initrd image: /boot/initrd.img-6.8.12-1-pve
+done
+root@edgar:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: resilvered 6.92G in 00:07:21 with 0 errors on Tue Feb 25 15:40:59 2025
+config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        rpool                                       ONLINE       0     0     0
+          mirror-0                                  ONLINE       0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3         ONLINE       0     0     0
+            ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3  ONLINE       0     0     0
+
+errors: No known data errors
+root@edgar:~# zpool scrub rpool
+root@edgar:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub in progress since Tue Feb 25 15:42:02 2025
+        6.73G / 6.73G scanned, 301M / 6.73G issued at 60.3M/s
+        0B repaired, 4.37% done, 00:01:49 to go
+config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        rpool                                       ONLINE       0     0     0
+          mirror-0                                  ONLINE       0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3         ONLINE       0     0     0
+            ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3  ONLINE       0     0     0
+
+errors: No known data errors
+root@edgar:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub in progress since Tue Feb 25 15:42:02 2025
+        6.73G / 6.73G scanned, 616M / 6.73G issued at 32.4M/s
+        0B repaired, 8.94% done, 00:03:13 to go
+config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        rpool                                       ONLINE       0     0     0
+          mirror-0                                  ONLINE       0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3         ONLINE       0     0     0
+            ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3  ONLINE       0     0     0
+
+errors: No known data errors
+root@edgar:~# proxmox-boot-tool status
+Re-executing '/usr/sbin/proxmox-boot-tool' in new private mount namespace..
+System currently booted with legacy bios
+A4AA-5148 is configured with: grub (versions: 6.8.12-1-pve, 6.8.12-8-pve)
+EEC6-6947 is configured with: grub (versions: 6.8.12-1-pve, 6.8.12-8-pve)
+root@edgar:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub in progress since Tue Feb 25 15:42:02 2025
+        6.73G / 6.73G scanned, 1.86G / 6.73G issued at 33.4M/s
+        0B repaired, 27.63% done, 00:02:29 to go
+config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        rpool                                       ONLINE       0     0     0
+          mirror-0                                  ONLINE       0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3         ONLINE       0     0     0
+            ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3  ONLINE       0     0     0
+
+errors: No known data errors
+root@edgar:~# zpool status -v
+  pool: rpool
+ state: ONLINE
+  scan: scrub repaired 0B in 00:04:06 with 0 errors on Tue Feb 25 15:46:08 2025
+config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        rpool                                       ONLINE       0     0     0
+          mirror-0                                  ONLINE       0     0     0
+            ata-ST31000524AS_5VPD6EX2-part3         ONLINE       0     0     0
+            ata-TOSHIBA_MQ01ABD100_96EOC9BST-part3  ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+## BELOW ARE LOGS FOR OTHER ATTEMPTS
+
+I have several of these events with issues in each.
+
 ## Confirm bad HDD
 
 Before I get started, these are relatively old systems and occasionally have odd blips with the old hardware. It is worth doing a `zpool clear` and `zpool scrub` on the drive and pool to verify that the drive is actually bad. Pulling SMART values from it isn't a bad idea either. I can confirm this drive is BAD and not coming back. Again, remember this is a HomeLab using really old equipment and not in a production enterprise data center. These are all salvaged or purchased equipment that are hitting my bank account when I replace parts. So worth a test and careful documentation incase it happens again shortly.
@@ -372,7 +742,7 @@ config:
 errors: No known data errors
 ```
 
-**Note**: My mistake above was to `zpool detach rpool xxx` rather than replace it with `zpool replace rpool xxx with /dev/disk/by-id/newdisk` and everything would work in the mirror. I also made this mistake on another system and broke the boot mirror. You can see the issue below in the section on recovering a failed mirror. 
+**Note**: My mistake above was to `zpool detach rpool xxx` rather than replace it with `zpool replace rpool xxx with /dev/disk/by-id/newdisk` and everything would work in the mirror. I also made this mistake on another system and broke the boot mirror. You can see the issue below in the section on recovering a failed mirror.
 
 Fix the boot for Proxmox
 
