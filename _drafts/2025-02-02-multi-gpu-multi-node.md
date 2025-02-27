@@ -25,3 +25,16 @@ I've got a pile of Nvidia Quadro P400s and P620s that are useful for video codex
 Comparing GPUs...
 https://technical.city/en/video/Quadro-P620-vs-GeForce-MX150-GP107
 https://technical.city/en/video/Quadro-P400-vs-Quadro-P620
+
+## GPU comparisons
+
+[Nvidia Tesla K80](https://www.nvidia.com/en-gb/data-center/tesla-k80/) that are just two 12gb vram gpu cards plastered together which are all over the place for pricing between $50 - $250 on [ebay](https://www.ebay.com/itm/285269093876).
+
+Here is a list of GPUs to review:
+
+* Nvidia Tesla P40
+* Nvidia Tesla K40m
+* Nvidia Tesla M40
+* Nvidia Tesla M60
+* NVIDIA GeForce GTX TITAN XP
+* Nvidia GeForce RTX 3060 12GB on [ebay](https://www.ebay.com/itm/126046122624)
