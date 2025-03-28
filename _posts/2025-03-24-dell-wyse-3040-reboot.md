@@ -132,6 +132,8 @@ Created symlink /etc/systemd/system/multi-user.target.wants/nightly-reboot.timer
 root@pve1:~# systemctl start nightly-reboot.timer
 ```
 
+Note: You do not explicitly enable the `nightly-reboot.service` if the timer is enabled, as the timer will handle the service activation.
+
 ## Make sure Timer is running
 
 Verify the `timer` is actually active and running.
@@ -148,3 +150,5 @@ Pass --all to see loaded but inactive timers, too.
 ## Denouement
 
 Now to wait and see if this works tonight and then set it up on the 2nd and 3rd nodes at 3am and 4am. I believe the restarts will help with some of the memory and cpu pressures on the individual nodes and rebalance workloads. We will see but it just feels wrong to reboot a UNIX based system. :)
+
+Minor Update: Everything is working great. Less contention so far.
