@@ -4,9 +4,9 @@ layout: post
 published: false
 ---
 
-I have a facination with the sounds of languages (phonemes) and how they are processed. This came about from a project I did a few years ago. How ASR (automatic speach recognition) used to work did not include breaking down the sounds of the language and present them as pieces of the solution. You typically just got a final text representation.
+I have a fascination with the sounds of languages (phonemes) and how they are processed. This came about from a project I did a few years ago in grad school. How ASR (automatic speech recognition) used to work did not include breaking down the sounds of the language and present them as pieces of the solution. You typically just got a final text representation.
 
-I'm interested in seeing if the phonetic or phoneme representations can be pulled from the moderm machine learning ASR pipelines. This is just an interest of mine with no defined goals beyond learning.
+I'm interested in seeing if the phonetic or phoneme representations can be pulled from the modern machine learning ASR pipelines. This is just an interest of mine with no defined goals beyond learning.
 
 To do this I need to know te right things to use to do this work...
 
