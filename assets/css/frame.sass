@@ -1,17 +1,18 @@
 ---
 ---
 
+@use "sass:color"
 @import main, font, basic, layout, classes
 
 html
-  background: lighten($dark, 70%)
+  background: color.adjust($dark, $lightness: 70%)
   padding: 0 calc(38% - 22em)
 
 body
-  box-shadow: 0 0 .3em lighten($dark, 65%)
+  box-shadow: 0 0 .3em color.adjust($dark, $lightness: 65%)
 
 body > header, body > footer
-  background: lighten($dark, 5%)
+  background: color.adjust($dark, $lightness: 5%)
   color: $light
 
 @media (min-width: 32em)
@@ -20,8 +21,8 @@ body > header, body > footer
 
 @media (prefers-color-scheme: dark)
   html
-    background: darken($dark, 4%)
+    background: color.adjust($dark, $lightness: -4%)
   body > header, body > footer
     background: $dark
   body, body > header, body > footer
-    box-shadow: 0 0 0 1px lighten($dark, 8%)
+    box-shadow: 0 0 0 1px color.adjust($dark, $lightness: 8%)
