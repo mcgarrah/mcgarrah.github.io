@@ -15,5 +15,3 @@ On the personal side, I am married with two great kids. We recently have the add
 I have two brothers, one of whom was a computer professional and worked for a major logistics distribution company. My other brother is in the medical profession for the military. My father is a retired Lt. Colonel in the United States Army and mom is a home maker.
 
 You can review our [Privacy Policy](/privacy/) at your convenience.
-
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwww.mcgarrah.org%2Fabout%2F&count_bg=%2314285C&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
