@@ -28,10 +28,10 @@ At its core, `oneworldsync` is a Python library designed to simplify access to p
 
 Once the core functionality was established, the next step was to make `oneworldsync` accessible to the Python community. This was achieved through two key platforms:
 
-* PyPI (Python Package Index): Publishing oneworldsync on PyPI allows installation via a simple `pip install oneworldsync`. This was a relatively straightforward process. The library can be found here: https://pypi.org/project/oneworldsync/
-* ReadTheDocs: Comprehensive documentation is important for any library. Sphinx was used to generate documentation, which is hosted on ReadTheDocs. This platform integrates well with GitHub, facilitating up-to-date documentation. The documentation is available at: https://oneworldsync-python.readthedocs.io/
+* PyPI (Python Package Index): Publishing `oneworldsync` on PyPI allows installation via a simple `pip install oneworldsync`. This was a relatively straightforward process. The library can be found here: [https://pypi.org/project/oneworldsync/](https://pypi.org/project/oneworldsync/)
+* ReadTheDocs: Comprehensive documentation is important for any library. Sphinx was used to generate documentation, which is hosted on ReadTheDocs. This platform integrates well with GitHub, facilitating up-to-date documentation. The documentation is available at: [https://oneworldsync-python.readthedocs.io/](https://oneworldsync-python.readthedocs.io/)
 
-The source code is open and available on GitHub: https://github.com/mcgarrah/oneworldsync_python
+The source code is open and available on GitHub: [https://github.com/mcgarrah/oneworldsync_python](https://github.com/mcgarrah/oneworldsync_python)
 
 ### Further Development and Use
 
