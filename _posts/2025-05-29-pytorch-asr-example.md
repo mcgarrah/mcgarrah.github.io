@@ -1,7 +1,7 @@
 ---
 title:  "ASR with PyTorch"
 layout: post
-published: false
+published: true
 ---
 
 # ASR with PyTorch: Exploring Phoneme Representations
