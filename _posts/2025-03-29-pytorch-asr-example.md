@@ -16,6 +16,23 @@ Automatic Speech Recognition (ASR) systems convert spoken language into text. Tr
 
 **Phonemes** are the smallest units of sound that distinguish one word from another in a particular language. For example, the words "bat" and "pat" differ only in their initial phonemes /b/ and /p/.
 
+## Understanding Wav2Vec 2.0
+
+Before diving into the code, it's helpful to understand how Wav2Vec 2.0 works:
+
+Wav2Vec 2.0 is a self-supervised learning framework for speech recognition developed by Facebook AI. It works in two main stages:
+
+1. **Pre-training**: The model learns speech representations from unlabeled audio data by solving a contrastive task that requires identifying the true future audio sample from a set of distractors.
+
+2. **Fine-tuning**: The pre-trained model is then fine-tuned on labeled data using Connectionist Temporal Classification (CTC) loss for speech recognition tasks.
+
+The architecture consists of:
+- A CNN feature encoder that converts raw audio into latent speech representations
+- A Transformer network that builds contextual representations
+- A quantization module that discretizes the latent representations
+
+This design allows Wav2Vec 2.0 to capture both phonetic and linguistic information from speech, making it ideal for our phoneme extraction task.
+
 ## Why PyTorch for ASR?
 
 After reviewing various frameworks, I've decided to focus on PyTorch for this exploration:
@@ -39,7 +56,65 @@ First, we need to install the required libraries:
 
 ```python
 # Install required packages
-# pip install torch torchaudio transformers
+pip install torch torchaudio transformers matplotlib numpy soundfile librosa
+```
+
+### Obtaining Sample Audio
+
+For this example, we'll download a sample audio file from LibriSpeech:
+
+```python
+# Download and extract a sample audio file from LibriSpeech
+import os
+import tarfile
+import tempfile
+from urllib.request import urlretrieve
+import shutil
+
+sample_dir = "sample_data"
+os.makedirs(sample_dir, exist_ok=True)
+
+# Target audio file paths - we'll create both FLAC and WAV versions
+flac_path = os.path.join(sample_dir, "sample_audio.flac")
+wav_path = os.path.join(sample_dir, "sample_audio.wav")
+
+# Check which files exist and set the audio path accordingly
+flac_exists = os.path.exists(flac_path)
+wav_exists = os.path.exists(wav_path)
+
+# Prefer WAV if it exists, otherwise use FLAC if it exists
+if wav_exists:
+    audio_path = wav_path
+    print(f"Using existing WAV file: {wav_path}")
+elif flac_exists:
+    audio_path = flac_path
+    print(f"Using existing FLAC file: {flac_path}")
+else:
+    # Neither file exists, need to download
+    print("Sample audio not found. Downloading from LibriSpeech...")
+    
+    # Download a specific file from LibriSpeech
+    audio_url = "https://www.openslr.org/resources/12/dev-clean/84/121123/84-121123-0001.flac"
+    print(f"Downloading from {audio_url}...")
+    urlretrieve(audio_url, flac_path)
+    print(f"Sample audio downloaded to {flac_path}")
+    audio_path = flac_path
+    
+    # Convert FLAC to WAV for better compatibility
+    try:
+        import librosa
+        import soundfile as sf
+        
+        print("Converting FLAC to WAV format...")
+        audio_data, sample_rate = librosa.load(flac_path, sr=None)
+        sf.write(wav_path, audio_data, sample_rate)
+        print(f"Converted audio saved to {wav_path}")
+        audio_path = wav_path  # Use the WAV file
+    except Exception as e:
+        print(f"Error converting audio: {e}")
+        print("Using original FLAC file instead.")
+
+print(f"Using audio file: {audio_path}")
 ```
 
 ### Loading and Processing Audio
@@ -48,16 +123,31 @@ First, we need to install the required libraries:
 import torch
 import torchaudio
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
+import matplotlib.pyplot as plt
+import numpy as np
+import os
 import IPython.display as ipd
 
-# Load pre-trained model and processor
-processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-base-960h")
-model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-base-960h")
+# Check if CUDA is available
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
 
 # Function to load and process audio
 def process_audio(file_path):
-    # Load audio
-    waveform, sample_rate = torchaudio.load(file_path)
+    # Load audio using alternative method if torchaudio fails
+    try:
+        # Try torchaudio first
+        waveform, sample_rate = torchaudio.load(file_path)
+    except RuntimeError:
+        # Fall back to using librosa
+        print(f"torchaudio failed to load {file_path}, trying librosa instead...")
+        import librosa
+        import numpy as np
+        
+        # Load with librosa (automatically handles various formats including FLAC)
+        audio_data, sample_rate = librosa.load(file_path, sr=None)
+        waveform = torch.from_numpy(audio_data).unsqueeze(0).float()
+        print("Successfully loaded audio with librosa")
     
     # Resample if needed
     if sample_rate != 16000:
@@ -71,12 +161,16 @@ def process_audio(file_path):
     
     return waveform.squeeze(), sample_rate
 
-# Example usage
-audio_path = "path/to/your/audio.wav"  # Replace with your audio file
+# Load and process the audio
 waveform, sample_rate = process_audio(audio_path)
 
-# Display audio for verification
-ipd.Audio(waveform.numpy(), rate=sample_rate)
+# Display audio information
+print(f"Sample rate: {sample_rate} Hz")
+print(f"Waveform shape: {waveform.shape}")
+print(f"Audio duration: {waveform.shape[0]/sample_rate:.2f} seconds")
+
+# In a Jupyter notebook, you can play the audio with:
+# ipd.Audio(waveform.numpy(), rate=sample_rate)
 ```
 
 ### Extracting Phoneme Probabilities
@@ -84,9 +178,18 @@ ipd.Audio(waveform.numpy(), rate=sample_rate)
 To extract phoneme-level information, we need to access the logits from the model before they're converted to text:
 
 ```python
+# Load pre-trained model and processor
+model_name = "facebook/wav2vec2-base-960h"
+print(f"Loading model: {model_name}")
+
+processor = Wav2Vec2Processor.from_pretrained(model_name)
+model = Wav2Vec2ForCTC.from_pretrained(model_name).to(device)
+print("Model loaded successfully!")
+
 def extract_phoneme_probs(waveform, sample_rate=16000):
     # Process audio for model input
     input_values = processor(waveform, sampling_rate=sample_rate, return_tensors="pt").input_values
+    input_values = input_values.to(device)
     
     # Get model outputs (without gradient calculation)
     with torch.no_grad():
@@ -96,11 +199,13 @@ def extract_phoneme_probs(waveform, sample_rate=16000):
     # Convert logits to probabilities
     probs = torch.nn.functional.softmax(logits, dim=-1)
     
-    return probs.squeeze(), processor.tokenizer.decoder
+    return probs.cpu().squeeze(), processor.tokenizer.decoder
 
 # Get phoneme probabilities
 phoneme_probs, decoder = extract_phoneme_probs(waveform)
 print(f"Shape of phoneme probabilities: {phoneme_probs.shape}")
+print(f"Number of time steps: {phoneme_probs.shape[0]}")
+print(f"Number of phoneme classes: {phoneme_probs.shape[1]}")
 ```
 
 ### Visualizing Phoneme Activations
@@ -108,10 +213,7 @@ print(f"Shape of phoneme probabilities: {phoneme_probs.shape}")
 We can visualize the phoneme activations over time:
 
 ```python
-import matplotlib.pyplot as plt
-import numpy as np
-
-def plot_phoneme_activations(probs, decoder, top_k=10):
+def plot_phoneme_activations(probs, decoder, top_k=5):
     # Get top-k phonemes at each time step
     top_probs, top_indices = torch.topk(probs, k=top_k, dim=1)
     
@@ -127,18 +229,26 @@ def plot_phoneme_activations(probs, decoder, top_k=10):
     
     # Plot
     plt.figure(figsize=(15, 8))
-    for i in range(min(5, top_k)):  # Plot top 5 phonemes
-        plt.plot(time_steps, top_probs[:, i], label=f"Phoneme {phoneme_map.get(top_indices[0, i], top_indices[0, i])}")
+    
+    # Plot for a subset of time steps for clarity
+    start_idx = 0
+    end_idx = min(200, len(time_steps))  # Show first 4 seconds or less
+    
+    for i in range(top_k):
+        plt.plot(time_steps[start_idx:end_idx], 
+                 top_probs[start_idx:end_idx, i], 
+                 label=f"Class {top_indices[0, i]} ({phoneme_map.get(top_indices[0, i], '')})")
     
     plt.xlabel("Time (seconds)")
     plt.ylabel("Probability")
     plt.title("Top Phoneme Activations Over Time")
     plt.legend()
+    plt.grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.show()
-
-# Visualize phoneme activations
-plot_phoneme_activations(phoneme_probs, decoder)
+    
+    # For a blog post, save the figure instead of displaying it
+    plt.savefig('phoneme_activations.png')
+    # plt.show()  # This works in interactive environments like Jupyter
 ```
 
 ### Decoding to Phonemes and Text
@@ -169,8 +279,8 @@ def decode_outputs(probs, decoder):
 # Decode outputs
 phoneme_sequence, collapsed_phonemes, text = decode_outputs(phoneme_probs, decoder)
 
-print("Full phoneme sequence (including repetitions):")
-print(phoneme_sequence[:50])  # Show first 50 for brevity
+print("Full phoneme sequence (first 50 frames):")
+print(phoneme_sequence[:50])
 print("\nCollapsed phoneme sequence:")
 print(collapsed_phonemes)
 print("\nDecoded text:")
@@ -183,27 +293,114 @@ For a more direct approach to phoneme recognition, we can use a model specifical
 
 ```python
 # Load a model fine-tuned for phoneme recognition
-phoneme_processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-lv-60-espeak-cv-ft")
-phoneme_model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-lv-60-espeak-cv-ft")
+phoneme_model_name = "facebook/wav2vec2-lv-60-espeak-cv-ft"
+print(f"Loading phoneme model: {phoneme_model_name}")
 
-def transcribe_to_phonemes(waveform, sample_rate=16000):
-    # Process audio for model input
-    input_values = phoneme_processor(waveform, sampling_rate=sample_rate, return_tensors="pt").input_values
+try:
+    # Import specific processor class for this model
+    from transformers import Wav2Vec2ProcessorWithLM, Wav2Vec2CTCTokenizer, Wav2Vec2FeatureExtractor
     
-    # Get model predictions
-    with torch.no_grad():
-        logits = phoneme_model(input_values).logits
+    # Load the model components separately
+    feature_extractor = Wav2Vec2FeatureExtractor.from_pretrained(phoneme_model_name)
+    tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(phoneme_model_name)
+    phoneme_processor = Wav2Vec2Processor(feature_extractor=feature_extractor, tokenizer=tokenizer)
+    phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name).to(device)
+    print("Phoneme model loaded successfully!")
     
-    # Decode phonemes
-    predicted_ids = torch.argmax(logits, dim=-1)
-    phoneme_string = phoneme_processor.batch_decode(predicted_ids)[0]
-    
-    return phoneme_string
+    def transcribe_to_phonemes(waveform, sample_rate=16000):
+        # Process audio for model input
+        input_values = phoneme_processor(waveform, sampling_rate=sample_rate, return_tensors="pt").input_values
+        input_values = input_values.to(device)
+        
+        # Get model predictions
+        with torch.no_grad():
+            logits = phoneme_model(input_values).logits
+        
+        # Decode phonemes
+        predicted_ids = torch.argmax(logits, dim=-1)
+        phoneme_string = phoneme_processor.batch_decode(predicted_ids)[0]
+        
+        return phoneme_string
 
-# Get phoneme transcription
-phoneme_transcription = transcribe_to_phonemes(waveform)
-print("Phoneme transcription:")
-print(phoneme_transcription)
+    # Get phoneme transcription
+    phoneme_transcription = transcribe_to_phonemes(waveform)
+    print("\nPhoneme transcription:")
+    print(phoneme_transcription)
+    
+except Exception as e:
+    print(f"Error loading phoneme model: {e}")
+    print("Skipping phoneme-specific model demonstration.")
+```
+
+## Analyzing Phoneme Distributions
+
+We can analyze the distribution of phonemes in our sample:
+
+```python
+# Count phoneme occurrences
+from collections import Counter
+
+# Count non-blank phonemes
+phoneme_counts = Counter([p for p in collapsed_phonemes if p != ''])
+
+# Plot top 15 phonemes
+top_phonemes = phoneme_counts.most_common(15)
+phonemes, counts = zip(*top_phonemes)
+
+# For visualization in a blog post
+plt.figure(figsize=(12, 6))
+plt.bar(phonemes, counts)
+plt.title('Top 15 Phonemes in Sample')
+plt.xlabel('Phoneme')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('phoneme_distribution.png')
+# plt.show()  # For interactive environments
+
+# For text-based output:
+print("\nTop 15 phonemes and their counts:")
+for phoneme, count in top_phonemes:
+    print(f"{phoneme}: {count}")
+```
+
+## Comparing Phoneme Transcriptions
+
+Let's compare the different phoneme transcriptions side by side:
+
+```python
+# Create a comparison of the different phoneme transcriptions
+print("\nPhoneme Transcription Comparison:")
+print("-" * 50)
+print("Wav2Vec2 Base with CTC Decoding:")
+print(text[:100] + "..." if len(text) > 100 else text)
+print("-" * 50)
+
+try:
+    print("Specialized Phoneme Model:")
+    print(phoneme_transcription[:100] + "..." if len(phoneme_transcription) > 100 else phoneme_transcription)
+except NameError:
+    print("Specialized model transcription not available")
+print("-" * 50)
+```
+
+## Saving and Loading Models
+
+For practical use, you might want to save and reuse models:
+
+```python
+# Save the model and processor for later use
+output_dir = "saved_model"
+os.makedirs(output_dir, exist_ok=True)
+
+# Save the model
+model.save_pretrained(output_dir)
+processor.save_pretrained(output_dir)
+print(f"Model and processor saved to {output_dir}")
+
+# Later, you can load them back:
+# loaded_processor = Wav2Vec2Processor.from_pretrained(output_dir)
+# loaded_model = Wav2Vec2ForCTC.from_pretrained(output_dir)
 ```
 
 ## Comparing Different ASR Models for Phoneme Extraction
@@ -225,6 +422,10 @@ Modern ASR systems built with PyTorch can indeed provide access to phoneme-level
 - Analyzing speech disorders
 
 By leveraging PyTorch's flexibility and the rich ecosystem of pre-trained models, we can extract and visualize phoneme representations from speech signals. This allows for a deeper understanding of how ASR systems process the sounds of language.
+
+## Code with Outputs
+
+You can review the complete code for the Jupyter Notebook used for this post [PyTorch ASR Example](https://github.com/mcgarrah/pytorch-asr-phonemes){:target="_blank"} on Github. You can also see an example of a successful execution with the **Notebook Outputs** here at [PyTorch Notebook Code & Outputs](/assets/pdfs/pytorch_asr_phonemes.html){:target="_blank"}. That will let you see the results with the graphics.
 
 ## Resources
 
