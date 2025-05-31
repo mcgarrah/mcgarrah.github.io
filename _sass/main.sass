@@ -1,4 +1,8 @@
 @use "sass:color"
+@use "copy-button"
+@use "comments"
+@use "tags-categories"
+@use "reading-time"
 
 $font-size: calc(0.8rem + 0.2vw) !default
 $font-weight: 400 !default
@@ -11,8 +15,3 @@ $light: #ffffff !default
 
 @function reduce($percent)
   @return rgba(color.mix($dark, $light), calc($percent / 100))
-
-@import "copy-button"
-@import "comments"
-@import "tags-categories"
-@import "reading-time"
