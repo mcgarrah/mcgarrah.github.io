@@ -57,36 +57,43 @@ layout: default
 <script src="/assets/js/clipboard.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Find all <pre> elements that are likely to contain highlighted code.
-  var codePres = document.querySelectorAll('figure.highlight pre, div.highlight pre, pre.highlight');
+  // Select all <code> elements that are direct children of <pre> elements.
+  var codeElements = document.querySelectorAll('pre > code');
 
-  codePres.forEach(function(preElement, index) {
-    // Ensure this pre element hasn't already been processed
+  codeElements.forEach(function(codeElement, index) {
+    var preElement = codeElement.parentNode; // This is the <pre> tag
+
+    // Ensure this pre element hasn't already been processed by a class marker
     if (preElement.classList.contains('copy-button-added')) {
       return;
     }
 
-    // Determine the "button container"
+    // Determine the "button container": the element to make relative and append the button to.
+    // It's usually a <figure class="highlight"> or <div class="highlight"> wrapping the <pre>,
+    // or the <pre> itself if it has class="highlight", or just the <pre> if no highlight class.
     var buttonContainer = preElement.closest('figure.highlight, div.highlight');
     if (!buttonContainer) {
-      if (preElement.classList.contains('highlight')) {
-        buttonContainer = preElement;
-      } else {
-        // Fallback, should be rare with specific selectors
-        buttonContainer = preElement.parentNode;
-      }
+      // If not within a figure.highlight or div.highlight, the preElement itself is the prime candidate.
+      buttonContainer = preElement;
     }
 
-    // Ensure the preElement has an ID for clipboard.js target
+    // Ensure the preElement (target for copy) has an ID
     if (!preElement.id) {
       preElement.id = 'codeblock-for-copy-' + index;
     }
 
-    // Make the buttonContainer relative for absolute positioning
-    // Avoid styling body if it's the unlikely parentNode fallback
-    if (buttonContainer && buttonContainer.tagName !== 'BODY' && getComputedStyle(buttonContainer).position === 'static') {
-      buttonContainer.style.position = 'relative';
+    // Make the buttonContainer relative for absolute positioning of the button.
+    // Avoid styling body if it's an unlikely fallback.
+    if (buttonContainer && buttonContainer.tagName !== 'BODY') {
+      if (getComputedStyle(buttonContainer).position === 'static') {
+        buttonContainer.style.position = 'relative';
+      }
+    } else if (buttonContainer && buttonContainer.tagName === 'BODY') {
+      // This case should ideally not happen if preElement is always wrapped or is the pre itself.
+      // If body is the container, we can't make it relative easily. Button might misbehave.
+      // Consider just appending to preElement's parent in such a rare case without relative positioning.
     }
+
 
     // Create the button
     var button = document.createElement('button');
@@ -94,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     button.innerHTML = 'Copy';
     button.setAttribute('data-clipboard-target', '#' + preElement.id);
 
-    // Explicitly set styles for position and appearance (consistent with SASS intention)
+    // Explicitly set styles for position and appearance
     button.style.position = 'absolute';
     button.style.top = '0.5em';
     button.style.right = '0.5em';
@@ -102,19 +109,19 @@ document.addEventListener('DOMContentLoaded', function() {
     button.style.padding = '0.25em 0.5em';
     button.style.fontSize = '0.8em';
 
+    // Append button to the determined container
     if (buttonContainer) {
         buttonContainer.appendChild(button);
     } else {
-        // Fallback if buttonContainer is somehow null (e.g. preElement was detached)
-        // This is defensive and should ideally not be reached.
-        preElement.parentNode.insertBefore(button, preElement);
+        // Highly unlikely fallback if buttonContainer couldn't be determined (e.g. pre is direct child of body)
+        preElement.parentNode.insertBefore(button, preElement.nextSibling); // Place after pre
     }
 
     preElement.classList.add('copy-button-added'); // Mark as processed
   });
 
-  // Initialize ClipboardJS
-  if (document.querySelector('.btn-copy')) { // Only initialize if buttons exist
+  // Initialize ClipboardJS (only if buttons were added)
+  if (document.querySelector('.btn-copy')) {
     var clipboard = new ClipboardJS('.btn-copy');
 
     clipboard.on('success', function(e) {
@@ -124,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     clipboard.on('error', function(e) {
-      var originalText = e.trigger.innerHTML; // Changed to 'Copy' from originalText which might be 'Error!'
       e.trigger.innerHTML = 'Error!';
       setTimeout(function() { e.trigger.innerHTML = 'Copy'; }, 2000);
     });
