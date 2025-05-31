@@ -10,8 +10,6 @@ published: true
 
 I'm pleased to introduce a Python module I've developed from scratch called `oneworldsync`. For those who need to programmatically access product content data from the 1WorldSync Content1 API, finding a streamlined solution was challenging to say the least. The only path provided was a very simple Python example, some older PDF documentation and a reference Java SDK. I work primarily in the Machine Learning space so Python first was a priority. Those were my primary motivations behind creating `oneworldsync` as I stumbled towards building a library.
 
-<!-- excerpt-end -->
-
 ### What is `oneworldsync`?
 
 At its core, `oneworldsync` is a Python library designed to simplify access to product information from the 1WorldSync Content1 repository. It provides a python library and a command line interface to access the REST API. 1WorldSync is a leading product content provider, and their [Content1](https://1worldsync.com/product-descriptions/content1/) platform is a major source of rich product data. This includes specifications, images, marketing copy, logistical information, and much more. The objective was to provide an intuitive and Pythonic method for developers and data analysts to access this extensive information.

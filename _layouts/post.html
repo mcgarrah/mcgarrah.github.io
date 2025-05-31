@@ -56,68 +56,78 @@ layout: default
 
 <script src="/assets/js/clipboard.min.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Revised script logic:
-    // Select all potential containers of code blocks
-    // Rouge typically wraps in figure.highlight, div.highlight, or just pre.highlight
-    var highlightContainers = document.querySelectorAll('figure.highlight, div.highlight, pre.highlight');
+document.addEventListener('DOMContentLoaded', function() {
+  // Find all <pre> elements that are likely to contain highlighted code.
+  var codePres = document.querySelectorAll('figure.highlight pre, div.highlight pre, pre.highlight');
 
-    highlightContainers.forEach(function(container, index) {
-      var preElement = container.querySelector('pre');
-      if (!preElement && container.tagName === 'PRE') {
-        preElement = container; // container itself is pre.highlight
+  codePres.forEach(function(preElement, index) {
+    // Ensure this pre element hasn't already been processed
+    if (preElement.classList.contains('copy-button-added')) {
+      return;
+    }
+
+    // Determine the "button container"
+    var buttonContainer = preElement.closest('figure.highlight, div.highlight');
+    if (!buttonContainer) {
+      if (preElement.classList.contains('highlight')) {
+        buttonContainer = preElement;
+      } else {
+        // Fallback, should be rare with specific selectors
+        buttonContainer = preElement.parentNode;
       }
+    }
 
-      if (!preElement) return; // Should not happen if selector is correct
+    // Ensure the preElement has an ID for clipboard.js target
+    if (!preElement.id) {
+      preElement.id = 'codeblock-for-copy-' + index;
+    }
 
-      // Ensure the preElement has an ID for clipboard.js target
-      if (!preElement.id) {
-        preElement.id = 'codeblock-for-copy-' + index;
-      }
+    // Make the buttonContainer relative for absolute positioning
+    // Avoid styling body if it's the unlikely parentNode fallback
+    if (buttonContainer && buttonContainer.tagName !== 'BODY' && getComputedStyle(buttonContainer).position === 'static') {
+      buttonContainer.style.position = 'relative';
+    }
 
-      // Make the container relative for absolute positioning of the button
-      if (getComputedStyle(container).position === 'static') {
-        container.style.position = 'relative';
-      }
+    // Create the button
+    var button = document.createElement('button');
+    button.className = 'btn btn-copy'; // Main styling from SASS
+    button.innerHTML = 'Copy';
+    button.setAttribute('data-clipboard-target', '#' + preElement.id);
 
-      // Create the button
-      var button = document.createElement('button');
-      button.className = 'btn btn-copy'; // Use existing styling
-      button.innerHTML = 'Copy';
-      button.setAttribute('data-clipboard-target', '#' + preElement.id);
+    // Explicitly set styles for position and appearance (consistent with SASS intention)
+    button.style.position = 'absolute';
+    button.style.top = '0.5em';
+    button.style.right = '0.5em';
+    button.style.zIndex = '10';
+    button.style.padding = '0.25em 0.5em';
+    button.style.fontSize = '0.8em';
 
-      // Style the button for top-right corner
-      button.style.position = 'absolute';
-      button.style.top = '0.5em';
-      button.style.right = '0.5em';
-      button.style.zIndex = '10';
-      button.style.padding = '0.25em 0.5em'; // Re-apply some basic padding if needed
-      button.style.fontSize = '0.8em';      // Re-apply font size
-      // Note: Main styling comes from _sass/copy-button.sass
+    if (buttonContainer) {
+        buttonContainer.appendChild(button);
+    } else {
+        // Fallback if buttonContainer is somehow null (e.g. preElement was detached)
+        // This is defensive and should ideally not be reached.
+        preElement.parentNode.insertBefore(button, preElement);
+    }
 
-      // Add the button to the container
-      container.appendChild(button);
-    });
+    preElement.classList.add('copy-button-added'); // Mark as processed
+  });
 
-    // Initialize ClipboardJS (should be existing)
+  // Initialize ClipboardJS
+  if (document.querySelector('.btn-copy')) { // Only initialize if buttons exist
     var clipboard = new ClipboardJS('.btn-copy');
 
     clipboard.on('success', function(e) {
       e.trigger.innerHTML = 'Copied!';
-      setTimeout(function() {
-        e.trigger.innerHTML = 'Copy';
-      }, 2000);
+      setTimeout(function() { e.trigger.innerHTML = 'Copy'; }, 2000);
       e.clearSelection();
     });
 
     clipboard.on('error', function(e) {
-      // Optionally provide more specific error feedback
-      // For example, if it's a browser that doesn't support execCommand
-      var originalText = e.trigger.innerHTML;
-      e.trigger.innerHTML = 'Error!'; // Or 'Press Ctrl+C'
-      setTimeout(function() {
-        e.trigger.innerHTML = originalText; // Or 'Copy'
-      }, 2000);
+      var originalText = e.trigger.innerHTML; // Changed to 'Copy' from originalText which might be 'Error!'
+      e.trigger.innerHTML = 'Error!';
+      setTimeout(function() { e.trigger.innerHTML = 'Copy'; }, 2000);
     });
-  });
+  }
+});
 </script>
