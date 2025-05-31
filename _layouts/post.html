@@ -5,10 +5,135 @@ layout: default
 <article>
   {% include meta.html post=page %}
   {{ content }}
+
+  <div class="post-tags-categories">
+    {% if page.tags.size > 0 %}
+      <div class="tags">
+        <strong>Tags:</strong>
+        {% for tag in page.tags %}
+          <a href="{{ site.baseurl }}/tags/{{ tag | slugify }}/">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if page.categories.size > 0 %}
+      <div class="categories">
+        <strong>Categories:</strong>
+        {% for category in page.categories %}
+          <a href="{{ site.baseurl }}/categories/{{ category | slugify }}/">{{ category }}</a>{% unless forloop.last %}, {% endunless %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
   {% if page.comments != false and site.comments.isso or site.comments.disqus %}
     <hr>
     {% if site.comments.isso_domain %}<div id="isso-thread"></div>{% endif %}
     {% if site.comments.disqus_shortname %}<div id="disqus_thread"></div>{% endif %}
     <noscript>Please enable JavaScript to view comments.</noscript>
   {% endif %}
+
+{%- if site.giscus -%}
+<section class="page__comments">
+  <script src="https://giscus.app/client.js"
+          data-repo="{{ site.giscus.repo }}"
+          data-repo-id="{{ site.giscus.repo_id }}"
+          data-category="{{ site.giscus.category }}"
+          data-category-id="{{ site.giscus.category_id }}"
+          data-mapping="{{ site.giscus.mapping }}"
+          data-strict="{{ site.giscus.strict }}"
+          data-reactions-enabled="{{ site.giscus.reactions_enabled }}"
+          data-emit-metadata="{{ site.giscus.emit_metadata }}"
+          data-input-position="{{ site.giscus.input_position }}"
+          data-theme="{{ site.giscus.theme }}"
+          data-lang="{{ site.giscus.lang }}"
+          data-loading="{{ site.giscus.loading }}"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+{%- endif -%}
 </article>
+
+<script src="/assets/js/clipboard.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Select all <code> elements that are direct children of <pre> elements.
+  var codeElements = document.querySelectorAll('pre > code');
+
+  codeElements.forEach(function(codeElement, index) {
+    var preElement = codeElement.parentNode; // This is the <pre> tag
+
+    // Ensure this pre element hasn't already been processed by a class marker
+    if (preElement.classList.contains('copy-button-added')) {
+      return;
+    }
+
+    // Determine the "button container": the element to make relative and append the button to.
+    // It's usually a <figure class="highlight"> or <div class="highlight"> wrapping the <pre>,
+    // or the <pre> itself if it has class="highlight", or just the <pre> if no highlight class.
+    var buttonContainer = preElement.closest('figure.highlight, div.highlight');
+    if (!buttonContainer) {
+      // If not within a figure.highlight or div.highlight, the preElement itself is the prime candidate.
+      buttonContainer = preElement;
+    }
+
+    // Ensure the preElement (target for copy) has an ID
+    if (!preElement.id) {
+      preElement.id = 'codeblock-for-copy-' + index;
+    }
+
+    // Make the buttonContainer relative for absolute positioning of the button.
+    // Avoid styling body if it's an unlikely fallback.
+    if (buttonContainer && buttonContainer.tagName !== 'BODY') {
+      if (getComputedStyle(buttonContainer).position === 'static') {
+        buttonContainer.style.position = 'relative';
+      }
+    } else if (buttonContainer && buttonContainer.tagName === 'BODY') {
+      // This case should ideally not happen if preElement is always wrapped or is the pre itself.
+      // If body is the container, we can't make it relative easily. Button might misbehave.
+      // Consider just appending to preElement's parent in such a rare case without relative positioning.
+    }
+
+
+    // Create the button
+    var button = document.createElement('button');
+    button.className = 'btn btn-copy'; // Main styling from SASS
+    button.innerHTML = 'Copy';
+    button.setAttribute('data-clipboard-target', '#' + preElement.id);
+
+    // Explicitly set styles for position and appearance
+    button.style.position = 'absolute';
+    button.style.top = '0.5em';
+    button.style.right = '0.5em';
+    button.style.zIndex = '10';
+    button.style.padding = '0.25em 0.5em';
+    button.style.fontSize = '0.8em';
+
+    // Append button to the determined container
+    if (buttonContainer) {
+        buttonContainer.appendChild(button);
+    } else {
+        // Highly unlikely fallback if buttonContainer couldn't be determined (e.g. pre is direct child of body)
+        preElement.parentNode.insertBefore(button, preElement.nextSibling); // Place after pre
+    }
+
+    preElement.classList.add('copy-button-added'); // Mark as processed
+  });
+
+  // Initialize ClipboardJS (only if buttons were added)
+  if (document.querySelector('.btn-copy')) {
+    var clipboard = new ClipboardJS('.btn-copy');
+
+    clipboard.on('success', function(e) {
+      e.trigger.innerHTML = 'Copied!';
+      setTimeout(function() { e.trigger.innerHTML = 'Copy'; }, 2000);
+      e.clearSelection();
+    });
+
+    clipboard.on('error', function(e) {
+      e.trigger.innerHTML = 'Error!';
+      setTimeout(function() { e.trigger.innerHTML = 'Copy'; }, 2000);
+    });
+  }
+});
+</script>

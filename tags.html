@@ -1,0 +1,13 @@
+---
+layout: list_page
+title: All Tags
+---
+<div class="taxonomies-list">
+  {% for tag_hash in site.tags %}
+    {% assign tag_name = tag_hash[0] %}
+    {% assign num_posts = tag_hash[1].size %}
+    <a href="{{ site.baseurl }}/tags/{{ tag_name | slugify }}/" class="taxonomy-item">
+      {{ tag_name }} ({{ num_posts }})
+    </a>
+  {% endfor %}
+</div>
