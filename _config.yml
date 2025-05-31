@@ -36,6 +36,8 @@ minimal: true             # use a dark header
 navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {file: "index.html", icon: blog}
   - {file: "archive.html", icon: list}
+  - {file: "tags.html", title: Tags, icon: tags}
+  - {file: "categories.html", title: Categories, icon: th-list} # Example icon
   - {file: "README.md", icon: user}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
@@ -59,3 +61,17 @@ plugins:
  - jekyll-feed             # used for RSS XML feed
  - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
  - jekyll-paginate         # adding back from earlier implementation in upstream fork
+
+giscus:
+  repo: mcgarrah/mcgarrah.github.io
+  repo_id: R_kgDOKBKIdw
+  category: Announcements
+  category_id: DIC_kwDOKBKId84Cq3DK
+  mapping: pathname # Options: pathname, url, title, og:title, specific, number
+  strict: 0 # Boolean: 0 or 1
+  reactions_enabled: 1 # Boolean: 0 or 1
+  emit_metadata: 0 # Boolean: 0 or 1
+  input_position: bottom # Options: top, bottom
+  theme: preferred_color_scheme # Options: light, dark, dark_dimmed, dark_high_contrast, preferred_color_scheme, transparent_dark,noborder_light, noborder_dark, cobal, or a custom CSS URL
+  lang: en
+  loading: lazy # Options: eager, lazy

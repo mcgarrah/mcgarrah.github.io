@@ -1,0 +1,46 @@
+// _sass/tags-categories.sass
+.post-tags-categories {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-size: 0.9em;
+  color: #666;
+
+  .tags, .categories {
+    margin-bottom: 0.5em;
+  }
+
+  strong {
+    color: #333;
+  }
+
+  a {
+    text-decoration: none;
+    color: #007bff; // Or your theme's link color
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.taxonomies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; // Space between items
+  margin-top: 1em;
+
+  .taxonomy-item {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f0f0f0; // Light background for each item
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333; // Dark text color
+    font-size: 0.95em;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #e0e0e0; // Slightly darker on hover
+      color: #000;
+    }
+  }
+}

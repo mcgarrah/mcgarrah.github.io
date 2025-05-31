@@ -2,6 +2,13 @@
 title:  "Backlog of Posts from 2024"
 layout: post
 published: true
+tags:
+  - planning
+  - jekyll
+  - backlog
+categories:
+  - organization
+  - writing
 ---
 
 My past write up for a [Backlog of Posts](/backlog-of-posts/) had all the things that I wanted to write about in mid-2024. It has been updated with links to the released posts that covered each as I finished up in 2024. I got a lot of them written but the backlog of drafts and things I wanted to write about also grew as I picked off drafts and added new posts.
