@@ -38,9 +38,9 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.198.0    # https://github.com/ruby/setup-ruby/releases/tag/v1.198.0
         with:
-          ruby-version: '3.2' # Not needed with a .ruby-version file
+          ruby-version: '3.2.6' # Specify exact version to avoid potential issues
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
+          cache-version: 1 # Increment this number to force re-download of cached gems
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
