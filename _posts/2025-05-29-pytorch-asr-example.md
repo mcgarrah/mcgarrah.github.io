@@ -10,6 +10,8 @@ I have a fascination with the sounds of languages (phonemes) and how they are pr
 
 I'm interested in seeing if the phonetic or phoneme representations can be pulled from the modern machine learning ASR pipelines. This is just an interest of mine with no defined goals beyond learning.
 
+<!-- excerpt-end -->
+
 ## Understanding ASR and Phonemes
 
 Automatic Speech Recognition (ASR) systems convert spoken language into text. Traditional ASR systems typically output only the final text, but modern deep learning approaches can provide intermediate representations, including phonemes.
