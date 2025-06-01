@@ -29,6 +29,7 @@ Wav2Vec 2.0 is a self-supervised learning framework for speech recognition devel
 2. **Fine-tuning**: The pre-trained model is then fine-tuned on labeled data using Connectionist Temporal Classification (CTC) loss for speech recognition tasks.
 
 The architecture consists of:
+
 - A CNN feature encoder that converts raw audio into latent speech representations
 - A Transformer network that builds contextual representations
 - A quantization module that discretizes the latent representations
