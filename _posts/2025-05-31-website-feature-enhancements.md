@@ -1,8 +1,16 @@
 ---
 title: "New Features: Copy Buttons, Comments, Tags, and More!"
-categories: [Website, Updates]
-tags: [feature, clipboard, giscus, tags, categories]
+layout: post
 published: true
+categories: 
+ - Website 
+ - Updates
+tags: 
+ - feature
+ - clipboard
+ - gisc
+ - tags
+ - categories
 ---
 
 I'm happy to announce a batch of new features that enhance the functionality and user experience of this blog. These improvements make the content more interactive, organized, and user-friendly. Hopefully, you like the changes.
