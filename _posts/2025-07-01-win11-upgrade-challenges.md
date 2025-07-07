@@ -14,7 +14,7 @@ Upgrading to Windows 11 on my ThinkPad T480 laptops turned into a performance ni
 
 I maintain two (2) ThinkPad T480 laptops as my daily drivers - a redundancy strategy born from experience and healthy paranoia. You can read about my [ThinkPad](/tags/thinkpad/) journey in previous posts. Having multiple mostly identical systems lets me test major changes on one before committing to the others. My wife also has a third T480 that she just wants to work.
 
-For the Windows 11 upgrade, I started with the first laptop (Thomas) which seemed fine after a few days of light usage. Encouraged by this success, I upgraded the second laptop (Dresden) which has more demanding usage - video conferencing with a Logitech C930e webcam, more complex development tool configuration, and heavier multitask
+For the Windows 11 upgrade, I started with the first laptop (Thomas) which seemed fine after a few days of light usage. Encouraged by this success, I upgraded the second laptop (Dresden) which has more demanding usage - video conferencing with a Logitech C930e webcam, more complex development tool configuration, and heavier multitasking.
 
 ## The Performance Disaster
 
@@ -25,7 +25,7 @@ Dresden's performance after the Windows 11 upgrade was catastrophically bad:
 - System wide stuttering with constant micro-hangs
 - Logitech C930e microphone completely non-functional
 - Intermittent Webcam initialization failures in MS Teams
-- Webcam hanging video for a few seconds
+- Logitech Webcam hanging video for a few seconds
 
 Interestingly, Thomas didn't exhibit these same severe issues, suggesting hardware-specific or configuration-dependent problems.
 
@@ -39,7 +39,9 @@ The Logitech C930e problems required multiple steps:
 2. **Update webcam firmware and drivers** - Minimal improvement
 3. **MS Teams compatibility issues persist** - Video and audio performance in Teams remains suboptimal
 
-After the below changes, the webcam video is still not fully usable but much better.
+*Note 1*: After the below changes to "Balanced", the webcam video is still not fully usable but significantly better. The  integrated camera and microphone work fine if the Logitech is unplugged.
+
+*Note 2*: Removing the [Amazon Basics powered USB 3.0 hub](https://www.amazon.com/dp/B00DQFGH80) seems to have fixed the last of the video performance issues.
 
 ### Snipping Tool Performance
 
@@ -71,9 +73,10 @@ This suggests Windows 11's "Best Performance" mode may be poorly optimized for o
 - Default settings in Windows 11 are not always optimal, even for performance-focused modes
 - Peripheral software (like Logi Tune) may need complete reinstallation rather than updates
 - The new Snipping Tool's auto-save feature creates unnecessary system load
+- Perfectly find USB 3.0 hub fails under Windows 11
 
 ## Current Status
 
-After implementing these fixes, Dresden is usable but still not as smooth as it was on Windows 10. The webcam situation remains partially resolved - functional but not optimal for professional video calls. I'm somewhat flummoxed but this seems like something that I'll just keep digging until I fix it.
+After implementing these fixes, Dresden is usable but still not as smooth as it was on Windows 10. The webcam situation is resolved. I'm somewhat flummoxed but this seems like something that I'll just keep digging until I fix it all. Thomas is still a bit more snappy but the different is less horrible.
 
-Hope this helps someone else if you are dealing with Logitech hardware, or the screenshot tool lag causes you issues.
+Hope this helps someone else if you are dealing with Logitech hardware, or the screenshot tool lag causes you issues, or you find yourself wondering why "Balanced" is better.
