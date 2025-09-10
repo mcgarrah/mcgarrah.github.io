@@ -334,15 +334,16 @@ Dependabot is great for keeping things updated, but it's not specifically focuse
 Like any automated tool, this isn't perfect:
 
 - You still need to review the PRs before merging (which is probably a good thing)
-- Sometimes it updates packages more than strictly necessary for the security fix
+- Sometimes it updates packages more than strictly than necessary for the security fix
 - It's only as good as pip-audit's vulnerability database
 - Python projects only - no help for your Node.js mess
+- Forces the use of the flexible version `>=` for your file
 
 ## Setting it up
 
 1. Drop the workflow file into `.github/workflows/pip-audit-pr.yaml`
 2. Create the helper script at `scripts/pin_requirements.py`
-3. Make sure your requirements use `>=` instead of `==` (if you're already pinning everything, this might not be for you)
+3. Make sure your requirements use `>=` instead of `==` (if you're already pinning everything, then this might not be for you)
 4. Fix the GitHub permissions mentioned above
 5. Test it manually first - trust me on this one
 
@@ -351,5 +352,7 @@ Like any automated tool, this isn't perfect:
 This setup has been working well for me across several projects. It catches security issues I would have missed and creates reasonable PRs without being too noisy. The weekly schedule means I don't forget about it, and the manual trigger is handy when I'm actively working on dependency updates.
 
 The helper script could probably be smarter about version parsing, but it handles the common cases I run into. If you find bugs or have improvements, the code is straightforward enough to modify.
+
+I have not made this generic for non-flexible version checks. That is another enhancement worth thinking about.
 
 Not the most exciting automation, but it's one less thing to worry about manually.
