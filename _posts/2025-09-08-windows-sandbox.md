@@ -173,4 +173,4 @@ choco install putty winscp
 
 Windows Sandbox has become an essential tool in my testing workflow. It's not perfect - the lack of persistence means setup time every session - but for quick "will this break my system?" testing, it's fantastic.
 
-The setup script saves me about 10 minutes each time, and I'm constantly tweaking it based on what I'm working on. Much better than the old days of hoping System Restore would save me.
+The setup script saves me about 10 minutes each time, and I'm constantly tweaking it based on what I'm working on. Much better than the old days of hoping System Restore would save me from a broken system.
