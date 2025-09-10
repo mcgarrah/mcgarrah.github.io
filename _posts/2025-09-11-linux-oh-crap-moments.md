@@ -1,14 +1,14 @@
 ---
-title:  "Debian Linux Oh-Crap Moment in the Homelabs"
+title:  "Debian Linux Oh-Crap Moment in the Homelab"
 layout: post
-published: false
+published: true
 ---
 
 We have all done it if you work long enough. I blew up my Debian Linux system with an incredibly stupid mistake breaking the whole system. It is actually one of the questions I have when interviewing someone. "What is the worst mistake you've ever made?" And if they admit one, the follow up question, "What did you learn?"
 
-I renamed my `/usr` directory to `/usr-root` with a `mv /usr /usr-root` as the root user. I knew I was treading on dangerous ground so I fortunately had two ssh console sessions up and both running as `root`. The goal was to migrate the `/usr` to separate storage to recover space for the very full root disk.
+I renamed my `/usr` directory to `/usr-root` with a `mv /usr /usr-root` as the root user. I knew I was treading on dangerous ground so I fortunately had two `ssh` console sessions up and both running as `root`. The goal was to migrate the `/usr` to separate storage to recover space for the very full root disk.
 
---MY POST ON PROXMOX 8.2 UPGRADE LINK HERE--
+This happened during my [Proxmox 8.2 upgrade process](/proxmox-upgrade-issues/) where I was trying to free up space on the root filesystem before proceeding with the cluster upgrades.
 
 ``` shell
 root@pve1:/mnt/pve/osdisk# mkdir /usr-new
@@ -27,25 +27,31 @@ This was the **oh crap** moment for me when I realized how badly I had just scre
 
 The above mistake was me just being hasty trying to get to my Proxmox 8.3 upgrades on the main cluster and doing this a little after 1:00am in the morning. That is usually when I screw things up... when I'm in a hurry and a bit tired. There is probably a life lesson in there someplace that I need to think about.
 
+## What Made This Worse: The Debian /usr Merge
 
+Another thing I missed which made this situation much worse was [The Debian /usr Merge](https://wiki.debian.org/UsrMerge). In modern Debian systems, `/lib`, `/sbin` and `/bin` are actually symlinks to `/usr/lib`, `/usr/sbin` and `/usr/bin`. This [Linux Fu article](https://hackaday.com/2020/09/03/linux-fu-moving-usr/) explains the implications well.
 
+I completely missed this major change in Debian file systems. I'm slightly old school UNIX where you could break up all the major volumes/partitions (var, usr, home, etc.) across different disks or partitions. This trend is falling off with the merged root volume approach.
 
+So when I moved `/usr`, I didn't just break user programs - I broke the entire system because the core system directories were symlinked into `/usr`.
 
-Another things I missed which impact this situation... [The Debian /usr Merge](https://wiki.debian.org/UsrMerge) where `/lib`, `/sbin` and `/bin` are symlinks to `/usr/lib`, `/usr/sbin` and `/usr/bin`.
+## Survival Mode: What You Have When Everything Breaks
 
-https://hackaday.com/2020/09/03/linux-fu-moving-usr/
+When you've nuked your system this badly, what do you actually have left? Fortunately, bash has a lot of built-in commands that don't depend on external binaries.
 
-I completely missed this major change in the Debian file systems changing over to a root centric partitioning. I'm slightly old school UNIX where you are able to break up all the major volumes/parititions (var, usr, home, etc...) to different disks or partitions on a disk. This trend is falling off with a merged root volume.
+### Basic File Listing
 
-First off what do you have with a root session when the base `/bin` commands are toast? You have the built-in commands of the shell.
-
-An `ls` like option:
+When `ls` is gone, you can still see what's in directories:
 
 ``` shell
 echo /*
+echo /home/*
+echo /etc/*
 ```
 
-Some useful `alias` entries for your sanity.
+### Useful Aliases for Sanity
+
+These bash-only aliases can help you navigate:
 
 ``` console
 alias myls='echo $*/*'
@@ -53,7 +59,9 @@ alias mycatin='(IFS=$'\n';while read line;do echo "$line";done) <'
 alias mycatout='(IFS=$'\n';while read line;do echo "$line";done) >'
 ```
 
-How to assess what commands you have...
+### Assessing What Commands You Have
+
+First, figure out what's still working:
 
 ``` shell
 type -a enable
@@ -66,13 +74,13 @@ echo is /usr/bin/echo
 echo is /bin/echo
 ```
 
-For a list of built-in `bash` commands:
+For a complete list of built-in bash commands:
 
 ``` shell
 enable
 ```
 
-I'll call out some useful ones like `echo`, `cd`, `export`, `type`, `read`
+The most useful ones for recovery are `echo`, `cd`, `export`, `type`, `read`, `printf`, and `help`.
 
 ``` console
 root@pve1:~# enable
@@ -189,16 +197,15 @@ A star (*) next to a name means that the command is disabled.
  help [-dms] [pattern ...]                                     { COMMANDS ; }
 ```
 
----
+## The Long Road to Recovery
 
-https://www.qfbox.info/bashcp
-http://fendrich.se/blog/2010/08/27/rescuing-hosed-system-using-only-bash/
-https://fakeguido.blogspot.com/2010/08/rescuing-hosed-system-using-only-bash.html
-https://unix.stackexchange.com/questions/432002/after-accidentally-renaming-usr-how-do-i-rename-it-back
-https://unix.stackexchange.com/questions/17428/moved-bin-and-other-folders-how-to-get-them-back
-https://unix.stackexchange.com/questions/783910/renamed-usr-bin-now-nothing-is-executable-anymore
+After discovering I still had `bash` built-ins, I had to figure out how to get my system commands working again. The problem was that even though I could see the binaries in `/usr-root/bin/`, they wouldn't execute because of missing shared libraries.
 
----
+### Understanding the Library Problem
+
+Linux binaries need shared libraries to run. When I moved `/usr`, I broke the library paths. The error "cannot execute: required file not found" wasn't about the binary - it was about the dynamic linker and shared libraries.
+
+First part, being clever with file systems.
 
 ``` shell
 root@pve1:/mnt/pve/osdisk# cat /etc/fstab
@@ -242,11 +249,18 @@ tmpfs                                          192816       0    192816   0% /ru
 /dev/sda1                                     7610676      24   7202592   1% /usr-new
 root@pve1:/mnt/pve/osdisk# cd
 root@pve1:~# cp -pr /usr/* /usr-new/
+```
 
+Next part with moving around file systems and broken world happens.
 
-
+``` shell
 root@pve1:/# mv /usr /usr-root
 root@pve1:/# mv /usr-new /usr
+```
+
+The broken world begins with me diagnosing things along the way.
+
+``` shell
 -bash: /usr/bin/mv: No such file or directory
 root@pve1:/# /usr-root/bin/mv /usr-new /usr
 -bash: /usr-root/bin/mv: cannot execute: required file not found
@@ -259,8 +273,6 @@ root@pve1:/# ls
 -bash: /usr/bin/ls: No such file or directory
 root@pve1:/# echo /lib64/*
 /lib64/*
-
-
 root@pve1:~# which mv
 -bash: which: command not found
 root@pve1:~# ln -s
@@ -325,42 +337,55 @@ cssh  set-osd-mclock-max-cap-iops.sh  setup_openwrt_lxc_container_proxmox.sh
 root@pve1:~# LD_LIBRARY_PATH=/usr-root/lib/x86_64-linux-gnu /usr-root/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 /usr-root/bin/ls
 ```
 
-On a second very similar system... tracing out the ld-linux shared library actual location.
+### Finding the Dynamic Linker
 
-``` shell
-  181  cd /usr/bin
-  182  ls -al
-  183  ls -al ls*
-  184  file ls
-  185  ls -al /lib64/ld-linux-x86-64.so.2 
-  186  ls -al /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
-  187  ls -al /usr/bin/ls
-  188  file /usr/bin/ls
-  189  ls -al /usr/lib64/ld-linux-x86-64.so.2 
-  190  ls /
-  191  ls /lib64
-  192  ls -al /lib64
-  193  ls -al /usr/lib64/ld-linux-x86-64.so.2 
-  194  ls -al /usr/lib64/ld-linux-x86-64.so.2 
-  195  ls -al /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 
-  196  ls -al /
-  197  ls -al /usr/lib
-  198  ls -al /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 
-```
+I had to figure out where the dynamic linker was located. On a working system, I traced through the library locations to understand the path structure. The key was finding `/usr-root/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2` - the dynamic linker that could load and execute binaries.
 
-How to reverse the damage
+### The Magic Recovery Command
+
+Once I found the right library path, I could execute the `mv` command by manually specifying the dynamic linker:
 
 ``` console
 root@pve1:~# LD_LIBRARY_PATH=/usr-root/lib/x86_64-linux-gnu /usr-root/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 /usr-root/bin/mv /usr-root /usr
+```
+
+And just like that, the system was back:
+
+``` console
 root@pve1:/# ls
 bin   dev  home        initrd.img.old  lib64       media  opt   root  sbin  sys  usr      var      vmlinuz.old
 boot  etc  initrd.img  lib             lost+found  mnt    proc  run   srv   tmp  usr-new  vmlinuz
 ```
 
+The key insight was that I needed to:
+1. Set `LD_LIBRARY_PATH` to point to the relocated libraries
+2. Use the dynamic linker directly to execute the `mv` command
+3. Move `/usr-root` back to `/usr`
+
 ## Boot Failure
 
-Full disclosure ... along the way ... I dorked up again with a bad `/etc/fstab` bind mount entry ... that meant I had to do the 150 mile drive to get past this screen...
+Full disclosure ... along the way ... I screwed up again with a bad `/etc/fstab` bind mount entry ... that meant I had to do the 150 mile drive to get past this screen... Unfortunately, I don't have the photo from my phone, but it was the dreaded "emergency mode" boot screen that every Linux admin fears.
 
--- PICTURE FROM CELL PHONE --
+The lesson learned was forgetting to add the `nofail` option to my `/etc/fstab` entries. I had learned this at some point in the past but had to re-learn it the hard way. The `nofail` option tells systemd to continue booting even if a mount fails, rather than dropping into emergency mode.
 
-Lesson learned on that one was forgetting to add the `nofail` or `nowaitboot` which I had learned at some point in the past but had to re-learn. Also, those options impacts have changed since **SystemD** transitions in the last couple years so another thing to re-re-learn.
+Also, the behavior of these options has changed since the SystemD transitions in recent years, so it's another thing to re-re-learn.
+
+## What I Learned
+
+1. **Never work on critical systems when tired** - Most of my worst mistakes happen after midnight
+2. **Always have multiple SSH sessions open** - This saved me from a 150-mile drive
+3. **Understand modern filesystem layouts** - The `/usr` merge changes everything
+4. **Know your bash built-ins** - They're your lifeline when everything else breaks
+5. **Use `nofail` in fstab** - Prevents boot failures from experimental mounts
+6. **Test recovery procedures** - Practice these techniques on non-critical systems
+
+## Useful References
+
+These resources helped me understand bash-only recovery techniques:
+
+- [Bash Copy Function](https://www.qfbox.info/bashcp)
+- [Rescuing a Hosed System Using Only Bash](http://fendrich.se/blog/2010/08/27/rescuing-hosed-system-using-only-bash/)
+- [Unix StackExchange: After accidentally renaming /usr](https://unix.stackexchange.com/questions/432002/after-accidentally-renaming-usr-how-do-i-rename-it-back)
+- [Unix StackExchange: Moved /bin and other folders](https://unix.stackexchange.com/questions/17428/moved-bin-and-other-folders-how-to-get-them-back)
+
+The moral of the story? We all make mistakes. The key is having enough knowledge and preparation to recover from them. And maybe don't do system administration at 1 AM.
