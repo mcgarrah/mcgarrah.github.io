@@ -16,6 +16,10 @@ excerpt_separator: <!-- excerpt-end -->
 date_format: "%B %d, %Y"
 paginate: 4
 
+# Future posts disabled for scheduled releases via GHA scheduled job
+#future: true
+future: false
+
 # Layout
 show_excerpts: true       # show article excerpts on the home page
 show_frame: false         # adds a gray frame to the site
