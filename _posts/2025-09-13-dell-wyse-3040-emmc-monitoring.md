@@ -4,7 +4,6 @@ layout: post
 categories: [technical, hardware]
 tags: [wyse3040, emmc, monitoring, storage, health, homelab, dell]
 published: true
-date: 2025-09-09
 ---
 
 I found out that eMMC storage is a different thing entirely when it comes to health monitoring. This is especially true when you're booting from it like on the [Dell Wyse 3040s](/tags/wyse3040/) of which I have several in my homelab. The goal is to get some status information on the eMMC storage health, but the usual SMART utilities don't work on eMMC.
