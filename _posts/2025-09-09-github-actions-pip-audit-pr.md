@@ -1,6 +1,8 @@
 ---
 title: "Github Actions pip-audit PR"
 layout: post
+categories: [technical, security]
+tags: [github-actions, python, security, automation, ci-cd, pip]
 published: true
 ---
 

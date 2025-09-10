@@ -1,6 +1,8 @@
 ---
 title: "Essential CLI Tools for Linux System Management"
 layout: post
+categories: [technical, reference]
+tags: [linux, cli, monitoring, tools, sysadmin, homelab]
 published: true
 ---
 
