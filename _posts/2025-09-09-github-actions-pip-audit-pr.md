@@ -44,9 +44,15 @@ You'll need a few things set up first:
 
 ## The Workflow
 
+{% comment %}
+The next code block section has {{ }} variables that required setting
+RAW and ENDRAW to show those variables correctly inline. It was a pain
+to figure this out so leaving myself a note here.
+{% endcomment %}
+
 ``` yaml
 name: pip-audit pull request
-
+{% raw %}
 # This workflow uses pip-audit to check for vulnerabilities in Python dependencies
 # and automatically creates a pull request with fixes if any vulnerabilities are found.
 #
@@ -165,16 +171,14 @@ jobs:
           Exit Code: ${{ steps.audit.outputs.exit_code }}
           
           **Audit Details:**
-          ```
           ${{ steps.audit_output.outputs.audit_details }}
-          ```
-          
+
           ---
                     
         branch: 'automated-pip-audit-fixes'
         # Ensures a clean branch for the PR
         delete-branch: true
-
+{% endraw %}
 ```
 
 ## The Helper Script
