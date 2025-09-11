@@ -27,9 +27,10 @@
 #  Scroll to "Jekyll Run - Configuration"
 #  Add "--trace" for more detailed error message on build
 #  Add "--drafts" to see the "_drafts" folder posts
+#  Add "--future" to publishes posts with a future date
 
 # bundle exec jekyll serve
 
 # For Debug and Drafts
 
-bundle exec jekyll serve --trace --drafts
+bundle exec jekyll serve --trace --drafts --future
