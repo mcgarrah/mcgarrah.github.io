@@ -6,7 +6,7 @@ tags: [wyse3040, emmc, monitoring, storage, health, homelab, dell]
 published: true
 ---
 
-I found out that eMMC storage is a different thing entirely when it comes to health monitoring. This is especially true when you're booting from it like on the [Dell Wyse 3040s](/tags/wyse3040/) of which I have several in my homelab. The goal is to get some status information on the eMMC storage health, but the usual SMART utilities don't work on eMMC.
+I found out awhile ago that eMMC storage is a different thing entirely when it comes to health monitoring. This is especially true when you're booting from it like on the [Dell Wyse 3040s](/tags/wyse3040/) of which I have several in my homelab. The goal is to get some status information on the eMMC storage health, but the usual SMART utilities don't work on eMMC.
 
 ``` console
 root@pve1:~# smartctl -H /dev/mmcblk0 -d auto
@@ -17,13 +17,13 @@ Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
 Please specify device type with the -d option.
 ```
 
-Turns out eMMC has its own health monitoring system that's actually pretty useful once you know how to access it.
+Turns out eMMC has its own health monitoring system that's actually pretty useful once you know how to access it. I figured I would share my experience since it took some time to figure out. Maybe this will help someone else.
 
 <!-- excerpt-end -->
 
 ## What is eMMC?
 
-eMMC (embedded MultiMediaCard) is basically flash storage that's soldered directly to the board. Unlike traditional SSDs, it doesn't support SMART monitoring, but it has its own health reporting system built into the JEDEC standard.
+eMMC (embedded MultiMediaCard) is basically flash storage that's soldered directly to the board. Unlike traditional SSDs, it doesn't support SMART monitoring, but it has its own health reporting system built into the [JEDEC standard](https://en.wikipedia.org/wiki/JEDEC_memory_standards).
 
 The [Dell Wyse 3040s](/tags/wyse3040/) use 8GB eMMC for the boot drive, and since these are fanless units running 24/7, monitoring the storage health is pretty important.
 
@@ -80,16 +80,19 @@ eMMC Pre EOL information [EXT_CSD_PRE_EOL_INFO]: 0x01
 Here's what these values mean:
 
 **Device Life Time Estimation Type A (0x01):**
+
 - Life time estimation for the MLC user partition eraseblocks
 - Provided in steps of 10%
 - 0x01 means 0%-10% device life time used
 
 **Device Life Time Estimation Type B (0x02):**
+
 - Life time estimation for the SLC boot partition eraseblocks  
 - Provided in steps of 10%
 - 0x02 means 10%-20% device life time used
 
 **Pre EOL Information (0x01):**
+
 - Overall status for reserved blocks
 - 0x01 = Normal: consumed less than 80% of reserved blocks
 - 0x02 = Warning: consumed 80% of reserved blocks  
@@ -98,6 +101,7 @@ Here's what these values mean:
 ## What This Means for My Dell Wyse Units
 
 My eMMC health looks pretty good:
+
 - User partition: 0-10% wear (excellent)
 - Boot partition: 10-20% wear (still very good)
 - Reserved blocks: Normal status
@@ -141,10 +145,10 @@ fi
 
 Unlike traditional hard drives or SSDs, eMMC doesn't give you SMART data, but the JEDEC health reporting is actually more straightforward. The 10% increments are coarse, but for homelab monitoring, knowing if you're in the "normal" range versus "warning" is usually sufficient.
 
-For my [Dell Wyse 3040](/tags/wyse3040/) cluster, this gives me confidence that the storage isn't wearing out prematurely under the Proxmox workload. Since these units are 150 miles away, early warning of storage issues is pretty valuable.
+For my [Dell Wyse 3040](/tags/wyse3040/) test cluster, this gives me confidence that the storage isn't wearing out prematurely under the Proxmox workload. Since these units are 150 miles away, early warning of storage issues is pretty valuable. Recently, I have converted all my [Tailscale on with Debian 12](/dell-wyse-3040-tailscale/) remote nodes running on these and want alerts if their storage is in trouble.
 
 ## References
 
 The health monitoring was introduced in JEDEC standard revision 5.0. The [CNX Software article on eMMC wear estimation](https://www.cnx-software.com/2019/08/16/wear-estimation-emmc-flash-memory/) has good background on the technical details.
 
-For more Dell Wyse 3040 content, check out my other posts on running [Proxmox clusters on these units](/proxmox-8-dell-wyse-3040/).
+For more [Dell Wyse 3040 content](/tags/wyse3040/), check out my other posts on running [Proxmox clusters on these units](/proxmox-8-dell-wyse-3040/) or [Tailscale on with Debian 12](/dell-wyse-3040-tailscale/).

@@ -19,62 +19,80 @@ These are the tools I install on every system because I know I'll need them:
 ### Process and System Monitoring
 
 **htop** - Because `top` is painful to read
+
 ```bash
 sudo apt install htop
 ```
+
 Better colors, easier sorting, tree view of processes. I can actually see what's eating CPU without squinting.
 
 **btop++** - The fancy new kid on the block
+
 ```bash
 sudo apt install btop
 ```
+
 Like htop but with graphs and better visuals. Overkill for servers, perfect for desktop systems.
 
 **glances** - The all-in-one dashboard
+
 ```bash
 sudo apt install glances
 ```
+
 Shows CPU, memory, disk, network all in one screen. Great for getting a quick system overview.
 
 ### Storage Diagnostics
 
 **ncdu** - Disk usage that doesn't suck
+
 ```bash
 sudo apt install ncdu
 ```
+
 Interactive disk usage analyzer. Way better than trying to parse `du` output when you're hunting for what's filling up your disk.
 
 **iotop** - See what's hammering your disks
+
 ```bash
 sudo apt install iotop
 ```
+
 Like `top` but for disk I/O. Essential when your system is grinding and you need to know which process is causing it.
 
 **lsblk** - Clean block device listing
+
 ```bash
 lsblk
 ```
+
 Built-in tool that shows your storage layout clearly. Much cleaner than parsing `/proc/mounts`.
 
 ### Network Troubleshooting
 
 **iftop** - Network traffic by connection
+
 ```bash
 sudo apt install iftop
 ```
+
 Shows which connections are using bandwidth. Great for "why is my internet slow?" moments.
 
 **nethogs** - Network usage by process
+
 ```bash
 sudo apt install nethogs
 ```
+
 Like iotop but for network. Shows which processes are using bandwidth.
 
 **mtr** - Better traceroute
+
 ```bash
 sudo apt install mtr
 ```
-Combines ping and traceroute. Shows packet loss and latency to each hop. Much more useful than plain traceroute.
+
+Combines `ping` and `traceroute`. Shows packet loss and latency to each hop. Much more useful than plain `traceroute`.
 
 ## The Specialists
 
@@ -83,32 +101,40 @@ Tools I don't use daily but are invaluable for specific problems:
 ### Hardware Monitoring
 
 **lm-sensors** - Temperature monitoring
+
 ```bash
 sudo apt install lm-sensors
 sudo sensors-detect
 sensors
 ```
+
 Essential for monitoring temperatures, especially on my fanless Dell Wyse units that can get toasty.
 
 **smartctl** - Drive health monitoring
+
 ```bash
 sudo apt install smartmontools
 sudo smartctl -a /dev/sda
 ```
+
 Check if your drives are dying before they take your data with them.
 
 ### Performance Analysis
 
 **iperf3** - Network performance testing
+
 ```bash
 sudo apt install iperf3
 ```
+
 Test actual network throughput between systems. Invaluable for diagnosing network performance issues.
 
 **ioping** - Storage latency testing
+
 ```bash
 sudo apt install ioping
 ```
+
 Like ping but for storage. Helps identify if storage is slow or just busy.
 
 ## Tools I've Abandoned
@@ -150,7 +176,7 @@ sudo apt install glances btop ioping
 
 Most system problems fall into a few categories: something's using too much CPU, disk I/O is saturated, network is slow, or you're out of space. These tools help you quickly identify which category you're dealing with.
 
-I don't use exotic monitoring solutions for my homelab. These simple CLI tools give me the information I need without the overhead of complex monitoring stacks. Sometimes the old ways are the best ways.
+I don't use currently exotic monitoring solutions for my homelab, but maybe I should. These simple CLI tools give me the information I need without the overhead of complex monitoring stacks. Sometimes the old ways are the best ways.
 
 ## References
 
