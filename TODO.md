@@ -19,7 +19,6 @@
 
 ### Technical Improvements
 
-- [ ] Update Jekyll to latest version (currently 4.3.4, latest is 4.4.1)
 - [ ] Add proper error pages (404, 500) with custom styling
 - [ ] Implement lazy loading for images
 - [ ] Add image optimization and responsive images
@@ -82,10 +81,11 @@
 - [x] Google Analytics and AdSense integration
 - [x] Scheduled builds for future posts
 - [x] Reading time indicator
+- [x] Update Jekyll to latest version (4.4.1)
 
 ## Notes
 
-- Current Jekyll version: 4.3.4 (latest available: 4.4.1)
+- Current Jekyll version: 4.4.1
 - Using Giscus for comments (GitHub Discussions)
 - Google Analytics: G-F90DVB199P
 - Google AdSense: ca-pub-2421538118074948

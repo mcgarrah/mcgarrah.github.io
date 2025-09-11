@@ -10,7 +10,34 @@ We have all done it if you work long enough. I blew up my Debian Linux system wi
 
 I renamed my `/usr` directory to `/usr-root` with a `mv /usr /usr-root` as the root user. I knew I was treading on dangerous ground so I fortunately had two `ssh` console sessions up and both running as `root`. The goal was to migrate the `/usr` to separate storage to recover space for the very full root disk.
 
-This happened during my [Proxmox 8.2 upgrade process](/proxmox-upgrade-issues/) where I was trying to free up space on the root filesystem before proceeding with the cluster upgrades.
+<!-- excerpt-end -->
+
+## The Context: Proxmox 8.3 Upgrade Crisis
+
+This disaster happened during my attempt to upgrade my test Proxmox cluster from 8.2 to 8.3. My [Dell Wyse 3040 test cluster](/proxmox-8-dell-wyse-3040/) has hyper-constrained hardware - only 2GB RAM and 8GB eMMC storage. These systems are about 160 miles away, making any physical intervention a significant undertaking.
+
+The upgrade process had stalled because the root filesystem was critically full:
+
+```console
+root@pve1:~# df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk0p2  5.7G  5.4G  283M  95% /
+```
+
+With only 283MB free space, the Proxmox upgrade couldn't proceed. I had already:
+
+1. **Cleaned APT cache**: `apt-get clean` recovered some space
+2. **Removed old kernels**: Purged unused Proxmox and Debian kernels
+3. **Removed atop logs**: 277MB of daily logs were consuming precious space
+
+But it still wasn't enough. The system needed more space, and I had an unused 8GB USB drive that I'd previously removed from the Ceph cluster. My plan was to:
+
+1. Create an LVM volume on the USB drive
+2. Copy `/usr` to the new volume
+3. Mount the new volume as `/usr`
+4. Proceed with the Proxmox upgrade
+
+What I didn't account for was the Debian `/usr` merge and how catastrophically wrong this could go.
 
 ``` shell
 root@pve1:/mnt/pve/osdisk# mkdir /usr-new
@@ -23,11 +50,40 @@ root@pve1:/# /usr-root/bin/mv /usr-new /usr
 -bash: /usr-root/bin/mv: cannot execute: required file not found
 ```
 
-This was the **oh crap** moment for me when I realized how badly I had just screwed up. When you break stuff this bad, it is time to stop for a minute and take stock. My absolutely worst case scenerio is a 150 mile drive to the box in question and a USB Recovery Boot Drive with my [***trash can*** **crash cart** (TC<sup>3</sup>)](https://www.mcgarrah.org/proxmox-upgrade-issues/). But I have been doing this long enough that I had left myself options with the two active root sessions *if* I worked carefully.
-
-<!-- excerpt-end -->
+This was the **oh crap** moment for me when I realized how badly I had just screwed up. When you break stuff this bad, it is time to stop for a minute and take stock. My absolutely worst case scenario is a 150 mile drive to the box in question and a USB Recovery Boot Drive with my [***trash can*** **crash cart** (TC<sup>3</sup>)](/proxmox-upgrade-issues/). But I have been doing this long enough that I had left myself options with the two active root sessions *if* I worked carefully.
 
 The above mistake was me just being hasty trying to get to my Proxmox 8.3 upgrades on the main cluster and doing this a little after 1:00am in the morning. That is usually when I screw things up... when I'm in a hurry and a bit tired. There is probably a life lesson in there someplace that I need to think about.
+
+### The Storage Setup That Led to Disaster
+
+Before the disaster, I had prepared the new storage properly:
+
+```console
+# Created LVM volume group from the old 8GB USB drive
+root@pve1:~# vgs
+  VG                                        #PV #LV #SN Attr   VSize   VFree
+  ceph-0391f8fe-42a1-4ff1-82f6-1412019e77eb   1   1   0 wz--n- <28.67g     0
+  osdisk                                      1   0   0 wz--n-  <7.47g <7.47g
+
+# Created logical volume
+root@pve1:~# lvcreate -l 100%FREE -n osdisk osdisk
+  Logical volume "osdisk" created.
+
+# Formatted with ext4
+root@pve1:~# mkfs.ext4 /dev/osdisk/osdisk
+mke2fs 1.47.0 (5-Feb-2023)
+Creating filesystem with 1957888 4k blocks and 489600 inodes
+...
+```
+
+I had even mounted it temporarily and successfully copied the `/usr` contents:
+
+```console
+root@pve1:~# mount /dev/osdisk/osdisk /usr-new
+root@pve1:~# cp -pr /usr/* /usr-new/
+```
+
+Everything was going according to plan until I executed the fateful `mv /usr /usr-root` command.
 
 ## What Made This Worse: The Debian /usr Merge
 
@@ -149,7 +205,7 @@ enable unset
 enable wait
 ```
 
-```
+```console
 root@pve1:~# help
 GNU bash, version 5.2.15(1)-release (x86_64-pc-linux-gnu)
 These shell commands are defined internally.  Type `help' to see this list.
@@ -207,7 +263,9 @@ After discovering I still had `bash` built-ins, I had to figure out how to get m
 
 Linux binaries need shared libraries to run. When I moved `/usr`, I broke the library paths. The error "cannot execute: required file not found" wasn't about the binary - it was about the dynamic linker and shared libraries.
 
-First part, being clever with file systems.
+### The Recovery Setup
+
+Fortunately, I still had the new `/usr` volume mounted and ready. The recovery process involved using the properly prepared storage that I'd set up before the disaster:
 
 ``` shell
 root@pve1:/mnt/pve/osdisk# cat /etc/fstab
@@ -360,26 +418,59 @@ boot  etc  initrd.img  lib             lost+found  mnt    proc  run   srv   tmp 
 ```
 
 The key insight was that I needed to:
+
 1. Set `LD_LIBRARY_PATH` to point to the relocated libraries
 2. Use the dynamic linker directly to execute the `mv` command
 3. Move `/usr-root` back to `/usr`
 
-## Boot Failure
+## Boot Failure and the 150-Mile Drive
 
 Full disclosure ... along the way ... I screwed up again with a bad `/etc/fstab` bind mount entry ... that meant I had to do the 150 mile drive to get past this screen... Unfortunately, I don't have the photo from my phone, but it was the dreaded "emergency mode" boot screen that every Linux admin fears.
+
+The `/etc/fstab` entry I added looked like this:
+
+```console
+# Added for /usr migration
+UUID=1b04ef96-590d-404f-bb21-2ecaaa98afaf /usr ext4 defaults 0 2
+```
+
+What I should have added was:
+
+```console
+# Proper entry with nofail option
+UUID=1b04ef96-590d-404f-bb21-2ecaaa98afaf /usr ext4 defaults,nofail 0 2
+```
 
 The lesson learned was forgetting to add the `nofail` option to my `/etc/fstab` entries. I had learned this at some point in the past but had to re-learn it the hard way. The `nofail` option tells systemd to continue booting even if a mount fails, rather than dropping into emergency mode.
 
 Also, the behavior of these options has changed since the SystemD transitions in recent years, so it's another thing to re-re-learn.
 
+## The Successful Recovery
+
+After the physical drive to fix the boot issue, I was able to complete the `/usr` migration successfully:
+
+```console
+# Final filesystem layout after recovery
+root@pve1:~# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk0p2  5.7G  1.0G  4.4G  19% /
+/dev/sda1        29G  3.5G   24G  13% /usr
+```
+
+The migration freed up over 3GB of space on the root filesystem, allowing the Proxmox 8.3 upgrade to proceed successfully. The irony is that the disaster recovery taught me more about Linux internals than the successful upgrade would have.
+
 ## What I Learned
 
 1. **Never work on critical systems when tired** - Most of my worst mistakes happen after midnight
-2. **Always have multiple SSH sessions open** - This saved me from a 150-mile drive
+2. **Always have multiple SSH sessions open** - This saved me from a 150-mile drive (initially)
 3. **Understand modern filesystem layouts** - The `/usr` merge changes everything
 4. **Know your bash built-ins** - They're your lifeline when everything else breaks
 5. **Use `nofail` in fstab** - Prevents boot failures from experimental mounts
 6. **Test recovery procedures** - Practice these techniques on non-critical systems
+7. **Plan for the worst case** - Having a [crash cart strategy](/proxmox-upgrade-issues/) is essential for remote systems
+8. **Constrained systems need different approaches** - The Dell Wyse 3040s taught me about working within severe limitations
+9. **Document your storage changes** - Keep notes on LVM layouts and mount points
+10. **The `/usr` merge is real** - Modern Debian systems are fundamentally different from traditional UNIX
 
 ## Useful References
 
