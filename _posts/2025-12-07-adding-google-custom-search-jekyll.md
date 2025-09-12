@@ -4,7 +4,16 @@ layout: post
 categories: [web-development, technical]
 tags: [google, search, jekyll, github-pages, feature, web-development]
 excerpt: "How to implement Google Custom Search Engine (CSE) on a Jekyll website hosted on GitHub Pages for better content discoverability."
+description: "Complete guide to implementing Google Custom Search Engine on Jekyll websites. Includes setup, customization, troubleshooting, and styling for GitHub Pages hosting."
+image: /assets/images/google-search-jekyll.png
+author: Michael McGarrah
+date: 2025-12-07
+last_modified_at: 2025-12-07
 published: true
+seo:
+  type: BlogPosting
+  date_published: 2025-12-07
+  date_modified: 2025-12-07
 ---
 
 As my Jekyll blog has grown to over 100 posts, finding specific content has become challenging for both me and my readers. While Jekyll has built-in tag and category systems, a proper search function was missing. Here's how I implemented Google Custom Search Engine (CSE) to solve this problem.

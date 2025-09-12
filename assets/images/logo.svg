@@ -1,0 +1,31 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- TARDIS-inspired simple logo -->
+  <rect x="156" y="100" width="200" height="300" fill="#003B6F" stroke="#001F3F" stroke-width="4"/>
+  <rect x="166" y="110" width="180" height="20" fill="#0074D9"/>
+  <rect x="166" y="140" width="180" height="240" fill="#004080"/>
+  
+  <!-- Door panels -->
+  <rect x="176" y="160" width="70" height="200" fill="#002040" stroke="#001020" stroke-width="2"/>
+  <rect x="266" y="160" width="70" height="200" fill="#002040" stroke="#001020" stroke-width="2"/>
+  
+  <!-- Door handles -->
+  <circle cx="240" cy="250" r="4" fill="#FFD700"/>
+  <circle cx="302" cy="250" r="4" fill="#FFD700"/>
+  
+  <!-- Police Box sign -->
+  <rect x="186" y="170" width="140" height="30" fill="#FFFFFF"/>
+  <text x="256" y="190" text-anchor="middle" font-family="Arial" font-size="14" fill="#000">POLICE BOX</text>
+  
+  <!-- Flashing light on top -->
+  <rect x="236" y="80" width="40" height="20" fill="#87CEEB"/>
+  <circle cx="256" cy="70" r="15" fill="#FFD700" opacity="0.8">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Base -->
+  <rect x="146" y="400" width="220" height="20" fill="#001F3F"/>
+  
+  <!-- McGarrah Tech text -->
+  <text x="256" y="450" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#003B6F">McGarrah</text>
+  <text x="256" y="470" text-anchor="middle" font-family="Arial" font-size="14" fill="#0074D9">Technical Blog</text>
+</svg>

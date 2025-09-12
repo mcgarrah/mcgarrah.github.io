@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.mcgarrah.org/sitemap.xml
+
+# Disallow crawling of admin/development files
+Disallow: /_site/
+Disallow: /vendor/
+Disallow: /.jekyll-cache/
+Disallow: /bin/
+Disallow: /start-jekyll.sh
+Disallow: /TODO.md
+Disallow: /JMM-TODO.md
+
+# Allow crawling of important content
+Allow: /assets/
+Allow: /categories/
+Allow: /tags/
+Allow: /archive/
+Allow: /search/
+Allow: /about/
+Allow: /privacy/

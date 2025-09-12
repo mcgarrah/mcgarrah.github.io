@@ -1,7 +1,29 @@
 title: "McGarrah Technical Blog"
 author: "Michael McGarrah"
-description: "Michael McGarrah's Technical Blog"
+description: "Technical blog covering homelab infrastructure, Proxmox/Ceph, Dell Wyse 3040, Jekyll development, and networking. Deep dives into virtualization, storage clustering, and system administration."
 lang: "en"
+url: "https://www.mcgarrah.org"
+baseurl: ""
+
+# SEO Configuration
+seo:
+  type: Person
+  name: "Michael McGarrah"
+  links:
+    - "https://www.linkedin.com/in/michaelmcgarrah/"
+    - "https://github.com/mcgarrah"
+    - "https://gitlab.com/mcgarrah"
+    - "https://stackoverflow.com/users/2452678/michael-mcgarrah"
+    - "https://orcid.org/0000-0001-8935-1293"
+    - "https://scholar.google.com/citations?user=Lt7T2SwAAAAJ"
+
+# Social Media
+# twitter:
+#   username: mcgarrah
+#   card: summary_large_image
+
+# Logo for structured data
+logo: "/assets/images/logo.png"
 
 # Google Analytics
 google_analytics: G-F90DVB199P
@@ -72,6 +94,7 @@ plugins:
  - jekyll-feed             # used for RSS XML feed
  - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
  - jekyll-paginate         # adding back from earlier implementation in upstream fork
+ - jekyll-seo-tag          # comprehensive SEO meta tags and structured data
 
 giscus:
   repo: mcgarrah/mcgarrah.github.io
