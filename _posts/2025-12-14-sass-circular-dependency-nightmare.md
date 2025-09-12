@@ -1,5 +1,6 @@
 ---
 title: "SASS Circular Dependency Nightmare: Lessons from Jekyll Architecture"
+layout: post
 categories: [jekyll, web-development, sass]
 tags: [sass, jekyll, circular-dependency, architecture, debugging]
 excerpt: "How a simple print stylesheet addition turned into a deep dive into SASS module architecture and the perils of circular dependencies."
@@ -38,7 +39,7 @@ This cryptic error message was my introduction to SASS circular dependencies. Th
 
 ## The Quick Fix That Made Things Worse
 
-My first instinct was to move the print styles directly into `main.sass`. This "fixed" the immediate problem but created a larger architectural issue. Then I needed to add Google Custom Search styling and hit the same problem again.
+My first attempt was to move the print styles directly into `main.sass` but this just felt wrong... but I was in a hurry. This "fixed" the immediate problem but created a larger architectural issue. Then I needed to add Google Custom Search styling (after implementing [Google Custom Search functionality](/2025/12/07/adding-google-custom-search-jekyll.html) the week before) and hit the same problem again. That feeling of wrongness pervaded the whole things and I knew I had a problem I needed to fix.
 
 ```sass
 // _sass/google-search.sass
@@ -49,7 +50,7 @@ Each time I tried to create a modular SASS file that needed variables, I created
 
 ## Understanding the Root Problem
 
-The issue wasn't with individual files—it was with the overall architecture. My original structure looked like this:
+So take a deep breath and back away from the problem. Often I need a break when fixing something this because I get so invested in the current that I miss the possible. After a break I could see the issue wasn't with individual files—it was with the overall architecture. My original structure looked like this:
 
 ```
 _sass/
@@ -170,6 +171,92 @@ Stick to one naming convention. I had issues with `_variables.sass` vs `variable
 ## The Final Architecture
 
 The working structure that eliminates circular dependencies:
+
+```mermaid
+graph TD
+    %% Variables - Foundation Layer (imports nothing)
+    V["🔧 variables.sass<br/>Pure variables & functions<br/>(imports nothing)"]
+    
+    %% Core Modules - Import variables directly
+    B["📄 basic.sass"]
+    L["📐 layout.sass"]
+    C["🎨 classes.sass"]
+    F["🔤 font.sass"]
+    
+    %% Feature Modules - Import variables directly
+    P["🖨️ print.sass"]
+    G["🔍 google-search.sass"]
+    CB["📋 copy-button.sass"]
+    CM["💬 comments.sass"]
+    TC["🏷️ tags-categories.sass"]
+    RT["⏱️ reading-time.sass"]
+    
+    %% Aggregator Layer
+    M["📦 main.sass<br/>Module aggregator"]
+    I["🔄 index.sass<br/>Module forwarder"]
+    
+    %% Entry Points
+    AI["🌐 assets/css/index.sass<br/>Main entry point"]
+    AF["🖼️ assets/css/frame.sass"]
+    AS["📱 assets/css/sidebar.sass"]
+    
+    %% Dependencies - Variables to modules
+    V --> B
+    V --> L
+    V --> C
+    V --> F
+    V --> P
+    V --> G
+    V --> CB
+    V --> CM
+    V --> TC
+    V --> RT
+    V --> M
+    V --> AF
+    V --> AS
+    
+    %% Main aggregates feature modules
+    M --> CB
+    M --> CM
+    M --> TC
+    M --> RT
+    M --> G
+    M --> P
+    
+    %% Index forwards everything
+    I --> V
+    I --> M
+    I --> F
+    I --> B
+    I --> L
+    I --> C
+    
+    %% Entry points
+    AI --> I
+    
+    %% Styling
+    classDef foundation fill:#e1f5fe,stroke:#01579b,stroke-width:3px
+    classDef core fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef feature fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef aggregator fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef entry fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    
+    class V foundation
+    class B,L,C,F core
+    class P,G,CB,CM,TC,RT feature
+    class M,I aggregator
+    class AI,AF,AS entry
+```
+
+### Architecture Layers
+
+1. **Foundation Layer** (🔧): `variables.sass` - Pure variables and functions, imports nothing
+2. **Core Modules** (📄🎨): Basic styling modules that form the foundation
+3. **Feature Modules** (🖨️🔍): Specific functionality modules
+4. **Aggregator Layer** (📦🔄): Combines and forwards modules
+5. **Entry Points** (🌐🖼️): Final CSS files served to browsers
+
+### File Structure
 
 ```text
 _sass/
