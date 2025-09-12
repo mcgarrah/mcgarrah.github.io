@@ -1,0 +1,27 @@
+---
+title: "Search"
+layout: default
+permalink: /search/
+sitemap: false
+---
+
+<article>
+  <header><h1>Search</h1></header>
+  
+  {% if site.google_cse_id %}
+  <div class="gcse-search"></div>
+  <script async src="https://cse.google.com/cse.js?cx={{ site.google_cse_id }}"></script>
+  
+  <p><small>Search Engine ID: {{ site.google_cse_id }}</small></p>
+  {% else %}
+  <p>Google Custom Search is not configured. Please add google_cse_id to _config.yml</p>
+  {% endif %}
+  
+  <hr>
+  <h3>Alternative: Search with Google</h3>
+  <form action="https://www.google.com/search" method="get" target="_blank">
+    <input type="hidden" name="sitesearch" value="mcgarrah.org">
+    <input type="text" name="q" placeholder="Search this site..." style="padding: 8px; width: 70%;">
+    <input type="submit" value="Search" style="padding: 8px;">
+  </form>
+</article>

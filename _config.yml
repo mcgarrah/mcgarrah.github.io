@@ -9,6 +9,12 @@ google_analytics: G-F90DVB199P
 # Google Adsense
 google_adsense: ca-pub-2421538118074948
 
+# Google Custom Search
+# Replace with your full CSE ID from Google Custom Search console
+# Format: "012345678901234567890:abcdefghijk" or just "abcdefghijk"
+google_cse_id: "50dc9b6524efa45a0" 
+google_cse_label: "McGarrah Blog Search"
+
 # Page Settings
 permalink: /:title/
 #excerpt_separator: "\n\n\n"
@@ -41,7 +47,8 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {file: "index.html", icon: blog}
   - {file: "archive.html", icon: list}
   - {file: "tags.html", title: Tags, icon: tags}
-  - {file: "categories.html", title: Categories, icon: th-list} # Example icon
+  - {file: "categories.html", title: Categories, icon: th-list}
+  - {file: "search.html", title: Search, icon: search}
   - {file: "README.md", icon: user}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons

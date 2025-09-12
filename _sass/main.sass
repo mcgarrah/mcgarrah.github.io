@@ -15,3 +15,69 @@ $light: #ffffff !default
 
 @function reduce($percent)
   @return rgba(color.mix($dark, $light), calc($percent / 100))
+
+// Google Custom Search styling with high specificity
+.gcse-search,
+.gsc-control-cse,
+.gsc-control-cse .gsc-control-cse
+  background-color: transparent !important
+  border: none !important
+
+.gcse-search .gsc-input-box,
+.gsc-input-box,
+.gsc-input-box-hover,
+.gsc-input-box-focus
+  background: $light !important
+  border: 1px solid reduce(20) !important
+  border-radius: 4px !important
+  box-shadow: none !important
+
+.gcse-search .gsc-search-button,
+.gsc-search-button,
+.gsc-search-button-v2
+  background: $link-color !important
+  border: 1px solid $link-color !important
+  border-radius: 4px !important
+
+.gcse-search input.gsc-input,
+.gsc-input
+  background: transparent !important
+  color: $dark !important
+  border: none !important
+
+// Dark theme with higher specificity
+@media (prefers-color-scheme: dark)
+  .gcse-search,
+  .gsc-control-cse,
+  .gsc-control-cse .gsc-control-cse
+    background-color: $dark !important
+    
+  .gcse-search .gsc-input-box,
+  .gsc-input-box,
+  .gsc-input-box-hover,
+  .gsc-input-box-focus
+    background: $dark !important
+    border: 1px solid reduce(80) !important
+    color: $light !important
+  
+  .gcse-search input.gsc-input,
+  .gsc-input,
+  input.gsc-input
+    background: transparent !important
+    color: $light !important
+    border: none !important
+  
+  .gcse-search .gs-title a,
+  .gs-title a,
+  .gs-title a:link,
+  .gs-title a:visited
+    color: $link-color !important
+    
+  .gcse-search .gs-snippet,
+  .gs-snippet
+    color: $light !important
+    
+  .gcse-search .gsc-webResult,
+  .gsc-webResult .gsc-result
+    background: transparent !important
+    border-bottom: 1px solid reduce(20) !important

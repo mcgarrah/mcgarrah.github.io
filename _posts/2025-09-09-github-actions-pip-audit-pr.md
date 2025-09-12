@@ -47,9 +47,11 @@ You'll need a few things set up first:
 ## The Workflow
 
 {% comment %}
+{% raw %}
 The next code block section has {{ }} variables that required setting
 RAW and ENDRAW to show those variables correctly inline. It was a pain
 to figure this out so leaving myself a note here.
+{% endraw %}
 {% endcomment %}
 
 ``` yaml
