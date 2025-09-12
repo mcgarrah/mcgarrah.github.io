@@ -1,7 +1,9 @@
 ---
 title:  "Making Sea Salt"
 layout: post
-categories: personal sea_salt vacation
+categories: [personal]
+tags: [cooking, sea-salt, vacation, personal, diy]
+published: true
 ---
 
 I did something completely different. I didn't boot my laptop the entire Thanksgiving weekend.

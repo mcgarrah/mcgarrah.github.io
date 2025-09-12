@@ -2,7 +2,7 @@
 title:  "Debian Linux Oh-Crap Moment in the Homelab"
 layout: post
 categories: [technical, troubleshooting]
-tags: [linux, debian, bash, recovery, proxmox, homelab]
+tags: [linux, debian, bash, recovery, proxmox, homelab, dell-wyse-3040]
 published: true
 ---
 

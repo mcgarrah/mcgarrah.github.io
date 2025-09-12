@@ -1,8 +1,8 @@
 ---
 title: "Adding Google Custom Search to Jekyll Website"
 layout: post
-categories: [jekyll, web-development, website]
-tags: [google, search, jekyll, github-pages, feature]
+categories: [web-development, technical]
+tags: [google, search, jekyll, github-pages, feature, web-development]
 excerpt: "How to implement Google Custom Search Engine (CSE) on a Jekyll website hosted on GitHub Pages for better content discoverability."
 published: true
 ---

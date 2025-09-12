@@ -2,7 +2,7 @@
 title: "Hybrid Ceph Storage: SSD WAL/DB with USB Drive Data"
 layout: post
 categories: [technical, homelab]
-tags: [ceph, ssd, usb, storage, performance, homelab, proxmox, wal, db]
+tags: [ceph, ssd, usb, storage, performance, homelab, proxmox, wal, db, dell-wyse-3040]
 published: true
 ---
 

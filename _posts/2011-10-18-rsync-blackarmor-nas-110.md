@@ -1,7 +1,9 @@
 ---
 title:  "Rsync on Black Armor NAS 110"
 layout: post
-categories: personal black_armor hack nas rsync seagate
+categories: [technical, hardware]
+tags: [seagate, black-armor, nas, rsync, backup, linux]
+published: true
 ---
 
 I figured out something simple but neat on the Black Armor NAS 110 (BA-NAS110) device.  It has ```rsync``` a powerful file-system replication tool from UNIX.

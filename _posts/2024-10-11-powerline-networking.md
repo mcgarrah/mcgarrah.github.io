@@ -1,6 +1,8 @@
 ---
 title:  "Powerline Networking for the Homelabs"
 layout: post
+categories: [technical, networking]
+tags: [networking, powerline, homelab, hardware, troubleshooting]
 published: true
 ---
 

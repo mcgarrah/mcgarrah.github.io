@@ -1,7 +1,8 @@
 ---
 title:  "ProxMox 8.2.2 Cluster on Dell Wyse 3040s"
 layout: post
-tags: technical proxmox wyse3040
+categories: [technical, homelab]
+tags: [proxmox, ceph, dell-wyse-3040, virtualization, homelab, clustering]
 published: true
 ---
 

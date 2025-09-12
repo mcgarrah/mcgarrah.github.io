@@ -2,7 +2,7 @@
 title:  "Dell Wyse 3040 eMMC Storage Health Monitoring"
 layout: post
 categories: [technical, hardware]
-tags: [wyse3040, emmc, monitoring, storage, health, homelab, dell]
+tags: [dell-wyse-3040, emmc, monitoring, storage, health, homelab]
 published: true
 ---
 

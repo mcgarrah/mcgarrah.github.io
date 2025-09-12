@@ -1,7 +1,9 @@
 ---
 title: "Certifications"
 layout: post
-categories: technical certifications
+categories: [technical, certifications]
+tags: [certifications, rhce, microsoft, sas, professional-development]
+published: true
 ---
 
 I’ve got a pile of certifications that I’ve accumulated over the years.

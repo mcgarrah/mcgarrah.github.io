@@ -1,7 +1,8 @@
 ---
 title:  "ProxMox 8.2 for the Homelabs"
 layout: post
-tags: technical proxmox homelab
+categories: [technical, homelab]
+tags: [proxmox, ceph, virtualization, homelab, storage, clustering]
 published: true
 ---
 

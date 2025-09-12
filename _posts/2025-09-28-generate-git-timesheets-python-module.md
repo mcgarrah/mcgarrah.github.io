@@ -2,7 +2,7 @@
 title: "Generate Git Timesheet from Commit Logs"
 layout: post
 categories: [technical, development]
-tags: [python, git, timetracking, automation, cli]
+tags: [python, git, timetracking, automation, cli, development]
 published: true
 ---
 

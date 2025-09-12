@@ -1,6 +1,8 @@
 ---
 title:  "ProxMox 8.2.4 Upgrade on Dell Wyse 3040s"
 layout: post
+categories: [technical, homelab]
+tags: [proxmox, dell-wyse-3040, upgrade, ceph, homelab, troubleshooting]
 published: true
 ---
 

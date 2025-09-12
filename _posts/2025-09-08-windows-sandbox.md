@@ -2,7 +2,7 @@
 title: "Windows Sandbox for Safe Testing"
 layout: post
 categories: [technical]
-tags: [windows, vm, sandbox]
+tags: [windows, vm, sandbox, virtualization]
 published: true
 ---
 

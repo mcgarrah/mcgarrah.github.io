@@ -1,7 +1,9 @@
 ---
 title:  "LetsEncrypt Certificates go live"
 layout: post
-categories: technical
+categories: [technical, security]
+tags: [letsencrypt, ssl, certificates, security, web-development]
+published: true
 ---
 
 I’m live with the Lets Encrypt certificates for the blog.mcgarrah.org website. This has been awhile in the making and I’m kind of excited.  I’m on a legacy environment with Ubuntu 12.04 LTS so part of the process is manual but certificate update just happens nicely. Updating the Apache config files has a little bit of effort but nothing too bad.

@@ -1,7 +1,9 @@
 ---
 title:  "Seagate Black Armor 110 NAS"
 layout: post
-categories: personal black_armor hack nas seagate-
+categories: [hardware, technical]
+tags: [seagate, black-armor, nas, linux, embedded, hacking, arm]
+published: true
 ---
 
 I found something fun.

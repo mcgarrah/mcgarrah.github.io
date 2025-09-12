@@ -7,6 +7,7 @@
 - [ ] Update meta descriptions for better SEO
 - [ ] Add missing alt tags to images
 - [ ] Create proper favicon set (multiple sizes)
+- [x] Inconsistent tags and categories in articles
 
 ### SEO Foundation (High Impact)
 - [ ] Add jekyll-seo-tag plugin for better meta tags and structured data

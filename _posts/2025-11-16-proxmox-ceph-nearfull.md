@@ -2,7 +2,7 @@
 title:  "Managing Ceph Nearfull Warnings in Proxmox Homelab"
 layout: post
 categories: [technical, homelab]
-tags: [proxmox, ceph, storage, monitoring, capacity, homelab]
+tags: [proxmox, ceph, storage, monitoring, capacity, homelab, dell-wyse-3040]
 published: true
 ---
 

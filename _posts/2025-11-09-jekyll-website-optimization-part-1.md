@@ -1,7 +1,7 @@
 ---
 title: "Jekyll Website Optimization for GitHub Pages - Part 1"
 layout: post
-categories: [technical, web-development]
+categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, seo, performance, website]
 published: true
 ---

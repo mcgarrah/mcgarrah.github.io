@@ -1,6 +1,8 @@
 ---
 title:  "ISC2 Cybersecurity Certification"
 layout: post
+categories: [security, certifications]
+tags: [isc2, cybersecurity, certification, security, professional-development]
 published: true
 ---
 

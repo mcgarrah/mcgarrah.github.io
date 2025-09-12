@@ -1,6 +1,8 @@
 ---
 title:  "Diagnosing a broken microwave"
 layout: post
+categories: [personal, hardware]
+tags: [repair, microwave, troubleshooting, diy, electronics]
 published: true
 ---
 

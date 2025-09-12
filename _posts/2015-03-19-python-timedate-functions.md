@@ -1,7 +1,9 @@
 ---
 title:  "Python TimeDate functions"
 layout: post
-categories: python technical
+categories: [technical, development]
+tags: [python, datetime, programming, reference]
+published: true
 ---
 
 I needed a quick understanding of the Python 3.3.0 datetime functionality to do a difference in times across days. Python make it amazingly easy.

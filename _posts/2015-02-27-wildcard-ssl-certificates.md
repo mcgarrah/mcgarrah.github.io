@@ -1,7 +1,9 @@
 ---
 title:  "Wildcard SSL Certificates"
 layout: post
-categories: technical
+categories: [technical, security]
+tags: [ssl, certificates, security, letsencrypt, web-development]
+published: true
 ---
 
 I’m beginning to setup enough infrastructure that a wildcard certificate would be nice but I’m uninterested in paying several hundred dollars a year for that certificate. The free certs that used to be around just are not there anymore so far as I can see. My goal is to setup SSL certificates for both my email server and all the virtual host web sites I’m hosting under my mcgarrah.org domain for less than a hundred dollars a year.

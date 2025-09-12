@@ -1,7 +1,8 @@
 ---
 title:  "Along time between posts"
 layout: post
-categories: personal
+categories: [personal]
+tags: [personal, career, education, georgia-tech, machine-learning]
 published: true
 ---
 

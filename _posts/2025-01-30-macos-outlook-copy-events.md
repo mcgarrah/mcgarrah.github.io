@@ -1,7 +1,8 @@
 ---
 title:  "MacOS Outlook Calendar Copy Events"
 layout: post
-tags: technical macos outlook calendar
+categories: [technical, reference]
+tags: [macos, outlook, calendar, productivity, microsoft]
 published: true
 ---
 

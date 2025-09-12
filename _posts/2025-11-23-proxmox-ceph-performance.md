@@ -2,7 +2,7 @@
 title:  "Optimizing Ceph Performance in Proxmox Homelab"
 layout: post
 categories: [technical, homelab]
-tags: [proxmox, ceph, performance, mclock, iops, optimization, homelab]
+tags: [proxmox, ceph, performance, mclock, iops, optimization, homelab, dell-wyse-3040]
 published: true
 ---
 
