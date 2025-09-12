@@ -21,3 +21,4 @@ Allow: /archive/
 Allow: /search/
 Allow: /about/
 Allow: /privacy/
+Allow: /resume/

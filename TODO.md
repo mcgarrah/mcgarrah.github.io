@@ -3,7 +3,7 @@
 ## 🚀 Next Sprint (Immediate Focus)
 
 ### Quick Wins (< 2 hours each)
-- [ ] Add Google Search Console verification file
+- [x] Add Google Search Console verification file
 - [ ] Update meta descriptions for better SEO
 - [ ] Add missing alt tags to images
 - [ ] Create proper favicon set (multiple sizes)
@@ -189,3 +189,27 @@
 - **High Impact, High Effort**: Performance Optimizations, Content Organization
 - **Low Impact, Low Effort**: Nice to have features
 - **Low Impact, High Effort**: Advanced Features (future consideration)
+
+
+Blog Post SEO Front Matter
+
+**Enhanced front matter template:**
+```yaml
+---
+title: "Your Post Title"
+layout: post
+categories: [category1, category2]
+tags: [tag1, tag2, tag3]
+excerpt: "Brief description for listings"
+description: "Detailed meta description for SEO (150-160 chars)"
+image: /assets/images/post-image.png
+author: Michael McGarrah
+date: YYYY-MM-DD
+last_modified_at: YYYY-MM-DD
+published: true
+seo:
+  type: BlogPosting
+  date_published: YYYY-MM-DD
+  date_modified: YYYY-MM-DD
+---
+```
