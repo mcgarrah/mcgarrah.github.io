@@ -27,7 +27,7 @@ I wanted to add a print stylesheet to optimize my blog posts for printing. Simpl
 
 ## The First Error
 
-```
+```text
 Error: Module loop: this module is already being loaded.
 ```
 
@@ -52,7 +52,7 @@ Each time I tried to create a modular SASS file that needed variables, I created
 
 So take a deep breath and back away from the problem. Often I need a break when fixing something this because I get so invested in the current that I miss the possible. After a break I could see the issue wasn't with individual files—it was with the overall architecture. My original structure looked like this:
 
-```
+```text
 _sass/
 ├── main.sass          # Variables + imports everything else
 ├── basic.sass         # Imports main for variables

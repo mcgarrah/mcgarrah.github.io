@@ -170,6 +170,7 @@ To make Google Custom Search match your site's automatic dark/light theme, add c
 ```
 
 **Important Notes:**
+
 - Add these styles directly to your existing `_sass/main.sass` file to avoid SASS module circular dependency errors
 - The multiple selectors are necessary to override Google's high-specificity CSS
 - **Limitation:** Search results may still show some Google default styling that's difficult to override due to how Google loads and applies their CSS dynamically
@@ -188,6 +189,7 @@ Enable additional features in CSE console:
 ## Testing and Validation
 
 1. Build your site locally:
+
    ```bash
    bundle exec jekyll serve
    ```
@@ -207,6 +209,7 @@ If you're using a custom domain (like `yourdomain.com` instead of `username.gith
 Your Jekyll site might be served from a custom domain, but Google CSE is configured for the GitHub domain. This results in no search results.
 
 **Example scenario:**
+
 - Site URL: `www.mcgarrah.org` (custom domain)
 - CSE configured for: `mcgarrah.github.io` (GitHub domain)
 - Result: No search results found
@@ -214,11 +217,13 @@ Your Jekyll site might be served from a custom domain, but Google CSE is configu
 ### Fix Custom Domain Configuration
 
 1. **Check your CNAME file** in your repository root:
-   ```
+
+   ```text
    www.yourdomain.com
    ```
 
 2. **Update Google Custom Search Engine**:
+
    - Go to [Google CSE Console](https://cse.google.com/cse/)
    - Select your search engine
    - Click "Setup" → "Sites to search"
@@ -227,12 +232,14 @@ Your Jekyll site might be served from a custom domain, but Google CSE is configu
    - Or use: `*.yourdomain.com` for subdomain support
 
 3. **Verify Google indexing** of your custom domain:
-   ```
+
+   ```text
    site:www.yourdomain.com
    site:yourdomain.com
    ```
 
 4. **Add fallback search** for immediate testing:
+
    ```html
    <form action="https://www.google.com/search" method="get" target="_blank">
      <input type="hidden" name="sitesearch" value="yourdomain.com">
@@ -244,6 +251,7 @@ Your Jekyll site might be served from a custom domain, but Google CSE is configu
 ### Google Search Console Setup
 
 Ensure both domain variants are added to Google Search Console:
+
 - `https://www.yourdomain.com`
 - `https://yourdomain.com`
 

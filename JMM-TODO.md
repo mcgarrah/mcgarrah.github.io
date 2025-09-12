@@ -2,11 +2,6 @@
 
 https://devhints.io/jekyll
 
-Jekyll code copy to clipboard button - super handy if we can get this conditional
-
-Github Comments for Jekyll Blog site
-    https://www.aleksandrhovhannisyan.com/blog/jekyll-comment-system-github-issues/
-
 Checking between upstream and clean branches in my Github
     https://github.com/mcgarrah/mcgarrah.github.io/compare/upstream...mcgarrah:mcgarrah.github.io:clean?expand=1
     Unfortunately, I have several changes all up in there at once...
