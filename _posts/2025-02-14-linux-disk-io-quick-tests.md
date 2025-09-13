@@ -1,6 +1,8 @@
 ---
 title:  "Linux Disk I/O Performance in the Homelab"
 layout: post
+categories: [technical, homelab, hardware]
+tags: [linux, storage, performance, iops, benchmarking, homelab, testing]
 published: true
 ---
 

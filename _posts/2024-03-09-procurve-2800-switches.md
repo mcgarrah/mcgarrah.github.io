@@ -1,7 +1,8 @@
 ---
 title:  "HP ProCurve 2800 initial setup"
 layout: post
-tags: technical procurve networking
+categories: [technical, networking, hardware]
+tags: [hp, procurve, networking, switches, configuration, serial-console, setup]
 published: true
 ---
 
@@ -182,18 +183,18 @@ Updating the firmware to the latest requires getting access to the firmware SWI/
 
 I have some copies of older router/switch firmwares that I'm looking into hosting and verifying on one of my switches in a future post.
 
-I also want to get the Java WebUI working but this is locked out because of Java Webstart being deprecated in almost every browser in existence. I found a method to do this relatively safely that I'll post on later.
+I also want to get the Java WebUI working but this is locked out because of Java Webstart being deprecated in almost every browser in existence. I found a method to do this relatively safely that [I'll post on later](/java-jnlp-webui/).
 
 ## Documentation
 
 For my ProCurve 2810 switches I have a list of PDFs documentation well worth grabbing and keeping around as references as these are extremely complex and powerful devices.
 
-* [Quick Installation Guide](https://ftp.hp.com/pub/networking/software/2810-QIG-June2006-59913844.pdf)
-* [Installation and Getting Started Guide](https://ftp.hp.com/pub/networking/software/2810-Install-May2006-59913843.pdf)
-* [Management and Configuration Guide](https://ftp.hp.com/pub/networking/software/2810-MgmtCfg-July2007-59914732.pdf)
-* [Advanced Traffic Management Guide](https://ftp.hp.com/pub/networking/software/2810-AdvTrafficMgmt-July2007-59914733.pdf)
-* [Access Security Guide](https://ftp.hp.com/pub/networking/software/2810-Security-July2007-59914734.pdf)
-* [Release Notes: Version N.11.04 Software](https://ftp.hp.com/pub/networking/software/2810-RelNotes-N1104-59916273.pdf) (thru N.11.04 release)
+* [Quick Installation Guide](https://ftp.hp.com/pub/networking/software/2810-QIG-June2006-59913844.pdf) ([local copy](/assets/pdfs/2810-QIG-June2006-59913844.pdf))
+* [Installation and Getting Started Guide](https://ftp.hp.com/pub/networking/software/2810-Install-May2006-59913843.pdf) ([local copy](/assets/pdfs/2810-Install-May2006-59913843.pdf))
+* [Management and Configuration Guide](https://ftp.hp.com/pub/networking/software/2810-MgmtCfg-July2007-59914732.pdf) ([local copy](/assets/pdfs/2810-MgmtCfg-July2007-59914732.pdf))
+* [Advanced Traffic Management Guide](https://ftp.hp.com/pub/networking/software/2810-AdvTrafficMgmt-July2007-59914733.pdf) ([local copy](/assets/pdfs/2810-AdvTrafficMgmt-July2007-59914733.pdf))
+* [Access Security Guide](https://ftp.hp.com/pub/networking/software/2810-Security-July2007-59914734.pdf) ([local copy](/assets/pdfs/2810-Security-July2007-59914734.pdf))
+* [Release Notes: Version N.11.04 Software](https://ftp.hp.com/pub/networking/software/2810-RelNotes-N1104-59916273.pdf) ([local copy](/assets/pdfs/2810-RelNotes-N1104-59916273.pdf)) (thru N.11.04 release)
 
 ## Reference
 

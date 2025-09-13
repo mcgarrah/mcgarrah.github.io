@@ -1,7 +1,8 @@
 ---
 title:  "Life Enhancing Home Office Items"
 layout: post
-tags: personal
+categories: [personal, productivity]
+tags: [office, productivity, furniture, ergonomics, work-from-home, personal]
 published: true
 ---
 

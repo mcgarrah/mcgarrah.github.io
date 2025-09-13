@@ -1,8 +1,8 @@
 ---
 title:  "Along time between posts"
 layout: post
-categories: [personal]
-tags: [personal, career, education, georgia-tech, machine-learning]
+categories: [personal, writing, web-development]
+tags: [personal, career, education, georgia-tech, machine-learning, jekyll, github-pages, website, migration]
 published: true
 ---
 

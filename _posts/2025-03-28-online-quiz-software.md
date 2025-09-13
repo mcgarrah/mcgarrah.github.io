@@ -1,6 +1,8 @@
 ---
 title:  "Online Quiz Software for Certifications"
 layout: post
+categories: [reference, education]
+tags: [certification, education, quiz, software, learning, study-tools]
 published: true
 ---
 

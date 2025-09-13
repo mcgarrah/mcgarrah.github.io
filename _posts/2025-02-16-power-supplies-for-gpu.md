@@ -2,14 +2,8 @@
 title:  "Power Supply upgrade for GPUs in the Homelab"
 layout: post
 published: true
-tags:
-  - homelab
-  - hardware
-  - gpu
-  - power-supply
-categories:
-  - infrastructure
-  - hardware-upgrade
+tags: [gpu, power-supply, hardware, homelab, upgrade, planning, dell-optiplex]
+categories: [technical, homelab, hardware]
 ---
 
 I want an extra ~350w of power available for a GPU that cannot run off PCIe bus power of 75w or 25w in some very old [Dell Optiplex 990 Mini Tower](https://www.dell.com/support/home/en-us/product-support/product/optiplex-990/overview) nodes in my Proxmox cluster.

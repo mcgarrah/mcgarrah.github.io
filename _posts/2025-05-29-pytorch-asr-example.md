@@ -1,6 +1,8 @@
 ---
 title:  "ASR with PyTorch"
 layout: post
+categories: [development, machine-learning]
+tags: [pytorch, asr, machine-learning, python, speech-recognition, ai, deep-learning]
 published: true
 ---
 

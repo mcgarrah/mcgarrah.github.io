@@ -1,8 +1,8 @@
 ---
 title:  "New Laptop update"
 layout: post
-tags: technical thinkpad t480
-categories: personal
+categories: [personal, hardware]
+tags: [thinkpad, t480, laptop, hardware, upgrade, personal]
 ---
 
 My [_new to me_ Thinkpad T480](/new-but-old-laptop/) is doing great. The better processor and the upgraded Nvidia MX150 GPU are both getting a workout with several of the new LLM models. I maxed out the RAM, Wifi, Hard Drive, and swapped around adding all the best components/features to one laptop consolidated from several different junkers I purchased. Those components include IR Camera, WWAN, backlit keyboard, good batteries, and a nice case.

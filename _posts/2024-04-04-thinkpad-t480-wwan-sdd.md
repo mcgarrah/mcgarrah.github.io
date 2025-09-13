@@ -1,7 +1,8 @@
 ---
 title:  "Thinkpad T480 WWAN SSD"
 layout: post
-tags: technical thinkpad t480
+categories: [technical, hardware]
+tags: [thinkpad, t480, ssd, wwan, hardware, upgrade, laptop, storage]
 published: true
 ---
 

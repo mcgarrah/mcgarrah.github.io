@@ -1,7 +1,8 @@
 ---
 title:  "Running Github Pages locally"
 layout: post
-tags: technical github_pages jekyll
+categories: [web-development, technical]
+tags: [jekyll, github-pages, ruby, bundler, wsl, development, local-development, troubleshooting]
 published: true
 ---
 

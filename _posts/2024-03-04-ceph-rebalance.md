@@ -1,7 +1,8 @@
 ---
 title:  "Ceph Cluster rebalance issue"
 layout: post
-tags: technical ceph proxmox
+categories: [technical, homelab, troubleshooting]
+tags: [ceph, proxmox, storage, clustering, rebalance, troubleshooting, homelab]
 published: true
 ---
 

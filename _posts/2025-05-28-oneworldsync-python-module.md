@@ -1,6 +1,8 @@
 ---
 title:  "Introducing oneworldsync: A Python Module for 1WorldSync Content1 API Access"
 layout: post
+categories: [development, programming]
+tags: [python, api, module, development, programming, automation, data-integration]
 published: true
 ---
 

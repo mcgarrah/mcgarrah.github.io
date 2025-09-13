@@ -1,6 +1,8 @@
 ---
 title:  "Debian 12 SystemD nightly reboots on Dell Wyse 3040s"
 layout: post
+categories: [technical, hardware, troubleshooting]
+tags: [dell-wyse-3040, debian, systemd, automation, homelab, scheduling, linux]
 published: true
 ---
 

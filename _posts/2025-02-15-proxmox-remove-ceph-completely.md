@@ -1,6 +1,8 @@
 ---
 title:  "Ceph Cluster Complete Removal on Proxmox for the Homelabs"
 layout: post
+categories: [technical, homelab, troubleshooting]
+tags: [proxmox, ceph, removal, cleanup, homelab, storage, troubleshooting]
 published: true
 ---
 

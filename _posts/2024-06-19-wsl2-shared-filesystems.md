@@ -1,7 +1,8 @@
 ---
 title:  "Sharing file systems between WSLv2 instances"
 layout: post
-tags: technical wsl
+categories: [technical, development]
+tags: [wsl, windows, linux, filesystems, development, technical, troubleshooting]
 published: true
 ---
 

@@ -2,10 +2,7 @@
 title:  "Backlog of Posts from 2024"
 layout: post
 published: true
-tags:
-  - planning
-  - jekyll
-  - backlog
+tags: [planning, jekyll, backlog, organization, writing, projects, homelab]
 categories:
   - organization
   - writing

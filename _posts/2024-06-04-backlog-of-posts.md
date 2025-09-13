@@ -1,6 +1,8 @@
 ---
 title:  "Backlog of Posts"
 layout: post
+categories: [organization, writing]
+tags: [backlog, planning, homelab, projects, writing, organization]
 published: true
 ---
 

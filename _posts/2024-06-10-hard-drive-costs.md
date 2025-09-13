@@ -1,7 +1,8 @@
 ---
 title:  "Hard Drives for the Homelabs"
 layout: post
-tags: technical homelab storage
+categories: [technical, homelab, hardware]
+tags: [storage, hard-drives, homelab, hardware, ceph, cost-analysis, technical]
 published: true
 ---
 
