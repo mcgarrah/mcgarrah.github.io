@@ -1,10 +1,21 @@
 # Jekyll Website TODO List
 
-## 🚀 Next Sprint (Immediate Focus)
+## 🚀 Next Sprint (Immediate Focus - URGENT: AdSense Review)
+
+### 🛡️ GDPR Compliance (PRIORITY 1 - Due: Next Day)
+- [x] **URGENT**: Implement cookie consent banner (GDPR compliance)
+- [x] **URGENT**: Update privacy policy with GDPR language
+- [x] **URGENT**: Make AdSense loading conditional on consent
+- [x] **URGENT**: Add consent management JavaScript
+- [x] **URGENT**: Fixed hardcoded values to use Jekyll config
+- [x] **TESTING**: Verify both AdSense and Analytics are blocked before consent ✅
+- [x] **TESTING**: Verify scripts load after consent given ✅
+- [x] **COMPLETE**: GDPR compliance ready for AdSense review 🎉
+- [ ] Verify Mermaid diagrams work on Github and not just local - SASS article has one
 
 ### Quick Wins (< 2 hours each)
 - [x] Add Google Search Console verification file
-- [ ] Update meta descriptions for better SEO
+- [x] Update meta descriptions for better SEO
 - [ ] Add missing alt tags to images
 - [ ] Create proper favicon set (multiple sizes)
 - [x] Inconsistent tags and categories in articles
@@ -55,8 +66,10 @@
 - [ ] Add security headers
 
 ### Privacy & Compliance
-- [ ] Implement cookie consent banner (GDPR compliance)
+- [ ] **MOVED TO PRIORITY 1**: Implement cookie consent banner (GDPR compliance)
 - [ ] Add privacy-focused analytics (Plausible or similar)
+- [ ] Add data processing transparency documentation
+- [ ] Implement right to data deletion process
 
 ## 📊 Analytics & Monitoring
 
