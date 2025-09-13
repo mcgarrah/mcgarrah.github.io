@@ -5,6 +5,7 @@ categories: [web-development, technical]
 tags: [sass, jekyll, circular-dependency, architecture, debugging, github-pages]
 excerpt: "How a simple print stylesheet addition turned into a deep dive into SASS module architecture and the perils of circular dependencies."
 published: true
+mermaid: true
 ---
 
 What started as a simple task to add a print stylesheet to my Jekyll website turned into a multi-hour debugging session that taught me valuable lessons about SASS module architecture. Here's the story of how circular dependencies can break your build and how to fix them properly.

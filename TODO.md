@@ -12,7 +12,6 @@
 - [x] **TESTING**: Verify scripts load after consent given ✅
 - [x] **COMPLETE**: GDPR compliance ready for AdSense review 🎉
 - [x] **ENHANCEMENT**: Added region detection - EU shows banner, US auto-consents 🌍
-- [ ] Verify Mermaid diagrams work on Github and not just local - SASS article has one
 
 ### Quick Wins (< 2 hours each)
 - [x] Add Google Search Console verification file
@@ -20,6 +19,10 @@
 - [ ] Add missing alt tags to images
 - [ ] Create proper favicon set (multiple sizes)
 - [x] Inconsistent tags and categories in articles
+- [x] Verify Mermaid diagrams work on Github and not just local - SASS article has one
+- [x] Implement Mermaid diagram support using modern Mermaid 11 ES modules
+- [x] Create article documenting Jekyll Mermaid integration challenges and solutions
+- [x] Fix nested code block rendering issues in Jekyll articles
 
 ### SEO Foundation (High Impact)
 - [x] Add jekyll-seo-tag plugin for better meta tags and structured data
@@ -129,6 +132,9 @@
 - [x] Open Graph and Twitter Card meta tags
 - [x] JSON-LD structured data for articles and author information
 - [x] Enhanced site configuration with proper URLs and SEO metadata
+- [x] Mermaid diagram support with modern ES modules API
+- [x] Jekyll Mermaid integration article (2025-09-18)
+- [x] Fixed nested code block rendering in Jekyll markdown
 
 ## Notes
 

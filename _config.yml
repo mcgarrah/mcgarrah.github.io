@@ -95,7 +95,6 @@ plugins:
  - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
  - jekyll-paginate         # adding back from earlier implementation in upstream fork
  - jekyll-seo-tag          # comprehensive SEO meta tags and structured data
-
 giscus:
   repo: mcgarrah/mcgarrah.github.io
   repo_id: R_kgDOKBKIdw
@@ -109,3 +108,5 @@ giscus:
   theme: preferred_color_scheme # Options: light, dark, dark_dimmed, dark_high_contrast, preferred_color_scheme, transparent_dark,noborder_light, noborder_dark, cobal, or a custom CSS URL
   lang: en
   loading: lazy # Options: eager, lazy
+
+
