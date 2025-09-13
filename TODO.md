@@ -11,6 +11,7 @@
 - [x] **TESTING**: Verify both AdSense and Analytics are blocked before consent ✅
 - [x] **TESTING**: Verify scripts load after consent given ✅
 - [x] **COMPLETE**: GDPR compliance ready for AdSense review 🎉
+- [x] **ENHANCEMENT**: Added region detection - EU shows banner, US auto-consents 🌍
 - [ ] Verify Mermaid diagrams work on Github and not just local - SASS article has one
 
 ### Quick Wins (< 2 hours each)

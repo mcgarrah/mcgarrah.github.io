@@ -9,10 +9,32 @@
     const GA_ID = '{{ site.google_analytics }}';
     const ADSENSE_ID = '{{ site.google_adsense }}';
     
+    // EU countries requiring GDPR consent
+    const EU_COUNTRIES = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB', 'IS', 'LI', 'NO'];
+    
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+    
+    function isEUUser() {
+        // Check if user is from EU based on timezone (fallback method)
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const euTimezones = ['Europe/', 'Atlantic/Reykjavik', 'Atlantic/Canary'];
+        return euTimezones.some(tz => timezone.startsWith(tz));
+    }
+    
+    async function checkUserRegion() {
+        try {
+            // Try to get country from a free geolocation API
+            const response = await fetch('https://ipapi.co/json/', { timeout: 3000 });
+            const data = await response.json();
+            return EU_COUNTRIES.includes(data.country_code);
+        } catch (error) {
+            // Fallback to timezone detection
+            return isEUUser();
+        }
     }
     
     function setCookie(name, value, days) {
@@ -82,11 +104,18 @@
         }
     }
     
-    function initConsent() {
+    async function initConsent() {
         const consent = getConsent();
+        const isEU = await checkUserRegion();
         
         if (!consent) {
-            showBanner();
+            if (isEU) {
+                showBanner();
+            } else {
+                // US users: auto-consent to all (no banner)
+                setConsent('all');
+                return;
+            }
         } else {
             loadConsentBasedScripts(consent);
         }
