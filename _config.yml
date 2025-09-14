@@ -5,6 +5,9 @@ lang: "en"
 url: "https://www.mcgarrah.org"
 baseurl: ""
 
+# Canonical URL configuration for SEO
+canonical_url: "https://www.mcgarrah.org"
+
 # SEO Configuration
 seo:
   type: Person

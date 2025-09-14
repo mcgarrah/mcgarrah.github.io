@@ -92,6 +92,16 @@
 
 ## 📊 Analytics & Monitoring
 
+### SEO & Indexing Issues (URGENT)
+- [x] **COMPLETE**: Fix Google Search Console indexing issues:
+  - "Duplicate without user-selected canonical" - Added canonical URLs
+- [x] Add canonical URL meta tags to all pages
+- [ ] **URGENT**: Fix "Not found (404)" errors - Check for broken internal links
+- [ ] Audit internal links for 404 errors
+- [ ] Check pagination URLs (page2, page3, etc.) for proper canonicals
+- [ ] Review category/tag page canonical URLs
+- [ ] Submit updated sitemap to Google Search Console
+
 ### Performance Monitoring
 - [ ] Implement performance monitoring
 - [ ] Add uptime monitoring
