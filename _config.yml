@@ -2,11 +2,11 @@ title: "McGarrah Technical Blog"
 author: "Michael McGarrah"
 description: "Technical blog covering homelab infrastructure, Proxmox/Ceph, Dell Wyse 3040, Jekyll development, and networking. Deep dives into virtualization, storage clustering, and system administration."
 lang: "en"
-url: "https://www.mcgarrah.org"
+url: "https://mcgarrah.org"
 baseurl: ""
 
 # Canonical URL configuration for SEO
-canonical_url: "https://www.mcgarrah.org"
+canonical_url: "https://mcgarrah.org"
 
 # SEO Configuration
 seo:

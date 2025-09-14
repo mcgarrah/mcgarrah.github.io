@@ -96,10 +96,12 @@
 - [x] **COMPLETE**: Fix Google Search Console indexing issues:
   - "Duplicate without user-selected canonical" - Added canonical URLs
 - [x] Add canonical URL meta tags to all pages
-- [ ] **URGENT**: Fix "Not found (404)" errors - Check for broken internal links
-- [ ] Audit internal links for 404 errors
-- [ ] Check pagination URLs (page2, page3, etc.) for proper canonicals
-- [ ] Review category/tag page canonical URLs
+- [x] **COMPLETE**: Fix "Not found (404)" errors - Added robots.txt blocks for problematic URLs
+- [x] Audit internal links for 404 errors - Found kramdown test files and high pagination numbers
+- [x] Check pagination URLs (page2, page3, etc.) - Jekyll generates pages 2-26, all legitimate
+- [x] **COMPLETE**: Clean _site folder regeneration - Removed testing artifacts causing 404s
+- [x] **COMPLETE**: Fix redirect issues - Aligned canonical URLs with GitHub Pages (mcgarrah.org)
+- [x] Review category/tag page canonical URLs - Working correctly
 - [ ] Submit updated sitemap to Google Search Console
 
 ### Performance Monitoring
