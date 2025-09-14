@@ -1,0 +1,22 @@
+{
+  "name": "mcgarrah-jekyll-blog",
+  "version": "1.0.0",
+  "description": "External dependency tracking for Jekyll blog security scanning",
+  "private": true,
+  "dependencies": {
+    "mermaid": "^11.0.0",
+    "katex": "^0.16.9",
+    "clipboard": "^2.0.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "audit": "npm audit",
+    "update": "npm update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcgarrah/mcgarrah.github.io.git"
+  },
+  "author": "Michael McGarrah",
+  "license": "MIT"
+}

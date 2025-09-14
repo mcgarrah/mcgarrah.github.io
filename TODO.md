@@ -64,6 +64,21 @@
 
 ## 🛡️ Security & Compliance
 
+### External Dependency Management (SECURITY PRIORITY)
+- [x] **COMPLETE**: Set up dependency scanning for CDN libraries
+- [x] **COMPLETE**: Created package.json to track npm dependencies for security scanning
+- [x] **COMPLETE**: Updated dependabot.yml to include npm ecosystem monitoring
+- [x] **COMPLETE**: Monitor external JavaScript dependencies for security updates:
+  - Mermaid: `https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs`
+  - KaTeX: `https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css`
+  - KaTeX JS: `https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js`
+  - KaTeX Auto-render: `https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js`
+  - Clipboard.js: `https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js`
+  - Google Tag Manager: `https://www.googletagmanager.com/gtag/js?id=G-F90DVB199P` (Google-managed)
+  - Giscus: `https://giscus.app/client.js` (GitHub-managed)
+- [ ] Consider using Subresource Integrity (SRI) hashes for CDN resources
+- [ ] **FUTURE**: Evaluate switching to self-hosted versions of critical libraries
+
 ### Security Headers
 - [ ] Add Content Security Policy (CSP) headers
 - [ ] Implement HTTP security headers (HSTS, X-Frame-Options, etc.)

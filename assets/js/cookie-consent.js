@@ -1,6 +1,15 @@
 ---
 ---
-// GDPR Cookie Consent Management
+/*!
+ * GDPR Cookie Consent Management
+ * Copyright (c) 2025 Michael McGarrah
+ * Licensed under MIT License
+ * 
+ * Custom implementation for Jekyll blog GDPR compliance
+ * Author: Michael McGarrah (mcgarrah@gmail.com)
+ * Website: https://www.mcgarrah.org
+ * Repository: https://github.com/mcgarrah/mcgarrah.github.io
+ */
 (function() {
     'use strict';
     
