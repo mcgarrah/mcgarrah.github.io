@@ -32,9 +32,8 @@ I'm doing these first because the lessons are still fresh and the cluster is act
 
 ## Hardware & System Administration
 
-**Mixed Throughout (September-November)**:
+**Mixed Throughout (October-November)**:
 
-- Windows Sandbox for Safe Testing  
 - Dell Wyse 3040 eMMC Storage Health Monitoring  
 - Enabling SMART Monitoring on Seagate USB Drives  
 - Essential CLI Tools for Linux System Management  
@@ -46,10 +45,11 @@ This is the grab bag of "stuff I figured out while trying to keep my homelab fro
 
 **Early Fall**:
 
-- Github Actions pip-audit PR  
-- Generate Git Timesheet from Commit Logs  
+- Windows Sandbox for Safe Testing (*already released*)
+- Using Github Actions with pip-audit to audit pip library versions (*already released*)
+- Generate Git Timesheet from Commit Logs
 
-A couple of Python tools I built because I got tired of doing repetitive stuff manually. The timesheet generator has been a lifesaver for tracking how much time I actually spend on different projects (spoiler: it's always more than I think).
+A couple of Python tools I built because I got tired of doing repetitive stuff manually or utilities I found that makes me more productive. The timesheet generator has been a lifesaver for tracking how much time I actually spend on different projects (spoiler: it's always more than I think).
 
 ## Jekyll & Web Development
 
@@ -58,7 +58,8 @@ A couple of Python tools I built because I got tired of doing repetitive stuff m
 - Jekyll Website Optimization for GitHub Pages - Part 1
 - Jekyll Website Optimization for GitHub Pages - Part 2  
 - Adding Google Custom Search to Jekyll Website  
-- SASS Circular Dependency Nightmare: Lessons from Jekyll Architecture  
+- SASS Circular Dependency Nightmare: Lessons from Jekyll Architecture
+- Jekyll Mermaid Diagram Rendering: From Manual JavaScript to Plugin Solutions
 
 This is me documenting all the ways I've broken and fixed this website. From making it faster to that time I created a circular dependency nightmare in SASS (that was fun), these posts are for anyone else crazy enough to build a technical blog with Jekyll. Learn from my mistakes so you don't have to make them yourself.
 
@@ -72,7 +73,7 @@ A rant about how Google has turned "add analytics to my blog" into a multi-servi
 
 ## Why Bother With a Schedule?
 
-Honestly, I'm terrible at sticking to schedules, but here's why I'm trying:
+Honestly, I'm terrible at sticking to schedules with my hobbiest work, but here's why I'm trying:
 
 1. **Consistency**: Turns out people like knowing when new stuff is coming
 2. **Documentation**: If I don't write it down while it's fresh, I'll forget how I fixed that weird thing
@@ -91,7 +92,7 @@ Looking at the roadmap, several themes emerge:
 
 ## Reality Check
 
-Look, I have general timelines, but let's be honest - stuff happens. Remember this all has to fit in between my MBA program, a fulltime job, and family. The nice thing about Jekyll's future-dated posts is I can shuffle things around if I finish something early or if my homelab decides to have a meltdown and gives me emergency content.
+Look, I have general timelines, but let's be honest - stuff happens. Remember this all has to fit in between my MBA program, working on certifications, a fulltime job, and I have a family. The nice thing about Jekyll's future-dated posts is I can shuffle things around if I finish something early or if my homelab decides to have a meltdown and gives me emergency content.
 
 The goal is consistency, not perfection. Some weeks might get bonus posts if I break something spectacularly or figure out something particularly cool.
 

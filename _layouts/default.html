@@ -20,7 +20,16 @@
 {% if page.mermaid or site.mermaid %}
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
+  
+  // Detect dark mode and set appropriate theme
+  const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = isDarkMode ? 'dark' : 'default';
+  
+  mermaid.initialize({ 
+    startOnLoad: true,
+    theme: theme
+  });
+  
   await mermaid.run({
     querySelector: '.language-mermaid',
   });

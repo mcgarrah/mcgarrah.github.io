@@ -92,7 +92,16 @@ Instead of fighting Rouge with DOM manipulation, use Mermaid 11's built-in suppo
 {% if page.mermaid or site.mermaid %}
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
+  
+  // Detect dark mode and set appropriate theme
+  const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = isDarkMode ? 'dark' : 'default';
+  
+  mermaid.initialize({ 
+    startOnLoad: true,
+    theme: theme
+  });
+  
   await mermaid.run({
     querySelector: '.language-mermaid',
   });
@@ -104,6 +113,7 @@ Instead of fighting Rouge with DOM manipulation, use Mermaid 11's built-in suppo
 - **ES Modules**: Uses modern JavaScript module system
 - **Direct Integration**: Works with Rouge's `.language-mermaid` class
 - **No DOM Manipulation**: Mermaid handles Jekyll's output directly
+- **Dark Mode Support**: Automatically switches themes based on user preference
 - **Cleaner Code**: Eliminates custom JavaScript workarounds
 
 ## Why Plugins Should Be Better (But Aren't)
@@ -111,8 +121,9 @@ Instead of fighting Rouge with DOM manipulation, use Mermaid 11's built-in suppo
 ### The Plugin Reality Check
 While plugins should theoretically be the better solution, the available Jekyll Mermaid plugins have significant issues:
 
-- **jekyll-mermaid** (last updated 6 years ago)
-- **jekyll-mermaid-v2** (last updated 11 years ago)
+- **[jekyll-mermaid](https://github.com/jasonbellamy/jekyll-mermaid)** (last updated 6 years ago)
+- **[jekyll-mermaid-diagrams](https://github.com/fuzhibo/jekyll-mermaid-diagrams)** (last updated 11 years ago)
+- Probably more out there but I was disappointed in my first two...
 - Both throw `NoMethodError` exceptions with modern Jekyll versions
 - Missing configuration requirements not documented properly
 
