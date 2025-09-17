@@ -99,6 +99,7 @@ The banner needed to be more than just a notification—it required three distin
 The JavaScript needed to handle multiple complex requirements:
 
 ```javascript
+{% raw %}
 ---
 ---
 // GDPR Cookie Consent Management
@@ -132,6 +133,7 @@ The JavaScript needed to handle multiple complex requirements:
         }
     }
 })();
+{% endraw %}
 ```
 
 Notice the *Front Matter* entries at the top. Those are important to support the lookup of the `site.<variables>` so we do not hard code them.
