@@ -12,6 +12,10 @@ on:
       - '_posts/**'
       - 'robots.txt'
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   seo-check:
     runs-on: ubuntu-latest
@@ -296,9 +300,16 @@ jobs:
           
           cat seo-report.md
           
+      - name: Display SEO report
+        run: |
+          echo "📋 SEO Health Check Report Contents:"
+          echo "==========================================="
+          cat seo-report.md
+          echo "==========================================="
+          
       - name: Upload SEO report
         uses: actions/upload-artifact@v4
         with:
-          name: seo-health-report
+          name: seo-health-report-$(date +%Y%m%d-%H%M%S)
           path: seo-report.md
-          retention-days: 30
+          retention-days: 180
