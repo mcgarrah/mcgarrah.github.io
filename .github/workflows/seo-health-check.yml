@@ -317,4 +317,4 @@ jobs:
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: seo-report.md
-          retention-days: 180
+          retention-days: 90
