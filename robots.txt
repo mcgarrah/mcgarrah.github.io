@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.mcgarrah.org/sitemap.xml
+Sitemap: https://mcgarrah.org/sitemap.xml
 
 # Disallow crawling of admin/development files
 Disallow: /_site/

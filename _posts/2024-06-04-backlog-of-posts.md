@@ -14,7 +14,7 @@ Here is a dump of my unpublished posts that need polishing to release:
 
 * Learning Jekyll
 * ~~Site to Site VPN for the Homelabs~~
-  * [Tailscale on Dell Wyse 3040 with Debian 12](https://www.mcgarrah.org/dell-wyse-3040-tailscale/) solves a lot
+  * [Tailscale on Dell Wyse 3040 with Debian 12](/dell-wyse-3040-tailscale/) solves a lot
 * Link Aggregated (LAG) and LACP NIC Bonding
 * ~~HP ProCurve Switch Java WebUI (Java JNLP WebStart)~~
   * [HP ProCurve Switch Java WebUI](/java-jnlp-webui/)

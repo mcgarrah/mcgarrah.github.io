@@ -102,6 +102,8 @@
 - [x] **COMPLETE**: Clean _site folder regeneration - Removed testing artifacts causing 404s
 - [x] **COMPLETE**: Fix redirect issues - Aligned canonical URLs with GitHub Pages (mcgarrah.org)
 - [x] Review category/tag page canonical URLs - Working correctly
+- [x] **COMPLETE**: Document SEO fixes - Created comprehensive article (2025-01-11)
+- [x] **COMPLETE**: Implement SEO health check automation - GitHub Actions workflow
 - [ ] Submit updated sitemap to Google Search Console
 
 ### Performance Monitoring

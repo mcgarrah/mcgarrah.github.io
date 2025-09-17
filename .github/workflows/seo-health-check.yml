@@ -1,0 +1,198 @@
+name: SEO Health Check
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly on Monday at 6 AM UTC
+  workflow_dispatch:  # Allow manual trigger
+  push:
+    branches: [main]
+    paths:
+      - '_config.yml'
+      - '_layouts/**'
+      - '_posts/**'
+      - 'robots.txt'
+
+jobs:
+  seo-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+          
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+        
+      - name: Check canonical URLs consistency
+        run: |
+          echo "Checking canonical URLs..."
+          INCONSISTENT=$(grep -r "canonical" _site/ | grep -v "mcgarrah.org" || true)
+          if [ -n "$INCONSISTENT" ]; then
+            echo "❌ Inconsistent canonical URLs found:"
+            echo "$INCONSISTENT"
+            exit 1
+          else
+            echo "✅ All canonical URLs consistent"
+          fi
+          
+      - name: Validate sitemap.xml
+        run: |
+          echo "Validating sitemap.xml..."
+          if [ -f "_site/sitemap.xml" ]; then
+            # Check if sitemap is valid XML
+            xmllint --noout _site/sitemap.xml
+            echo "✅ Sitemap XML is valid"
+            
+            # Check sitemap contains expected URLs
+            URLS=$(grep -c "<url>" _site/sitemap.xml)
+            echo "📊 Sitemap contains $URLS URLs"
+            
+            # Check for correct domain in sitemap
+            WRONG_DOMAIN=$(grep -c "www.mcgarrah.org" _site/sitemap.xml || true)
+            if [ "$WRONG_DOMAIN" -gt 0 ]; then
+              echo "❌ Sitemap contains wrong domain (www.mcgarrah.org)"
+              exit 1
+            else
+              echo "✅ Sitemap uses correct domain"
+            fi
+          else
+            echo "❌ Sitemap not found"
+            exit 1
+          fi
+          
+      - name: Check robots.txt
+        run: |
+          echo "Checking robots.txt..."
+          if [ -f "_site/robots.txt" ]; then
+            echo "✅ Robots.txt exists"
+            
+            # Check sitemap reference in robots.txt
+            if grep -q "Sitemap: https://mcgarrah.org/sitemap.xml" _site/robots.txt; then
+              echo "✅ Robots.txt references correct sitemap"
+            else
+              echo "❌ Robots.txt missing or incorrect sitemap reference"
+              exit 1
+            fi
+          else
+            echo "❌ Robots.txt not found"
+            exit 1
+          fi
+          
+      - name: Check meta tags on sample pages
+        run: |
+          echo "Checking meta tags..."
+          
+          # Check homepage
+          if grep -q '<meta name="description"' _site/index.html; then
+            echo "✅ Homepage has meta description"
+          else
+            echo "❌ Homepage missing meta description"
+            exit 1
+          fi
+          
+          # Check for Open Graph tags
+          if grep -q 'property="og:' _site/index.html; then
+            echo "✅ Homepage has Open Graph tags"
+          else
+            echo "❌ Homepage missing Open Graph tags"
+            exit 1
+          fi
+          
+      - name: Check for 404 page
+        run: |
+          echo "Checking 404 page..."
+          if [ -f "_site/404.html" ]; then
+            echo "✅ Custom 404 page exists"
+          else
+            echo "❌ Custom 404 page missing"
+            exit 1
+          fi
+          
+      - name: Validate feed.xml
+        run: |
+          echo "Validating RSS feed..."
+          if [ -f "_site/feed.xml" ]; then
+            xmllint --noout _site/feed.xml
+            echo "✅ RSS feed XML is valid"
+            
+            # Check feed contains recent posts
+            ITEMS=$(grep -c "<item>" _site/feed.xml || true)
+            echo "📊 RSS feed contains $ITEMS items"
+          else
+            echo "❌ RSS feed not found"
+            exit 1
+          fi
+          
+      - name: Check for broken internal links
+        run: |
+          echo "Checking for broken internal links..."
+          
+          # Find all HTML files and check for internal links
+          find _site -name "*.html" -exec grep -l 'href="/' {} \; | head -5 | while read file; do
+            echo "Checking links in $file..."
+            
+            # Extract internal links and check if target files exist
+            grep -o 'href="[^"]*"' "$file" | grep 'href="/' | sed 's/href="//;s/"//' | while read link; do
+              # Remove anchor fragments
+              clean_link=$(echo "$link" | sed 's/#.*//')
+              
+              # Skip external links and special cases
+              if [[ "$clean_link" =~ ^https?:// ]] || [[ "$clean_link" == "/" ]]; then
+                continue
+              fi
+              
+              # Check if file exists in _site
+              target_file="_site${clean_link}"
+              if [[ "$clean_link" == */ ]]; then
+                target_file="${target_file}index.html"
+              elif [[ ! "$clean_link" =~ \. ]]; then
+                target_file="${target_file}/index.html"
+              fi
+              
+              if [ ! -f "$target_file" ]; then
+                echo "⚠️  Potential broken link: $link in $file"
+              fi
+            done
+          done
+          
+      - name: Generate SEO report
+        run: |
+          echo "## SEO Health Check Report" > seo-report.md
+          echo "Generated: $(date)" >> seo-report.md
+          echo "" >> seo-report.md
+          
+          # Site statistics
+          echo "### Site Statistics" >> seo-report.md
+          echo "- Total HTML pages: $(find _site -name "*.html" | wc -l)" >> seo-report.md
+          echo "- Sitemap URLs: $(grep -c "<url>" _site/sitemap.xml)" >> seo-report.md
+          echo "- RSS feed items: $(grep -c "<item>" _site/feed.xml || echo "0")" >> seo-report.md
+          echo "" >> seo-report.md
+          
+          # Check for common SEO issues
+          echo "### SEO Checks" >> seo-report.md
+          
+          # Pages without meta descriptions
+          MISSING_DESC=$(find _site -name "*.html" -exec grep -L 'name="description"' {} \; | wc -l)
+          echo "- Pages missing meta descriptions: $MISSING_DESC" >> seo-report.md
+          
+          # Pages without titles
+          MISSING_TITLE=$(find _site -name "*.html" -exec grep -L '<title>' {} \; | wc -l)
+          echo "- Pages missing titles: $MISSING_TITLE" >> seo-report.md
+          
+          echo "" >> seo-report.md
+          echo "✅ SEO health check completed successfully" >> seo-report.md
+          
+          cat seo-report.md
+          
+      - name: Upload SEO report
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-health-report
+          path: seo-report.md
+          retention-days: 30
