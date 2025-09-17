@@ -36,6 +36,22 @@ jobs:
       - name: Build Jekyll site
         run: bundle exec jekyll build
         
+      - name: Serve site for Lighthouse
+        run: |
+          bundle exec jekyll serve --detach --port 4000
+          sleep 5  # Wait for server to start
+          
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            http://localhost:4000
+            http://localhost:4000/about/
+            http://localhost:4000/archive/
+          configPath: './.lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+        
       - name: Check canonical URLs consistency
         run: |
           echo "Checking canonical URLs..."
@@ -136,9 +152,17 @@ jobs:
             exit 1
           fi
           
-      - name: Check for broken internal links
+      - name: Check links with Lychee
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: --verbose --no-progress --exclude-path '_site/resume' '_site/**/*.html'
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Check for broken internal links (custom)
         run: |
-          echo "Checking for broken internal links..."
+          echo "Checking for broken internal links (Jekyll-specific)..."
           
           # Find all HTML files and check for internal links
           find _site -name "*.html" -exec grep -l 'href="/' {} \; | head -5 | while read file; do
