@@ -26,6 +26,9 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
           
+      - name: Install XML tools
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+          
       - name: Build Jekyll site
         run: bundle exec jekyll build
         
@@ -142,8 +145,8 @@ jobs:
               # Remove anchor fragments
               clean_link=$(echo "$link" | sed 's/#.*//')
               
-              # Skip external links and special cases
-              if [[ "$clean_link" =~ ^https?:// ]] || [[ "$clean_link" == "/" ]]; then
+              # Skip external links, special cases, and /resume/ links (separate deployment)
+              if [[ "$clean_link" =~ ^https?:// ]] || [[ "$clean_link" == "/" ]] || [[ "$clean_link" =~ ^/resume ]]; then
                 continue
               fi
               
@@ -161,6 +164,91 @@ jobs:
             done
           done
           
+      - name: Check structured data
+        run: |
+          echo "Checking structured data..."
+          
+          # Check for JSON-LD structured data
+          JSON_LD_PAGES=$(find _site -name "*.html" -exec grep -l 'application/ld+json' {} \; | wc -l)
+          echo "📊 Pages with JSON-LD: $JSON_LD_PAGES"
+          
+          # Check homepage has structured data
+          if grep -q 'application/ld+json' _site/index.html; then
+            echo "✅ Homepage has structured data"
+          else
+            echo "⚠️  Homepage missing structured data"
+          fi
+          
+      - name: Check image optimization
+        run: |
+          echo "Checking image optimization..."
+          
+          # Check for images without alt text
+          MISSING_ALT=$(find _site -name "*.html" -exec grep -o '<img[^>]*>' {} \; | grep -v 'alt=' | wc -l || true)
+          echo "⚠️  Images without alt text: $MISSING_ALT"
+          
+          # Check for large images (basic check)
+          find _site -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" | while read img; do
+            SIZE=$(stat -f%z "$img" 2>/dev/null || stat -c%s "$img" 2>/dev/null || echo 0)
+            if [ "$SIZE" -gt 500000 ]; then  # 500KB
+              echo "⚠️  Large image: $img ($(($SIZE/1024))KB)"
+            fi
+          done
+          
+      - name: Check page performance indicators
+        run: |
+          echo "Checking performance indicators..."
+          
+          # Check for inline CSS (should be minimal)
+          INLINE_CSS=$(find _site -name "*.html" -exec grep -o '<style[^>]*>.*</style>' {} \; | wc -l || true)
+          echo "📊 Pages with inline CSS: $INLINE_CSS"
+          
+          # Check for external script count
+          EXTERNAL_SCRIPTS=$(find _site -name "*.html" -exec grep -o 'src="http[^"]*"' {} \; | sort -u | wc -l || true)
+          echo "📊 Unique external scripts: $EXTERNAL_SCRIPTS"
+          
+      - name: Check content quality indicators
+        run: |
+          echo "Checking content quality..."
+          
+          # Check for duplicate titles
+          find _site -name "*.html" -exec grep -o '<title>[^<]*</title>' {} \; | sort | uniq -d > duplicate-titles.txt
+          DUPLICATE_TITLES=$(wc -l < duplicate-titles.txt)
+          if [ "$DUPLICATE_TITLES" -gt 0 ]; then
+            echo "⚠️  Duplicate titles found: $DUPLICATE_TITLES"
+            head -5 duplicate-titles.txt
+          else
+            echo "✅ No duplicate titles"
+          fi
+          
+          # Check for duplicate meta descriptions
+          find _site -name "*.html" -exec grep -l 'name="description"' {} \; | xargs grep -o 'name="description" content="[^"]*"' | sort | uniq -d > duplicate-descriptions.txt
+          DUPLICATE_DESC=$(wc -l < duplicate-descriptions.txt)
+          if [ "$DUPLICATE_DESC" -gt 0 ]; then
+            echo "⚠️  Duplicate meta descriptions: $DUPLICATE_DESC"
+            echo "Files with duplicate descriptions:"
+            find _site -name "*.html" -exec grep -l 'name="description"' {} \; | xargs grep -l "$(head -1 duplicate-descriptions.txt | sed 's/.*content="//;s/".*//')" | head -5
+          else
+            echo "✅ No duplicate meta descriptions"
+          fi
+          
+      - name: Check mobile optimization
+        run: |
+          echo "Checking mobile optimization..."
+          
+          # Check for viewport meta tag
+          VIEWPORT_PAGES=$(find _site -name "*.html" -exec grep -l 'name="viewport"' {} \; | wc -l)
+          TOTAL_PAGES=$(find _site -name "*.html" | wc -l)
+          echo "📊 Pages with viewport meta: $VIEWPORT_PAGES/$TOTAL_PAGES"
+          
+          if [ "$VIEWPORT_PAGES" -eq "$TOTAL_PAGES" ]; then
+            echo "✅ All pages have viewport meta tag"
+          else
+            echo "⚠️  Some pages missing viewport meta tag"
+            echo "Pages missing viewport meta:"
+            find _site -name "*.html" -exec grep -L 'name="viewport"' {} \; | head -5
+          fi
+          
       - name: Generate SEO report
         run: |
           echo "## SEO Health Check Report" > seo-report.md
@@ -172,18 +260,36 @@ jobs:
           echo "- Total HTML pages: $(find _site -name "*.html" | wc -l)" >> seo-report.md
           echo "- Sitemap URLs: $(grep -c "<url>" _site/sitemap.xml)" >> seo-report.md
           echo "- RSS feed items: $(grep -c "<item>" _site/feed.xml || echo "0")" >> seo-report.md
+          echo "- Pages with JSON-LD: $(find _site -name "*.html" -exec grep -l 'application/ld+json' {} \; | wc -l)" >> seo-report.md
+          echo "- Pages with viewport meta: $(find _site -name "*.html" -exec grep -l 'name="viewport"' {} \; | wc -l)" >> seo-report.md
           echo "" >> seo-report.md
           
           # Check for common SEO issues
-          echo "### SEO Checks" >> seo-report.md
+          echo "### SEO Issues" >> seo-report.md
           
-          # Pages without meta descriptions
-          MISSING_DESC=$(find _site -name "*.html" -exec grep -L 'name="description"' {} \; | wc -l)
+          # Pages without meta descriptions (excluding /assets/)
+          MISSING_DESC=$(find _site -name "*.html" -not -path "_site/assets/*" -exec grep -L 'name="description"' {} \; | wc -l)
           echo "- Pages missing meta descriptions: $MISSING_DESC" >> seo-report.md
+          if [ "$MISSING_DESC" -gt 0 ]; then
+            echo "  Files missing descriptions:" >> seo-report.md
+            find _site -name "*.html" -not -path "_site/assets/*" -exec grep -L 'name="description"' {} \; | head -5 | sed 's/^/    - /' >> seo-report.md
+          fi
           
           # Pages without titles
           MISSING_TITLE=$(find _site -name "*.html" -exec grep -L '<title>' {} \; | wc -l)
           echo "- Pages missing titles: $MISSING_TITLE" >> seo-report.md
+          if [ "$MISSING_TITLE" -gt 0 ]; then
+            echo "  Files missing titles:" >> seo-report.md
+            find _site -name "*.html" -exec grep -L '<title>' {} \; | head -5 | sed 's/^/    - /' >> seo-report.md
+          fi
+          
+          # Images without alt text
+          MISSING_ALT=$(find _site -name "*.html" -exec grep -o '<img[^>]*>' {} \; | grep -v 'alt=' | wc -l || true)
+          echo "- Images without alt text: $MISSING_ALT" >> seo-report.md
+          
+          # Duplicate content issues
+          DUPLICATE_TITLES=$(find _site -name "*.html" -exec grep -o '<title>[^<]*</title>' {} \; | sort | uniq -d | wc -l)
+          echo "- Duplicate titles: $DUPLICATE_TITLES" >> seo-report.md
           
           echo "" >> seo-report.md
           echo "✅ SEO health check completed successfully" >> seo-report.md
