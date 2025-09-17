@@ -182,6 +182,7 @@ end
 
 **Liquid Tags for Content Control:**
 ```liquid
+{% raw %}
 <!-- Show content only with analytics consent -->
 {% consent_required 'analytics' %}
   <div class="analytics-widget">
@@ -199,6 +200,7 @@ end
 <!-- Consent status information -->
 <p>Consent level: {{ consent.level }}</p>
 <p>Consent date: {{ consent.date | date: "%B %d, %Y" }}</p>
+{% endraw %}
 ```
 
 ### Phase 3: Advanced Features (Month 5-6)
