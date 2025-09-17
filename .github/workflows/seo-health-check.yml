@@ -32,7 +32,7 @@ jobs:
       - name: Check canonical URLs consistency
         run: |
           echo "Checking canonical URLs..."
-          INCONSISTENT=$(grep -r "canonical" _site/ | grep -v "mcgarrah.org" || true)
+          INCONSISTENT=$(find _site -name "*.html" -exec grep -l "canonical" {} \; | xargs grep "canonical" | grep -v "mcgarrah.org" || true)
           if [ -n "$INCONSISTENT" ]; then
             echo "❌ Inconsistent canonical URLs found:"
             echo "$INCONSISTENT"
