@@ -308,8 +308,13 @@ jobs:
           echo "==========================================="
           
       - name: Upload SEO report
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          echo "ARTIFACT_NAME=seo-health-report-$TIMESTAMP" >> $GITHUB_ENV
+        
+      - name: Upload SEO report artifact
         uses: actions/upload-artifact@v4
         with:
-          name: seo-health-report-$(date +%Y%m%d-%H%M%S)
+          name: ${{ env.ARTIFACT_NAME }}
           path: seo-report.md
           retention-days: 180
