@@ -247,6 +247,47 @@ jobs:
           EXTERNAL_SCRIPTS=$(find _site -name "*.html" -exec grep -o 'src="http[^"]*"' {} \; | sort -u | wc -l || true)
           echo "📊 Unique external scripts: $EXTERNAL_SCRIPTS"
           
+      - name: Check descriptive link text
+        run: |
+          echo "Checking for non-descriptive link text..."
+          
+          # Find generic link text patterns
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -iE '(read more|click here|here|more|continue reading)' | wc -l || true)
+          echo "⚠️  Generic link text found: $GENERIC_LINKS"
+          
+          if [ "$GENERIC_LINKS" -gt 0 ]; then
+            echo "Files with generic link text:"
+            find _site -name "*.html" -exec grep -l -iE '(read more|click here|here|more|continue reading)' {} \; | head -5
+          fi
+          
+      - name: Check anchor elements
+        run: |
+          echo "Checking for anchor elements without proper href..."
+          
+          # Find anchor elements without href or with empty/invalid href
+          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
+          echo "⚠️  Anchor elements without proper href: $INVALID_ANCHORS"
+          
+          # Find disabled/empty anchors
+          DISABLED_ANCHORS=$(find _site -name "*.html" -exec grep -o '<a[^>]*class="[^"]*disabled[^"]*"[^>]*>' {} \; | wc -l || true)
+          echo "⚠️  Disabled anchor elements: $DISABLED_ANCHORS"
+          
+          if [ "$INVALID_ANCHORS" -gt 0 ] || [ "$DISABLED_ANCHORS" -gt 0 ]; then
+            echo "Files with invalid anchors:"
+            find _site -name "*.html" -exec grep -l '<a[^>]*class="[^"]*disabled' {} \; | head -5
+          fi
+          
+      - name: Check tap target sizes
+        run: |
+          echo "Checking for small tap targets..."
+          
+          # This is a basic check - full validation requires CSS analysis
+          SMALL_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -E '^.{1,20}$' | wc -l || true)
+          echo "⚠️  Potentially small tap targets: $SMALL_LINKS"
+          
+          echo "Note: Full tap target validation requires CSS analysis and browser testing"
+          echo "Consider using Lighthouse CI reports for detailed tap target analysis"
+          
       - name: Check content quality indicators
         run: |
           echo "Checking content quality..."
@@ -330,6 +371,14 @@ jobs:
           # Duplicate content issues
           DUPLICATE_TITLES=$(find _site -name "*.html" -exec grep -o '<title>[^<]*</title>' {} \; | sort | uniq -d | wc -l)
           echo "- Duplicate titles: $DUPLICATE_TITLES" >> seo-report.md
+          
+          # Generic link text
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -iE '(read more|click here|here|more|continue reading)' | wc -l || true)
+          echo "- Generic link text: $GENERIC_LINKS" >> seo-report.md
+          
+          # Invalid anchor elements
+          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
+          echo "- Anchor elements without proper href: $INVALID_ANCHORS" >> seo-report.md
           
           echo "" >> seo-report.md
           echo "✅ SEO health check completed successfully" >> seo-report.md

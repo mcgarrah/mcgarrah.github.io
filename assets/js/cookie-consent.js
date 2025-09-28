@@ -73,6 +73,11 @@
     }
     
     function loadConsentBasedScripts(consentLevel) {
+        // Skip loading scripts during localhost testing
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            return;
+        }
+        
         // Load Google Analytics script and configure
         if (GA_ID && !document.querySelector('script[src*="googletagmanager.com/gtag"]')) {
             const gaScript = document.createElement('script');
@@ -97,6 +102,11 @@
     }
     
     function loadAdSense() {
+        // Skip loading AdSense during localhost testing
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            return;
+        }
+        
         if (ADSENSE_ID && !document.querySelector('script[src*="adsbygoogle"]')) {
             const script = document.createElement('script');
             script.async = true;
