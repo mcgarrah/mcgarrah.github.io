@@ -3,12 +3,8 @@ title: "Hybrid Ceph Storage: SSD WAL/DB with USB Drive Data"
 layout: post
 categories: [technical, homelab]
 tags: [ceph, ssd, usb, storage, performance, homelab, proxmox, wal, db, dell-wyse-3040]
-published: true
+published: false
 ---
-
-# Hybrid Ceph Storage: SSD WAL/DB with USB Drive Data
-
-## Introduction
 
 Running Ceph in a homelab presents unique challenges. You want the benefits of distributed storage - high availability, scalability, and data protection - but enterprise-grade hardware costs can quickly spiral out of control. That's where hybrid storage configurations shine.
 
@@ -37,6 +33,7 @@ My Proxmox cluster consists of three nodes that have evolved from my [Dell Wyse 
 Each node runs Proxmox 8.2.2 with the [optimized Ceph settings](/proxmox-ceph-homelab-settings/) I've developed for homelab use.
 
 ### SSD Selection for WAL/DB
+
 For the WAL and DB devices, I chose fast SSDs that can handle the constant small writes and metadata operations:
 
 - **Size**: 32-64GB per OSD (following the 4% rule for WAL, 1% for DB)
@@ -60,8 +57,8 @@ While I'm "committing the sin" of using 1Gbps networking instead of 10Gbps, the 
 
 Before creating OSDs, calculate your WAL and DB requirements:
 
-- **WAL size**: 4% of OSD size (200GB for a 5TB OSD)
-- **DB size**: 1% of OSD size (50GB for a 5TB OSD)  
+- **WAL size**: 4% of OSD size (100GB for a 5TB OSD)
+- **DB size**: 1% of OSD size (50GB for a 5TB OSD)
 - **SSD partitioning**: Create separate partitions for each OSD's WAL and DB
 
 ### USB Drive Preparation
