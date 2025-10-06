@@ -4,7 +4,7 @@ title: Ceph OSD Debugging
 date: 2025-09-29 00:00:00 -0500
 categories: [ceph, homelab]
 tags: [ceph, homelab, debugging, osd]
-publish: false
+published: false
 ---
 
 So I took multiple hard power hits at my house and my UPS was not setup to power down cleanly. That is entirely my fault. Like backups, protecting your power is something you relearn when you have an event.
