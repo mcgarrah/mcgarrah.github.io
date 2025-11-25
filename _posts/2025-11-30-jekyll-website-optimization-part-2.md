@@ -153,7 +153,7 @@ window.addEventListener('scroll', function() {
 Especially important for categorized technical content:
 
 ```liquid
-<nav class="breadcrumb">
+{% raw %}<nav class="breadcrumb">
   <a href="/">Home</a>
   {% if page.categories %}
     {% for category in page.categories %}
@@ -163,7 +163,7 @@ Especially important for categorized technical content:
   {% endif %}
   <span class="separator">›</span>
   <span class="current">{{ page.title }}</span>
-</nav>
+</nav>{% endraw %}
 ```
 
 #### 2. Social Share Buttons
@@ -171,7 +171,7 @@ Especially important for categorized technical content:
 Increase content distribution:
 
 ```html
-<div class="share-buttons">
+{% raw %}<div class="share-buttons">
   <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}&text={{ page.title }}" 
      target="_blank" rel="noopener">
     Share on Twitter
@@ -180,7 +180,7 @@ Increase content distribution:
      target="_blank" rel="noopener">
     Share on LinkedIn
   </a>
-</div>
+</div>{% endraw %}
 ```
 
 #### 3. Cookie Consent Banner
@@ -210,7 +210,7 @@ function acceptCookies() {
 Enhanced 404/500 pages with search functionality:
 
 ```html
-<!-- 404.html -->
+{% raw %}<!-- 404.html -->
 ---
 layout: default
 permalink: /404.html
@@ -227,7 +227,7 @@ permalink: /404.html
       <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
     </article>
   {% endfor %}
-</div>
+</div>{% endraw %}
 ```
 
 #### 2. Lazy Loading Implementation
@@ -272,21 +272,25 @@ Multiple image sizes for different devices:
 Implementing the optimizations from both parts has yielded measurable improvements:
 
 #### Page Load Performance
+
 - **Initial load time**: Reduced from 3.2s to 1.6s (50% improvement)
 - **Time to Interactive**: Improved from 4.1s to 2.1s (49% improvement)
 - **First Contentful Paint**: Reduced from 1.8s to 0.9s (50% improvement)
 
 #### Core Web Vitals
+
 - **Largest Contentful Paint**: Improved from 2.8s to 1.4s
 - **First Input Delay**: Reduced from 120ms to 45ms
 - **Cumulative Layout Shift**: Decreased from 0.15 to 0.05
 
 #### User Engagement
+
 - **Session duration**: Increased by 30% (better navigation and related posts)
 - **Pages per session**: Improved by 25% (better content organization)
 - **Bounce rate**: Reduced by 35% (faster loading, better UX)
 
 #### Mobile Performance
+
 - **Mobile PageSpeed score**: Improved from 65 to 87
 - **Mobile usability**: No issues detected
 - **Mobile traffic**: Increased by 40% (better mobile experience)
@@ -296,17 +300,20 @@ Implementing the optimizations from both parts has yielded measurable improvemen
 Key findings from Google Analytics after optimizations:
 
 #### Content Performance
+
 - **Technical tutorials** have 45% longer session duration
 - **Code-heavy posts** show 60% higher engagement with copy buttons
 - **Series articles** (like this two-part post) have 25% better retention
 
 #### Traffic Sources
+
 - **Organic search**: 65% of traffic (improved SEO working)
 - **Direct traffic**: 20% (returning readers, good sign)
 - **Social media**: 10% (room for improvement)
 - **Referrals**: 5% (technical community links)
 
 #### Popular Content Categories
+
 1. **Proxmox/Ceph articles**: Highest engagement and sharing
 2. **Dell Wyse 3040 series**: Strong search traffic
 3. **Jekyll/GitHub Pages**: Good for developer audience
@@ -317,9 +324,11 @@ Key findings from Google Analytics after optimizations:
 ### What Worked Exceptionally Well
 
 #### 1. Consistent Technical Focus
+
 Focusing on homelab and infrastructure topics created a loyal readership. Technical depth matters more than broad appeal for this audience.
 
 #### 2. Series-Based Content
+
 Multi-part articles (like this one) perform better than single long posts:
 - Better reader retention
 - Higher return visitor rates
@@ -327,60 +336,74 @@ Multi-part articles (like this one) perform better than single long posts:
 - Better SEO for related keywords
 
 #### 3. Real-World Examples
+
 Posts with actual command outputs and screenshots perform 40% better than theoretical content.
 
 #### 4. GitHub Integration
+
 Using GitHub for comments, hosting, and workflows creates a seamless developer experience.
 
 ### What Needed Adjustment
 
 #### 1. Mobile Experience
+
 Initially underestimated mobile traffic (now 35% of visitors). Mobile optimization became crucial.
 
 #### 2. Search Functionality
+
 With 100+ posts, site search became essential. Readers couldn't find older content easily.
 
 #### 3. Content Organization
+
 Tags and categories needed refinement as content volume grew. Initial organization didn't scale well.
 
 #### 4. Performance at Scale
+
 Image optimization and lazy loading became critical as the site grew.
 
 ### Unexpected Discoveries
 
 #### 1. International Audience
+
 40% of traffic comes from outside the US, making GDPR compliance and internationalization important.
 
 #### 2. Long-Tail SEO Success
+
 Specific technical problems (like "Dell Wyse 3040 Proxmox") drive consistent traffic months after publication.
 
 #### 3. Community Building
+
 Technical readers prefer GitHub Discussions over traditional comments. The developer-focused audience appreciates the familiar interface.
 
 #### 4. Content Longevity
+
 Technical tutorials have a much longer useful life than expected. Posts from 2023 still drive significant traffic.
 
 ## Future Enhancement Roadmap
 
 ### Short-term (Next 3 months)
+
 - Implement dark/light theme toggle
 - Add site search functionality
 - Create custom 404 page with search
 - Implement reading progress indicators
 
 ### Medium-term (3-6 months)
+
 - Add breadcrumb navigation
 - Implement lazy loading for images
 - Create responsive image sets
 - Add social share buttons
 
 ### Long-term (6+ months)
+
 - Multi-language support (considering Spanish)
 - Newsletter signup integration
 - Advanced search with filtering
 - Mobile app manifest (PWA)
 
 ### Infrastructure Improvements
+
 - CDN implementation for assets
 - Advanced caching strategies
 - Security headers implementation
