@@ -330,6 +330,7 @@ Focusing on homelab and infrastructure topics created a loyal readership. Techni
 #### 2. Series-Based Content
 
 Multi-part articles (like this one) perform better than single long posts:
+
 - Better reader retention
 - Higher return visitor rates
 - More social sharing
