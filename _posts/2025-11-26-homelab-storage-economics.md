@@ -68,23 +68,16 @@ Building a 15-drive Ceph cluster happened in phases, with costs varying signific
 
 ## Backup Storage Economics
 
-### 20TB Primary Backup Drive
+| Drive | Model | Purchase Date | Cost | Cost/TB | Current Usage |
+|-------|-------|---------------|------|---------|---------------|
+| **20TB** | Avolusion PRO-X 20TB | June 16, 2024 | $219.99 | $11.00/TB | ZFS volume for CephFS backups |
+| **28TB** | Seagate Expansion 28TB (STKP28000400) | November 21, 2025 | $289.99 | $10.36/TB | Planned as primary backup |
 
-**Model**: Avolusion PRO-X 20TB
-**Purchase Date**: June 16, 2024
-**Cost**: $219.99
-**Cost per TB**: $11.00/TB
-**Usage**: ZFS volume for rsync backups of entire CephFS
+### Backup Strategy and Efficiency
 
-**Key Insight**: This single drive can backup my entire 50TB usable Ceph capacity, demonstrating the storage efficiency of the cluster.
+The backup drives reveal something fascinating about my Ceph cluster's real-world efficiency. That 20TB drive currently holds complete rsync backups of my entire 50TB usable Ceph capacity, which tells me I'm getting compression ratios of 2.5:1 or better. This isn't just theoretical - it's actual data from VMs, containers, and file storage that compresses remarkably well due to similar base images and redundant content.
 
-### 28TB Secondary Storage
-
-**Model**: Seagate Expansion 28TB (STKP28000400)
-**Purchase Date**: November 21, 2025
-**Cost**: $289.99
-**Cost per TB**: $10.36/TB
-**Planned Usage**: Primary backup volume, with 20TB becoming off-site mirror
+My plan is to promote the new 28TB drive to primary backup duty while relocating the 20TB drive for off-site backup rotation. This gives me both local and remote backup coverage at an average cost of $10.68/TB - less than half the cost of the Ceph storage, but without any of the redundancy or performance benefits. It's the perfect complement to the distributed storage: cheap, simple, and effective for disaster recovery scenarios.
 
 ## Cost Comparison Analysis
 
@@ -103,13 +96,13 @@ Ceph's redundancy comes at a 50% capacity penalty, effectively doubling the cost
 - **No downtime** for drive replacements
 - **Performance benefits** from distributed I/O
 
-### Backup Drive Efficiency
+### The Redundancy Tax vs Backup Value
 
-The backup drives show the true efficiency of the Ceph cluster - 50TB of usable data compresses well enough that a 20TB drive can hold complete backups. This suggests:
+The backup drives demonstrate why having multiple storage tiers makes sense. While Ceph's redundancy comes at a 50% capacity penalty, the backup drives show the true efficiency of the cluster - 50TB of usable data compresses well enough that a 20TB drive can hold complete backups. This compression comes from:
 
-- **Compression ratios** of 2.5:1 or better
-- **Deduplication benefits** from similar VM/container images
-- **Efficient backup strategies** using incremental rsync
+- **Similar VM/container base images** creating natural deduplication opportunities
+- **Incremental rsync strategies** that only backup changed data
+- **File-level compression** on the ZFS backup volumes
 
 ## Real-World Storage Costs
 
@@ -166,17 +159,16 @@ Large external drives offer the best $/TB ratio and serve as an excellent comple
 - Consider NVMe cache tiers for hot data
 - Evaluate backup retention policies based on capacity
 
-## Conclusion
+## The Real Story Behind the Numbers
 
-Homelab storage economics involve more than just $/TB calculations. While Ceph costs 3x more per usable TB than backup drives, it provides:
+Look, I'll be honest - when I started building this Ceph cluster, I wasn't thinking about cost per TB. I was thinking "this is cool distributed storage technology" and "I want to learn how this works." The economics came later when my wife asked why I needed another 5TB drive.
 
-- **Reliability**: No single points of failure
-- **Performance**: Distributed I/O capabilities  
-- **Convenience**: Always-available network storage
-- **Scalability**: Growth path for future needs
+Turns out the math is actually pretty interesting. Yes, Ceph costs me 3x more per usable TB than just buying big external drives. But here's the thing - when one of those 5TB drives dies (and they will), I don't even notice. The cluster just keeps running. Compare that to the heart attack I'd have if my single 28TB backup drive failed.
 
-The backup drives complement this by providing cost-effective bulk storage for archival and disaster recovery.
+The $89 Costco drives were a steal, and I kick myself for not buying more when they were available. But even at $110 each, building this cluster has been worth it for the learning experience alone. Plus, there's something deeply satisfying about having 15 drives working together as one big storage pool.
 
-**Bottom Line**: For active storage requiring high availability, Ceph's $30/TB is justified. For backup and archival, external drives at $10-11/TB provide excellent value. The combination creates a robust, cost-effective homelab storage solution.
+The backup drives? They're the unsung heroes of this setup. That 20TB drive backing up my entire 50TB Ceph cluster shows just how well compression and deduplication work in the real world. It's like having a safety net that costs $11/TB.
 
-The key insight is that different storage tiers serve different purposes, and optimizing for pure $/TB misses the bigger picture of reliability, performance, and operational simplicity.
+**Bottom Line**: If you're just looking for cheap storage, buy the biggest external drive you can afford. But if you want to learn about distributed systems, have some redundancy, and don't mind paying the "education tax," Ceph is pretty amazing. Just don't tell my wife how much those drives actually cost.
+
+The real lesson here? Different storage serves different purposes. Sometimes you pay for convenience, sometimes for reliability, and sometimes just for the fun of learning something new. In my homelab, all three have their place.
