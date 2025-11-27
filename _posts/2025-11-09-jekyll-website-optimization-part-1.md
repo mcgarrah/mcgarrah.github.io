@@ -255,11 +255,12 @@ Benefits:
 
 This covers the foundational optimizations that every Jekyll site should implement. In [Part 2 of this series](/jekyll-website-optimization-part-2/), I'll dive into:
 
-- Advanced analytics and monitoring setup
-- Remaining optimization priorities
-- Performance measurement and results
-- Lessons learned from running a technical blog
-- Future enhancement roadmap
+- Advanced analytics and monitoring with Google Analytics 4
+- Custom event tracking for technical content
+- Remaining optimization priorities (dark/light theme, search, etc.)
+- Performance measurement results and Core Web Vitals
+- Lessons learned from running 100+ technical posts
+- Future enhancement roadmap and infrastructure improvements
 
 ## Conclusion
 
