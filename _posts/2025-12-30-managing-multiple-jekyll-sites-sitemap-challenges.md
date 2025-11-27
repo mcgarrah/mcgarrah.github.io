@@ -4,7 +4,6 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, sitemap, multi-site, domain-management]
 excerpt: "How to handle sitemap.xml generation when running multiple Jekyll sites under a single custom domain on GitHub Pages."
-date: 2025-12-30
 published: true
 ---
 
@@ -44,7 +43,7 @@ Both sites need consistent canonical URL configuration, but they're managed inde
 Generate sitemap.xml without plugins using Jekyll's Liquid templating:
 
 ```xml
----
+{% raw %}---
 layout: null
 sitemap: false
 ---
@@ -62,7 +61,7 @@ sitemap: false
     <loc>{{ site.url }}/resume/</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
   </url>
-</urlset>
+</urlset>{% endraw %}
 ```
 
 ### Approach 2: Sitemap Index Files
@@ -120,6 +119,7 @@ The `jekyll-sitemap` plugin cannot be configured to include additional entries m
 ### Current Plugin Constraints
 
 The `jekyll-sitemap` plugin:
+
 - Only includes pages, posts, and collections from the current repository
 - Has no configuration option for manual URL additions
 - Cannot reference external sites or other repositories
@@ -132,7 +132,7 @@ The `jekyll-sitemap` plugin:
 Replace the plugin with a custom `sitemap.xml` template that allows manual entries:
 
 ```xml
----
+{% raw %}---
 layout: null
 sitemap: false
 ---
@@ -165,7 +165,7 @@ sitemap: false
     <loc>{{ site.url }}/resume/print/</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
   </url>
-</urlset>
+</urlset>{% endraw %}
 ```
 
 #### Solution 2: Configuration-Based Manual Entries
@@ -186,13 +186,13 @@ sitemap_urls:
 Then reference in custom sitemap:
 
 ```xml
-<!-- In custom sitemap.xml -->
+{% raw %}<!-- In custom sitemap.xml -->
 {% for manual_url in site.sitemap_urls %}
   <url>
     <loc>{{ site.url }}{{ manual_url.url }}</loc>
     <lastmod>{{ manual_url.lastmod }}T00:00:00+00:00</lastmod>
   </url>
-{% endfor %}
+{% endfor %}{% endraw %}
 ```
 
 #### Solution 3: Hybrid Approach
@@ -204,12 +204,14 @@ Keep the plugin for automatic generation, then post-process with GitHub Actions 
 ### Plugin Development Status
 
 Current `jekyll-sitemap` plugin issues:
+
 - [Possibility to add pages that are not in the project #295](https://github.com/jekyll/jekyll-sitemap/issues/295)
 - [Allow generating sitemap_index files #300](https://github.com/jekyll/jekyll-sitemap/pull/300)
 
 ### Cross-Repository Coordination
 
 Changes to either site need to trigger sitemap regeneration, requiring:
+
 - Webhook coordination between repositories
 - Shared deployment workflows
 - Consistent URL structure maintenance
@@ -237,6 +239,7 @@ collections:
 ### Subdomain Approach
 
 Separate sites completely:
+
 - Main blog: `https://blog.mcgarrah.org`
 - Resume: `https://resume.mcgarrah.org`
 

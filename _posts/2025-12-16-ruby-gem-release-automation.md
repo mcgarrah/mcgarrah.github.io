@@ -1,15 +1,15 @@
 ---
 layout: post
-title: "Ruby Gem Release Automation: From Manual Hell to One-Command Publishing"
-date: 2025-01-14
+title: "Ruby Gem Release Automation - Part 1: Infrastructure Implementation"
 categories: [ruby, devops, automation, ci-cd]
 tags: [ruby-gem, github-actions, readthedocs, rubygems, release-automation, devops]
 excerpt: "Building a complete release automation pipeline for Ruby gems with GitHub Actions, Read the Docs integration, and RubyGems publishing - lessons learned from 10+ manual steps to single command deployment."
+published: true
 ---
 
 <!-- excerpt-end -->
 
-While developing the [jekyll-pandoc-exports](https://github.com/mcgarrah/jekyll-pandoc-exports) plugin, I discovered that building the actual functionality was only half the battle. The real challenge was creating a professional release pipeline that could handle documentation, testing, and publishing automatically. This is Part 1 of a two-part series - here I'll cover the infrastructure and automation challenges.
+While developing the [jekyll-pandoc-exports](https://github.com/mcgarrah/jekyll-pandoc-exports) plugin, I discovered that building the actual functionality was only half the battle. The real challenge was creating a professional release pipeline that could handle documentation, testing, and publishing automatically. This is Part 1 of a two-part series - here I'll cover the infrastructure and automation challenges. In [Part 2](/jekyll-pandoc-exports-plugin) I will cover implementing the core functionality of the plugin.
 
 ## The Manual Release Hell
 
@@ -38,6 +38,7 @@ This 13-step process was error-prone, time-consuming, and frankly demoralizing. 
 Coming from Python development, I expected Read the Docs integration to be straightforward. It wasn't. Ruby gems have different documentation patterns than Python packages:
 
 **MkDocs Configuration** (`.readthedocs.yaml`):
+
 ```yaml
 version: 2
 
@@ -75,6 +76,7 @@ Unlike Python's Sphinx autodoc, Ruby documentation required manual organization 
 RubyGems publishing presented unique challenges compared to PyPI:
 
 **Trusted Publishers Setup**:
+
 ```yaml
 # .github/workflows/publish.yml
 name: Publish to RubyGems
@@ -268,6 +270,7 @@ ReleaseManager.new.run(ARGV[0], ARGV.include?('--skip-tests'))
 ```
 
 **Key Ruby Script Features:**
+
 - **Semantic version validation** with regex patterns
 - **Duplicate version detection** in changelog
 - **Conditional test execution** with `--skip-tests` flag
@@ -372,7 +375,7 @@ end
 DevResetManager.new.run
 ```
 
-** Features:**
+**Features:**
 
 - **Hard reset** dev branch to match main exactly
 - **Version suggestions** for next development cycle
@@ -383,7 +386,6 @@ DevResetManager.new.run
 - **Help system** with `--help` flag
 - **Detailed status updates** during each operation
 - **Error handling** with meaningful exit codes
-
 
 Usage: `./bin/reset-dev` or `./bin/reset-dev --help`
 
@@ -422,14 +424,14 @@ The automated pipeline reduced release time from 2+ hours to 5 minutes:
 
 ```text
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Development   │───▶│  GitHub Actions  │───▶│   RubyGems.org  │
+│   Development   │──▶│  GitHub Actions  │───▶│   RubyGems.org  │
 │     Branch      │    │   CI/CD Pipeline │    │   Publication   │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │  bin/release    │    │  Read the Docs   │    │  GitHub Release │
-│     Script      │    │  Documentation  │    │    Creation     │
+│     Script      │    │  Documentation   │    │    Creation     │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 

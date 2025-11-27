@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Building a Jekyll Plugin for Automated Document Exports - Part 2: Technical Implementation"
-date: 2025-01-15
 categories: [jekyll, ruby, pandoc, automation]
 tags: [jekyll-plugin, pandoc, pdf-generation, docx, ruby-gem, documentation]
 excerpt: "Technical deep-dive into Jekyll plugin development: hooks system, Pandoc integration, and document generation features. Part 2 of building a professional Ruby gem."
@@ -36,9 +35,11 @@ pdf: true
 ## Key Features
 
 ### Automatic Generation
+
 The plugin runs during Jekyll's `post_write` phase, processing all configured collections (pages, posts, custom collections) and generating exports for marked content.
 
 ### Configurable Output
+
 Full configuration control through `_config.yml`:
 
 ```yaml
@@ -54,6 +55,7 @@ pandoc_exports:
 ```
 
 ### Incremental Builds
+
 The plugin only regenerates files when the source content changes, significantly improving build performance:
 
 ```ruby

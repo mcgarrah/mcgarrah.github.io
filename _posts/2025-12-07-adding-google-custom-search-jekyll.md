@@ -55,7 +55,7 @@ The search engine ID looks like: `012345678901234567890:abcdefghijk`
 Create `search.html` in your Jekyll root:
 
 ```html
----
+{% raw %}---
 title: "Search"
 layout: default
 permalink: /search/
@@ -70,7 +70,7 @@ sitemap: false
   {% if site.google_cse_id %}
   <script async src="https://cse.google.com/cse.js?cx={{ site.google_cse_id }}"></script>
   {% endif %}
-</article>
+</article>{% endraw %}
 ```
 
 ### Step 3: Add Configuration
@@ -290,9 +290,11 @@ After updating CSE configuration for a custom domain, allow 24-48 hours for Goog
 
 For comparison, other Jekyll search options include:
 
-- **Algolia** - More powerful but requires API setup
-- **Lunr.js** - Client-side search but requires JavaScript build process
-- **Simple Jekyll Search** - Basic JavaScript search of site content
+- **[Algolia](https://www.algolia.com/doc/framework-integration/jekyll/)** - More powerful search with instant results, faceted search, and analytics. Requires API key setup, has usage limits on free tier, and needs build-time indexing. Not pursued due to complexity and potential costs for larger sites.
+
+- **[Lunr.js](https://lunrjs.com/)** - Client-side JavaScript search that builds an index from your content. Provides fast, offline-capable search without external dependencies. Not chosen because it requires a JavaScript build process, increases page load time with large content indexes, and lacks the comprehensive indexing that Google provides.
+
+- **[Simple Jekyll Search](https://github.com/christian-fei/Simple-Jekyll-Search)** - Lightweight JavaScript solution that searches through a JSON file of your posts. Easy to implement and fully self-contained. Rejected because it only searches post metadata (titles, tags, categories) rather than full content, and doesn't scale well with large amounts of content.
 
 ## Results
 

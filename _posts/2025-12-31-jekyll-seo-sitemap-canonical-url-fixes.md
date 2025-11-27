@@ -88,7 +88,7 @@ This eliminated the problematic kramdown test URLs that were causing 404 errors.
 Enhanced the default layout with explicit canonical URL support:
 
 ```html
-<!-- _layouts/default.html -->
+{% raw %}<!-- _layouts/default.html -->
 <head>
   <!-- Jekyll SEO Tag handles most meta tags -->
   {% seo %}
@@ -97,7 +97,7 @@ Enhanced the default layout with explicit canonical URL support:
   {% unless page.canonical_url %}
     <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
   {% endunless %}
-</head>
+</head>{% endraw %}
 ```
 
 ### Step 4: Update Robots.txt
@@ -216,13 +216,13 @@ excerpt: "Brief description for search results and social sharing."
 description: "Longer meta description for search engines (150-160 characters)."
 image: /assets/images/article-image.png
 author: Michael McGarrah
-date: 2025-01-11
-last_modified_at: 2025-01-11
+date: 2025-12-31
+last_modified_at: 2025-12-31
 published: true
 seo:
   type: BlogPosting
-  date_published: 2025-01-11
-  date_modified: 2025-01-11
+  date_published: 2025-12-31
+  date_modified: 2025-12-31
 ---
 ```
 
@@ -321,6 +321,7 @@ jobs:
 ```
 
 The workflow automatically:
+
 - Validates sitemap.xml structure and domain consistency
 - Checks canonical URL alignment across all pages
 - Verifies robots.txt configuration
