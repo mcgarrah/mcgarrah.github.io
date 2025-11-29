@@ -14,13 +14,15 @@ After years of focusing on infrastructure and cloud technologies, I've decided t
 
 This project didn't emerge from nowhere. During my undergraduate Computer Science studies at NC State, I spent considerable time writing physics simulations - projectile motion calculators, collision detection systems, and particle dynamics models. These mathematical foundations proved invaluable for understanding game mechanics, even decades later.
 
-In the early 2000s, I briefly worked with VRA (Do2Learn) on virtual reality applications, exploring immersive educational environments before VR became mainstream. That experience with 3D coordinate systems, user interaction design, and real-time rendering planted seeds that are finally bearing fruit.
+In the early-1990's, I worked in benchmark development with low level performance metrics and analysis were my focus area. This delved into the esoteric areas of device drivers and mixed C and assembler. Towards the end of that work, I was working on gaming video cards and what would eventually be GPUs. I know a horrific amount about about low level graphics end up on your monitor.
 
 I also developed vision systems for coordinate motion capture in ergonomics research - getting paid to write computer vision algorithms that tracked human movement patterns for workplace safety analysis. This work with real-time coordinate tracking, spatial mathematics, and movement prediction directly applies to enemy pathfinding and projectile physics in games.
 
-Over the years, I've dabbled with game development as a hobby - experimenting with PyGame for 2D graphics, SDL for cross-platform multimedia, and even some low-level C programs for performance-critical simulations. However, I always viewed game development as less lucrative than enterprise software, banking systems, and business applications, so I pursued the more financially stable path.
+In the early 2000s, I briefly worked with VRA (Do2Learn) on virtual reality applications, exploring immersive educational environments before VR became mainstream. That experience with 3D coordinate systems, user interaction design, and real-time rendering planted seeds that are finally bearing fruit.
 
-Now, with a solid career foundation established, I'm revisiting these creative interests. I'm also working on modernizing an older Star Trek game called StarVoyager, originally built with SDL for Debian only, to run on Windows, Linux, and macOS. The cross-platform challenges there directly inform this Godot project's multi-platform export strategy.
+Over the years, I've dabbled with game development as a hobby - experimenting with [PyGame](https://www.pygame.org/) for 2D graphics, [SDL](https://www.libsdl.org/) for cross-platform multimedia, and even some low-level C programs for performance-critical simulations. However, I always viewed game development as less lucrative than enterprise software, banking systems, and business applications, so I pursued the more financially stable path. Kids like a roof and food on the table.
+
+Now, with a solid career foundation established, I'm revisiting these creative interests. I'm also working on modernizing an older Star Trek game called [StarVoyager](http://starvoyager.bluesky.me.uk/), originally built with SDL for Debian only, to run on Windows, Linux, and macOS. I've [hacked on it](https://github.com/mcgarrah/starvoyager) quite a bit and you can see in my branches my progress. The cross-platform challenges there directly inform this Godot project's multi-platform export strategy.
 
 This tower defense game represents both a return to form and a step forward - combining decades of software engineering experience with modern game development tools and patterns.
 
