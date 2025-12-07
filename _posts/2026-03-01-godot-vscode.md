@@ -6,7 +6,7 @@ tags: ["tower-defense", "game-development", "godot-engine", "web-games", "html5"
 published: true
 ---
 
-After years of focusing on infrastructure and cloud technologies, I've decided to return to an old passion: game development. Specifically, I'm building a tower defense game using the Godot Engine 4.5, with the goal of creating something fun while learning modern game development patterns.
+After years of focusing on infrastructure and cloud technologies, I've decided to return to an old passion: game development. Specifically, I'm taking a shot at building a tower defense game using the Godot Engine 4.5, with the goal of creating something fun while learning modern game development patterns.
 
 <!-- excerpt-end -->
 
@@ -14,7 +14,7 @@ After years of focusing on infrastructure and cloud technologies, I've decided t
 
 This project didn't emerge from nowhere. During my undergraduate Computer Science studies at NC State, I spent considerable time writing physics simulations - projectile motion calculators, collision detection systems, and particle dynamics models. These mathematical foundations proved invaluable for understanding game mechanics, even decades later.
 
-In the early-1990's, I worked in benchmark development with low level performance metrics and analysis were my focus area. This delved into the esoteric areas of device drivers and mixed C and assembler. Towards the end of that work, I was working on gaming video cards and what would eventually be GPUs. I know a horrific amount about about low level graphics end up on your monitor.
+In the early-1990's, I worked in benchmark development with low level performance metrics and analysis as my focus area. This delved into the esoteric areas of device drivers and mixed C and assembler. Towards the end of that work, I was working on gaming video cards and what would eventually be GPUs. I know a horrific amount about how low level graphics end up on your monitor.
 
 I also developed vision systems for coordinate motion capture in ergonomics research - getting paid to write computer vision algorithms that tracked human movement patterns for workplace safety analysis. This work with real-time coordinate tracking, spatial mathematics, and movement prediction directly applies to enemy pathfinding and projectile physics in games.
 
@@ -28,7 +28,7 @@ This tower defense game represents both a return to form and a step forward - co
 
 ## Project Overview
 
-The game follows a classic tower defense formula with a unique thematic twist: **Biology vs. Technology**. Players defend their home using bug spray can towers against waves of mutant bug enemies. It's a simple concept that allows for complex strategic gameplay while maintaining visual coherence.
+The game follows a classic tower defense formula with what I hope is a unique thematic twist: **Biology vs. Technology**. Players defend their home using bug spray can towers against waves of mutant bug enemies. It's a simple concept that allows for complex strategic gameplay while maintaining visual coherence.
 
 ### Current State: Playable Prototype
 
