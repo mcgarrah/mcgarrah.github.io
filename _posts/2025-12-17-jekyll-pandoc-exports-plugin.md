@@ -4,6 +4,7 @@ title: "Building a Jekyll Plugin for Automated Document Exports - Part 2: Techni
 categories: [jekyll, ruby, pandoc, automation]
 tags: [jekyll-plugin, pandoc, pdf-generation, docx, ruby-gem, documentation]
 excerpt: "Technical deep-dive into Jekyll plugin development: hooks system, Pandoc integration, and document generation features. Part 2 of building a professional Ruby gem."
+published: false
 ---
 
 <!-- excerpt-end -->

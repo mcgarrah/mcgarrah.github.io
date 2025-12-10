@@ -4,6 +4,7 @@ title: "Building a Jekyll GDPR Plugin: From Custom Implementation to Community S
 categories: [jekyll, ruby, gdpr, open-source]
 tags: [jekyll-plugin, gdpr, ruby-gem, privacy, compliance, open-source]
 excerpt: "Planning and developing a Jekyll plugin for GDPR compliance - turning a successful custom implementation into a reusable community solution."
+published: false
 ---
 
 <!-- excerpt-end -->

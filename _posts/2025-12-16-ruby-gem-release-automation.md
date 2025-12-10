@@ -4,7 +4,7 @@ title: "Ruby Gem Release Automation - Part 1: Infrastructure Implementation"
 categories: [ruby, devops, automation, ci-cd]
 tags: [ruby-gem, github-actions, readthedocs, rubygems, release-automation, devops]
 excerpt: "Building a complete release automation pipeline for Ruby gems with GitHub Actions, Read the Docs integration, and RubyGems publishing - lessons learned from 10+ manual steps to single command deployment."
-published: true
+published: false
 ---
 
 <!-- excerpt-end -->
