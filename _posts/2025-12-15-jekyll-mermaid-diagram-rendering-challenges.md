@@ -1,9 +1,9 @@
 ---
-title: "Jekyll Mermaid Diagram Rendering: From Manual JavaScript to Plugin Solutions"
+title: "Jekyll Mermaid Diagram Rendering: Why Client-Side Beats Plugins"
 layout: post
 categories: [web-development, jekyll]
 tags: [jekyll, mermaid, diagrams, javascript, plugins, rouge, syntax-highlighting]
-excerpt: "How Jekyll 4.4's Rouge syntax highlighter interferes with Mermaid diagram rendering and why using a dedicated plugin is the better approach."
+excerpt: "How Jekyll 4.4's Rouge syntax highlighter interferes with Mermaid diagram rendering and why client-side rendering with Mermaid 11 is better than plugins."
 published: true
 mermaid: true
 ---
@@ -141,6 +141,17 @@ While plugins should theoretically be the better solution, the available Jekyll 
 ### The Reality
 
 Unmaintained plugins become liabilities. They break with framework updates and create more problems than they solve.
+
+### Why Client-Side Rendering is Better
+
+Even if a well-maintained plugin existed, client-side rendering is architecturally superior for diagrams:
+
+- **Separation of Concerns** - Jekyll generates structure, browser renders dynamic content
+- **Performance** - No build-time overhead, diagrams render with proper browser context
+- **Standard Markdown** - Fenced code blocks work across platforms (GitHub, GitLab, VS Code)
+- **GitHub Pages Compatible** - Custom plugins don't work on GitHub Pages
+- **Always Current** - CDN delivery means automatic Mermaid updates
+- **Browser Features** - Access to dark mode detection, viewport sizing, user preferences
 
 ## Testing the Solution
 

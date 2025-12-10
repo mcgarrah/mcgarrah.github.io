@@ -211,7 +211,7 @@ Enable additional features in CSE console:
 
 ## Troubleshooting Custom Domains
 
-If you're using a custom domain (like `yourdomain.com` instead of `username.github.io`), you need to ensure Google Custom Search is configured for the correct domain:
+If you're using a custom domain (like `yourdomain.com` instead of `username.github.io`), you need to ensure Google Custom Search is configured for the correct domain.
 
 ### Common Issue: Domain Mismatch
 
