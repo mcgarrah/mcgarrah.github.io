@@ -58,7 +58,7 @@ jobs:
           echo "LIGHTHOUSE_ARTIFACT_NAME=lighthouse-results-$TIMESTAMP" >> $GITHUB_ENV
         
       - name: Upload Lighthouse artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.LIGHTHOUSE_ARTIFACT_NAME }}
           path: .lighthouseci/
@@ -398,7 +398,7 @@ jobs:
           echo "ARTIFACT_NAME=seo-health-report-$TIMESTAMP" >> $GITHUB_ENV
         
       - name: Upload SEO report artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: seo-report.md
