@@ -185,11 +185,11 @@ Manual JavaScript solutions require ongoing maintenance as frameworks evolve.
 
 ## Implementation Steps
 
-1. **Remove custom JavaScript** from layout files
-2. **Add jekyll-mermaid** to `Gemfile` and `_config.yml`
-3. **Run bundle install** to install the plugin
-4. **Restart Jekyll** server
-5. **Test diagram rendering** with existing content
+1. **Add Mermaid 11 script** to your Jekyll layout file
+2. **Use conditional loading** with `page.mermaid` or `site.mermaid` front matter
+3. **Write diagrams** using standard fenced code blocks with `mermaid` language
+4. **Test rendering** in development with `bundle exec jekyll serve`
+5. **Deploy** - works on GitHub Pages without plugin restrictions
 
 ## Conclusion
 
