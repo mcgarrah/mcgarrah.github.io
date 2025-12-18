@@ -4,7 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, sitemap, multi-site, domain-management]
 excerpt: "How to handle sitemap.xml generation when running multiple Jekyll sites under a single custom domain on GitHub Pages."
-published: true
+published: false
 ---
 
 Running multiple Jekyll sites under a single custom domain creates unique challenges for SEO and sitemap management. This post explores the complexities of managing **mcgarrah.org** (main blog) and **mcgarrah.org/resume** (separate Jekyll site) as distinct GitHub repositories while maintaining proper search engine indexing.
