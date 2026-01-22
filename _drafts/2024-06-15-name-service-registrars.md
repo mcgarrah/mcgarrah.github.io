@@ -38,6 +38,15 @@ Ick and costly.
 
 ## Porkbun
 
+<!-- TODO: Research Porkbun as primary migration target from SquareSpace
+     Key advantages:
+     - Full REST API access (unlike SquareSpace walled garden)
+     - Competitive pricing vs SquareSpace
+     - Developer-friendly with programmatic DNS control
+     - No vendor lock-in for transfers
+     - Perfect match for PowerDNS homelab setup with API integration
+-->
+
 ???
 
 
