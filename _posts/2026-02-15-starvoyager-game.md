@@ -3,7 +3,7 @@ title: "Modernizing StarVoyager: From Legacy SDL to Cross-Platform Gaming"
 layout: post
 categories: ["gamedev", "c++", "programming", "retro-gaming"]
 tags: ["starvoyager", "sdl", "game-development", "cross-platform", "security", "refactoring"]
-published: true
+published: false
 ---
 
 Before working on my Godot tower defense game, which I'll talk about in a future post, I've been tackling a much larger challenge: modernizing StarVoyager, a classic Star Trek-themed space combat game originally built for Debian Linux with SDL 1.2. This project represents the intersection of retro gaming preservation and modern software engineering practices. It also refreshes my C/C++ programming skill set as a side effect.

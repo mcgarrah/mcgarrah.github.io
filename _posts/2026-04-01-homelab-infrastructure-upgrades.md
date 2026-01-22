@@ -3,7 +3,7 @@ title: "Homelab Infrastructure Upgrades: Addressing Network Bottlenecks and Reli
 layout: post
 categories: ["homelab", "networking", "infrastructure"]
 tags: ["glnet", "tailscale", "procurve", "proxmox", "caddy", "vpn", "networking"]
-published: true
+published: false
 ---
 
 After months of dealing with intermittent network issues, aging hardware bottlenecks, and reliability problems in my homelab, it's time for a comprehensive infrastructure upgrade. These aren't just nice-to-have improvements—they're addressing real pain points that have been impacting daily operations and limiting the lab's potential.

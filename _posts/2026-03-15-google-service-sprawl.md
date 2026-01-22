@@ -3,7 +3,7 @@ title: "Google Services Sprawl"
 layout: post
 categories: [web-development, technical]
 tags: [google, web-development, analytics, search, tools, frustration]
-published: true
+published: false
 ---
 
 Lions and Tigers and Adsense, oh my... All the Google Services I think I need. And all the overhead for them.
