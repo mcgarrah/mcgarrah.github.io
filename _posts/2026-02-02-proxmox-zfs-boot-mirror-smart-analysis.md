@@ -171,6 +171,15 @@ ssh root@192.168.86.11 'bash /root/check-boot-smart.sh'
 - Crucial BX500 120GB
 - Samsung 870 EVO 120GB (premium option)
 
+**⚠️ Avoid: Bliksem SSDs**
+
+Purchased Bliksem 128GB SSDs from Amazon in Feb/Mar 2024 that failed within 2 years:
+- Stopped reporting SMART data correctly
+- ZFS reported bad blocks and strange behavior
+- CrystalDiskInfo couldn't explain the ZFS errors
+- Pulled drives proactively before complete failure
+- Stick with established brands (Kingston, Crucial, Samsung)
+
 **Installation Steps:**
 1. Verify 2 available SATA ports on motherboard
 2. Install 2x 2.5" SSDs (may need adapters for 3.5" bays)
