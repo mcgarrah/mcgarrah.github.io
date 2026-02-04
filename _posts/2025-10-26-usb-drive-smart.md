@@ -10,7 +10,9 @@ USB drives are notorious for hiding their SMART data behind finicky USB-to-SATA 
 
 After wrestling with several Seagate drives in my homelab, I finally figured out the magic incantations needed to get SMART data working. Here's how to do it properly.
 
-**Note**: The decision to not allow this in Linux as a default was done for a good reasons. You are playing with fire as some drives behave erratically. I have not experienced this with recently purchased USB Drives, but older ones did have quirks and issues. So buyer beware.
+**Update (2026-02-03):** This article has been superseded by [USB Drive SMART Updates: Fast-Track to the GRUB Solution](/2026/02/03/usb-drive-smart-updates/) which includes updated device IDs and production experience from my Ceph cluster deployment.
+
+**Note**: The decision to not allow this in Linux as a default was done for good reasons. You are playing with fire as some drives behave erratically. I have not experienced this with recently purchased USB drives, but older ones did have quirks and issues. So buyer beware.
 
 <!-- excerpt-end -->
 
@@ -58,7 +60,7 @@ For immediate testing:
 
 ```bash
 # Apply quirks immediately (lost on reboot)
-echo "0bc2:ac2b:,0bc2:ac41:,0bc2:2344:" > /sys/module/usb_storage/parameters/quirks
+echo "0bc2:2344:,0bc2:ac2b:,0bc2:ac41:" > /sys/module/usb_storage/parameters/quirks
 
 # Verify it worked
 cat /sys/module/usb_storage/parameters/quirks
@@ -70,7 +72,7 @@ For permanent changes that survive reboots:
 
 ```bash
 # Create modprobe configuration
-echo 'options usb-storage quirks=0bc2:ac2b:,0bc2:ac41:,0bc2:2344:' > /etc/modprobe.d/usbstorage-quirks.conf
+echo 'options usb-storage quirks=0bc2:2344:,0bc2:ac2b:,0bc2:ac41:' > /etc/modprobe.d/usbstorage-quirks.conf
 
 # Rebuild initramfs
 update-initramfs -u
@@ -82,13 +84,13 @@ This method works even if the modprobe approach fails:
 
 ```bash
 # Create GRUB configuration
-cat > /etc/default/grub.d/usb-quirks.cfg << EOF
+cat > /etc/default/grub.d/usb-quirks.cfg << 'EOF'
 # Override quirks for Seagate USB drives
-GRUB_CMDLINE_LINUX="\$GRUB_CMDLINE_LINUX usb_storage.quirks=0bc2:ac2b:,0bc2:2344:,0bc2:ac41:"
+GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX usb_storage.quirks=0bc2:2344:,0bc2:ac2b:,0bc2:ac41:"
 EOF
 
-# Update GRUB and reboot
-update-grub
+# Update GRUB (Debian/Ubuntu) or proxmox-boot-tool (Proxmox)
+update-grub  # or: proxmox-boot-tool refresh
 reboot
 ```
 
@@ -99,7 +101,7 @@ After applying quirks and reconnecting your drive:
 ```bash
 # Check that quirks are active
 cat /sys/module/usb_storage/parameters/quirks
-# Should show: 0bc2:ac2b:,0bc2:2344:,0bc2:ac41:
+# Should show: 0bc2:2344:,0bc2:ac2b:,0bc2:ac41:
 
 # Verify drive is using usb-storage instead of uas
 lsscsi -H
@@ -128,12 +130,13 @@ smartctl -d sat -H /dev/sdX
 
 Here are the most common Seagate USB drive IDs that need quirks:
 
+- `0bc2:2344` - Expansion Portable (older)
 - `0bc2:ac2b` - BUP Portable series
 - `0bc2:ac41` - One Touch HDD series
-- `0bc2:2344` - Expansion Portable (older)
-- `0bc2:ac25` - Some Backup Plus models
 
 If you have a different model, use `lsusb` to find your specific vendor:product ID.
+
+**For updated device coverage including newer models, see the [2026 update article](/2026/02/03/usb-drive-smart-updates/).**
 
 ## My Multi-Node Setup
 
@@ -179,3 +182,8 @@ In my homelab, I use these drives for backup storage and media serving. Being ab
 - [r/DataHoarder discussion](https://www.reddit.com/r/DataHoarder/comments/nc392f/how_can_i_read_the_smart_data_of_a_16_tb_seagate/) - Community solutions
 
 Now go forth and monitor those USB drives properly! Your future self will thank you when you catch a failing drive before it takes your data with it.
+
+**For the latest device IDs and production deployment experience, see [USB Drive SMART Updates: Fast-Track to the GRUB Solution](/2026/02/03/usb-drive-smart-updates/).**d refresh boot configuration
+cp /mnt/pve/cephfs/backups/usb-quirks.cfg /etc/default/grub.d/usb-quirks.cfg
+proxmox-boot-tool refresh
+```
