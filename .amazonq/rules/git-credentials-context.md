@@ -62,18 +62,19 @@ git config --global credential.https://gitlab.env.io.helper "/usr/local/share/gc
 
 ### Corporate Split VPN / TLS Proxy Requirement
 
-The user's macOS workstation runs a corporate VPN with TLS inspection (split tunnel).
-GitHub HTTPS operations (push, pull, fetch) require the corporate VPN tunnel to be
-active. When the VPN is off or the split tunnel is disabled, git push to GitHub fails
-with the same HTTP 403 symptom described above.
+The user's macOS workstation runs a corporate VPN with a split tunnel configuration.
+When the split VPN is ON, GitHub traffic bypasses the corporate TLS proxy and reaches
+GitHub directly (certificate issuer will be a public CA like Sectigo or DigiCert).
+When the split VPN is OFF, all traffic routes through the corporate proxy which blocks
+GitHub access entirely, causing HTTP 403 errors on push/pull/fetch.
 
 **Diagnosis:**
 ```bash
-GIT_CURL_VERBOSE=1 git push origin main 2>&1 | grep -i "issuer\|certificate"
+curl -sv --max-time 5 https://github.com 2>&1 | grep "issuer:"
 ```
-If the TLS certificate issuer shows a corporate proxy CA (not GitHub's own CA), the
-corporate VPN is intercepting the connection. If it does NOT show the corporate CA
-and you're getting 403s, the split VPN may be off and traffic is routing incorrectly.
+- Public CA (e.g., Sectigo, DigiCert) → Split VPN is ON, GitHub access works.
+- Corporate proxy CA → Split VPN is OFF, GitHub is blocked.
+- Connection timeout/failure → Split VPN is OFF or network is down.
 
 **Fix:** Re-enable the corporate split VPN, then retry the push.
 
