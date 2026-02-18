@@ -60,7 +60,30 @@ git config --global credential.https://gitlab.env.io.helper "/usr/local/share/gc
 - Removing all credential helpers (breaks GitLab auth)
 - Using personal access tokens directly in URLs (security risk)
 
+### Corporate Split VPN / TLS Proxy Requirement
+
+The user's macOS workstation runs a corporate VPN with TLS inspection (split tunnel).
+GitHub HTTPS operations (push, pull, fetch) require the corporate VPN tunnel to be
+active. When the VPN is off or the split tunnel is disabled, git push to GitHub fails
+with the same HTTP 403 symptom described above.
+
+**Diagnosis:**
+```bash
+GIT_CURL_VERBOSE=1 git push origin main 2>&1 | grep -i "issuer\|certificate"
+```
+If the TLS certificate issuer shows a corporate proxy CA (not GitHub's own CA), the
+corporate VPN is intercepting the connection. If it does NOT show the corporate CA
+and you're getting 403s, the split VPN may be off and traffic is routing incorrectly.
+
+**Fix:** Re-enable the corporate split VPN, then retry the push.
+
+**Key point:** The 403 from VPN/proxy issues looks identical to the 403 from credential
+helper misconfiguration. Check VPN status first before debugging credential helpers.
+
 ### Prevention
 
 If the user installs or updates GCM (e.g., via `brew upgrade`), it may re-add itself
 as a global credential helper. Check for this if 403 errors recur after software updates.
+
+If 403 errors appear after no credential changes, check corporate VPN/proxy status before
+investigating credential helpers.
