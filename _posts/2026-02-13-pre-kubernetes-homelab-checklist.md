@@ -39,37 +39,57 @@ When Kubernetes is deployed with MetalLB LoadBalancer IPs in the 192.168.87.100-
 
 ### The Solution
 
-Insert GL-MT2500A (Brume 2) routers between ISP modems and Google Wifi devices:
+Deploy GL-iNet Brume 2 (GL-MT2500A) WireGuard VPN gateways in a hybrid topology:
+
+- **Raleigh (server site)**: Brume 2 on LAN at 192.168.87.250 — WireGuard server (10.99.0.1/24). Port forwarding: Google Fiber Router → Google Wifi → Brume 2 (UDP 51820). Masquerades VPN traffic so responses route back without static routes on Google Wifi.
+- **Beach and other spoke sites (consumer sites)**: Brume 2 inline between ISP modem and Google Wifi/Nest Wifi — WireGuard client. Transit network 192.168.2.0/24. All devices transparently reach Raleigh services through the VPN tunnel.
 
 ```
-Google Fiber → Brume 2 (WireGuard) → Google Wifi → Devices
-                    ↕
-Spectrum → Brume 2 (WireGuard) → Google Nest Wifi → Devices
+# Raleigh (Brume 2 on LAN — server)
+Google Fiber → Google Wifi → [Brume 2 at 192.168.87.250] ← WireGuard server
+                              ↕ WireGuard tunnel (10.99.0.1 ↔ 10.99.0.3)
+# Beach (Brume 2 inline — consumer)
+Spectrum → [Brume 2 WAN | LAN 192.168.2.1] → Google Nest Wifi → Devices
 ```
 
-The Brume 2 handles VPN routing while preserving the existing WiFi infrastructure.
+**Why hybrid (not inline at both sites):** Google Wifi/Nest Wifi can't modify default gateway or add static routes. Inline at consumer sites means all devices (TVs, phones) transparently reach Raleigh services. Raleigh stays on LAN because it's the server site — only needs to accept inbound VPN.
 
 ### Tasks
 
-- [ ] Configure Raleigh Brume 2 (192.168.86.254)
+- [ ] Configure Raleigh Brume 2 (192.168.87.250 on LAN)
   - [ ] Initial setup and firmware update
-  - [ ] Configure LAN: 192.168.86.254/23
-  - [ ] Configure WireGuard server (10.99.0.1/30)
-  - [ ] Physical installation between Google Fiber and Google Wifi
-  - [ ] Test internet connectivity
+  - [ ] Configure LAN: 192.168.87.250/23, gateway 192.168.86.1
+  - [ ] Disable DHCP server (Google Wifi handles DHCP)
+  - [ ] Configure WireGuard server (10.99.0.1/24, port 51820)
+  - [ ] Connect to switch or Google Wifi LAN port (no downtime)
+  - [ ] Port forward: Google Wifi UDP 51820 → 192.168.87.250
+  - [ ] Port forward: Google Fiber Router UDP 51820 → Google Wifi WAN IP
+  - [ ] Configure masquerade for VPN traffic
+  - [ ] Test with mobile WireGuard client on cellular
 
-- [ ] Configure Beach Brume 2 (192.168.88.254)
+- [ ] Configure Beach Brume 2 (inline, transit 192.168.2.0/24)
   - [ ] Initial setup and firmware update
-  - [ ] Configure LAN: 192.168.88.254/23
-  - [ ] Configure WireGuard client to Raleigh
-  - [ ] Physical installation between Spectrum and Google Nest Wifi
-  - [ ] Test site-to-site connectivity
+  - [ ] Configure WAN: DHCP from Spectrum, LAN: 192.168.2.1/24
+  - [ ] Configure WireGuard client (10.99.0.3/24) to Raleigh
+  - [ ] Add static route: 192.168.86.0/23 via wg0
+  - [ ] Physical installation: Spectrum → Brume 2 → Google Nest Wifi (~15 min downtime)
+  - [ ] Test internet and cross-site connectivity
+
+- [ ] DNS Configuration (all sites)
+  - [ ] Change Google Wifi DNS from "Automatic" to Custom: 192.168.86.3, 192.168.86.2
+  - [ ] Change Google Nest Wifi DNS from "Automatic" to Custom: 192.168.88.2, 192.168.86.3
+  - [ ] Verify internal hostname resolution (jellyfin.home.mcgarrah.org)
 
 - [ ] Validation
-  - [ ] Ping 192.168.86.11 (harlan) from Beach
-  - [ ] Ping 192.168.88.2 from Raleigh
-  - [ ] Test DNS resolution across sites
+  - [ ] Beach TV can stream from Jellyfin (192.168.86.29)
+  - [ ] Beach devices can reach Raleigh Proxmox nodes
+  - [ ] DNS resolution works across sites (Technitium)
   - [ ] Performance test with iperf3 (expect 300-355 Mbps)
+
+- [ ] Future spoke sites (Wilson, Katie, Sam)
+  - [ ] Same inline topology as Beach
+  - [ ] WireGuard tunnel IPs: Wilson 10.99.0.5, Katie 10.99.0.7, Sam 10.99.0.9
+  - [ ] Upgrade Raleigh to Brume 3 (GL-MT5000, already purchased) before adding 3rd site
 
 ### Decision: Keep Tailscale as Backup
 
@@ -230,20 +250,23 @@ These services may eventually migrate to Kubernetes, but getting them operationa
 
 ### Switch Upgrades
 
-Current: Netgear consumer switches (no LACP)  
-Target: HP ProCurve 2800 series (LACP capable)
+Current backbone: HP ProCurve 2510-24 (J9019B) — 24x 10/100 ports + 2 dual-personality GbE uplinks, managed, fanless, no LACP  
+Current SAN: Netgear 8-port consumer switch (unmanaged, hangs every 4-6 months requiring reboot)  
+Target backbone: HP ProCurve 2824 (24x 1GbE ports, managed, LACP capable)  
+Target SAN: HP ProCurve 2810 (24x 1GbE ports, managed, LACP capable)
 
 ### Tasks
 
-- [ ] Deploy HP ProCurve 2810 for SAN network
+- [ ] Deploy HP ProCurve 2810 for SAN network (priority)
+  - [ ] Replace Netgear 8-port consumer switch
   - [ ] Configure LACP port channels
-  - [ ] Migrate Ceph nodes to bonded connections
+  - [ ] Migrate Ceph Core nodes to bonded connections
   - [ ] Verify improved replication performance
 
-- [ ] Deploy HP ProCurve 2824 for primary network (optional)
-  - [ ] Replace existing HP ProCurve 2510
+- [ ] Deploy HP ProCurve 2824 for primary network
+  - [ ] Replace existing HP ProCurve 2510-24 backbone switch
   - [ ] Configure LACP for management traffic
-  - [ ] Migrate edge switches as needed
+  - [ ] Migrate edge Netgear switches as needed
 
 - [ ] Router upgrade (Raleigh)
   - [ ] Replace Google Wifi (original) with Google Nest Wifi 6
@@ -382,11 +405,12 @@ Once all prerequisites are complete, the Kubernetes deployment follows this sequ
 
 Before running `terraform apply` for Kubernetes:
 
-- [ ] Site-to-site VPN operational (Beach can reach Raleigh services)
-- [ ] DNS infrastructure finalized and documented
+- [ ] Site-to-site VPN operational (Beach can reach Raleigh services via WireGuard)
+- [ ] DNS infrastructure finalized (Custom Technitium DNS on all Google Wifi/Nest Wifi)
 - [ ] PBS backing up all critical LXCs and VMs
 - [ ] Jellyfin and ARR suite operational
-- [ ] Network switches upgraded (at minimum, SAN network)
+- [ ] HP ProCurve 2810 deployed for SAN network (LACP for Ceph)
+- [ ] HP ProCurve 2824 deployed for primary network (replacing ProCurve 2510-24)
 - [ ] Edgar boot drive replaced
 - [ ] All documentation current
 

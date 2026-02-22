@@ -6,7 +6,7 @@ tags: [proxmox, homelab, infrastructure, planning, vms, jellyfin, arr-suite, dns
 published: false
 ---
 
-This is my comprehensive roadmap for transforming my Proxmox homelab cluster into a production-ready Video Media Service (VMS) accessible at `vms.home.mcgarrah.org` from both my Raleigh and Beach locations. The project spans infrastructure hardening, service deployment, and eventual Kubernetes migration.
+This is my comprehensive roadmap for transforming my Proxmox homelab cluster into a production-ready Video Media Service (VMS) accessible at `vms.home.mcgarrah.org` from all five family sites (Raleigh, Beach, Wilson, Katie, Sam). The project spans infrastructure hardening, service deployment, and eventual Kubernetes migration.
 
 <!-- excerpt-end -->
 
@@ -111,11 +111,12 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 **Status:** In Progress - Split-brain DNS with redundancy
 
 **Primary Options:**
-- **Technitium DNS:** Modern web UI, Docker-friendly
-- **PowerDNS:** Enterprise-grade, API-driven
+- **Technitium DNS:** Modern web UI, deployed in LXC, 6-node HA cluster across all sites
+- **PowerDNS:** Enterprise-grade, API-driven (evaluated, not deployed)
 - **Implementation:** LXC containers with Proxmox SDN integration
 - **Features:** Split-brain DNS, internal/external resolution
 - **Redundancy:** Multi-node deployment for high availability
+- **Current Status:** Technitium deployed and working, PowerDNS evaluated as alternative
 
 ### GPU Enablement
 **Status:** Planned - Enable GPU passthrough for media processing
@@ -186,13 +187,15 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 ### Network Infrastructure Upgrades
 **Status:** High Priority - Comprehensive network modernization
 
-**Switch Infrastructure (ProCurve 2800 Deployment):**
-- **Current:** Single 1GbE connections per node
-- **Target:** LACP bonded connections for redundancy and throughput
-- **Hardware:** HP ProCurve 2800 series switches (already acquired)
-- **Limitations:** No IPv6 support (would require ProCurve 2900 series upgrade)
-- **Benefits:** Link redundancy, improved bandwidth utilization
-- **Future Upgrade Path:** ProCurve 2900 series for full IPv6 and advanced VLAN support
+**Switch Infrastructure (HP ProCurve Deployment):**
+- **Current backbone:** HP ProCurve 2510-24 (J9019B) — 24x 10/100 ports + 2 dual-personality GbE uplinks, managed, no LACP
+- **Current SAN:** Netgear 8-port consumer switch (unmanaged, hangs every 4-6 months requiring reboot)
+- **Target backbone:** HP ProCurve 2824 (24x 1GbE ports, managed, LACP capable)
+- **Target SAN:** HP ProCurve 2810 (24x 1GbE ports, managed, LACP capable)
+- **Available:** 3-4 ProCurve 2800 series switches on hand, ready to deploy
+- **Benefits:** 10x port speed upgrade (100Mb → 1GbE), LACP bonding for redundancy and aggregate bandwidth, eliminates Netgear reliability issues
+- **Management:** The 2510-24 Java WebUI can still be accessed via [legacy browser setup](/java-jnlp-webui/) for diagnostics during migration
+- **Note:** ProCurve 2800 series does not support IPv6 — IPv6 is a long-term consideration requiring ProCurve 2900 series or newer (see network docs)
 
 **LACP Configuration:**
 - **Proxmox Nodes:** Configure bond0 with LACP (802.3ad)
@@ -204,30 +207,27 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 - **Raleigh Location:** Upgrade from Google Wifi (original) to Google Nest Wifi 6
 - **Beach Location:** ✅ Already upgraded to Google Nest Wifi 6
 - **Hardware Status:** New Wifi 6 router and endpoints ready for installation
-- **IPv6 Support:** Router-level IPv6 connectivity (limited by ProCurve 2800 switch capabilities)
+- **IPv6 Support:** Not applicable with current ProCurve 2800 series switches — long-term future consideration
 - **Multi-Gigabit Capability:** Support Google Fiber multi-gig speeds (>1Gbps)
 - **ISP Integration:** Full utilization of Google Fiber bandwidth capabilities
-- **VLAN Limitations:** Advanced VLAN features constrained by ProCurve 2800 series
-- **Benefits:** Wifi 6 performance, better coverage, improved client capacity, partial IPv6 support
-- **Timeline:** Deploy alongside ProCurve switch installation
+- **Benefits:** Wifi 6 performance, better coverage, improved client capacity
+- **Timeline:** Deploy alongside HP ProCurve switch installation
 
 **Implementation Priority:**
 - **Critical for VMS:** Network reliability essential for media streaming
 - **Ceph Performance:** Bonded connections improve storage network performance
 - **ISP Utilization:** Multi-gigabit Google Fiber support for high-bandwidth streaming
-- **Partial IPv6:** Router-level IPv6 support (full network IPv6 requires ProCurve 2900 upgrade)
 - **Wireless Performance:** Wifi 6 supports high-bandwidth media streaming
 - **HA Requirements:** Network redundancy supports cluster availability
-- **Future Considerations:** ProCurve 2900 series upgrade for complete IPv6 and advanced VLAN support LACP bond status, interface errors, bandwidth utilization
 
 ## Phase 2: Core Services Deployment
 
 ### Caddy Reverse Proxy
-**Status:** Q1 Priority - Internal testing with split-brain DNS
+**Status:** ✅ Deployed - Internal services proxied
 
-- **Deployment:** LXC container with automatic HTTPS
-- **Phase 1:** Internal testing with split-brain DNS resolution
-- **Services:** Jellyfin, Arr Suite, monitoring dashboards
+- **Deployment:** LXC container (192.168.86.30) with automatic HTTPS
+- **Current:** Proxying Jellyfin and internal services
+- **Services:** Jellyfin, Arr Suite (planned), monitoring dashboards
 - **Features:** Automatic Let's Encrypt certificates for internal domains
 - **Configuration:** Dynamic service discovery
 - **Security:** Internal-only access until SSO implementation
@@ -244,12 +244,13 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 - **Storage:** Ceph RBD for configuration, CephFS for media
 
 ### Jellyfin Media Server
-**Status:** Planned - Primary media streaming service
+**Status:** ✅ Deployed - Primary media streaming service
 
-- **Deployment:** LXC with GPU passthrough for transcoding
-- **Storage:** CephFS for media library
+- **Deployment:** LXC (192.168.86.29) with GPU passthrough (P620) for transcoding
+- **Storage:** CephFS for media library (~10 TiB), metadata migrated to CephFS
+- **Rootfs:** Shrunk to 8GB for faster HA failover
 - **Features:** Hardware-accelerated transcoding
-- **Access:** Internal and external via Caddy proxy
+- **Access:** Internal and cross-site via Caddy proxy (192.168.86.30)
 
 ### SSO Authentication
 **Status:** Planned - Unified authentication across services
@@ -333,21 +334,24 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 - **Prerequisites:** SSO implementation, security hardening, internal testing complete
 
 ### Multi-Location Access
-**Status:** Planned - Seamless access from Raleigh and Beach
+**Status:** Planned - Seamless access from all 5 sites (Raleigh, Beach, Wilson, Katie, Sam)
 
-- **VPN:** Site-to-site connectivity
-- **Replication:** Consider media sync between locations
-- **Failover:** Backup access methods
-- **Performance:** Optimize for remote streaming
+- **Primary VPN:** GL-iNet Brume 2 WireGuard in hybrid topology — Raleigh on LAN (server), spoke sites inline (consumer)
+- **Backup VPN:** Tailscale via Dell Wyse 3040 gateways (device-to-device, DNS replication)
+- **Transparent Routing:** Beach/spoke devices reach Raleigh services (Jellyfin, Proxmox, K8s) without configuration
+- **DNS:** Custom Technitium DNS on all Google Wifi/Nest Wifi for internal hostname resolution
+- **Performance:** 300-355 Mbps per spoke (Brume 2 WireGuard limit)
+- **Hub Upgrade:** Brume 3 (GL-MT5000, already purchased) for Raleigh when adding 3rd site
 
-### LACP Network Bonding & ProCurve Integration
+### LACP Network Bonding & HP ProCurve Integration
 **Status:** High Priority - Network infrastructure upgrade
 
-**ProCurve 2800 Switch Deployment:**
-- **Current:** Single 1GbE connections per node
-- **Target:** LACP bonded connections for redundancy and throughput
-- **Hardware:** HP ProCurve 2800 series switches (already acquired)
-- **Benefits:** Link redundancy, improved bandwidth utilization
+**HP ProCurve Switch Deployment:**
+- **Current backbone:** HP ProCurve 2510-24 (J9019B) — 24x 10/100 ports + 2 dual-personality GbE uplinks, managed, no LACP
+- **Current SAN:** Netgear 8-port consumer switch (unmanaged, hangs every 4-6 months)
+- **Target backbone:** HP ProCurve 2824 (24x 1GbE ports, LACP capable)
+- **Target SAN:** HP ProCurve 2810 (24x 1GbE ports, LACP capable)
+- **Benefits:** 10x port speed, link redundancy, improved bandwidth utilization, eliminates Netgear reliability issues
 
 **LACP Configuration:**
 - **Proxmox Nodes:** Configure bond0 with LACP (802.3ad)
@@ -375,7 +379,7 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 - **Integration:** NUT (Network UPS Tools) for monitoring and shutdown
 
 **Implementation Timeline:**
-- **Phase 1:** Deploy with ProCurve 2800 switch installation
+- **Phase 1:** Deploy with HP ProCurve 2824/2810 switch installation
 - **Phase 2:** Configure NUT for graceful shutdowns
 - **Phase 3:** Test power failure scenarios
 - **Benefits:** Prevent data corruption, extend hardware lifespan
@@ -436,22 +440,22 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 
 ### Q1 2026 (Current Focus)
 - [ ] **Edgar BIOS to UEFI migration** (Feb 8th+ - waiting for SSD delivery)
-- [ ] **Network infrastructure upgrades** (ProCurve switches + Google Nest Wifi 6)
+- [ ] **Network infrastructure upgrades** (HP ProCurve 2824 primary + HP ProCurve 2810 SAN + Google Nest Wifi 6)
 - [ ] **UPS deployment** (Smart UPS X 1500 + Back-UPS ES 450 units)
 - [ ] **DNS registrar migration completion** (Batch 1-3)
-- [ ] **Caddy proxy deployment** (internal testing with split-brain DNS)
+- [x] **Caddy proxy deployed** (192.168.86.30, proxying Jellyfin and internal services)
 - [ ] **Proxmox storage optimizations** (ZFS atime=off, RRDcached tuning)
 - [ ] ZFS boot mirror restoration
 - [ ] Log2RAM deployment
-- [ ] DNS infrastructure (Technitium/PowerDNS)
+- [ ] DNS infrastructure finalization (Technitium vs PowerDNS decision)
 - [ ] GPU enablement testing
 
 ### Q2 2026
 - [ ] **Arr Suite LXC containers** (Sonarr, Radarr, Prowlarr, Bazarr)
-- [ ] **Jellyfin with GPU transcoding** (primary media server)
+- [x] **Jellyfin with GPU transcoding** (deployed at 192.168.86.29, P620 GPU)
 - [ ] **Basic SSO implementation** (Authentik or Keycloak)
 - [ ] **Internal testing and optimization** (performance tuning)
-- [ ] **Multi-location testing** (Raleigh and Beach access)
+- [ ] **Multi-location testing** (Raleigh and Beach access via WireGuard)
 
 ### Q3 2026
 - [ ] **Public service exposure** (Jellyfin and Arr Suite external access)
@@ -480,7 +484,7 @@ This is my comprehensive roadmap for transforming my Proxmox homelab cluster int
 - **Scalability:** Easy addition of new services and nodes
 
 ### User Experience Goals
-- **Access:** Seamless streaming from both locations
+- **Access:** Seamless streaming from all 5 sites
 - **Quality:** 4K transcoding with GPU acceleration
 - **Management:** Single sign-on across all services
 - **Reliability:** Automatic failover and recovery
@@ -523,4 +527,4 @@ This roadmap transforms my Proxmox homelab from a development cluster into a pro
 
 The ultimate goal is `vms.home.mcgarrah.org` - a reliable, secure, and performant media service accessible from anywhere, with the infrastructure foundation to support future expansion into a full home operations platform.
 
-**Next Steps:** Begin with ZFS boot mirror restoration and Log2RAM implementation, as these provide immediate stability improvements for the foundation work ahead.
+**Next Steps:** Complete the site-to-site VPN deployment (Brume 2 hardware on hand), finalize DNS configuration across all sites, and deploy the ARR suite alongside the already-operational Jellyfin and Caddy services.

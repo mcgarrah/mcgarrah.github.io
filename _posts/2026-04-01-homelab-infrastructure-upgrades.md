@@ -2,7 +2,7 @@
 title: "Homelab Infrastructure Upgrades: Addressing Network Bottlenecks and Reliability Issues"
 layout: post
 categories: ["homelab", "networking", "infrastructure"]
-tags: ["glnet", "tailscale", "procurve", "proxmox", "caddy", "vpn", "networking"]
+tags: ["glinet", "brume2", "tailscale", "procurve", "proxmox", "caddy", "vpn", "networking"]
 published: false
 ---
 
@@ -16,8 +16,9 @@ My homelab has grown organically over the years, and like many homelabs, it's re
 
 ### Network Connectivity Challenges
 
-- **Site-to-site connectivity** between Raleigh and Emerald Isle locations is unreliable
-- **100Mb bottlenecks** on core switches limiting inter-VLAN and storage traffic
+- **Site-to-site connectivity** across five family locations (Raleigh, Beach, Wilson, Katie, Sam) is unreliable
+- **100Mb bottlenecks** on backbone switch (HP ProCurve 2510-24 J9019B has 24x 10/100 ports) limiting cluster and storage traffic
+- **Netgear switch reliability** — consumer-grade SAN switches hang every 4-6 months requiring manual reboot
 - **DNS resolution** inconsistencies across different network segments
 - **Media streaming** performance issues due to proxy limitations
 
@@ -29,26 +30,26 @@ My homelab has grown organically over the years, and like many homelabs, it's re
 
 ## Planned Infrastructure Upgrades
 
-### 1. GLNet Hume 2 VPN Implementation
+### 1. GL-iNet Brume 2 VPN Implementation
 
 **Problem**: Current site-to-site connectivity relies on consumer-grade solutions that frequently drop connections and provide inconsistent performance between my Raleigh lab and Emerald Isle remote location.
 
-**Solution**: Deploy GLNet Hume 2 VPN appliances at both locations for enterprise-grade site-to-site connectivity.
+**Solution**: Deploy GL-iNet Brume 2 (GL-MT2500A) VPN appliances at both locations for enterprise-grade site-to-site connectivity.
 
 **Implementation Plan**:
 
 ```bash
 # Raleigh Location (Main Site)
-- GLNet Hume 2 configured as primary hub
-- Static IP configuration: 192.168.1.0/24
-- VPN subnet: 10.100.0.0/16
-- Routing for lab subnets: 10.10.10.0/24, 10.20.20.0/24
+- GL-iNet Brume 2 configured as WireGuard server on LAN
+- Static IP: 192.168.87.250 on 192.168.86.0/23 network
+- WireGuard tunnel: 10.99.0.1/24
+- Port forwarding: Google Fiber Router → Google Wifi → Brume 2
 
 # Emerald Isle Location (Remote Site)  
-- GLNet Hume 2 configured as spoke
-- Local subnet: 192.168.2.0/24
-- VPN tunnel to Raleigh hub
-- Route propagation for remote access
+- GL-iNet Brume 2 configured inline (Spectrum → Brume 2 → Google Nest Wifi)
+- Transit network: 192.168.2.0/24
+- WireGuard tunnel: 10.99.0.3/24
+- Routes Raleigh traffic (192.168.86.0/23) through VPN tunnel
 ```
 
 **Expected Benefits**:
@@ -71,9 +72,9 @@ My homelab has grown organically over the years, and like many homelabs, it's re
 dns:
   nameservers:
     - 100.100.100.100  # Tailscale MagicDNS
-    - 10.10.10.1       # Local Pi-hole
+    - 192.168.86.3     # Local Technitium DNS
   search_domains:
-    - lab.mcgarrah.org
+    - home.mcgarrah.org
     - ts.net
   
 # New October 2025 Features
@@ -94,39 +95,41 @@ features:
 
 ### 3. Core Network Switch Upgrades
 
-**Problem**: HP ProCurve switches at the Raleigh location are limited to 100Mb, creating significant bottlenecks for:
+**Problem**: The HP ProCurve 2510-24 (J9019B) backbone switch has 24x 10/100 Mbps ports with only 2 dual-personality Gigabit uplinks (RJ-45 or SFP), creating 100Mb bottlenecks for all node traffic. The switch is fanless, 1U rack-mountable, and managed (CLI + [Java WebUI](/java-jnlp-webui/)), but lacks LACP support. The Netgear 8-port SAN switch is unmanaged and hangs every 4-6 months requiring manual reboot. Neither supports LACP, preventing link aggregation for:
 
 - **Proxmox cluster traffic** between nodes
-- **Ceph storage replication** and client access
+- **Ceph storage replication** and client access (single 1GbE link per node)
 - **VM migration** operations
 - **Media streaming** from NAS to clients
 
-**Solution**: Upgrade both core switches to Gigabit-capable models.
+**Solution**: Upgrade both core switches to LACP-capable managed switches.
 
 **Hardware Plan**:
 
 ```text
-Current: HP ProCurve 2524 (24x 100Mb + 2x 1Gb uplinks)
-Target:  HP ProCurve 2920 (24x 1Gb + 4x SFP+ uplinks)
+Primary Network:
+  Current: HP ProCurve 2510-24 (J9019B) — 24x 10/100 ports + 2 dual-personality GbE uplinks, managed, fanless, no LACP
+  Target:  HP ProCurve 2824 (24x 1GbE ports, managed, LACP capable)
+
+SAN Network:
+  Current: Netgear 8-port consumer switch (unmanaged, hangs every 4-6 months)
+  Target:  HP ProCurve 2810 (24x 1GbE ports, managed, LACP capable)
 
 Network Topology:
-┌─────────────────┐    ┌─────────────────┐
-│   Core Switch   │────│  Storage VLAN   │
-│   (1Gb ports)   │    │   10.20.20.0/24 │
-└─────────────────┘    └─────────────────┘
-         │
-    ┌─────────────────┐    ┌─────────────────┐
-    │  Compute VLAN   │    │   Management    │
-    │  10.10.10.0/24  │    │   10.30.30.0/24 │
-    └─────────────────┘    └─────────────────┘
+┌─────────────────────┐    ┌─────────────────────┐
+│  HP ProCurve 2824   │    │  HP ProCurve 2810   │
+│  Primary Network    │    │  SAN Network        │
+│  192.168.86.0/23    │    │  10.10.10.0/23      │
+└─────────────────────┘    └─────────────────────┘
 ```
 
 **Implementation Strategy**:
 
-1. **Staged migration** - Replace switches one at a time
-2. **VLAN preservation** - Maintain existing network segmentation
-3. **Cable management** - Upgrade patch cables to Cat6
-4. **Performance testing** - Validate throughput improvements
+1. **SAN first** - Replace Netgear 8-port with HP ProCurve 2810 (immediate Ceph benefit)
+2. **Primary second** - Replace HP ProCurve 2510-24 with HP ProCurve 2824
+3. **LACP bonding** - Configure 802.3ad on Ceph Core nodes for aggregate bandwidth
+4. **Cable management** - Upgrade patch cables to Cat6
+5. **Performance testing** - Validate throughput improvements with iperf3
 
 ### 4. Proxmox Boot Drive Reliability Upgrade
 
@@ -193,8 +196,8 @@ pve-install --target-hd /dev/sda,/dev/sdb \
 
 ```caddyfile
 # Jellyfin Media Server Proxy
-jellyfin.lab.mcgarrah.org {
-    reverse_proxy 10.10.10.50:8096 {
+jellyfin.home.mcgarrah.org {
+    reverse_proxy 192.168.86.29:8096 {
         header_up X-Real-IP {remote_host}
         header_up X-Forwarded-For {remote_host}
         header_up X-Forwarded-Proto {scheme}
@@ -225,15 +228,15 @@ jellyfin.lab.mcgarrah.org {
     }
 }
 
-# Additional media services
-sonarr.lab.mcgarrah.org {
+# Additional media services (planned)
+sonarr.home.mcgarrah.org {
     reverse_proxy 10.10.10.51:8989
     basicauth {
         admin $2a$14$hashed_password
     }
 }
 
-radarr.lab.mcgarrah.org {
+radarr.home.mcgarrah.org {
     reverse_proxy 10.10.10.52:7878
     basicauth {
         admin $2a$14$hashed_password
@@ -253,13 +256,13 @@ radarr.lab.mcgarrah.org {
 
 ### Phase 1: Network Foundation (Weeks 1-2)
 
-1. **GLNet Hume 2 deployment** at both locations
+1. **GL-iNet Brume 2 deployment** at both locations
 2. **Site-to-site VPN** configuration and testing
 3. **Routing table updates** for cross-site connectivity
 
 ### Phase 2: Core Infrastructure (Weeks 3-4)
 
-1. **ProCurve switch replacement** with staged migration
+1. **ProCurve switch replacement** (HP ProCurve 2810 for SAN, HP ProCurve 2824 for primary) with staged migration
 2. **Network performance validation** and optimization
 3. **VLAN reconfiguration** for improved segmentation
 
@@ -279,9 +282,10 @@ radarr.lab.mcgarrah.org {
 
 ### Network Throughput
 
-- **10x improvement** in inter-VLAN traffic (100Mb → 1Gb)
-- **Consistent site-to-site** connectivity with GLNet VPN
-- **Reduced latency** with Tailscale mesh optimization
+- **10x improvement** in backbone port speed (100Mb → 1GbE) with HP ProCurve 2824
+- **LACP bonding** for aggregate bandwidth and link redundancy on both networks
+- **Consistent site-to-site** connectivity with GL-iNet Brume 2 WireGuard VPN (300-355 Mbps per spoke)
+- **Eliminated Netgear hangs** — managed HP ProCurve switches don't need periodic reboots
 
 ### Reliability Metrics
 
@@ -324,11 +328,12 @@ The systematic approach—starting with network foundation, then core infrastruc
 
 **Key Success Metrics**:
 
-- **Network throughput** increased by 10x on core segments
+- **Network redundancy** with LACP bonding and 10x port speed upgrade on primary network
 - **System uptime** improved to 99.9% with redundant boot drives
-- **Site connectivity** reliability approaching enterprise levels
+- **Eliminated Netgear reliability issues** — no more 4-6 month reboot cycles on SAN
+- **Site connectivity** across all 5 family locations via WireGuard VPN
 - **Security posture** enhanced with proper SSL termination and monitoring
 
 This upgrade cycle represents a maturation of the homelab from a collection of individual systems to a cohesive, enterprise-grade infrastructure that can support more ambitious projects and provide reliable services for daily use.
 
-*Next up: Documenting the GLNet Hume 2 configuration process and performance benchmarking results as the implementation progresses.*
+*Next up: Documenting the GL-iNet Brume 2 configuration process and performance benchmarking results as the implementation progresses.*

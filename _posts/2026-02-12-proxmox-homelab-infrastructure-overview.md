@@ -50,16 +50,17 @@ This separation prevents heavy replication traffic from competing with client I/
 
 ## Multi-Site Network Architecture
 
-The homelab spans four physical locations, each with its own /23 network:
+The homelab spans five physical locations, each with its own /23 network:
 
-| Location | Network | Gateway | Status |
-|----------|---------|---------|--------|
-| Raleigh | 192.168.86.0/23 | 192.168.86.1 | Primary (Proxmox cluster) |
-| Beach (Emerald Isle) | 192.168.88.0/23 | 192.168.88.1 | Secondary |
-| Wilson | 192.168.84.0/23 | 192.168.84.1 | Future |
-| Katie | 192.168.82.0/23 | 192.168.82.1 | Future |
+| Location | Network | Gateway | ISP | Status |
+|----------|---------|---------|-----|--------|
+| Raleigh | 192.168.86.0/23 | 192.168.86.1 | Google Fiber | Primary (Proxmox cluster) |
+| Beach (Emerald Isle) | 192.168.88.0/23 | 192.168.88.1 | Spectrum | Secondary |
+| Wilson | 192.168.84.0/23 | 192.168.84.1 | Greenlight | Future |
+| Katie | 192.168.82.0/23 | 192.168.82.1 | AT&T Fiber | Future |
+| Sam | 192.168.80.0/23 | 192.168.80.1 | Spectrum | Future |
 
-Each site has a Dell Wyse 3040 running Tailscale for VPN connectivity and Technitium DNS for local resolution.
+Each site has a Dell Wyse 3040 running Tailscale (backup VPN) and Technitium DNS for local resolution. Primary site-to-site connectivity will use GL-iNet Brume 2 (GL-MT2500A) WireGuard VPN gateways in a hybrid topology — Raleigh Brume 2 on LAN as WireGuard server, spoke sites with Brume 2 inline between ISP modem and Google Wifi/Nest Wifi for transparent cross-site routing.
 
 ### IP Allocation Strategy
 
@@ -89,14 +90,15 @@ Proxmox HA groups (P620, K600) enable automatic VM placement on nodes with the r
 
 ### Running LXC Containers
 
-- **Jellyfin** (192.168.86.50): Media server with GPU passthrough, metadata on CephFS
+- **Jellyfin** (192.168.86.29): Media server with GPU passthrough, metadata on CephFS
 - **Technitium DNS** (192.168.86.3): Primary DNS with zone replication
-- **Caddy** (192.168.86.4): Reverse proxy for internal services
+- **Caddy** (192.168.86.30): Reverse proxy for internal services
 
 ### Infrastructure Services
 
-- **Tailscale**: Site-to-site VPN via Dell Wyse 3040 gateways
-- **Technitium DNS**: 5-node HA cluster across all sites
+- **WireGuard VPN**: Site-to-site via GL-iNet Brume 2 (GL-MT2500A) — primary VPN (planned)
+- **Tailscale**: Backup VPN and DNS replication via Dell Wyse 3040 gateways
+- **Technitium DNS**: 6-node HA cluster across all sites
 - **Proxmox HA**: Configured for automatic VM/LXC failover
 
 ## Storage Strategy
@@ -113,9 +115,9 @@ This separation allows the media library to grow independently of VM storage whi
 
 While the infrastructure is solid, several components need attention before deploying Kubernetes:
 
-1. **Site-to-Site VPN**: Brume 2 routers for full subnet routing (Tailscale is device-only)
-2. **DNS Decision**: Finalize Technitium vs PowerDNS for Kubernetes integration
-3. **Network Upgrades**: Deploy HP ProCurve 2800 switches for LACP bonding
+1. **Site-to-Site VPN**: GL-iNet Brume 2 WireGuard deployment for full subnet routing across all 5 sites (hybrid topology — Raleigh on LAN, spoke sites inline)
+2. **DNS Configuration**: Change all Google Wifi/Nest Wifi DNS from "Automatic" to Custom (Technitium) for internal hostname resolution
+3. **Network Upgrades**: Deploy HP ProCurve 2824 (primary) and HP ProCurve 2810 (SAN) switches for LACP bonding
 4. **Backup Infrastructure**: Configure PBS with USB drives for VM/LXC backups
 5. **Boot Drive Health**: Replace aging HDDs with SSDs on several nodes
 
@@ -153,8 +155,8 @@ Two years of homelab operation have taught me:
 
 The immediate priorities are:
 
-1. Deploy site-to-site VPN (Brume 2 routers)
-2. Finalize DNS infrastructure
+1. Deploy site-to-site VPN (GL-iNet Brume 2 WireGuard — hybrid topology across 5 sites)
+2. Configure DNS (Custom Technitium DNS on all Google Wifi/Nest Wifi devices)
 3. Configure PBS backups
 4. Complete Jellyfin and ARR suite deployment
 5. Then: Kubernetes
