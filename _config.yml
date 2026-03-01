@@ -74,7 +74,8 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {file: "tags.html", title: Tags, icon: tags}
   - {file: "categories.html", title: Categories, icon: th-list}
   - {file: "search.html", title: Search, icon: search}
-  - {file: "README.md", icon: user}
+  - {url: "/about/", title: About, icon: user}
+  - {url: "/contact/", title: Contact, icon: envelope}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@gmail.com"}
