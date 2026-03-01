@@ -76,6 +76,7 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {file: "search.html", title: Search, icon: search}
   - {url: "/about/", title: About, icon: user}
   - {url: "/contact/", title: Contact, icon: envelope}
+  - {url: "/privacy/", title: Privacy, icon: lock}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@gmail.com"}
@@ -112,5 +113,3 @@ giscus:
   theme: preferred_color_scheme # Options: light, dark, dark_dimmed, dark_high_contrast, preferred_color_scheme, transparent_dark,noborder_light, noborder_dark, cobal, or a custom CSS URL
   lang: en
   loading: lazy # Options: eager, lazy
-
-
