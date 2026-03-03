@@ -16,7 +16,7 @@ seo:
 
 I've been trying to get Google AdSense approval for over a year now. Today marks another rejection, and I'm documenting the entire debugging process because Google's feedback is frustratingly vague.
 
-**Rejection Message:** "Site isn't ready to show ads"
+**Rejection Message:** "The team has reviewed it but unfortunately your site isn’t ready to show ads at this time. there are some issues which need fixing before your site is ready to show ads."
 
 That's it. No specific details. No actionable feedback. Just a generic rejection that could mean anything from content quality issues to technical problems to policy violations.
 
