@@ -8,22 +8,37 @@ layout: page
 
 I'm always interested in connecting with fellow technologists, researchers, and homelab enthusiasts.
 
-### Email
+### Contact Information
 
-**Primary:** [mcgarrah@gmail.com](mailto:mcgarrah@gmail.com)
+{% for item in site.external %}
+  {% if item.icon == 'envelope' %}
+**Email:** [{{ item.url | remove: 'mailto:' }}]({{ item.url }})
+  {% endif %}
+{% endfor %}
 
 ### Professional Networks
 
-- **LinkedIn:** [Michael McGarrah](https://www.linkedin.com/in/michaelmcgarrah/)
-- **GitHub:** [@mcgarrah](https://github.com/mcgarrah)
-- **GitLab:** [@mcgarrah](https://gitlab.com/mcgarrah)
-- **Stack Overflow:** [Profile](https://stackoverflow.com/users/2452678/michael-mcgarrah)
+{% for item in site.external %}
+  {% if item.icon == 'linkedin' or item.icon == 'github' or item.icon == 'gitlab' or item.icon == 'stack-overflow' %}
+- **{{ item.title }}:** [{{ item.url | remove: 'https://' | remove: 'http://' }}]({{ item.url }})
+  {% endif %}
+{% endfor %}
 
 ### Academic & Research
 
-- **ORCID:** [0000-0001-8935-1293](https://orcid.org/0000-0001-8935-1293)
-- **Google Scholar:** [Citations](https://scholar.google.com/citations?user=Lt7T2SwAAAAJ)
-- **ResearchGate:** [Profile](https://www.researchgate.net/profile/James-Mcgarrah)
+{% for item in site.external %}
+  {% if item.icon == 'orcid' or item.icon == 'graduation-cap' or item.icon == 'researchgate' %}
+- **{{ item.title }}:** [{{ item.url | remove: 'https://' | remove: 'http://' }}]({{ item.url }})
+  {% endif %}
+{% endfor %}
+
+### Other
+
+{% for item in site.external %}
+  {% if item.icon == 'discord' or item.icon == 'file' or item.icon == 'rss' %}
+- **{{ item.title }}:** [{{ item.url | remove: 'https://' | remove: 'http://' }}]({{ item.url }})
+  {% endif %}
+{% endfor %}
 
 ### About This Blog
 
