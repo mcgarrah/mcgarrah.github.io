@@ -1,5 +1,8 @@
 title: "McGarrah Technical Blog"
-author: "Michael McGarrah"
+author:
+  name: "Michael McGarrah"
+  email: "mcgarrah@gmail.com"
+  uri: "https://mcgarrah.org/about/"
 description: "Technical blog covering homelab infrastructure, Proxmox/Ceph, Dell Wyse 3040, Jekyll development, and networking. Deep dives into virtualization, storage clustering, and system administration."
 lang: "en"
 url: "https://mcgarrah.org"
