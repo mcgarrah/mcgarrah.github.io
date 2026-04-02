@@ -5,7 +5,7 @@ categories: [web-development, technical, frustration]
 tags: [google, adsense, jekyll, github-pages, seo, debugging, gdpr]
 excerpt: "Another AdSense rejection with no specific details. Documenting the debugging process, fixes implemented, and the frustration of opaque rejection messages."
 description: "Comprehensive analysis of Google AdSense rejection for Jekyll blog, including sitemap 404 errors, thin content analysis, and remediation steps taken."
-last_modified_at: 2026-03-02
+last_modified_at: 2026-04-02
 published: true
 mermaid: true
 seo:
@@ -543,6 +543,11 @@ I've implemented every fix I can identify:
 - Wait for recrawl
 - Resubmit to AdSense
 
+**April 2, 2026:**
+
+- Shifted focus from technical fixes to E-E-A-T signals
+- See follow-up post: [Improving E-E-A-T Signals for Google AdSense Approval on Jekyll](/improving-eeat-jekyll-adsense/)
+
 **Future Updates:**
 
 - Will update this post with resubmission results
@@ -555,6 +560,7 @@ I've implemented every fix I can identify:
 
 **Related Articles:**
 
+- [Improving E-E-A-T Signals for Google AdSense Approval on Jekyll](/improving-eeat-jekyll-adsense/)
 - [Implementing GDPR Compliance for Jekyll Sites](/implementing-gdpr-compliance-jekyll-adsense/)
 - [Adding Google Custom Search to Jekyll Website](/adding-google-custom-search-jekyll/)
 - [Jekyll SEO Health Checks](/jekyll-seo-health-checks/)
