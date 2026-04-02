@@ -386,6 +386,12 @@ What started as a disk space crisis became an opportunity to build a more scalab
 
 This pattern applies to any LXC service with growing data requirements—separate the static (OS) from the dynamic (data) for better resource utilization and operational flexibility.
 
+## Related Articles
+
+- [Proxmox Ceph Settings for the Homelab](/proxmox-ceph-homelab-settings/) — Tuning Ceph for low-power hardware
+- [Homelab Storage Economics: Ceph vs Single Drive](/homelab-storage-economics/) — Cost analysis of distributed storage
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place
+
 ## References
 
 - [Proxmox LXC Documentation](https://pve.proxmox.com/wiki/Linux_Container)

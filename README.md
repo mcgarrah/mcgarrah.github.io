@@ -28,6 +28,8 @@ I have been writing about technology since 2004. This blog covers topics I work 
 
 All content is based on my direct, hands-on experience. I write about what I actually build, break, and fix.
 
+For a guided tour of my most popular topic, see the [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/).
+
 ## Profiles & Publications
 
 You can find me on these platforms:

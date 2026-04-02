@@ -4,7 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, python, backup, automation, scripting]
 published: true
-last_modified_at: 2026-01-22
+last_modified_at: 2026-04-02
 ---
 
 One of the underrated features of Proxmox is the ability to leave notes on the individual resources like the Datacenter, individual nodes, and every VM or Container. However, these notes are tucked away in individual configuration files within the Proxmox Cluster File System (`/etc/pve`).
@@ -296,3 +296,9 @@ pandoc /var/www/cluster/notes.md -o /var/www/cluster/index.html --standalone --c
 ```
 
 This creates a web-accessible version of your cluster documentation that stays in sync with your engineering notes. I have not done this part yet and will likely write a follow up when I do it.
+
+## Related Articles
+
+- [Proxmox 8 Lessons Learned in the Homelab](/proxmox-8-lessons-learned/) — Hard-won tips from running Proxmox
+- [Monitoring ZFS Boot Mirror Health in Proxmox 8](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring for boot drives
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place

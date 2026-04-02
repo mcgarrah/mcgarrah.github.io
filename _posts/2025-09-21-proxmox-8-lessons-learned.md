@@ -4,7 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, virtualization, homelab, storage, clustering, dell-wyse-3040]
 published: true
-last_modified_at: 2025-09-21
+last_modified_at: 2026-04-02
 ---
 
 I've been running Proxmox in my homelab since version 7.4, and the journey to Proxmox 8.2.2 was to say the least... educational. Let me share some hard-won lessons that might save you some headaches. These even apply to the Proxmox 9 upgrades as well which I have not scheduled in my cluster yet. I'm pretty sure I'll have updates when I get to that upgrade to share.
@@ -135,3 +135,10 @@ I'm using a Netgear GS108Ev2 switch and found this [Home Assistant integration](
 The homelab journey with Proxmox has been incredibly rewarding, even with the occasional 3 AM troubleshooting session. The platform is solid once you understand its quirks, and the learning experience is invaluable.
 
 Got questions about any of these topics? The Proxmox community forums are fantastic, and I'm always happy to share war stories.
+
+## Related Articles
+
+- [Proxmox Ceph Settings for the Homelab](/proxmox-ceph-homelab-settings/) — Tuning Ceph for low-power hardware
+- [Adding Ceph Dashboard to Your Proxmox Cluster](/proxmox-add-ceph-dashboard/) — Web-based cluster monitoring
+- [Proxmox VE 8.1 to 8.2 Upgrade Issues](/proxmox-upgrade-issues/) — Upgrade pitfalls and fixes
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place

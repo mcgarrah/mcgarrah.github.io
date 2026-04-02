@@ -487,3 +487,10 @@ Proactive monitoring and phased replacement planning enables reliable homelab op
 - Standardizing on single SSD size simplifies inventory and reduces costs
 - BIOS to UEFI migration enables modern boot features and GPT partitioning
 - All data storage handled by Ceph cluster, not boot drives
+
+## Related Articles
+
+- [Consolidating Proxmox Notes: A Python Export Script](/proxmox-consolidated-notes/) — Automating cluster documentation
+- [Dell Wyse 3040 eMMC Storage Health Monitoring](/dell-wyse-3040-emmc-monitoring/) — Monitoring embedded storage health
+- [Enabling SMART Monitoring on Seagate USB Drives](/usb-drive-smart/) — Getting health data from USB storage
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place
