@@ -4,6 +4,7 @@ layout: post
 categories: [homelab, storage]
 tags: [ceph, storage, costs, homelab, economics, backup]
 published: true
+last_modified_at: 2025-11-26
 ---
 
 After building and running a Ceph cluster for my homelab, I've gained valuable insights into the real-world economics of distributed storage versus traditional single-drive solutions. This analysis breaks down the actual costs per GB across different storage strategies in my setup.

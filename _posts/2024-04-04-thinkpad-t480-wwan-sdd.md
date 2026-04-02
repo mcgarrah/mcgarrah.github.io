@@ -4,6 +4,7 @@ layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, ssd, wwan, hardware, upgrade, laptop, storage]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 ## Adding another SSD Drive

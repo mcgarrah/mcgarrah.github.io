@@ -2,6 +2,7 @@
 title:  "Power Supply upgrade for GPUs in the Homelab"
 layout: post
 published: true
+last_modified_at: 2025-09-13
 tags: [gpu, power-supply, hardware, homelab, upgrade, planning, dell-optiplex]
 categories: [technical, homelab, hardware]
 ---

@@ -2,6 +2,7 @@
 title: "New Features: Copy Buttons, Comments, Tags, and More!"
 layout: post
 published: true
+last_modified_at: 2025-09-13
 categories: [web-development, website]
 tags: [feature, clipboard, giscus, tags, categories, jekyll, github-pages, website]
 ---

@@ -4,6 +4,7 @@ layout: post
 categories: [personal, hardware]
 tags: [repair, microwave, troubleshooting, diy, electronics]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 My relatively new microwave just stopped heating things for no apparent reason one morning. We bought it a couple years back (about 3 years ago), so I was not happy as I expect these to work awhile with several working for ten (10) plus years. We picked up a new one from the local white box retailer as we wanted a replacement quickly. But my wife while digging around on Youtube found [Microwave works but wont heat - Cheap and easy fix](https://www.youtube.com/watch?v=z0FON4p_4ZA) which was exactly what we experienced.

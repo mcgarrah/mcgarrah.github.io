@@ -4,6 +4,7 @@ layout: post
 categories: [technical, hardware]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab]
 published: true
+last_modified_at: 2026-02-04
 ---
 
 USB drives are notorious for hiding their SMART data behind finicky USB-to-SATA bridges. If you've ever tried to check the health of a Seagate USB drive and gotten frustrated with "unsupported field in scsi command" errors, you're not alone.

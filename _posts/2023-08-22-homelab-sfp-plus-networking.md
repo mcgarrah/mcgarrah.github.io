@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking, homelab, hardware]
 tags: [networking, homelab, 10gbps, sfp+, switches, procurve, mikrotik, budget]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 This is a project I've been thinking about for a long time...  how to get 10gbpe+ networking in a homelab without breaking the bank.

@@ -4,6 +4,7 @@ layout: post
 categories: [technical, hardware]
 tags: [dell-wyse-3040, hardware, cmos, battery, repair, homelab]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 *[CMOS]: Complementary Metal-Oxide-Semiconductor - A CMOS chip stores the settings like date & time, fan speed, booting sequence.

@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking, hardware]
 tags: [hp, procurve, networking, switches, configuration, serial-console, setup]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 ## Get access to switch console

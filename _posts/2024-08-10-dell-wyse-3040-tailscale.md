@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking]
 tags: [dell-wyse-3040, debian, tailscale, vpn, networking, homelab]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 I have been using the [Dell Wyse 3040](https://www.parkytowers.me.uk/thin/wyse/3040/) as awesome little systems for my [Tailscale](https://tailscale.com/) nodes in my multiple joint homelab networks. These systems are super low power consuming and physically small enough to just plug and go. Truly, deploying a WireGuard®-based VPN solution could not be any easier. I have four of these units connecting my homelab networks across three geographically diverse locations.

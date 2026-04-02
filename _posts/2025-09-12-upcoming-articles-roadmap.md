@@ -4,6 +4,7 @@ layout: post
 categories: [organization, writing]
 tags: [planning, roadmap, homelab, proxmox, ceph, jekyll, development, writing]
 published: true
+last_modified_at: 2025-09-14
 ---
 
 I've got a pile of articles I want to get out before the end of 2025, and I'm trying to stick to at least one post per week. That's roughly 16 more articles between now and December, which sounds doable if I don't get distracted by shiny new projects.

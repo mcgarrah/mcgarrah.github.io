@@ -4,6 +4,7 @@ layout: post
 categories: [reference, education]
 tags: [certification, education, quiz, software, learning, study-tools]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 I have been studying for [several technical certifications](/isc2-cybersecurity-certification/) and recently an online MBA program with Exams that require studying. A goal in the back of my mind was to study for those using an application that replicates the certification and exam process. With that in mind, I started looking around for a simple test or quiz web application that lets me plugin a pile of questions in multiple-choice format with a timer as a baseline.

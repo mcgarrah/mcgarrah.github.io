@@ -2,6 +2,7 @@
 title:  "Backlog of Posts from 2024"
 layout: post
 published: true
+last_modified_at: 2025-09-13
 tags: [planning, jekyll, backlog, organization, writing, projects, homelab]
 categories:
   - organization

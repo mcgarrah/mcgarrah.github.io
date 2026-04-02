@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking]
 tags: [openwrt, networking, hacking, google-wifi, router, firmware]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 I have a pile of first generation [**Google Wifi**](https://en.wikipedia.org/wiki/Nest_Wifi#First_generation) units that I'm upgrading from to the latest [Nest Wifi Pro](https://store.google.com/product/nest_wifi_pro) that has WiFi 6e support. I want to reuse the older network devices for a secondary network but want greater control over them.

@@ -4,6 +4,7 @@ layout: post
 categories: [technical, hardware, troubleshooting]
 tags: [dell-wyse-3040, debian, systemd, automation, homelab, scheduling, linux]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 My super lean Proxmox 8.3 testbed cluster running Ceph occasionally just decides to lockup a node based on it being incredibly limited on RAM and CPU. As much as I hate rebooting Linux/UNIX systems, this is a case where a nightly reboot of the nodes might help with reliability.

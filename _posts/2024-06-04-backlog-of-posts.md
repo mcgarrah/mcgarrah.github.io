@@ -4,6 +4,7 @@ layout: post
 categories: [organization, writing]
 tags: [backlog, planning, homelab, projects, writing, organization]
 published: true
+last_modified_at: 2025-09-17
 ---
 
 I've got a backlog of posts I want to do on various topics. A couple of recent posts, I figured getting out something rough was better than not getting it out and just posted something that felt like it needed another draft or two. I'll likely review those quickly posted items and update them as time permits.

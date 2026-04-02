@@ -4,6 +4,7 @@ layout: post
 categories: [personal, writing, web-development]
 tags: [personal, career, education, georgia-tech, machine-learning, jekyll, github-pages, website, migration]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 So it's been quite awhile since I posted anything to any blog. I did post a couple updates as I did projects in grad school. The Wordpress site I used for this earlier died and was hosted on a VMware ESXi server in my homelab. I didn't have time to fix it while in school so no postings since mid-2016.

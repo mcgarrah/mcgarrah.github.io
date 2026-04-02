@@ -4,6 +4,7 @@ layout: post
 categories: [technical, reference]
 tags: [macos, outlook, calendar, productivity, microsoft]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 The Copy/Paste of an Event in the Outlook Calendar is no longer offered and cut off without much notice. I can confirm this in Outlook on the Mac as of 4Q-2024. This appears to also impact Windows users but they have a registry workaround to re-enable it. This is not a bug but functionality that was intentionally removed by Microsoft for reasons mentioned in their post below.

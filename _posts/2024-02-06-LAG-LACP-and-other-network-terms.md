@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking]
 tags: [networking, lacp, lag, procurve, switches, aggregation, performance]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 This is a meandering post without an immediate happy outcome.

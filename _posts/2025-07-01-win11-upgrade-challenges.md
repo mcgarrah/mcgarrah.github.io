@@ -4,6 +4,7 @@ layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, windows11, webcam, performance]
 published: true
+last_modified_at: 2025-07-06
 ---
 
 Upgrading to Windows 11 on my ThinkPad T480 laptops turned into a performance nightmare with some unexpected solutions.

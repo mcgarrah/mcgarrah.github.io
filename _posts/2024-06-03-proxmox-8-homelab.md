@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, virtualization, homelab, storage, clustering]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 I am in the process of building a [Proxmox 8 Cluster](https://www.proxmox.com/) with [Ceph](https://ceph.io/) in an HA (high availability) configuration using very low-end hardware and questionable options for the various [hardware buses](https://en.wikipedia.org/wiki/Bus_(computing)). I'm going for HA, ~~cheap~~frugal and reuse of hardware that I've gathered up over the years.

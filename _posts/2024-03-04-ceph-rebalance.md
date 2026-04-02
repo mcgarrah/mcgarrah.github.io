@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab, troubleshooting]
 tags: [ceph, proxmox, storage, clustering, rebalance, troubleshooting, homelab]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 This is rough draft that I'm just pushing out as it might be useful to someone not stay in my drafts folder forever...  Good enough beats Perfect that never ships every time.

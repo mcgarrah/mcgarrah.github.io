@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, python, backup, automation, scripting]
 published: true
+last_modified_at: 2026-01-22
 ---
 
 One of the underrated features of Proxmox is the ability to leave notes on the individual resources like the Datacenter, individual nodes, and every VM or Container. However, these notes are tucked away in individual configuration files within the Proxmox Cluster File System (`/etc/pve`).

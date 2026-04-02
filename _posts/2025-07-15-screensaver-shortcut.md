@@ -4,6 +4,7 @@ layout: post
 categories: [technical]
 tags: [windows, screensaver]
 published: true
+last_modified_at: 2025-07-18
 ---
 
 After my Windows 11 upgrade, I have a need for a quick way to start my screensaver but not lock my computer. So the Windows-L (lock) is not a desired options for this use-case. I want to quickly get back to my screen without logging back in.

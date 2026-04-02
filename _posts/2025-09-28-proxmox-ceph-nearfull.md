@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, storage, monitoring, capacity, homelab, dell-wyse-3040]
 published: true
+last_modified_at: 2025-09-28
 ---
 
 When running Ceph in a homelab environment, especially on resource-constrained hardware like my [Dell Wyse 3040 cluster](/proxmox-8-dell-wyse-3040/), managing storage capacity becomes critical. Understanding Ceph's **Nearfull** warnings and how to respond to them can prevent your cluster from going read-only unexpectedly.

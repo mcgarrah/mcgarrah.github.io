@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, virtualization, homelab, storage, clustering, dell-wyse-3040]
 published: true
+last_modified_at: 2025-09-21
 ---
 
 I've been running Proxmox in my homelab since version 7.4, and the journey to Proxmox 8.2.2 was to say the least... educational. Let me share some hard-won lessons that might save you some headaches. These even apply to the Proxmox 9 upgrades as well which I have not scheduled in my cluster yet. I'm pretty sure I'll have updates when I get to that upgrade to share.

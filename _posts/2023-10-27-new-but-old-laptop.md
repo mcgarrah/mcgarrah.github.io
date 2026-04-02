@@ -1,6 +1,7 @@
 ---
 title:  "A new to me but old laptop"
 layout: post
+last_modified_at: 2025-09-13
 categories: [personal, hardware]
 tags: [thinkpad, t480, laptop, hardware, refurbished, personal, technology]
 ---

@@ -4,6 +4,7 @@ layout: post
 categories: [technical, security]
 tags: [github-actions, python, security, automation, ci-cd, pip]
 published: true
+last_modified_at: 2025-09-14
 ---
 
 I've got several Python and TypeScript projects scattered around that need constant dependency babysitting. Dependabot does a decent job but keeps missing Python pip security issues that `pip-audit` catches. The problem is `pip-audit` wants everything pinned to exact versions, but I prefer flexible `>=` constraints in my requirements files.

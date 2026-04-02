@@ -4,6 +4,7 @@ layout: post
 categories: [technical, hardware, proxmox]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab, ceph, cluster]
 published: true
+last_modified_at: 2026-02-04
 ---
 
 New USB drives arrived for my Ceph cluster, and they're not reporting SMART data. Again. After solving this problem in my [October 2025 article](/2025/10/26/usb-drive-smart/), I need to update the configuration with new device IDs and share the lessons learned from running this solution across my entire cluster.

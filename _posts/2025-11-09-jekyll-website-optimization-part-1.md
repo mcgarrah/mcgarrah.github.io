@@ -4,6 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, seo, performance, website]
 published: true
+last_modified_at: 2025-11-27
 ---
 
 After running this Jekyll-based website for a couple years (since July of 2023), I've learned valuable lessons about optimizing Jekyll sites for GitHub Pages. This blog initially started as a consolidation of several blog websites I'd published over the years. This is Part 1 of a two-part series covering the foundational optimizations that have made the biggest difference for my homelab blog.

@@ -4,6 +4,7 @@ layout: post
 categories: [technical, troubleshooting]
 tags: [linux, debian, bash, recovery, proxmox, homelab, dell-wyse-3040]
 published: true
+last_modified_at: 2025-11-23
 ---
 
 We have all done it if you work long enough. I blew up my Debian Linux system with an incredibly stupid mistake breaking the whole system. It is actually one of the questions I have when interviewing someone. "What is the worst mistake you've ever made?" And if they admit one, the follow up question, "What did you learn?"

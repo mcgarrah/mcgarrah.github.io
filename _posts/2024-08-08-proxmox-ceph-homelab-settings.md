@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, homelab, storage, optimization, performance]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 What is Ceph? Ceph is an open source software-defined storage system designed and built to address block, file and object storage needs for a modern homelab. [Proxmox Virtual Environment (PVE)](https://pve.proxmox.com/) makes creating and managing a [Hyper-Converged Ceph Cluster](https://pve.proxmox.com/pve-docs/chapter-pveceph.html) relatively easy for initially configuring and setting it up.

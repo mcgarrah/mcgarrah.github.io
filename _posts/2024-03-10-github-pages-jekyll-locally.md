@@ -4,6 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, ruby, bundler, wsl, development, local-development, troubleshooting]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 How to run Github Pages locally in my Microsoft Windows 10 Pro [WSLv2](https://learn.microsoft.com/en-us/windows/wsl/about) [Ubuntu 22.04 LTS](https://ubuntu.com/desktop/wsl) environment and using [Visual Studio Code](https://code.visualstudio.com/) to modify the contents. I'm not a [Ruby](https://www.ruby-lang.org/) or [Jekyll](https://jekyllrb.com/) expert by any means but just wanted a quick guide on running my Github Pages website locally to review them before pushing to [this website](https://mcgarrah.org). Seemed like an easy enough thing but there were a couple of hiccups to sort out so thought I'd write them down for future me when I try this again.

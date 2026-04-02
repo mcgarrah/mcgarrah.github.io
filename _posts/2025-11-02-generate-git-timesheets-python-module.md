@@ -4,6 +4,7 @@ layout: post
 categories: [technical, development]
 tags: [python, git, timetracking, automation, cli, development]
 published: true
+last_modified_at: 2025-11-24
 ---
 
 I hate time tracking. Seriously. Most time tracking tools require you to remember to start timers, categorize work, and generally interrupt your flow to feed some system that's probably going to be wrong anyway. But when you're freelancing or need to report hours on projects, you're stuck with it.

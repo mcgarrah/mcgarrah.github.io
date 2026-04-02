@@ -4,6 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, analytics, performance, monitoring]
 published: true
+last_modified_at: 2025-11-30
 ---
 
 In [Part 1](/jekyll-website-optimization-part-1/) of this series, we covered the foundational optimizations for Jekyll sites on GitHub Pages. Part 2 dives into advanced analytics, performance monitoring, and the lessons learned from running a technical blog with 100+ posts.

@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab, troubleshooting]
 tags: [proxmox, ceph, removal, cleanup, homelab, storage, troubleshooting]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 My test Proxmox Cluster is used for *testing* and along the way I broke the Ceph Cluster part of it badly while doing a lot of physical media replacements. The test cluster is the right place to try out risky stuff instead of on my main cluster that is loaded up with my data. Fixing it often teaches you something but in this case I already know the lessons and just want to fast track getting a clean ceph cluster back online.
