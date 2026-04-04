@@ -4,14 +4,14 @@ layout: post
 categories: [technical, hardware]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab]
 published: true
-last_modified_at: 2026-02-04
+last_modified_at: 2026-04-03
 ---
 
 USB drives are notorious for hiding their SMART data behind finicky USB-to-SATA bridges. If you've ever tried to check the health of a Seagate USB drive and gotten frustrated with "unsupported field in scsi command" errors, you're not alone.
 
 After wrestling with several Seagate drives in my homelab, I finally figured out the magic incantations needed to get SMART data working. Here's how to do it properly.
 
-**Update (2026-02-03):** This article has been superseded by [USB Drive SMART Updates: Fast-Track to the GRUB Solution](/2026/02/03/usb-drive-smart-updates/) which includes updated device IDs and production experience from my Ceph cluster deployment.
+**Update (2026-02-03):** This article has been superseded by [USB Drive SMART Updates: Fast-Track to the GRUB Solution](/usb-drive-smart-updates/) which includes updated device IDs and production experience from my Ceph cluster deployment.
 
 **Note**: The decision to not allow this in Linux as a default was done for good reasons. You are playing with fire as some drives behave erratically. I have not experienced this with recently purchased USB drives, but older ones did have quirks and issues. So buyer beware.
 
