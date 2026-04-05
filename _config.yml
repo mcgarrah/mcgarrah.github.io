@@ -103,6 +103,7 @@ plugins:
  - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
  - jekyll-paginate         # adding back from earlier implementation in upstream fork
  - jekyll-seo-tag          # comprehensive SEO meta tags and structured data
+ - jekyll-redirect-from    # redirect support for renamed or moved pages
 giscus:
   repo: mcgarrah/mcgarrah.github.io
   repo_id: R_kgDOKBKIdw

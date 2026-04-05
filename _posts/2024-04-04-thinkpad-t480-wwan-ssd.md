@@ -1,5 +1,8 @@
 ---
 title:  "Thinkpad T480 WWAN SSD"
+permalink: /thinkpad-t480-wwan-ssd/
+redirect_from:
+  - /thinkpad-t480-wwan-sdd/
 layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, ssd, wwan, hardware, upgrade, laptop, storage]
