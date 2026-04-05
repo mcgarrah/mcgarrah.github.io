@@ -2,7 +2,7 @@
 title:  "Backlog of Posts from 2024"
 layout: post
 published: true
-last_modified_at: 2025-09-13
+last_modified_at: 2026-04-05
 tags: [planning, jekyll, backlog, organization, writing, projects, homelab]
 categories:
   - organization
@@ -36,7 +36,7 @@ Here is a list of my unpublished draft posts that need time and polishing to rel
   * Hosting for Hobbiest (free tiers)
   * Multiple Jekyll feature updates
   * Adding interactive commenting system to GHP Jekyll
-  * Borken Linux Root Boot failure amd recovery
+  * Broken Linux Root Boot failure and recovery
   * Oracle Cloud Infrastructure (OCI) learning
   * Portfolio Project: [Fullstack Quick Quiz WebApp](https://github.com/mcgarrah/legendary_quick_quiz)
   * Portfolio Project: [Terraform for AWS QuickSight](https://github.com/mcgarrah/quicksight_demo)

@@ -4,7 +4,7 @@ layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, windows11, webcam, performance]
 published: true
-last_modified_at: 2025-07-06
+last_modified_at: 2026-04-05
 ---
 
 Upgrading to Windows 11 on my ThinkPad T480 laptops turned into a performance nightmare with some unexpected solutions.
@@ -64,7 +64,7 @@ The most surprising discovery was with Windows 11's power settings:
 
 **Path:** `Settings > System > Power & Battery > Power Mode`
 
-CounterIntuitively, **"Best Performance" mode performed worse than "Balanced" mode** on the T480. Switching to "Balanced" provided significant performance improvements across all applications.
+Counterintuitively, **"Best Performance" mode performed worse than "Balanced" mode** on the T480. Switching to "Balanced" provided significant performance improvements across all applications.
 
 This suggests Windows 11's "Best Performance" mode may be poorly optimized for older hardware or creates thermal throttling issues on the T480's thermal design. I have not dug into this issue deeply just benefitted from finding it.
 
@@ -74,10 +74,10 @@ This suggests Windows 11's "Best Performance" mode may be poorly optimized for o
 - Default settings in Windows 11 are not always optimal, even for performance-focused modes
 - Peripheral software (like Logi Tune) may need complete reinstallation rather than updates
 - The new Snipping Tool's auto-save feature creates unnecessary system load
-- Perfectly find USB 3.0 hub fails under Windows 11
+- Perfectly fine USB 3.0 hub fails under Windows 11
 
 ## Current Status
 
-After implementing these fixes, Dresden is usable but still not as smooth as it was on Windows 10. The webcam situation is resolved. I'm somewhat flummoxed but this seems like something that I'll just keep digging until I fix it all. Thomas is still a bit more snappy but the different is less horrible.
+After implementing these fixes, Dresden is usable but still not as smooth as it was on Windows 10. The webcam situation is resolved. I'm somewhat flummoxed but this seems like something that I'll just keep digging until I fix it all. Thomas is still a bit more snappy but the difference is less horrible.
 
 Hope this helps someone else if you are dealing with Logitech hardware, or the screenshot tool lag causes you issues, or you find yourself wondering why "Balanced" is better.

@@ -4,7 +4,7 @@ layout: post
 categories: [technical, hardware, troubleshooting]
 tags: [dell-wyse-3040, debian, systemd, automation, homelab, scheduling, linux]
 published: true
-last_modified_at: 2025-09-13
+last_modified_at: 2026-04-05
 ---
 
 My super lean Proxmox 8.3 testbed cluster running Ceph occasionally just decides to lockup a node based on it being incredibly limited on RAM and CPU. As much as I hate rebooting Linux/UNIX systems, this is a case where a nightly reboot of the nodes might help with reliability.
@@ -29,7 +29,7 @@ You may be prompted for your preferred editor. I am comfortable in both `vi` and
 1    2   *   *   *    /usr/sbin/shutdown -r now
 ```
 
-You will have a reboot at 2:01AM every day. I have included two lines of comments to help understand the values for the single uncommented line. Determine if your system is using UTC or local time. My particular system is using US Eastern timezone. In a production environment, I usually use UTC consistently for log aggrevation to work.
+You will have a reboot at 2:01AM every day. I have included two lines of comments to help understand the values for the single uncommented line. Determine if your system is using UTC or local time. My particular system is using US Eastern timezone. In a production environment, I usually use UTC consistently for log aggregation to work.
 
 Another lesson is to always use fully qualified paths for your commands being run by a cron job. In Debian 12, the `/usr/sbin/` is correct for this and not the classic UNIX `/sbin/`. You can always check using the `which` command as so...
 
@@ -40,7 +40,7 @@ root@pve1:~# which shutdown
 
 Debian 12 uses a merged root `/` and `/usr`. [The Debian /usr Merge](https://wiki.debian.org/UsrMerge) where `/lib`, `/sbin` and `/bin` are symlinks to `/usr/lib`, `/usr/sbin` and `/usr/bin`. I learned this hard way when I migrated my `/usr` to new disk earlier this year... and watched everything break badly.
 
-Savey folks will wonder by I have not also considered using the `/etc/cron.daily/` method. This mechanism does not have sufficient timer controls to be useful for my use-case of rebooting off hours and at different times of night for each node. I do not want all three nodes down at the same time.
+Savvy folks will wonder why I have not also considered using the `/etc/cron.daily/` method. This mechanism does not have sufficient timer controls to be useful for my use-case of rebooting off hours and at different times of night for each node. I do not want all three nodes down at the same time.
 
 Now to move past legacy methods. Let's play with SystemD.
 

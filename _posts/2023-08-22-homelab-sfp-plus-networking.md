@@ -4,10 +4,10 @@ layout: post
 categories: [technical, networking, homelab, hardware]
 tags: [networking, homelab, 10gbps, sfp+, switches, procurve, mikrotik, budget]
 published: true
-last_modified_at: 2025-09-13
+last_modified_at: 2026-04-05
 ---
 
-This is a project I've been thinking about for a long time...  how to get 10gbpe+ networking in a homelab without breaking the bank.
+This is a project I've been thinking about for a long time...  how to get 10Gbps+ networking in a homelab without breaking the bank.
 
 First option is just getting some DAC Cables and dual port 10Gbpe NICs then build a point-to-point ring network. That is relatively cheap and would set me up for future switched networks.  DACs could be swapped out for GBics that use copper (thermal issues) or fiber (delicate).
 
