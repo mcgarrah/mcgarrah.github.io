@@ -5,6 +5,9 @@
 <meta charset="{{ site.encoding }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Jekyll v{{ jekyll.version }}">
+{% if page.noindex %}
+<meta name="robots" content="noindex, follow">
+{% endif %}
 {% if site.show_frame %}
 <link rel="stylesheet" href="{{ "/assets/css/frame.css" | relative_url }}">
 {% else %}
