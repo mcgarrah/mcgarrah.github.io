@@ -35,10 +35,12 @@ jobs:
           
       - name: Build Jekyll site
         run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
         
       - name: Serve site for Lighthouse
         run: |
-          bundle exec jekyll serve --detach --port 4000
+          bundle exec jekyll serve --detach --port 4000 --skip-initial-build
           sleep 5  # Wait for server to start
           
       - name: Run Lighthouse CI
