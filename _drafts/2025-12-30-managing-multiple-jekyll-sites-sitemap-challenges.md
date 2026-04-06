@@ -2,14 +2,52 @@
 title: "Managing Multiple Jekyll Sites Under One Domain: Sitemap Challenges"
 layout: post
 categories: [web-development, technical]
-tags: [jekyll, github-pages, sitemap, multi-site, domain-management]
-excerpt: "How to handle sitemap.xml generation when running multiple Jekyll sites under a single custom domain on GitHub Pages."
+tags: [jekyll, github-pages, sitemap, multi-site, domain-management, seo, adsense]
+excerpt: "How to handle sitemap.xml generation when running multiple Jekyll sites under a single custom domain on GitHub Pages — and why it matters for AdSense approval."
 published: false
 ---
 
 Running multiple Jekyll sites under a single custom domain creates unique challenges for SEO and sitemap management. This post explores the complexities of managing **mcgarrah.org** (main blog) and **mcgarrah.org/resume** (separate Jekyll site) as distinct GitHub repositories while maintaining proper search engine indexing.
 
 <!-- excerpt-end -->
+
+## Why This Matters: The AdSense Wake-Up Call
+
+This isn't just a theoretical SEO concern. During my [ongoing AdSense approval debugging](/adsense-approval-failure-remediation/), I discovered that the multi-site architecture creates concrete problems that affect how Google evaluates the domain:
+
+### The `robots.txt` Problem
+
+The `robots.txt` specification requires the file to live at the **domain root** — `https://mcgarrah.org/robots.txt`. You cannot place a `robots.txt` at `/resume/robots.txt` and have crawlers respect it. This means the main blog's `robots.txt` governs the entire domain, but it has no awareness of the resume site's structure.
+
+My blog's `robots.txt` allows `/resume/` (good), but the resume site has no way to add its own crawl directives.
+
+### The Placeholder Description Problem
+
+The resume site shipped with the default theme description: `"A beautiful Jekyll theme for creating a Resume"`. Google crawls `mcgarrah.org/resume` as part of the same domain it's evaluating for AdSense. Template placeholder text on any subpath hurts the overall domain quality signal.
+
+This was an easy fix — just updating `_config.yml` in the resume repo — but it illustrates how a separate repository can silently degrade the main site's SEO without anyone noticing.
+
+### The Missing SEO Infrastructure
+
+The resume site has no `jekyll-seo-tag` plugin, so its pages lack:
+- Structured data (`application/ld+json`)
+- Open Graph meta tags
+- Canonical URL tags
+- Twitter card meta tags
+
+Google sees these pages as part of `mcgarrah.org` but with noticeably worse SEO markup than the blog pages. This inconsistency may contribute to the "site isn't ready" rejections.
+
+### What I've Fixed So Far
+
+| Issue | Status |
+|-------|--------|
+| Placeholder description | ✅ Fixed — updated to real description |
+| Missing `jekyll-seo-tag` | ⏳ Deferred — requires theme integration work |
+| Missing `jekyll-sitemap` | ⏳ Deferred — requires cross-repo sitemap strategy |
+| `robots.txt` for `/resume/` | ❌ Not possible — `robots.txt` must be at domain root |
+| Unified sitemap | ⏳ Deferred — see solutions below |
+
+The rest of this article explores the sitemap problem and potential solutions.
 
 ## The Multi-Site Architecture Challenge
 
@@ -255,6 +293,32 @@ Separate sites completely:
 - [Jekyll - Generating sitemap.xml without a plugin](https://www.independent-software.com/generating-a-sitemap-xml-with-jekyll-without-a-plugin.html)
 - [Jekyll-Sitemap: adding URLs not in project](https://talk.jekyllrb.com/t/jekyll-sitemap-adding-url-that-are-not-in-the-project/6920/3)
 - [Multi-site sitemap discussions](https://www.reddit.com/r/Jekyll/comments/1egcfsh/how_to_include_urls_from_secondary_project_in/)
+
+## My Recommended Path Forward
+
+After working through the AdSense approval process and hitting these issues firsthand, here's what I'd actually recommend for sites in this situation:
+
+### Short Term: Sitemap Index File
+
+The sitemap index approach (Approach 2 above) is the lowest-effort solution that solves the Google Search Console problem. Create a `sitemapindex.xml` at the domain root that references both sitemaps, and submit that to Search Console instead of the individual sitemaps.
+
+This doesn't require changes to either Jekyll site's build process — just a static file in the main blog repo.
+
+### Medium Term: Add `jekyll-seo-tag` to Resume
+
+The resume site's lack of structured data is a real SEO gap. Adding `jekyll-seo-tag` to the resume's Gemfile and including `{% seo %}` in its `<head>` would bring its pages up to the same standard as the blog. This is independent of the sitemap problem.
+
+### Long Term: Evaluate Merging
+
+I've written a [separate analysis of merging the two sites](/merging-two-jekyll-websites-architectural-analysis/) into a single repository. The collection-based approach is technically sound but requires significant work. The sitemap and SEO problems are the strongest argument for eventually doing this merge.
+
+## Related Articles
+
+- [Google AdSense Approval Failure: Debugging the 'Site Isn't Ready' Rejection](/adsense-approval-failure-remediation/) — Where the multi-site SEO gaps were discovered
+- [Improving E-E-A-T Signals for Google AdSense Approval on Jekyll](/improving-eeat-jekyll-adsense/) — Broader SEO improvements
+- [Fixing AdSense Verification Without Breaking GDPR](/adsense-verification-gdpr-script-loading-fix/) — The verification script fix
+- [Merging Two Jekyll Websites: Architectural Analysis](/merging-two-jekyll-websites-architectural-analysis/) — Full merge feasibility study
+- [Jekyll SEO, Sitemap, and Canonical URL Fixes](/jekyll-seo-sitemap-canonical-url-fixes/) — Earlier SEO work on the main blog
 
 ---
 
