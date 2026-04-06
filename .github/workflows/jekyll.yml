@@ -51,6 +51,14 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+      - name: Validate sitemap URLs
+        run: |
+          if grep -q 'localhost' ./_site/sitemap.xml; then
+            echo "::error::sitemap.xml contains localhost URLs"
+            grep 'localhost' ./_site/sitemap.xml | head -5
+            exit 1
+          fi
+          echo "Sitemap OK: all URLs use production domain"
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v4
