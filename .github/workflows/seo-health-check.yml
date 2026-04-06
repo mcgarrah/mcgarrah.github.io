@@ -42,7 +42,7 @@ jobs:
           sleep 5  # Wait for server to start
           
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v10
+        uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
             http://localhost:4000
@@ -165,7 +165,7 @@ jobs:
           fi
           
       - name: Check links with Lychee
-        uses: lycheeverse/lychee-action@v2.0.2
+        uses: lycheeverse/lychee-action@v2.4.0
         with:
           args: --verbose --no-progress --exclude-path '_site/resume' '_site/**/*.html'
           fail: true
@@ -251,13 +251,14 @@ jobs:
         run: |
           echo "Checking for non-descriptive link text..."
           
-          # Find generic link text patterns
-          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -iE '(read more|click here|here|more|continue reading)' | wc -l || true)
+          # Find generic link text patterns — match only exact non-descriptive text
+          # Exclude "read more: Title" which is descriptive
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
           echo "⚠️  Generic link text found: $GENERIC_LINKS"
           
           if [ "$GENERIC_LINKS" -gt 0 ]; then
-            echo "Files with generic link text:"
-            find _site -name "*.html" -exec grep -l -iE '(read more|click here|here|more|continue reading)' {} \; | head -5
+            echo "Links with generic text:"
+            find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | head -10
           fi
           
       - name: Check anchor elements
@@ -373,7 +374,7 @@ jobs:
           echo "- Duplicate titles: $DUPLICATE_TITLES" >> seo-report.md
           
           # Generic link text
-          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -iE '(read more|click here|here|more|continue reading)' | wc -l || true)
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
           echo "- Generic link text: $GENERIC_LINKS" >> seo-report.md
           
           # Invalid anchor elements

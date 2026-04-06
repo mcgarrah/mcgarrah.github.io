@@ -10,7 +10,7 @@ Hello, my name is Michael McGarrah and I am a technologist at heart. This is my 
 
 I am primarily working in **Cloud Architecture** for enterprise infrastructure with a mixture of **Machine Learning** or other domain expertise I have picked up over the years. I'm a jack of all trades and master of some. Part of what makes jobs interesting to me is gathering up domain expertise in lots of areas. I have over 25 years of professional experience in software engineering, system administration, and infrastructure design.
 
-My [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/) page covers my professional career. For an insanely detailed version of my resume, you can go [here](/resume/print).
+My [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/) page covers my professional career. For an insanely detailed version of my resume, you can view the [full print version](/resume/print).
 
 ## Education
 
