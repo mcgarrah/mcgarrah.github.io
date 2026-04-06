@@ -54,9 +54,16 @@ module Jekyll
   end
 
   # Exclude pagination pages (page2/, page3/, etc.) from sitemap
-  Jekyll::Hooks.register :pages, :post_init do |page|
-    if page.url =~ %r{^/page\d+/}
-      page.data['sitemap'] = false
+  class PaginationSitemapExcluder < Generator
+    safe true
+    priority :lowest
+
+    def generate(site)
+      site.pages.each do |page|
+        if page.dir =~ %r{^/page\d+}
+          page.data['sitemap'] = false
+        end
+      end
     end
   end
 end
