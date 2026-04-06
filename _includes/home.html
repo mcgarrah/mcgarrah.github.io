@@ -9,8 +9,8 @@
 
 {% if paginator.total_pages > 1 %}
   <footer>
-    {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path | relative_url }}">« newer posts</a>{% else %}<span></span>{% endif %}
+    {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path | relative_url }}">« newer posts</a>{% else %}<span class="disabled">« newer posts</span>{% endif %}
     <span>page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-    {% if paginator.next_page %}<a href="{{ paginator.next_page_path | relative_url }}">older posts »</a>{% else %}<span></span>{% endif %}
+    {% if paginator.next_page %}<a href="{{ paginator.next_page_path | relative_url }}">older posts »</a>{% else %}<span class="disabled">older posts »</span>{% endif %}
   </footer>
 {% endif %}

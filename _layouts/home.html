@@ -17,8 +17,8 @@ layout: default
 
 {% if paginator.total_pages > 1 %}
 <footer class="{% if site.dark_footer %}dark{% endif %}">
-  <a {% if paginator.previous_page %}class="gray" href="{{ paginator.previous_page_path | relative_url }}"{% else %}class="disabled"{% endif %}>« newer posts</a>
+  {% if paginator.previous_page %}<a class="gray" href="{{ paginator.previous_page_path | relative_url }}">« newer posts</a>{% else %}<span class="disabled">« newer posts</span>{% endif %}
   <span>page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-  <a {% if paginator.next_page %}class="gray" href="{{ paginator.next_page_path | relative_url }}"{% else %}class="disabled"{% endif %}>older posts »</a>
+  {% if paginator.next_page %}<a class="gray" href="{{ paginator.next_page_path | relative_url }}">older posts »</a>{% else %}<span class="disabled">older posts »</span>{% endif %}
 </footer>
 {% endif %}
