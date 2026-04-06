@@ -104,6 +104,14 @@ plugins:
  - jekyll-paginate         # adding back from earlier implementation in upstream fork
  - jekyll-seo-tag          # comprehensive SEO meta tags and structured data
  - jekyll-redirect-from    # redirect support for renamed or moved pages
+
+# Exclude static assets from sitemap (PDFs, HTML exports)
+# Their lastmod dates reset on every CI checkout, causing false updates
+defaults:
+  - scope:
+      path: "assets/pdfs"
+    values:
+      sitemap: false
 giscus:
   repo: mcgarrah/mcgarrah.github.io
   repo_id: R_kgDOKBKIdw
