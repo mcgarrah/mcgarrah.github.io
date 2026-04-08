@@ -9,8 +9,14 @@ on:
     paths:
       - '_config.yml'
       - '_layouts/**'
+      - '_includes/**'
+      - '_plugins/**'
       - '_posts/**'
+      - '_sass/**'
+      - 'assets/**'
       - 'robots.txt'
+      - '.github/workflows/seo-health-check.yml'
+      - '.lighthouserc.json'
 
 permissions:
   contents: read
