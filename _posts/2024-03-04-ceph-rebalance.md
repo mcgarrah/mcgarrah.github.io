@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab, troubleshooting]
 tags: [ceph, proxmox, storage, clustering, rebalance, troubleshooting, homelab]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 This is rough draft that I'm just pushing out as it might be useful to someone not stay in my drafts folder forever...  Good enough beats Perfect that never ships every time.
@@ -18,7 +19,7 @@ Something that I'm navigating is Ceph will go into read-only mode when you appro
 
 <!-- excerpt-end -->
 
-ProxMox 8.1 with Ceph Reef by default has the Balancer feature enabled. It is also setup to protect the accessiblity of the cluster contents against overuse from rebalancing and recovery activities. In my case, I want the cluster to be less responsive so I can get this rebalanced faster. Often rebalancing and recovery go hand-in-hand but my case only has rebalancing.
+ProxMox 8.1 with Ceph Reef by default has the Balancer feature enabled. It is also setup to protect the accessibility of the cluster contents against overuse from rebalancing and recovery activities. In my case, I want the cluster to be less responsive so I can get this rebalanced faster. Often rebalancing and recovery go hand-in-hand but my case only has rebalancing.
 
 How to get default values for Recovery Settings
 

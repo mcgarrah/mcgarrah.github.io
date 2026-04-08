@@ -4,6 +4,7 @@ layout: post
 categories: [technical, productivity]
 tags: [macos, sudo, touchid, tmux, displaylink, security, productivity, configuration]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 This is an out of place post but I figured if setting up **Touch ID** with `sudo` on my MacBook Pro stumped me that it would cause others issues and worth a quick write up. Also worth having around when I get a new MacBook Pro in the future.

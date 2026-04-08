@@ -4,6 +4,7 @@ layout: post
 categories: [development, machine-learning]
 tags: [pytorch, asr, machine-learning, python, speech-recognition, ai, deep-learning]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 # ASR with PyTorch: Exploring Phoneme Representations

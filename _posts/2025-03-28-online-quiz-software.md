@@ -4,6 +4,7 @@ layout: post
 categories: [reference, education]
 tags: [certification, education, quiz, software, learning, study-tools]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 I have been studying for [several technical certifications](/isc2-cybersecurity-certification/) and recently an online MBA program with Exams that require studying. A goal in the back of my mind was to study for those using an application that replicates the certification and exam process. With that in mind, I started looking around for a simple test or quiz web application that lets me plugin a pile of questions in multiple-choice format with a timer as a baseline.
@@ -70,7 +71,7 @@ So here are the distilled quick set of requirements:
 
 That is all I had mapped out when I started. As I started working, I discovered I had not mapped out the JSON formats for quizes, questions, answers, categories, or other data. You'll see in the code that it was a mistake not to think about those a bit upfront. On the other hand, I also had something up and running in short order as a prototype for testing what worked and didn't work for me. So I had that going for me. POC can be either piece-of-crap or proof-of-concept when it comes to refining requirements.
 
-When I started writing this webapp back in December 2024, I didn't have any asperations about what it would end up looking like for a user. I now know I still have a lot I want to do with it and those show up in the [TODO.md](https://github.com/mcgarrah/legendary_quick_quiz/blob/main/TODO.md), [FAQ.md](https://github.com/mcgarrah/legendary_quick_quiz/blob/main/FAQ.md) and [README.md](https://github.com/mcgarrah/legendary_quick_quiz/blob/main/README.md) files. As it stands right now, you can look at the code and see a [demo website](https://plain-gaby-mcgarrah-a35e7264.koyeb.app/) at the Github repository at [Certification Timed Multiple Choice Quiz WebApp](https://github.com/mcgarrah/legendary_quick_quiz).
+When I started writing this webapp back in December 2024, I didn't have any aspirations about what it would end up looking like for a user. I now know I still have a lot I want to do with it and those show up in the [TODO.md](https://github.com/mcgarrah/legendary_quick_quiz/blob/main/TODO.md), [FAQ.md](https://github.com/mcgarrah/legendary_quick_quiz/blob/main/FAQ.md) and [README.md](https://github.com/mcgarrah/legendary_quick_quiz/blob/main/README.md) files. As it stands right now, you can look at the code and see a [demo website](https://plain-gaby-mcgarrah-a35e7264.koyeb.app/) at the Github repository at [Certification Timed Multiple Choice Quiz WebApp](https://github.com/mcgarrah/legendary_quick_quiz).
 
 The [TODO.md](https://github.com/mcgarrah/legendary_quick_quiz/blob/main/TODO.md) file has a list of things I am thinking about doing. One of those items is to look into Github Project to manage the TODO list and requirements along with a roadmap. That would make is easier to find what I want to do next time I get a break and want to write some code. I never thought I'd want Atlassian Jira for personal use until I was playing around.
 

@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking]
 tags: [hp, procurve, java, webui, networking, legacy, troubleshooting]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 > "Don't bury the lede"

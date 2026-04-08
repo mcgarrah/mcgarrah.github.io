@@ -9,6 +9,7 @@ image: /assets/images/jekyll-seo-health-checks.png
 author: Michael McGarrah
 date: 2026-01-01
 published: true
+last_modified_at: 2026-01-01
 seo:
   type: BlogPosting
   date_published: 2026-01-01

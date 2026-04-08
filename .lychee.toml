@@ -1,0 +1,40 @@
+# Lychee link checker configuration
+# https://lychee.cli.rs/configuration/
+
+# Exclude patterns that are expected to fail in CI
+exclude = [
+    # LinkedIn blocks automated requests with 999 status
+    "linkedin\\.com",
+    # ResearchGate blocks bots
+    "researchgate\\.net",
+    # Google Scholar blocks bots
+    "scholar\\.google\\.com",
+    # ORCID may rate-limit
+    "orcid\\.org",
+    # Localhost references in blog content
+    "localhost",
+    "127\\.0\\.0\\.1",
+    # Mail links
+    "^mailto:",
+    # JavaScript links
+    "^javascript:",
+    # Anchor-only links
+    "^#",
+    # Resume subsite (separate deployment)
+    "/resume/",
+]
+
+# Accept these HTTP status codes as valid
+accept = [200, 203, 429]
+
+# Timeout per request in seconds
+timeout = 30
+
+# Max concurrent requests (be polite)
+max_concurrency = 5
+
+# Max retries per request
+max_retries = 3
+
+# User agent to avoid bot blocking
+user_agent = "Mozilla/5.0 (compatible; lychee-link-checker)"

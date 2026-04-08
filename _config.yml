@@ -1,5 +1,8 @@
 title: "McGarrah Technical Blog"
-author: "Michael McGarrah"
+author:
+  name: "Michael McGarrah"
+  email: "mcgarrah@gmail.com"
+  uri: "https://mcgarrah.org/about/"
 description: "Technical blog covering homelab infrastructure, Proxmox/Ceph, Dell Wyse 3040, Jekyll development, and networking. Deep dives into virtualization, storage clustering, and system administration."
 lang: "en"
 url: "https://mcgarrah.org"
@@ -74,7 +77,9 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {file: "tags.html", title: Tags, icon: tags}
   - {file: "categories.html", title: Categories, icon: th-list}
   - {file: "search.html", title: Search, icon: search}
-  - {file: "README.md", icon: user}
+  - {url: "/about/", title: About, icon: user}
+  - {url: "/contact/", title: Contact, icon: envelope}
+  - {url: "/privacy/", title: Privacy, icon: lock}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@gmail.com"}
@@ -98,6 +103,15 @@ plugins:
  - jekyll-sitemap          # plugin to silently generate a sitemaps.org compliant sitemap
  - jekyll-paginate         # adding back from earlier implementation in upstream fork
  - jekyll-seo-tag          # comprehensive SEO meta tags and structured data
+ - jekyll-redirect-from    # redirect support for renamed or moved pages
+
+# Exclude static assets from sitemap (PDFs, HTML exports)
+# Their lastmod dates reset on every CI checkout, causing false updates
+defaults:
+  - scope:
+      path: "assets/pdfs"
+    values:
+      sitemap: false
 giscus:
   repo: mcgarrah/mcgarrah.github.io
   repo_id: R_kgDOKBKIdw
@@ -111,5 +125,3 @@ giscus:
   theme: preferred_color_scheme # Options: light, dark, dark_dimmed, dark_high_contrast, preferred_color_scheme, transparent_dark,noborder_light, noborder_dark, cobal, or a custom CSS URL
   lang: en
   loading: lazy # Options: eager, lazy
-
-

@@ -102,24 +102,17 @@
     }
     
     function loadAdSense() {
-        // Skip loading AdSense during localhost testing
+        // Skip during localhost testing
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             return;
         }
-        
-        if (ADSENSE_ID && !document.querySelector('script[src*="adsbygoogle"]')) {
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`;
-            script.crossOrigin = 'anonymous';
-            script.onload = function() {
-                // Initialize auto ads after script loads
-                (adsbygoogle = window.adsbygoogle || []).push({
-                    google_ad_client: ADSENSE_ID,
-                    enable_page_level_ads: true
-                });
-            };
-            document.head.appendChild(script);
+        // AdSense script is already loaded in <head> via adsense.html for verification.
+        // Only activate auto ads here after user consent is granted.
+        if (ADSENSE_ID) {
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: ADSENSE_ID,
+                enable_page_level_ads: true
+            });
         }
     }
     

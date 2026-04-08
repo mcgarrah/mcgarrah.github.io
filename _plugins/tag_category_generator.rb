@@ -31,6 +31,8 @@ module Jekyll
       self.data['tag'] = tag
       self.data['posts'] = posts
       self.data['title'] = "Posts tagged with \"#{tag}\""
+      self.data['sitemap'] = false
+      self.data['noindex'] = true if posts.size < 3
     end
   end
 
@@ -46,6 +48,22 @@ module Jekyll
       self.data['category'] = category
       self.data['posts'] = posts
       self.data['title'] = "Posts in category \"#{category}\""
+      self.data['sitemap'] = false
+      self.data['noindex'] = true if posts.size < 3
+    end
+  end
+
+  # Exclude pagination pages (page2/, page3/, etc.) from sitemap
+  class PaginationSitemapExcluder < Generator
+    safe true
+    priority :lowest
+
+    def generate(site)
+      site.pages.each do |page|
+        if page.dir =~ %r{^/page\d+}
+          page.data['sitemap'] = false
+        end
+      end
     end
   end
 end

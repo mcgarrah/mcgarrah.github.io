@@ -1,9 +1,10 @@
 ---
-title:  "Along time between posts"
+title:  "A long time between posts"
 layout: post
 categories: [personal, writing, web-development]
 tags: [personal, career, education, georgia-tech, machine-learning, jekyll, github-pages, website, migration]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 So it's been quite awhile since I posted anything to any blog. I did post a couple updates as I did projects in grad school. The Wordpress site I used for this earlier died and was hosted on a VMware ESXi server in my homelab. I didn't have time to fix it while in school so no postings since mid-2016.
@@ -25,7 +26,7 @@ good thing.
 
 The Github Actions component of this website build is fascinating and I'm still
 wrapping my brain around what I can do with it. I did some side project work on
-OpenLens custom builds for awhile to support a work imitative and it was very
+OpenLens custom builds for awhile to support a work initiative and it was very
 powerful.
 
 So I've dug out my old WordPress website archives, some articles from my Google Blogging and even older archives for DarkMagic.org that includes

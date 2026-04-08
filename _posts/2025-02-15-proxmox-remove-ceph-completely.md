@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab, troubleshooting]
 tags: [proxmox, ceph, removal, cleanup, homelab, storage, troubleshooting]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 My test Proxmox Cluster is used for *testing* and along the way I broke the Ceph Cluster part of it badly while doing a lot of physical media replacements. The test cluster is the right place to try out risky stuff instead of on my main cluster that is loaded up with my data. Fixing it often teaches you something but in this case I already know the lessons and just want to fast track getting a clean ceph cluster back online.
@@ -14,7 +15,7 @@ I need it back in place to test the Proxmox 8.2 to Proxmox 8.3 upgrade of my mai
 
 <!-- excerpt-end -->
 
-This is a brutal set of commands to just burn down the ceph components. You are welcome to use this as it was successful for my system cleanup but I take no responsiblity for your cluster if you use them. I am *nuking* stuff indiscrimately to just get it cleared out. Beware the `rm -rf` as it is crazy bad news under the wrong circumstances. This could damage your system and I again take no responsibility for any damage done.
+This is a brutal set of commands to just burn down the ceph components. You are welcome to use this as it was successful for my system cleanup but I take no responsibility for your cluster if you use them. I am *nuking* stuff indiscriminately to just get it cleared out. Beware the `rm -rf` as it is crazy bad news under the wrong circumstances. This could damage your system and I again take no responsibility for any damage done.
 
 Everything here assumes you are logged in as the `root` user. There is no `sudo` going on here. You are playing with fire.
 

@@ -9,8 +9,14 @@ on:
     paths:
       - '_config.yml'
       - '_layouts/**'
+      - '_includes/**'
+      - '_plugins/**'
       - '_posts/**'
+      - '_sass/**'
+      - 'assets/**'
       - 'robots.txt'
+      - '.github/workflows/seo-health-check.yml'
+      - '.lighthouserc.json'
 
 permissions:
   contents: read
@@ -22,10 +28,10 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.300.0
         with:
           ruby-version: '3.2'
           bundler-cache: true
@@ -35,14 +41,16 @@ jobs:
           
       - name: Build Jekyll site
         run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
         
       - name: Serve site for Lighthouse
         run: |
-          bundle exec jekyll serve --detach --port 4000
+          bundle exec jekyll serve --detach --port 4000 --skip-initial-build
           sleep 5  # Wait for server to start
           
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v10
+        uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
             http://localhost:4000
@@ -58,7 +66,7 @@ jobs:
           echo "LIGHTHOUSE_ARTIFACT_NAME=lighthouse-results-$TIMESTAMP" >> $GITHUB_ENV
         
       - name: Upload Lighthouse artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.LIGHTHOUSE_ARTIFACT_NAME }}
           path: .lighthouseci/
@@ -67,7 +75,8 @@ jobs:
       - name: Check canonical URLs consistency
         run: |
           echo "Checking canonical URLs..."
-          INCONSISTENT=$(find _site -name "*.html" -exec grep -l "canonical" {} \; | xargs grep "canonical" | grep -v "mcgarrah.org" || true)
+          # Only match actual <link rel="canonical"> tags, not syntax-highlighted code in blog posts
+          INCONSISTENT=$(find _site -name "*.html" -exec grep -h '<link[^>]*rel="canonical"' {} \; | grep -v "mcgarrah.org" || true)
           if [ -n "$INCONSISTENT" ]; then
             echo "❌ Inconsistent canonical URLs found:"
             echo "$INCONSISTENT"
@@ -167,7 +176,7 @@ jobs:
       - name: Check links with Lychee
         uses: lycheeverse/lychee-action@v2.7.0
         with:
-          args: --verbose --no-progress --exclude-path '_site/resume' '_site/**/*.html'
+          args: --base https://mcgarrah.org --no-progress --exclude-path '_site/resume' '_site/**/*.html'
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -251,13 +260,14 @@ jobs:
         run: |
           echo "Checking for non-descriptive link text..."
           
-          # Find generic link text patterns
-          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -iE '(read more|click here|here|more|continue reading)' | wc -l || true)
+          # Find generic link text patterns — match only exact non-descriptive text
+          # Exclude "read more: Title" which is descriptive
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
           echo "⚠️  Generic link text found: $GENERIC_LINKS"
           
           if [ "$GENERIC_LINKS" -gt 0 ]; then
-            echo "Files with generic link text:"
-            find _site -name "*.html" -exec grep -l -iE '(read more|click here|here|more|continue reading)' {} \; | head -5
+            echo "Links with generic text:"
+            find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | head -10
           fi
           
       - name: Check anchor elements
@@ -373,7 +383,7 @@ jobs:
           echo "- Duplicate titles: $DUPLICATE_TITLES" >> seo-report.md
           
           # Generic link text
-          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -iE '(read more|click here|here|more|continue reading)' | wc -l || true)
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
           echo "- Generic link text: $GENERIC_LINKS" >> seo-report.md
           
           # Invalid anchor elements
@@ -398,7 +408,7 @@ jobs:
           echo "ARTIFACT_NAME=seo-health-report-$TIMESTAMP" >> $GITHUB_ENV
         
       - name: Upload SEO report artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: seo-report.md

@@ -4,6 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, ruby, bundler, wsl, development, local-development, troubleshooting]
 published: true
+last_modified_at: 2026-04-04
 ---
 
 How to run Github Pages locally in my Microsoft Windows 10 Pro [WSLv2](https://learn.microsoft.com/en-us/windows/wsl/about) [Ubuntu 22.04 LTS](https://ubuntu.com/desktop/wsl) environment and using [Visual Studio Code](https://code.visualstudio.com/) to modify the contents. I'm not a [Ruby](https://www.ruby-lang.org/) or [Jekyll](https://jekyllrb.com/) expert by any means but just wanted a quick guide on running my Github Pages website locally to review them before pushing to [this website](https://mcgarrah.org). Seemed like an easy enough thing but there were a couple of hiccups to sort out so thought I'd write them down for future me when I try this again.
@@ -15,19 +16,19 @@ This should also lets me test out new plugins, new versions and changes to templ
 ### Get Ruby
 
 ```console
-➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ sudo apt install ruby-full
+sudo apt install ruby-full
 ```
 
 ### Install Bundler
 
 ```console
-➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ sudo gem install bundler   
+sudo gem install bundler   
 ```
 
 ### Install GHP dependencies locally rather than into global OS libraries
 
 ```console
-➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundler install --binstubs --path vendor  
+bundler install --binstubs --path vendor  
 ```
 
 This creates a ```./vendor``` and ```./bin``` in the local directory rather than install them into the OS libraries. It also had to be run twice to get it to work correctly in one environment. Looks like a newer bundler version resolves the issue for the second run.
@@ -37,7 +38,7 @@ I've not used RVM [Ruby Version Manager](https://rvm.io/) to manage the Ruby ver
 ### Run local Server (and fail)
 
 ```console
-➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundle exec jekyll serve
+bundle exec jekyll serve
 ```
 
 FAILED with non-specific error.
@@ -47,7 +48,7 @@ FAILED with non-specific error.
 So I turned on more detailed debug tracing
 
 ```console
-➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundle exec jekyll serve --trace
+bundle exec jekyll serve --trace
 ...
 /home/mcgarrah/Github/mcgarrah.github.io/vendor/ruby/3.0.0/gems/jekyll-4.2.2/lib/jekyll/commands/serve/servlet.rb:3:in `require': cannot load such file -- webrick (LoadError)
 ...
@@ -58,7 +59,7 @@ So I turned on more detailed debug tracing
 Found a note in the MacOS Homebrew section about a missing library which is the same one *webrick*. So if you are on Ruby 3.0 or higher be aware it does not come with Webrick by default... so I had to install it.
 
 ```console
-➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundler add webrick
+bundler add webrick
 ```
 
 ### Run local server
@@ -66,7 +67,7 @@ Found a note in the MacOS Homebrew section about a missing library which is the 
 Try running it again
 
 ```console
-➜  mcgarrah.github.io git:(feature/jekyll-plugins) ✗ bundle exec jekyll serve
+bundle exec jekyll serve
 ```
 
 ### Success
