@@ -36,16 +36,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.198.0    # https://github.com/ruby/setup-ruby/releases/tag/v1.198.0
+        uses: ruby/setup-ruby@v1.300.0    # https://github.com/ruby/setup-ruby/releases/tag/v1.300.0
         with:
           ruby-version: '3.2.6' # Specify exact version to avoid potential issues
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 1 # Increment this number to force re-download of cached gems
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
@@ -73,13 +73,13 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
 #
-# https://github.com/actions/deploy-pages/releases/tag/v4
-# https://github.com/actions/upload-pages-artifact/releases/tag/v3
-# https://github.com/actions/configure-pages/releases/tag/v5
-# https://github.com/actions/checkout/releases/tag/v4
+# https://github.com/actions/deploy-pages/releases/tag/v5
+# https://github.com/actions/upload-pages-artifact/releases/tag/v4
+# https://github.com/actions/configure-pages/releases/tag/v6
+# https://github.com/actions/checkout/releases/tag/v6
 #
-# https://github.com/ruby/setup-ruby/releases/tag/v1.198.0
+# https://github.com/ruby/setup-ruby/releases/tag/v1.300.0
 #
