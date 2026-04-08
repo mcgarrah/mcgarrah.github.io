@@ -4,6 +4,7 @@ layout: post
 categories: [personal, productivity]
 tags: [office, productivity, furniture, ergonomics, work-from-home, personal]
 published: true
+last_modified_at: 2025-09-13
 ---
 
 Recently, I have been bouncing between my two home office spaces, hotels and an occasional visit to a cubical in my companies building. My home office spaces are nicely equipped with dual 28" or larger monitors (which I'll post about later), full office desks. I went overboard on some really nice high-end office chairs years ago as a business I worked for went under and sold off equipment and furniture. So my home office space is often nicer than what is provided at most businesses.

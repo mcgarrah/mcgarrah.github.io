@@ -25,6 +25,9 @@ layout: default
     {% endif %}
   </div>
 
+  <hr>
+  {% include author-bio.html %}
+
   {% if page.comments != false and site.comments.isso or site.comments.disqus %}
     <hr>
     {% if site.comments.isso_domain %}<div id="isso-thread"></div>{% endif %}

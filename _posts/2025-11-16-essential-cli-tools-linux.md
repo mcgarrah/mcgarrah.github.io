@@ -4,6 +4,7 @@ layout: post
 categories: [technical, reference]
 tags: [linux, cli, monitoring, tools, sysadmin, homelab]
 published: true
+last_modified_at: 2025-11-16
 ---
 
 After years of managing Linux systems - from my [Dell Wyse 3040 Proxmox cluster](/tags/wyse3040/) to various VMs and containers - I've accumulated a collection of command-line tools that I reach for constantly. These aren't exotic utilities, but rather the practical tools that help me figure out what's actually happening when systems misbehave.

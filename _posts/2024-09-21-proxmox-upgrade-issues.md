@@ -4,6 +4,7 @@ layout: post
 categories: [technical, troubleshooting]
 tags: [proxmox, upgrade, troubleshooting, homelab, hardware, dell-optiplex]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 An extended power loss for my primary Proxmox 8 cluster, while I was remote, took half of my cluster nodes out of commission into an unbootable state. This unbootable half of the cluster would not show up on the network after the power came back even with manual physical rebooting. The other half would boot up and show on the network. All the nodes had a second problem that they would not open a PVE WebUI Console Shell or show any output on any of the video output ports for either the Nvidia PCIe GPU or the Intel iGPU. So I have to figure out what looks to be a set of overlapping issues and clean up this mess. There were several lessons learned and re-learned along the way.

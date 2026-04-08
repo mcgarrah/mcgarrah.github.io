@@ -1,14 +1,18 @@
 ---
 title:  "Thinkpad T480 WWAN SSD"
+permalink: /thinkpad-t480-wwan-ssd/
+redirect_from:
+  - /thinkpad-t480-wwan-sdd/
 layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, ssd, wwan, hardware, upgrade, laptop, storage]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 ## Adding another SSD Drive
 
-In my etermal tinkering with my [Lenovo Thinkpad T480s](https://en.wikipedia.org/wiki/ThinkPad_T_series#T480), I have continued the trend of adding new features. So earlier, in [A new to me but old laptop](/new-but-old-laptop/) and [New Laptop update](/new-laptop-update/), I threw out a bunch of enhancement options. Some of those I've done and some I left on the backlog as things that just cost too much on my metric of usefulness per dollar. The WWAN SSD for extra storage was one of those that just seemed like a bad bang-for-the-buck for storage. I also like the option to add a SIM card and have cellular network available in case I have to go back to consulting on the road.
+In my eternal tinkering with my [Lenovo Thinkpad T480s](https://en.wikipedia.org/wiki/ThinkPad_T_series#T480), I have continued the trend of adding new features. So earlier, in [A new to me but old laptop](/new-but-old-laptop/) and [New Laptop update](/new-laptop-update/), I threw out a bunch of enhancement options. Some of those I've done and some I left on the backlog as things that just cost too much on my metric of usefulness per dollar. The WWAN SSD for extra storage was one of those that just seemed like a bad bang-for-the-buck for storage. I also like the option to add a SIM card and have cellular network available in case I have to go back to consulting on the road.
 
 <!-- excerpt-end -->
 

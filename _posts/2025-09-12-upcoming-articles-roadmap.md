@@ -4,6 +4,7 @@ layout: post
 categories: [organization, writing]
 tags: [planning, roadmap, homelab, proxmox, ceph, jekyll, development, writing]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 I've got a pile of articles I want to get out before the end of 2025, and I'm trying to stick to at least one post per week. That's roughly 16 more articles between now and December, which sounds doable if I don't get distracted by shiny new projects.
@@ -73,7 +74,7 @@ A rant about how Google has turned "add analytics to my blog" into a multi-servi
 
 ## Why Bother With a Schedule?
 
-Honestly, I'm terrible at sticking to schedules with my hobbiest work, but here's why I'm trying:
+Honestly, I'm terrible at sticking to schedules with my hobbyist work, but here's why I'm trying:
 
 1. **Consistency**: Turns out people like knowing when new stuff is coming
 2. **Documentation**: If I don't write it down while it's fresh, I'll forget how I fixed that weird thing

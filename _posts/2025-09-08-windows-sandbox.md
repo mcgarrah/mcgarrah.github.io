@@ -4,6 +4,7 @@ layout: post
 categories: [technical]
 tags: [windows, vm, sandbox, virtualization]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 I've been doing more experimental stuff on my Windows 11 laptops lately - testing sketchy PowerShell scripts, trying out random software, and generally doing things that could completely wreck my system. While I have disk images for recovery, that's a nuclear option that would cost me a day or two of rebuilding.

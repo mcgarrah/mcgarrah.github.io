@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking, hardware]
 tags: [hp, procurve, networking, switches, configuration, serial-console, setup]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 ## Get access to switch console
@@ -32,7 +33,7 @@ PuTTY is your friend on Windows once you get the COM port up. I've used it for y
 
 Setting the COM port to 115200 baud rather than 9600... makes thing just go faster. The console can detect 9600 or the 115200 but will not automatically switch once it starts a session.
 
-To do a hard reset of the switch and clear the passwords. Just a reset does not clear the management password to enter "enable" mode.  Dual paper clips are necessary to do the password clearing. In the above picture with the paperclips, click the image, to see a larger version with a hole or "reset" and "clear" that both have to be depressed at the same time during a startup. Below is a link to the documenation for this process.
+To do a hard reset of the switch and clear the passwords. Just a reset does not clear the management password to enter "enable" mode.  Dual paper clips are necessary to do the password clearing. In the above picture with the paperclips, click the image, to see a larger version with a hole or "reset" and "clear" that both have to be depressed at the same time during a startup. Below is a link to the documentation for this process.
 
 [Reset ProCurve 2800 Password](https://community.hpe.com/t5/aruba-provision-based/default-password-hp-procurve-switch-2824/m-p/4237025/highlight/true#M7628)
 

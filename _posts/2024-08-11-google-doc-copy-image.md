@@ -4,13 +4,14 @@ layout: post
 categories: [technical, reference]
 tags: [google-docs, images, productivity, web-development]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 Google Docs uses a URL based clipboard method to copy/cut and paste images and other media. That happens to works great between Google Docs but it completely fails when I try to take images from Google Docs to my Jekyll Posts when I need an actual image file. This is a small things but took some digging to figure it out for both Windows and MacOS.
 
 <!-- excerpt-end -->
 
-## Here are the step
+## Here are the steps
 
 You are forcing Google Docs to provide direct access to the image object in the web browser. I've done this with Chrome on both Windows 10 and macOS Sonoma successfully.
 

@@ -7,6 +7,7 @@ group :jekyll_plugins do
   gem "jekyll-sitemap", "~> 1.4.0"
   gem "jekyll-paginate", "~> 1.1.0"
   gem "jekyll-seo-tag", "~> 2.8.0"
+  gem "jekyll-redirect-from", "~> 0.16.0"
 end
 
 gem "webrick", "~> 1.9.1"

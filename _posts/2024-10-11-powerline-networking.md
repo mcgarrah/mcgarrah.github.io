@@ -4,6 +4,7 @@ layout: post
 categories: [technical, networking]
 tags: [networking, powerline, homelab, hardware, troubleshooting]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 I inherited, from a stack of old junk hardware, two [Netgear Powerline 500 Nano XAVB5101](https://www.netgear.com/support/product/xavb5101/) plugs. I thought I would try it out for a quick network connection between two floors in my new house using the existing power cabling.

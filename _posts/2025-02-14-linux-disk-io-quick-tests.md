@@ -4,11 +4,12 @@ layout: post
 categories: [technical, homelab, hardware]
 tags: [linux, storage, performance, iops, benchmarking, homelab, testing]
 published: true
+last_modified_at: 2026-04-05
 ---
 
 I swapped my physical disks around in my low-end testing hardware cluster. I have a mixture of soldered to the motherboard eMMC and an external USB3 Thumbdrive serving for a root file systems and external `/usr` volumes now. I would like a quick performance check on reading and writing to those file systems. I also don't want to setup a huge performance benchmark suite or additional tooling. I just want some quick results at this point.
 
-My basic question is what did I loose in this decision to break out my `/usr` out to an external USB3 drive. How much performance did I loose?
+My basic question is what did I lose in this decision to break out my `/usr` out to an external USB3 drive. How much performance did I lose?
 
 <!-- excerpt-end -->
 

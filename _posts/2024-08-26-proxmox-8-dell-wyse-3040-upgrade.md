@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, dell-wyse-3040, upgrade, ceph, homelab, troubleshooting]
 published: true
+last_modified_at: 2025-09-11
 ---
 
 My earlier post for [ProxMox 8.2.2 Cluster on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040/) mentioned the tight constraints of the cluster both with RAM and DISK space. There are some extra steps involved in keeping a very lean Proxmox 8 cluster running on these extremely resource limited boxes. I am running Proxmox 8.2 and Ceph Reef on them which leaves them slightly under resourced as a default. So when the Ceph would not start up the Ceph Monitors after my upgrade from Proxmox 8.2.2 to 8.2.4, I had to dig a bit to find the problem.

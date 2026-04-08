@@ -4,6 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, performance, mclock, iops, optimization, homelab, dell-wyse-3040]
 published: true
+last_modified_at: 2025-10-12
 ---
 
 Performance tuning Ceph in a homelab environment presents unique challenges, especially when running on USB storage and constrained hardware. After dealing with performance issues during cluster rebalancing and OSD expansion, I've learned valuable lessons about mClock configuration, IOPS optimization, and the realities of USB 3.0 storage performance.

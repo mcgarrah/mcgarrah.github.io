@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "Building a Jekyll GDPR Plugin: From Custom Implementation to Community Solution"
-date: 2025-01-18
 categories: [jekyll, ruby, gdpr, open-source]
 tags: [jekyll-plugin, gdpr, ruby-gem, privacy, compliance, open-source]
 excerpt: "Planning and developing a Jekyll plugin for GDPR compliance - turning a successful custom implementation into a reusable community solution."
+published: false
 ---
 
 <!-- excerpt-end -->
@@ -23,6 +23,7 @@ The Jekyll ecosystem lacks a comprehensive GDPR compliance solution. Most existi
 - **External dependencies** - Requiring CDN resources or third-party services
 
 Jekyll users need a solution that:
+
 - Integrates seamlessly with Jekyll's build process
 - Uses Jekyll configuration variables
 - Works with static site deployment
@@ -126,6 +127,7 @@ gdpr_consent:
 ### Phase 1: Core Features (Month 1-2)
 
 **Essential Functionality:**
+
 - Automatic consent banner injection
 - Basic consent levels (essential/all)
 - Google Analytics and AdSense integration
@@ -133,6 +135,7 @@ gdpr_consent:
 - Local storage consent management
 
 **Technical Implementation:**
+
 ```ruby
 # lib/jekyll-gdpr-consent.rb
 module Jekyll
@@ -175,12 +178,14 @@ end
 ### Phase 2: Enhanced Features (Month 3-4)
 
 **Advanced Functionality:**
+
 - Multiple consent levels (essential/analytics/advertising/all)
 - Additional service integrations (Facebook Pixel, etc.)
 - Custom styling and themes
 - Multi-language support
 
 **Liquid Tags for Content Control:**
+
 ```liquid
 {% raw %}
 <!-- Show content only with analytics consent -->
@@ -206,6 +211,7 @@ end
 ### Phase 3: Advanced Features (Month 5-6)
 
 **Enterprise Features:**
+
 - Consent analytics and reporting
 - A/B testing for banner designs
 - Webhook notifications for consent changes
@@ -213,6 +219,7 @@ end
 - Compliance audit trails
 
 **Developer API:**
+
 ```javascript
 // JavaScript API for custom integrations
 window.jekyllGdpr = {
@@ -242,6 +249,7 @@ window.jekyllGdpr = {
 ### Phase 4: Community & Maintenance (Ongoing)
 
 **Community Building:**
+
 - Comprehensive documentation site
 - Example implementations and demos
 - Community contribution guidelines
@@ -274,6 +282,7 @@ end
 **Challenge:** Jekyll plugins can't easily inject CSS/JS assets into the final site.
 
 **Solutions:**
+
 1. **Sass Integration:** Generate `.scss` files that Jekyll processes
 2. **Asset Copying:** Copy pre-built assets to `_site` directory
 3. **Inline Assets:** Embed critical CSS/JS directly in HTML
@@ -359,6 +368,7 @@ var consent = {
 ### For Site Owners
 
 **Immediate Value:**
+
 - Drop-in GDPR compliance with minimal configuration
 - No custom JavaScript development required
 - Maintained and updated solution
@@ -366,6 +376,7 @@ var consent = {
 - Professional consent management
 
 **Long-term Benefits:**
+
 - Automatic compliance updates as regulations evolve
 - Community-driven feature development
 - Reduced maintenance burden
@@ -374,12 +385,14 @@ var consent = {
 ### For Developers
 
 **Technical Advantages:**
+
 - Extensible plugin architecture
 - Well-documented API for customization
 - Hooks for custom consent logic
 - Open source collaboration opportunities
 
 **Integration Examples:**
+
 ```ruby
 # Custom consent processor
 Jekyll::GdprConsent::Hooks.register_consent_change do |consent_data|
@@ -400,6 +413,7 @@ end
 ### For the Jekyll Ecosystem
 
 **Community Impact:**
+
 - Standardized GDPR implementation across Jekyll sites
 - Reduced barrier to privacy compliance
 - Enhanced Jekyll's enterprise readiness
@@ -408,6 +422,7 @@ end
 ## Development Timeline
 
 ### Month 1-2: Foundation
+
 - [ ] Core plugin architecture
 - [ ] Basic consent banner functionality
 - [ ] Google Analytics/AdSense integration
@@ -416,6 +431,7 @@ end
 - [ ] Basic documentation
 
 ### Month 3-4: Enhancement
+
 - [ ] Multiple consent levels
 - [ ] Additional service integrations
 - [ ] Custom styling system
@@ -424,6 +440,7 @@ end
 - [ ] Comprehensive testing suite
 
 ### Month 5-6: Advanced Features
+
 - [ ] Consent analytics dashboard
 - [ ] A/B testing capabilities
 - [ ] Webhook integrations
@@ -432,6 +449,7 @@ end
 - [ ] Performance optimizations
 
 ### Ongoing: Community
+
 - [ ] Documentation website
 - [ ] Example implementations
 - [ ] Community contribution guidelines
@@ -443,12 +461,14 @@ end
 ### Compliance Maintenance
 
 **Regulatory Tracking:**
+
 - Monitor GDPR interpretation updates
 - Track new privacy regulations (CCPA, etc.)
 - Update service provider integrations
 - Maintain browser compatibility
 
 **Automated Compliance Checks:**
+
 ```ruby
 class ComplianceValidator
   def validate_implementation(site)
@@ -473,12 +493,14 @@ end
 ### Performance Optimization
 
 **Bundle Size Management:**
+
 - Minimize JavaScript footprint
 - Optimize CSS for critical path
 - Lazy load non-essential features
 - Use modern compression techniques
 
 **Loading Strategy:**
+
 ```javascript
 // Critical consent logic (inline)
 window.gdprConsent = {
@@ -498,7 +520,8 @@ if (document.readyState === 'loading') {
 ### Open Source Strategy
 
 **Repository Structure:**
-```
+
+```text
 jekyll-gdpr-consent/
 ├── lib/
 │   └── jekyll-gdpr-consent/
@@ -516,6 +539,7 @@ jekyll-gdpr-consent/
 ```
 
 **Contribution Guidelines:**
+
 - Clear coding standards and style guide
 - Comprehensive test requirements
 - Documentation standards
@@ -525,6 +549,7 @@ jekyll-gdpr-consent/
 ### Documentation Strategy
 
 **Multi-Level Documentation:**
+
 1. **Quick Start Guide** - Get running in 5 minutes
 2. **Configuration Reference** - Complete option documentation
 3. **Integration Examples** - Real-world implementation patterns
@@ -541,6 +566,7 @@ The success of my custom GDPR implementation demonstrates the need for a compreh
 - **Open source collaboration** for continuous improvement
 
 The planned `jekyll-gdpr-consent` plugin represents an opportunity to:
+
 - Democratize privacy compliance for Jekyll users
 - Contribute meaningfully to the open source ecosystem
 - Create sustainable privacy tooling for static sites

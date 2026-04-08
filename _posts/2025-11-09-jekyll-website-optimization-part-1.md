@@ -4,6 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, seo, performance, website]
 published: true
+last_modified_at: 2025-11-27
 ---
 
 After running this Jekyll-based website for a couple years (since July of 2023), I've learned valuable lessons about optimizing Jekyll sites for GitHub Pages. This blog initially started as a consolidation of several blog websites I'd published over the years. This is Part 1 of a two-part series covering the foundational optimizations that have made the biggest difference for my homelab blog.
@@ -49,13 +50,13 @@ document.querySelectorAll('pre code').forEach((block) => {
 Readers appreciate knowing how long an article will take to read. I added a reading time calculator:
 
 ```liquid
-{% assign words = content | number_of_words %}
+{% raw %}{% assign words = content | number_of_words %}
 {% assign reading_time = words | divided_by: 200 %}
 {% if reading_time < 1 %}
   Less than 1 minute read
 {% else %}
   {{ reading_time }} minute read
-{% endif %}
+{% endif %}{% endraw %}
 ```
 
 ### 3. Optimized Image Loading
@@ -107,7 +108,7 @@ baseurl: ""
 The jekyll-feed plugin generates RSS feeds automatically, but customization improves subscriber experience:
 
 ```liquid
----
+{% raw %}---
 layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
@@ -125,7 +126,7 @@ layout: null
       </item>
     {% endfor %}
   </channel>
-</rss>
+</rss>{% endraw %}
 ```
 
 ## Content Management Improvements
@@ -150,7 +151,7 @@ published: true
 Created dynamic archive pages for better content discovery:
 
 ```liquid
-{% for post in site.posts %}
+{% raw %}{% for post in site.posts %}
   {% assign year = post.date | date: "%Y" %}
   {% assign month = post.date | date: "%B" %}
   {% if year != previous_year %}
@@ -165,7 +166,7 @@ Created dynamic archive pages for better content discovery:
   </article>
   {% assign previous_year = year %}
   {% assign previous_month = month %}
-{% endfor %}
+{% endfor %}{% endraw %}
 ```
 
 ### 3. Related Posts Section
@@ -173,7 +174,7 @@ Created dynamic archive pages for better content discovery:
 Implemented related posts based on tags and categories:
 
 ```liquid
-{% assign related_posts = site.related_posts | where_exp: "post", "post.url != page.url" | slice: 0, 3 %}
+{% raw %}{% assign related_posts = site.related_posts | where_exp: "post", "post.url != page.url" | slice: 0, 3 %}
 {% if related_posts.size > 0 %}
   <section class="related-posts">
     <h3>Related Articles</h3>
@@ -184,7 +185,7 @@ Implemented related posts based on tags and categories:
       </article>
     {% endfor %}
   </section>
-{% endif %}
+{% endif %}{% endraw %}
 ```
 
 ## GitHub Actions Workflow
@@ -255,11 +256,12 @@ Benefits:
 
 This covers the foundational optimizations that every Jekyll site should implement. In [Part 2 of this series](/jekyll-website-optimization-part-2/), I'll dive into:
 
-- Advanced analytics and monitoring setup
-- Remaining optimization priorities
-- Performance measurement and results
-- Lessons learned from running a technical blog
-- Future enhancement roadmap
+- Advanced analytics and monitoring with Google Analytics 4
+- Custom event tracking for technical content
+- Remaining optimization priorities (dark/light theme, search, etc.)
+- Performance measurement results and Core Web Vitals
+- Lessons learned from running 100+ technical posts
+- Future enhancement roadmap and infrastructure improvements
 
 ## Conclusion
 
