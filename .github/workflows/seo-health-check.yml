@@ -176,7 +176,7 @@ jobs:
       - name: Check links with Lychee
         uses: lycheeverse/lychee-action@v2.4.0
         with:
-          args: --verbose --no-progress --exclude-path '_site/resume' '_site/**/*.html'
+          args: --base https://mcgarrah.org --no-progress --exclude-path '_site/resume' '_site/**/*.html'
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
