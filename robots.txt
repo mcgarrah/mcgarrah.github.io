@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://mcgarrah.org/sitemap.xml
+# Sitemap Index (covers main blog + resume sub-site)
+Sitemap: https://mcgarrah.org/sitemapindex.xml
 
 # Disallow crawling of admin/development files
 Disallow: /_site/

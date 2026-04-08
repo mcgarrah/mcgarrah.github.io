@@ -49,10 +49,10 @@ Google sees these pages as part of `mcgarrah.org` but with noticeably worse SEO 
 | Issue | Status |
 |-------|--------|
 | Placeholder description | ✅ Fixed — updated to real description |
-| Missing `jekyll-seo-tag` | ⏳ Deferred — requires theme integration work |
-| Missing `jekyll-sitemap` | ⏳ Deferred — requires cross-repo sitemap strategy |
+| Missing `jekyll-seo-tag` | ✅ Fixed — added plugin and `{% seo %}` tag to resume head |
+| Missing `jekyll-sitemap` | ✅ Fixed — added plugin to resume repo |
 | `robots.txt` for `/resume/` | ❌ Not possible — `robots.txt` must be at domain root |
-| Unified sitemap | ⏳ Deferred — see solutions below |
+| Unified sitemap | ✅ Fixed — `sitemapindex.xml` at domain root references both sitemaps |
 
 The rest of this article explores the sitemap problem and potential solutions.
 

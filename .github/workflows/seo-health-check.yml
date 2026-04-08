@@ -117,14 +117,33 @@ jobs:
             echo "✅ Robots.txt exists"
             
             # Check sitemap reference in robots.txt
-            if grep -q "Sitemap: https://mcgarrah.org/sitemap.xml" _site/robots.txt; then
-              echo "✅ Robots.txt references correct sitemap"
+            if grep -q "Sitemap: https://mcgarrah.org/sitemapindex.xml" _site/robots.txt; then
+              echo "✅ Robots.txt references correct sitemap index"
             else
               echo "❌ Robots.txt missing or incorrect sitemap reference"
               exit 1
             fi
           else
             echo "❌ Robots.txt not found"
+            exit 1
+          fi
+          
+      - name: Validate sitemapindex.xml
+        run: |
+          echo "Validating sitemapindex.xml..."
+          if [ -f "_site/sitemapindex.xml" ]; then
+            xmllint --noout _site/sitemapindex.xml
+            echo "✅ Sitemap index XML is valid"
+            
+            # Check it references both sitemaps
+            if grep -q "mcgarrah.org/sitemap.xml" _site/sitemapindex.xml && grep -q "mcgarrah.org/resume/sitemap.xml" _site/sitemapindex.xml; then
+              echo "✅ Sitemap index references both sitemaps"
+            else
+              echo "❌ Sitemap index missing expected sitemap references"
+              exit 1
+            fi
+          else
+            echo "❌ Sitemap index not found"
             exit 1
           fi
           
