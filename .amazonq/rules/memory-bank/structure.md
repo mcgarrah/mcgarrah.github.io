@@ -9,7 +9,7 @@ mcgarrah.github.io/
 ├── _layouts/                 # Page templates (default, post, page, etc.)
 ├── _includes/               # Reusable HTML components
 ├── _sass/                   # SCSS stylesheets and variables
-├── _posts/                  # Blog articles (100+ markdown files)
+├── _posts/                  # Blog articles (130+ markdown files)
 ├── _drafts/                 # Unpublished content in development
 ├── _plugins/                # Custom Ruby plugins
 ├── _data/                   # YAML data files (Font Awesome icons)
@@ -23,6 +23,9 @@ mcgarrah.github.io/
 - **categories.html** - Category listing page
 - **tags.html** - Tag cloud and organization
 - **archive.html** - Chronological post listing
+- **contact.md** - Contact information page
+- **search.html** - Google Custom Search page
+- **CNAME** - Custom domain mapping (www.mcgarrah.org)
 
 ### Asset Organization
 ```
@@ -31,6 +34,7 @@ assets/
 ├── js/                      # JavaScript functionality
 ├── images/                  # Blog post images and screenshots
 ├── fonts/                   # Custom web fonts (PT Sans)
+├── fontawesome/             # Font Awesome icon assets
 ├── pdfs/                    # Technical documentation
 ├── binaries/                # Software downloads
 └── exes/                    # Portable applications
@@ -53,6 +57,9 @@ assets/
 - **post.html** - Blog article layout with metadata and comments
 - **page.html** - Static page template
 - **home.html** - Homepage with post excerpts and pagination
+- **paginate.html** - Paginated post listing layout
+- **archive.html** - Archive page layout
+- **list_page.html** - Generic list page layout
 - **category_page.html** - Category-specific post listings
 - **tag_page.html** - Tag-specific post listings
 
@@ -60,8 +67,13 @@ assets/
 - **menu.html** - Navigation bar with responsive design
 - **sidebar.html** - Social links and external profiles
 - **analytics.html** - Google Analytics integration
+- **adsense.html** - Google AdSense integration
 - **cookie-consent.html** - GDPR compliance banner
 - **meta.html** - SEO meta tags and structured data
+- **author-bio.html** - Author biography section
+- **embed.html** - Embedded content (video, media) support
+- **home.html** - Homepage content partial
+- **archive.html** - Archive listing partial
 
 ### Plugin Architecture
 - **tag_category_generator.rb** - Automatic page generation for tags/categories
@@ -69,6 +81,7 @@ assets/
 - **jekyll-sitemap** - XML sitemap creation
 - **jekyll-paginate** - Post pagination
 - **jekyll-seo-tag** - Comprehensive SEO optimization
+- **jekyll-redirect-from** - Redirect support for renamed or moved pages
 
 ## Architectural Patterns
 

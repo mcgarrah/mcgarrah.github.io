@@ -7,10 +7,11 @@ Personal technical blog and website for Michael McGarrah, a technologist special
 
 ### Content Management
 - **Jekyll-powered static site** with GitHub Pages hosting
-- **Extensive blog archive** with 100+ technical articles spanning 2001-2026
+- **Extensive blog archive** with 130+ technical articles spanning 2001-2026
 - **Category and tag organization** for easy content discovery
 - **Draft management system** for content development
 - **RSS feed** for content syndication
+- **Redirect support** for renamed or moved pages via jekyll-redirect-from
 
 ### Technical Content Focus
 - **Homelab infrastructure** - Proxmox, Ceph, virtualization
@@ -26,6 +27,7 @@ Personal technical blog and website for Michael McGarrah, a technologist special
 - **Reading time estimates** and excerpt previews
 - **Mermaid diagram support** for technical illustrations
 - **Code syntax highlighting** with copy buttons
+- **Contact page** for direct communication
 
 ### SEO and Analytics
 - **Comprehensive SEO optimization** with structured data

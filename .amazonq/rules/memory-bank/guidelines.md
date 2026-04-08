@@ -103,6 +103,17 @@ Example pattern:
 - **Date Format** - Use YYYY-MM-DD format for post filenames
 - **Category/Tag Usage** - Apply consistent taxonomy for content organization
 - **Excerpt Separators** - Use `<!-- excerpt-end -->` for custom excerpts
+- **Redirect Support** - Use `redirect_from` in front matter when renaming or moving posts
+
+Example redirect front matter:
+```yaml
+---
+title: "New Post Title"
+redirect_from:
+  - /old-url/
+  - /another-old-url/
+---
+```
 
 ### Asset Organization
 - **Image Optimization** - Compress images for web delivery
@@ -135,8 +146,21 @@ Example pattern:
 ### Automated Checks
 - **CI/CD Pipeline** - GitHub Actions for automated testing
 - **Security Scanning** - CodeQL analysis for vulnerability detection
-- **SEO Validation** - Automated SEO health checks
+- **SEO Validation** - Automated SEO health checks via seo-health-check.yml
 - **Dependency Updates** - Dependabot for security updates
+
+### SEO Health Check Workflow
+The `seo-health-check.yml` workflow validates on every push to main:
+- **Canonical URL consistency** - Verifies all `<link rel="canonical">` tags use mcgarrah.org domain
+- **Sitemap validation** - Checks XML validity and correct domain usage
+- **Robots.txt verification** - Ensures correct sitemap reference
+- **Meta tag checks** - Validates description and Open Graph tags
+- **Structured data** - Checks for JSON-LD presence
+- **Link validation** - Lychee link checker for broken links
+- **Content quality** - Duplicate titles, generic link text, missing alt text
+- **Lighthouse CI** - Performance, accessibility, and SEO scoring
+
+Note: Canonical URL checks must match `<link` tags specifically to avoid false positives from syntax-highlighted code blocks in blog posts.
 
 ## Documentation Requirements
 

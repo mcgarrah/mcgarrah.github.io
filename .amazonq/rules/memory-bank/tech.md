@@ -25,11 +25,12 @@
 ### Jekyll Plugins (Gemfile)
 ```ruby
 gem "jekyll", "~> 4.4.1"
-gem "jekyll-feed", "~> 0.17.0"        # RSS/Atom feed generation
-gem "jekyll-sitemap", "~> 1.4.0"      # XML sitemap creation
-gem "jekyll-paginate", "~> 1.1.0"     # Post pagination
-gem "jekyll-seo-tag", "~> 2.8.0"      # SEO meta tags
-gem "webrick", "~> 1.9.1"             # Local development server
+gem "jekyll-feed", "~> 0.17.0"           # RSS/Atom feed generation
+gem "jekyll-sitemap", "~> 1.4.0"         # XML sitemap creation
+gem "jekyll-paginate", "~> 1.1.0"        # Post pagination
+gem "jekyll-seo-tag", "~> 2.8.0"         # SEO meta tags
+gem "jekyll-redirect-from", "~> 0.16.0"  # Redirect support for moved pages
+gem "webrick", "~> 1.9.1"                # Local development server
 ```
 
 ### JavaScript Dependencies (package.json)
@@ -106,7 +107,7 @@ bundle exec jekyll clean
 - **Gemfile** - Ruby dependency specifications
 - **package.json** - JavaScript dependency tracking
 - **.gitignore** - Version control exclusions
-- **CNAME** - Custom domain configuration
+- **CNAME** - Custom domain configuration (www.mcgarrah.org)
 
 ## External Integrations
 
