@@ -75,8 +75,8 @@ jobs:
       - name: Check canonical URLs consistency
         run: |
           echo "Checking canonical URLs..."
-          # Only check actual <link rel="canonical"> tags, not body content that mentions "canonical"
-          INCONSISTENT=$(find _site -name "*.html" -exec grep -h 'rel="canonical"' {} \; | grep -v "mcgarrah.org" || true)
+          # Only match actual <link rel="canonical"> tags, not syntax-highlighted code in blog posts
+          INCONSISTENT=$(find _site -name "*.html" -exec grep -h '<link[^>]*rel="canonical"' {} \; | grep -v "mcgarrah.org" || true)
           if [ -n "$INCONSISTENT" ]; then
             echo "❌ Inconsistent canonical URLs found:"
             echo "$INCONSISTENT"
