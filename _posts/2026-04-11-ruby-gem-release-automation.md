@@ -4,12 +4,19 @@ title: "Ruby Gem Release Automation - Part 1: Infrastructure Implementation"
 categories: [ruby, devops, automation, ci-cd]
 tags: [ruby-gem, github-actions, readthedocs, rubygems, release-automation, devops]
 excerpt: "Building a complete release automation pipeline for Ruby gems with GitHub Actions, Read the Docs integration, and RubyGems publishing - lessons learned from 10+ manual steps to single command deployment."
-published: false
+description: "How to build a complete Ruby gem release automation pipeline with GitHub Actions, Read the Docs integration, RubyGems trusted publishing, and a single-command release script that replaces 13 manual steps."
+date: 2026-04-11
+last_modified_at: 2026-04-11
+published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-04-11
+  date_modified: 2026-04-11
 ---
 
 <!-- excerpt-end -->
 
-While developing the [jekyll-pandoc-exports](https://github.com/mcgarrah/jekyll-pandoc-exports) plugin, I discovered that building the actual functionality was only half the battle. The real challenge was creating a professional release pipeline that could handle documentation, testing, and publishing automatically. This is Part 1 of a two-part series - here I'll cover the infrastructure and automation challenges. In [Part 2](/jekyll-pandoc-exports-plugin) I will cover implementing the core functionality of the plugin.
+While developing the [jekyll-pandoc-exports](https://github.com/mcgarrah/jekyll-pandoc-exports) plugin, I discovered that building the actual functionality was only half the battle. The real challenge was creating a professional release pipeline that could handle documentation, testing, and publishing automatically. This is Part 1 of a three-part series - here I'll cover the infrastructure and automation challenges. In [Part 2](/jekyll-pandoc-exports-plugin/) I cover the plugin's technical implementation, and in [Part 3](/jekyll-pandoc-exports-resume-integration/) I walk through integrating it into a real project and the bugs that surfaced.
 
 ## The Manual Release Hell
 
@@ -29,7 +36,7 @@ Initially, my release process looked like this nightmare checklist:
 12. Create GitHub release with changelog
 13. Reset development branch for next iteration
 
-This 13-step process was error-prone, time-consuming, and frankly demoralizing. I needed automation. This was something I already learned in my work writing a [Python Library](/oneworldsync-python-module) earlier this year.
+This 13-step process was error-prone, time-consuming, and frankly demoralizing. I needed automation. This was something I already learned in my work writing a [Python Library](/oneworldsync-python-module/) the previous year.
 
 ## The Infrastructure Challenge
 
@@ -409,6 +416,23 @@ I am much less proud of this script but it gets the job done. And I got my Ruby 
 
 **Matrix Builds**: Ruby version compatibility testing had unique edge cases.
 
+**Frozen Lockfiles**: The most insidious issue was `Gemfile.lock` version drift between the gemspec and the lockfile. When you bump the version in `version.rb` but forget to run `bundle install` before committing, the lockfile still references the old version. The CI publish workflow runs with `bundler-cache: true`, which sets frozen mode — and frozen mode refuses to install when the gemspec version doesn't match the lockfile. The fix is simple (run `bundle install` after version bumps), but the failure mode is confusing: the gem builds and tests pass locally, the PR merges, the tag is created, and then the publish workflow fails silently on a bundler error. I hit this during the v0.1.12 release and had to delete the tag, update the lockfile, re-tag, and manually trigger the publish workflow.
+
+### Jekyll 3.x Compatibility
+
+A subtle Ruby language issue surfaced when integrating the plugin into my [resume site](/jekyll-pandoc-exports-resume-integration/), which uses the `github-pages` gem (Jekyll 3.10.0). The plugin's `:post_write` hook block used `return` to exit early:
+
+```ruby
+Jekyll::Hooks.register :site, :post_write do |site|
+  config = setup_configuration(site)
+  return unless config['enabled']  # LocalJumpError in Jekyll 3.x
+end
+```
+
+In Ruby, `return` inside a `do...end` block tries to return from the enclosing method — but hook blocks have no enclosing method in Jekyll 3.x's invocation path, causing a `LocalJumpError`. The fix was replacing `return` with `next`, which is the correct way to exit early from a block. This worked fine in Jekyll 4.x due to differences in how it invokes hooks, so the bug was invisible during development and testing.
+
+This is the kind of issue that only surfaces when real users integrate your gem into their projects — another argument for eating your own dog food early.
+
 ### Release Automation Benefits
 
 The automated pipeline reduced release time from 2+ hours to 5 minutes:
@@ -469,9 +493,9 @@ Two commands handle the complete release cycle:
 
 ## Next Steps
 
-In [Part 2](/jekyll-pandoc-exports-plugin-part-2/), I'll cover the actual plugin development - the Jekyll hooks system, Pandoc integration, and technical implementation details that make the automated document exports work.
+In [Part 2](/jekyll-pandoc-exports-plugin/), I cover the plugin's technical implementation — the Jekyll hooks system, Pandoc integration, and the architecture that makes automated document exports work. In [Part 3](/jekyll-pandoc-exports-resume-integration/), I walk through integrating the plugin into my resume site, where the Jekyll 3.x compatibility bug and several other issues surfaced — and where the release automation described above proved its value by enabling rapid fix-test-release cycles.
 
-The infrastructure investment was substantial, but it enabled rapid iteration on the plugin functionality itself. Professional release automation isn't just about convenience - it's about enabling sustainable open-source development.
+Professional release automation isn't just about convenience — it's about enabling sustainable open-source development.
 
 ---
 

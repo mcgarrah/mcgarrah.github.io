@@ -36,13 +36,13 @@ This was an easy fix — just updating `_config.yml` in the resume repo — but 
 
 ### The Missing SEO Infrastructure
 
-The resume site has no `jekyll-seo-tag` plugin, so its pages lack:
+The resume site originally had no `jekyll-seo-tag` plugin, so its pages lacked:
 - Structured data (`application/ld+json`)
 - Open Graph meta tags
 - Canonical URL tags
 - Twitter card meta tags
 
-Google sees these pages as part of `mcgarrah.org` but with noticeably worse SEO markup than the blog pages. This inconsistency may contribute to the "site isn't ready" rejections.
+Google saw these pages as part of `mcgarrah.org` but with noticeably worse SEO markup than the blog pages. This inconsistency may have contributed to the "site isn't ready" rejections.
 
 ### What I've Fixed So Far
 
@@ -103,7 +103,7 @@ The [sitemaps.org protocol](https://www.sitemaps.org/protocol.html) supports sit
 
 Submit this to Google Search Console instead of the individual sitemaps. This is the lowest-effort solution — just a static file in the main blog repo, no changes to either site's build process.
 
-The downside: you need to ensure the resume site actually generates a `sitemap.xml` (it currently doesn't have `jekyll-sitemap` installed).
+The downside: you need to ensure the resume site actually generates a `sitemap.xml` (I've since added `jekyll-sitemap` to the resume repo).
 
 ### Approach 2: Custom Sitemap Template
 

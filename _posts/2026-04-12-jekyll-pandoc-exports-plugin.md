@@ -4,12 +4,19 @@ title: "Building a Jekyll Plugin for Automated Document Exports - Part 2: Techni
 categories: [jekyll, ruby, pandoc, automation]
 tags: [jekyll-plugin, pandoc, pdf-generation, docx, ruby-gem, documentation]
 excerpt: "Technical deep-dive into Jekyll plugin development: hooks system, Pandoc integration, and document generation features. Part 2 of building a professional Ruby gem."
-published: false
+description: "Technical deep-dive into building a Jekyll plugin for automated PDF and DOCX exports using Pandoc, covering the hooks system, incremental builds, Unicode cleanup, CLI tools, and extensible architecture."
+date: 2026-04-12
+last_modified_at: 2026-04-12
+published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-04-12
+  date_modified: 2026-04-12
 ---
 
 <!-- excerpt-end -->
 
-In [Part 1](/ruby-gem-release-automation/), I covered the infrastructure challenges of building a professional Ruby gem with automated releases, documentation, and CI/CD. Now let's dive into the technical implementation of the Jekyll plugin itself.
+In [Part 1](/ruby-gem-release-automation/), I covered the infrastructure challenges of building a professional Ruby gem with automated releases, documentation, and CI/CD. Now let's dive into the technical implementation of the Jekyll plugin itself. In [Part 3](/jekyll-pandoc-exports-resume-integration/), I'll cover integrating the plugin into a real project and the bugs that surfaced.
 
 The [jekyll-pandoc-exports](https://github.com/mcgarrah/jekyll-pandoc-exports) plugin solves a common problem: automatically generating downloadable PDF and Word document versions of your Jekyll pages using Pandoc.
 
@@ -47,13 +54,18 @@ Full configuration control through `_config.yml`:
 pandoc_exports:
   enabled: true
   output_dir: 'downloads'
-  collections: ['pages', 'posts']
+  collections: ['pages']
   incremental: true
   pdf_options:
     variable: 'geometry:margin=0.75in'
   unicode_cleanup: true
-  inject_downloads: true
+  inject_downloads: false
+  image_path_fixes:
+    - pattern: 'src="/resume/assets/'
+      replacement: 'src="{{site.dest}}/assets/'
 ```
+
+The `inject_downloads: false` setting is useful when your theme already has its own download links — as was the case with my resume site's sidebar. The `image_path_fixes` array handles the path rewriting needed when a site uses a `baseurl` like `/resume`.
 
 ### Incremental Builds
 
@@ -189,103 +201,32 @@ The Read the Docs integration (covered in Part 1) provides professional document
 
 ## Real-World Usage
 
-The plugin is actively used in my resume site, automatically generating:
-
-- PDF versions for easy downloading and printing
-- DOCX versions for recruiters who prefer Word format
-- Multiple layout variants (short/long versions)
+The plugin is integrated into my [resume site](https://github.com/mcgarrah/resume), replacing the previous workflow of manually exporting PDFs and committing static files. The integration uncovered several compatibility bugs and required HTML cleanup work to produce clean document output — that full story is covered in [Part 3](/jekyll-pandoc-exports-resume-integration/).
 
 ## Future Enhancements
 
-### Additional Document Formats
+Pandoc's format support opens several directions for the plugin:
 
-Pandoc supports numerous output formats that would expand the plugin's utility:
-
-**ODT (OpenDocument Text)**: LibreOffice/OpenOffice compatibility for users preferring open-source office suites:
-
-```yaml
----
-title: My Document
-odt: true  # Generate .odt file
----
-```
-
-**RTF (Rich Text Format)**: Universal format readable by virtually any word processor, ideal for maximum compatibility:
-
-```yaml
-rtf: true  # Generate .rtf file
-```
-
-### Site-Wide EPUB Generation
-
-A compelling enhancement would be generating complete EPUB books from entire Jekyll sites. This would be particularly valuable for:
-
-- **Blog Archives**: Convert your entire blog into a readable e-book format
-- **Documentation Sites**: Package complete documentation as downloadable EPUB
-- **Article Collections**: Combine related posts into themed e-books
-
-Implementation would involve:
-
-```yaml
-pandoc_exports:
-  epub_collections:
-    blog_archive:
-      title: "McGarrah Technical Blog - Complete Archive"
-      collections: ['posts']
-      sort_by: 'date'
-      cover_image: '/assets/images/blog-cover.png'
-    documentation:
-      title: "Complete Documentation"
-      collections: ['docs']
-      sort_by: 'weight'
-```
-
-The plugin would:
-
-1. Aggregate all posts/pages in specified collections
-2. Generate a proper EPUB table of contents
-3. Handle cross-references and internal links
-4. Include metadata (author, publication date, description)
-5. Embed images and assets properly
-
-### Technical Considerations
-
-- **Memory Management**: Large site exports would require streaming processing
-- **Link Resolution**: Convert internal Jekyll links to EPUB navigation
-- **Asset Bundling**: Embed images, CSS, and other assets into EPUB package
-- **Metadata Extraction**: Use Jekyll front matter for EPUB metadata
-
-These enhancements would transform the plugin from individual page exports to comprehensive site archival and distribution tool.
-
-### Mermaid Diagram Support
-
-Technical documentation often includes Mermaid diagrams that need proper handling in exported formats:
-
-```yaml
-pandoc_exports:
-  mermaid:
-    enabled: true
-    render_method: 'svg'  # or 'png' for better compatibility
-    theme: 'default'
-```
-
-Challenges to address:
-
-- **SVG Rendering**: Convert Mermaid JavaScript to static SVG/PNG images
-- **PDF Compatibility**: Ensure diagrams render properly in LaTeX/PDF output
-- **Fallback Handling**: Graceful degradation when Mermaid CLI unavailable
-
-### Other Planned Improvements
-
-- Enhanced template system with Liquid support
-- Integration with Jekyll's asset pipeline
-- Batch processing optimizations
-- Custom CSS injection per format
-- Automated table of contents generation
+- **Additional formats** — ODT for LibreOffice users, RTF for maximum compatibility
+- **Site-wide EPUB generation** — aggregate posts or collections into downloadable e-books with proper table of contents and metadata
+- **Mermaid diagram support** — render Mermaid JavaScript diagrams to static SVG/PNG for PDF compatibility
+- **Enhanced templates** — Liquid support in export templates, per-format CSS injection
+- **Batch optimizations** — parallel processing and Jekyll asset pipeline integration
 
 ## Getting Started
 
-Install the plugin:
+Install system dependencies:
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+
+# macOS
+brew install pandoc
+brew install --cask mactex
+```
+
+Install the plugin (v0.1.12+ required for Jekyll 3.x / `github-pages` compatibility):
 
 ```bash
 gem install jekyll-pandoc-exports
@@ -308,28 +249,40 @@ pdf: true
 ---
 ```
 
+For GitHub Actions CI builds, add a step to install Pandoc and LaTeX before the Jekyll build:
+
+```yaml
+- name: Install Pandoc and LaTeX
+  run: |
+    sudo apt-get update
+    sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+```
+
 The plugin handles the rest automatically during your Jekyll build process.
 
 ## Conclusion
 
-Building this plugin was a two-part challenge: creating robust infrastructure (Part 1) and implementing the core functionality (Part 2). The Jekyll plugin architecture proved flexible and powerful, while Pandoc's conversion capabilities enabled professional document generation.
+Building this plugin was a three-part challenge: creating robust infrastructure ([Part 1](/ruby-gem-release-automation/)), implementing the core functionality (this article), and integrating it into a real project ([Part 3](/jekyll-pandoc-exports-resume-integration/)). The Jekyll plugin architecture proved flexible and powerful, while Pandoc's conversion capabilities enabled professional document generation.
 
 Key technical achievements:
 
 - **Zero-configuration** document exports with sensible defaults
+- **Jekyll 3.x and 4.x** compatibility for broad ecosystem support
 - **Extensible hooks system** for custom processing workflows
 - **Performance optimization** with incremental builds and statistics
 - **Professional error handling** with dependency validation
+- **CI/CD ready** with GitHub Actions workflow integration
 
 The automated export functionality has streamlined my content workflow, and the release automation (from Part 1) enables sustainable open-source development.
 
-The plugin demonstrates how proper infrastructure investment enables rapid feature development and professional software delivery.
+The plugin demonstrates how proper infrastructure investment enables rapid feature development and professional software delivery. In [Part 3](/jekyll-pandoc-exports-resume-integration/), I cover the real-world integration into my resume site — where eating my own dog food uncovered Jekyll 3.x compatibility bugs, nil safety issues, and the surprising challenges of converting themed HTML into clean PDF and Word documents.
 
 ---
 
 **Series Resources:**
 
 - [Part 1: Release Automation](/ruby-gem-release-automation/)
+- [Part 3: Resume Integration](/jekyll-pandoc-exports-resume-integration/)
 - [GitHub Repository](https://github.com/mcgarrah/jekyll-pandoc-exports)
 - [Documentation Site](https://jekyll-pandoc-exports.readthedocs.io)
 - [RubyGems Package](https://rubygems.org/gems/jekyll-pandoc-exports)
