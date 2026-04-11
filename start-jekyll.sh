@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Setting up on Ubuntu 22.04 LTS / 24.04 LTS
 #
 # sudo apt -y install make build-essential ruby ruby-dev
@@ -22,15 +24,18 @@
 # Version: 1.7.0
 # Publisher: Dedsec727
 # VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run
-
-# File -> Perferences -> Settings (Ctrl+,)
+#
+# File -> Preferences -> Settings (Ctrl+,)
 #  Scroll to "Jekyll Run - Configuration"
-#  Add "--trace" for more detailed error message on build
-#  Add "--drafts" to see the "_drafts" folder posts
-#  Add "--future" to publishes posts with a future date
+#  Or set in .vscode/settings.json per workspace
 
-# bundle exec jekyll serve
+# Jekyll serve flags:
+#   --trace         Show full Ruby backtrace on errors
+#   --drafts        Render posts in the _drafts/ folder
+#   --future        Publish posts with a future date
+#   --unpublished   Render posts with published: false in front matter
+#   --livereload    Auto-refresh browser on file save
+#   --incremental   Only rebuild changed pages (faster, but restart
+#                   if edits to _includes/ or _layouts/ seem stale)
 
-# For Debug and Drafts
-
-bundle exec jekyll serve --trace --drafts --future
+bundle exec jekyll serve --trace --drafts --future --unpublished --livereload --incremental
