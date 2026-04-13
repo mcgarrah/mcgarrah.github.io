@@ -1,15 +1,24 @@
 ---
-title: "Jekyll and Markdown Feature Reference for This Blog"
+title: "How the Sausage Is Made: Every Feature Powering This Jekyll Blog"
 layout: post
 categories: [web-development, jekyll]
-tags: [jekyll, markdown, mermaid, katex, giscus, tutorial, reference]
-excerpt: "A comprehensive reference for all the Jekyll, Markdown, and custom features available on this blog — from basic formatting to Mermaid diagrams, KaTeX math, collapsible sections, and embedded content."
+tags: [jekyll, markdown, mermaid, katex, giscus, tutorial, reference, pandoc, seo, gdpr, github-pages]
+excerpt: "After 130+ posts and two years of Jekyll customization, here's the complete feature set behind this blog — from Mermaid diagrams and KaTeX math to GDPR compliance, Pandoc exports, and the SEO pipeline. A look behind the curtain at what it takes to run a technical blog on GitHub Pages."
+description: "Complete reference for all Jekyll, Markdown, and custom features on mcgarrah.org — Mermaid diagrams, KaTeX math, Giscus comments, GDPR cookie consent, Pandoc PDF/DOCX exports, SEO structured data, collapsible sections, and Font Awesome icons. Built on GitHub Pages with the Contrast theme."
+date: 2026-04-18
+last_modified_at: 2026-04-18
 mathjax: true
 mermaid: true
-published: false
+published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-04-18
+  date_modified: 2026-04-18
 ---
 
-This post is a living reference for every formatting and feature capability available on this blog. I consolidated it from years of test files and template experiments so I have one place to check syntax when writing new articles.
+This blog has been running on Jekyll and GitHub Pages since 2023, and over 130+ posts it has accumulated a lot of features. Every time I needed something — diagrams for a [Ceph architecture post](/proxmox-ceph-homelab-settings/), math notation for a [research article](/phonemes-aiml-research/), PDF exports for my [resume](/resume/) — I bolted it on.
+
+The result is a static site that does far more than most people expect from Jekyll. This post documents every feature, how it works, and the syntax to use it. It's the reference I wish I'd had when I started, and it's the one I actually use when writing new articles.
 
 <!-- excerpt-end -->
 
@@ -569,9 +578,68 @@ The `_includes/author-bio.html` include adds an author section to posts.
 
 The `_includes/sidebar.html` provides social links and external profiles when `show_sidebar: true` is set.
 
-## Theme Origin
+## Pandoc Exports
 
-This blog is built on the [Contrast](https://github.com/niklasbuschmann/contrast) theme by Niklas Buschmann, which itself draws from Hyde, Minima, and Lagrange. I've extended it significantly with Mermaid diagrams, KaTeX math, Giscus comments, GDPR compliance, code copy buttons, custom tag/category generators, and SEO optimizations.
+The [jekyll-pandoc-exports](/jekyll-pandoc-exports-plugin/) plugin generates PDF and DOCX versions of posts at build time using Pandoc. This powers the downloadable resume at [mcgarrah.org/resume/](/resume/).
+
+Enable per-post in front matter:
+
+```yaml
+---
+pandoc_export:
+  pdf: true
+  docx: true
+---
+```
+
+The plugin runs during `jekyll build`, converting the rendered HTML to PDF (via LaTeX) and DOCX. Output goes to `assets/pdfs/` and `assets/docx/`. See the [resume integration post](/jekyll-pandoc-exports-resume-integration/) for the full implementation.
+
+## The Stack at a Glance
+
+After all the additions, here's what powers this blog:
+
+| Feature | Implementation | Added |
+|---------|---------------|-------|
+| Static site | Jekyll 4.4.1 on GitHub Pages | 2023 |
+| Theme | Contrast (heavily modified) | 2023 |
+| Diagrams | Mermaid.js via front matter flag | 2025 |
+| Math | KaTeX via front matter flag | 2025 |
+| Comments | Giscus (GitHub Discussions) | 2024 |
+| Search | Google Custom Search | 2025 |
+| Analytics | Google Analytics (G-F90DVB199P) | 2024 |
+| GDPR | Custom cookie consent with EU detection | 2025 |
+| SEO | jekyll-seo-tag + structured data + health checks | 2025-2026 |
+| PDF/DOCX | jekyll-pandoc-exports plugin | 2026 |
+| Redirects | jekyll-redirect-from | 2025 |
+| Icons | Font Awesome 5.12.0 SVG sprite | 2023 |
+| Syntax highlighting | Rouge with copy buttons | 2024 |
+| Tags/Categories | Custom Ruby generator plugin | 2024 |
+
+The base theme is [Contrast](https://github.com/niklasbuschmann/contrast) by Niklas Buschmann, which draws from Hyde, Minima, and Lagrange. At this point, the customizations probably outweigh the original theme code.
+
+## What's Next
+
+Features I'm considering:
+
+- **Table of contents** — auto-generated from headings for longer posts
+- **Reading progress bar** — visual indicator for long articles
+- **Dark mode toggle** — the theme supports it but it's not exposed yet
+- **Image optimization** — automated compression in the build pipeline
+
+If you're building a Jekyll blog and want to see how any of this works, the [source code is on GitHub](https://github.com/mcgarrah/mcgarrah.github.io).
+
+## Related Posts
+
+- [Jekyll Pandoc Exports Plugin](/jekyll-pandoc-exports-plugin/) — The plugin that generates PDF and DOCX from posts
+- [Pandoc Exports Resume Integration](/jekyll-pandoc-exports-resume-integration/) — Using Pandoc exports for the downloadable resume
+- [Mermaid Diagram Rendering Challenges](/jekyll-mermaid-diagram-rendering-challenges/) — Getting Mermaid to work reliably in Jekyll
+- [Jekyll Website Optimization Part 1](/jekyll-website-optimization-part-1/) — Performance and structure improvements
+- [Jekyll Website Optimization Part 2](/jekyll-website-optimization-part-2/) — Further refinements
+- [Implementing GDPR Compliance for Jekyll and AdSense](/implementing-gdpr-compliance-jekyll-adsense/) — The cookie consent implementation
+- [Jekyll SEO Sitemap and Canonical URL Fixes](/jekyll-seo-sitemap-canonical-url-fixes/) — Fixing SEO plumbing
+- [Jekyll SEO Health Checks](/jekyll-seo-health-checks/) — Automated SEO validation in CI
+- [Adding Google Custom Search to Jekyll](/adding-google-custom-search-jekyll/) — Site search implementation
+- [Running GitHub Pages Jekyll Locally](/github-pages-jekyll-locally/) — Local development setup
 
 ## References
 
@@ -581,4 +649,5 @@ This blog is built on the [Contrast](https://github.com/niklasbuschmann/contrast
 - [KaTeX Documentation](https://katex.org/docs/supported.html)
 - [Mermaid Documentation](https://mermaid.js.org/)
 - [Giscus](https://giscus.app/)
+- [Pandoc User's Guide](https://pandoc.org/MANUAL.html)
 - [Jekyll Front Matter Defaults](https://jekyllrb.com/docs/configuration/front-matter-defaults/)
