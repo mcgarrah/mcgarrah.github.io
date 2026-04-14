@@ -193,7 +193,7 @@ jobs:
           fi
           
       - name: Check links with Lychee
-        uses: lycheeverse/lychee-action@v2.7.0
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
           args: --base https://mcgarrah.org --no-progress --exclude-path '_site/resume' '_site/**/*.html'
           fail: true
