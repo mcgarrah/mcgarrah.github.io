@@ -62,6 +62,35 @@ This is the question I didn't ask carefully enough when building the cluster, wh
 
 In my cluster, the nodes created via the Proxmox UI (edgar, poe) got DB, while the nodes created via CLI (harlan, kovacs, quell) got WAL-only. Both work fine, but future rebuilds will standardize on DB.
 
+### What Are WAL-Only Nodes Actually Losing?
+
+With 9 of 15 OSDs running WAL-only, the performance gap is worth understanding. The difference comes down to where RocksDB metadata reads happen:
+
+- **DB nodes (edgar, poe)**: metadata reads hit the MX500 SSD — sub-millisecond latency
+- **WAL-only nodes (harlan, kovacs, quell)**: metadata reads hit the USB HDD — 5-15ms seek latency per operation
+
+For a cluster with 2.94M objects, that's a lot of RocksDB lookups. The impact shows up in:
+
+- **Scrub operations** — each object's checksum requires a metadata lookup. WAL-only OSDs scrub slower because every lookup waits for an HDD seek.
+- **Recovery and backfill** — peering decisions require reading metadata for every PG. DB nodes peer faster after a restart.
+- **CephFS directory listings** — listing a directory with thousands of files triggers metadata reads for each entry. DB nodes respond noticeably faster.
+- **OSD startup time** — the OSD replays its RocksDB on startup. DB nodes boot faster because the replay reads from SSD.
+
+You can compare OSD latency between WAL-only and DB nodes with:
+
+```bash
+# Compare apply latency across OSDs (lower is better)
+for osd in 0 3 6 1 4 7; do
+  LAT=$(ceph osd perf 2>/dev/null | grep "^\s*$osd" | awk '{print $3}')
+  HOST=$(ceph osd metadata $osd 2>/dev/null | grep '"hostname"' | awk -F'"' '{print $4}')
+  TYPE="WAL"
+  ceph osd metadata $osd 2>/dev/null | grep -q bluefs_db && TYPE="DB"
+  echo "osd.$osd  $HOST  $TYPE  apply_latency: ${LAT}ms"
+done
+```
+
+I haven't run a formal A/B comparison yet — designing a test that isolates the WAL vs DB variable without disrupting a live cluster with 10 TiB of data is tricky. The OSDs serve different PGs with different access patterns, so raw latency numbers aren't directly comparable. A proper test would require creating matched OSDs on the same node with identical data, which means temporarily destroying and recreating an OSD. That's a project for a maintenance window, not a Tuesday afternoon. If I get to it, I'll publish the results as a follow-up.
+
 ## My Hardware Setup
 
 ### The AlteredCarbon Cluster
