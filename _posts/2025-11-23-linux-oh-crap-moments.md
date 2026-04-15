@@ -4,7 +4,7 @@ layout: post
 categories: [technical, troubleshooting]
 tags: [linux, debian, bash, recovery, proxmox, homelab, dell-wyse-3040]
 published: true
-last_modified_at: 2025-11-23
+last_modified_at: 2026-04-14
 ---
 
 We have all done it if you work long enough. I blew up my Debian Linux system with an incredibly stupid mistake breaking the whole system. It is actually one of the questions I have when interviewing someone. "What is the worst mistake you've ever made?" And if they admit one, the follow up question, "What did you learn?"
@@ -483,3 +483,10 @@ These resources helped me understand bash-only recovery techniques:
 - [Unix StackExchange: Moved /bin and other folders](https://unix.stackexchange.com/questions/17428/moved-bin-and-other-folders-how-to-get-them-back)
 
 The moral of the story? We all make mistakes. The key is having enough knowledge and preparation to recover from them. And maybe don't do system administration at 1 AM.
+
+## Related Posts
+
+- [Ceph OSD Recovery After Power Failure](/ceph-osd-recovery-power-failure/) — Another recovery story with higher stakes
+- [When ZFS and Ceph Problems Collide](/zfs-ceph-overlapping-failures/) — Overlapping failures and the mistakes made debugging them
+- [Essential CLI Tools for Linux System Management](/essential-cli-tools-linux/) — Tools that help prevent and recover from mistakes
+- [Proxmox 8 Lessons Learned](/proxmox-8-lessons-learned/) — More hard-won lessons from running infrastructure

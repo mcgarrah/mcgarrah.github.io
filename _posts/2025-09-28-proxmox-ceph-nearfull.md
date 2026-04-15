@@ -4,7 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, storage, monitoring, capacity, homelab, dell-wyse-3040]
 published: true
-last_modified_at: 2025-09-28
+last_modified_at: 2026-04-14
 ---
 
 When running Ceph in a homelab environment, especially on resource-constrained hardware like my [Dell Wyse 3040 cluster](/proxmox-8-dell-wyse-3040/), managing storage capacity becomes critical. Understanding Ceph's **Nearfull** warnings and how to respond to them can prevent your cluster from going read-only unexpectedly.
@@ -200,6 +200,15 @@ For more Ceph management guidance, see my articles on [Ceph performance tuning](
 
 - [Ceph Storage Capacity Documentation](https://docs.ceph.com/en/latest/rados/configuration/mon-config-ref/#storage-capacity)
 - [SUSE Support: Cluster Pools got marked read only, OSDs are near full](https://www.suse.com/support/kb/doc/?id=000019724)
+
+## Related Posts
+
+- [Proxmox Ceph Settings for the Homelab](/proxmox-ceph-homelab-settings/) — Tuning Ceph for homelab hardware
+- [Optimizing Ceph Performance in Proxmox](/proxmox-ceph-performance/) — mClock and IOPS optimization
+- [Homelab Storage Economics: Ceph vs Single Drive](/homelab-storage-economics/) — Cost analysis of distributed storage
+- [Hybrid Ceph Storage: SSD WAL/DB Acceleration](/ceph-ssd-wal-db-usb-storage/) — SSD acceleration architecture
+- [Ceph OSD Recovery After Power Failure](/ceph-osd-recovery-power-failure/) — Recovering from cascading OSD failures
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All Proxmox and Ceph articles
 
 *[PVE]: Proxmox Virtual Environment
 *[OSD]: Object Storage Daemon

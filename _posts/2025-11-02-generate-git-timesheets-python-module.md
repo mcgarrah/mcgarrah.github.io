@@ -4,7 +4,7 @@ layout: post
 categories: [technical, development]
 tags: [python, git, timetracking, automation, cli, development]
 published: true
-last_modified_at: 2025-11-24
+last_modified_at: 2026-04-14
 ---
 
 I hate time tracking. Seriously. Most time tracking tools require you to remember to start timers, categorize work, and generally interrupt your flow to feed some system that's probably going to be wrong anyway. But when you're freelancing or need to report hours on projects, you're stuck with it.
@@ -287,3 +287,8 @@ If you're tired of manual time tracking but need to report hours, give it a try.
 It's not revolutionary, but it's useful. Sometimes that's enough.
 
 [GitHub Repository](https://github.com/mcgarrah/git_timesheet_python) is available and it is a `pip` installable tool.
+
+## Related Posts
+
+- [Ruby Gem Release Automation](/ruby-gem-release-automation/) — Another CLI tool with automated release pipeline
+- [Essential CLI Tools for Linux System Management](/essential-cli-tools-linux/) — More useful command-line tools

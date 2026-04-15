@@ -4,7 +4,7 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, performance, mclock, iops, optimization, homelab, dell-wyse-3040]
 published: true
-last_modified_at: 2025-10-12
+last_modified_at: 2026-04-14
 ---
 
 Performance tuning Ceph in a homelab environment presents unique challenges, especially when running on USB storage and constrained hardware. After dealing with performance issues during cluster rebalancing and OSD expansion, I've learned valuable lessons about mClock configuration, IOPS optimization, and the realities of USB 3.0 storage performance.
@@ -283,3 +283,13 @@ For more Ceph optimization guidance, see my articles on [Ceph nearfull managemen
 - [dmClock Algorithm Paper](https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Gulati.pdf)
 - [Proxmox Forum: mClock IOPS Issues](https://forum.proxmox.com/threads/when-adding-a-new-osd-to-ceph-the-osd_mclock_max_capacity_iops_-hdd-ssd-values-do-not-appear-in-the-configuration-database.129132/post-697088)
 - [IBM Ceph OSD Capacity Determination](https://www.ibm.com/docs/en/storage-ceph/7?topic=scheduler-ceph-osd-capacity-determination)
+
+## Related Posts
+
+- [Proxmox Ceph Settings for the Homelab](/proxmox-ceph-homelab-settings/) — Base Ceph configuration and scrub tuning
+- [Managing Ceph Nearfull Warnings](/proxmox-ceph-nearfull/) — Capacity management under pressure
+- [Hybrid Ceph Storage: SSD WAL/DB Acceleration](/ceph-ssd-wal-db-usb-storage/) — SSD acceleration for USB-based OSDs
+- [Enabling SMART Monitoring on Seagate USB Drives](/usb-drive-smart/) — Health monitoring for USB Ceph drives
+- [Homelab Storage Economics: Ceph vs Single Drive](/homelab-storage-economics/) — Cost analysis of distributed storage
+- [Linux Disk I/O Performance in the Homelab](/linux-disk-io-quick-tests/) — Benchmarking methods for storage
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All Proxmox and Ceph articles

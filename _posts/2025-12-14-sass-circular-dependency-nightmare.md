@@ -5,7 +5,7 @@ categories: [web-development, technical]
 tags: [sass, jekyll, circular-dependency, architecture, debugging, github-pages]
 excerpt: "How a simple print stylesheet addition turned into a deep dive into SASS module architecture and the perils of circular dependencies."
 published: true
-last_modified_at: 2025-12-14
+last_modified_at: 2026-04-14
 mermaid: true
 ---
 
@@ -303,3 +303,9 @@ Now adding new stylesheets is straightforward: create the module, import variabl
 ---
 
 *This refactoring was part of ongoing improvements to my Jekyll website. You can see the complete implementation and follow similar patterns in your own projects.*
+
+## Related Posts
+
+- [Jekyll Website Optimization Part 1](/jekyll-website-optimization-part-1/) — The optimization work that led to this refactoring
+- [Jekyll Theme Missing Head and Body Tags](/jekyll-theme-missing-head-body-tags/) — Another theme architecture issue
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference for this blog

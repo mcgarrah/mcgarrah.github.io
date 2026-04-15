@@ -2,6 +2,8 @@
 title:  "Site to Site VPN for the Homelabs"
 layout: post
 published: false
+categories: [technical, networking]
+tags: [vpn, wireguard, tailscale, headscale, brume2, openwrt, gl-inet, networking, homelab, carp]
 ---
 
 ## VPN in a multi-site Home Network
@@ -57,3 +59,55 @@ I thought ahead have my two locations setup with different CIDR ranges of IP add
 ## Network Diagrams
 
 more tbd here...
+
+## VPN Technology Comparison: Tailscale / Headscale vs WireGuard on Brume2
+
+The Brume2 devices support both OpenVPN and WireGuard natively. The question is whether to use raw WireGuard directly on the Brume2 or layer a mesh VPN solution like Tailscale or Headscale on top.
+
+### WireGuard Direct (on Brume2)
+
+- Native support in GL.iNet firmware and OpenWRT
+- Full control over routing and split-tunnel configuration
+- No external dependencies or coordination servers
+- Manual key management and peer configuration
+- Best performance — runs directly on the hardware
+
+### Tailscale
+
+- WireGuard-based mesh VPN with automatic key management
+- NAT traversal handled automatically (DERP relay servers)
+- Easy client onboarding — works behind most firewalls without port forwarding
+- Coordination server is Tailscale-hosted (SaaS dependency)
+- Free tier available for personal use
+
+### Headscale
+
+- Self-hosted open-source implementation of the Tailscale coordination server
+- Same client-side experience as Tailscale but fully self-hosted
+- Could run as an LXC container on the Proxmox cluster
+- More complex to set up and maintain than Tailscale SaaS
+- Full control over the coordination plane
+
+### Decision Factors
+
+- Do I want to depend on Tailscale's SaaS for my homelab connectivity?
+- Is the Brume2 powerful enough to run Tailscale/Headscale client alongside its other duties?
+- How does this interact with the Google Nest Wifi Pro mesh at each site?
+- CARP (Common Address Redundancy Protocol) considerations for HA if running VPN on the Proxmox cluster instead of dedicated hardware
+
+TODO: Test WireGuard direct on Brume2 first, then evaluate Tailscale overlay.
+
+## CARP and High Availability Networking
+
+CARP (Common Address Redundancy Protocol) provides failover for network services using virtual IP addresses. Relevant if the VPN endpoint moves from dedicated Brume2 hardware to a virtualized solution on the Proxmox cluster.
+
+This ties into the broader question of whether network-critical services (VPN, DNS, DHCP) should run on dedicated hardware or as HA containers on the cluster. The risk of a cluster node reboot dropping all house networking is a real concern.
+
+Related: [Google WiFi with OpenWRT](/google-wifi-with-openwrt/) covers the OpenWRT side of this setup.
+
+## Reference Links
+
+- [Turn off DHCP on Google WiFi to use another DHCP Server](https://www.reddit.com/r/GoogleWiFi/comments/p0h4wu/turn_off_dhcp_on_google_wifi_to_use_another_dhcp/) — Relevant if running DHCP from the cluster
+- [Link Aggregation (LAG/LACP) overview video](https://youtu.be/NVO2UV_HQhs?si=pueS2LnSDVEhaxmE)
+- [LoRaWAN by Apalrd](https://youtu.be/HWF6Qm7JhJU?si=PwX1Ah21EFCPFa-j) — Long-range IoT networking option
+- [HP ProCurve CLI Cheat Sheet](https://community.spiceworks.com/how_to/85991-hp-procurve-cli-cheat-sheet) — Includes LAG/LACP configuration

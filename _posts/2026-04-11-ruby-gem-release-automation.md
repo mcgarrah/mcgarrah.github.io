@@ -505,3 +505,10 @@ Professional release automation isn't just about convenience — it's about enab
 - [GitHub Actions Workflows](https://github.com/mcgarrah/jekyll-pandoc-exports/tree/main/.github/workflows)
 - [bin/release Script](https://github.com/mcgarrah/jekyll-pandoc-exports/blob/main/bin/release)
 - [Read the Docs Configuration](https://github.com/mcgarrah/jekyll-pandoc-exports/blob/main/.readthedocs.yaml)
+
+## Related Posts
+
+- [Jekyll Pandoc Exports Plugin](/jekyll-pandoc-exports-plugin/) — Part 2: The plugin this pipeline releases
+- [Pandoc Exports Resume Integration](/jekyll-pandoc-exports-resume-integration/) — Part 3: Real-world integration and bug fixes
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference including Pandoc exports
+- [Building This Blog](/setting-up-jekyll-blog-github-pages/) — The Jekyll setup that uses this plugin

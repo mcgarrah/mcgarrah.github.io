@@ -4,7 +4,7 @@ layout: post
 categories: [technical, hardware]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab]
 published: true
-last_modified_at: 2026-04-03
+last_modified_at: 2026-04-14
 ---
 
 USB drives are notorious for hiding their SMART data behind finicky USB-to-SATA bridges. If you've ever tried to check the health of a Seagate USB drive and gotten frustrated with "unsupported field in scsi command" errors, you're not alone.
@@ -188,3 +188,11 @@ Now go forth and monitor those USB drives properly! Your future self will thank 
 cp /mnt/pve/cephfs/backups/usb-quirks.cfg /etc/default/grub.d/usb-quirks.cfg
 proxmox-boot-tool refresh
 ```
+
+## Related Posts
+
+- [USB Drive SMART Updates](/usb-drive-smart-updates/) — Updated device IDs and production deployment experience
+- [Hybrid Ceph Storage: SSD WAL/DB Acceleration](/ceph-ssd-wal-db-usb-storage/) — The storage architecture these drives support
+- [Proxmox Ceph Settings for the Homelab](/proxmox-ceph-homelab-settings/) — Ceph configuration for homelab hardware
+- [When ZFS and Ceph Problems Collide](/zfs-ceph-overlapping-failures/) — What happens when USB Ceph drives fail
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All Proxmox and Ceph articles

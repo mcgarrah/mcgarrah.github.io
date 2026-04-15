@@ -6,6 +6,7 @@ tags: [jekyll, mermaid, diagrams, javascript, plugins, rouge, syntax-highlightin
 excerpt: "How Jekyll 4.4's Rouge syntax highlighter interferes with Mermaid diagram rendering and why client-side rendering with Mermaid 11 is better than plugins."
 published: true
 mermaid: true
+last_modified_at: 2026-04-14
 ---
 
 While working on my [SASS architecture article](/sass-circular-dependency-nightmare/), I encountered a frustrating issue: my carefully crafted Mermaid diagram wasn't rendering. What seemed like a simple diagram display problem revealed deeper challenges with Jekyll's syntax highlighting and diagram integration.
@@ -208,3 +209,10 @@ The 2025 solution is cleaner than both plugins and custom workarounds.
 ---
 
 *This experience reinforced the value of understanding framework internals and choosing appropriate tools for the job.*
+
+## Related Posts
+
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference including Mermaid syntax
+- [SASS Circular Dependency Nightmare](/sass-circular-dependency-nightmare/) — Another Jekyll architecture deep dive
+- [Jekyll Website Optimization Part 1](/jekyll-website-optimization-part-1/) — Site structure improvements
+- [Jekyll Pandoc Exports Plugin](/jekyll-pandoc-exports-plugin/) — Another Jekyll plugin integration challenge

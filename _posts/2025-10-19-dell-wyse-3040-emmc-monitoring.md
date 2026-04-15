@@ -4,7 +4,7 @@ layout: post
 categories: [technical, hardware]
 tags: [dell-wyse-3040, emmc, monitoring, storage, health, homelab]
 published: true
-last_modified_at: 2025-10-19
+last_modified_at: 2026-04-14
 ---
 
 I found out awhile ago that eMMC storage is a different thing entirely when it comes to health monitoring. This is especially true when you're booting from it like on the [Dell Wyse 3040s](/tags/wyse3040/) of which I have several in my homelab. The goal is to get some status information on the eMMC storage health, but the usual SMART utilities don't work on eMMC.
@@ -153,3 +153,11 @@ For my [Dell Wyse 3040](/tags/wyse3040/) test cluster, this gives me confidence 
 The health monitoring was introduced in JEDEC standard revision 5.0. The [CNX Software article on eMMC wear estimation](https://www.cnx-software.com/2019/08/16/wear-estimation-emmc-flash-memory/) has good background on the technical details.
 
 For more [Dell Wyse 3040 content](/tags/wyse3040/), check out my other posts on running [Proxmox clusters on these units](/proxmox-8-dell-wyse-3040/) or [Tailscale on with Debian 12](/dell-wyse-3040-tailscale/).
+
+## Related Posts
+
+- [ProxMox 8.2.2 Cluster on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040/) — Building a cluster from thin clients
+- [Tailscale on Dell Wyse 3040](/dell-wyse-3040-tailscale/) — Remote access setup
+- [Dell Wyse 3040 CMOS Battery Replacement](/dell-wyse-3040-cmos-battery/) — Hardware maintenance
+- [Debian 12 SystemD Nightly Reboots on Dell Wyse 3040s](/dell-wyse-3040-reboot/) — Stability workarounds
+- [Essential CLI Tools for Linux System Management](/essential-cli-tools-linux/) — Monitoring tools used on these devices

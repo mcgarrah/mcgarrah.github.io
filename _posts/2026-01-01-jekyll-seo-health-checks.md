@@ -911,3 +911,11 @@ For Jekyll site owners serious about SEO performance, implementing a similar com
 ---
 
 *This comprehensive SEO health check system has been running in production since late 2025, processing weekly validations and maintaining consistent site quality. The complete workflow implementation is available in the [GitHub repository](https://github.com/mcgarrah/mcgarrah.github.io/blob/main/.github/workflows/seo-health-check.yml) for reference and adaptation.*
+
+## Related Posts
+
+- [Jekyll SEO Sitemap and Canonical URL Fixes](/jekyll-seo-sitemap-canonical-url-fixes/) — The fixes this system validates
+- [Jekyll Sitemap Bloat](/jekyll-sitemap-bloat-tags-categories-pagination/) — Sitemap issues caught by health checks
+- [Improving E-E-A-T for Jekyll and AdSense](/improving-eeat-jekyll-adsense/) — E-E-A-T signals monitored by this system
+- [Jekyll Website Optimization Part 2](/jekyll-website-optimization-part-2/) — Performance monitoring context
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference for this blog

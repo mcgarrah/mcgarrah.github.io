@@ -1,264 +1,83 @@
 # Jekyll Website TODO List
 
-## 🚀 Next Sprint (Immediate Focus - URGENT: AdSense Review)
+## High Impact
 
-### 🛡️ GDPR Compliance (PRIORITY 1 - Due: Next Day)
-- [x] **URGENT**: Implement cookie consent banner (GDPR compliance)
-- [x] **URGENT**: Update privacy policy with GDPR language
-- [x] **URGENT**: Make AdSense loading conditional on consent
-- [x] **URGENT**: Add consent management JavaScript
-- [x] **URGENT**: Fixed hardcoded values to use Jekyll config
-- [x] **TESTING**: Verify both AdSense and Analytics are blocked before consent ✅
-- [x] **TESTING**: Verify scripts load after consent given ✅
-- [x] **COMPLETE**: GDPR compliance ready for AdSense review 🎉
-- [x] **ENHANCEMENT**: Added region detection - EU shows banner, US auto-consents 🌍
+### Front Matter Hygiene
 
-### Quick Wins (< 2 hours each)
-- [x] Add Google Search Console verification file
-- [x] Update meta descriptions for better SEO
-- [ ] Add missing alt tags to images
-- [ ] Create proper favicon set (multiple sizes)
-- [x] Inconsistent tags and categories in articles
-- [x] Verify Mermaid diagrams work on Github and not just local - SASS article has one
-- [x] Implement Mermaid diagram support using modern Mermaid 11 ES modules
-- [x] Create article documenting Jekyll Mermaid integration challenges and solutions
-- [x] Fix nested code block rendering issues in Jekyll articles
+The blog has 139 published posts but front matter completeness varies widely. Older posts (2001-2016) have minimal front matter while newer posts have full SEO optimization. Filling these gaps improves search engine visibility across the entire archive.
 
-### SEO Foundation (High Impact)
-- [x] Add jekyll-seo-tag plugin for better meta tags and structured data
-- [x] Implement proper Open Graph and Twitter Card meta tags
-- [x] Add JSON-LD structured data for articles
-- [x] Create comprehensive robots.txt file
-- [x] Configure site URL and SEO metadata in _config.yml
-- [x] Add Google site verification code
-- [x] Create logo image for structured data
+- [ ] Add `description` to posts missing it (120 of 139 posts) — Google uses this for search result snippets in SERPs. Without it, Google auto-generates a snippet from page content, which is often a poor representation of the article. The `jekyll-seo-tag` plugin renders this as `<meta name="description">`. Target 150-160 characters per post.
+- [ ] Add `tags` to posts missing them (50 of 139 posts) — Tags drive the tag page generator and help readers discover related content. Posts without tags are invisible to tag-based navigation. Many of the 50 untagged posts are from 2001-2015 and predate the tag system.
+- [ ] Add `<!-- excerpt-end -->` separator to posts missing it (34 of 139, mostly 2004-2015) — Without the custom separator, Jekyll uses the first paragraph as the excerpt. For technical posts that start with context-setting, this produces unhelpful homepage previews. The 34 missing posts are deep in pagination but still appear in RSS feeds and search results.
+- [ ] Add `last_modified_at` to posts missing it (62 of 139) — The `jekyll-seo-tag` plugin uses this to generate `<meta property="article:modified_time">`, signaling content freshness to search engines. Posts updated since original publication should reflect the update date. Google may rank recently-modified content higher for competitive queries.
+- [ ] Add missing alt tags to images — Required for accessibility (screen readers) and SEO (Google Image Search). The SEO health check workflow already flags these but doesn't block deploys.
 
-## 📈 Performance & UX Improvements
+### Tag Hygiene
 
-### User Experience Enhancements
-- [ ] Create reading progress indicator
-- [ ] Add "related posts" section to post layout
-- [ ] Implement breadcrumb navigation
-- [ ] Add share buttons for social media
-- [ ] Add tag cloud visualization
+- [ ] Consolidate singleton tags — 138 of 237 tags are used on only one post. Each generates a tag page with a single post, marked `noindex` by the tag generator plugin. These dilute the tag system's usefulness for navigation. Merge singleton tags into existing broader tags where possible (e.g., merge `dart-sass` into `sass`, merge `serial-console` into `configuration`). This would reduce generated pages and make the `/tags/` index more useful.
 
-### Performance Optimizations
-- [ ] Implement lazy loading for images
-- [ ] Add image optimization and responsive images
-- [ ] Optimize CSS delivery (inline critical CSS)
-- [ ] Add WebP image format support
+### Resume Repo Gemfile
 
-## 🔧 Content & Site Management
+The resume site at `mcgarrah.org/resume/` has two Gemfile issues that could cause unexpected breakage:
 
-### Content Organization
-- [ ] Consolidate and clean up old posts from 2001-2016
-- [ ] Create post templates for common topics (technical, personal)
-- [ ] Add author bio section to posts
-- [ ] Implement post series/collections feature
+- [ ] Pin Jekyll version in resume `Gemfile` with `~>` constraint — Currently `gem "jekyll"` with no version. A `bundle update` could jump from Jekyll 3.x to 4.x (or beyond) without warning, breaking the build. The blog pins `gem "jekyll", "~> 4.4.1"` which allows patch updates but prevents major version surprises.
+- [ ] Resolve `jekyll` + `github-pages` gem conflict — Both `gem "jekyll"` and `gem 'github-pages'` are present. The `github-pages` gem bundles its own pinned Jekyll version (currently 3.10.x). Having both can cause version resolution conflicts where Bundler picks an unexpected Jekyll version. Choose one: either use `github-pages` (which pins Jekyll for you but limits plugin choices) or use standalone `jekyll` with a pinned version (which gives full control but requires a custom GitHub Actions build).
 
-### Content Creation Tools
-- [ ] PDF version of resume auto-generation
-- [ ] Create technical cheat sheets section
-- [ ] Add code snippet collection
-- [ ] Implement photo gallery for projects
+## Quick Wins
 
-## 🛡️ Security & Compliance
+- [ ] Create proper favicon set (16x16, 32x32, 180x180 Apple Touch, `site.webmanifest`) — Currently only a basic `favicon.ico` exists at the site root. Modern browsers and mobile devices expect multiple sizes. Missing favicons cause 404s in server logs and a generic icon on mobile home screens. Tools like [RealFaviconGenerator](https://realfavicongenerator.net/) can generate the full set from a single source image.
+- [ ] Upgrade `http://` links to `https://` in old posts (2011-2015 era) — Several old posts link to Wikipedia, blogspot, SourceForge, and other sites using `http://`. These sites all support HTTPS now. Mixed content warnings aside, `https://` links are a minor trust signal and prevent browser security warnings. Simple find-and-replace across the affected posts.
 
-### External Dependency Management (SECURITY PRIORITY)
-- [x] **COMPLETE**: Set up dependency scanning for CDN libraries
-- [x] **COMPLETE**: Created package.json to track npm dependencies for security scanning
-- [x] **COMPLETE**: Updated dependabot.yml to include npm ecosystem monitoring
-- [x] **COMPLETE**: Monitor external JavaScript dependencies for security updates:
-  - Mermaid: `https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs`
-  - KaTeX: `https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css`
-  - KaTeX JS: `https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js`
-  - KaTeX Auto-render: `https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js`
-  - Clipboard.js: `https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js`
-  - Google Tag Manager: `https://www.googletagmanager.com/gtag/js?id=G-F90DVB199P` (Google-managed)
-  - Giscus: `https://giscus.app/client.js` (GitHub-managed)
-- [ ] Consider using Subresource Integrity (SRI) hashes for CDN resources
-- [ ] **FUTURE**: Evaluate switching to self-hosted versions of critical libraries
+## Resume Repo CI/CD Parity
 
-### Security Headers
-- [ ] Add Content Security Policy (CSP) headers
-- [ ] Implement HTTP security headers (HSTS, X-Frame-Options, etc.)
-- [ ] Add security headers
+The blog has three GitHub Actions workflows (build/deploy, CodeQL, SEO health check), Dependabot across three ecosystems, and Lighthouse CI. The resume repo has only the build workflow and Dependabot. Given that the resume is a professional asset — often the first thing a potential employer sees — it deserves the same quality gates.
 
-### Privacy & Compliance
-- [ ] **MOVED TO PRIORITY 1**: Implement cookie consent banner (GDPR compliance)
-- [ ] Add privacy-focused analytics (Plausible or similar)
-- [ ] Add data processing transparency documentation
-- [ ] Implement right to data deletion process
+- [ ] Add SEO health check workflow to resume repo — Validate canonical URLs, meta tags, structured data, and broken links. The blog's `seo-health-check.yml` can be adapted with minimal changes.
+- [ ] Add Lighthouse CI config to resume repo — Performance, accessibility, and SEO scoring. The blog's `.lighthouserc.json` is a good starting template. The resume should score ≥0.9 on accessibility since it's a professional document.
+- [ ] Add CodeQL workflow to resume repo — Security scanning for the GitHub Actions workflows themselves. Low effort (copy the blog's `codeql.yml`), low maintenance, free on public repos.
+- [ ] Pin all gem versions in resume `Gemfile` with `~>` constraints — Match the blog's approach of pessimistic version constraints on every gem. Prevents surprise breakage from major version jumps during `bundle update`.
 
-## 📊 Analytics & Monitoring
+## User Experience
 
-### SEO & Indexing Issues (URGENT)
-- [x] **COMPLETE**: Fix Google Search Console indexing issues:
-  - "Duplicate without user-selected canonical" - Added canonical URLs
-- [x] Add canonical URL meta tags to all pages
-- [x] **COMPLETE**: Fix "Not found (404)" errors - Added robots.txt blocks for problematic URLs
-- [x] Audit internal links for 404 errors - Found kramdown test files and high pagination numbers
-- [x] Check pagination URLs (page2, page3, etc.) - Jekyll generates pages 2-26, all legitimate
-- [x] **COMPLETE**: Clean _site folder regeneration - Removed testing artifacts causing 404s
-- [x] **COMPLETE**: Fix redirect issues - Aligned canonical URLs with GitHub Pages (mcgarrah.org)
-- [x] Review category/tag page canonical URLs - Working correctly
-- [x] **COMPLETE**: Document SEO fixes - Created comprehensive article (2025-01-11)
-- [x] **COMPLETE**: Implement SEO health check automation - GitHub Actions workflow
-- [ ] Submit updated sitemap to Google Search Console
+- [ ] Add share buttons for social media — Reduce friction for readers who want to share posts on LinkedIn, Reddit, or Twitter/X. The `jekyll-codex.org` without-plugin approach avoids adding JavaScript dependencies. Currently readers must manually copy the URL.
+- [ ] Create reading progress indicator (scroll-based) — A thin progress bar at the top of the page showing how far through the article the reader is. Different from the existing "X min read" estimate which is static. Useful for long technical posts (some exceed 3,000 words).
+- [ ] Implement breadcrumb navigation — Show the path (Home > Category > Post) at the top of each page. Helps readers understand site structure and navigate up. Also generates breadcrumb structured data that Google displays in search results.
+- [ ] Add tag cloud visualization — A visual representation of all tags weighted by post count on the `/tags/` page. More engaging than the current flat list. Should be done after tag hygiene cleanup to avoid displaying 138 singleton tags.
+- [ ] Add automated "related posts" to post layout — 16 of 139 posts have hand-curated "Related Posts" sections (all from Sep 2025 onward). Manual cross-references are higher quality but don't scale to the 123 older posts. An automated solution via `site.related_posts` or tag-based matching would provide baseline related content for every post. Could coexist with manual sections where they exist.
 
-### Performance Monitoring
-- [ ] Implement performance monitoring
-- [ ] Add uptime monitoring
-- [ ] Create analytics dashboard
+## Performance
 
-## 🌐 Advanced Features (Future)
+- [ ] Implement lazy loading for images — Add `loading="lazy"` to `<img>` tags so images below the fold don't load until the reader scrolls to them. Improves initial page load time, especially on image-heavy posts like the PiKVM parts list or network diagrams.
+- [ ] Add responsive images and WebP format support — Serve appropriately sized images based on viewport width and modern formats where supported. Reduces bandwidth for mobile readers. Would require an image processing step in the build pipeline.
+- [ ] Optimize CSS delivery (inline critical CSS) — Extract above-the-fold CSS and inline it in the `<head>` to eliminate the render-blocking stylesheet request. Improves First Contentful Paint in Lighthouse scores.
 
-### Accessibility & Internationalization
-- [ ] Add keyboard navigation support
-- [ ] Implement skip-to-content links for accessibility
-- [ ] Multi-language support (English/Spanish)
+## Content Organization
 
-### Advanced Functionality
-- [ ] Add newsletter signup
-- [ ] Implement full-text search with indexing
-- [ ] Add comment moderation system
-- [ ] Create mobile app manifest (PWA)
-- [ ] Implement service worker for offline functionality
+- [ ] Consolidate and clean up old posts from 2001-2016 — The oldest posts are short, lack front matter, and some have broken formatting from platform migrations (WordPress → Blogger → Jekyll). Consider adding a "vintage" category, updating front matter, and fixing formatting issues. Some may be candidates for merging into retrospective posts.
+- [ ] Audit and fix dead links in old posts (2011-2015 era) — Posts from this era link to blogspot blogs, old Seagate forums, SourceForge projects, and other sites that may no longer exist. The Lychee link checker in the SEO workflow catches new breakage, but a one-time audit of the ~14 unique external URLs in the oldest posts would clean up existing link rot. Replace dead links with Wayback Machine archives where possible.
+- [ ] Create post templates for common topics (technical, personal) — Standardize front matter and section structure for recurring post types (homelab walkthrough, Jekyll feature, hardware review, opinion piece). Reduces the friction of starting a new post and ensures consistent SEO metadata.
+- [ ] Implement post series/collections feature — Group related posts into named series (e.g., "Proxmox & Ceph Homelab", "Jekyll Blog Infrastructure") with previous/next navigation. Jekyll collections or a custom Liquid include could handle this. The [Proxmox & Ceph Guide](/proxmox-ceph-guide/) page is a manual version of this concept.
 
-### Infrastructure & Scaling
-- [ ] Set up CDN for assets
-- [ ] Implement caching strategy
-- [ ] Set up automated backups
-- [ ] Add loading states for dynamic content
+## Security
 
-## 🔍 SEO & Discoverability (Nice to Have)
+- [ ] Add Subresource Integrity (SRI) hashes for CDN resources — CDN-loaded scripts (Mermaid, KaTeX, Clipboard.js) could be tampered with if the CDN is compromised. SRI hashes ensure the browser only executes scripts that match the expected hash. Requires updating hashes when CDN versions change (Dependabot PRs would be the trigger).
+- [ ] Evaluate self-hosting critical libraries (Mermaid, KaTeX, Clipboard.js) — Eliminates CDN dependency entirely. Trade-off: larger repository, manual version updates, but no external runtime dependency. The `package.json` already tracks these versions for security scanning.
+- [ ] Add Content Security Policy (CSP) headers — Restrict which domains can serve scripts, styles, and images on the site. Prevents XSS attacks by blocking unauthorized script execution. GitHub Pages has limited header support, but a `<meta>` tag CSP in the HTML head provides baseline protection.
+- [ ] Implement HTTP security headers (HSTS, X-Frame-Options) — HSTS forces HTTPS connections. X-Frame-Options prevents clickjacking. GitHub Pages handles HSTS at the infrastructure level, but explicit headers in the HTML provide defense in depth.
 
-- [ ] Add XML sitemap index for better organization
-- [ ] Implement canonical URLs for duplicate content
-- [ ] Add meta robots tags for better crawling control
-- [ ] Create HTML sitemap page for users
-- [ ] Create custom 403 and other HTTP error pages
+## Accessibility
 
-## Completed Items
+- [ ] Add keyboard navigation support — Ensure all interactive elements (navigation, code copy buttons, tag links) are reachable and operable via keyboard. Test with Tab, Enter, and arrow keys. Important for users who can't use a mouse.
+- [ ] Implement skip-to-content links — A hidden link at the top of each page that becomes visible on keyboard focus, allowing screen reader and keyboard users to skip the navigation and jump directly to the main content. Standard accessibility pattern.
 
-- [x] Jekyll code copy to clipboard buttons
-- [x] GitHub Comments integration (Giscus)
-- [x] Tags and Categories system
-- [x] RSS feed and sitemap
-- [x] Google Analytics and AdSense integration
-- [x] Scheduled builds for future posts
-- [x] Reading time indicator
-- [x] Update Jekyll to latest version (4.4.1)
-- [x] Basic favicon implementation (favicon.ico exists)
-- [x] Google AdSense ads.txt file
-- [x] Add site search functionality (Google Custom Search)
-- [x] Add proper error pages (404, 500) with custom styling
-- [x] Add dark/light theme toggle (implemented via CSS `prefers-color-scheme` media query)
-- [x] Add print stylesheet
-- [x] Create archive page with year/month filtering (basic archive page exists at /archive/)
-- [x] robots.txt file (comprehensive custom version with proper directives)
-- [x] Jekyll SEO Tag plugin for automated meta tags and structured data
-- [x] Open Graph and Twitter Card meta tags
-- [x] JSON-LD structured data for articles and author information
-- [x] Enhanced site configuration with proper URLs and SEO metadata
-- [x] Mermaid diagram support with modern ES modules API
-- [x] Jekyll Mermaid integration article (2025-09-18)
-- [x] Fixed nested code block rendering in Jekyll markdown
+## Privacy
 
-## Notes
+- [ ] Evaluate privacy-focused analytics (Plausible or similar) — Google Analytics requires GDPR consent management and loads third-party JavaScript. Plausible is lightweight (~1KB), cookie-free, GDPR-compliant by default, and could replace or supplement GA. Trade-off: paid service ($9/month) vs free GA with consent complexity.
 
-### Technical Stack
-- Jekyll version: 4.4.1
-- Ruby version: 3.2.0
-- Hosted on: GitHub Pages
-- Custom domain: www.mcgarrah.org
-- SSL/TLS: Enabled via GitHub Pages
+## Future Considerations
 
-### Content Management
-- Total posts: 100+ articles (2001-2025)
-- Post pagination: 4 posts per page
-- Future posts: Disabled (future: false)
-- Excerpt separator: `<!-- excerpt-end -->`
-- Permalink structure: `/:title/`
-
-### Search & Discovery
-- Google Custom Search Engine: 50dc9b6524efa45a0
-- XML Sitemap: Auto-generated via jekyll-sitemap
-- RSS Feed: Auto-generated via jekyll-feed
-- Archive page: Chronological post listing
-- Tags system: Automated tag pages
-- Categories system: Automated category pages
-
-### User Experience Features
-- Automatic dark/light theme switching (prefers-color-scheme)
-- Reading time indicators on posts
-- Code copy-to-clipboard buttons
-- Print-optimized stylesheets
-- Custom 404/500 error pages with haiku
-- Responsive design with sidebar navigation
-- Mobile-friendly layout
-
-### Analytics & Monetization
-- Google Analytics: G-F90DVB199P
-- Google AdSense: ca-pub-2421538118074948
-- AdSense ads.txt file configured
-
-### Comments & Engagement
-- Giscus integration (GitHub Discussions)
-- Repository: mcgarrah/mcgarrah.github.io
-- Category: Announcements (DIC_kwDOKBKId84Cq3DK)
-- Theme: Matches site's preferred color scheme
-
-### Build & Deployment
-- Automated builds via GitHub Actions
-- Scheduled builds for future post releases
-- Jekyll plugins: jekyll-feed, jekyll-sitemap, jekyll-paginate
-- Custom tag/category generator plugin
-
-### Performance Features
-- Font optimization with PT Sans web fonts
-- Syntax highlighting with Rouge
-- KaTeX support for mathematical expressions
-- Optimized CSS with SASS preprocessing
-
-## 📋 Project Management
-
-### Current Sprint Status
-- **In Progress**: None
-- **Blocked**: None
-- **Next Up**: Quick Wins section
-
-### Effort Estimates
-- 🟢 Quick (< 2 hours)
-- 🟡 Medium (2-8 hours) 
-- 🔴 Large (> 8 hours)
-
-### Impact vs Effort Matrix
-- **High Impact, Low Effort**: SEO Foundation, Quick Wins
-- **High Impact, High Effort**: Performance Optimizations, Content Organization
-- **Low Impact, Low Effort**: Nice to have features
-- **Low Impact, High Effort**: Advanced Features (future consideration)
-
-
-Blog Post SEO Front Matter
-
-**Enhanced front matter template:**
-```yaml
----
-title: "Your Post Title"
-layout: post
-categories: [category1, category2]
-tags: [tag1, tag2, tag3]
-excerpt: "Brief description for listings"
-description: "Detailed meta description for SEO (150-160 chars)"
-image: /assets/images/post-image.png
-author: Michael McGarrah
-date: YYYY-MM-DD
-last_modified_at: YYYY-MM-DD
-published: true
-seo:
-  type: BlogPosting
-  date_published: YYYY-MM-DD
-  date_modified: YYYY-MM-DD
----
-```
+- [ ] Multi-language support (English/Spanish) — Would differentiate the blog and reach a broader audience. The [Polyglot plugin](https://github.com/untra/polyglot/) handles Jekyll multi-language sites. Start with ES and EN. Significant ongoing effort to maintain translations. Reference: [Multilingual Jekyll site guide](https://leo3418.github.io/collections/multilingual-jekyll-site/).
+- [ ] Full-text search with local indexing (beyond Google Custom Search) — Google Custom Search depends on Google's index and shows ads on the free tier. A local search index (Lunr.js, Pagefind) would provide instant, ad-free search without external dependencies. Trade-off: increases build time and JavaScript bundle size.
+- [ ] Progressive Web App (PWA) manifest and service worker — Allow readers to "install" the blog on mobile home screens and read cached content offline. Useful for readers in low-connectivity environments. Requires a `manifest.json` and service worker JavaScript.
+- [ ] Custom 403 error page — The blog has custom 404 and 500 pages with haiku but no 403 (Forbidden). Low priority since GitHub Pages rarely serves 403s, but completes the error page set.
+- [ ] Performance and uptime monitoring — External monitoring (UptimeRobot, Pingdom free tier) to alert if the site goes down. GitHub Pages is generally reliable but outages happen. Also useful for tracking response time trends.

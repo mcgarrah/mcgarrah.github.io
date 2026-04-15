@@ -4,7 +4,7 @@ layout: post
 categories: [technical, reference]
 tags: [linux, cli, monitoring, tools, sysadmin, homelab]
 published: true
-last_modified_at: 2025-11-16
+last_modified_at: 2026-04-14
 ---
 
 After years of managing Linux systems - from my [Dell Wyse 3040 Proxmox cluster](/tags/wyse3040/) to various VMs and containers - I've accumulated a collection of command-line tools that I reach for constantly. These aren't exotic utilities, but rather the practical tools that help me figure out what's actually happening when systems misbehave.
@@ -184,3 +184,10 @@ I don't use currently exotic monitoring solutions for my homelab, but maybe I sh
 The [Monadical - Unix System Monitoring and Diagnostic CLI Tools](https://monadical.com/posts/system-monitoring-tools.html) has a comprehensive list if you want to explore more options. I borrowed some ideas from their organization of the tools.
 
 For my Proxmox-specific monitoring needs, I covered some of these tools in my [Dell Wyse 3040 cluster posts](/proxmox-8-dell-wyse-3040/).
+
+## Related Posts
+
+- [Dell Wyse 3040 eMMC Storage Health Monitoring](/dell-wyse-3040-emmc-monitoring/) — Monitoring embedded storage with CLI tools
+- [Linux Disk I/O Performance in the Homelab](/linux-disk-io-quick-tests/) — Benchmarking with command-line tools
+- [Debian Linux Oh-Crap Moment](/linux-oh-crap-moments/) — When CLI skills save the day
+- [Generate Git Timesheet from Commit Logs](/generate-git-timesheets-python-module/) — Another useful CLI tool

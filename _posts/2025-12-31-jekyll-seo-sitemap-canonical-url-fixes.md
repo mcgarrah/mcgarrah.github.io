@@ -354,3 +354,11 @@ These fixes resulted in immediate improvements in Google Search Console metrics 
 ---
 
 *This article documents the SEO fixes implemented on my Jekyll blog in January 2025. The complete source code and configuration can be found in my [GitHub repository](https://github.com/mcgarrah/mcgarrah.github.io).*
+
+## Related Posts
+
+- [Jekyll SEO Health Checks](/jekyll-seo-health-checks/) — Automated validation of these fixes
+- [Jekyll Sitemap Bloat](/jekyll-sitemap-bloat-tags-categories-pagination/) — Further sitemap optimization
+- [Implementing GDPR Compliance for Jekyll](/implementing-gdpr-compliance-jekyll-adsense/) — Privacy compliance that affects SEO
+- [Jekyll Website Optimization Part 1](/jekyll-website-optimization-part-1/) — Broader site optimization
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference for this blog

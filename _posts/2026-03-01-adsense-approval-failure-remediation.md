@@ -577,3 +577,11 @@ I've implemented every fix I can identify:
 *This is a living document. I'll update it as I progress through the resubmission process and receive (hopefully more specific) feedback from Google.*
 
 **Current Mood:** Frustrated but determined. I've done everything I can identify. Now it's up to Google.
+
+## Related Posts
+
+- [Implementing GDPR Compliance for Jekyll](/implementing-gdpr-compliance-jekyll-adsense/) — The original GDPR implementation for AdSense
+- [Fixing AdSense Verification Without Breaking GDPR](/adsense-verification-gdpr-script-loading-fix/) — The architectural fix that resolved the verification issue
+- [Improving E-E-A-T for Jekyll and AdSense](/improving-eeat-jekyll-adsense/) — E-E-A-T signals for approval
+- [Jekyll SEO Sitemap and Canonical URL Fixes](/jekyll-seo-sitemap-canonical-url-fixes/) — SEO fixes that contributed to approval
+- [Jekyll SEO Health Checks](/jekyll-seo-health-checks/) — Automated validation of SEO requirements

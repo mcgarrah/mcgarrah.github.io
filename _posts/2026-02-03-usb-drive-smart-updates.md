@@ -180,3 +180,11 @@ For Ceph environments, SMART monitoring isn't optional—it's essential. This so
 
 - [Original USB SMART article](/2025/10/26/usb-drive-smart/) - Complete exploration of all methods
 - [smartmontools documentation](https://www.smartmontools.org/) - SMART monitoring tools
+
+## Related Posts
+
+- [Enabling SMART Monitoring on Seagate USB Drives](/usb-drive-smart/) — The original deep dive into USB SMART quirks
+- [Hybrid Ceph Storage: SSD WAL/DB Acceleration](/ceph-ssd-wal-db-usb-storage/) — The storage architecture these drives support
+- [When ZFS and Ceph Problems Collide](/zfs-ceph-overlapping-failures/) — USB drive failure and OSD replacement
+- [Ceph OSD Recovery After Power Failure](/ceph-osd-recovery-power-failure/) — Recovering from USB drive failures after power loss
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All Proxmox and Ceph articles

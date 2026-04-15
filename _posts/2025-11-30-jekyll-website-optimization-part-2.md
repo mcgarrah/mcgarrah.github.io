@@ -4,7 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, analytics, performance, monitoring]
 published: true
-last_modified_at: 2025-11-30
+last_modified_at: 2026-04-14
 ---
 
 In [Part 1](/jekyll-website-optimization-part-1/) of this series, we covered the foundational optimizations for Jekyll sites on GitHub Pages. Part 2 dives into advanced analytics, performance monitoring, and the lessons learned from running a technical blog with 100+ posts.
@@ -456,3 +456,11 @@ The combination of Jekyll's flexibility, GitHub's reliability, and thoughtful op
 - [Jekyll Performance Tips](https://jekyllrb.com/docs/performance/)
 - [GitHub Pages Optimization](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)
 - [Web Performance Best Practices](https://web.dev/fast/)
+
+## Related Posts
+
+- [Jekyll Website Optimization Part 1](/jekyll-website-optimization-part-1/) — First round of improvements
+- [Jekyll SEO Health Checks](/jekyll-seo-health-checks/) — Automated SEO and performance monitoring
+- [Implementing GDPR Compliance for Jekyll](/implementing-gdpr-compliance-jekyll-adsense/) — Privacy compliance implementation
+- [Adding Google Custom Search to Jekyll](/adding-google-custom-search-jekyll/) — Site search feature
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference for this blog

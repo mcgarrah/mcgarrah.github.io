@@ -4,7 +4,7 @@ layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, seo, performance, website]
 published: true
-last_modified_at: 2025-11-27
+last_modified_at: 2026-04-14
 ---
 
 After running this Jekyll-based website for a couple years (since July of 2023), I've learned valuable lessons about optimizing Jekyll sites for GitHub Pages. This blog initially started as a consolidation of several blog websites I'd published over the years. This is Part 1 of a two-part series covering the foundational optimizations that have made the biggest difference for my homelab blog.
@@ -283,3 +283,11 @@ Stay tuned for Part 2, where we'll explore advanced optimizations and dive deepe
 - [GitHub Pages Documentation](https://docs.github.com/en/pages)
 - [Contrast Theme](https://github.com/niklasbuschmann/contrast) - Original theme
 - [Giscus](https://giscus.app/) - GitHub Discussions comment system
+
+## Related Posts
+
+- [Jekyll Website Optimization Part 2](/jekyll-website-optimization-part-2/) — Continued optimization and analytics
+- [SASS Circular Dependency Nightmare](/sass-circular-dependency-nightmare/) — Stylesheet architecture lessons
+- [Jekyll SEO Sitemap and Canonical URL Fixes](/jekyll-seo-sitemap-canonical-url-fixes/) — SEO plumbing fixes
+- [Adding Google Custom Search to Jekyll](/adding-google-custom-search-jekyll/) — Site search implementation
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference for this blog

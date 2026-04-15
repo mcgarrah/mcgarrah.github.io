@@ -4,7 +4,7 @@ layout: post
 categories: [homelab, storage]
 tags: [ceph, storage, costs, homelab, economics, backup]
 published: true
-last_modified_at: 2025-11-26
+last_modified_at: 2026-04-14
 ---
 
 After building and running a Ceph cluster for my homelab, I've gained valuable insights into the real-world economics of distributed storage versus traditional single-drive solutions. This analysis breaks down the actual costs per GB across different storage strategies in my setup.
@@ -173,3 +173,12 @@ The backup drives? They're the unsung heroes of this setup. That 20TB drive back
 **Bottom Line**: If you're just looking for cheap storage, buy the biggest external drive you can afford. But if you want to learn about distributed systems, have some redundancy, and don't mind paying the "education tax," Ceph is pretty amazing. Just don't tell my wife how much those drives actually cost.
 
 The real lesson here? Different storage serves different purposes. Sometimes you pay for convenience, sometimes for reliability, and sometimes just for the fun of learning something new. In my homelab, all three have their place.
+
+## Related Posts
+
+- [Proxmox Ceph Settings for the Homelab](/proxmox-ceph-homelab-settings/) — Tuning Ceph for homelab hardware
+- [Hybrid Ceph Storage: SSD WAL/DB Acceleration](/ceph-ssd-wal-db-usb-storage/) — The hybrid architecture that balances cost and performance
+- [Managing Ceph Nearfull Warnings](/proxmox-ceph-nearfull/) — What happens when capacity gets tight
+- [Enabling SMART Monitoring on Seagate USB Drives](/usb-drive-smart/) — Monitoring the USB drives that make this affordable
+- [Hard Drive Costs](/hard-drive-costs/) — Historical pricing context
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All Proxmox and Ceph articles

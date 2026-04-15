@@ -323,3 +323,10 @@ The implementation took less than 30 minutes and immediately improved the site's
 ---
 
 *This feature has been added to my website as part of ongoing improvements. You can see the search functionality in action at the [Search](/search/) page.*
+
+## Related Posts
+
+- [Jekyll Website Optimization Part 1](/jekyll-website-optimization-part-1/) — Site structure improvements
+- [Jekyll Website Optimization Part 2](/jekyll-website-optimization-part-2/) — Analytics and performance
+- [Jekyll SEO Health Checks](/jekyll-seo-health-checks/) — Automated validation including search indexing
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference for this blog

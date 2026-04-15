@@ -282,3 +282,10 @@ Both files are served from `/resume/downloads/` and linked directly from the res
 - [Documentation Site](https://jekyll-pandoc-exports.readthedocs.io)
 - [RubyGems Package](https://rubygems.org/gems/jekyll-pandoc-exports)
 - [Resume Site Integration](https://github.com/mcgarrah/resume)
+
+## Related Posts
+
+- [Ruby Gem Release Automation](/ruby-gem-release-automation/) — Part 1: The CI/CD pipeline
+- [Jekyll Pandoc Exports Plugin](/jekyll-pandoc-exports-plugin/) — Part 2: Plugin architecture
+- [Merging Two Jekyll Websites](/merging-two-jekyll-websites-architectural-analysis/) — Why the blog and resume stay separate
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference including Pandoc exports

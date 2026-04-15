@@ -11,7 +11,7 @@ published: true
 seo:
   type: BlogPosting
   date_published: 2025-09-17
-  date_modified: 2025-09-17
+  date_modified: 2026-04-14
 ---
 
 ## The GDPR Challenge: When AdSense Review Meets Compliance Reality
@@ -465,3 +465,11 @@ The success of this implementation sparked interest in creating a reusable Jekyl
 ---
 
 *This implementation was completed in September 2025 for Google AdSense review compliance. The site successfully passed review and maintains full GDPR compliance while providing an optimized user experience based on visitor location.*
+
+## Related Posts
+
+- [Fixing AdSense Verification Without Breaking GDPR](/adsense-verification-gdpr-script-loading-fix/) — The follow-up fix when this implementation was too aggressive
+- [Google AdSense Approval Failure Remediation](/adsense-approval-failure-remediation/) — Debugging opaque AdSense rejections
+- [Improving E-E-A-T for Jekyll and AdSense](/improving-eeat-jekyll-adsense/) — E-E-A-T signals for AdSense approval
+- [Jekyll SEO Health Checks](/jekyll-seo-health-checks/) — Automated SEO validation including GDPR checks
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference including GDPR

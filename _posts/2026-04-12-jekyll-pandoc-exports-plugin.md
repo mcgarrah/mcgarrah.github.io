@@ -287,3 +287,10 @@ The plugin demonstrates how proper infrastructure investment enables rapid featu
 - [Documentation Site](https://jekyll-pandoc-exports.readthedocs.io)
 - [RubyGems Package](https://rubygems.org/gems/jekyll-pandoc-exports)
 - [Example Implementation](https://github.com/mcgarrah/resume)
+
+## Related Posts
+
+- [Ruby Gem Release Automation](/ruby-gem-release-automation/) — Part 1: The CI/CD pipeline for this plugin
+- [Pandoc Exports Resume Integration](/jekyll-pandoc-exports-resume-integration/) — Part 3: Real-world integration and bug fixes
+- [Jekyll Mermaid Diagram Rendering Challenges](/jekyll-mermaid-diagram-rendering-challenges/) — Another Jekyll plugin integration challenge
+- [How the Sausage Is Made](/jekyll-markdown-feature-reference/) — Complete feature reference including Pandoc exports

@@ -60,3 +60,83 @@ First the startup order and cabling up in a certain order is important for the E
 My choice of the AIMOS 8-port KVM has an impact on capabilies. The PiKVM V3 handles the backfeed power issues for me.
 
 Putting the USB-C Y-Connector and HDMI Splitter in the right places matters a lot.  Ask me how I know?!? Yeah plugged them in wrong a couple times. I plan to label everything now that it works.
+
+
+## PiKVM Configuration Notes
+
+### Virtual Console Switching
+
+- `ScrollLock` `ScrollLock` then `1`-`8` — Switch KVM port via keyboard
+- `Ctrl` `Ctrl` then `1`-`8` — Alternative switching shortcut
+- `Ctrl`+`Alt`+`F2` — Access second virtual console on PiKVM itself
+
+### Terminal Console Sizing
+
+The default terminal console may be oversized (e.g., 75 rows × 200 columns). To fix:
+
+```bash
+stty -a          # Check current settings
+stty rows 45 cols 160   # Set reasonable size
+```
+
+Reference: [How to resize tty console width](https://unix.stackexchange.com/questions/473599/how-to-resize-tty-console-width)
+
+Note: `resizecons 80x25` did NOT work.
+
+### Change Passwords (root & admin)
+
+```bash
+su -                          # If you're in the webterm
+rw                            # Switch filesystem to read-write mode
+passwd root                   # Change OS root password
+kvmd-htpasswd set admin       # Change web UI admin password
+ro                            # Back to read-only
+```
+
+Default credentials are `admin`/`admin`. See [PiKVM FAQ](https://docs.pikvm.org/faq/#common-questions).
+
+### Static IP Configuration
+
+```bash
+rw    # Enable writing
+```
+
+Edit `/etc/systemd/network/eth0.network` (or `wlan0.network` for Wi-Fi):
+
+```ini
+[Network]
+Address=192.168.x.x/24
+Gateway=192.168.x.x
+DNS=192.168.x.x
+DNS=192.168.x.x
+```
+
+**Important:** Don't forget the `/24` suffix (CIDR), otherwise PiKVM becomes unreachable.
+
+### EDID Configuration
+
+See [PiKVM EDID docs](https://docs.pikvm.org/edid/) — important for HDMI handshake with the KVM switch.
+
+### SSL Certificate
+
+For custom SSL: [PiKVM Let's Encrypt guide](https://docs.pikvm.org/letsencrypt/)
+
+### Override Configuration
+
+Custom settings go in `/etc/kvmd/override.yaml`.
+
+## Reference Videos and Links
+
+### PiKVM + KVM Setup
+
+- [PiKVM and KVM setup walkthrough](https://youtu.be/w56QCshaiNQ?si=5uERVHKveVXrE0vn) — Order of operation and HDMI splitter considerations
+- [PiKVM media fix](https://youtu.be/azQjfgOMIQQ?si=ckOrqIGmTjbR0I33)
+- [Controlling up to 4 servers with PiKVM](https://blog.ktz.me/pikvm-controlling-up-to-4-servers-simultaneously/)
+- [Use 1 PiKVM to control 4 systems](https://blog.ktz.me/use-1-pikvm-instance-to-control-4-systems/)
+- [Adding KVM buttons to PiKVM WebUI](https://github.com/pikvm/pikvm/issues/207#issuecomment-1806784764)
+
+### AIMOS KVM Hardware
+
+- [AIMOS 8-port KVM on AliExpress](https://www.aliexpress.us/item/3256806092416308.html)
+- [AIMOS KVM on Amazon](https://www.amazon.com/gp/product/B08QCR62VL) — Good review with limitations
+- [Reddit discussion on AIMOS + PiKVM](https://www.reddit.com/r/pikvm/comments/tmkx21/comment/i1yb5qi/?utm_source=share&utm_medium=web2x&context=3)
