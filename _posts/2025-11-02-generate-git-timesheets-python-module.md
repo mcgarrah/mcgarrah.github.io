@@ -233,6 +233,7 @@ ggts [options]
 ```
 
 Key options include:
+
 - `--base-dir PATH`: Base directory containing git repositories
 - `--since DATE`: Show commits more recent than a specific date
 - `--until DATE`: Show commits older than a specific date
