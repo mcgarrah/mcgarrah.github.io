@@ -30,7 +30,8 @@ Last updated: 2026-04-16
 | Date | Title | Blog Posts Referenced |
 |------|-------|---------------------|
 | 2026-04-04 | From Homelabs to Machine Learning | Infrastructure series (Proxmox, Ceph, Dell Wyse, monitoring) |
-| 2026-04-20 | From Markdown to Production | Jekyll series (feature reference, setup guide, SEO, GDPR, Pandoc, Mermaid, optimization) |
+| 2026-04-20 | From Markdown to Production | Jekyll series (feature reference, setup guide, SEO, GDPR, Pandoc, Mermaid, optimization, AdSense debugging, SASS architecture) |
+| 2026-05-18 | When Storage Breaks | Ceph failures & recovery, hybrid SSD/USB architecture, WAL vs DB benchmarks, ZFS overlapping failures, SSH access, storage economics |
 | TBD | Machine Learning (planned) | AI/ML research, phonemes, cloud DS platforms |
 
 ---

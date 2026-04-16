@@ -10,6 +10,7 @@ The `_substack/` prefix ensures Jekyll ignores this directory during builds — 
 |------|------|-------|-------------|
 | 2026-04-04 | `2026-04-04-from-homelabs-to-machine-learning.md` | From Homelabs to Machine Learning | https://mcgarrah.substack.com/p/from-homelabs-to-machine-learning |
 | 2026-04-20 | `2026-04-20-from-markdown-to-production.md` | From Markdown to Production | TBD |
+| 2026-05-18 | `2026-05-18-when-storage-breaks.md` | When Storage Breaks | TBD |
 | TBD | — | Machine Learning (planned) | — |
 
 ## Substack Tags
@@ -18,6 +19,7 @@ The `_substack/` prefix ensures Jekyll ignores this directory during builds — 
 |---------|------|
 | From Homelabs to Machine Learning | Homelab, Infrastructure, Machine Learning, Open Source, Software Engineering |
 | From Markdown to Production | Software Engineering, Technical Writing, Web Development, Open Source, Blogging |
+| When Storage Breaks | Homelab, Infrastructure, Ceph, Storage, Proxmox, Distributed Systems, Software Engineering |
 
 ## Cross-References
 

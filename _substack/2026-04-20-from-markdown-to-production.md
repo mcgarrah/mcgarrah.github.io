@@ -64,6 +64,9 @@ My [online resume](https://mcgarrah.org/resume/) needed downloadable PDF and DOC
 
 SEO isn't a checkbox — it's a system that needs monitoring. I learned this after months of Google AdSense rejections that turned out to be structural issues with canonical URLs, sitemap bloat, and missing structured data.
 
+The debugging started with a completely opaque rejection message — "your site isn't ready to show ads" — and no actionable feedback. Seven hours of systematic investigation later, I'd found sitemap 404 errors, a missing contact page, and navigation bugs that Google never explicitly identified.
+
+- [Google AdSense Approval Failure: Debugging the 'Site Isn't Ready' Rejection](https://mcgarrah.org/adsense-approval-failure-remediation/) — The full debugging story: 20 unpublished posts leaking into the sitemap, the `published: false` gotcha in jekyll-sitemap, and why migrating from WordPress cost me my existing AdSense approval.
 - [Jekyll SEO Sitemap and Canonical URL Fixes](https://mcgarrah.org/jekyll-seo-sitemap-canonical-url-fixes/) — Fixing the plumbing: canonical URLs that pointed to the wrong domain, sitemaps with duplicate entries.
 - [Jekyll SEO Health Checks](https://mcgarrah.org/jekyll-seo-health-checks/) — Automated validation in CI: every push checks canonical URLs, sitemap XML, meta tags, structured data, and broken links.
 - [Jekyll Sitemap Bloat: Tags, Categories, and Pagination](https://mcgarrah.org/jekyll-sitemap-bloat-tags-categories-pagination/) — Tag and category pages were inflating the sitemap with hundreds of low-value URLs. Fixing it required understanding what search engines actually want.
@@ -82,6 +85,7 @@ Performance matters for both user experience and SEO. A static site should be fa
 
 - [Jekyll Website Optimization Part 1](https://mcgarrah.org/jekyll-website-optimization-part-1/) — Structure, performance, and the first round of improvements.
 - [Jekyll Website Optimization Part 2](https://mcgarrah.org/jekyll-website-optimization-part-2/) — Further refinements after measuring real-world performance.
+- [SASS Circular Dependency Nightmare](https://mcgarrah.org/sass-circular-dependency-nightmare/) — What started as adding a print stylesheet turned into a multi-hour debugging session that exposed fundamental architecture problems in the SASS module hierarchy. The fix — extracting variables into a standalone module — is the same separation-of-concerns pattern you'd apply to any software dependency graph.
 - [Adding Google Custom Search to Jekyll](https://mcgarrah.org/adding-google-custom-search-jekyll/) — Site search without a backend. Google Custom Search handles the indexing; Jekyll provides the search page.
 
 ## Managing Multiple Sites
