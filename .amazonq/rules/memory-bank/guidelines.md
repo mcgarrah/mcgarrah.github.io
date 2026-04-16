@@ -115,6 +115,22 @@ redirect_from:
 ---
 ```
 
+### Post Date Consistency
+When creating or rescheduling posts, four date values must all agree:
+- **Filename date** - `YYYY-MM-DD` prefix in the filename
+- **`date:`** - Explicit date in front matter (if present)
+- **`seo.date_published`** - Structured data publish date
+- **`seo.date_modified`** / **`last_modified_at`** - Must be >= `date_published`
+
+If renaming a file to change its publish date, update all four. A `last_modified_at` or `seo.date_modified` that predates `date_published` looks wrong to search engines.
+
+### Draft and Future Post Detection in Templates
+Jekyll does not expose a `post.draft` flag. To detect post status in Liquid templates:
+- **Drafts**: `post.path contains '_drafts/'` — works because `post.path` includes the source directory
+- **Future posts**: `post.date > site.time` — compares post date against build timestamp
+
+Both checks are inert in production builds (without `--drafts`/`--future` flags) since those posts are excluded from `site.posts` entirely.
+
 ### Asset Organization
 - **Image Optimization** - Compress images for web delivery
 - **Descriptive Filenames** - Use clear, descriptive names for assets

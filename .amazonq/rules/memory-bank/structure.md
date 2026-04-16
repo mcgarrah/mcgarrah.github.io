@@ -69,11 +69,19 @@ assets/
 - **analytics.html** - Google Analytics integration
 - **adsense.html** - Google AdSense integration
 - **cookie-consent.html** - GDPR compliance banner
-- **meta.html** - SEO meta tags and structured data
+- **meta.html** - SEO meta tags, structured data, and draft/future icon badges
 - **author-bio.html** - Author biography section
 - **embed.html** - Embedded content (video, media) support
-- **home.html** - Homepage content partial
-- **archive.html** - Archive listing partial
+- **home.html** - Homepage content partial (with draft/future indicators)
+- **archive.html** - Archive listing partial (with draft/future indicators)
+
+### Font Awesome SVG Sprite
+The SVG sprite (`assets/fontawesome/icons.svg`) is built at compile time from `_config.yml` keys:
+- **`navigation`** - Nav bar icons
+- **`external`** - Social/footer icons
+- **`post_status_icons`** - Draft (pencil-alt) and future (robot) post indicators
+
+To add new icons, add an entry to the appropriate config key. The sprite template loops all three keys. Icon data lives in `_data/font-awesome/icons.json` (3,100+ icons available).
 
 ### Plugin Architecture
 - **tag_category_generator.rb** - Automatic page generation for tags/categories
