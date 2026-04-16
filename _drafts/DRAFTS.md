@@ -1,8 +1,8 @@
 # Drafts Review — Publish Readiness Analysis
 
-Reviewed: All 51 drafts in `_drafts/` folder
+Reviewed: All 44 drafts in `_drafts/` folder
 Cross-referenced against: All published posts in `_posts/` and `_substack/`
-Last updated: 2026-04-16
+Last updated: 2026-06-04
 
 ---
 
@@ -22,6 +22,16 @@ Last updated: 2026-04-16
 | ~~`2026-04-25-ssh-key-access-proxmox-cluster.md`~~ | `2026-04-17-ssh-key-access-proxmox-cluster.md` | Promoted 2026-05-18, rescheduled 2026-04-16 |
 | ~~`2025-12-16-ruby-gem-release-automation.md`~~ | `2026-04-11-ruby-gem-release-automation.md` | Deleted (superseded, published version has additional content) |
 | ~~`2026-04-26-ceph-wal-vs-db-performance-test.md`~~ | `2026-04-18-ceph-wal-vs-db-performance-test.md` | Promoted 2026-05-18, rescheduled 2026-04-16 |
+| ~~`2024-08-15-ghp-jekyll-upgrade.md`~~ | `2026-04-22-jekyll-upgrade-two-years-cascading-breakage.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-content-plumbing-permalinks-reading-time.md`~~ | `2026-04-25-jekyll-content-plumbing-permalinks-reading-time.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-small-things-polish-features.md`~~ | `2026-04-28-jekyll-small-things-polish-features.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ | `2026-04-30-jekyll-liquid-code-fence-rendering-trap.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-tag-category-generator-plugin.md`~~ | `2026-05-02-jekyll-tag-category-generator-plugin.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-giscus-comments-implementation.md`~~ | `2026-05-05-jekyll-giscus-comments-implementation.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-github-actions-cicd-pipeline.md`~~ | `2026-05-07-jekyll-github-actions-cicd-pipeline.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-run-vscode-plugin-local-development.md`~~ | `2026-05-09-jekyll-run-vscode-plugin-local-development.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-draft-future-visual-indicators.md`~~ | `2026-05-12-jekyll-draft-future-visual-indicators.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-content-distribution-pipeline.md`~~ | `2026-05-14-jekyll-content-distribution-pipeline.md` | Promoted 2026-04-16 (batch) |
 
 ---
 
@@ -46,8 +56,9 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 🖥️ **Proxmox ZFS Boot Mirrors** | #5, #18, #19 | #5 is ready; #18 is a merge candidate with #5; #19 depends on completing the migration |
 | 🎮 **Game Development** | #9, #10 | StarVoyager and Godot — independent but pair well |
 | 🌍 **Proxmox SDN & Networking** | #11, #12, #22 | PowerDNS, OpenWRT LXC, and LAG/LACP |
-| 📝 **Jekyll Deep Dives** | #6, #7, #8, #13, #14, #15, #16, #17, #18, #19a, #19b, #19c (Jekyll cluster) | The 2026-05-10 batch — publish in any order |
-| 🗄️ **Ceph Storage** | #20, #21, #28 | WAL/DB test, OSD moves, Reef→Squid upgrade |
+| 📝 **Jekyll Deep Dives** | #16, #17, #18 | Remaining Jekyll drafts (10 promoted 2026-04-16) |
+| 🗄️ **Ceph Storage** | #21, #28 | OSD moves, Reef→Squid upgrade |
+| 🔧 **Caddy Reverse Proxy** | #NEW1, #NEW2 | Proxmox Web UI + Ceph Dashboard — publish Proxmox first |
 | 🔑 **SSH & Remote Access** | — | Published; prerequisite for #20 (WAL/DB benchmarks) |
 | 🏗️ **Homelab Infrastructure** (overlapping) | #24, #25, #26 | Pick ONE of these three to publish |
 | 🧠 **Data Science & AI/ML** | #23, #29 | Five Stages + Research model — merge or publish separately |
@@ -75,11 +86,9 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **Related:** `2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`, `2026-04-06-adsense-verification-gdpr-script-loading-fix.md`
 - **Estimated effort:** 15 minutes
 
-### 4. `2026-05-10-jekyll-tag-category-generator-plugin.md` — 📝 Jekyll Deep Dives
+### 4. ~~`2026-05-10-jekyll-tag-category-generator-plugin.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. Covers full plugin code, design decisions, URL structure, sitemap exclusion, noindex, both layouts, real stats (237 tags, 53 categories).
-- **Related:** `2026-04-07-jekyll-sitemap-bloat-tags-categories-pagination.md`, `2026-04-19-setting-up-jekyll-blog-github-pages.md`
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-05-02-jekyll-tag-category-generator-plugin.md`
 
 ### 5. `2025-02-25-proxmox-zfs-boot-mirrors-part-1.md` — 🖥️ ZFS Boot Mirrors
 
@@ -88,25 +97,17 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **Related:** `2026-02-05-proxmox-zfs-boot-mirror-smart-analysis.md`
 - **Estimated effort:** 30 minutes
 
-### 6. `2026-05-10-jekyll-giscus-comments-implementation.md` — 📝 Jekyll Deep Dives
+### 6. ~~`2026-05-10-jekyll-giscus-comments-implementation.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. Covers six alternatives evaluated, why Giscus won, full implementation, legacy dead code, Lambda prototype.
-- **What's needed:** Review and add Discussions tab screenshots.
-- **Related:** `2026-04-19-setting-up-jekyll-blog-github-pages.md`, `2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-05-05-jekyll-giscus-comments-implementation.md`
 
-### 7. `2026-05-10-jekyll-content-plumbing-permalinks-reading-time.md` — 📝 Jekyll Deep Dives
+### 7. ~~`2026-05-10-jekyll-content-plumbing-permalinks-reading-time.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. Permalinks, reading time, excerpt separator, pagination, jekyll-redirect-from — all with git history.
-- **What's needed:** Verify config snippets match current state.
-- **Related:** `2026-04-18-jekyll-markdown-feature-reference.md`, `2026-04-07-jekyll-sitemap-bloat-tags-categories-pagination.md`
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-04-25-jekyll-content-plumbing-permalinks-reading-time.md`
 
-### 8. `2024-08-15-ghp-jekyll-upgrade.md` — 📝 Jekyll Deep Dives
+### 8. ~~`2024-08-15-ghp-jekyll-upgrade.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Rewritten into full chronological article covering two years of Jekyll upgrades (webrick, Ubuntu 24.04, Jekyll 4.2→4.4.1, Dart Sass 3.0, Node.js 24 GHA).
-- **What's needed:** Review for accuracy. Could use a timeline diagram.
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-04-22-jekyll-upgrade-two-years-cascading-breakage.md`
 
 ---
 
@@ -138,26 +139,17 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **Related:** `2025-02-01-google-wifi-with-openwrt.md`
 - **Estimated effort:** 1 hour
 
-### 13. `2026-05-10-jekyll-github-actions-cicd-pipeline.md` — 📝 Jekyll Deep Dives
+### 13. ~~`2026-05-10-jekyll-github-actions-cicd-pipeline.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. All three GHA workflows, Dependabot, Lighthouse CI, Mermaid pipeline diagram, canonical URL grep bug story, cost analysis.
-- **What's needed:** Verify workflow YAML snippets match current files. Add recent Dependabot PR examples.
-- **Related:** `2026-01-01-jekyll-seo-health-checks.md`, `2025-09-09-github-actions-pip-audit-pr.md`
-- **Estimated effort:** 1 hour
+- **Published as:** `2026-05-07-jekyll-github-actions-cicd-pipeline.md`
 
-### 14. `2026-05-10-jekyll-small-things-polish-features.md` — 📝 Jekyll Deep Dives
+### 14. ~~`2026-05-10-jekyll-small-things-polish-features.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. Six polish features: dark/light theme, print stylesheet, 404/500 haiku, author bio, archive page, favicon.
-- **What's needed:** Add screenshots of dark/light mode, 404 page, print output.
-- **Related:** `2026-04-02-improving-eeat-jekyll-adsense.md`, `2025-12-14-sass-circular-dependency-nightmare.md`
-- **Estimated effort:** 1 hour
+- **Published as:** `2026-04-28-jekyll-small-things-polish-features.md`
 
-### 15. `2026-05-10-jekyll-content-distribution-pipeline.md` — 📝 Jekyll Deep Dives
+### 15. ~~`2026-05-10-jekyll-content-distribution-pipeline.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. Six distribution channels: RSS, sitemap, GSC, Substack, social sharing, internal cross-references. Mermaid pipeline diagram.
-- **What's needed:** Add GSC screenshots, verify Substack link counts, add social sharing examples.
-- **Related:** `2025-12-31-jekyll-seo-sitemap-canonical-url-fixes.md`, `2026-04-07-jekyll-sitemap-bloat-tags-categories-pagination.md`
-- **Estimated effort:** 1 hour
+- **Published as:** `2026-05-14-jekyll-content-distribution-pipeline.md`
 
 ### 16. `2026-05-10-jekyll-enhancements-without-plugins.md` — 📝 Jekyll Deep Dives
 
@@ -185,26 +177,17 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **What's needed:** Light editing. Could use a real-world example or diagram.
 - **Estimated effort:** 1-2 hours
 
-### 19a. `2026-05-10-jekyll-run-vscode-plugin-local-development.md` — 📝 Jekyll Deep Dives
+### 19a. ~~`2026-05-10-jekyll-run-vscode-plugin-local-development.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. Jekyll Run VS Code extension config, settings precedence, `_config.yml` future flag trap, draft visibility gotcha, bash fallback script.
-- **What's needed:** Verify settings paths match current VS Code version.
-- **Related:** `2026-05-10-jekyll-draft-future-visual-indicators.md` (follow-up)
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-05-09-jekyll-run-vscode-plugin-local-development.md`
 
-### 19b. `2026-05-10-jekyll-liquid-code-fence-rendering-trap.md` — 📝 Jekyll Deep Dives
+### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft. Documents the raw/endraw Liquid escaping issue in code fences.
-- **What's needed:** Review for accuracy.
-- **Related:** `2026-04-20-jekyll-markdown-feature-reference.md`
-- **Estimated effort:** 15 minutes
+- **Published as:** `2026-04-30-jekyll-liquid-code-fence-rendering-trap.md`
 
-### 19c. `2026-05-10-jekyll-draft-future-visual-indicators.md` — 📝 Jekyll Deep Dives
+### 19c. ~~`2026-05-10-jekyll-draft-future-visual-indicators.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
-- **Status:** Complete first draft with screenshots. Font Awesome pencil/robot icons and italic styling for draft and future posts in archive and home page listings.
-- **What's needed:** Review screenshots. Verify production safety claims.
-- **Related:** `2026-05-10-jekyll-run-vscode-plugin-local-development.md` (predecessor)
-- **Estimated effort:** 15 minutes
+- **Published as:** `2026-05-12-jekyll-draft-future-visual-indicators.md`
 
 ### 20. ~~`2026-04-26-ceph-wal-vs-db-performance-test.md`~~ — 🗄️ Ceph Storage — PROMOTED
 
@@ -318,13 +301,36 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ---
 
+## New Drafts (added since last review)
+
+### NEW1. `2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md` — 🔧 Caddy Reverse Proxy
+
+- **Status:** Complete first draft. Single Caddy LXC entry point for 6-node Proxmox cluster with load balancing, health checks, WebSocket support for noVNC console.
+- **What's needed:** Review and verify configuration. Add screenshots.
+- **Estimated effort:** 1 hour
+
+### NEW2. `2026-05-15-caddy-reverse-proxy-ceph-dashboard.md` — 🔧 Caddy Reverse Proxy
+
+- **Status:** Complete first draft. Caddy proxy for floating Ceph Dashboard (follows active ceph-mgr). Depends on NEW1 (Caddy LXC already deployed).
+- **What's needed:** Publish NEW1 first (referenced). Review health check config.
+- **Estimated effort:** 1 hour
+
+### NEW3. `writing-to-think-two-decades-of-figuring-things-out.md` — ✍️ Personal/Writing
+
+- **Status:** Reflective essay on 20+ years of technical blogging, Feynman Technique, motivation for writing, and moving to Substack.
+- **What's needed:** Review. No date prefix — add one before publishing.
+- **Estimated effort:** 30 minutes
+
+---
+
 ## Tier 4: Too Raw / Redundant — Hold or Archive
 
 ### 38. `2025-12-18-jekyll-gdpr-plugin-development.md`
 
 - **Status:** Aspirational plugin development plan — no code shipped.
-- **Recommendation:** Hold until plugin is actually started.
-- **Related:** `2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`
+- **Recommendation:** Complete the plugin, publish as a Ruby gem, and write a companion article following the same pattern as the Pandoc exports plugin (`2026-04-12-jekyll-pandoc-exports-plugin.md`) and gem release automation (`2026-04-11-ruby-gem-release-automation.md`). The GDPR implementation article (`2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`) is the starting point; this draft is the follow-through.
+- **Related:** `2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`, `2026-04-12-jekyll-pandoc-exports-plugin.md`, `2026-04-11-ruby-gem-release-automation.md`
+- **Cross-ref:** See TODO.md → High Impact → "GDPR Cookie Consent Ruby Plugin"
 
 ### 39. `2026-01-03-jekyll-resume-post-type-implementation.md`
 
@@ -391,19 +397,15 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 1 | `name-service-registrars.md` | 30 min | 🌐 Domain & Email |
 | 2 | `email-forwarding-evaluation.md` | 15 min | 🌐 Domain & Email |
 | 3 | `google-service-sprawl.md` | 15 min | — |
-| 4 | `jekyll-tag-category-generator-plugin.md` | 30 min | 📝 Jekyll |
-| 5 | `proxmox-zfs-boot-mirrors-part-1.md` | 30 min | 🖥️ ZFS |
-| 6 | `jekyll-giscus-comments-implementation.md` | 30 min | 📝 Jekyll |
-| 7 | `jekyll-content-plumbing-permalinks-reading-time.md` | 30 min | 📝 Jekyll |
-| 8 | `ghp-jekyll-upgrade.md` | 30 min | 📝 Jekyll |
-| 9 | `jekyll-run-vscode-plugin-local-development.md` | 30 min | 📝 Jekyll |
-| 10 | `jekyll-liquid-code-fence-rendering-trap.md` | 15 min | 📝 Jekyll |
-| 11 | `jekyll-draft-future-visual-indicators.md` | 15 min | 📝 Jekyll |
-| 12 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
-| 13 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
+| 4 | `proxmox-zfs-boot-mirrors-part-1.md` | 30 min | 🖥️ ZFS |
+| 5 | `writing-to-think-two-decades-of-figuring-things-out.md` | 30 min | ✍️ Personal |
+| 6 | `caddy-reverse-proxy-proxmox-web-ui.md` | 1 hr | 🔧 Caddy |
+| 7 | `caddy-reverse-proxy-ceph-dashboard.md` | 1 hr | 🔧 Caddy |
+| 8 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
+| 9 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
 
-**Total effort for top 8:** ~3 hours
-**Total effort for all 13:** ~6 hours
+**Total effort for top 5:** ~2 hours
+**Total effort for all 9:** ~5.5 hours
 
 ---
 
@@ -411,13 +413,14 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | Category | Count |
 |----------|-------|
-| **Total drafts in `_drafts/`** | **51** |
-| Ready to publish — Tier 1 | 11 |
-| Near-complete — Tier 2 | 13 |
+| **Total drafts in `_drafts/`** | **44** |
+| Ready to publish — Tier 1 | 3 (+ 8 promoted) |
+| Near-complete — Tier 2 | 6 (+ 7 promoted) |
+| New drafts (untiered) | 3 |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
-| **Total** | **52 (includes 1 DRAFTS.md)** |
+| **Total tracked** | **44 drafts + 1 DRAFTS.md** |
 
 ### Previously Removed
 
@@ -425,6 +428,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 |----------|-------|
 | Superseded drafts (deleted 2025-07-15) | 3 |
 | Promoted to _posts (2026-04-12–13) | 4 |
+| Promoted to _posts (2026-04-16 batch — 10 Jekyll deep dives) | 10 |
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |

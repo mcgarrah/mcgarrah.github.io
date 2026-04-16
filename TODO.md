@@ -2,6 +2,10 @@
 
 ## High Impact
 
+### GDPR Cookie Consent Ruby Plugin
+
+- [ ] Complete the GDPR cookie consent Ruby plugin as a proper Jekyll gem — The GDPR article (`2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`) and the plugin development draft (`_drafts/2025-12-18-jekyll-gdpr-plugin-development.md`) cover the implementation, but the plugin needs a follow-through article about packaging it as a published Ruby gem. Follow the same pattern as the Pandoc exports plugin (`2026-04-12-jekyll-pandoc-exports-plugin.md`) and the gem release automation article (`2026-04-11-ruby-gem-release-automation.md`). Write the companion article and publish the gem.
+
 ### Front Matter Hygiene
 
 The blog has 139 published posts but front matter completeness varies widely. Older posts (2001-2016) have minimal front matter while newer posts have full SEO optimization. Filling these gaps improves search engine visibility across the entire archive.
@@ -44,6 +48,7 @@ The blog has three GitHub Actions workflows (build/deploy, CodeQL, SEO health ch
 - [ ] Implement breadcrumb navigation — Show the path (Home > Category > Post) at the top of each page. Helps readers understand site structure and navigate up. Also generates breadcrumb structured data that Google displays in search results.
 - [ ] Add tag cloud visualization — A visual representation of all tags weighted by post count on the `/tags/` page. More engaging than the current flat list. Should be done after tag hygiene cleanup to avoid displaying 138 singleton tags.
 - [ ] Add automated "related posts" to post layout — 16 of 139 posts have hand-curated "Related Posts" sections (all from Sep 2025 onward). Manual cross-references are higher quality but don't scale to the 123 older posts. An automated solution via `site.related_posts` or tag-based matching would provide baseline related content for every post. Could coexist with manual sections where they exist.
+- [ ] Fix "read more" links — The post title is currently used as the link text for "read more" links, making them excessively long. Move the title into a `title=""` tooltip attribute instead and use short link text like "Read more" or "Continue reading". Keeps the links compact while preserving the context on hover.
 
 ## Performance
 
