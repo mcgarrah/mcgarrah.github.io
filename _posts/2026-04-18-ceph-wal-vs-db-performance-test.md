@@ -5,7 +5,14 @@ categories: [proxmox, ceph, homelab, storage]
 tags: [proxmox, ceph, ssd, wal, db, bluestore, performance, benchmarking, homelab]
 mermaid: true
 excerpt: "Nine of my fifteen Ceph OSDs use WAL-only acceleration while six use DB. I set out to measure the performance gap and discovered the real story isn't WAL vs DB — it's the USB 3.0 hardware ceiling that dominates everything. The matched-hardware comparison shows DB is 5-15% faster on reads, not the 32% that naive cross-node testing suggested."
+description: "Benchmarking WAL-only vs DB acceleration on Ceph BlueStore OSDs with USB 3.0 drives and SSD metadata. Covers cross-node and matched-hardware comparisons, USB storage IOPS analysis, backfill tuning, recovery rate measurements, and ready-to-run benchmark scripts for a 15-OSD Proxmox homelab cluster."
+date: 2026-04-18
+last_modified_at: 2026-04-18
 published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-04-18
+  date_modified: 2026-04-18
 ---
 
 My [hybrid Ceph storage article](/ceph-ssd-wal-db-usb-storage/) documented the WAL vs DB inconsistency across the AlteredCarbon cluster — harlan, kovacs, and quell use WAL-only, while edgar and poe use DB. I recommended standardizing on DB but admitted I hadn't measured the actual performance difference.

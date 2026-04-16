@@ -5,15 +5,15 @@ categories: [web-development, jekyll]
 tags: [jekyll, markdown, mermaid, katex, giscus, tutorial, reference, pandoc, seo, gdpr, github-pages]
 excerpt: "After 130+ posts and two years of Jekyll customization, here's the complete feature set behind this blog — from Mermaid diagrams and KaTeX math to GDPR compliance, Pandoc exports, and the SEO pipeline. A look behind the curtain at what it takes to run a technical blog on GitHub Pages."
 description: "Complete reference for all Jekyll, Markdown, and custom features on mcgarrah.org — Mermaid diagrams, KaTeX math, Giscus comments, GDPR cookie consent, Pandoc PDF/DOCX exports, SEO structured data, collapsible sections, and Font Awesome icons. Built on GitHub Pages with the Contrast theme."
-date: 2026-04-18
-last_modified_at: 2026-04-18
+date: 2026-04-20
+last_modified_at: 2026-04-20
 mathjax: true
 mermaid: true
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-04-18
-  date_modified: 2026-04-18
+  date_published: 2026-04-20
+  date_modified: 2026-04-20
 ---
 
 This blog has been running on Jekyll and GitHub Pages since 2023, and over 130+ posts it has accumulated a lot of features. Every time I needed something — diagrams for a [Ceph architecture post](/proxmox-ceph-homelab-settings/), math notation for a [research article](/phonemes-aiml-research/), PDF exports for my [resume](/resume/) — I bolted it on.

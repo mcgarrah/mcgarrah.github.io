@@ -5,13 +5,13 @@ categories: [proxmox, homelab, security]
 tags: [proxmox, ssh, homelab, security, clustering, dell-optiplex-990]
 excerpt: "Typing passwords every time you SSH into a Proxmox node gets old fast — especially with a six-node cluster. Here's how to set up SSH key authentication and an SSH config so you can just type 'ssh harlan' and be in."
 description: "Step-by-step guide to configuring SSH key-based authentication for a Proxmox cluster. Covers key generation, key deployment, SSH config setup with named hosts, and how Proxmox's shared authorized_keys across cluster nodes means you only copy the key once."
-date: 2026-04-25
-last_modified_at: 2026-04-25
+date: 2026-04-17
+last_modified_at: 2026-04-17
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-04-25
-  date_modified: 2026-04-25
+  date_published: 2026-04-17
+  date_modified: 2026-04-17
 ---
 
 Typing passwords every time you SSH into a Proxmox node gets old fast — especially when you have a six-node cluster and you're bouncing between nodes all day. SSH key-based authentication eliminates the password prompts entirely, and Proxmox makes it even easier because the cluster shares `authorized_keys` across all nodes. Copy the key once, access every node.

@@ -5,13 +5,13 @@ categories: [proxmox, ceph, homelab, storage]
 tags: [proxmox, ceph, ssd, usb, storage, performance, homelab, wal, db, bluestore, dell-optiplex-990, seagate]
 excerpt: "Running Ceph on USB drives sounds crazy until you put the WAL and DB on an SSD. Here's how separating metadata onto a Crucial MX500 transformed my 15-OSD homelab cluster from sluggish to surprisingly capable — at a fraction of all-SSD costs."
 description: "Architecture and implementation guide for hybrid Ceph BlueStore storage with SSD WAL/DB acceleration and USB HDD data drives. Covers WAL vs DB differences, sizing, ceph-volume creation, Proxmox UI setup, performance results, cost analysis, and operational lessons from a 15-OSD Proxmox homelab cluster."
-date: 2026-04-22
-last_modified_at: 2026-04-22
+date: 2026-04-16
+last_modified_at: 2026-04-16
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-04-22
-  date_modified: 2026-04-22
+  date_published: 2026-04-16
+  date_modified: 2026-04-16
 ---
 
 Running Ceph in a homelab means making tradeoffs. You want distributed storage — high availability, scalability, data protection — but enterprise hardware costs spiral fast. My answer: put the brains on SSD and the bulk on cheap USB drives.
