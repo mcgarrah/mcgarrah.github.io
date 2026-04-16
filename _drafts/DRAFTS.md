@@ -1,8 +1,8 @@
 # Drafts Review — Publish Readiness Analysis
 
-Reviewed: All 46 drafts in `_drafts/` folder
+Reviewed: All 51 drafts in `_drafts/` folder
 Cross-referenced against: All published posts in `_posts/` and `_substack/`
-Last updated: 2026-05-18
+Last updated: 2026-04-16
 
 ---
 
@@ -17,11 +17,11 @@ Last updated: 2026-05-18
 | ~~`2024-08-26-proxmox-misc-scripts.md`~~ | `2024-08-26-proxmox-8-dell-wyse-3040-upgrade.md` | Deleted 2026-04-12 (duplicate) |
 | ~~`2026-04-01-jekyll-markdown-feature-reference.md`~~ | `2026-04-18-jekyll-markdown-feature-reference.md` | Promoted 2026-04-13 |
 | ~~`2026-04-02-learning-jekyll.md`~~ | `2026-04-19-setting-up-jekyll-blog-github-pages.md` | Promoted 2026-04-13 |
-| ~~`2025-10-05-ceph-ssd-wal-db-usb-storage.md`~~ | `2026-04-22-ceph-ssd-wal-db-usb-storage.md` | Promoted 2026-04-13 |
+| ~~`2025-10-05-ceph-ssd-wal-db-usb-storage.md`~~ | `2026-04-16-ceph-ssd-wal-db-usb-storage.md` | Promoted 2026-04-13, rescheduled 2026-04-16 |
 | ~~`2024-12-31-jekyll-add-comments-section.md`~~ | Merged into `2026-05-10-jekyll-giscus-comments-implementation.md` | Deleted (content merged) |
-| ~~`2026-04-25-ssh-key-access-proxmox-cluster.md`~~ | `2026-04-25-ssh-key-access-proxmox-cluster.md` | Promoted 2026-05-18 |
+| ~~`2026-04-25-ssh-key-access-proxmox-cluster.md`~~ | `2026-04-17-ssh-key-access-proxmox-cluster.md` | Promoted 2026-05-18, rescheduled 2026-04-16 |
 | ~~`2025-12-16-ruby-gem-release-automation.md`~~ | `2026-04-11-ruby-gem-release-automation.md` | Deleted (superseded, published version has additional content) |
-| ~~`2026-04-26-ceph-wal-vs-db-performance-test.md`~~ | `2026-04-26-ceph-wal-vs-db-performance-test.md` | Promoted 2026-05-18 |
+| ~~`2026-04-26-ceph-wal-vs-db-performance-test.md`~~ | `2026-04-18-ceph-wal-vs-db-performance-test.md` | Promoted 2026-05-18, rescheduled 2026-04-16 |
 
 ---
 
@@ -45,7 +45,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 🖥️ **Proxmox ZFS Boot Mirrors** | #5, #18, #19 | #5 is ready; #18 is a merge candidate with #5; #19 depends on completing the migration |
 | 🎮 **Game Development** | #9, #10 | StarVoyager and Godot — independent but pair well |
 | 🌍 **Proxmox SDN & Networking** | #11, #12, #22 | PowerDNS, OpenWRT LXC, and LAG/LACP |
-| 📝 **Jekyll Deep Dives** | #6, #7, #8, #13, #14, #15, #16, #17, #18 (Jekyll cluster) | The 2026-05-10 batch — publish in any order |
+| 📝 **Jekyll Deep Dives** | #6, #7, #8, #13, #14, #15, #16, #17, #18, #19a, #19b, #19c (Jekyll cluster) | The 2026-05-10 batch — publish in any order |
 | 🗄️ **Ceph Storage** | #20, #21, #28 | WAL/DB test, OSD moves, Reef→Squid upgrade |
 | 🔑 **SSH & Remote Access** | — | Published; prerequisite for #20 (WAL/DB benchmarks) |
 | 🏗️ **Homelab Infrastructure** (overlapping) | #24, #25, #26 | Pick ONE of these three to publish |
@@ -184,9 +184,30 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **What's needed:** Light editing. Could use a real-world example or diagram.
 - **Estimated effort:** 1-2 hours
 
+### 19a. `2026-05-10-jekyll-run-vscode-plugin-local-development.md` — 📝 Jekyll Deep Dives
+
+- **Status:** Complete first draft. Jekyll Run VS Code extension config, settings precedence, `_config.yml` future flag trap, draft visibility gotcha, bash fallback script.
+- **What's needed:** Verify settings paths match current VS Code version.
+- **Related:** `2026-05-10-jekyll-draft-future-visual-indicators.md` (follow-up)
+- **Estimated effort:** 30 minutes
+
+### 19b. `2026-05-10-jekyll-liquid-code-fence-rendering-trap.md` — 📝 Jekyll Deep Dives
+
+- **Status:** Complete first draft. Documents the raw/endraw Liquid escaping issue in code fences.
+- **What's needed:** Review for accuracy.
+- **Related:** `2026-04-20-jekyll-markdown-feature-reference.md`
+- **Estimated effort:** 15 minutes
+
+### 19c. `2026-05-10-jekyll-draft-future-visual-indicators.md` — 📝 Jekyll Deep Dives
+
+- **Status:** Complete first draft with screenshots. Font Awesome pencil/robot icons and italic styling for draft and future posts in archive and home page listings.
+- **What's needed:** Review screenshots. Verify production safety claims.
+- **Related:** `2026-05-10-jekyll-run-vscode-plugin-local-development.md` (predecessor)
+- **Estimated effort:** 15 minutes
+
 ### 20. ~~`2026-04-26-ceph-wal-vs-db-performance-test.md`~~ — 🗄️ Ceph Storage — PROMOTED
 
-- **Published as:** `2026-04-26-ceph-wal-vs-db-performance-test.md`
+- **Published as:** `2026-04-18-ceph-wal-vs-db-performance-test.md`
 - **Benchmark data:** `assets/data/ceph-wal-db/`
 
 ### 21. `2026-01-01-photosynth-update.md`
@@ -374,11 +395,14 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 6 | `jekyll-giscus-comments-implementation.md` | 30 min | 📝 Jekyll |
 | 7 | `jekyll-content-plumbing-permalinks-reading-time.md` | 30 min | 📝 Jekyll |
 | 8 | `ghp-jekyll-upgrade.md` | 30 min | 📝 Jekyll |
-| 9 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
-| 10 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
+| 9 | `jekyll-run-vscode-plugin-local-development.md` | 30 min | 📝 Jekyll |
+| 10 | `jekyll-liquid-code-fence-rendering-trap.md` | 15 min | 📝 Jekyll |
+| 11 | `jekyll-draft-future-visual-indicators.md` | 15 min | 📝 Jekyll |
+| 12 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
+| 13 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
 
 **Total effort for top 8:** ~3 hours
-**Total effort for all 10:** ~5 hours
+**Total effort for all 13:** ~6 hours
 
 ---
 
@@ -386,13 +410,13 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | Category | Count |
 |----------|-------|
-| **Total drafts in `_drafts/`** | **46** |
-| Ready to publish — Tier 1 | 8 |
+| **Total drafts in `_drafts/`** | **51** |
+| Ready to publish — Tier 1 | 11 |
 | Near-complete — Tier 2 | 13 |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
-| **Total** | **47 (includes 1 DRAFTS.md)** |
+| **Total** | **52 (includes 1 DRAFTS.md)** |
 
 ### Previously Removed
 
