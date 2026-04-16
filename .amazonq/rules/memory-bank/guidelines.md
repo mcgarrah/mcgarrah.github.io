@@ -139,6 +139,14 @@ Both checks are inert in production builds (without `--drafts`/`--future` flags)
 
 ## Security Practices
 
+### Homelab SSH Access
+- **Shared credentials file** at `~/.shared-creds` contains SSH credentials for LXC containers and VMs
+- **INI-style format** with section headers per host (e.g., `[caddy-lxc]`) and `username:` / `password:` fields
+- **File permissions** must be 600 (`chmod 600 ~/.shared-creds`)
+- **Usage**: Use `sshpass -p '<password>' ssh <user>@<ip>` to access homelab hosts when SSH key auth is not configured
+- **Adding new hosts**: Append a new `[section-name]` block with username and password
+- **Never** echo or display credentials in command output — read the file silently
+
 ### Privacy Compliance
 - **GDPR Implementation** - Implement proper consent management for EU users
 - **Cookie Management** - Use secure cookie attributes (SameSite=Lax)
