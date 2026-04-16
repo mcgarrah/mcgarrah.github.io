@@ -1,6 +1,6 @@
 # Drafts Review — Publish Readiness Analysis
 
-Reviewed: All 47 drafts in `_drafts/` folder
+Reviewed: All 46 drafts in `_drafts/` folder
 Cross-referenced against: All published posts in `_posts/` and `_substack/`
 Last updated: 2026-05-18
 
@@ -21,6 +21,7 @@ Last updated: 2026-05-18
 | ~~`2024-12-31-jekyll-add-comments-section.md`~~ | Merged into `2026-05-10-jekyll-giscus-comments-implementation.md` | Deleted (content merged) |
 | ~~`2026-04-25-ssh-key-access-proxmox-cluster.md`~~ | `2026-04-25-ssh-key-access-proxmox-cluster.md` | Promoted 2026-05-18 |
 | ~~`2025-12-16-ruby-gem-release-automation.md`~~ | `2026-04-11-ruby-gem-release-automation.md` | Deleted (superseded, published version has additional content) |
+| ~~`2026-04-26-ceph-wal-vs-db-performance-test.md`~~ | `2026-04-26-ceph-wal-vs-db-performance-test.md` | Promoted 2026-05-18 |
 
 ---
 
@@ -183,14 +184,10 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **What's needed:** Light editing. Could use a real-world example or diagram.
 - **Estimated effort:** 1-2 hours
 
-### 20. `2026-04-26-ceph-wal-vs-db-performance-test.md` — 🗄️ Ceph Storage
+### 20. ~~`2026-04-26-ceph-wal-vs-db-performance-test.md`~~ — 🗄️ Ceph Storage — PROMOTED
 
-- **Status:** Phase 1 baseline data collected (2026-04-14). Article updated with cross-node latency tables, OSD bench results, and observations. Phase 2 (same-node matched comparison) blocked on osd.6 backfill completing.
-- **Depends on:** `2026-04-25-ssh-key-access-proxmox-cluster.md` (published) — SSH setup used for remote benchmarking
-- **Prerequisite for Phase 2:** Maintenance window, cluster at HEALTH_OK, PBS backup
-- **Related:** `2026-04-22-ceph-ssd-wal-db-usb-storage.md` — promises this follow-up
-- **Benchmark data:** `_drafts/benchmarks/phase1-baseline-2026-04-14.md`
-- **Estimated effort:** Phase 2 execution 4-8 hours (backfill), 1-2 hours to write up results
+- **Published as:** `2026-04-26-ceph-wal-vs-db-performance-test.md`
+- **Benchmark data:** `assets/data/ceph-wal-db/`
 
 ### 21. `2026-01-01-photosynth-update.md`
 
@@ -389,13 +386,13 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | Category | Count |
 |----------|-------|
-| **Total drafts in `_drafts/`** | **47** |
+| **Total drafts in `_drafts/`** | **46** |
 | Ready to publish — Tier 1 | 8 |
-| Near-complete — Tier 2 | 14 |
+| Near-complete — Tier 2 | 13 |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
-| **Total** | **48 (includes 1 DRAFTS.md)** |
+| **Total** | **47 (includes 1 DRAFTS.md)** |
 
 ### Previously Removed
 
