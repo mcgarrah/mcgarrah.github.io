@@ -6,12 +6,12 @@ tags: [jekyll, github-pages, tutorial, getting-started, seo, gdpr, giscus, pando
 excerpt: "I've been writing about technology since 2004. This blog has lived on WordPress, Blogger, and now Jekyll on GitHub Pages. Here's how I set it up, what I added along the way, and what I'd do differently if I started over."
 description: "How to set up a Jekyll blog on GitHub Pages with custom domain, GitHub Actions CI/CD, SEO optimization, GDPR compliance, Giscus comments, Pandoc PDF exports, and the lessons learned from building mcgarrah.org over 130+ posts."
 date: 2026-04-19
-last_modified_at: 2026-04-19
+last_modified_at: 2026-04-15
 published: true
 seo:
   type: BlogPosting
   date_published: 2026-04-19
-  date_modified: 2026-04-19
+  date_modified: 2026-04-15
 ---
 
 I've been writing about technology since 2004 — first on WordPress, then Blogger, and now Jekyll on GitHub Pages. The migration to Jekyll happened in 2023 when I wanted full control over the site without paying for hosting or fighting with WordPress plugin conflicts.
@@ -107,19 +107,64 @@ After theme setup, the key files:
 
 To serve the site from a custom domain instead of `<username>.github.io`:
 
-1. Create a `CNAME` file in the repository root:
+1. Create a `CNAME` file in the repository root with your apex domain (no `www`):
 
     ```text
-    www.mcgarrah.org
+    mcgarrah.org
     ```
 
-2. Configure DNS with your registrar — add a CNAME record pointing `www` to `<username>.github.io`
+2. Configure DNS with your registrar:
+   - **A records** for the apex domain (`@`) pointing to GitHub Pages IPs:
+     - `185.199.108.153`
+     - `185.199.109.153`
+     - `185.199.110.153`
+     - `185.199.111.153`
+   - **CNAME record** for `www` pointing to `<username>.github.io`
 
-3. In the GitHub repository settings under Pages, verify the custom domain and enable HTTPS
+3. In the GitHub repository settings under Pages, set the custom domain to the apex domain (e.g., `mcgarrah.org`) and enable **Enforce HTTPS**
 
-GitHub handles the Let's Encrypt certificate automatically. The [GitHub Pages custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) cover the DNS details.
+GitHub handles the Let's Encrypt certificate automatically. With this configuration, GitHub Pages serves the site from the apex domain and automatically 301-redirects `www` to the apex.
+
+The [GitHub Pages custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) cover the full DNS setup.
 
 I'm currently [migrating my domains from Squarespace to Porkbun](/name-service-registrars/) for better API access and lower costs — relevant if you're choosing a registrar for a new blog.
+
+### The www vs Apex Domain Trap
+
+I ran into a subtle but damaging SEO issue that's worth documenting. My original CNAME file was set to `www.mcgarrah.org`, but my `_config.yml` had:
+
+```yaml
+url: "https://mcgarrah.org"
+```
+
+This created a mismatch across the entire site:
+
+| Component | Domain Used |
+|-----------|------------|
+| CNAME (GitHub Pages primary) | `www.mcgarrah.org` |
+| `_config.yml` url | `mcgarrah.org` |
+| jekyll-seo-tag canonical URLs | `mcgarrah.org` |
+| jekyll-sitemap URLs | `mcgarrah.org` |
+| robots.txt sitemap reference | `mcgarrah.org` |
+
+GitHub Pages treated `www.mcgarrah.org` as the primary domain and 301-redirected the apex `mcgarrah.org` → `www.mcgarrah.org`. But every canonical tag and sitemap entry pointed to `mcgarrah.org` (no www). Google Search Console saw the site served from one domain with canonical tags pointing to another — splitting crawl data and confusing search rankings.
+
+The fix was straightforward: change the CNAME file from `www.mcgarrah.org` to `mcgarrah.org` and update the GitHub Pages custom domain setting to match. My existing DNS records already supported this:
+
+```text
+A    @    185.199.108.153  (GitHub Pages)
+A    @    185.199.109.153  (GitHub Pages)
+A    @    185.199.110.153  (GitHub Pages)
+A    @    185.199.111.153  (GitHub Pages)
+CNAME www mcgarrah.github.io
+```
+
+After the change, the redirect flipped correctly:
+
+- `https://mcgarrah.org` → **200 OK** (primary)
+- `https://www.mcgarrah.org` → **301 redirect** to `https://mcgarrah.org/`
+
+The lesson: **your CNAME file, `_config.yml` url, and GitHub Pages custom domain setting must all agree on the same domain.** If you use the apex domain in `_config.yml`, use it everywhere. The `www` CNAME DNS record still exists so GitHub Pages can handle the redirect — it just shouldn't be the primary domain in the CNAME file.
 
 ## GitHub Actions CI/CD
 
