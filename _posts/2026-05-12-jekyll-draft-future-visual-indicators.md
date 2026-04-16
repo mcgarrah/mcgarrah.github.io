@@ -1,11 +1,17 @@
 ---
 title: "Visual Indicators for Draft and Future Posts in Jekyll"
 layout: post
-published: true
 categories: [web-development, technical, jekyll]
 tags: [jekyll, drafts, future-posts, font-awesome, local-development, github-pages, ux]
 excerpt: "When previewing a Jekyll site locally with --drafts and --future, it's hard to tell which posts are live and which are still unpublished. I added Font Awesome icons and italic styling to the archive and home pages so drafts get a pencil and future posts get a robot — visible only during local development."
 description: "How to add visual indicators for draft and future-dated posts in Jekyll templates. Uses Font Awesome SVG icons (pencil for drafts, robot for future), italic styling, and Liquid conditionals that only activate during local development with --drafts and --future flags. Covers archive pages, paginated home pages, and excerpt views."
+date: 2026-05-12
+last_modified_at: 2026-05-12
+published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-05-12
+  date_modified: 2026-05-12
 ---
 
 My previous article on [Jekyll Run plugin configuration](/jekyll-run-vscode-plugin-local-development/) documented a frustrating problem: when you run `jekyll serve --drafts --future`, draft and future-dated posts appear in your listings but look identical to published posts. You can't tell at a glance which articles are live on production and which are still waiting.

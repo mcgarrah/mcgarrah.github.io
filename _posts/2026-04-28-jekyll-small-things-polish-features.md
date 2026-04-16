@@ -1,11 +1,17 @@
 ---
 title: "The Small Things: Polish Features That Make a Jekyll Blog Feel Professional"
 layout: post
-published: false
 categories: [web-development, technical, jekyll]
 tags: [jekyll, dark-mode, print-stylesheet, 404-page, favicon, archive, author-bio, ux, github-pages, e-e-a-t]
 excerpt: "Dark mode, print stylesheets, haiku error pages, author bios, and the archive page — none of these are glamorous features. Each one took less than a day. Together they're the difference between a blog that looks like a default template and one that feels like someone cares about it."
 description: "Six small polish features for a Jekyll blog: automatic dark/light theme via prefers-color-scheme, print stylesheet for clean article printing, custom 404/500 error pages with haiku, author bio with E-E-A-T signals, archive page, and favicon. Each feature explained with code, git history, and design rationale."
+date: 2026-04-28
+last_modified_at: 2026-04-28
+published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-04-28
+  date_modified: 2026-04-28
 ---
 
 Nobody visits a blog because it has a print stylesheet. Nobody subscribes because the 404 page has a haiku. But these small touches signal that the site is maintained, that someone thought about the details, and that the content is worth the reader's time.

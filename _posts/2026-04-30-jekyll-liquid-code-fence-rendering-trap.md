@@ -1,11 +1,17 @@
 ---
 title: "Jekyll's Invisible Bug: When Code Fences Don't Protect Your Liquid Examples"
 layout: post
-published: true
 categories: [web-development, technical, jekyll]
 tags: [jekyll, liquid, markdown, debugging, code-blocks, github-pages, raw-tag]
 excerpt: "If you write Jekyll posts about Jekyll, your Liquid code examples will silently vanish — or crash the build. Markdown code fences don't protect Liquid tags from execution. Here's how to find every affected post, why it sneaks up on you, and the fix that actually works."
 description: "A deep dive into Jekyll's Liquid rendering behavior inside Markdown code fences. Explains why code blocks don't protect Liquid tags, how to detect unprotected tags across an entire site, the difference between silent failures and build crashes, and the correct use of raw/endraw tags with edge cases for nested examples."
+date: 2026-04-30
+last_modified_at: 2026-04-30
+published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-04-30
+  date_modified: 2026-04-30
 ---
 
 I had a blog post about reading time calculation that crashed my Jekyll build. The error pointed to a draft file, but the code it complained about was inside a Markdown code fence — supposedly safe, display-only text. It wasn't.

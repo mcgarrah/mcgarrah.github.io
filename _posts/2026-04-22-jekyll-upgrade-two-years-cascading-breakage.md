@@ -1,11 +1,17 @@
 ---
 title: "Upgrading Jekyll: Two Years of Cascading Breakage"
 layout: post
-published: false
 categories: [web-development, technical, jekyll]
 tags: [jekyll, ruby, sass, dart-sass, github-actions, github-pages, upgrade, webrick, node-js]
 excerpt: "Every Jekyll upgrade broke something downstream. Ruby 3.0 dropped webrick. Jekyll 4.3 broke SASS imports. Dart Sass 3.0 deprecated color functions. Node.js 24 forced all GitHub Actions to update. Here's the full upgrade timeline and what each one taught me."
 description: "A chronicle of upgrading Jekyll from 4.2 to 4.4.1 over two years: webrick dependency, SASS index naming conflicts, Dart Sass 2.0 division syntax, module system migration, circular dependency restructuring, and Node.js 24 GitHub Actions updates. Each upgrade's breakage and fix documented from git history."
+date: 2026-04-22
+last_modified_at: 2026-04-22
+published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-04-22
+  date_modified: 2026-04-22
 ---
 
 I've upgraded Jekyll three times in two years. Each time, the version bump was one line in the Gemfile. Each time, the cascading breakage took hours to fix. The Jekyll upgrade was never the hard part — it was everything that broke downstream.
