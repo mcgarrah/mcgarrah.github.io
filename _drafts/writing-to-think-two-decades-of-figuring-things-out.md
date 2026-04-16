@@ -40,17 +40,32 @@ xychart-beta
   bar [1, 3, 2, 2, 1, 4, 17, 9, 2, 9, 7, 2, 0, 0, 0, 0, 0, 0, 3, 24, 33, 32]
 ```
 
+2026 is on pace to be the biggest year yet — thirty-two posts published or scheduled with nineteen more drafts waiting. The bar chart doesn't even know about those yet.
+
+```mermaid
+---
+config:
+  theme: default
+---
+xychart-beta
+  title "2026 Projection: Published + Drafts"
+  x-axis [2023, 2024, 2025, "2026 published", "2026 projected"]
+  y-axis "Posts" 0 --> 55
+  bar [3, 24, 33, 32, 51]
+```
+
 The seven-year gap from 2017–2022 is hard to miss. So is the explosion after it.
 
 - **2001–2008** — Nine posts. Life updates, career moves, figuring out what a blog even was.
 - **2011–2012** — Twenty-six posts in two years. I'd gotten my hands on a Seagate BlackArmor NAS and couldn't stop pulling it apart. Every post was me working through another layer of that hardware.
 - **2013–2016** — Twenty posts across four years. Steady but not urgent. I was learning, but not struggling with anything hard enough to need the writing.
-- **2017–2022** — Nothing. Zero posts for nearly seven years. Georgia Tech's OMSCS program, career changes, life. I was learning constantly but not writing any of it down.
+- **2017–2022** — Nothing on the blog. Zero posts for nearly seven years. But I wasn't not writing — I was writing constantly. Research papers and cross-domain academic projects for Georgia Tech's OMSCS program. Enterprise and solution architecture documents at work, which is mostly explaining complex systems to people who need to make decisions about them. Security narratives and policy documents — writing the story of why something works and is safe to use as designed, or the occasional compensating controls document explaining why something doesn't meet the letter of a policy but satisfies the underlying security goals. Piles of writing. I just wasn't writing *here*.
 - **2023** — Three posts. Testing the waters again.
 - **2024** — Twenty-four posts. The homelab buildout year. Proxmox, Ceph, ZFS, networking — every week brought a new problem that needed to be written through.
-- **2025–2026** — Sixty-five posts published or scheduled, forty-three more in drafts. Something broke open.
+- **2025** — Thirty-three posts. The writing habit fully locked in. Jekyll deep dives, Ceph storage, Proxmox lessons learned — a post nearly every week.
+- **2026** — Thirty-two posts already published or scheduled and we're not even halfway through the year. Nineteen more drafts in the pipeline. Something broke open.
 
-The seven-year gap is the most interesting part. I didn't stop learning during that time — I was doing a master's degree in computer science, working in cloud architecture, building things constantly. But I wasn't writing. And looking back, I think I lost something during that period. Not knowledge, but *clarity*. The kind of clarity you only get when you force yourself to explain what you're doing and why.
+The seven-year gap is the most interesting part. I didn't stop writing during that time — I was producing more words per year than I ever had. Academic papers, architecture documents, security assessments, policy justifications. The writing was constant, but it was all locked behind corporate firewalls and academic walls. None of it was public, none of it was searchable, and none of it fed back into the kind of community conversation that a blog enables. Looking back, I think I lost something during that period. Not knowledge or even writing discipline, but *reach*. The kind of reach you only get when you force yourself to explain what you're doing in a way that anyone can find and respond to.
 
 When I came back to writing in 2023, it felt like turning on a light in a room I'd been navigating by feel.
 
@@ -111,7 +126,7 @@ I've published 151 posts across twenty-plus years. The topics range from NAS hac
 
 The bursts in my publishing history correspond exactly to periods when I was building something new and struggling with it. The silences correspond to periods when I was either too busy to write or — more honestly — not struggling enough to need the writing.
 
-I'm in a burst right now. Forty-three drafts in the pipeline, posts scheduled through mid-2026, and a Kubernetes-on-Proxmox project generating new material every week. The homelab keeps breaking in interesting ways, and every break is a post waiting to happen.
+I'm in a burst right now. Twenty-nine drafts in the pipeline across 2025 and 2026, posts scheduled through mid-2026, and a Kubernetes-on-Proxmox project generating new material every week. The homelab keeps breaking in interesting ways, and every break is a post waiting to happen.
 
 If you've read this far, you're probably someone who thinks by writing too. Or you're considering starting. My advice is simple: don't write for an audience. Write for the confused version of yourself. The audience, if it comes, is a bonus. The understanding is the point.
 
