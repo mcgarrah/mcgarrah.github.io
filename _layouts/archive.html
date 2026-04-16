@@ -5,10 +5,23 @@ layout: default
   {{ content }}
   <header><h1>Posts</h1></header>
   {% for post in site.posts %}
+  {%- assign is_draft = false -%}
+  {%- assign is_future = false -%}
+  {%- if post.path contains '_drafts/' -%}{%- assign is_draft = true -%}{%- endif -%}
+  {%- if post.date > site.time -%}{%- assign is_future = true -%}{%- endif -%}
   {%- assign date_format = site.date_format | default: "%B %d, %Y" -%}
   <div>
     <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
-    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+    {%- if is_draft %}
+    <svg aria-label="Draft" class="icon icon-status" title="Draft"><use xlink:href="{{ "/assets/fontawesome/icons.svg" | relative_url }}#pencil-alt"></use></svg>
+    {%- elsif is_future %}
+    <svg aria-label="Future" class="icon icon-status" title="Scheduled"><use xlink:href="{{ "/assets/fontawesome/icons.svg" | relative_url }}#robot"></use></svg>
+    {%- endif %}
+    <h3>
+      {%- if is_draft or is_future %}<em>{% endif -%}
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      {%- if is_draft or is_future %}</em>{% endif -%}
+    </h3>
   </div>
   {% endfor %}
 </article>

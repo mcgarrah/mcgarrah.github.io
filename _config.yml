@@ -82,6 +82,11 @@ navigation:                # accepts {file, title, url, icon, sidebaricon}
   - {url: "/contact/", title: Contact, icon: envelope}
   - {url: "/privacy/", title: Privacy, icon: lock}
 
+# Icons for draft and future post indicators (dev-only, loaded into SVG sprite)
+post_status_icons:
+  - {icon: pencil-alt}     # draft posts
+  - {icon: robot}          # future-dated posts
+
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mcgarrah@gmail.com"}
   - {title: Github, icon: github, url: "https://github.com/mcgarrah"}

@@ -7,9 +7,22 @@ layout: default
   <ul>
     {%- assign posts = paginator.posts | default: site.posts -%}
     {% for post in posts %}
+    {%- assign is_draft = false -%}
+    {%- assign is_future = false -%}
+    {%- if post.path contains '_drafts/' -%}{%- assign is_draft = true -%}{%- endif -%}
+    {%- if post.date > site.time -%}{%- assign is_future = true -%}{%- endif -%}
     <li>
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+      {%- if is_draft %}
+      <svg aria-label="Draft" class="icon icon-status" title="Draft"><use xlink:href="{{ "/assets/fontawesome/icons.svg" | relative_url }}#pencil-alt"></use></svg>
+      {%- elsif is_future %}
+      <svg aria-label="Future" class="icon icon-status" title="Scheduled"><use xlink:href="{{ "/assets/fontawesome/icons.svg" | relative_url }}#robot"></use></svg>
+      {%- endif %}
+      {%- if is_draft or is_future %}
+      <em><a href="{{ post.url | relative_url }}">{{ post.title }}</a></em>
+      {%- else %}
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      {%- endif %}
     </li>
     {% endfor %}
   </ul>
