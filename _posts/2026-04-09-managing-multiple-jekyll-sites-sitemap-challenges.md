@@ -49,7 +49,7 @@ Google saw these pages as part of `mcgarrah.org` but with noticeably worse SEO m
 | Issue | Status |
 |-------|--------|
 | Placeholder description | ✅ Fixed — updated to real description |
-| Missing `jekyll-seo-tag` | ✅ Fixed — added plugin and `{% seo %}` tag to resume head |
+| Missing `jekyll-seo-tag` | ✅ Fixed — added plugin and {% raw %}`{% seo %}`{% endraw %} tag to resume head |
 | Missing `jekyll-sitemap` | ✅ Fixed — added plugin to resume repo |
 | `robots.txt` for `/resume/` | ❌ Not possible — `robots.txt` must be at domain root |
 | Unified sitemap | ✅ Fixed — `sitemapindex.xml` at domain root references both sitemaps |
@@ -228,7 +228,7 @@ This doesn't require changes to either Jekyll site's build process — just a st
 
 ### Medium Term: Add `jekyll-seo-tag` to Resume
 
-The resume site's lack of structured data is a real SEO gap. Adding `jekyll-seo-tag` to the resume's Gemfile and including `{% seo %}` in its `<head>` would bring its pages up to the same standard as the blog. This is independent of the sitemap problem.
+The resume site's lack of structured data is a real SEO gap. Adding `jekyll-seo-tag` to the resume's Gemfile and including {% raw %}`{% seo %}`{% endraw %} in its `<head>` would bring its pages up to the same standard as the blog. This is independent of the sitemap problem.
 
 ### Long Term: Evaluate Merging
 

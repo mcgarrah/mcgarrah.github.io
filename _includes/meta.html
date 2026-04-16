@@ -3,12 +3,14 @@
   {%- assign date_format = site.date_format | default: "%B %d, %Y" -%}
   <span class="post-byline">By <a href="/about/" rel="author">{{ site.author.name | default: site.author }}</a></span> ·
   <time datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: date_format }}</time>
-  {%- assign words_per_minute = 200 -%}
-  {%- assign number_of_words = include.post.content | number_of_words -%}
-  {%- if number_of_words < words_per_minute -%}
-    <span class="reading-time">Less than 1 min read</span>
-  {%- else -%}
-    {%- assign reading_time = number_of_words | divided_by: words_per_minute -%}
-    <span class="reading-time">{{ reading_time }} min read</span>
+  {%- if include.post.content -%}
+    {%- assign words_per_minute = 200 -%}
+    {%- assign number_of_words = include.post.content | number_of_words -%}
+    {%- if number_of_words < words_per_minute -%}
+      <span class="reading-time">Less than 1 min read</span>
+    {%- else -%}
+      {%- assign reading_time = number_of_words | divided_by: words_per_minute -%}
+      <span class="reading-time">{{ reading_time }} min read</span>
+    {%- endif -%}
   {%- endif -%}
 </header>

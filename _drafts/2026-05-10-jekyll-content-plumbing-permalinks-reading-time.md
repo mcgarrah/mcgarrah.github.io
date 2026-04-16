@@ -82,14 +82,14 @@ Every post on this blog shows an estimated reading time (e.g., "5 min read") in 
 The calculation lives in `_includes/meta.html`:
 
 ```liquid
-{%- assign words_per_minute = 200 -%}
+{% raw %}{%- assign words_per_minute = 200 -%}
 {%- assign number_of_words = include.post.content | number_of_words -%}
 {%- if number_of_words < words_per_minute -%}
   <span class="reading-time">Less than 1 min read</span>
 {%- else -%}
   {%- assign reading_time = number_of_words | divided_by: words_per_minute -%}
   <span class="reading-time">{{ reading_time }} min read</span>
-{%- endif -%}
+{%- endif -%}{% endraw %}
 ```
 
 The math is simple: count words, divide by 200 words per minute (average adult reading speed), round down. Posts under 200 words show "Less than 1 min read" instead of "0 min read."

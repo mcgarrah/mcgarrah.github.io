@@ -147,7 +147,7 @@ Here's the pattern. Your `_layouts/default.html` should look like this:
 
 The rules are simple:
 
-- **In `<head>`**: meta tags, `{% seo %}`, stylesheets, scripts, feed links, analytics, verification scripts
+- **In `<head>`**: meta tags, {% raw %}`{% seo %}`{% endraw %}, stylesheets, scripts, feed links, analytics, verification scripts
 - **In `<body>`**: everything visible — navigation, sidebar, content, footer, cookie banners
 
 ### What to Move

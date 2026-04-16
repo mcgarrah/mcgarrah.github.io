@@ -114,7 +114,7 @@ This is a cheap check that has saved me at least once. The `JEKYLL_ENV: producti
 The full build job:
 
 ```yaml
-jobs:
+{% raw %}jobs:
   build:
     runs-on: ubuntu-latest
     steps:
@@ -135,7 +135,7 @@ jobs:
             echo "::error::sitemap.xml contains localhost URLs"
             exit 1
           fi
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v4{% endraw %}
 ```
 
 Key details:
@@ -180,7 +180,7 @@ What remains is **GitHub Actions workflow analysis** (`language: actions`), whic
 - Untrusted input in `run` steps
 - Missing permission restrictions
 - Vulnerable action versions
-- Script injection via `${{ }}` expressions
+- Script injection via {% raw %}`${{ }}`{% endraw %} expressions
 
 ```yaml
 strategy:

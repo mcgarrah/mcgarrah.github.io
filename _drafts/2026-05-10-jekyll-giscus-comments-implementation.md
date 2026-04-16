@@ -237,7 +237,7 @@ Key configuration choices:
 In `_layouts/post.html`:
 
 ```html
-{%- if site.giscus -%}
+{% raw %}{%- if site.giscus -%}
 <section class="page__comments">
   <script src="https://giscus.app/client.js"
           data-repo="{{ site.giscus.repo }}"
@@ -256,20 +256,20 @@ In `_layouts/post.html`:
           async>
   </script>
 </section>
-{%- endif -%}
+{%- endif -%}{% endraw %}
 ```
 
-Every `_config.yml` value is templated via Liquid — no hardcoded values in the layout. The `{%- if site.giscus -%}` guard means the widget only renders if Giscus is configured, so the theme works without it.
+Every `_config.yml` value is templated via Liquid — no hardcoded values in the layout. The {% raw %}`{%- if site.giscus -%}`{% endraw %} guard means the widget only renders if Giscus is configured, so the theme works without it.
 
 ### Legacy Dead Code
 
 The post layout still contains the original theme's Isso and Disqus support:
 
 ```html
-{% if page.comments != false and site.comments.isso or site.comments.disqus %}
+{% raw %}{% if page.comments != false and site.comments.isso or site.comments.disqus %}
   {% if site.comments.isso_domain %}<div id="isso-thread"></div>{% endif %}
   {% if site.comments.disqus_shortname %}<div id="disqus_thread"></div>{% endif %}
-{% endif %}
+{% endif %}{% endraw %}
 ```
 
 This never renders because neither `site.comments.isso_domain` nor `site.comments.disqus_shortname` is set in `_config.yml`. It's harmless dead code from the Contrast theme fork. I've left it in case someone forks this blog and wants to use those systems instead.

@@ -140,7 +140,7 @@ This took weeks to resolve properly across all Ruby versions.
 The release workflow needed to coordinate multiple moving parts:
 
 ```yaml
-name: Release
+{% raw %}name: Release
 on:
   workflow_dispatch:
     inputs:
@@ -172,7 +172,7 @@ jobs:
         run: |
           gh release create "v${{ inputs.version }}" \
                            --title "Release v${{ inputs.version }}" \
-                           --notes "$changelog_content"
+                           --notes "$changelog_content"{% endraw %}
 ```
 
 ## The bin/release Script

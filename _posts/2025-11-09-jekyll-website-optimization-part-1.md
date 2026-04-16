@@ -81,11 +81,11 @@ This approach:
 Proper meta tags significantly improve search engine visibility:
 
 ```html
-<meta name="description" content="{{ page.excerpt | strip_html | truncate: 160 }}">
+{% raw %}<meta name="description" content="{{ page.excerpt | strip_html | truncate: 160 }}">
 <meta property="og:title" content="{{ page.title }}">
 <meta property="og:description" content="{{ page.excerpt | strip_html | truncate: 160 }}">
 <meta property="og:type" content="article">
-<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">{% endraw %}
 ```
 
 ### 2. Sitemap Generation
@@ -228,7 +228,7 @@ This combination of settings allows me to bank up several articles to post at fu
 Replaced traditional comment systems with GitHub Discussions via Giscus:
 
 ```html
-<script src="https://giscus.app/client.js"
+{% raw %}<script src="https://giscus.app/client.js"
         data-repo="mcgarrah/mcgarrah.github.io"
         data-repo-id="{{ site.giscus.repo_id }}"
         data-category="General"
@@ -242,7 +242,7 @@ Replaced traditional comment systems with GitHub Discussions via Giscus:
         data-lang="en"
         crossorigin="anonymous"
         async>
-</script>
+</script>{% endraw %}
 ```
 
 Benefits:

@@ -293,7 +293,7 @@ Several mature libraries exist for cookie consent:
 
 #### **Jekyll Integration Challenges**
 
-Most libraries expect dynamic backends for configuration. They can't access Jekyll variables like `{{ site.google_analytics }}` directly, requiring additional build steps or manual configuration.
+Most libraries expect dynamic backends for configuration. They can't access Jekyll variables like {% raw %}`{{ site.google_analytics }}`{% endraw %} directly, requiring additional build steps or manual configuration.
 
 #### **Tailored Logic Requirements**
 

@@ -51,8 +51,9 @@ date_format: "%B %d, %Y"
 paginate: 4
 
 # Future posts disabled for scheduled releases via GHA scheduled job
-#future: true
-future: false
+# CLI --future flag controls this during local development
+# GitHub Actions builds without --future, so future posts stay hidden in production
+#future: false
 
 # Layout
 show_excerpts: true       # show article excerpts on the home page

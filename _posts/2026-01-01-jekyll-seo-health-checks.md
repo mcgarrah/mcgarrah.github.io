@@ -182,7 +182,7 @@ The `.lighthouserc.json` configuration enforces quality thresholds:
 Custom artifact handling provides timestamped Lighthouse reports:
 
 ```yaml
-- name: Upload Lighthouse results
+{% raw %}- name: Upload Lighthouse results
   run: |
     TIMESTAMP=$(date +%Y%m%d-%H%M%S)
     echo "LIGHTHOUSE_ARTIFACT_NAME=lighthouse-results-$TIMESTAMP" >> $GITHUB_ENV
@@ -192,7 +192,7 @@ Custom artifact handling provides timestamped Lighthouse reports:
   with:
     name: ${{ env.LIGHTHOUSE_ARTIFACT_NAME }}
     path: .lighthouseci/
-    retention-days: 90
+    retention-days: 90{% endraw %}
 ```
 
 This creates artifacts like `lighthouse-results-20260101-143022` containing:
@@ -340,13 +340,13 @@ Link Text: "read more"
 
 **Jekyll Template Fix**:
 ```liquid
-<!-- Instead of generic "read more" -->
+{% raw %}<!-- Instead of generic "read more" -->
 <a href="{{ post.url }}">read more</a>
 
 <!-- Use descriptive text -->
 <a href="{{ post.url }}">{{ post.title | truncate: 50 }}</a>
 <!-- or -->
-<a href="{{ post.url }}" aria-label="Read full article: {{ post.title }}">read more</a>
+<a href="{{ post.url }}" aria-label="Read full article: {{ post.title }}">read more</a>{% endraw %}
 ```
 
 **CSS-Only Solution** (maintains design while improving SEO):
@@ -366,7 +366,7 @@ Link Text: "read more"
 ```
 
 ```liquid
-<a href="{{ post.url }}" class="read-more-link" data-title="{{ post.title }}">read more</a>
+{% raw %}<a href="{{ post.url }}" class="read-more-link" data-title="{{ post.title }}">read more</a>{% endraw %}
 ```
 
 ### Anchor Elements Without Proper href Attributes
@@ -403,7 +403,7 @@ Element: <a class="disabled">
 
 **Jekyll Pagination Fix**:
 ```liquid
-<!-- Instead of disabled anchor -->
+{% raw %}<!-- Instead of disabled anchor -->
 {% if paginator.previous_page %}
   <a href="{{ paginator.previous_page_path }}">« newer posts</a>
 {% else %}
@@ -415,7 +415,7 @@ Element: <a class="disabled">
   <a href="{{ paginator.previous_page_path }}">« newer posts</a>
 {% else %}
   <a href="#" aria-disabled="true" onclick="return false;">« newer posts</a>
-{% endif %}
+{% endif %}{% endraw %}
 ```
 
 **CSS for Disabled State**:
@@ -487,13 +487,13 @@ Tap Target: Archive <a href="/archive/"> Size: 13x18
 The workflow uses Lychee for comprehensive link validation:
 
 ```yaml
-- name: Check links with Lychee
+{% raw %}- name: Check links with Lychee
   uses: lycheeverse/lychee-action@v1
   with:
     args: --verbose --no-progress --exclude-path '_site/resume' '_site/**/*.html'
     fail: true
   env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}{% endraw %}
 ```
 
 **Lychee advantages over custom scripts:**
@@ -700,7 +700,7 @@ Reports are displayed directly in GitHub Actions logs for immediate visibility:
 Both SEO reports and Lighthouse results use consistent timestamped naming:
 
 ```yaml
-- name: Upload SEO report
+{% raw %}- name: Upload SEO report
   run: |
     TIMESTAMP=$(date +%Y%m%d-%H%M%S)
     echo "ARTIFACT_NAME=seo-health-report-$TIMESTAMP" >> $GITHUB_ENV
@@ -710,7 +710,7 @@ Both SEO reports and Lighthouse results use consistent timestamped naming:
   with:
     name: ${{ env.ARTIFACT_NAME }}
     path: seo-report.md
-    retention-days: 90
+    retention-days: 90{% endraw %}
 ```
 
 This creates organized artifacts like:
@@ -858,9 +858,9 @@ permissions:
 
 **Artifact Management**: Implement consistent naming and retention
 ```yaml
-# Timestamped artifacts for organization
+{% raw %}# Timestamped artifacts for organization
 name: ${{ env.ARTIFACT_NAME }}
-retention-days: 90  # Balance storage and utility
+retention-days: 90  # Balance storage and utility{% endraw %}
 ```
 
 ### Customization for Different Sites

@@ -259,14 +259,14 @@ function foo() {
 
 The Liquid `highlight` tag with optional line numbers:
 
-```
-{{ "{% highlight ruby " }}%}
+{% raw %}```
+{% highlight ruby %}
 def print_hi(name)
   puts "Hi, #{name}"
 end
 print_hi('Tom')
-{{ "{% endhighlight " }}%}
-```
+{% endhighlight %}
+```{% endraw %}
 
 {% highlight ruby %}
 def print_hi(name)
@@ -295,54 +295,54 @@ root@harlan:~# zpool status
 
 ## Escaping Liquid Template Code
 
-When writing about Jekyll, you'll often need to show Liquid tags like `{{ "{{ variable }}" }}` or `{{ "{% if condition %}" }}` in code blocks. Without protection, Jekyll's Liquid engine will try to evaluate them during the build — silently swallowing your example code or throwing errors.
+{% raw %}When writing about Jekyll, you'll often need to show Liquid tags like `{{ variable }}` or `{% if condition %}` in code blocks. Without protection, Jekyll's Liquid engine will try to evaluate them during the build — silently swallowing your example code or throwing errors.{% endraw %}
 
 ### The `raw` / `endraw` Tag
 
-Wrap code blocks containing Liquid syntax with `{{ "{% raw %}" }}` and `{{ "{% endraw %}" }}`:
+{% raw %}Wrap code blocks containing Liquid syntax with <code>{&#37; raw %}</code> and <code>{&#37; endraw %}</code>:
 
 ````markdown
 ```html
-{{ "{% raw %}" }}<head>
-  {{ "{{ content }}" }}
-  {{ "{% if page.mermaid %}" }}
+{&#37; raw %}<head>
+  {{ content }}
+  {% if page.mermaid %}
   <script src="mermaid.js"></script>
-  {{ "{% endif %}" }}
-</head>{{ "{% endraw %}" }}
+  {% endif %}
+</head>{&#37; endraw %}
 ```
 ````
 
-Place `{{ "{% raw %}" }}` immediately after the opening code fence and `{{ "{% endraw %}" }}` just before the closing fence. Everything between them passes through as literal text.
+Place <code>{&#37; raw %}</code> immediately after the opening code fence and <code>{&#37; endraw %}</code> just before the closing fence. Everything between them passes through as literal text.{% endraw %}
 
 This is the approach used throughout this blog — for example in the [Mermaid diagram rendering challenges]({% post_url 2025-12-15-jekyll-mermaid-diagram-rendering-challenges %}) and [SEO sitemap canonical URL fixes]({% post_url 2025-12-31-jekyll-seo-sitemap-canonical-url-fixes %}) posts.
 
 ### When You Need It
 
-You need `{{ "{% raw %}" }}` / `{{ "{% endraw %}" }}` any time a code block contains:
+{% raw %}You need <code>{&#37; raw %}</code> / <code>{&#37; endraw %}</code> any time a code block contains:
 
-- **Liquid output tags** — `{{ "{{ site.url }}" }}`, `{{ "{{ page.title }}" }}`
-- **Liquid logic tags** — `{{ "{% if %}" }}`, `{{ "{% for %}" }}`, `{{ "{% include %}" }}`
-- **GitHub Actions expressions** — `${{ "{{ secrets.GITHUB_TOKEN }}" }}` (the `${{ "{{ }}" }}` syntax triggers Liquid too)
-- **Jekyll front matter inside code blocks** — the `---` fences with Liquid variables
+- **Liquid output tags** — `{{ site.url }}`, `{{ page.title }}`
+- **Liquid logic tags** — `{% if %}`, `{% for %}`, `{% include %}`
+- **GitHub Actions expressions** — `${{ secrets.GITHUB_TOKEN }}` (the `${{ }}` syntax triggers Liquid too)
+- **Jekyll front matter inside code blocks** — the `---` fences with Liquid variables{% endraw %}
 
 ### Leaving Yourself a Note
 
 For complex posts, a hidden comment explaining why `raw` is needed helps future-you:
 
-````markdown
-{{ "{% comment %}" }}
-The next code block has {{ "{{ }}" }} variables that require
+{% raw %}````markdown
+{&#37; comment %}
+The next code block has {{ }} variables that require
 raw/endraw Liquid tags to render correctly.
-{{ "{% endcomment %}" }}
+{&#37; endcomment %}
 ```yaml
-{{ "{% raw %}" }}on:
+{&#37; raw %}on:
   push:
-    branches: [ ${{ "{{ github.event.base_ref }}" }} ]
-{{ "{% endraw %}" }}
+    branches: [ ${{ github.event.base_ref }} ]
+{&#37; endraw %}
 ```
 ````
 
-The `{{ "{% comment %}" }}` / `{{ "{% endcomment %}" }}` block is invisible in the rendered output but visible when editing the markdown source.
+The <code>{&#37; comment %}</code> / <code>{&#37; endcomment %}</code> block is invisible in the rendered output but visible when editing the markdown source.{% endraw %}
 
 ## Collapsible Sections
 
@@ -387,21 +387,21 @@ You can also put a code snippet in the summary line itself using Liquid highligh
 
 This blog uses a custom `_includes/embed.html` that creates a responsive 16:9 container. Use the embed URL format (not the watch URL):
 
-```liquid
-{{ "{% include embed.html url=\"https://www.youtube.com/embed/VIDEO_ID\" " }}%}
+{% raw %}```liquid
+{% include embed.html url="https://www.youtube.com/embed/VIDEO_ID" %}
 ```
 
 For a YouTube playlist:
 
 ```liquid
-{{ "{% include embed.html url=\"https://www.youtube.com/embed/videoseries?list=PLAYLIST_ID\" " }}%}
+{% include embed.html url="https://www.youtube.com/embed/videoseries?list=PLAYLIST_ID" %}
 ```
 
 The embed automatically scales to 100% width with a 56.25% padding-bottom ratio (16:9 aspect). You can override dimensions with optional `width` and `height` parameters:
 
 ```liquid
-{{ "{% include embed.html url=\"https://www.youtube.com/embed/VIDEO_ID\" width=\"560\" height=\"315\" " }}%}
-```
+{% include embed.html url="https://www.youtube.com/embed/VIDEO_ID" width="560" height="315" %}
+```{% endraw %}
 
 ### Generic Embeds
 

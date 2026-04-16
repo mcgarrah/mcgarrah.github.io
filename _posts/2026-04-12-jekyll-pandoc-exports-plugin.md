@@ -62,7 +62,7 @@ pandoc_exports:
   inject_downloads: false
   image_path_fixes:
     - pattern: 'src="/resume/assets/'
-      replacement: 'src="{{site.dest}}/assets/'
+      replacement: 'src="{% raw %}{{site.dest}}{% endraw %}/assets/'
 ```
 
 The `inject_downloads: false` setting is useful when your theme already has its own download links — as was the case with my resume site's sidebar. The `image_path_fixes` array handles the path rewriting needed when a site uses a `baseurl` like `/resume`.

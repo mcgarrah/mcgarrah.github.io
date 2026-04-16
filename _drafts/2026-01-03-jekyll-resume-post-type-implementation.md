@@ -48,7 +48,7 @@ canonical_url: "/resume/"
 
 **Minimal Post Content**:
 ```markdown
-This is my professional resume, updated {{ site.time | date: "%B %Y" }}.
+{% raw %}This is my professional resume, updated {{ site.time | date: "%B %Y" }}.{% endraw %}
 
 For a PDF version, [download here](/assets/pdf/resume.pdf).
 ```
@@ -132,7 +132,7 @@ education:
 
 **Layout File** (`_layouts/resume.html`):
 ```html
----
+{% raw %}---
 layout: default
 ---
 
@@ -157,14 +157,14 @@ layout: default
     {% include resume/skills.html %}
     {% endcomment %}
   </div>
-</article>
+</article>{% endraw %}
 ```
 
 ## Modular Resume Components
 
 **Personal Section** (`_includes/resume/personal.html`):
 ```html
-<section class="resume-section personal">
+{% raw %}<section class="resume-section personal">
   <div class="contact-info">
     <h2>{{ site.data.resume.personal.name }}</h2>
     <p class="title">{{ site.data.resume.personal.title }}</p>
@@ -174,12 +174,12 @@ layout: default
       <li>{{ site.data.resume.personal.website }}</li>
     </ul>
   </div>
-</section>
+</section>{% endraw %}
 ```
 
 **Experience Section** (`_includes/resume/experience.html`):
 ```html
-<section class="resume-section experience">
+{% raw %}<section class="resume-section experience">
   <h2>Professional Experience</h2>
   {% for job in site.data.resume.experience %}
     <div class="job">
@@ -195,7 +195,7 @@ layout: default
       </ul>
     </div>
   {% endfor %}
-</section>
+</section>{% endraw %}
 ```
 
 ## Styling Integration

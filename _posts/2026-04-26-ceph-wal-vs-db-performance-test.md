@@ -3,6 +3,7 @@ title: "Measuring the WAL vs DB Performance Gap on Ceph USB OSDs"
 layout: post
 categories: [proxmox, ceph, homelab, storage]
 tags: [proxmox, ceph, ssd, wal, db, bluestore, performance, benchmarking, homelab]
+mermaid: true
 excerpt: "Nine of my fifteen Ceph OSDs use WAL-only acceleration while six use DB. I set out to measure the performance gap and discovered the real story isn't WAL vs DB — it's the USB 3.0 hardware ceiling that dominates everything. The matched-hardware comparison shows DB is 5-15% faster on reads, not the 32% that naive cross-node testing suggested."
 published: true
 ---
@@ -176,6 +177,16 @@ HDD  /dev/sdf (USB):     71 IOPS
 ```
 
 The sequential read gap is only 2×, but the random 4K IOPS gap is **13×**. Ceph backfill and normal OSD operations are dominated by random I/O — metadata lookups, PG peering, object reads scattered across the disk. At 75 IOPS × 4 KB = ~300 KB/s of random read throughput, it's clear why recovery crawls at 13 MiB/s: the OSD is mixing random metadata reads with sequential data writes, and the spinning platters can't seek fast enough.
+
+```mermaid
+xychart-beta horizontal
+    title "Random 4K Read IOPS by Drive Type"
+    x-axis ["SSD MX500 (SATA)", "7200 RPM 3.5in (USB)", "5400 RPM 2.5in (USB)"]
+    y-axis "IOPS" 0 --> 1050
+    bar [979, 129, 77]
+```
+
+The SSD is **13× faster** than the Ceph OSD drives on random I/O. This is the single biggest factor in cluster performance.
 
 The USB-SATA bridge adds some overhead (command queuing is limited compared to native SATA), but the fundamental constraint is the ~8ms average seek time of a 5400 RPM 2.5" drive. That's physics, not protocol.
 
@@ -389,6 +400,8 @@ osd.4 was a clear outlier (1,207 IOPS) — edgar was under elevated load during 
 | subop_latency | 133.2ms | 155.7ms | WAL 14% faster |
 | op_latency | 420.2ms | 399.8ms | DB 5% faster |
 
+The matched comparison shows the bars are much closer together than Phase 1 suggested — the tables tell this story more clearly than charts can at these mixed scales.
+
 ### Revised Assessment
 
 With properly matched hardware, the DB advantage shrinks considerably from the Phase 1 numbers:
@@ -398,6 +411,14 @@ With properly matched hardware, the DB advantage shrinks considerably from the P
 | Read latency | DB 32% faster | DB **11%** faster |
 | Small I/O IOPS | DB 24% faster | **Inconclusive** (noise) |
 | Write latency | DB 14% faster | DB **10%** faster |
+
+```mermaid
+xychart-beta
+    title "DB Read Latency Advantage: Mismatched vs Matched Hardware"
+    x-axis ["Phase 1 Read (mismatched)", "Matched Read (same model)", "Phase 1 Write (mismatched)", "Matched Write (same model)"]
+    y-axis "DB Faster (%)" 0 --> 36
+    bar [32, 11, 14, 10]
+```
 
 The Phase 1 "DB is 32% faster on reads" was inflated by comparing different drive variants (2AN170 at 5526 RPM vs 2U8170 at 5400 RPM). The real-world difference on matched hardware is likely **5-15%** — still meaningful over time, but not dramatic enough to justify the 4-5 day backfill cost per OSD conversion as a standalone project. The recommendation changes from "standardize on DB proactively" to **"use DB when rebuilding OSDs for other reasons"** — which was already the approach in the [hybrid storage article](/ceph-ssd-wal-db-usb-storage/).
 
