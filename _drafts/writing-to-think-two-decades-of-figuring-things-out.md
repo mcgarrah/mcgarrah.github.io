@@ -28,6 +28,20 @@ This is the [Feynman Technique](https://en.wikipedia.org/wiki/Learning_by_teachi
 
 My publishing history has a pattern:
 
+```mermaid
+---
+config:
+  theme: default
+---
+xychart-beta
+  title "Blog Posts Published Per Year"
+  x-axis [2001, 2004, 2005, 2007, 2008, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+  y-axis "Posts" 0 --> 35
+  bar [1, 3, 2, 2, 1, 4, 17, 9, 2, 9, 7, 2, 0, 0, 0, 0, 0, 0, 3, 24, 33, 32]
+```
+
+The seven-year gap from 2017–2022 is hard to miss. So is the explosion after it.
+
 - **2001–2008** — Nine posts. Life updates, career moves, figuring out what a blog even was.
 - **2011–2012** — Twenty-six posts in two years. I'd gotten my hands on a Seagate BlackArmor NAS and couldn't stop pulling it apart. Every post was me working through another layer of that hardware.
 - **2013–2016** — Twenty posts across four years. Steady but not urgent. I was learning, but not struggling with anything hard enough to need the writing.
