@@ -14,7 +14,7 @@ seo:
   date_modified: 2026-05-24
 ---
 
-Parts [1](/proxmox-zfs-boot-mirrors-part-1/) and [2](/proxmox-zfs-boot-mirrors-part-2/) cover the normal failure modes: one drive dies, you replace it, ZFS resilvering handles the rest. This part covers the scenario those procedures can't fix — when both drives in the mirror fail at the same time.
+[Part 1](/proxmox-zfs-boot-mirrors-part-1/) covers replacing a failed drive with one of the same size. [Part 2](/proxmox-zfs-boot-mirrors-part-2/) covers the planned migration path — downsizing from large HDDs to smaller SSDs with a fresh install and optional UEFI upgrade. This part covers the scenario neither of those procedures is designed for — when both drives in the mirror fail at the same time and you're doing an emergency recovery.
 
 That's what happened to harlan, one of the six nodes in my homelab cluster. Both 500GB HDDs developed simultaneous checksum errors and permanent data corruption. The root cause wasn't two independent drive deaths — it was a shared failure point, most likely a bad SATA cable or failing controller causing I/O errors that corrupted both sides of the mirror before ZFS could self-heal.
 
@@ -166,7 +166,7 @@ The installer will create a fresh rpool on the new SSDs. The OSD drives are unto
 
 harlan was kept on Legacy BIOS for the reinstall because the other cluster nodes are also Legacy BIOS. Mixing boot modes in a cluster is fine — each node boots independently — but switching a live node from Legacy to UEFI requires repartitioning the boot disks, which adds risk during an already stressful recovery.
 
-The practical rule: **keep the same boot mode as the original install** for a recovery. Switch to UEFI on a fresh node build when you have time to do it deliberately. See [Part 2](/proxmox-zfs-boot-mirrors-part-2/) for the UEFI migration procedure.
+The practical rule: **keep the same boot mode as the original install** for an emergency recovery. Switch to UEFI on a planned fresh install when you have time to do it deliberately — see [Part 2](/proxmox-zfs-boot-mirrors-part-2/) for the planned migration path that includes the UEFI upgrade.
 
 ## Post-Install Identity Restoration
 
@@ -395,6 +395,6 @@ Run this as a cron job or after any significant configuration change. The backup
 ## Related Articles
 
 - [ZFS Boot Mirrors on Proxmox 8 - Part 1](/proxmox-zfs-boot-mirrors-part-1/) — Same-size drive replacement
-- [ZFS Boot Mirrors on Proxmox 8 - Part 2](/proxmox-zfs-boot-mirrors-part-2/) — Migrating to smaller SSDs
+- [ZFS Boot Mirrors on Proxmox 8 - Part 2](/proxmox-zfs-boot-mirrors-part-2/) — Planned migration to smaller SSDs with fresh install and UEFI upgrade
 - [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring and alerting
 - [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place

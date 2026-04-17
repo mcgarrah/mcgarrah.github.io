@@ -16,7 +16,7 @@ seo:
 
 From my earlier post [ProxMox 8 for the Homelabs](/proxmox-8-homelab/), I offhandedly mentioned that using Proxmox ZFS boot drive mirrors saved my bacon a couple of times. Having set up email alerting for ZFS failures, I've now dealt with this recovery procedure enough times — and made enough mistakes — that it's worth writing down properly.
 
-This is the procedure for replacing a failed drive in a Proxmox ZFS boot mirror. Part 2 will cover migrating to smaller SSDs when your replacement drives are a different size than the originals.
+This is the procedure for replacing a failed drive in a Proxmox ZFS boot mirror. Part 2 covers the planned migration path when your replacement drives are smaller than the originals — a fresh install with an optional UEFI upgrade.
 
 [![Proxmox 8 ZFS Boot Mirror status in the web UI](/assets/images/zfs-boot-mirror-proxmox8-001.png){:width="40%" height="40%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/zfs-boot-mirror-proxmox8-001.png){:target="_blank"}
 
@@ -290,7 +290,7 @@ The Apple HDD that appears in the tanaka console sessions above is a salvaged dr
 
 ## What's Next
 
-This procedure covers same-size drive replacement. If your replacement drives are smaller than the originals — which is common when migrating from old spinning rust HDDs to modern SSDs — ZFS won't let you simply add the smaller drive to the mirror. That's the subject of [Part 2](/proxmox-zfs-boot-mirrors-part-2/).
+This procedure covers same-size drive replacement. If your replacement drives are smaller than the originals — which is common when migrating from old spinning rust HDDs to modern SSDs — ZFS won't let you simply add the smaller drive to the mirror. The planned migration path, including a fresh install and optional UEFI upgrade, is covered in [Part 2](/proxmox-zfs-boot-mirrors-part-2/).
 
 If both drives in your mirror fail simultaneously — which can happen when a bad SATA cable or failing controller corrupts both sides before ZFS can self-heal — neither resilvering nor send/receive will save you. That scenario, and the full fresh-install recovery procedure that preserves your Ceph OSDs, is covered in [Part 3](/proxmox-zfs-boot-mirrors-part-3/).
 
