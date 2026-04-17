@@ -1,19 +1,21 @@
 ---
-title: "ZFS Boot Mirrors on Proxmox 8 for the Homelab - Part 2"
+title: "ZFS Boot Mirrors on Proxmox 8 for the Homelab - Part 3"
 layout: post
 categories: [proxmox, zfs, storage, homelab]
 tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror, ssd, uefi]
 excerpt: "Migrating a Proxmox ZFS boot mirror from large spinning rust HDDs to smaller SSDs — why a fresh install with a UEFI upgrade is the practical path."
 description: "How to migrate a Proxmox ZFS boot mirror to smaller replacement drives using a fresh install approach, covering the Golden Backup checklist, UEFI upgrade from Legacy BIOS, cluster rejoin, and Ceph OSD reactivation. Based on real migrations across a six-node homelab cluster."
-date: 2026-05-25
-last_modified_at: 2026-05-25
+date: 2026-06-03
+last_modified_at: 2026-06-03
 seo:
   type: BlogPosting
-  date_published: 2026-05-25
-  date_modified: 2026-05-25
+  date_published: 2026-06-03
+  date_modified: 2026-06-03
 ---
 
-[Part 1](/proxmox-zfs-boot-mirrors-part-1/) covered replacing a failed ZFS boot mirror drive with one of the same size. This is the harder problem: your replacement drives are *smaller* than the originals.
+[Part 1](/proxmox-zfs-boot-mirrors-part-1/) covered replacing a failed ZFS boot mirror drive with one of the same size. [Part 2](/proxmox-zfs-boot-mirrors-part-2/) covered the emergency recovery when both drives fail simultaneously. This is the planned version of that same fresh-install procedure — applied deliberately when your replacement drives are *smaller* than the originals, with a UEFI upgrade included.
+
+The backup checklist and recovery steps here were refined across the Harlan emergency (Part 2), the Quell sequential drive swap, and the Edgar planned migration. This is the procedure I'll follow for the remaining cluster nodes as their spinning rust ages out.
 
 In my case, the cluster nodes have 500GB or 1TB spinning rust HDDs as boot mirrors but only use 3-7GB of actual space — Ceph handles all the real storage. Replacing them with 128GB SSDs makes sense on cost, speed, and reliability grounds. But ZFS won't let you add a smaller drive to an existing mirror:
 
@@ -30,7 +32,7 @@ cannot attach /dev/disk/by-id/ata-smaller-ssd-part3 to rpool: device is too smal
 
 My original plan was to use `zfs send | zfs receive` to migrate data from the larger pool to a new smaller pool without reinstalling. There are documented approaches for this — a [Reddit tutorial](https://www.reddit.com/r/Proxmox/comments/1cr6wn7/tutorial_howto_migrate_a_pve_zfs_bootroot_mirror/), a [shell script](https://github.com/kneutron/ansitest/blob/master/proxmox/proxmox-replace-zfs-mirror-boot-disks-with-smaller.sh), and Aaron Lauterer's [migration guide](https://aaronlauterer.com/blog/2021/proxmox-ve-migrate-to-smaller-root-disks/). I spent time researching and partially testing this path on tanaka before abandoning it.
 
-The problem is that send/receive only solves one thing — the disk size mismatch. It leaves you on the same Legacy BIOS with GRUB, the same aging OS install, and the same accumulated configuration drift. After working through the Harlan and Quell emergency recoveries documented in [Part 3](/proxmox-zfs-boot-mirrors-part-3/), I realized the fresh install approach solves multiple problems at once:
+The problem is that send/receive only solves one thing — the disk size mismatch. It leaves you on the same Legacy BIOS with GRUB, the same aging OS install, and the same accumulated configuration drift. After working through the Harlan and Quell recoveries documented in [Part 2](/proxmox-zfs-boot-mirrors-part-2/), I realized the fresh install approach solves multiple problems at once:
 
 - **UEFI upgrade.** Legacy BIOS and GRUB are technical debt. Proxmox already prefers `systemd-boot` on UEFI installs, and PVE 9.x is coming. Every node left on Legacy BIOS is a node that will need extra attention during the major version upgrade. A fresh install is the clean path to UEFI — you can't switch boot modes with a send/receive migration.
 - **Clean OS state.** Years of package upgrades, configuration changes, and accumulated cruft disappear. The fresh install starts from a known-good baseline.
@@ -51,11 +53,11 @@ With PVE 9.x on the horizon, staying on Legacy BIOS means risking boot issues du
 | Situation | Approach |
 |-----------|----------|
 | One drive failed, replacement is same size | [Part 1](/proxmox-zfs-boot-mirrors-part-1/) (zpool replace) |
-| Both drives failed simultaneously | [Part 3](/proxmox-zfs-boot-mirrors-part-3/) (emergency fresh install) |
+| Both drives failed simultaneously | [Part 2](/proxmox-zfs-boot-mirrors-part-2/) (emergency fresh install) |
 | Planned migration to smaller drives | This article (planned fresh install with UEFI upgrade) |
 | Node has no Ceph OSDs | Simpler — skip the OSD reactivation steps |
 
-The difference between this article and Part 3 is *timing*. Part 3 is an emergency recovery when the node is already dead. This article is a planned migration where you control the schedule and can prepare thoroughly.
+The difference between this article and Part 2 is *timing*. Part 2 is an emergency recovery when the node is already dead. This article is a planned migration where you control the schedule and can prepare thoroughly.
 
 ## The Golden Backup Checklist
 
@@ -101,7 +103,7 @@ apt-mark showmanual > /mnt/pve/cephfs/backups/edgar/apt-mark-showmanual.txt
 | `ceph_lvm_layout.txt` | Maps OSD IDs to physical devices — your recovery map if `ceph-volume lvm activate --all` fails |
 | `/etc/pve/user.cfg` | Cluster-wide but good to have a local copy for reference |
 
-The `/etc/subuid` and `/etc/subgid` files were the lesson learned from the Harlan recovery — the Jellyfin LXC container wouldn't start after the rebuild because the UID mappings were missing. See [Part 3](/proxmox-zfs-boot-mirrors-part-3/) for the full story.
+The `/etc/subuid` and `/etc/subgid` files were the lesson learned from the Harlan recovery — the Jellyfin LXC container wouldn't start after the rebuild because the UID mappings were missing. See [Part 2](/proxmox-zfs-boot-mirrors-part-2/) for the full story.
 
 ## The Migration Procedure
 
@@ -266,6 +268,6 @@ ceph osd tree
 ## Related Articles
 
 - [ZFS Boot Mirrors on Proxmox 8 - Part 1](/proxmox-zfs-boot-mirrors-part-1/) — Same-size drive replacement
-- [ZFS Boot Mirrors on Proxmox 8 - Part 3](/proxmox-zfs-boot-mirrors-part-3/) — Emergency recovery from catastrophic dual-drive failure
+- [ZFS Boot Mirrors on Proxmox 8 - Part 2](/proxmox-zfs-boot-mirrors-part-2/) — Emergency recovery from catastrophic dual-drive failure
 - [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring and alerting
 - [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place
