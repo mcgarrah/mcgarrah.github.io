@@ -44,6 +44,8 @@ My test cluster runs on Dell Wyse 3040 thin clients — $15 each on eBay:
 
 ## Supporting Infrastructure
 
+- [Caddy Reverse Proxy for Proxmox Web UI](/caddy-reverse-proxy-proxmox-web-ui/) — Single entry point with load balancing and health checks
+- [Caddy Reverse Proxy for Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) — Stable URL for the floating ceph-mgr dashboard
 - [Buying a 10Gbps Network on a Homelab Budget](/homelab-sfp-plus-networking/) — SFP+ networking on the cheap
 - [Linux Disk I/O Performance in the Homelab](/linux-disk-io-quick-tests/) — Quick benchmarking methods
 - [Enabling SMART Monitoring on Seagate USB Drives](/usb-drive-smart/) — Getting health data from USB storage

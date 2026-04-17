@@ -3,6 +3,10 @@ title: "Caddy Reverse Proxy for Proxmox Web UI"
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, caddy, reverse-proxy, lxc, ssl, web-interface, homelab]
+last_modified_at: 2026-05-16
+seo:
+  date_published: 2026-05-16
+  date_modified: 2026-05-16
 ---
 
 Managing a six-node Proxmox cluster means six different web interfaces on six different IPs, all on port 8006 with self-signed certificates. A Caddy reverse proxy in an LXC container gives you a single entry point with load balancing, health checks, and working WebSocket support for the console — all in about 30 lines of configuration.
@@ -107,14 +111,14 @@ https://192.168.86.30 {
 
 ### A Note on TLS Verification
 
-The Caddyfile includes a commented-out option for proper CA trust:
+For a more secure alternative, you could trust the PVE CA directly instead of skipping verification:
 
 ```caddyfile
-# More secure alternative if you mount the PVE CA into the LXC:
-# tls_trusted_ca_certs /etc/pve/pve-root-ca.pem
+# More secure alternative if you copy the PVE CA into the LXC:
+# tls_trusted_ca_certs /etc/ssl/certs/pve-root-ca.pem
 ```
 
-The `/etc/pve` filesystem isn't directly accessible from inside an LXC container. You could copy the CA cert into the container, but for an internal homelab proxy, `tls_insecure_skip_verify` is pragmatic — the traffic never leaves your LAN.
+The `/etc/pve` filesystem isn't directly accessible from inside an LXC container, but you can copy the CA cert in manually. For an internal homelab proxy, `tls_insecure_skip_verify` is pragmatic — the traffic never leaves your LAN.
 
 ## Step 4: Enable and Start Caddy
 
@@ -197,10 +201,11 @@ journalctl -u caddy -f
 | Backend Nodes | 6 (192.168.86.11–16:8006) |
 | Load Balancing | ip_hash (sticky sessions) |
 | Health Checks | 10s interval, 2s timeout |
-| Uptime | Running since March 2026 |
+| Uptime | Running in production |
 
 ## Related Articles
 
+- [Caddy Reverse Proxy for Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) — Adding the Ceph Dashboard as a second proxy site
 - [Adding Ceph Dashboard to Your Proxmox Cluster](/proxmox-add-ceph-dashboard/) — Setting up the Ceph monitoring dashboard
 - [Consolidating Proxmox Notes: A Python Export Script](/proxmox-consolidated-notes/) — Backing up cluster documentation
 - [Proxmox 8 Lessons Learned in the Homelab](/proxmox-8-lessons-learned/) — Hard-won tips from running Proxmox

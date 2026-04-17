@@ -3,6 +3,10 @@ title: "Caddy Reverse Proxy for Ceph Dashboard"
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, caddy, reverse-proxy, dashboard, monitoring, homelab]
+last_modified_at: 2026-05-19
+seo:
+  date_published: 2026-05-19
+  date_modified: 2026-05-19
 ---
 
 The Ceph Dashboard has a frustrating quirk — it runs on whichever node is the active ceph-mgr, and that can change during failovers. One day it's on `https://192.168.86.12:8443`, the next it's on `.13`. Since I already have a Caddy reverse proxy LXC handling Proxmox Web UI access, adding the Ceph Dashboard as a second site block is straightforward and solves the floating-IP problem.
@@ -82,7 +86,7 @@ https://192.168.86.30:8443 {
 		to 192.168.86.16:8443
 
 		lb_policy first
-		health_uri /
+		health_uri /api/health
 		health_interval 10s
 		health_timeout 3s
 		health_status 200
@@ -97,7 +101,8 @@ https://192.168.86.30:8443 {
 ### Why This Configuration Works
 
 - **All nodes listed** — All six nodes run ceph-mgr, so all are included. The health check naturally finds whichever one is currently active.
-- **`lb_policy first`** — Routes to the first healthy upstream. Since only the active ceph-mgr serves the dashboard, the health check naturally finds it. Unlike the Proxmox UI where all nodes are valid targets, only one Ceph mgr is active at a time.
+- **`lb_policy first`** — Routes to the first healthy upstream. Inactive mgr nodes still have port 8443 open, but they return errors — the health check is what distinguishes the active node from the standby ones.
+- **`health_uri /api/health`** — The Ceph Dashboard's `/api/health` endpoint returns HTTP 200 without requiring authentication, making it reliable for health checks. The root path `/` redirects unauthenticated requests (HTTP 302), which would cause all nodes to fail the `health_status 200` check.
 - **Port 8443 on the proxy** — Keeps the familiar Ceph Dashboard port. You access `https://192.168.86.30:8443/` instead of guessing which node is active.
 - **`tls_insecure_skip_verify`** — Same rationale as the Proxmox proxy — Ceph uses self-signed certificates.
 - **3-second health timeout** — Slightly longer than the Proxmox proxy because the Ceph Dashboard can be slower to respond under load.
@@ -137,9 +142,13 @@ You'll see listeners on `:443` (Proxmox UI), `:8443` (Ceph Dashboard), and `127.
 1. Open `https://192.168.86.30:8443/` in your browser
 2. Accept the self-signed certificate warning
 3. You should see the Ceph Dashboard login page
-4. Log in with your Ceph Dashboard credentials (admin/admin if you followed my setup article)
+4. Log in with your Ceph Dashboard credentials
 
-![Ceph Dashboard Overview](/assets/images/ceph-dashboard-overview.png)
+This is what you've been working toward — a stable, single URL for the full Ceph cluster overview, regardless of which node is currently the active ceph-mgr:
+
+![Ceph Dashboard Overview showing cluster health, OSD status, and storage utilization](/assets/images/ceph-dashboard-overview.png)
+
+The dashboard shows cluster health, OSD status, pool utilization, and active alerts — everything you need to know about your Ceph cluster at a glance, now accessible from one bookmark that never breaks.
 
 ### Test Failover
 
@@ -232,7 +241,7 @@ https://192.168.86.30:8443 {
 		to 192.168.86.16:8443
 
 		lb_policy first
-		health_uri /
+		health_uri /api/health
 		health_interval 10s
 		health_timeout 3s
 		health_status 200
