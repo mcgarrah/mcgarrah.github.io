@@ -7,7 +7,6 @@ excerpt: "When both drives in your ZFS boot mirror fail simultaneously, you can'
 description: "Step-by-step guide to recovering a Proxmox node after catastrophic dual-drive ZFS boot mirror failure, covering pre-failure backup strategy, fresh install, hostid restoration, cluster rejoin, and Ceph OSD reactivation without data loss."
 date: 2026-05-24
 last_modified_at: 2026-05-24
-published: false
 seo:
   type: BlogPosting
   date_published: 2026-05-24

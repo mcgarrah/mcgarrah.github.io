@@ -138,6 +138,11 @@ Jekyll does not expose a `post.draft` flag. To detect post status in Liquid temp
 
 Both checks are inert in production builds (without `--drafts`/`--future` flags) since those posts are excluded from `site.posts` entirely.
 
+### Draft Front Matter
+- **Never use `published: false`** in drafts — the `_drafts/` directory is sufficient to prevent publication
+- Jekyll excludes `_drafts/` from builds unless `--drafts` is passed; adding `published: false` is redundant and creates cleanup work when promoting to `_posts/`
+- When promoting a draft, move the file to `_posts/` with the correct date prefix — no front matter changes needed for publication status
+
 ### Asset Organization
 - **Image Optimization** - Compress images for web delivery
 - **Descriptive Filenames** - Use clear, descriptive names for assets

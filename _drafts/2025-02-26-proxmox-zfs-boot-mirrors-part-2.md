@@ -7,7 +7,6 @@ excerpt: "Migrating a Proxmox ZFS boot mirror from large spinning rust HDDs to s
 description: "How to migrate a Proxmox ZFS boot mirror to smaller replacement drives using a fresh install approach, covering the Golden Backup checklist, UEFI upgrade from Legacy BIOS, cluster rejoin, and Ceph OSD reactivation. Based on real migrations across a six-node homelab cluster."
 date: 2026-05-25
 last_modified_at: 2026-05-25
-published: false
 seo:
   type: BlogPosting
   date_published: 2026-05-25
