@@ -292,6 +292,8 @@ The Apple HDD that appears in the tanaka console sessions above is a salvaged dr
 
 This procedure covers same-size drive replacement. If your replacement drives are smaller than the originals — which is common when migrating from old spinning rust HDDs to modern SSDs — ZFS won't let you simply add the smaller drive to the mirror. That's the subject of [Part 2](/proxmox-zfs-boot-mirrors-part-2/).
 
+If both drives in your mirror fail simultaneously — which can happen when a bad SATA cable or failing controller corrupts both sides before ZFS can self-heal — neither resilvering nor send/receive will save you. That scenario, and the full fresh-install recovery procedure that preserves your Ceph OSDs, is covered in [Part 3](/proxmox-zfs-boot-mirrors-part-3/).
+
 ## Related Articles
 
 - [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring scripts and cluster health overview

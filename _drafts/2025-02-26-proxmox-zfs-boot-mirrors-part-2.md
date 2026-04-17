@@ -6,15 +6,32 @@ tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror, ssd]
 excerpt: "Migrating a Proxmox ZFS boot mirror from large spinning rust HDDs to smaller SSDs — the procedure ZFS makes deliberately difficult."
 description: "How to migrate a Proxmox ZFS boot mirror to smaller replacement drives using ZFS send/receive, covering partition creation with parted, proxmox-boot-tool initialization, and data migration from a 500GB HDD mirror to 128GB SSDs."
 published: false
+seo:
+  type: BlogPosting
+  date_published: 2026-05-25
+  date_modified: 2026-05-25
 ---
 
-Part 1 covered replacing a failed ZFS boot mirror drive with one of the same size. This is the harder problem: your replacement drives are *smaller* than the originals.
+[Part 1](/proxmox-zfs-boot-mirrors-part-1/) covered replacing a failed ZFS boot mirror drive with one of the same size. This is the harder problem: your replacement drives are *smaller* than the originals.
 
 In my case, the cluster nodes have 500GB spinning rust HDDs as boot mirrors but only use 3-7GB of actual space — Ceph handles all the real storage. Replacing them with 128GB SSDs makes sense on cost, speed, and reliability grounds. But ZFS won't let you add a smaller drive to an existing mirror.
 
 [![Proxmox 8 ZFS Boot Mirror](/assets/images/zfs-boot-mirror-proxmox8-001.png){:width="40%" height="40%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/zfs-boot-mirror-proxmox8-001.png){:target="_blank"}
 
 <!-- excerpt-end -->
+
+## Which Path Is Right for You?
+
+Before starting, decide which migration approach fits your situation:
+
+| Situation | Approach |
+|-----------|----------|
+| One drive failed, replacement is smaller | This article (send/receive migration) |
+| Both drives failed simultaneously | [Part 3](/proxmox-zfs-boot-mirrors-part-3/) (fresh install) |
+| Node has no Ceph OSDs, drives are smaller | Fresh install is simpler — see [Part 3](/proxmox-zfs-boot-mirrors-part-3/) |
+| Node has Ceph OSDs, drives are smaller | This article — preserves OSDs without reinstall |
+
+The send/receive migration is more complex but keeps the running OS intact. If both drives have already failed and the OS is unbootable, skip to [Part 3](/proxmox-zfs-boot-mirrors-part-3/).
 
 ## The Problem
 
@@ -140,6 +157,7 @@ done
 ## Related Articles
 
 - [ZFS Boot Mirrors on Proxmox 8 - Part 1](/proxmox-zfs-boot-mirrors-part-1/) — Same-size drive replacement
+- [ZFS Boot Mirrors on Proxmox 8 - Part 3](/proxmox-zfs-boot-mirrors-part-3/) — Catastrophic dual-drive failure and fresh install recovery
 - [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring
 - [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place
 
