@@ -33,6 +33,8 @@ Last updated: 2026-06-10
 | ~~`2026-05-10-jekyll-run-vscode-plugin-local-development.md`~~ | `2026-05-09-jekyll-run-vscode-plugin-local-development.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-draft-future-visual-indicators.md`~~ | `2026-05-12-jekyll-draft-future-visual-indicators.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-content-distribution-pipeline.md`~~ | `2026-05-14-jekyll-content-distribution-pipeline.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ | `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md` | Promoted 2026-04-16 |
+| ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-05-19-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16 |
 
 ---
 
@@ -209,17 +211,13 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ### 22. `2024-03-11-lag-lacp-nic-bonding.md` — 🌍 SDN & Networking
 
-### 22a. `2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md` — 🔧 Caddy Reverse Proxy
+### 22a. ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ — 🔧 Caddy Reverse Proxy — PROMOTED
 
-- **Status:** Complete first draft. Single Caddy LXC entry point for 6-node Proxmox cluster with load balancing, health checks, WebSocket support for noVNC console.
-- **What's needed:** Review and verify configuration. Add screenshots.
-- **Estimated effort:** 1 hour
+- **Published as:** `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md`
 
-### 22b. `2026-05-15-caddy-reverse-proxy-ceph-dashboard.md` — 🔧 Caddy Reverse Proxy
+### 22b. ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ — 🔧 Caddy Reverse Proxy — PROMOTED
 
-- **Status:** Complete first draft. Caddy proxy for floating Ceph Dashboard (follows active ceph-mgr). Depends on 22a (Caddy LXC already deployed).
-- **What's needed:** Publish 22a first (referenced). Review health check config.
-- **Estimated effort:** 1 hour
+- **Published as:** `2026-05-19-caddy-reverse-proxy-ceph-dashboard.md`
 
 - **Status:** Nice highway/traffic analogy. Includes critical LACP misconception about single TCP connections. HP ProCurve 2810 link.
 - **What's needed:** Add practical section — ProCurve config, Proxmox bond setup, performance results.
@@ -396,8 +394,8 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 3 | `google-service-sprawl.md` | 15 min | — |
 | 4 | `proxmox-zfs-boot-mirrors-part-1.md` | 30 min | 🖥️ ZFS |
 | 5 | `writing-to-think-two-decades-of-figuring-things-out.md` | 30 min | ✍️ Personal |
-| 6 | `caddy-reverse-proxy-proxmox-web-ui.md` | 1 hr | 🔧 Caddy |
-| 7 | `caddy-reverse-proxy-ceph-dashboard.md` | 1 hr | 🔧 Caddy |
+| ~~6~~ | ~~`caddy-reverse-proxy-proxmox-web-ui.md`~~ | PROMOTED | 🔧 Caddy |
+| ~~7~~ | ~~`caddy-reverse-proxy-ceph-dashboard.md`~~ | PROMOTED | 🔧 Caddy |
 
 **Note:** Posts written directly to `_posts` (not promoted from drafts): `2026-04-02-improving-eeat-jekyll-adsense.md`, `2026-04-06-adsense-verification-gdpr-script-loading-fix.md`, `2026-04-07-jekyll-sitemap-bloat-tags-categories-pagination.md`, `2026-04-08-jekyll-theme-missing-head-body-tags.md`
 | 8 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
@@ -429,6 +427,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Promoted to _posts (2026-04-12–13) | 4 |
 | Written directly to _posts (2026-04-02–08, AdSense/Jekyll series) | 4 |
 | Promoted to _posts (2026-04-16 batch — 10 Jekyll deep dives) | 10 |
+| Promoted to _posts (2026-04-16 — Caddy reverse proxy pair) | 2 |
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |
