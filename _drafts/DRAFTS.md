@@ -2,7 +2,7 @@
 
 Reviewed: All 44 drafts in `_drafts/` folder
 Cross-referenced against: All published posts in `_posts/` and `_substack/`
-Last updated: 2026-06-04
+Last updated: 2026-06-10
 
 ---
 
@@ -14,8 +14,9 @@ Last updated: 2026-06-04
 | ~~`2024-09-02-proxmox-ceph-performance.md`~~ | `2025-10-12-proxmox-ceph-performance.md` | Deleted 2025-07-15 |
 | ~~`2025-02-16-usb3-drive-smart.md`~~ | `2025-10-26-usb-drive-smart.md` + `2026-02-03-usb-drive-smart-updates.md` | Deleted 2025-07-15 |
 | ~~`2025-09-29-ceph-osd-debugging.md`~~ | `2026-04-14-ceph-osd-recovery-power-failure.md` | Promoted 2026-04-12 |
+| ~~`(written directly)`~~ | `2026-04-15-zfs-ceph-overlapping-failures.md` | Written directly to _posts 2026-04-12 |
 | ~~`2024-08-26-proxmox-misc-scripts.md`~~ | `2024-08-26-proxmox-8-dell-wyse-3040-upgrade.md` | Deleted 2026-04-12 (duplicate) |
-| ~~`2026-04-01-jekyll-markdown-feature-reference.md`~~ | `2026-04-18-jekyll-markdown-feature-reference.md` | Promoted 2026-04-13 |
+| ~~`2026-04-01-jekyll-markdown-feature-reference.md`~~ | `2026-04-20-jekyll-markdown-feature-reference.md` | Promoted 2026-04-13, rescheduled 2026-04-20 |
 | ~~`2026-04-02-learning-jekyll.md`~~ | `2026-04-19-setting-up-jekyll-blog-github-pages.md` | Promoted 2026-04-13 |
 | ~~`2025-10-05-ceph-ssd-wal-db-usb-storage.md`~~ | `2026-04-16-ceph-ssd-wal-db-usb-storage.md` | Promoted 2026-04-13, rescheduled 2026-04-16 |
 | ~~`2024-12-31-jekyll-add-comments-section.md`~~ | Merged into `2026-05-10-jekyll-giscus-comments-implementation.md` | Deleted (content merged) |
@@ -58,7 +59,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 🌍 **Proxmox SDN & Networking** | #11, #12, #22 | PowerDNS, OpenWRT LXC, and LAG/LACP |
 | 📝 **Jekyll Deep Dives** | #16, #17, #18 | Remaining Jekyll drafts (10 promoted 2026-04-16) |
 | 🗄️ **Ceph Storage** | #21, #28 | OSD moves, Reef→Squid upgrade |
-| 🔧 **Caddy Reverse Proxy** | #NEW1, #NEW2 | Proxmox Web UI + Ceph Dashboard — publish Proxmox first |
+| 🔧 **Caddy Reverse Proxy** | #22a, #22b | Proxmox Web UI + Ceph Dashboard — publish Proxmox first |
 | 🔑 **SSH & Remote Access** | — | Published; prerequisite for #20 (WAL/DB benchmarks) |
 | 🏗️ **Homelab Infrastructure** (overlapping) | #24, #25, #26 | Pick ONE of these three to publish |
 | 🧠 **Data Science & AI/ML** | #23, #29 | Five Stages + Research model — merge or publish separately |
@@ -66,6 +67,12 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 ---
 
 ## Tier 1: Ready to Publish (< 30 min each)
+
+### 0. `writing-to-think-two-decades-of-figuring-things-out.md` — ✍️ Personal/Writing
+
+- **Status:** Reflective essay on 20+ years of technical blogging, Feynman Technique, motivation for writing, and moving to Substack. Has Mermaid bar chart of posts per year.
+- **What's needed:** Add a date prefix to filename before publishing.
+- **Estimated effort:** 30 minutes
 
 ### 1. `2026-02-06-name-service-registrars.md` — 🌐 Domain & Email
 
@@ -202,6 +209,18 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ### 22. `2024-03-11-lag-lacp-nic-bonding.md` — 🌍 SDN & Networking
 
+### 22a. `2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md` — 🔧 Caddy Reverse Proxy
+
+- **Status:** Complete first draft. Single Caddy LXC entry point for 6-node Proxmox cluster with load balancing, health checks, WebSocket support for noVNC console.
+- **What's needed:** Review and verify configuration. Add screenshots.
+- **Estimated effort:** 1 hour
+
+### 22b. `2026-05-15-caddy-reverse-proxy-ceph-dashboard.md` — 🔧 Caddy Reverse Proxy
+
+- **Status:** Complete first draft. Caddy proxy for floating Ceph Dashboard (follows active ceph-mgr). Depends on 22a (Caddy LXC already deployed).
+- **What's needed:** Publish 22a first (referenced). Review health check config.
+- **Estimated effort:** 1 hour
+
 - **Status:** Nice highway/traffic analogy. Includes critical LACP misconception about single TCP connections. HP ProCurve 2810 link.
 - **What's needed:** Add practical section — ProCurve config, Proxmox bond setup, performance results.
 - **Estimated effort:** 2 hours
@@ -301,28 +320,6 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ---
 
-## New Drafts (added since last review)
-
-### NEW1. `2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md` — 🔧 Caddy Reverse Proxy
-
-- **Status:** Complete first draft. Single Caddy LXC entry point for 6-node Proxmox cluster with load balancing, health checks, WebSocket support for noVNC console.
-- **What's needed:** Review and verify configuration. Add screenshots.
-- **Estimated effort:** 1 hour
-
-### NEW2. `2026-05-15-caddy-reverse-proxy-ceph-dashboard.md` — 🔧 Caddy Reverse Proxy
-
-- **Status:** Complete first draft. Caddy proxy for floating Ceph Dashboard (follows active ceph-mgr). Depends on NEW1 (Caddy LXC already deployed).
-- **What's needed:** Publish NEW1 first (referenced). Review health check config.
-- **Estimated effort:** 1 hour
-
-### NEW3. `writing-to-think-two-decades-of-figuring-things-out.md` — ✍️ Personal/Writing
-
-- **Status:** Reflective essay on 20+ years of technical blogging, Feynman Technique, motivation for writing, and moving to Substack.
-- **What's needed:** Review. No date prefix — add one before publishing.
-- **Estimated effort:** 30 minutes
-
----
-
 ## Tier 4: Too Raw / Redundant — Hold or Archive
 
 ### 38. `2025-12-18-jekyll-gdpr-plugin-development.md`
@@ -401,6 +398,8 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 5 | `writing-to-think-two-decades-of-figuring-things-out.md` | 30 min | ✍️ Personal |
 | 6 | `caddy-reverse-proxy-proxmox-web-ui.md` | 1 hr | 🔧 Caddy |
 | 7 | `caddy-reverse-proxy-ceph-dashboard.md` | 1 hr | 🔧 Caddy |
+
+**Note:** Posts written directly to `_posts` (not promoted from drafts): `2026-04-02-improving-eeat-jekyll-adsense.md`, `2026-04-06-adsense-verification-gdpr-script-loading-fix.md`, `2026-04-07-jekyll-sitemap-bloat-tags-categories-pagination.md`, `2026-04-08-jekyll-theme-missing-head-body-tags.md`
 | 8 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
 | 9 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
 
@@ -414,9 +413,9 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Category | Count |
 |----------|-------|
 | **Total drafts in `_drafts/`** | **44** |
-| Ready to publish — Tier 1 | 3 (+ 8 promoted) |
-| Near-complete — Tier 2 | 6 (+ 7 promoted) |
-| New drafts (untiered) | 3 |
+| Ready to publish — Tier 1 | 4 (+ 8 promoted) |
+| Near-complete — Tier 2 | 8 (+ 7 promoted) |
+| New drafts (untiered) | 0 |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
@@ -428,6 +427,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 |----------|-------|
 | Superseded drafts (deleted 2025-07-15) | 3 |
 | Promoted to _posts (2026-04-12–13) | 4 |
+| Written directly to _posts (2026-04-02–08, AdSense/Jekyll series) | 4 |
 | Promoted to _posts (2026-04-16 batch — 10 Jekyll deep dives) | 10 |
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
