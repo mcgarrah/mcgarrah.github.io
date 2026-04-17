@@ -5,13 +5,13 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, github-actions, ci-cd, codeql, seo, lighthouse, dependabot, automation, github-pages, security]
 excerpt: "Three GitHub Actions workflows, Dependabot, and a Lighthouse config — here's the full CI/CD pipeline that builds, deploys, secures, and monitors this Jekyll blog. Including the bugs I shipped along the way."
 description: "A complete walkthrough of the GitHub Actions CI/CD pipeline for a Jekyll blog on GitHub Pages: custom build and deploy with scheduled future posts, CodeQL security scanning, SEO health checks with Lighthouse CI, Dependabot dependency management, and the lessons learned building it over two years."
-date: 2026-05-07
-last_modified_at: 2026-05-07
+date: 2026-05-08
+last_modified_at: 2026-05-08
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-07
-  date_modified: 2026-05-07
+  date_published: 2026-05-08
+  date_modified: 2026-05-08
 ---
 
 Most Jekyll blogs on GitHub Pages use the default build. Push to main, GitHub builds it, done. That worked for me too — until I needed custom plugins, scheduled future posts, and wanted to stop deploying broken sitemaps. Now I have three GitHub Actions workflows, Dependabot watching three package ecosystems, and a Lighthouse config that blocks my own ad scripts.

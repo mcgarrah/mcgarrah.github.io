@@ -5,13 +5,13 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, rss, sitemap, substack, seo, google-search-console, content-distribution, github-pages, newsletter]
 excerpt: "Writing a blog post is half the work. The other half is making sure it reaches people — through RSS feeds, sitemaps, search engines, newsletters, and social sharing. Here's the full distribution pipeline for a Jekyll blog, from git push to a reader's screen."
 description: "The complete content distribution pipeline for a Jekyll blog on GitHub Pages: RSS feed via jekyll-feed, XML sitemap and sitemap index for multi-site coverage, Google Search Console submission, Substack newsletter cross-posting with 47+ inbound links, permalink stability for external references, and the workflow that ties it all together."
-date: 2026-05-14
-last_modified_at: 2026-05-14
+date: 2026-05-15
+last_modified_at: 2026-05-15
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-14
-  date_modified: 2026-05-14
+  date_published: 2026-05-15
+  date_modified: 2026-05-15
 ---
 
 I write a markdown file, push to GitHub, and GitHub Actions builds the site. That's the publishing step. But publishing isn't distribution — a post that exists on a server isn't a post that reaches readers.

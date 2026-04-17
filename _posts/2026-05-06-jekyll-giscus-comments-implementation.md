@@ -5,13 +5,13 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, giscus, comments, github-discussions, github-pages, gdpr, engagement]
 excerpt: "Jekyll has no database. So where do comments live? I evaluated six approaches — from hosted services to custom Lambda functions — before landing on Giscus. Here's the decision process and the implementation."
 description: "How to add a comment system to a Jekyll blog on GitHub Pages using Giscus and GitHub Discussions. Covers the evaluation of Disqus, Isso, Utterances, GitHub Issues API, Staticman, and Giscus, with implementation details, GDPR considerations, and the advantages of keeping everything in the GitHub ecosystem."
-date: 2026-05-05
-last_modified_at: 2026-05-05
+date: 2026-05-06
+last_modified_at: 2026-05-06
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-05
-  date_modified: 2026-05-05
+  date_published: 2026-05-06
+  date_modified: 2026-05-06
 ---
 
 Jekyll is a static site generator. There's no server, no database, no backend. When someone visits a page, they get pre-built HTML files served from a CDN. That's the whole point — it's fast, cheap, and secure.

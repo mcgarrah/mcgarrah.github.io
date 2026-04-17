@@ -5,13 +5,13 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, permalinks, reading-time, excerpts, pagination, redirects, seo, github-pages, configuration]
 excerpt: "The invisible infrastructure behind a Jekyll blog — how permalink structure, reading time estimates, custom excerpt separators, pagination, and redirect handling all work together. These aren't glamorous features, but getting them wrong breaks SEO, confuses readers, and creates maintenance headaches."
 description: "A deep dive into Jekyll content management configuration: permalink structure with /:title/, reading time calculation via Liquid, custom excerpt separators, jekyll-paginate setup, and jekyll-redirect-from for URL preservation. Includes the git history of how each feature evolved on mcgarrah.org."
-date: 2026-04-25
-last_modified_at: 2026-04-25
+date: 2026-04-27
+last_modified_at: 2026-04-27
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-04-25
-  date_modified: 2026-04-25
+  date_published: 2026-04-27
+  date_modified: 2026-04-27
 ---
 
 These are the features nobody notices until they break. Permalink structure determines every URL on the site. Reading time sets reader expectations. Excerpt separators control what shows on the homepage. Pagination keeps the front page from becoming a mile-long scroll. Redirects prevent 404s when you rename a post.

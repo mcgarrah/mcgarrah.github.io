@@ -5,13 +5,13 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, ruby, plugins, tags, categories, github-pages, seo, github-actions]
 excerpt: "GitHub Pages doesn't support tag or category pages out of the box. Here's how I built a custom Jekyll generator plugin that creates them automatically — and the SEO lessons learned along the way."
 description: "How to build a custom Jekyll Ruby plugin that automatically generates tag and category pages, with SEO controls for sitemap exclusion and noindex on thin content. Includes the full plugin, layouts, and index pages."
-date: 2026-05-02
-last_modified_at: 2026-05-02
+date: 2026-05-04
+last_modified_at: 2026-05-04
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-02
-  date_modified: 2026-05-02
+  date_published: 2026-05-04
+  date_modified: 2026-05-04
 ---
 
 GitHub Pages with Jekyll gives you tags and categories in front matter, but no pages for them. You can tag a post `proxmox` all day long — there's no `/tags/proxmox/` page unless you build one. Manually creating a page for each tag doesn't scale. At 139 posts with 237 unique tags and 53 categories, that's not an option.

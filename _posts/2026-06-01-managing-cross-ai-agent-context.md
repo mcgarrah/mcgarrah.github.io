@@ -5,12 +5,12 @@ categories: [technical, development]
 tags: [ai, gemini, amazon-q, github-copilot, claude-code, cursor, windsurf, productivity, tooling]
 excerpt: "Every AI coding assistant has its own proprietary rules format. Here's how to maintain a single source of truth that works across Amazon Q, Claude Code, GitHub Copilot, Cursor, Windsurf, Gemini, and the rest."
 description: "Practical strategies for managing project context and coding rules across multiple AI coding assistants without maintaining duplicate files for each tool."
-date: 2026-06-30
-last_modified_at: 2026-06-30
+date: 2026-06-01
+last_modified_at: 2026-06-01
 seo:
   type: BlogPosting
-  date_published: 2026-06-30
-  date_modified: 2026-06-30
+  date_published: 2026-06-01
+  date_modified: 2026-06-01
 ---
 
 As the landscape of AI coding assistants continues to explode — with tools like Amazon Q, Claude Code, GitHub Copilot, Cursor, Windsurf, and Gemini Code Assist — managing how these agents interact with your codebase is becoming a new kind of maintenance headache.

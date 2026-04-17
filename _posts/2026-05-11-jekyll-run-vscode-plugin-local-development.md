@@ -5,13 +5,13 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, vscode, local-development, github-pages, future-posts, drafts, configuration]
 excerpt: "The Jekyll Run VS Code extension is convenient for local development, but its settings live in four different places and the defaults won't show your future-dated posts. Here's how to configure it properly, where the settings actually come from, and the _config.yml trap that silently overrides your CLI flags."
 description: "Complete guide to configuring the Jekyll Run VS Code extension for local Jekyll development. Covers command-line arguments, settings precedence across workspace, machine, and multi-root workspace files, the _config.yml future flag trap, and a fallback bash script for when the extension misbehaves."
-date: 2026-05-09
-last_modified_at: 2026-05-09
+date: 2026-05-11
+last_modified_at: 2026-05-11
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-09
-  date_modified: 2026-05-09
+  date_published: 2026-05-11
+  date_modified: 2026-05-11
 ---
 
 The [Jekyll Run](https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run) VS Code extension (Dedsec727.jekyll-run) gives you a one-click button to build and serve your Jekyll site. It works well for basic use, but if you write future-dated posts, use drafts, or run a multi-root workspace, the defaults will bite you.

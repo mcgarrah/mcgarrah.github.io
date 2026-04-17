@@ -5,13 +5,13 @@ categories: [web-development, jekyll]
 tags: [jekyll, github-pages, tutorial, getting-started, seo, gdpr, giscus, pandoc, github-actions]
 excerpt: "I've been writing about technology since 2004. This blog has lived on WordPress, Blogger, and now Jekyll on GitHub Pages. Here's how I set it up, what I added along the way, and what I'd do differently if I started over."
 description: "How to set up a Jekyll blog on GitHub Pages with custom domain, GitHub Actions CI/CD, SEO optimization, GDPR compliance, Giscus comments, Pandoc PDF exports, and the lessons learned from building mcgarrah.org over 130+ posts."
-date: 2026-04-19
-last_modified_at: 2026-04-19
+date: 2026-04-20
+last_modified_at: 2026-04-20
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-04-19
-  date_modified: 2026-04-19
+  date_published: 2026-04-20
+  date_modified: 2026-04-20
 ---
 
 I've been writing about technology since 2004 — first on WordPress, then Blogger, and now Jekyll on GitHub Pages. The migration to Jekyll happened in 2023 when I wanted full control over the site without paying for hosting or fighting with WordPress plugin conflicts.

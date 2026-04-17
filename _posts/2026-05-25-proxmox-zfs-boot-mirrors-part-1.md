@@ -5,13 +5,13 @@ categories: [proxmox, zfs, storage, homelab]
 tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror]
 excerpt: "ZFS boot mirrors saved my homelab cluster more than once. Here's the complete procedure for replacing a failed drive in a Proxmox ZFS boot mirror — including the mistakes I made so you don't have to."
 description: "Step-by-step guide to replacing a failed drive in a Proxmox ZFS boot mirror, covering partition copying, zpool replace, proxmox-boot-tool, and scrub verification. Includes common mistakes and a multi-node recovery example."
-date: 2026-05-23
-last_modified_at: 2026-05-23
+date: 2026-05-25
+last_modified_at: 2026-05-25
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-23
-  date_modified: 2026-05-23
+  date_published: 2026-05-25
+  date_modified: 2026-05-25
 ---
 
 From my earlier post [ProxMox 8 for the Homelabs](/proxmox-8-homelab/), I offhandedly mentioned that using Proxmox ZFS boot drive mirrors saved my bacon a couple of times. Having set up email alerting for ZFS failures, I've now dealt with this recovery procedure enough times — and made enough mistakes — that it's worth writing down properly.

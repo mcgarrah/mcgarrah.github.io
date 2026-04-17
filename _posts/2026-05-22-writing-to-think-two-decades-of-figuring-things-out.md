@@ -6,13 +6,13 @@ tags: [writing, blogging, substack, reflection, motivation]
 mermaid: true
 excerpt: "I don't write to share what I know. I write to figure out what I know. After 151 posts across 20+ years, I'm finally honest about why I do this — and why I'm moving to Substack to find the conversation I've been looking for."
 description: "A reflection on two decades of technical blogging, the real motivation behind writing things down, and why Substack is the next step for finding the interaction that static sites can't provide."
-date: 2026-05-21
-last_modified_at: 2026-05-21
+date: 2026-05-22
+last_modified_at: 2026-05-22
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-21
-  date_modified: 2026-05-21
+  date_published: 2026-05-22
+  date_modified: 2026-05-22
 ---
 
 I've been writing about technology since 2004. That's over twenty years of blog posts, platform migrations, and long stretches of silence. If you looked at my publishing history on a timeline, you'd see bursts of intense activity separated by years of nothing. The pattern tells a story I didn't fully understand until recently.
