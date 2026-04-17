@@ -1,7 +1,6 @@
 ---
 title:  "Jekyll Copy Copy Buttons for the Homelabs"
 layout: post
-published: false
 ---
 
 Adding a code copy button to the code sections of a Jekyll post are kind of useful. This is especially true for the posts I write with commands used for doing something useful.

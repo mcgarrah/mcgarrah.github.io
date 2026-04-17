@@ -1,7 +1,6 @@
 ---
 title:  "Hosting for the Hobbiest"
 layout: post
-published: false
 ---
 
 Netlify, Ploomber and Koyeb hosting...

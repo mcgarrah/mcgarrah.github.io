@@ -1,7 +1,6 @@
 ---
 title:  "WSLv2 with Oh My Zsh"
 layout: post
-published: false
 ---
 
 Why do I install **OMZ** on just about every system I use now? Because it just works out of the box and improves the command line experience without getting in the way. The other part of why is that I started using the iTerm2 (a terminal) in MacOS a good bit, and it defaults to **zsh** and not **bash**.

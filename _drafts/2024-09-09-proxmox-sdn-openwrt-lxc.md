@@ -1,7 +1,6 @@
 ---
 title:  "Proxmox 8.2 SDN with OpenWRT 23.05.3 LXC for the Homelabs"
 layout: post
-published: false
 ---
 
 Setting up a private SDN network on Proxmox 8.2 that can be managed by an OpenWRT with LuCI webui...

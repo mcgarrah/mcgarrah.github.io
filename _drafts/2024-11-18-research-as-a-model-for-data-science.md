@@ -1,7 +1,6 @@
 ---
 title:  "Academic Research as a model for Data Science and Machine Learning"
 layout: post
-published: false
 ---
 
 DS is not SD - you fail as much or more than you succeed in DS. Good DS wins less than 1 in 5. Good SD, wins more than 4 in 5.

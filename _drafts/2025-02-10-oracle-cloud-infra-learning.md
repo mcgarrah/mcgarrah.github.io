@@ -1,7 +1,6 @@
 ---
 title:  "Oracle Cloud Infrastructure for the Homelab"
 layout: post
-published: false
 ---
 
 OCI is an interesting proposition. They offer something called the Always Free Tier which seems to have a very generous amount of hardware.

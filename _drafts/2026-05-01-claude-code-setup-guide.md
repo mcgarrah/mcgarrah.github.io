@@ -7,7 +7,6 @@ excerpt: "Setting up Claude Code as a CLI-based AI coding assistant — from the
 description: "A practical guide to installing, configuring, and using Claude Code for AI-assisted development, written for developers transitioning from IDE-based assistants like Amazon Q to a terminal-first workflow."
 date: 2026-05-01
 last_modified_at: 2026-05-01
-published: false
 seo:
   type: BlogPosting
   date_published: 2026-05-01

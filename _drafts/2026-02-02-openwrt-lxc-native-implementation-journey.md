@@ -3,7 +3,6 @@ title: "OpenWRT LXC Native Implementation: From Debian Overlay to Pure Rootfs"
 layout: post
 categories: [homelab, proxmox, networking]
 tags: [openwrt, lxc, proxmox, networking, router, firewall]
-published: false
 ---
 
 **DRAFT ahead of submitting Pull Request**

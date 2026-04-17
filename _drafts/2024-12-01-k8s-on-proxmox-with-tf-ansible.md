@@ -1,7 +1,6 @@
 ---
 title:  "Building Kubernetes on Proxmox with Ansible & Teraform for the Homelabs"
 layout: post
-published: false
 ---
 
 [ClusterCreator: Terraform & Ansible K8S Bootstrapping on Proxmox](https://github.com/mcgarrah/ClusterCreator) by Jairus Christensen looks like an amazing opportunity for me to get a Kuberetes Cluster running in the Homelab with my existing Proxmox Cluster.

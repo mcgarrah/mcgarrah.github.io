@@ -1,7 +1,6 @@
 ---
 title:  "Jekyll Internal Formatting: Front Matter, Parsing Engines, and Content Syntax"
 layout: post
-published: false
 categories: [technical, jekyll]
 tags: [jekyll, markdown, front-matter, kramdown, liquid, formatting, abbreviations]
 ---

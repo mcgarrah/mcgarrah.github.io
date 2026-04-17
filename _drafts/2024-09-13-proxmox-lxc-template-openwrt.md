@@ -1,7 +1,6 @@
 ---
 title:  "Proxmox LXC Template for OpenWRT for the Homelabs"
 layout: post
-published: false
 ---
 
 OpenWRT in an LXC using a template... we currently have to do this as an unmanaged ostype and a manual download of rootfs. This should be easier.

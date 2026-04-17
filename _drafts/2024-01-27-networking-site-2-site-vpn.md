@@ -1,7 +1,6 @@
 ---
 title:  "Site to Site VPN for the Homelabs"
 layout: post
-published: false
 categories: [technical, networking]
 tags: [vpn, wireguard, tailscale, headscale, brume2, openwrt, gl-inet, networking, homelab, carp]
 ---

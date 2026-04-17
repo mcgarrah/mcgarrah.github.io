@@ -1,7 +1,6 @@
 ---
 title:  "Moving Ceph OSD (disks) between Ceph nodes"
 layout: post
-published: false
 ---
 
 My Proxmox Ceph Cluster setup and configuration is a lessons learned as I go along. I think I made a mistake in adding the third batch of three disks on the existing three nodes hosting my Ceph Cluster. From reading and thinking this through, I believe I should have spread out the OSDs across more than the minimum three ceph nodes to a fourth ceph node. Three ceph nodes is the minimum and you should have more to protect against failures in a 3 copies and 2 active (3/2) ceph pool.

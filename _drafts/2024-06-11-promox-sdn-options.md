@@ -1,7 +1,6 @@
 ---
 title:  "ProxMox 8.2 SDN options for the Homelabs"
 layout: post
-published: false
 ---
 
 After adding fourth (4) set of three (3) 5tb hard drives to my Ceph cluster on Proxmox 8.2.2, I'm up to about 20tb of highly available storage with no means of serving media out of it. So the plan is to build my multi-media services platform on a Proxmox Clusters with CephFS for the storage using LXC containers as a first options over VMs.

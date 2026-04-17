@@ -1,7 +1,6 @@
 ---
 title:  "Link Aggregated (LAG) and LACP NIC Bonding"
 layout: post
-published: false
 ---
 
 ## LAG and LACP... what is the difference?

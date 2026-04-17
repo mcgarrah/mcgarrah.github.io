@@ -1,7 +1,6 @@
 ---
 title:  "PiKVM v3 and AIMOS 8-port KVM Setup"
 layout: post
-published: false
 ---
 
 Setting up my [PiKVM v3](https://docs.pikvm.org/v3/) has been a journey spanning well over a year to get it the way I wanted. The goal was to get a ~cheap~ frugal setup that let me manage more than just one or a couple machines and both have the PiKVM WebUI and local KVM (keyboard / video / mouse). So I have a local keyboard/video/mouse on the test bench that functions when sitting near the servers and also the remote PiKVM WebUI with keyboard/video/mouse when remotely accessing or just across the house. That was a trippy path to get it all working cleanly. Hopefully, my final setup and failures along hte way are useful to someone else heading down this path.

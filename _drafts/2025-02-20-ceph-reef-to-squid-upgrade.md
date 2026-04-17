@@ -1,7 +1,6 @@
 ---
 title:  "Proxmox Ceph 18 (reef) to Ceph 19 (squid) in the Homelab"
 layout: post
-published: false
 ---
 
 I need to plan my main cluster upgrade of the Ceph system.

@@ -4,7 +4,6 @@ layout: post
 categories: [homelab, proxmox, dns]
 tags: [powerdns, lxc, proxmox, sdn, dns, homelab]
 mermaid: true
-published: false
 ---
 
 **DRAFT ahead of submitting Pull Request**

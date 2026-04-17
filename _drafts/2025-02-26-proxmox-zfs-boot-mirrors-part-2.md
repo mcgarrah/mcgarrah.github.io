@@ -1,7 +1,6 @@
 ---
 title:  "ZFS Boot Mirrors on Proxmox 8.3 for the Homelab - Part 2"
 layout: post
-published: false
 ---
 
 ZFS Boot Mirrors are awesome for keeping my old systems up and running as I have drive failures.

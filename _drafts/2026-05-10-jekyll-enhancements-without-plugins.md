@@ -1,7 +1,6 @@
 ---
 title:  "Jekyll Enhancements Without Plugins"
 layout: post
-published: false
 categories: [technical, jekyll]
 tags: [jekyll, plugins, github-pages, enhancements, search, comments, gdpr, seo]
 ---

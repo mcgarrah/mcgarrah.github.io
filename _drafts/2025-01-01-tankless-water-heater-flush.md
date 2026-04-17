@@ -1,7 +1,6 @@
 ---
 title:  "Tankless Water Heater Maintenance Flush for the Home~~labs~~"
 layout: post
-published: false
 ---
 
 Show pictures of my two tankless water heaters. Show closed up and opened up.

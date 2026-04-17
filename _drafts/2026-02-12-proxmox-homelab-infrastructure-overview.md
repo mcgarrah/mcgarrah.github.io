@@ -4,7 +4,6 @@ layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, homelab, infrastructure, networking, kubernetes, virtualization]
 excerpt: "A comprehensive overview of my six-node Proxmox cluster with Ceph storage, multi-site networking, and the foundation for Kubernetes deployment."
-published: false
 ---
 
 After two years of building, breaking, and rebuilding my homelab, it's time to document the current state of the "AlteredCarbon" cluster. This post serves as both a reference for myself and a foundation for the Kubernetes deployment I'm planning.

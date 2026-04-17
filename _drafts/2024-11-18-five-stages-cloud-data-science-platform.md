@@ -1,7 +1,6 @@
 ---
 title:  "Five Stages of a Successful Cloud Data Science Platform"
 layout: post
-published: false
 ---
 
 Data Science promotion process in five stages (with maybe three in a startup): it is always about the data

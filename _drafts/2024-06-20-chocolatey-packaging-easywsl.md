@@ -1,7 +1,6 @@
 ---
 title:  "How to package software in Chocolatey"
 layout: post
-published: false
 ---
 
 I'm interested in learning a bit more about Chocolatey packaging for Windows environments. I'm using it for my Thinkpad T480 Windows development laptops running WSLv2 and base windows tools. It makes updates a lot easier with a CLI and GUI package manager. I recently encountered a utility that wasn't packaged ([easyWSL](https://github.com/redcode-labs/easyWSL)) that I like using and wanted to figure out how hard it is to package it up and keep it current.

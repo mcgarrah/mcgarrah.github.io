@@ -4,7 +4,6 @@ layout: post
 categories: [web-development, jekyll]
 tags: [jekyll, resume, post-types, collections, data-driven-content]
 excerpt: "Exploring how to create a specialized 'Resume' post type within Jekyll to display professional information as structured content, offering a lightweight alternative to full site merger."
-published: false
 ---
 
 Rather than merging two complete Jekyll sites, what if we could create a specialized "Resume" post type within the main blog? This approach would allow displaying professional information as structured content while maintaining the blog's existing architecture and functionality.
