@@ -76,6 +76,13 @@ Example pattern:
 @dir = File.join('categories', category.downcase.gsub(' ', '-').gsub('_', '-'))
 ```
 
+### Python Environment
+- **Always use `.venv`** — Never install packages globally or with `--user`/`--break-system-packages`
+- **Create per-project venvs** — `python3 -m venv .venv` in the repo root
+- **Activate before use** — `source .venv/bin/activate && pip install ...`
+- **Add `.venv` to `.gitignore`** — Virtual environments must not be committed
+- **No system-level pip** — Respect PEP 668 managed environments on macOS
+
 ## Architectural Patterns
 
 ### Jekyll Integration
