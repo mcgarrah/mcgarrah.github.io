@@ -1,19 +1,148 @@
 ---
-title:  "ZFS Boot Mirrors on Proxmox 8.3 for the Homelab - Part 2"
+title: "ZFS Boot Mirrors on Proxmox 8 for the Homelab - Part 2"
 layout: post
+categories: [proxmox, zfs, storage, homelab]
+tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror, ssd]
+excerpt: "Migrating a Proxmox ZFS boot mirror from large spinning rust HDDs to smaller SSDs — the procedure ZFS makes deliberately difficult."
+description: "How to migrate a Proxmox ZFS boot mirror to smaller replacement drives using ZFS send/receive, covering partition creation with parted, proxmox-boot-tool initialization, and data migration from a 500GB HDD mirror to 128GB SSDs."
+published: false
 ---
 
-ZFS Boot Mirrors are awesome for keeping my old systems up and running as I have drive failures.
+Part 1 covered replacing a failed ZFS boot mirror drive with one of the same size. This is the harder problem: your replacement drives are *smaller* than the originals.
 
-From that description, you might see my problem. Anticipating this problem, I bought a pair of cheap 120Gb SSD drives as a longer term solution. 
+In my case, the cluster nodes have 500GB spinning rust HDDs as boot mirrors but only use 3-7GB of actual space — Ceph handles all the real storage. Replacing them with 128GB SSDs makes sense on cost, speed, and reliability grounds. But ZFS won't let you add a smaller drive to an existing mirror.
 
-Unfortunately, I have larger paired 500Gb HDDs in the boot mirror and smaller replacement 120Gb SSDs. The boot drives are sporting about 3-4Gb of actual disk usage since I use Ceph & CephFS for the shared storage and not local storage on the nodes. This makes the smaller disks better options for my use-case and from a cost perspective.
-
-So I need to figure out how to migrate the content from the existing paired mirror 500Gb HDD to the new 120Gb SSD while preserving the **bootable** ZFS mirror. Welcome to the adventure of using old hardware.
-
-[![Proxmox 8.2.4 ZFS Boot Mirror](/assets/images/zfs-boot-mirror-proxmox8-001.png){:width="40%" height="40%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/zfs-boot-mirror-proxmox8-001.png){:target="_blank"}
+[![Proxmox 8 ZFS Boot Mirror](/assets/images/zfs-boot-mirror-proxmox8-001.png){:width="40%" height="40%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/zfs-boot-mirror-proxmox8-001.png){:target="_blank"}
 
 <!-- excerpt-end -->
+
+## The Problem
+
+ZFS mirrors require the replacement drive to be the same size or larger than the existing drives. Attempting to add a smaller drive fails:
+
+```console
+root@tanaka:~# zpool attach rpool ata-existing-part3 /dev/disk/by-id/ata-smaller-ssd-part3
+cannot attach /dev/disk/by-id/ata-smaller-ssd-part3 to rpool: device is too small
+```
+
+The workaround is to migrate the data to the new smaller pool using `zfs send | zfs receive` rather than resilvering.
+
+---
+
+## TODO: Complete This Article
+
+The following sections need to be written with actual console sessions from a completed migration.
+
+### What needs to be documented:
+
+**1. Prerequisites and planning**
+- Verify actual ZFS pool usage is smaller than the new drive (`zpool list`, `df -h`)
+- Confirm new drive partition 3 size will fit the data
+- Have a tested back-out plan (keep one original HDD until migration verified)
+
+**2. Partition the new smaller SSD**
+- Use `parted` to create the three Proxmox partitions on the new SSD:
+  - Partition 1: BIOS boot (34s–2047s, bios_grub flag)
+  - Partition 2: EFI System (2048s–2099199s, fat32, boot+esp flags)
+  - Partition 3: ZFS (2099200s to end of disk)
+- The `sfdisk -d | sfdisk` trick from Part 1 won't work here since the sizes differ
+- The `parted` session for tanaka is already in this draft as a starting point
+
+**3. Initialize the Proxmox boot partition**
+- `proxmox-boot-tool format /dev/disk/by-id/<new-ssd>-part2`
+- `proxmox-boot-tool init /dev/disk/by-id/<new-ssd>-part2 grub`
+- Verify with `proxmox-boot-tool status`
+
+**4. Create a new ZFS pool on the new SSD**
+- `zpool create newpool /dev/disk/by-id/<new-ssd>-part3`
+- Set matching ZFS properties from the existing rpool
+
+**5. Migrate data with ZFS send/receive**
+- `zfs snapshot -r rpool@migrate`
+- `zfs send -R rpool@migrate | zfs receive -F newpool`
+- This is the missing section — needs a real console session
+
+**6. Swap the pools**
+- Export newpool, import as rpool
+- Update `/etc/kernel/proxmox-boot-uuids`
+- Reboot and verify
+
+**7. Add second SSD to mirror**
+- Once booting from the new SSD, add the second SSD using `zpool attach` (same size, so standard Part 1 procedure applies)
+
+**8. Verify and clean up**
+- `proxmox-boot-tool status` — both SSDs listed
+- `zpool scrub rpool` — no errors
+- Keep original HDD for one week as insurance before repurposing
+
+### Alternative approach to research:
+The [Reddit tutorial](https://www.reddit.com/r/Proxmox/comments/1cr6wn7/tutorial_howto_migrate_a_pve_zfs_bootroot_mirror/) and [shell script](https://github.com/kneutron/ansitest/blob/master/proxmox/proxmox-replace-zfs-mirror-boot-disks-with-smaller.sh) referenced below may offer a cleaner path. Worth testing against the manual approach.
+
+---
+
+## Existing Work (Starting Point)
+
+The `parted` sessions below from tanaka are already captured and can be incorporated into the finished article.
+
+### Partition the new SSD with parted
+
+```console
+root@tanaka:~# parted /dev/sdc
+(parted) mklabel gpt
+(parted) mkpart "" 34s 2047s
+Warning: The resulting partition is not properly aligned for best performance: 34s % 2048s != 0s
+Ignore/Cancel? i
+(parted) toggle 1 bios_grub
+(parted) mkpart "" fat32 2048s 2099199s
+(parted) set 2 boot on
+(parted) set 2 esp on
+(parted) mkpart "" zfs 2099200s -1
+(parted) print
+Model: Timetec 30TT253X2-128G (scsi)
+Disk /dev/sdc: 128GB
+Number  Start     End         Size        File system  Name  Flags
+ 1      17.4kB    1049kB      1031kB                         bios_grub
+ 2      1049kB    1075MB      1074MB                         boot, esp
+ 3      1075MB    128GB       127GB
+```
+
+### Initialize Proxmox boot on the new SSD (via USB enclosure)
+
+```console
+root@tanaka:~# proxmox-boot-tool format \
+  /dev/disk/by-id/usb-Timetec_30TT253X2-128G_012345678999-0:0-part2
+Formatting as vfat.. Done.
+
+root@tanaka:~# proxmox-boot-tool init \
+  /dev/disk/by-id/usb-Timetec_30TT253X2-128G_012345678999-0:0-part2 grub
+Installing grub i386-pc target.. Installation finished. No error reported.
+Copying and configuring kernels on /dev/disk/by-uuid/D7D1-00F1
+        Copying kernel 6.8.12-1-pve
+        Copying kernel 6.8.12-8-pve
+done
+```
+
+### ZFS data migration (INCOMPLETE — needs real console session)
+
+```console
+# TODO: Complete this section with actual zfs send/receive output
+```
+
+## References
+
+- [Migrate Proxmox VE to smaller root disks](https://aaronlauterer.com/blog/2021/proxmox-ve-migrate-to-smaller-root-disks/) — Aaron Lauterer
+- [Move GRUB and boot partition to another disk](https://aaronlauterer.com/blog/2021/move-grub-and-boot-to-other-disk/) — Aaron Lauterer
+- [Tutorial: migrate PVE ZFS boot mirror to smaller disks](https://www.reddit.com/r/Proxmox/comments/1cr6wn7/tutorial_howto_migrate_a_pve_zfs_bootroot_mirror/) — Reddit
+- [proxmox-replace-zfs-mirror-boot-disks-with-smaller.sh](https://github.com/kneutron/ansitest/blob/master/proxmox/proxmox-replace-zfs-mirror-boot-disks-with-smaller.sh) — Shell script
+- [ZFS send/receive for pool migration](https://www.reddit.com/r/zfs/comments/sx6ohz/comment/hxqeanr/) — Reddit
+- [ZFS: shrink pool](https://niziak.spox.org/wiki/linux:fs:zfs:shrink) — niziak.spox.org
+
+## Related Articles
+
+- [ZFS Boot Mirrors on Proxmox 8 - Part 1](/proxmox-zfs-boot-mirrors-part-1/) — Same-size drive replacement
+- [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring
+- [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place
+
 
 ## Plan a back out plan
 

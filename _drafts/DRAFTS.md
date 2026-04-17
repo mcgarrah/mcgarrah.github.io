@@ -36,6 +36,8 @@ Last updated: 2026-06-10
 | ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ | `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md` | Promoted 2026-04-16 |
 | ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-05-19-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16 |
 | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | `2026-05-21-writing-to-think-two-decades-of-figuring-things-out.md` | Promoted 2026-04-16 |
+| ~~`2025-02-25-proxmox-zfs-boot-mirrors-part-1.md`~~ | `2026-05-23-proxmox-zfs-boot-mirrors-part-1.md` | Promoted 2026-04-16 |
+| ~~`2024-09-23-zfs-boot-mirrors-proxmox8-part-1.md`~~ | Merged into `2026-05-23-proxmox-zfs-boot-mirrors-part-1.md` | Retired 2026-04-16 |
 
 ---
 
@@ -98,12 +100,9 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 - **Published as:** `2026-05-02-jekyll-tag-category-generator-plugin.md`
 
-### 5. `2025-02-25-proxmox-zfs-boot-mirrors-part-1.md` — 🖥️ ZFS Boot Mirrors
+### 5. ~~`2025-02-25-proxmox-zfs-boot-mirrors-part-1.md`~~ — 🖥️ ZFS Boot Mirrors — PROMOTED
 
-- **Status:** Complete working example with full console output for Edgar node
-- **What's needed:** Add `categories`, `tags`, `excerpt` front matter. Brief conclusion paragraph.
-- **Related:** `2026-02-05-proxmox-zfs-boot-mirror-smart-analysis.md`
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-05-23-proxmox-zfs-boot-mirrors-part-1.md`
 
 ### 6. ~~`2026-05-10-jekyll-giscus-comments-implementation.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
@@ -249,19 +248,16 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **Problem:** Overlaps with #24-26. Decide which to publish.
 - **Estimated effort:** 2 hours (mostly deduplication)
 
-### 28. `2024-09-23-zfs-boot-mirrors-proxmox8-part-1.md` — 🖥️ ZFS Boot Mirrors
+### 28. ~~`2024-09-23-zfs-boot-mirrors-proxmox8-part-1.md`~~ — 🖥️ ZFS Boot Mirrors — RETIRED
 
-- **Status:** MASSIVE article — complete console sessions for Tanaka and Harlan nodes, plus a documented `zpool detach` vs `zpool replace` mistake and recovery.
-- **Problem:** Near-duplicate of #5 (2025-02-25 version covers Edgar). Identical intro text.
-- **Recommendation:** MERGE best parts of both into one definitive multi-scenario guide.
-- **Related:** `2026-02-05-proxmox-zfs-boot-mirror-smart-analysis.md`
-- **Estimated effort:** 3-4 hours to merge
+- **Merged into:** `2025-02-25-proxmox-zfs-boot-mirrors-part-1.md` (tanaka session, harlan recovery, zpool detach mistake)
+- **Deleted:** 2026-04-16
 
 ### 29. `2025-02-26-proxmox-zfs-boot-mirrors-part-2.md` — 🖥️ ZFS Boot Mirrors
 
-- **Status:** "Shrink ZFS mirror to smaller SSDs" — has problem statement, `parted` session, proxmox-boot-tool setup. Stops before actual ZFS data copy.
-- **What's needed:** Complete the ZFS send/receive or pool migration step.
-- **Estimated effort:** 3-4 hours
+- **Status:** Front matter and outline complete. Has parted sessions and proxmox-boot-tool init for the new SSD. Missing the critical `zfs send | zfs receive` data migration section.
+- **What's needed:** Complete the ZFS send/receive pool migration with a real console session. Eight steps outlined in the draft TODO section.
+- **Estimated effort:** 2-3 hours (requires actually performing the migration on a node)
 
 ### 30. `2024-01-27-networking-site-2-site-vpn.md` — 🌍 SDN & Networking
 
@@ -392,7 +388,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 1 | `name-service-registrars.md` | 30 min | 🌐 Domain & Email |
 | 2 | `email-forwarding-evaluation.md` | 15 min | 🌐 Domain & Email |
 | 3 | `google-service-sprawl.md` | 15 min | — |
-| 4 | `proxmox-zfs-boot-mirrors-part-1.md` | 30 min | 🖥️ ZFS |
+| ~~5~~ | ~~`proxmox-zfs-boot-mirrors-part-1.md`~~ | PROMOTED | 🖥️ ZFS |
 | ~~5~~ | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | PROMOTED | ✍️ Personal |
 | ~~6~~ | ~~`caddy-reverse-proxy-proxmox-web-ui.md`~~ | PROMOTED | 🔧 Caddy |
 | ~~7~~ | ~~`caddy-reverse-proxy-ceph-dashboard.md`~~ | PROMOTED | 🔧 Caddy |
@@ -429,6 +425,8 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Promoted to _posts (2026-04-16 batch — 10 Jekyll deep dives) | 10 |
 | Promoted to _posts (2026-04-16 — Caddy reverse proxy pair) | 2 |
 | Promoted to _posts (2026-04-16 — Writing to Think essay) | 1 |
+| Promoted to _posts (2026-04-16 — ZFS Boot Mirrors Part 1) | 1 |
+| Retired/merged drafts (2026-04-16) | 1 |
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |
