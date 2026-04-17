@@ -3,7 +3,6 @@ title: "Caddy Reverse Proxy for Proxmox Web UI"
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, caddy, reverse-proxy, lxc, ssl, web-interface, homelab]
-published: false
 ---
 
 Managing a six-node Proxmox cluster means six different web interfaces on six different IPs, all on port 8006 with self-signed certificates. A Caddy reverse proxy in an LXC container gives you a single entry point with load balancing, health checks, and working WebSocket support for the console — all in about 30 lines of configuration.

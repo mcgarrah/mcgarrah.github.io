@@ -17,7 +17,7 @@ The dashboard gives you a web interface to monitor your Ceph cluster without SSH
 
 ## Step 1: Install Dashboard Package
 
-First, install the dashboard package on all manager nodes. In my 3-node cluster, that means all three nodes since they all run ceph-mgr:
+First, install the dashboard package on all manager nodes. In my cluster, all nodes run ceph-mgr so the package needs to be on every node:
 
 ```bash
 # Run on each manager node
@@ -28,9 +28,14 @@ For my cluster:
 
 ```bash
 root@harlan:~# apt install ceph-mgr-dashboard -y
-root@kovacs:~# apt install ceph-mgr-dashboard -y  
+root@kovacs:~# apt install ceph-mgr-dashboard -y
 root@poe:~# apt install ceph-mgr-dashboard -y
+root@edgar:~# apt install ceph-mgr-dashboard -y
+root@tanaka:~# apt install ceph-mgr-dashboard -y
+root@quell:~# apt install ceph-mgr-dashboard -y
 ```
+
+> **Note:** This article was originally written when the cluster had three nodes. When the cluster grew to six nodes, the package had to be installed on the three new nodes (edgar, tanaka, quell) and re-installed on harlan after a boot disk failure required a node rebuild. If you add nodes to your cluster later, remember to install `ceph-mgr-dashboard` on each one — any node without it will serve a "No active ceph-mgr instance" error page instead of the dashboard.
 
 ## Step 2: Enable the Dashboard Module
 
