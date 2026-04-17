@@ -2,7 +2,7 @@
 
 Reviewed: All 44 drafts in `_drafts/` folder
 Cross-referenced against: All published posts in `_posts/` and `_substack/`
-Last updated: 2026-06-10
+Last updated: 2026-04-17
 
 ---
 
@@ -36,8 +36,25 @@ Last updated: 2026-06-10
 | ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ | `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md` | Promoted 2026-04-16 |
 | ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-05-19-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16 |
 | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | `2026-05-21-writing-to-think-two-decades-of-figuring-things-out.md` | Promoted 2026-04-16 |
-| ~~`2025-02-25-proxmox-zfs-boot-mirrors-part-1.md`~~ | `2026-05-23-proxmox-zfs-boot-mirrors-part-1.md` | Promoted 2026-04-16 |
-| ~~`2024-09-23-zfs-boot-mirrors-proxmox8-part-1.md`~~ | Merged into `2026-05-23-proxmox-zfs-boot-mirrors-part-1.md` | Retired 2026-04-16 |
+| ~~`2025-02-25-proxmox-zfs-boot-mirrors-part-1.md`~~ | `2026-05-25-proxmox-zfs-boot-mirrors-part-1.md` | Promoted 2026-04-16, rescheduled to MWF |
+| ~~`2024-09-23-zfs-boot-mirrors-proxmox8-part-1.md`~~ | Merged into `2026-05-25-proxmox-zfs-boot-mirrors-part-1.md` | Retired 2026-04-16 |
+| ~~`2026-05-24-proxmox-zfs-boot-mirrors-part-3.md`~~ | `2026-05-29-proxmox-zfs-boot-mirrors-part-2.md` | Promoted 2026-04-17, renumbered Part 3→2 |
+| ~~`2025-02-26-proxmox-zfs-boot-mirrors-part-2.md`~~ | `2026-06-03-proxmox-zfs-boot-mirrors-part-3.md` | Promoted 2026-04-17, renumbered Part 2→3 |
+| ~~`2026-06-29-ai-coding-agent-context-files-reference.md`~~ | `2026-05-27-ai-coding-agent-context-files-reference.md` | Promoted 2026-04-17 |
+| ~~`2026-06-30-managing-cross-ai-agent-context.md`~~ | `2026-06-01-managing-cross-ai-agent-context.md` | Promoted 2026-04-17 |
+
+### MWF Cadence Correction (2026-04-17)
+
+All 16 posts from April 20 onward were rescheduled from an incorrect Tue/Thu/Sat cadence to the intended Mon/Wed/Fri cadence. Filenames and all four date fields updated. Permalink is `/:title/` so URL slugs were unchanged.
+
+### ZFS Series Renumbering (2026-04-17)
+
+The ZFS boot mirror series was reordered to match the narrative arc:
+- Part 1: Same-size drive replacement (routine)
+- Part 2: Emergency recovery from dual-drive failure (Harlan — already happened)
+- Part 3: Planned migration to smaller SSDs with UEFI upgrade (applying lessons learned)
+
+Old Part 2 (send/receive migration) was rewritten as a fresh-install procedure with UEFI upgrade and became Part 3. Old Part 3 (emergency recovery) became Part 2.
 
 ---
 
@@ -59,7 +76,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Cluster | Drafts | Notes |
 |---------|--------|-------|
 | 🌐 **Domain & Email Migration** | #1, #2 | Publish registrars first, email second |
-| 🖥️ **Proxmox ZFS Boot Mirrors** | #5, #18, #19 | #5 is ready; #18 is a merge candidate with #5; #19 depends on completing the migration |
+| 🖥️ **Proxmox ZFS Boot Mirrors** | — | All 3 parts promoted (Part 1 Mon 5/25, Part 2 Fri 5/29, Part 3 Wed 6/3) |
 | 🎮 **Game Development** | #9, #10 | StarVoyager and Godot — independent but pair well |
 | 🌍 **Proxmox SDN & Networking** | #11, #12, #22 | PowerDNS, OpenWRT LXC, and LAG/LACP |
 | 📝 **Jekyll Deep Dives** | #16, #17, #18 | Remaining Jekyll drafts (10 promoted 2026-04-16) |
@@ -102,7 +119,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ### 5. ~~`2025-02-25-proxmox-zfs-boot-mirrors-part-1.md`~~ — 🖥️ ZFS Boot Mirrors — PROMOTED
 
-- **Published as:** `2026-05-23-proxmox-zfs-boot-mirrors-part-1.md`
+- **Published as:** `2026-05-25-proxmox-zfs-boot-mirrors-part-1.md` (rescheduled MWF)
 
 ### 6. ~~`2026-05-10-jekyll-giscus-comments-implementation.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
@@ -253,11 +270,25 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **Merged into:** `2025-02-25-proxmox-zfs-boot-mirrors-part-1.md` (tanaka session, harlan recovery, zpool detach mistake)
 - **Deleted:** 2026-04-16
 
-### 29. `2025-02-26-proxmox-zfs-boot-mirrors-part-2.md` — 🖥️ ZFS Boot Mirrors
+### 29. ~~`2025-02-26-proxmox-zfs-boot-mirrors-part-2.md`~~ — 🖥️ ZFS Boot Mirrors — PROMOTED (as Part 3)
 
-- **Status:** Front matter and outline complete. Has parted sessions and proxmox-boot-tool init for the new SSD. Missing the critical `zfs send | zfs receive` data migration section.
-- **What's needed:** Complete the ZFS send/receive pool migration with a real console session. Eight steps outlined in the draft TODO section.
-- **Estimated effort:** 2-3 hours (requires actually performing the migration on a node)
+- **Published as:** `2026-06-03-proxmox-zfs-boot-mirrors-part-3.md`
+- **Rewritten:** Abandoned incomplete zfs send/receive approach in favor of fresh install with UEFI upgrade. GRUB/Legacy BIOS is technical debt with PVE 9.x approaching. The fresh install path solves disk sizing, UEFI migration, and clean OS state in one operation.
+
+### 29a. ~~`2026-05-24-proxmox-zfs-boot-mirrors-part-3.md`~~ — 🖥️ ZFS Boot Mirrors — PROMOTED (as Part 2)
+
+- **Published as:** `2026-05-29-proxmox-zfs-boot-mirrors-part-2.md`
+- **Renumbered:** Emergency dual-drive failure recovery (Harlan) now Part 2 — it teaches the backup checklist that Part 3 applies.
+
+### 29b. `2026-06-29-ai-coding-agent-context-files-reference.md` — 🤖 AI/Tooling — PROMOTED
+
+- **Published as:** `2026-05-27-ai-coding-agent-context-files-reference.md`
+- **Content:** Reference guide for context/rules files across 9 AI coding assistants
+
+### 29c. `2026-06-30-managing-cross-ai-agent-context.md` — 🤖 AI/Tooling — PROMOTED
+
+- **Published as:** `2026-06-01-managing-cross-ai-agent-context.md`
+- **Content:** Strategies for managing project context across multiple AI agents
 
 ### 30. `2024-01-27-networking-site-2-site-vpn.md` — 🌍 SDN & Networking
 
@@ -392,6 +423,10 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | ~~5~~ | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | PROMOTED | ✍️ Personal |
 | ~~6~~ | ~~`caddy-reverse-proxy-proxmox-web-ui.md`~~ | PROMOTED | 🔧 Caddy |
 | ~~7~~ | ~~`caddy-reverse-proxy-ceph-dashboard.md`~~ | PROMOTED | 🔧 Caddy |
+| ~~—~~ | ~~`proxmox-zfs-boot-mirrors-part-2.md`~~ | PROMOTED (as Part 3) | 🖥️ ZFS |
+| ~~—~~ | ~~`proxmox-zfs-boot-mirrors-part-3.md`~~ | PROMOTED (as Part 2) | 🖥️ ZFS |
+| ~~—~~ | ~~`ai-coding-agent-context-files-reference.md`~~ | PROMOTED | 🤖 AI |
+| ~~—~~ | ~~`managing-cross-ai-agent-context.md`~~ | PROMOTED | 🤖 AI |
 
 **Note:** Posts written directly to `_posts` (not promoted from drafts): `2026-04-02-improving-eeat-jekyll-adsense.md`, `2026-04-06-adsense-verification-gdpr-script-loading-fix.md`, `2026-04-07-jekyll-sitemap-bloat-tags-categories-pagination.md`, `2026-04-08-jekyll-theme-missing-head-body-tags.md`
 | 8 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
@@ -406,14 +441,14 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | Category | Count |
 |----------|-------|
-| **Total drafts in `_drafts/`** | **44** |
-| Ready to publish — Tier 1 | 4 (+ 8 promoted) |
-| Near-complete — Tier 2 | 8 (+ 7 promoted) |
+| **Total drafts in `_drafts/`** | **38** |
+| Ready to publish — Tier 1 | 3 (+ 12 promoted) |
+| Near-complete — Tier 2 | 7 (+ 9 promoted) |
 | New drafts (untiered) | 0 |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
-| **Total tracked** | **44 drafts + 1 DRAFTS.md** |
+| **Total tracked** | **38 drafts + 1 DRAFTS.md** |
 
 ### Previously Removed
 
@@ -426,6 +461,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Promoted to _posts (2026-04-16 — Caddy reverse proxy pair) | 2 |
 | Promoted to _posts (2026-04-16 — Writing to Think essay) | 1 |
 | Promoted to _posts (2026-04-16 — ZFS Boot Mirrors Part 1) | 1 |
+| Promoted to _posts (2026-04-17 — ZFS Parts 2 & 3, AI agent pair) | 4 |
 | Retired/merged drafts (2026-04-16) | 1 |
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
