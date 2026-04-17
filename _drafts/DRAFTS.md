@@ -35,6 +35,7 @@ Last updated: 2026-06-10
 | ~~`2026-05-10-jekyll-content-distribution-pipeline.md`~~ | `2026-05-14-jekyll-content-distribution-pipeline.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ | `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md` | Promoted 2026-04-16 |
 | ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-05-19-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16 |
+| ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | `2026-05-21-writing-to-think-two-decades-of-figuring-things-out.md` | Promoted 2026-04-16 |
 
 ---
 
@@ -70,11 +71,9 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ## Tier 1: Ready to Publish (< 30 min each)
 
-### 0. `writing-to-think-two-decades-of-figuring-things-out.md` — ✍️ Personal/Writing
+### 0. ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ — ✍️ Personal/Writing — PROMOTED
 
-- **Status:** Reflective essay on 20+ years of technical blogging, Feynman Technique, motivation for writing, and moving to Substack. Has Mermaid bar chart of posts per year.
-- **What's needed:** Add a date prefix to filename before publishing.
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-05-21-writing-to-think-two-decades-of-figuring-things-out.md`
 
 ### 1. `2026-02-06-name-service-registrars.md` — 🌐 Domain & Email
 
@@ -205,9 +204,10 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ### 21. `2026-01-01-photosynth-update.md`
 
-- **Status:** Expanded into full article covering Georgia Tech PyPhotoSynthExport, Photosynth shutdown, open-source alternatives.
+- **Status:** Expanded into full article covering Georgia Tech PyPhotoSynthExport, Photosynth shutdown, open-source alternatives. Reads as wishful thinking about old tools without a concrete implementation to share.
+- **Recommendation:** Split into two articles. Publish this one as a retrospective/eulogy for Photosynth and the export work. Write a **companion article** that actually implements a local photogrammetry pipeline using current open-source alternatives (e.g. OpenMVG, OpenMVS, COLMAP, or Meshroom) — something hands-on with real results rather than just evaluating options.
 - **Related:** `2016-04-25-photosync-export-visualizer.md`
-- **Estimated effort:** 1 hour
+- **Estimated effort:** 1 hour for this article as-is; 3-4 hours for the companion implementation article
 
 ### 22. `2024-03-11-lag-lacp-nic-bonding.md` — 🌍 SDN & Networking
 
@@ -393,7 +393,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 2 | `email-forwarding-evaluation.md` | 15 min | 🌐 Domain & Email |
 | 3 | `google-service-sprawl.md` | 15 min | — |
 | 4 | `proxmox-zfs-boot-mirrors-part-1.md` | 30 min | 🖥️ ZFS |
-| 5 | `writing-to-think-two-decades-of-figuring-things-out.md` | 30 min | ✍️ Personal |
+| ~~5~~ | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | PROMOTED | ✍️ Personal |
 | ~~6~~ | ~~`caddy-reverse-proxy-proxmox-web-ui.md`~~ | PROMOTED | 🔧 Caddy |
 | ~~7~~ | ~~`caddy-reverse-proxy-ceph-dashboard.md`~~ | PROMOTED | 🔧 Caddy |
 
@@ -428,6 +428,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Written directly to _posts (2026-04-02–08, AdSense/Jekyll series) | 4 |
 | Promoted to _posts (2026-04-16 batch — 10 Jekyll deep dives) | 10 |
 | Promoted to _posts (2026-04-16 — Caddy reverse proxy pair) | 2 |
+| Promoted to _posts (2026-04-16 — Writing to Think essay) | 1 |
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |
