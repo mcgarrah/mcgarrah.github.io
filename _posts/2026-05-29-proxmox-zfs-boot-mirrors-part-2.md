@@ -5,12 +5,12 @@ categories: [proxmox, zfs, storage, homelab, ceph]
 tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror, ceph, recovery, disaster-recovery]
 excerpt: "When both drives in your ZFS boot mirror fail simultaneously, you can't resilver your way out. Here's the full procedure for a Proxmox fresh install that preserves your Ceph OSDs and rejoins the cluster — based on a real harlan node recovery."
 description: "Step-by-step guide to recovering a Proxmox node after catastrophic dual-drive ZFS boot mirror failure, covering pre-failure backup strategy, fresh install, hostid restoration, cluster rejoin, and Ceph OSD reactivation without data loss."
-date: 2026-05-27
-last_modified_at: 2026-05-27
+date: 2026-05-29
+last_modified_at: 2026-05-29
 seo:
   type: BlogPosting
-  date_published: 2026-05-27
-  date_modified: 2026-05-27
+  date_published: 2026-05-29
+  date_modified: 2026-05-29
 ---
 
 [Part 1](/proxmox-zfs-boot-mirrors-part-1/) covers replacing a failed drive with one of the same size. This part covers the scenario that procedure can't fix — when both drives in the mirror fail at the same time and you're doing an emergency recovery. [Part 3](/proxmox-zfs-boot-mirrors-part-3/) covers the planned migration path — downsizing from large HDDs to smaller SSDs with a fresh install and UEFI upgrade, applying the lessons learned here.

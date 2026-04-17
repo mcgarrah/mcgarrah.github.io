@@ -5,12 +5,12 @@ categories: [technical, development]
 tags: [ai, amazon-q, claude-code, github-copilot, cursor, windsurf, gemini, cline, aider, kiro, productivity, tooling]
 excerpt: "A practical reference for the context and rules files used by every major AI coding assistant — Amazon Q, Claude Code, GitHub Copilot, Cursor, Windsurf, Gemini, Cline, Aider, and Kiro."
 description: "Comprehensive reference documenting the exact file paths, formats, scoping rules, and exclusion mechanisms for context files across all major AI coding assistants."
-date: 2026-05-29
-last_modified_at: 2026-05-29
+date: 2026-05-27
+last_modified_at: 2026-05-27
 seo:
   type: BlogPosting
-  date_published: 2026-05-29
-  date_modified: 2026-05-29
+  date_published: 2026-05-27
+  date_modified: 2026-05-27
 ---
 
 Every AI coding assistant has its own way of reading project-level instructions. If you only use one tool, you learn its convention and move on. But if you work across multiple agents — or your team does — knowing exactly what each tool expects becomes essential.
