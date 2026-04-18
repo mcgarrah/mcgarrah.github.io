@@ -86,6 +86,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 🔑 **SSH & Remote Access** | — | Published; prerequisite for #20 (WAL/DB benchmarks) |
 | 🏗️ **Homelab Infrastructure** (overlapping) | #24, #25, #26 | Pick ONE of these three to publish |
 | 🧠 **Data Science & AI/ML** | #23, #29 | Five Stages + Research model — merge or publish separately |
+| 🔒 **Draft Preview Site** | new | 3-part series: options exploration, design refinement, implementation |
 
 ---
 
@@ -452,7 +453,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | **Total drafts in `_drafts/`** | **38** |
 | Ready to publish — Tier 1 | 3 (+ 12 promoted) |
 | Near-complete — Tier 2 | 7 (+ 9 promoted) |
-| New drafts (untiered) | 0 |
+| New drafts (untiered) | 3 (Draft Preview Site series) |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |

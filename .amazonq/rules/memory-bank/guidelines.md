@@ -143,6 +143,26 @@ Both checks are inert in production builds (without `--drafts`/`--future` flags)
 - Jekyll excludes `_drafts/` from builds unless `--drafts` is passed; adding `published: false` is redundant and creates cleanup work when promoting to `_posts/`
 - When promoting a draft, move the file to `_posts/` with the correct date prefix — no front matter changes needed for publication status
 
+### Drafts Convenience Files
+The `_drafts/` folder contains two types of files:
+- **Draft posts** — Markdown files with `YYYY-MM-DD-title.md` naming and front matter, intended for eventual promotion to `_posts/`
+- **Convenience files** — Uppercase Markdown files without front matter (e.g., `DRAFTS.md`, `SUBDOMAIN-DRAFTS.md`) used for planning, analysis, and reference
+
+Convenience files:
+- Use `UPPERCASE-NAME.md` naming to distinguish them from draft posts
+- Have **no front matter** — Jekyll still renders them at `--drafts` serve time, making them viewable in the browser for easy review
+- Are **never promoted** to `_posts/` — they are working documents, not blog content
+- May inform blog posts (e.g., `SUBDOMAIN-DRAFTS.md` analysis → three-part blog series) but remain as reference material
+- `DRAFTS.md` is the master tracking file for all draft status, tiers, clusters, and promotion history
+
+### Publication Cadence
+- **Schedule**: Monday, Wednesday, Friday (MWF)
+- All promoted posts must follow the MWF cadence — no Tuesday, Thursday, Saturday, or Sunday publish dates
+- When promoting a batch of drafts, assign dates sequentially on MWF slots starting from the next available date
+- When rescheduling posts, maintain MWF alignment and update all four date fields (filename, `date:`, `seo.date_published`, `seo.date_modified` / `last_modified_at`)
+- Multi-part series should publish on consecutive MWF slots (e.g., Part 1 Monday, Part 2 Wednesday, Part 3 Friday)
+- The daily GitHub Actions cron build (`jekyll.yml` at 05:00 UTC) publishes future-dated posts when their date arrives — no manual intervention needed
+
 ### Asset Organization
 - **Image Optimization** - Compress images for web delivery
 - **Descriptive Filenames** - Use clear, descriptive names for assets

@@ -19,6 +19,10 @@ mcgarrah.github.io/
 ### Content Management
 - **_posts/** - Published articles with date-based naming (YYYY-MM-DD-title.md)
 - **_drafts/** - Work-in-progress articles without publication dates
+  - Draft posts: `YYYY-MM-DD-title.md` with front matter (promoted to `_posts/` when ready)
+  - Convenience files: `UPPERCASE-NAME.md` without front matter (planning/reference docs, never promoted)
+  - `DRAFTS.md` - Master tracking file for all draft status, tiers, and promotion history
+  - `SUBDOMAIN-DRAFTS.md` - Analysis document for drafts preview site project
 - **_data/font-awesome/** - Icon definitions for UI components
 - **categories.html** - Category listing page
 - **tags.html** - Tag cloud and organization
