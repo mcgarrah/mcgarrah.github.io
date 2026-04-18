@@ -79,7 +79,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 🖥️ **Proxmox ZFS Boot Mirrors** | — | All 3 parts promoted (Part 1 Mon 5/25, Part 2 Fri 5/29, Part 3 Wed 6/3) |
 | 🎮 **Game Development** | #9, #10 | StarVoyager and Godot — independent but pair well |
 | 🌍 **Proxmox SDN & Networking** | #11, #12, #22 | PowerDNS, OpenWRT LXC, and LAG/LACP |
-| 🔌 **Jekyll Run Plugin** | #19a (published), new drafts | macOS crash fix (rbenv), plugin PR/fork |
+| 🔌 **Jekyll Run → Run Jekyll** | #19a (published), new drafts | macOS crash fix, fork/rename, bug fixes, testing |
 | 📝 **Jekyll Deep Dives** | #16, #17, #18 | Remaining Jekyll drafts (10 promoted 2026-04-16) |
 | 🗄️ **Ceph Storage** | #21, #28 | OSD moves, Reef→Squid upgrade |
 | 🔧 **Caddy Reverse Proxy** | #22a, #22b | Proxmox Web UI + Ceph Dashboard — publish Proxmox first |
@@ -205,12 +205,13 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 ### 19a. ~~`2026-05-10-jekyll-run-vscode-plugin-local-development.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
 - **Published as:** `2026-05-11-jekyll-run-vscode-plugin-local-development.md`
-- **Related series (🔌 Jekyll Run Plugin):**
+- **Related series (🔌 Jekyll Run Plugin → Run Jekyll):**
   - `_drafts/2026-05-22-jekyll-run-plugin-multiroot-workspace-bug.md` — macOS crash diagnosis, rbenv fix, terminal launch requirement
-  - `_drafts/2026-05-25-jekyll-run-plugin-pr-and-fork.md` — Plugin source code fixes, build from source, PR vs fork strategy
-  - `_drafts/2026-05-28-vscode-marketplace-publisher-account-setup.md` — VS Code Marketplace publisher account setup for forking
-  - `_drafts/2026-06-01-vscode-extension-testing-jekyll-run.md` — Test harness setup, unit and integration tests for the three bugs
-  - Publish order: published article first (done), then macOS crash article, then PR/fork article, then publisher setup, then testing
+  - `_drafts/2026-05-25-forking-jekyll-run-to-run-jekyll.md` — CI/CD modernization, fork rename, Marketplace publishing
+  - `_drafts/2026-05-28-vscode-marketplace-publisher-account-setup.md` — VS Code Marketplace publisher account setup
+  - `_drafts/2026-05-29-run-jekyll-bug-fixes-and-code-review.md` — 3 bugs fixed in v1.7.1 + 15 more from deep code review
+  - `_drafts/2026-06-01-vscode-extension-testing-jekyll-run.md` — Test harness setup, unit and integration tests
+  - Publish order: published article (done), macOS crash, fork/rename, publisher account, bug fixes, testing
 
 ### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
