@@ -173,6 +173,56 @@ vsce publish patch
 vsce publish minor
 ```
 
+## Automated Publishing with GitHub Actions
+
+The Jekyll Run fork already has a CI pipeline that automates both testing and publishing. Instead of running `vsce publish` manually, you can publish by creating a GitHub Release.
+
+### How It Works
+
+The fork includes two workflows:
+
+- `ci-release.yml` — Runs tests on macOS, Ubuntu, and Windows on every push and PR
+- `ci-publish.yml` — Publishes to the Marketplace when you create a GitHub Release
+
+The publish workflow uses your Marketplace PAT (the same token from Step 2) as a GitHub secret:
+
+```yaml
+# .github/workflows/ci-publish.yml
+on:
+  release:
+    types: [published]
+jobs:
+  publish:
+    steps:
+      - run: npm install
+      - uses: JCofman/vscodeaction@master
+        env:
+          PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN }}
+        with:
+          args: publish -p $PUBLISHER_TOKEN
+```
+
+### Setting Up the Secret
+
+1. Go to your fork on GitHub → **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret**
+3. Name: `PUBLISHER_TOKEN`
+4. Value: The Personal Access Token from Step 2 (the Azure DevOps PAT with Marketplace Manage scope)
+
+### Publishing a Release
+
+Once the secret is configured:
+
+1. Push your fixes and bump the version in `package.json`
+2. Go to your fork on GitHub → **Releases** → **Create a new release**
+3. Tag with the version (e.g., `v1.8.0`), write release notes
+4. Click **Publish release**
+5. The `ci-publish.yml` workflow triggers automatically and publishes to the Marketplace
+
+This means the full workflow is: push code → CI tests on three platforms → create release → auto-publish. No manual `vsce` commands needed after initial setup.
+
+For details on the test infrastructure and CI workflows, see [Testing a VS Code Extension: Building a Test Harness for Jekyll Run](/vscode-extension-testing-jekyll-run/).
+
 ## My Situation: Jekyll Run Fork
 
 For context, here's my publishing plan for the Jekyll Run extension:
@@ -189,6 +239,7 @@ The fixes are documented in [Jekyll Run Plugin: Patching the Source and Submitti
 - [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/) — Configuration guide
 - [Jekyll Run Plugin: Fixing the Multi-Root Workspace Crash](/jekyll-run-plugin-multiroot-workspace-bug/) — macOS debugging story
 - [Jekyll Run Plugin: Patching the Source and Submitting a PR](/jekyll-run-plugin-pr-and-fork/) — Code fixes and fork strategy
+- [Testing a VS Code Extension: Building a Test Harness for Jekyll Run](/vscode-extension-testing-jekyll-run/) — Test infrastructure and CI workflows
 
 ## References
 
