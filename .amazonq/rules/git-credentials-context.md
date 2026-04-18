@@ -88,3 +88,25 @@ as a global credential helper. Check for this if 403 errors recur after software
 
 If 403 errors appear after no credential changes, check corporate VPN/proxy status before
 investigating credential helpers.
+
+
+### File Operations: Prefer `git mv` Over `mv`
+
+Always use `git mv` instead of `mv` when renaming or moving tracked files. This preserves
+Git history (rename detection) so `git log --follow` traces the file back to its original
+commits. A plain `mv` + `git add` can work, but it relies on Git's similarity heuristic
+and may lose history if the file content also changes significantly in the same commit.
+
+**Rule:**
+```bash
+# Correct — preserves history
+git mv old-path/file.md new-path/file.md
+
+# Avoid — history may not follow
+mv old-path/file.md new-path/file.md
+git add new-path/file.md
+git rm old-path/file.md
+```
+
+**When suggesting file renames or moves, always use `git mv`.**
+The only exception is for untracked files that have never been committed.
