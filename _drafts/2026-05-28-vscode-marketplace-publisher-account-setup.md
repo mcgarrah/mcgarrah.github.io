@@ -223,11 +223,33 @@ This means the full workflow is: push code → CI tests on three platforms → c
 
 ### GitHub Release with VSIX Download
 
-In addition to Marketplace publishing, the fork has a `build-vsix.yml` workflow that builds the `.vsix` extension package and attaches it to GitHub Releases. This lets users install the extension directly from GitHub without the Marketplace:
+In addition to Marketplace publishing, the fork has a `build-vsix.yml` workflow that builds the `.vsix` extension package and attaches it to GitHub Releases. This lets users install the extension directly from GitHub without the Marketplace.
+
+`code --install-extension` only accepts local files or Marketplace extension IDs — it can't download from a URL. You need to download the `.vsix` first, then install it.
+
+### Installing from a GitHub Release
+
+Using the `gh` CLI (one command):
 
 ```bash
-# Download from the GitHub Release page, then:
+# Download the latest release and install
+gh release download v1.7.0 --repo mcgarrah/jekyll-run --pattern '*.vsix'
 code --install-extension jekyll-run.vsix
+```
+
+Using `curl`:
+
+```bash
+# Download from the release assets URL
+curl -L -o jekyll-run.vsix \
+  https://github.com/mcgarrah/jekyll-run/releases/download/v1.7.0/jekyll-run.vsix
+code --install-extension jekyll-run.vsix
+```
+
+Or just download manually from the [Releases page](https://github.com/mcgarrah/jekyll-run/releases) and run:
+
+```bash
+code --install-extension ~/Downloads/jekyll-run.vsix
 ```
 
 The workflow triggers in two ways:
@@ -244,11 +266,13 @@ To test the build without creating a release:
 
 To create a release with the VSIX attached:
 
-1. Go to the fork on GitHub → **Releases** → **Create a new release**
-2. Tag with the version (e.g., `v1.8.0`)
-3. Write release notes describing the fixes
-4. Click **Publish release**
-5. Both `ci-publish.yml` (Marketplace) and `build-vsix.yml` (GitHub artifact) trigger automatically
+1. Tag the release: `git tag -a v1.8.0 -m "v1.8.0 - description"`
+2. Push the tag: `git push origin v1.8.0`
+3. Create the release: `gh release create v1.8.0 --title "v1.8.0 - Title" --notes "Release notes"`
+4. Both `ci-publish.yml` (Marketplace) and `build-vsix.yml` (GitHub artifact) trigger automatically
+5. The `.vsix` file appears as a downloadable asset on the release page
+
+Or create the release through the GitHub web UI: **Releases** → **Create a new release** → select the tag → **Publish release**.
 
 The VSIX download is useful for:
 - Testing before publishing to the Marketplace
