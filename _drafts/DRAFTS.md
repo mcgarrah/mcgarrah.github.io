@@ -210,7 +210,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
   - `_drafts/2026-05-25-forking-jekyll-run-to-run-jekyll.md` — CI/CD modernization, fork rename, Marketplace publishing
   - `_drafts/2026-05-28-vscode-marketplace-publisher-account-setup.md` — VS Code Marketplace publisher account setup
   - `_drafts/2026-05-29-run-jekyll-bug-fixes-and-code-review.md` — 3 bugs fixed in v1.7.1 + 15 more from deep code review
-  - `_drafts/2026-06-01-vscode-extension-testing-jekyll-run.md` — Test harness setup, unit and integration tests
+  - `_drafts/2026-06-01-run-jekyll-testing-and-test-harness.md` — Test harness setup, unit and integration tests
   - Publish order: published article (done), macOS crash, fork/rename, publisher account, bug fixes, testing
 
 ### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
