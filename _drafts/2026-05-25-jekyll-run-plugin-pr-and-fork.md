@@ -289,6 +289,44 @@ TypeScript 3.8 is from 2020. The VS Code API types target 1.18 (from 2017). Thes
 
 The PR is the right first step. The original author built a useful extension that thousands of people use. If they're still around, they deserve the chance to merge the fix. If not, the MIT license exists for exactly this situation.
 
+## Additional Issues Found in Code Review
+
+Beyond the three bugs fixed in v1.7.1, a deeper code review revealed additional issues worth addressing in a future release.
+
+### High Priority — Crashes or Silent Failures
+
+**Double rejection in stderr handler** (`run.ts` lines 65-74): Both `if(error.includes('Error'))` and `if(error.includes('ruby'))` can match the same stderr data. Both call `reject()`, but a Promise can only be rejected once. Fix: use `else if`.
+
+**Raw Buffer passed to reject** (`run.ts` line 68, `build.ts` line 37): The `Error`/`argument` branch does `reject(data)` where `data` is a Buffer. The caller does `error.toString()` which works on Buffers but produces garbage on other types. Fix: `reject(error)` (the already-converted string).
+
+**lsof crash on header-only output** (`process-on-port.ts` line 22): If `lsof` returns only the header row, `output.split('\n')[1]` is `undefined` and `.split()` throws TypeError. Fix: check the second line exists.
+
+**install.ts rejects with no error** (line 31): `reject()` with no argument means the caller gets `undefined`, which crashes on `.toString()`. Fix: `reject(data)` or `reject(new Error(data.toString()))`.
+
+**runBundleInstall not async-aware** (`extension.ts` lines 175-188): Button state cleanup runs immediately instead of after the async install completes, causing UI flicker. Fix: move cleanup into `.finally()`.
+
+**deactivate() has no error handling** (`extension.ts` line 290): During deactivation the workspace may be torn down. `Config.get()` could fail. Fix: wrap in try-catch.
+
+### Medium Priority — Robustness
+
+**exec-cmd.ts swallows all errors** (line 6): Every command failure returns the string `'error'` with no context. Callers can't distinguish "command not found" from "permission denied". Fix: return the actual error message.
+
+**get-numbers-in-string.ts splits on single space** (line 3): Same pattern as the lsof bug. Used by `kill-process-children.ts` to parse `ps` output. Fix: split on `/\s+/`.
+
+**kill-process-children.ts doesn't await the kill** (line 22): `executeCMD('kill -9 ...')` runs without `await`. The caller's `.finally()` may execute before processes are dead. Fix: add `await`.
+
+**Version check for VS Code < 1.31 is dead code** (`open-in-browser.ts` line 4): The extension requires VS Code >= 1.18, but any version that can run it is past 1.31 (released 2019). The `compare-versions` dependency exists solely for this check. Fix: remove the check and the dependency.
+
+**pid-on-port.ts undefined array access** (line 8): `getNumbersInString(output)[0]` can be `undefined` if no numbers are found, resolving the Promise with `undefined` instead of `0`. Fix: `|| 0` fallback.
+
+### Low Priority — Code Quality
+
+**stopServerOnExit default is wrong type** (`package.json`): Declared as `"default": "false"` (string) but type is `boolean`. The string `"false"` is truthy, so the server always stops on exit regardless of the setting. Fix: `"default": false`.
+
+**Inline require** (`extension.ts` line 62): `var read = require('read-yaml')` should be a top-level import.
+
+**Duplicate error handlers** (`extension.ts`): The `.then(rejection)` and `.catch()` handlers in Run and Restart commands are identical copy-paste blocks. Fix: extract to a shared function.
+
 ## Related Posts
 
 - [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/) — Complete configuration guide
