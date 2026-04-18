@@ -98,6 +98,8 @@ If you use a multi-root workspace (multiple folders in one VS Code window), the 
 }
 ```
 
+**macOS users:** If you see `TypeError: Cannot read properties of null (reading 'toString')` in a multi-root workspace, the problem is deeper than settings — it's related to macOS GUI PATH inheritance and Ruby version management. See [Jekyll Run Plugin: Fixing the Multi-Root Workspace Crash](/jekyll-run-plugin-multiroot-workspace-bug/) for the full diagnosis and fix.
+
 ### The Machine Settings Trap
 
 On VS Code Remote (SSH, WSL, etc.), machine settings live at `~/.vscode-server/data/Machine/settings.json` on the remote host. If someone — or an extension update — writes a `jekyll-run.commandLineArguments` value there with fewer flags, it can override your workspace settings depending on how the extension resolves precedence.
