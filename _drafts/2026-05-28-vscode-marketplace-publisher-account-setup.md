@@ -221,6 +221,40 @@ Once the secret is configured:
 
 This means the full workflow is: push code → CI tests on three platforms → create release → auto-publish. No manual `vsce` commands needed after initial setup.
 
+### GitHub Release with VSIX Download
+
+In addition to Marketplace publishing, the fork has a `build-vsix.yml` workflow that builds the `.vsix` extension package and attaches it to GitHub Releases. This lets users install the extension directly from GitHub without the Marketplace:
+
+```bash
+# Download from the GitHub Release page, then:
+code --install-extension jekyll-run.vsix
+```
+
+The workflow triggers in two ways:
+
+- **On GitHub Release**: builds and attaches `jekyll-run.vsix` to the release as a downloadable asset
+- **Manual trigger** (`workflow_dispatch`): builds and uploads as a GitHub Actions artifact for testing before a release
+
+To test the build without creating a release:
+
+1. Go to the fork on GitHub → **Actions** tab
+2. Select **Build VSIX** workflow
+3. Click **Run workflow** → select `main` branch → **Run workflow**
+4. When complete, download the artifact from the workflow run
+
+To create a release with the VSIX attached:
+
+1. Go to the fork on GitHub → **Releases** → **Create a new release**
+2. Tag with the version (e.g., `v1.8.0`)
+3. Write release notes describing the fixes
+4. Click **Publish release**
+5. Both `ci-publish.yml` (Marketplace) and `build-vsix.yml` (GitHub artifact) trigger automatically
+
+The VSIX download is useful for:
+- Testing before publishing to the Marketplace
+- Sharing with others who want to try the fix before it's officially published
+- Installing on machines without Marketplace access
+
 For details on the test infrastructure and CI workflows, see [Testing a VS Code Extension: Building a Test Harness for Jekyll Run](/vscode-extension-testing-jekyll-run/).
 
 ## My Situation: Jekyll Run Fork
