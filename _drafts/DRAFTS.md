@@ -208,7 +208,8 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **Related series (🔌 Jekyll Run Plugin):**
   - `_drafts/2026-05-22-jekyll-run-plugin-multiroot-workspace-bug.md` — macOS crash diagnosis, rbenv fix, terminal launch requirement
   - `_drafts/2026-05-25-jekyll-run-plugin-pr-and-fork.md` — Plugin source code fixes, build from source, PR vs fork strategy
-  - Publish order: published article first (done), then macOS crash article, then PR/fork article
+  - `_drafts/2026-05-28-vscode-marketplace-publisher-account-setup.md` — VS Code Marketplace publisher account setup for forking
+  - Publish order: published article first (done), then macOS crash article, then PR/fork article, then publisher setup
 
 ### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
