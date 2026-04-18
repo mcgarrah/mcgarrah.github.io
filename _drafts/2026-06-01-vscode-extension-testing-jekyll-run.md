@@ -101,7 +101,7 @@ This is the default from `yo code` — the VS Code extension generator. It prove
 From a cloned copy of the repository:
 
 ```bash
-git clone https://github.com/Kanna727/jekyll-run.git
+git clone https://github.com/mcgarrah/jekyll-run.git
 cd jekyll-run
 npm install
 npm test
@@ -341,7 +341,7 @@ src/test/
 
 ## The Existing Fork and CI Infrastructure
 
-I already have the source cloned at `jekyll-run-kanna727/`. Better yet, the original author set up a complete CI pipeline that we can reuse:
+I already have the fork at `jekyll-run/` (origin: `mcgarrah/jekyll-run`). Better yet, the original author set up a complete CI pipeline that we can reuse:
 
 ### ci-release.yml — Cross-Platform Testing
 
@@ -403,9 +403,12 @@ The CI workflows are from 2020 and need version bumps before they'll run:
 The remote also needs updating — it currently points to the original author's repo:
 
 ```bash
-# Add your fork as origin, keep upstream for PRs
-git remote rename origin upstream
-git remote add origin https://github.com/mcgarrah/jekyll-run.git
+# Fork remote is already set up
+git remote -v
+# origin  https://github.com/mcgarrah/jekyll-run.git
+
+# Add upstream for PRs to the original author
+git remote add upstream https://github.com/Kanna727/jekyll-run.git
 ```
 
 ## Running Tests

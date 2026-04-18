@@ -158,7 +158,7 @@ The plugin uses TypeScript compiled to JavaScript. The compiled output lives in 
 ### Prerequisites
 
 ```bash
-git clone https://github.com/Kanna727/jekyll-run.git
+git clone https://github.com/mcgarrah/jekyll-run.git
 cd jekyll-run
 npm install
 ```
