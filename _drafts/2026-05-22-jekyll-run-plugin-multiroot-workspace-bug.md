@@ -246,6 +246,20 @@ fi
 bundle exec jekyll serve --trace --drafts --future --unpublished --livereload --incremental
 ```
 
+## Known Issue: Port Conflict Shows Thread Exception
+
+If a Jekyll server is already running on port 4000 (from a terminal `./start-jekyll.sh` session, for example), clicking the Jekyll Run button won't show a clean "port in use" error. Instead, you'll see a thread exception popup:
+
+```
+#<Thread:0x0000000126cc9a58 .../live_reload_reactor.rb:39 run> terminated with exception
+```
+
+This happens because the plugin's port-detection code parses `lsof` output by splitting on single spaces, but macOS `lsof` uses variable-width columns with multiple spaces between fields. The PID is never extracted, so the plugin thinks port 4000 is free, launches Jekyll, and the livereload thread crashes on the port conflict before the main server reports `EADDRINUSE`.
+
+The workaround is to not run both simultaneously — use either `./start-jekyll.sh` or the Jekyll Run button, not both. Kill the terminal server first (`Ctrl+C`) before using the plugin.
+
+This is a separate plugin bug covered in [Jekyll Run Plugin: Patching the Source and Submitting a PR](/jekyll-run-plugin-pr-and-fork/).
+
 ## Summary
 
 Three problems, layered on top of each other, each masking the next:
@@ -255,8 +269,9 @@ Three problems, layered on top of each other, each masking the next:
 | macOS GUI apps don't inherit shell PATH | System Ruby 2.6 runs instead of project Ruby | Launch VS Code from terminal |
 | Plugin rejects `null` on non-Errno Ruby errors | TypeError instead of useful error message | Plugin bug (PR needed) |
 | Ruby 4.0 livereload incompatibility | Thread exception popup | Use Ruby 3.3 via rbenv |
+| Plugin `lsof` parsing broken on macOS | Port conflict shows thread exception instead of clean error | Don't run terminal server and plugin simultaneously; plugin bug (PR needed) |
 
-The first one is the blocker. The second makes debugging harder. The third drove the choice of Ruby 3.3 over 4.0.
+The first one is the blocker. The second makes debugging harder. The third drove the choice of Ruby 3.3 over 4.0. The fourth is a nuisance if you forget to stop a terminal server before using the plugin.
 
 ## Related Posts
 
