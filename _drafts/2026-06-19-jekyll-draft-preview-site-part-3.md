@@ -29,6 +29,8 @@ This is Part 3 of a three-part series:
 
 <!-- TODO: Document repo creation, Pages setup, Discussions enablement -->
 
+> **Implementation note:** GitHub Pages setup fails on a truly empty repo because there is no `main` branch to select yet. The repo needs an initial commit first, so initialize with a `README.md` or create any file before enabling Pages.
+
 ## DNS Configuration
 
 <!-- TODO: Document Porkbun CNAME setup, GitHub Pages custom domain verification, HTTPS enforcement -->

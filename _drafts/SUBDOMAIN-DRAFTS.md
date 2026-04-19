@@ -506,13 +506,15 @@ Organized by where the work happens. Each step is independent enough to do in a 
 
 ### Phase 1: GitHub Setup (browser, ~15 minutes total)
 
-- [ ] **1.1** Create `mcgarrah/drafts.mcgarrah.org` repo on GitHub (public, empty, no README)
-- [ ] **1.2** Enable GitHub Pages on the drafts repo (Settings → Pages → Deploy from branch → `main` → `/ (root)`)
-- [ ] **1.3** Enable GitHub Discussions on the drafts repo (Settings → General → Features → Discussions)
+- [x] **1.1** Create `mcgarrah/drafts.mcgarrah.org` repo on GitHub (public, initialized so `main` exists)
+- [x] **1.2** Enable GitHub Pages on the drafts repo (Settings → Pages → Deploy from branch → `main` → `/ (root)`)
+- [x] **1.3** Enable GitHub Discussions on the drafts repo (Settings → General → Features → Discussions)
 - [ ] **1.4** Create a "Draft Reviews" category in Discussions (Discussions tab → Categories → New category)
 - [ ] **1.5** Generate a GitHub PAT with `repo` scope for cross-repo push (Settings → Developer settings → Personal access tokens → Fine-grained tokens, scope to `drafts.mcgarrah.org` repo only)
 - [ ] **1.6** Add `DRAFTS_DEPLOY_TOKEN` secret to `mcgarrah.github.io` repo (Settings → Secrets and variables → Actions → New repository secret)
 - [ ] **1.7** Pick a Staticrypt password and add `DRAFTS_PASSWORD` secret to `mcgarrah.github.io` repo
+
+**Important gotcha:** GitHub Pages cannot be configured for `main` until the repo has an initial commit and the `main` branch actually exists. Creating the repo as truly empty blocks Pages setup with an error. Initializing with a `README.md` (or creating any file and committing it) avoids that.
 
 ### Phase 2: DNS (Porkbun, ~2 minutes)
 

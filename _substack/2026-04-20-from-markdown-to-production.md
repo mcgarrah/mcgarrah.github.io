@@ -41,6 +41,7 @@ Jekyll is a Ruby-based static site generator. You write Markdown, Jekyll compile
 
 - [How the Sausage Is Made: Every Feature Powering This Jekyll Blog](https://mcgarrah.org/jekyll-markdown-feature-reference/) — The complete feature reference for everything the blog can do: Mermaid diagrams, KaTeX math, collapsible sections, code highlighting with copy buttons, YouTube embeds, and more.
 - [Building This Blog: Jekyll on GitHub Pages from Zero to 130+ Posts](https://mcgarrah.org/setting-up-jekyll-blog-github-pages/) — The setup guide: repository creation, custom domains, theme selection, GitHub Actions CI/CD, and what I'd do differently if I started over.
+- [Jekyll Upgrade: Two Years of Cascading Breakage](https://mcgarrah.org/jekyll-upgrade-two-years-cascading-breakage/) — What happens when you skip two years of dependency updates. Ruby, Bundler, and Jekyll all moved on without me.
 - [Running GitHub Pages Jekyll Locally](https://mcgarrah.org/github-pages-jekyll-locally/) — Local development setup. You need this before you can iterate quickly.
 
 ## Writing Features That Required Engineering
@@ -52,6 +53,9 @@ Every feature I added to the blog was driven by a specific need in a specific ar
 My [Ceph architecture posts](https://mcgarrah.org/proxmox-ceph-homelab-settings/) needed network topology diagrams. Rather than screenshot Visio drawings, I integrated Mermaid.js for diagrams rendered from text at build time.
 
 - [Mermaid Diagram Rendering Challenges in Jekyll](https://mcgarrah.org/jekyll-mermaid-diagram-rendering-challenges/) — Getting Mermaid to work reliably in Jekyll required solving Liquid template conflicts, script loading order, and dark mode compatibility.
+
+- [Jekyll Small Things: The Polish Features That Add Up](https://mcgarrah.org/jekyll-small-things-polish-features/) — Copy buttons on code blocks, reading time estimates, and the small touches that make a technical blog feel professional.
+- [Jekyll Liquid Code Fence Rendering Trap](https://mcgarrah.org/jekyll-liquid-code-fence-rendering-trap/) — When your blog post about Liquid templates gets processed *by* Liquid templates. The meta-debugging story.
 
 ### PDF Exports for the Resume
 
@@ -99,8 +103,19 @@ The blog and resume are separate Jekyll sites in separate repositories, served u
 
 Jekyll's plugin system lets you extend the build process with Ruby. I've written custom generators for tag pages, category pages, and Pandoc exports.
 
+- [Jekyll Tag and Category Generator Plugin](https://mcgarrah.org/jekyll-tag-category-generator-plugin/) — A custom Ruby generator that creates individual pages for every tag and category. The kind of build-time code generation that's invisible to readers but essential for navigation.
 - [Ruby Gem Release Automation](https://mcgarrah.org/ruby-gem-release-automation/) — Automating the release pipeline for the Pandoc exports gem. CI/CD for a Ruby gem is its own education.
 - [Jekyll Theme Missing Head and Body Tags](https://mcgarrah.org/jekyll-theme-missing-head-body-tags/) — Debugging a theme issue where the HTML structure was technically invalid but browsers rendered it anyway. The kind of bug that only shows up when you add structured data validation.
+
+## The Development Workflow
+
+The blog itself has a development workflow that mirrors professional software projects — CI/CD, comments, content pipelines, and local development tooling.
+
+- [Jekyll GitHub Actions CI/CD Pipeline](https://mcgarrah.org/jekyll-github-actions-cicd-pipeline/) — Automated builds, SEO validation, and deployment on every push. The same pipeline patterns used in production software.
+- [Jekyll Giscus Comments Implementation](https://mcgarrah.org/jekyll-giscus-comments-implementation/) — Adding GitHub Discussions-backed comments to a static site. No database, no hosted service — just GitHub's API.
+- [Jekyll Content Distribution Pipeline](https://mcgarrah.org/jekyll-content-distribution-pipeline/) — How content flows from draft to published to syndicated across platforms.
+- [Jekyll Content Plumbing: Permalinks and Reading Time](https://mcgarrah.org/jekyll-content-plumbing-permalinks-reading-time/) — The invisible infrastructure: URL structure, reading time estimates, and excerpt handling.
+- [Jekyll Run Plugin: Local Development Settings That Actually Work](https://mcgarrah.org/jekyll-run-vscode-plugin-local-development/) — VS Code integration for local Jekyll development. This led to discovering and fixing bugs in an abandoned extension — which became its own open-source project.
 
 ## The Connection to Professional Engineering
 
@@ -111,17 +126,20 @@ If this looks like a lot of engineering for "just a blog," that's the point. Eve
 - **SEO structured data** is JSON-LD — the same linked data format used in knowledge graphs and ML training data annotation
 - **GDPR compliance** is privacy engineering — increasingly required in ML systems that handle personal data
 - **Static site generation** is the build-once-deploy-everywhere pattern behind every CDN, every serverless function, and every ML model serving endpoint
+- **Open-source contribution** — finding a bug in a VS Code extension, diagnosing it, writing the fix, and publishing a maintained fork is the same workflow used in enterprise open-source
 
 The blog is where I practice these skills on my own terms. The enterprise is where I apply them at scale.
 
 ## What's Next
 
-The blog continues to evolve. Current projects:
+The blog continues to evolve. Here's what's in the pipeline:
 
-- **Kubernetes deployment** — migrating from GitHub Pages to self-hosted on my [Proxmox cluster](https://mcgarrah.org/proxmox-ceph-guide/) for more control
-- **Dark mode toggle** — the theme supports it but the UI doesn't expose it yet
-- **Image optimization pipeline** — automated compression in the build step
-- **Table of contents generation** — auto-generated from headings for longer posts
+- **VS Code extension fork** — I found three bugs in the Jekyll Run VS Code extension, and the maintainer hasn't committed in five years. I'm forking it as "Run Jekyll" with bug fixes, new features (Clean and Doctor commands), and a real test suite. The debugging story alone spans seven articles.
+- **Draft preview site** — Building a password-protected preview at `drafts.mcgarrah.org` so reviewers can see unpublished content and leave feedback via Giscus before articles go live. Staticrypt encryption on GitHub Pages, automated via GitHub Actions.
+- **Jekyll deep dives** — More articles on the internal plumbing: Liquid template gotchas, Jekyll enhancements without plugins, and the formatting conventions that keep 140+ posts consistent.
+- **Infrastructure crossover** — The [Proxmox cluster](https://mcgarrah.org/proxmox-ceph-guide/) is getting Caddy reverse proxies, ZFS boot mirror procedures, and eventually Kubernetes. The blog may move from GitHub Pages to self-hosted when the K8s cluster is production-ready.
+
+If you're interested in the infrastructure side, my earlier piece [From Homelabs to Machine Learning](https://mcgarrah.substack.com/p/from-homelabs-to-machine-learning) covers the Proxmox, Ceph, and networking foundation. The next Substack installment covers what happens when that storage infrastructure fails — and how Ceph's self-healing saved my data.
 
 ## About Me
 

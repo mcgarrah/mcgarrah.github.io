@@ -160,12 +160,15 @@ drafts.mcgarrah.org  CNAME  mcgarrah.github.io.
 
 Wait — `mcgarrah.github.io` already points to the production site. How does GitHub know which repo to serve?
 
+**This is the key insight:** The DNS CNAME points to GitHub's *apex domain* (`mcgarrah.github.io.`), not directly to your new repo. GitHub then uses the `CNAME` *file* inside your repo to route the request. This allows multiple repos under one account to each have their own custom domains.
+
 GitHub Pages routes by `Host` header:
 1. Browser requests `drafts.mcgarrah.org`
-2. DNS resolves to GitHub's IPs (via the CNAME)
-3. GitHub sees `Host: drafts.mcgarrah.org`
-4. GitHub finds the repo with a `CNAME` file containing `drafts.mcgarrah.org`
-5. Serves that repo's content
+2. DNS resolves to GitHub's IPs (via the CNAME pointing to `mcgarrah.github.io.`)
+3. GitHub receives the request with `Host: drafts.mcgarrah.org`
+4. GitHub searches *all your repos* for a `CNAME` file containing `drafts.mcgarrah.org`
+5. Finds `mcgarrah/drafts.mcgarrah.org` with `CNAME: drafts.mcgarrah.org`
+6. Serves that repo's content
 
 The `CNAME` file in the drafts repo is the routing key. The workflow creates it automatically during deployment.
 
@@ -237,6 +240,8 @@ Two secrets needed:
 - `DRAFTS_DEPLOY_TOKEN` — a GitHub PAT with `repo` scope for cross-repo push
 
 The drafts repo needs GitHub Pages configured to "Deploy from a branch" → `main` → `/ (root)`.
+
+One setup trap: an empty repo has no `main` branch yet, so GitHub Pages setup fails until the repo has an initial commit. Initialize the repo with a `README.md` or create any first commit before trying to configure Pages.
 
 ## Remaining Gaps
 
