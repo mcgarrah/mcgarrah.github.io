@@ -110,7 +110,7 @@ The `ci-publish.yml` workflow publishes to the VS Code Marketplace when a GitHub
     fi
 ```
 
-Setting up the token requires a [VS Code Marketplace publisher account](/vscode-marketplace-publisher-account-setup/).
+Setting up the token requires a [VS Code Marketplace publisher account](/run-jekyll-vscode-marketplace-publisher-setup/).
 
 ## Dependency Updates
 
@@ -158,7 +158,7 @@ vsce package       # Build .vsix
 - [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/) — Configuration guide
 - [Jekyll Run Plugin: Fixing the Multi-Root Workspace Crash](/jekyll-run-plugin-multiroot-workspace-bug/) — macOS debugging story
 - [Run Jekyll: Bug Fixes and Code Review](/run-jekyll-bug-fixes-and-code-review/) — The actual code fixes
-- [Setting Up a VS Code Marketplace Publisher Account](/vscode-marketplace-publisher-account-setup/) — Publishing prerequisites
+- [Setting Up a VS Code Marketplace Publisher Account](/run-jekyll-vscode-marketplace-publisher-setup/) — Publishing prerequisites
 - [Testing a VS Code Extension](/vscode-extension-testing-jekyll-run/) — Test harness and CI
 
 ## References

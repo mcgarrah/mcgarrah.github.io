@@ -492,18 +492,86 @@ Two Jekyll builds per push to `main` (production + drafts). Both run in a public
 
 ---
 
-## Next Steps
+## Decisions Made
 
-1. Decide: subdomain (`drafts.mcgarrah.org`) vs project page (`mcgarrah.org/drafts/`)
-2. Decide: Staticrypt (Option 1) or no password (Option 2)
-3. Create the `mcgarrah/drafts.mcgarrah.org` repo on GitHub (public, empty)
-4. Enable GitHub Pages on the drafts repo (Settings → Pages → Deploy from branch → `main` → `/ (root)`)
-5. Enable GitHub Discussions on the drafts repo, create a "Draft Reviews" category
-6. Configure Giscus for the drafts repo at https://giscus.app — get `repo_id` and `category_id`
-7. Create `_config_drafts.yml` overlay in the main repo
-8. Add `DRAFTS_PASSWORD` and `DRAFTS_DEPLOY_TOKEN` to main repo's GitHub Secrets
-9. Create `.github/workflows/deploy-drafts.yml` in the main repo
-10. Add CNAME record in Porkbun: `drafts.mcgarrah.org` CNAME `mcgarrah.github.io.` (if subdomain)
-11. Add the visual "DRAFT PREVIEW" banner to `_layouts/default.html`
-12. Test end-to-end: push, verify build, password prompt (if Staticrypt), navigation, Giscus comments
-13. Share the URL (and password if applicable) with reviewers
+- **Subdomain** (`drafts.mcgarrah.org`) — chosen over project page for clean `robots.txt` separation
+- **Staticrypt** — yes, as a low-cost UX speed bump; removable anytime
+- **Giscus on drafts repo** — keeps feedback separate from production comments
+- **Public drafts repo** — free GitHub Pages, no real security benefit from private given public source
+- **Build on every push** — both triggers (push to `main` + `workflow_dispatch`) enabled
+
+## Implementation Checklist
+
+Organized by where the work happens. Each step is independent enough to do in a spare 5-15 minutes.
+
+### Phase 1: GitHub Setup (browser, ~15 minutes total)
+
+- [ ] **1.1** Create `mcgarrah/drafts.mcgarrah.org` repo on GitHub (public, empty, no README)
+- [ ] **1.2** Enable GitHub Pages on the drafts repo (Settings → Pages → Deploy from branch → `main` → `/ (root)`)
+- [ ] **1.3** Enable GitHub Discussions on the drafts repo (Settings → General → Features → Discussions)
+- [ ] **1.4** Create a "Draft Reviews" category in Discussions (Discussions tab → Categories → New category)
+- [ ] **1.5** Generate a GitHub PAT with `repo` scope for cross-repo push (Settings → Developer settings → Personal access tokens → Fine-grained tokens, scope to `drafts.mcgarrah.org` repo only)
+- [ ] **1.6** Add `DRAFTS_DEPLOY_TOKEN` secret to `mcgarrah.github.io` repo (Settings → Secrets and variables → Actions → New repository secret)
+- [ ] **1.7** Pick a Staticrypt password and add `DRAFTS_PASSWORD` secret to `mcgarrah.github.io` repo
+
+### Phase 2: DNS (Porkbun, ~2 minutes)
+
+- [ ] **2.1** Add CNAME record in Porkbun: `drafts` → `mcgarrah.github.io.`
+- [ ] **2.2** Wait for DNS propagation (usually < 5 minutes, can verify with `dig drafts.mcgarrah.org`)
+- [ ] **2.3** After first deployment, enable "Enforce HTTPS" in the drafts repo's Pages settings
+
+### Phase 3: Giscus Configuration (browser, ~5 minutes)
+
+- [ ] **3.1** Go to https://giscus.app
+- [ ] **3.2** Enter `mcgarrah/drafts.mcgarrah.org` as the repo
+- [ ] **3.3** Select "Draft Reviews" as the Discussion category
+- [ ] **3.4** Copy the `data-repo-id` and `data-category-id` values
+- [ ] **3.5** Save these values — needed for `_config_drafts.yml` in Phase 4
+
+### Phase 4: Main Repo Files (IDE, ~20 minutes total)
+
+- [ ] **4.1** Create `_config_drafts.yml` in the main repo root with drafts URL, disabled analytics/ads, and Giscus config pointing to drafts repo (use IDs from Phase 3)
+- [ ] **4.2** Create `.github/workflows/deploy-drafts.yml` in the main repo (workflow sketch is in this document and Part 2)
+- [ ] **4.3** Add the draft preview banner to `_layouts/default.html` (Liquid conditional on `site.url contains 'drafts'`)
+- [ ] **4.4** Commit and push to `main`
+
+### Phase 5: Testing (~30 minutes)
+
+- [ ] **5.1** Verify the `deploy-drafts.yml` workflow runs successfully in GitHub Actions
+- [ ] **5.2** Verify `drafts.mcgarrah.org` loads and shows the Staticrypt password prompt
+- [ ] **5.3** Enter the password — verify the site renders correctly with drafts and future posts visible
+- [ ] **5.4** Click through 3-4 internal links — verify `--remember` works (no re-prompting)
+- [ ] **5.5** Verify the orange "DRAFT PREVIEW" banner appears at the top
+- [ ] **5.6** Verify `robots.txt` at `drafts.mcgarrah.org/robots.txt` shows `Disallow: /`
+- [ ] **5.7** Verify `feed.xml` and `sitemap.xml` return 404
+- [ ] **5.8** Verify Google Analytics is NOT loading (check browser DevTools → Network)
+- [ ] **5.9** Scroll to bottom of a post — verify Giscus loads and points to the drafts repo Discussions
+- [ ] **5.10** Leave a test comment via Giscus — verify it appears in the drafts repo's Discussions
+- [ ] **5.11** Test on mobile (Staticrypt prompt, navigation, banner)
+- [ ] **5.12** Test in a private/incognito window (should prompt for password again)
+
+### Phase 6: Write Part 3 Article
+
+- [ ] **6.1** Fill in Part 3 (`_drafts/2026-06-19-jekyll-draft-preview-site-part-3.md`) with real results from testing
+- [ ] **6.2** Document anything that didn't work as expected and workarounds applied
+- [ ] **6.3** Add screenshots of the password prompt, draft banner, and Giscus comments
+- [ ] **6.4** Update `SUBDOMAIN-DRAFTS.md` with any changes discovered during implementation
+
+### Phase 7: Share with Reviewers
+
+- [ ] **7.1** Send the URL (`drafts.mcgarrah.org`) and password to reviewers
+- [ ] **7.2** Explain that Giscus comments require a GitHub account
+- [ ] **7.3** Provide a fallback contact method (email) for reviewers without GitHub accounts
+- [ ] **7.4** Promote the three-part blog series to `_posts/` when ready
+
+## Quick Reference: What Goes Where
+
+| File | Repo | Purpose |
+|------|------|---------|
+| `_config_drafts.yml` | `mcgarrah.github.io` | Jekyll config overlay for drafts build |
+| `.github/workflows/deploy-drafts.yml` | `mcgarrah.github.io` | GitHub Actions workflow |
+| `CNAME` | `drafts.mcgarrah.org` (auto-created by workflow) | GitHub Pages custom domain routing |
+| `DRAFTS_PASSWORD` secret | `mcgarrah.github.io` | Staticrypt shared password |
+| `DRAFTS_DEPLOY_TOKEN` secret | `mcgarrah.github.io` | GitHub PAT for cross-repo push |
+| Draft preview banner | `mcgarrah.github.io` `_layouts/default.html` | Visual indicator for reviewers |
+| Giscus config | `_config_drafts.yml` | Points comments to drafts repo Discussions |

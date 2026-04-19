@@ -482,7 +482,7 @@ A PR with tests is harder to ignore than a PR with just code changes. It shows t
 - [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/) — Configuration guide
 - [Jekyll Run Plugin: Fixing the Multi-Root Workspace Crash](/jekyll-run-plugin-multiroot-workspace-bug/) — macOS debugging story
 - [Jekyll Run Plugin: Patching the Source and Submitting a PR](/jekyll-run-plugin-pr-and-fork/) — Code fixes and fork strategy
-- [Setting Up a VS Code Marketplace Publisher Account](/vscode-marketplace-publisher-account-setup/) — Publishing prerequisites
+- [Setting Up a VS Code Marketplace Publisher Account](/run-jekyll-vscode-marketplace-publisher-setup/) — Publishing prerequisites
 
 ## References
 

@@ -1,6 +1,6 @@
 # Drafts Review — Publish Readiness Analysis
 
-Reviewed: All 44 drafts in `_drafts/` folder
+Reviewed: All 47 draft articles in `_drafts/` folder
 Cross-referenced against: All published posts in `_posts/` and `_substack/`
 Last updated: 2026-04-17
 
@@ -30,7 +30,7 @@ Last updated: 2026-04-17
 | ~~`2026-05-10-jekyll-tag-category-generator-plugin.md`~~ | `2026-05-02-jekyll-tag-category-generator-plugin.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-giscus-comments-implementation.md`~~ | `2026-05-05-jekyll-giscus-comments-implementation.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-github-actions-cicd-pipeline.md`~~ | `2026-05-07-jekyll-github-actions-cicd-pipeline.md` | Promoted 2026-04-16 (batch) |
-| ~~`2026-05-10-jekyll-run-vscode-plugin-local-development.md`~~ | `2026-05-09-jekyll-run-vscode-plugin-local-development.md` | Promoted 2026-04-16 (batch) |
+| ~~`2026-05-10-jekyll-run-vscode-plugin-local-development.md`~~ | `2026-05-11-jekyll-run-vscode-plugin-local-development.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-draft-future-visual-indicators.md`~~ | `2026-05-12-jekyll-draft-future-visual-indicators.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-content-distribution-pipeline.md`~~ | `2026-05-14-jekyll-content-distribution-pipeline.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ | `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md` | Promoted 2026-04-16 |
@@ -209,10 +209,11 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **Related series (🔌 Jekyll Run Plugin → Run Jekyll):**
   - `_drafts/2026-05-22-jekyll-run-plugin-multiroot-workspace-bug.md` — macOS crash diagnosis, rbenv fix, terminal launch requirement
   - `_drafts/2026-05-25-forking-jekyll-run-to-run-jekyll.md` — CI/CD modernization, fork rename, Marketplace publishing
-  - `_drafts/2026-05-28-vscode-marketplace-publisher-account-setup.md` — VS Code Marketplace publisher account setup
+  - `_drafts/2026-05-28-run-jekyll-vscode-marketplace-publisher-setup.md` — Run Jekyll: VS Code Marketplace publisher account setup
   - `_drafts/2026-05-29-run-jekyll-bug-fixes-and-code-review.md` — 3 bugs fixed in v1.7.1 + 15 more from deep code review
   - `_drafts/2026-06-01-run-jekyll-testing-and-test-harness.md` — Test harness setup, unit and integration tests
-  - Publish order: published article (done), macOS crash, fork/rename, publisher account, bug fixes, testing
+  - `_drafts/2026-06-04-run-jekyll-new-features-clean-doctor-tests.md` — New features: Clean, Doctor commands and automated test suite
+  - Publish order: published article (done), macOS crash, fork/rename, publisher account, bug fixes, testing, new features
 
 ### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
@@ -450,14 +451,14 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | Category | Count |
 |----------|-------|
-| **Total drafts in `_drafts/`** | **38** |
+| **Total drafts in `_drafts/`** | **47** |
 | Ready to publish — Tier 1 | 3 (+ 12 promoted) |
 | Near-complete — Tier 2 | 7 (+ 9 promoted) |
 | New drafts (untiered) | 3 (Draft Preview Site series) |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
-| **Total tracked** | **38 drafts + 1 DRAFTS.md** |
+| **Total tracked** | **47 drafts + 3 tracker files (`DRAFTS.md`, `DRAFTS-TODO.md`, `SUBDOMAIN-DRAFTS.md`)** |
 
 ### Previously Removed
 

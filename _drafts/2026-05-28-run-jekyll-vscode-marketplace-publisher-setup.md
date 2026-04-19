@@ -1,8 +1,8 @@
 ---
-title: "Setting Up a VS Code Marketplace Publisher Account"
+title: "Run Jekyll: VS Code Marketplace Publisher Account Setup"
 layout: post
 categories: [web-development, technical]
-tags: [vscode, vscode-extension, marketplace, azure-devops, open-source, publishing]
+tags: [vscode, vscode-extension, marketplace, azure-devops, open-source, publishing, jekyll]
 excerpt: "If you need to fork and publish a VS Code extension — because the original maintainer disappeared five years ago — you first need a Marketplace publisher account. Here's the setup process: Microsoft account, Azure DevOps PAT, publisher profile, and the vsce CLI."
 description: "Step-by-step guide to creating a VS Code Marketplace publisher account for publishing extensions. Covers Microsoft account setup, Azure DevOps Personal Access Token generation, publisher profile creation, vsce CLI authentication, and package.json requirements. Written in the context of forking an abandoned extension."
 date: 2026-05-28
@@ -14,11 +14,20 @@ seo:
   date_modified: 2026-05-28
 ---
 
-The [Jekyll Run VS Code extension](https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run) hasn't been updated in five years. I [diagnosed three bugs](/jekyll-run-plugin-multiroot-workspace-bug/) and [wrote the fixes](/jekyll-run-plugin-pr-and-fork/), but the upstream repository appears abandoned. If the PR sits without response, the next step is forking and publishing a maintained version.
+The [Jekyll Run VS Code extension](https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run) hasn't been updated in five years. I [diagnosed three bugs](/jekyll-run-plugin-multiroot-workspace-bug/) and [wrote the fixes](/forking-jekyll-run-to-run-jekyll/), but the upstream repository appears abandoned. If the PR sits without response, the next step is forking and publishing a maintained version.
 
 To publish a VS Code extension, you need a Marketplace publisher account. The process routes through Microsoft's Azure DevOps infrastructure — not obvious, not well-documented in one place, and easy to get wrong on the authentication step.
 
 <!-- excerpt-end -->
+
+This is part of an ongoing series on the Run Jekyll VS Code extension:
+- [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/)
+- [Jekyll Run Plugin: Fixing the Multi-Root Workspace Crash](/jekyll-run-plugin-multiroot-workspace-bug/)
+- [Forking Jekyll Run: From Abandoned Plugin to Run Jekyll](/forking-jekyll-run-to-run-jekyll/)
+- **Run Jekyll: VS Code Marketplace Publisher Account Setup** (this post)
+- [Run Jekyll: Bug Fixes and Code Review](/run-jekyll-bug-fixes-and-code-review/)
+- [Run Jekyll: Testing and Test Harness](/run-jekyll-testing-and-test-harness/)
+- [Run Jekyll: New Features — Clean, Doctor, and Real Tests](/run-jekyll-new-features-clean-doctor-tests/)
 
 ## Why You'd Need This
 
@@ -110,8 +119,8 @@ Before publishing, your extension's `package.json` must include these fields:
 
 ```json
 {
-    "name": "jekyll-run-fixed",
-    "displayName": "Jekyll Run (Fixed)",
+    "name": "run-jekyll",
+    "displayName": "Run Jekyll",
     "description": "Build and Run your Jekyll static website (maintained fork)",
     "version": "1.8.0",
     "publisher": "mcgarrah",
@@ -140,7 +149,7 @@ Before publishing, your extension's `package.json` must include these fields:
 
 When publishing a fork of someone else's extension:
 
-- **Change the `name`** to avoid confusion (e.g., `jekyll-run-fixed` instead of `jekyll-run`)
+- **Change the `name`** to avoid confusion (e.g., `run-jekyll` instead of `jekyll-run`)
 - **Credit the original author** in the README and description
 - **Link to the original repository** and your PR (if submitted)
 - **Explain why the fork exists** — "maintained fork with multi-root workspace fix"
@@ -153,7 +162,7 @@ When publishing a fork of someone else's extension:
 vsce package
 
 # Install locally to verify
-code --install-extension jekyll-run-fixed-1.8.0.vsix
+code --install-extension run-jekyll-1.8.0.vsix
 
 # Publish to the Marketplace
 vsce publish
@@ -287,17 +296,14 @@ For context, here's my publishing plan for the Jekyll Run extension:
 
 1. **PR submitted** to [Kanna727/jekyll-run](https://github.com/Kanna727/jekyll-run) with the three-file fix
 2. **Wait 60 days** for a response
-3. **If no response**: fork, rename to `jekyll-run-fixed`, publish under my publisher ID
+3. **If no response**: fork, rename to `run-jekyll`, publish under my publisher ID
 4. **If merged**: no fork needed, everyone benefits from the upstream fix
 
-The fixes are documented in [Jekyll Run Plugin: Patching the Source and Submitting a PR](/jekyll-run-plugin-pr-and-fork/).
+The fixes are documented in [Forking Jekyll Run: From Abandoned Plugin to Run Jekyll](/forking-jekyll-run-to-run-jekyll/).
 
-## Related Posts
+---
 
-- [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/) — Configuration guide
-- [Jekyll Run Plugin: Fixing the Multi-Root Workspace Crash](/jekyll-run-plugin-multiroot-workspace-bug/) — macOS debugging story
-- [Jekyll Run Plugin: Patching the Source and Submitting a PR](/jekyll-run-plugin-pr-and-fork/) — Code fixes and fork strategy
-- [Testing a VS Code Extension: Building a Test Harness for Jekyll Run](/vscode-extension-testing-jekyll-run/) — Test infrastructure and CI workflows
+*This is part of an ongoing series on forking and improving the Jekyll Run VS Code extension. The extension source is at [github.com/mcgarrah/jekyll-run](https://github.com/mcgarrah/jekyll-run).*
 
 ## References
 
