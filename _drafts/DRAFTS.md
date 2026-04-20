@@ -40,7 +40,7 @@ Last updated: 2026-04-20
 | ~~`2026-05-10-jekyll-draft-future-visual-indicators.md`~~ | `2026-05-12-jekyll-draft-future-visual-indicators.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-content-distribution-pipeline.md`~~ | `2026-05-14-jekyll-content-distribution-pipeline.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ | `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md` | Promoted 2026-04-16 |
-| ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-05-19-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16 |
+| ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-06-26-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16, rescheduled 2026-04-20 |
 | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | `2026-05-21-writing-to-think-two-decades-of-figuring-things-out.md` | Promoted 2026-04-16 |
 | ~~`2025-02-25-proxmox-zfs-boot-mirrors-part-1.md`~~ | `2026-05-25-proxmox-zfs-boot-mirrors-part-1.md` | Promoted 2026-04-16, rescheduled to MWF |
 | ~~`2024-09-23-zfs-boot-mirrors-proxmox8-part-1.md`~~ | Merged into `2026-05-25-proxmox-zfs-boot-mirrors-part-1.md` | Retired 2026-04-16 |
@@ -232,7 +232,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
   - `2026-06-29-run-jekyll-new-features-clean-doctor-tests.md` — PROMOTED
   - Publish order: published article (done), macOS crash, fork/rename, publisher account, bug fixes, testing, new features
   - All 6 promoted interleaved with Draft Preview Site series on MWF cadence (June 5–29)
-  - Intentional open insertion slots for alternate subjects: **June 22** and **June 26**
+  - Intentional open insertion slot for alternate subjects: **June 22** (June 26 filled by Caddy/Ceph)
 
 ### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
@@ -262,7 +262,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ### 22b. ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ — 🔧 Caddy Reverse Proxy — PROMOTED
 
-- **Published as:** `2026-05-19-caddy-reverse-proxy-ceph-dashboard.md`
+- **Published as:** `2026-06-26-caddy-reverse-proxy-ceph-dashboard.md`
 
 - **Status:** Nice highway/traffic analogy. Includes critical LACP misconception about single TCP connections. HP ProCurve 2810 link.
 - **What's needed:** Add practical section — ProCurve config, Proxmox bond setup, performance results.
@@ -495,5 +495,5 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |
-| Promoted to _posts (2026-06-05–29 — Run Jekyll 6 + Draft Preview 3, interleaved MWF with open slots on June 22 and June 26) | 9 |
+| Promoted to _posts (2026-06-05–29 — Run Jekyll 6 + Draft Preview 3, interleaved MWF with open slot on June 22) | 9 |
 | Convenience files retired (SUBDOMAIN-DRAFTS.md, DRAFTS-TODO.md → RUNJEKYLL-EXTENSION.md) | 2 |

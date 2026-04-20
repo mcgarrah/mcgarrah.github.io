@@ -131,7 +131,7 @@ Documented in `FEATURE.md` in the jekyll-run repo and the new features blog draf
 | 6 | ✅ Published | 2026-06-24 | `_posts/2026-06-24-run-jekyll-testing-and-test-harness.md` | Test harness and regression tests |
 | 7 | ✅ Published | 2026-06-29 | `_posts/2026-06-29-run-jekyll-new-features-clean-doctor-tests.md` | New features: Clean, Doctor, tests |
 
-All 7 articles published. Articles 2–7 promoted 2026-06-20, interleaved with Draft Preview Site series on MWF cadence, with open insertion slots on June 22 and June 26 for non-Run-Jekyll subjects.
+All 7 articles published. Articles 2–7 promoted 2026-06-20, interleaved with Draft Preview Site series on MWF cadence, with one open insertion slot on June 22 for a non-Run-Jekyll subject (June 26 filled by Caddy/Ceph).
 
 ## Notes
 
