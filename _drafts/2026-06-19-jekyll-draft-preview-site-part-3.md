@@ -71,10 +71,11 @@ Early runs surfaced several workflow-level issues:
 
 1. **GitHub Pages setup on empty repo failed**: the repo needed an initial commit before `main` could be selected in Pages settings.
 2. **Encryption step appeared hung**: processing many files made `Encrypt HTML with Staticrypt` look stuck even when still running.
-3. **Password prompt did not appear after first success**: pages were deployed unencrypted, which required tightening in-place encryption behavior.
+3. **Password prompt did not appear after first success**: pages were deployed unencrypted — root cause was Staticrypt API misuse: the `-o` flag doesn't exist in v3.5.4+. Used directory output (`-d <directory>`) instead and batch-process all files at once.
 4. **Deployment included large executable files**: binaries in deploy output triggered GitHub large-file warnings and highlighted the need for artifact filtering.
 5. **Full-site encryption created unnecessary overhead**: encrypting already-public content increased runtime and complexity.
-6. **Initial verification check was too brittle**: string matching on encrypted output caused false failures; verification needed to validate file transformation more directly.
+6. **Initial verification check was too brittle**: string matching on encrypted output caused false failures; replaced with hash-based verification to detect actual file transformation.
+7. **Special-case files broke encryption targeting**: utility documents like `DRAFTS.md` and `SUBDOMAIN-DRAFTS.md` (without front matter) were included in encryption scope. Fixed by filtering to only files matching `YYYY-MM-DD-*.md` pattern (actual posts).
 
 ## Lessons Learned
 
