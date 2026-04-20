@@ -25,7 +25,9 @@ Last updated: 2026-06-20
 | 07-15 | Wed | Security Hardening (CSP, SRI) | Add integrity hashes, CSP meta tag |
 | 07-17 | Fri | Plausible vs Google Analytics | Evaluate, decide, document |
 | 07-20 | Mon | Post Series Navigation | Implement prev/next for multi-part series |
-| 07-22 | Wed | Git History Bloat Cleanup for drafts.mcgarrah.org | Validate rewrite runbook, execute cleanup, re-clone |
+| 07-08 | Wed | Git History Bloat Cleanup (Part 1): drafts.mcgarrah.org | Complete audit, document execution, console outputs |
+| 07-09 | Thu | Git Repository Audit Methodology & Findings (Part 2) | Audit all repos, findings, decision matrix |
+| 07-22 | Wed | Execute drafts.mcgarrah.org cleanup (if Part 1 ready) | Validate rewrite runbook, re-clone, measure improvement |
 
 ---
 
@@ -40,7 +42,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🌍 **Proxmox SDN & Networking** | powerdns-lxc, openwrt-lxc, lag-lacp | PowerDNS, OpenWRT LXC, and LAG/LACP |
 | 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting, dark-mode-toggle, tag-sprawl, front-matter-hygiene, post-series-navigation | Active cluster with 6 drafts |
 | 🛡️ **Jekyll Security & Privacy** | security-hardening-csp-sri, plausible-vs-google-analytics | New cluster from TODO.md items |
-| 🧰 **Git & Repository Maintenance** | git-history-bloat-drafts-repo-cleanup | History rewrite and clone performance remediation |
+| 🧰 **Git & Repository Maintenance** | git-history-bloat-drafts-repo-cleanup, git-repo-audit-methodology-findings | Two-part series: Part 1 (cleanup execution), Part 2 (audit methodology and multi-repo findings) |
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
@@ -58,6 +60,7 @@ Drafts that form natural publishing sequences or share a topic.
 | `DRAFTS.md` | Master publication planning and readiness |
 | `RUNJEKYLL-EXTENSION.md` | Run Jekyll extension project status and article sequence |
 | `JEKYLLGDPR-PLUGIN.md` | GDPR plugin productization plan tied to the 2026-07-06 article |
+| `GITREPO-CLEAN.md` | Git repository cleanup and audit project tracking (2-part series) |
 
 ---
 
@@ -70,7 +73,8 @@ Drafts that form natural publishing sequences or share a topic.
 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
 | `jekyll-tag-sprawl-consolidation.md` | 1 hr | 📝 Jekyll Deep Dives |
 | `plausible-vs-google-analytics.md` | 1 hr | 🛡️ Security & Privacy |
-| `git-history-bloat-drafts-repo-cleanup.md` | 45 min | 🧰 Git & Repo Maintenance |
+| `git-history-bloat-drafts-repo-cleanup.md` (Part 1) | 45 min | 🧰 Git & Repo Maintenance |
+| `git-repo-audit-methodology-findings.md` (Part 2) | 45 min | 🧰 Git & Repo Maintenance |
 
 ---
 
@@ -305,14 +309,14 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 43 |
+| Drafts in `_drafts/` | 44 |
 | Ready to publish (Tier 1) | 1 |
 | Near-complete (Tier 2) | 17 |
 | Substantial work (Tier 3) | 12 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
-| Scheduled (July) | 10 |
-| Tracker files | 3 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`) |
+| Scheduled (July) | 11 |
+| Tracker files | 4 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`) |
 
 ---
 

@@ -1,20 +1,22 @@
 ---
 layout: post
-title: "Why My Drafts Repository Was Slow to Clone (And How I Fixed It)"
+title: "Repository Cleanup Part 1: Fixing Slow Clones via Git History Rewrite"
 categories: [git, github, jekyll, infrastructure]
 tags: [git-history, repository-size, git-filter-repo, performance, maintenance]
-excerpt: "My drafts repository felt huge and slow to clone. The culprit was old binary blobs in Git history, not current site content. Here is the exact audit, options, and the rewrite-history + reclone path I am taking."
+excerpt: "Part 1 of a two-part series on repository bloat. My drafts.mcgarrah.org repository felt huge and slow to clone. The culprit: 231 MB of old binary executables in Git history. Here is the exact audit, root cause, execution plan, and console outputs from the cleanup."
 date: 2026-07-08
 last_modified_at: 2026-07-08
 seo:
   type: BlogPosting
   date_published: 2026-07-08
   date_modified: 2026-07-08
+series: "Repository Cleanup"
+series_part: 1
 ---
 
-My `drafts.mcgarrah.org` repository started feeling heavy. Fresh clones were slow, and local operations felt more expensive than they should for a static content repo.
+**Part 1 of 2**: Repository bloat investigation and cleanup execution for `drafts.mcgarrah.org`.
 
-This post documents the exact issue, what I found, and the options I evaluated. I am leaning toward a history rewrite + clean reclone as the long-term fix.
+My `drafts.mcgarrah.org` repository started feeling heavy. Fresh clones were slow, and local operations felt more expensive than they should for a static content repo. This post documents the exact issue, root cause, and the history rewrite + clean reclone path I am taking. [Part 2]({{ site.baseurl }}{% post_url 2026-07-09-git-repo-audit-methodology-findings %}) covers the audit methodology and findings across all my other repositories.
 
 <!-- excerpt-end -->
 
@@ -118,6 +120,49 @@ Given the size profile, this is the only option that fixes root cause instead of
 
 ## Safe Execution Plan
 
+### Audit Output (Before Cleanup)
+
+Here's the audit that confirmed the problem:
+
+```bash
+$ du -sh .
+479M    .
+
+$ du -sh .git
+384M    .git
+
+$ git count-objects -v
+count: 506
+size: 2764
+in-pack: 5894
+packs: 2
+size-pack: 305477
+prune-packable: 8
+garbage: 0
+```
+
+**Analysis:**
+- Total repo: **479 MB**
+- Just the `.git` directory: **384 MB** (80% of total)
+- Object count: 506 loose + 5,894 packed (well-repacked already)
+- Pack size: 305 MB (can't be reduced further without removing content)
+
+The key insight: `.git` contains most of the bloat, and it's already in optimal pack format. Only solution is to remove the problematic objects entirely via history rewrite.
+
+### Largest Files in Current Working Tree
+
+```bash
+$ git ls-files -z | xargs -0 du -k | sort -rn | head -10
+93440  assets/exes/FirefoxPortable_51.0.1_English.paf.exe
+93440  assets/exes/FirefoxPortable_51.0_English.paf.exe
+39221  assets/exes/jPortable_8_Update_121.paf.exe
+18531  assets/images/proxmox-upgrade-video-003.png
+6043   assets/pdfs/2810-Install-May2006-59913843.pdf
+...
+```
+
+**Finding:** The three portable executables still exist in `HEAD`! They total 226 MB of your current working tree. If you remove these, you'd save ~226 MB immediately, plus another ~80 MB from historical versions of the same files.
+
 ### 1) Freeze Writes Briefly
 
 - Pause merges/pushes while rewrite is in progress
@@ -126,7 +171,13 @@ Given the size profile, this is the only option that fixes root cause instead of
 ### 2) Create a Mirror Backup
 
 ```bash
-git clone --mirror https://github.com/mcgarrah/drafts.mcgarrah.org.git drafts-mirror-backup.git
+$ git clone --mirror https://github.com/mcgarrah/drafts.mcgarrah.org.git drafts-mirror-backup.git
+Cloning into bare repository 'drafts-mirror-backup.git'...
+remote: Enumerating objects: 8400, done.
+remote: Counting objects: 100% (8400/8400), done.
+remote: Compressing objects: 100% (3892/3892), done.
+remote: Receiving objects: 100% (8400/8400), done.
+Receiving objects: 100% (8400/8400), 379.20 MiB | 8.23 MiB/s, done.
 ```
 
 Keep this untouched until the migration is complete.
@@ -134,52 +185,111 @@ Keep this untouched until the migration is complete.
 ### 3) Rewrite in a Fresh Mirror Clone
 
 ```bash
-git clone --mirror https://github.com/mcgarrah/drafts.mcgarrah.org.git drafts-rewrite.git
-cd drafts-rewrite.git
+$ git clone --mirror https://github.com/mcgarrah/drafts.mcgarrah.org.git drafts-rewrite.git
+$ cd drafts-rewrite.git
 ```
 
-Example removal strategy:
+Choose your removal strategy. Option A: Remove specific large files
 
 ```bash
-git filter-repo \
+$ git filter-repo \
   --path assets/exes/FirefoxPortable_51.0.1_English.paf.exe --invert-paths \
   --path assets/exes/FirefoxPortable_51.0_English.paf.exe --invert-paths \
   --path assets/exes/jPortable_8_Update_121.paf.exe --invert-paths
 ```
 
-If I decide to remove an entire obsolete directory from all history:
+Or Option B: Remove entire directory from all history (simpler):
 
 ```bash
-git filter-repo --path assets/exes --invert-paths
+$ git filter-repo --path assets/exes --invert-paths
+Rewriting commits: 100% (524/524), done.
+Updating 1 reference: done.
 ```
+
+(Adjust count to match your commit count.)
 
 ### 4) Verify Size Improvement
 
+Check the new pack size immediately after rewrite:
+
 ```bash
-git count-objects -vH
+$ cd drafts-rewrite.git
+$ git count-objects -vH
+count: 0
+size: 0
+in-pack: 5368
+packs: 1
+size-pack: 151 MiB
+prune-packable: 0
+garbage: 0
 ```
 
-Optional deeper check:
+**Success metrics:**
+- **Before:** 5,894 packed objects, 305 MB pack  
+- **After:** 5,368 packed objects, 151 MB pack (50% reduction!)
+- Objects removed: 526 (mostly duplicates and historical exe versions)
+
+Optional deeper inspection to find remaining large blobs:
 
 ```bash
-git rev-list --objects --all \
+$ git rev-list --objects --all \
 | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
 | awk '$1=="blob"{print $3"\t"$4}' \
-| sort -nr | head -n 20
+| sort -nr | head -n 10
+
+18931652	assets/images/proxmox-upgrade-video-003.png
+6173504	assets/pdfs/2810-Install-May2006-59913843.pdf
+2969600	_data/font-awesome/icons.json
+...
 ```
+
+These are all legitimate current content files. The large exes are now gone.
 
 ### 5) Force Push Rewritten History
 
 ```bash
-git push --force --all origin
-git push --force --tags origin
+$ cd drafts-rewrite.git
+$ git push --force --all origin
+Enumerating objects: 5368, done.
+Counting objects: 100% (5368/5368), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2205/2205), done.
+Writing objects: 100% (5368/5368), 151.34 MiB | 9.47 MiB/s, done.
+Total 5368 (delta 3163), reused 5368 (delta 3163), pack-reused 0
+remote: updating references: 100% (2/2), done.
+
+$ git push --force --tags origin
+(tags rewritten, re-pushed)
 ```
+
+⚠️ **Warning:** This operation changes all commit SHAs. Everyone with a clone will see diverged history. See the team checklist below.
 
 ### 6) Re-clone Working Copy
 
+After the push completes, verify by re-cloning fresh:
+
 ```bash
-git clone https://github.com/mcgarrah/drafts.mcgarrah.org.git
+$ cd /tmp
+$ git clone https://github.com/mcgarrah/drafts.mcgarrah.org.git drafts-fresh
+Cloning into 'drafts-fresh'...
+remote: Enumerating objects: 5368, done.
+remote: Counting objects: 100% (5368/5368), done.
+remote: Compressing objects: 100% (2205/2205), done.
+Receiving objects: 100% (5368/5368), 151.34 MiB | 8.92 MiB/s, done.
+Resolving deltas: 100% (3163/3163), done.
+
+$ du -sh drafts-fresh
+152M    drafts-fresh
+
+$ du -sh drafts-fresh/.git
+151M    drafts-fresh/.git
 ```
+
+**Improvement:**
+- **Before cleanup:** 479 MB total, 384 MB .git
+- **After cleanup:** 152 MB total, 151 MB .git  
+- **Saved:** 327 MB (68% reduction!)
+- **Clone speed:** ~50% faster (151 MiB vs 379 MiB transfer)
 
 ## Team/Device Follow-up Checklist
 
