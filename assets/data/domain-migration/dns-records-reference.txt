@@ -1,0 +1,213 @@
+# DNS Records Reference — Domain Migration from SquareSpace to Porkbun
+
+Reference data for domain migration project. See the blog post
+"Migrating 16 Domains from SquareSpace to Porkbun" for context.
+
+Last updated: 2026-05-20
+
+---
+
+## Complete DNS Records for Remaining Domains
+
+Complete DNS record exports from SquareSpace WebUI for all domains
+pending migration. These records must be recreated at Porkbun before
+changing nameservers.
+
+### mcgarware.com (6 records)
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| @ | A | N/A | 4 hrs | 162.192.161.17 |
+| @ | TXT | N/A | 4 hrs | google-site-verification=T1OUBa5vCb2RNJPOlgT-e_3f1LHL6Bj1jOvWnb6lx28 |
+| * | A | N/A | 4 hrs | 162.192.161.17 |
+| @ | MX | 0 | 4 hrs | mail.mcgarware.com |
+| q2bbdutzhwpc | CNAME | N/A | 4 hrs | gv-ktv5wl7u3o2ed6.dv.googlehosted.com |
+| u3pbeqzfx6cw | CNAME | N/A | 4 hrs | gv-6ampgmd2owu6jm.dv.googlehosted.com |
+| _domainconnect | CNAME | 0 | 4 hrs | _domainconnect.domains.squarespace.com |
+
+Services: Custom mail server, Google verification, wildcard A record
+
+### darkmagic.org (4 records)
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| @ | A | N/A | 4 hrs | 162.192.161.17 |
+| * | A | N/A | 4 hrs | 162.192.161.17 |
+| @ | MX | 0 | 4 hrs | mail.darkmagic.org |
+| rqs52plmht5e | CNAME | N/A | 5 mins | gv-3afe6jvd7llvt4.dv.googlehosted.com |
+| _domainconnect | CNAME | 0 | 4 hrs | _domainconnect.domains.squarespace.com |
+
+Services: Custom mail server, Google verification, wildcard A record
+
+### mcgarrah.dev (5 records)
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| @ | MX | 10 | 1 hr | mxa.mailgun.org |
+| @ | MX | 10 | 1 hr | mxb.mailgun.org |
+| @ | TXT | 0 | 4 hrs | v=spf1 include:mailgun.org ~all |
+| k1._domainkey | TXT | N/A | 4 hrs | k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDaNqmVIbyKdh4yj5j9h/oI4TWupX9eAxCtWgsvhOaIIzyXUTzJ7u4pi3RqgbkwtkAXp+OVhKkT9g5mBuVpw+2z1v4tzNPurYXrZK8eQOcarq90GHxHxFt7rc93LRxL3TPdlqDo9rhhQRCMHYxLcfqWs+ZQP5nMAhqzCX3xiNvIJwIDAQAB |
+| 7iqykqi4x3j2 | CNAME | N/A | 5 mins | gv-j7b3wscway7nv7.dv.googlehosted.com |
+| _domainconnect | CNAME | 0 | 4 hrs | _domainconnect.domains.squarespace.com |
+
+Services: Mailgun email forwarding with DKIM, Google verification
+
+### mcgarrah.us (9 records)
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| @ | MX | 10 | 1 hr | mxa.mailgun.org |
+| @ | MX | 10 | 1 hr | mxb.mailgun.org |
+| @ | TXT | 0 | 4 hrs | v=spf1 include:mailgun.org ~all |
+| @ | A | 0 | 4 hrs | 198.185.159.144 |
+| www | CNAME | 0 | 4 hrs | ext-sq.squarespace.com |
+| k1._domainkey | TXT | N/A | 4 hrs | k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDILYjDIZg+iLHWt7l0tHPWHWZrcQRxH1owBw6IQquZvYdHhPjjqm1dAX9/f1JJD0xzaySeAuqsLTTHoHRNanXki8h5rpWhKJQHu+S6oe805bGbYgR7jtojECd1vyLD2SxZLQW7s6TKL7421kbm5s8xC6C4vurFrkc6sxTOThujlwIDAQAB |
+| z2n4no5yj4yi | CNAME | N/A | 5 mins | gv-sncvkpfwymdd3d.dv.googlehosted.com |
+| gnnvpcegimkw | CNAME | N/A | 5 mins | gv-wfkuufzspjwuwu.dv.googlehosted.com |
+| _domainconnect | CNAME | 0 | 6 hrs | connect.domains.google.com |
+
+Services: Mailgun email, SquareSpace domain forwarding to blog.mcgarrah.org, Google verification
+
+### mcgarrah.app (5 records)
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| @ | MX | 10 | 4 hrs | mxa.mailgun.org |
+| @ | MX | 10 | 4 hrs | mxb.mailgun.org |
+| @ | TXT | 0 | 4 hrs | v=spf1 include:mailgun.org ~all |
+| pic._domainkey | TXT | N/A | 4 hrs | k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnpLa6qKBJoQxxKinb16Tjt2AZ1Mkqc9d6UfMZ1JpIFG1l0DYUVLSzoqLZwtel4wvTNk/ZiSf+axEwNitFUPYsllTnzQUZU0Vqk93ZnkHSOIxlYuXHvbG0Dp1u8qKHrE3Lt4Wnfl7CNW1gr7rZ3GxIGpxvx2fx6TRJupSO6vjHPQIDAQAB |
+| k7wdpuzlke3f | CNAME | N/A | 4 hrs | gv-slhe5zzsgiylq4.dv.googlehosted.com |
+| _domainconnect | CNAME | 0 | 4 hrs | _domainconnect.domains.squarespace.com |
+
+Services: Mailgun email forwarding with DKIM, Google verification
+
+### mcgarrah.org (25 records - HIGHEST COMPLEXITY)
+
+Root Domain Records:
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| @ | A | N/A | 4 hrs | 185.199.108.153 |
+| @ | A | N/A | 4 hrs | 185.199.109.153 |
+| @ | A | N/A | 4 hrs | 185.199.110.153 |
+| @ | A | N/A | 4 hrs | 185.199.111.153 |
+| @ | MX | 10 | 4 hrs | mxa.mailgun.org |
+| @ | MX | 10 | 4 hrs | mxb.mailgun.org |
+| @ | TXT | 0 | 4 hrs | v=spf1 include:mailgun.org ~all |
+| www | CNAME | N/A | 4 hrs | mcgarrah.github.io |
+
+GitHub Pages:
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| _github-pages-challenge-mcgarrah | TXT | N/A | 4 hrs | 227ae2c8899a18276ab5e14236ebe6 |
+
+Email (DKIM):
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| smtp._domainkey | TXT | N/A | 4 hrs | k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAt0rUepHugGJ88YJJbHzxjgVS7TPUwYynqgDAL7iYyUSoJNI47+PxmliFZu+v5vqPN+hOzi6ec2Dq/L2/tyBa37vdNfKKRetCwfHeOLbyjuae3Ugr+hwc+cw6sVqgPoQg4mNkgIC03eqp0RJAtnpU8gTmgQBLvIaYRRAkuWGP1wIDAQAB |
+
+DigitalOcean Apps:
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| nutrition | CNAME | N/A | 1 hr | nutrition-app-foi8z.ondigitalocean.app |
+| quiz | CNAME | N/A | 1 hr | quiz-app-erfpf.ondigitalocean.app |
+| shiny-quiz | CNAME | N/A | 1 hr | shiny-quiz-app-r2gvx.ondigitalocean.app |
+| docean | A | N/A | 4 hrs | 138.197.58.15 |
+
+Nutrition Subdomain Email:
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| nutrition.mcgarrah.org | MX | 10 | 4 hrs | mxa.mailgun.org |
+| nutrition.mcgarrah.org | MX | 10 | 4 hrs | mxb.mailgun.org |
+| nutrition.mcgarrah.org | TXT | N/A | 4 hrs | v=spf1 include:mailgun.org ~all |
+| email.nutrition.mcgarrah.org | CNAME | N/A | 4 hrs | mailgun.org |
+| pdk1._domainkey.nutrition.mcgarrah.org | CNAME | N/A | 4 hrs | pdk1._domainkey.69f56b4.dkim1.us.mgsend.org |
+| pdk2._domainkey.nutrition.mcgarrah.org | CNAME | N/A | 4 hrs | pdk2._domainkey.69f56b4.dkim1.us.mgsend.org |
+| _dmarc.nutrition.mcgarrah.org | TXT | N/A | 4 hrs | v=DMARC1; p=none; pct=100; fo=1; ri=3600; rua=mailto:cd510f68@dmarc.mailgun.org,mailto:fe8ab924@inbox.ondmarc.com; ruf=mailto:cd510f68@dmarc.mailgun.org,mailto:fe8ab924@inbox.ondmarc.com; |
+
+Legacy/Other:
+
+| Host | Type | Priority | TTL | Data |
+|------|------|----------|-----|------|
+| old-root | A | N/A | 4 hrs | 162.192.161.17 |
+| 62sny5ubm7fy | CNAME | N/A | 4 hrs | gv-wlttolxmsvc7ve.dv.googlehosted.com |
+| _domainconnect | CNAME | 0 | 4 hrs | _domainconnect.domains.squarespace.com |
+
+Services: GitHub Pages blog, Mailgun email (root + nutrition subdomain),
+4 DigitalOcean apps, Google verification, legacy server
+
+---
+
+## Deprecated Records (DO NOT MIGRATE)
+
+These records should NOT be migrated to Porkbun. They are either
+registrar-specific, point to dead servers, or will be replaced.
+
+### SquareSpace/Google Domain Connect Records (ALL DOMAINS)
+
+DO NOT MIGRATE - registrar management records:
+
+| Domain | Host | Type | Data | Reason |
+|--------|------|------|------|--------|
+| mcgarware.com | _domainconnect | CNAME | _domainconnect.domains.squarespace.com | SquareSpace-specific |
+| darkmagic.org | _domainconnect | CNAME | _domainconnect.domains.squarespace.com | SquareSpace-specific |
+| mcgarrah.dev | _domainconnect | CNAME | _domainconnect.domains.squarespace.com | SquareSpace-specific |
+| mcgarrah.us | _domainconnect | CNAME | connect.domains.google.com | Google Domains-specific |
+| mcgarrah.app | _domainconnect | CNAME | _domainconnect.domains.squarespace.com | SquareSpace-specific |
+| mcgarrah.org | _domainconnect | CNAME | _domainconnect.domains.squarespace.com | SquareSpace-specific |
+
+### SquareSpace Domain Forwarding (mcgarrah.us)
+
+DO NOT MIGRATE - SquareSpace forwarding service won't work after transfer:
+
+| Host | Type | Data | Reason |
+|------|------|------|--------|
+| @ | A | 198.185.159.144 | SquareSpace forwarding IP - replace with CNAME to blog.mcgarrah.org |
+| www | CNAME | ext-sq.squarespace.com | SquareSpace forwarding - replace with CNAME to blog.mcgarrah.org |
+
+Replacement: Use Porkbun URL forwarding or direct CNAME to blog.mcgarrah.org
+
+### Legacy/Dead Server Records
+
+DO NOT MIGRATE - point to servers that are likely offline:
+
+| Domain | Host | Type | Data | Reason |
+|--------|------|------|------|--------|
+| mcgarware.com | * | A | 162.192.161.17 | Wildcard to dead server - security risk |
+| mcgarware.com | @ | A | 162.192.161.17 | Points to dead server |
+| darkmagic.org | * | A | 162.192.161.17 | Wildcard to dead server - security risk |
+| darkmagic.org | @ | A | 162.192.161.17 | Points to dead server |
+| mcgarrah.org | old-root | A | 162.192.161.17 | Explicitly marked as legacy |
+
+Action Required:
+- Verify if 162.192.161.17 is still active before migration
+- If dead, do not migrate these records
+- Wildcard (*) records are security risks - only use if necessary
+
+### Custom Mail Server Records (Verify Before Migration)
+
+VERIFY BEFORE MIGRATING - custom mail servers instead of Mailgun:
+
+| Domain | Host | Type | Data | Status |
+|--------|------|------|------|--------|
+| mcgarware.com | @ | MX | mail.mcgarware.com | Verify mail server is active |
+| darkmagic.org | @ | MX | mail.darkmagic.org | Verify mail server is active |
+
+Action Required:
+- Check if mail.mcgarware.com and mail.darkmagic.org are active
+- If inactive, replace with Mailgun MX records like other domains
+- If active, ensure A records for mail.* subdomains are also migrated
+
+### Summary
+
+Records to SKIP: 13 total
+- 6x _domainconnect records (all domains)
+- 2x SquareSpace forwarding records (mcgarrah.us)
+- 5x legacy/dead server records (162.192.161.17)
+
+Records to VERIFY: 2 total
+- 2x custom mail server MX records
