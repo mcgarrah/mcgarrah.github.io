@@ -42,11 +42,20 @@ jobs:
 
           while IFS= read -r -d '' file; do
             npx --yes staticrypt "$file" \
+              -o "$file" \
               -p "$DRAFTS_PASSWORD" \
               --short \
               --remember 30 \
               --template-title "Draft Preview - mcgarrah.org"
           done < <(find _site -type f -name '*.html' -print0)
+
+      - name: Remove oversized binaries from deploy output
+        run: |
+          # Exclude executable payloads from the preview deployment.
+          rm -rf _site/assets/exes
+
+          # Guard against accidental large-file deploys that should use LFS.
+          find _site -type f -size +45M -print -delete
 
       - name: Apply crawler protections
         run: |
