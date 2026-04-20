@@ -509,7 +509,8 @@ Two Jekyll builds per push to `main` (production + drafts). Both run in a public
 - **Large binary artifacts in output**: deployment surfaced GitHub warnings for oversized executables and reinforced pruning/LFS boundaries.
 - **Selective encryption became necessary**: only draft and future article pages needed protection; encrypting the full site added avoidable churn.
 - **Verification false negatives**: content-string checks failed even when files were transformed, requiring a more reliable verification method.
-- **Staticrypt `-o` flag doesn't exist**: version 3.5.4+ uses `-d <directory>` for output; the invalid `-o` flag caused silent failures with no error message, making encrypted output appear but silently fail to write.
+- **Staticrypt `-o` flag doesn't exist**: version 3.5.4+ uses `-d <directory>` for output; the invalid `-o` flag caused silent failures with no error message.
+- **Staticrypt flattens directory structures**: when processing multiple files with `-d <directory>`, all output goes to `<directory>/filename.html` (not preserving nested paths). Fixed by processing each file individually.
 
 ## Implementation Checklist
 

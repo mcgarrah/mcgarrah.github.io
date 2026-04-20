@@ -275,14 +275,14 @@ Two Jekyll builds per push to `main`. Both run in a public repo, so GitHub Actio
 As soon as I started running real deployments, the design hit a few practical edge cases:
 
 1. **Staticrypt looked hung in Actions**: Encrypting hundreds of pages made one step look stalled for long periods. It was progressing, but the logs were hard to interpret.
-2. **First successful deploy still had no password prompt**: The workflow completed, but the deployed pages stayed plain HTML. Root cause: Staticrypt v3.5.4+ doesn't support the `-o` flag for output; using it silently fails without error messages. Switched to directory output (`-d <directory>`) for batch processing.
+2. **First successful deploy still had no password prompt**: The workflow completed, but the deployed pages stayed plain HTML. Root cause: Staticrypt v3.5.4+ doesn't support the `-o` flag and silently ignores it. Switched to directory output (`-d <directory>`) for batch processing, but discovered it flattens directory structures — all output goes to `<directory>/filename.html` regardless of input nesting. Fixed by processing each file individually.
 3. **Large binary warnings during deploy**: The drafts deployment included oversized executable artifacts under `assets/exes`, which triggered GitHub large-file warnings and pointed to LFS concerns.
 4. **Encrypting the full site created avoidable churn**: Password-protecting already-public pages added build time and noise without adding value.
 5. **Verification logic produced false negatives**: A string-based post-encryption check failed on at least one encrypted target page and caused a run failure despite successful processing. Replaced with hash-based verification.
 6. **Runner portability details mattered**: Command forms that are fine locally can fail on Ubuntu runners without Linux-compatible syntax.
 7. **Special-case files broke encryption targeting**: Utility documents like `DRAFTS.md` and `SUBDOMAIN-DRAFTS.md` (lacking Jekyll front matter) were included in the encryption scope. Fixed by filtering to only files matching `YYYY-MM-DD-*.md` pattern.
 
-These pushed the workflow toward selective encryption (draft + future posts only), safer deploy filtering for binaries, stronger validation that checks whether files actually changed, and more precise targeting of actual post files.
+These pushed the workflow toward selective encryption (draft + future posts only), safer deploy filtering for binaries, stronger validation that checks whether files actually changed, more precise targeting of actual post files, and individual-file processing to preserve directory structure.
 
 ## Open Questions
 
