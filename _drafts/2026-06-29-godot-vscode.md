@@ -3,6 +3,12 @@ title: "Building a Tower Defense Game with Godot 4.5: From Prototype to Multi-Pl
 layout: post
 categories: ["gamedev", "godot", "programming"]
 tags: ["tower-defense", "game-development", "godot-engine", "web-games", "html5"]
+date: 2026-06-29
+last_modified_at: 2026-06-29
+seo:
+  type: BlogPosting
+  date_published: 2026-06-29
+  date_modified: 2026-06-29
 ---
 
 After years of focusing on infrastructure and cloud technologies, I've decided to return to an old passion: game development. Specifically, I'm taking a shot at building a tower defense game using the Godot Engine 4.5, with the goal of creating something fun while learning modern game development patterns.
