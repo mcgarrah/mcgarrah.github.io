@@ -110,19 +110,21 @@ jobs:
           echo "Encrypting ${#target_files[@]} draft/future article pages"
 
           for file in "${target_files[@]}"; do
+            before_hash="$(sha256sum "$file" | awk '{print $1}')"
+
             ./node_modules/.bin/staticrypt "$file" \
               -o "$file" \
               -p "$DRAFTS_PASSWORD" \
               --short \
               --remember 30 \
               --template-title "Draft Preview - mcgarrah.org"
-          done
 
-          # Verify at least one encrypted page contains Staticrypt output.
-          if [[ "${#target_files[@]}" -gt 0 ]] && ! grep -qi 'staticrypt' "${target_files[0]}"; then
-            echo "::error::Staticrypt verification failed for ${target_files[0]}"
-            exit 1
-          fi
+            after_hash="$(sha256sum "$file" | awk '{print $1}')"
+            if [[ "$before_hash" == "$after_hash" ]]; then
+              echo "::error::Staticrypt did not modify $file"
+              exit 1
+            fi
+          done
 
       - name: Remove oversized binaries from deploy output
         run: |
