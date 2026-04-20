@@ -114,46 +114,67 @@ jobs:
 
           echo "Encrypting ${#target_files[@]} draft/future article pages"
 
+          if [[ "${#target_files[@]}" -eq 0 ]]; then
+            echo "No files to encrypt"
+            exit 0
+          fi
+
+          # Create temporary directory for encrypted output
+          temp_encrypt_dir="$(mktemp -d)"
+          trap "rm -rf '$temp_encrypt_dir'" EXIT
+
+          # Staticrypt with individual files needs basename extraction, so we'll use a different approach:
+          # Create a list of files and process them with proper path reconstruction
+          declare -a files_to_encrypt=()
+          
           for file in "${target_files[@]}"; do
-            before_hash="$(sha256sum "$file" | awk '{print $1}')"
-
-            # Staticrypt flattens directory structure with -d, so use a unique temp dir per file
-            temp_file_dir="$(mktemp -d)"
-            trap "rm -rf '$temp_file_dir'" EXIT
-
-            # Get just the filename for Staticrypt processing
-            filename="$(basename "$file")"
-
-            # Encrypt file to temp dir
-            npm exec staticrypt -- "$file" \
-              -p "$DRAFTS_PASSWORD" \
-              --short \
-              --remember 30 \
-              --template-title "Draft Preview - mcgarrah.org" \
-              -d "$temp_file_dir" \
-              -c false
-
-            # Copy encrypted file back to original location (Staticrypt outputs as basename only)
-            if [[ ! -f "$temp_file_dir/$filename" ]]; then
-              echo "::error::Encryption did not produce $temp_file_dir/$filename for $file"
-              exit 1
-            fi
-
-            cp "$temp_file_dir/$filename" "$file"
-
-            after_hash="$(sha256sum "$file" | awk '{print $1}')"
-            if [[ "$before_hash" == "$after_hash" ]]; then
-              echo "::error::Encryption did not modify $file (before hash matched after)"
-              exit 1
-            fi
-
-            echo "✓ Encrypted $file"
-            rm -rf "$temp_file_dir"
+            files_to_encrypt+=("$file")
           done
 
-          # Verify at least one encrypted page contains Staticrypt output
-          if [[ "${#target_files[@]}" -gt 0 ]] && ! grep -qi 'staticrypt' "${target_files[0]}"; then
+          # Encrypt all target files at once to a temp directory
+          # Use npm exec to ensure we have the right staticrypt binary
+          npm exec staticrypt -- \
+            "${files_to_encrypt[@]}" \
+            -p "$DRAFTS_PASSWORD" \
+            --short \
+            --remember 30 \
+            --template-title "Draft Preview - mcgarrah.org" \
+            -d "$temp_encrypt_dir" \
+            -c false \
+            2>&1 | tee /tmp/staticrypt.log
+
+          # Verify encryption and copy encrypted files back
+          for file in "${target_files[@]}"; do
+            basename_file="$(basename "$file")"
+            
+            # Look for the encrypted file in temp directory with just the basename
+            # (Staticrypt outputs to dir/basename.html when given full path)
+            encrypted_file="$temp_encrypt_dir/$basename_file"
+
+            if [[ ! -f "$encrypted_file" ]]; then
+              echo "::error::Encryption did not produce $encrypted_file (looked for basename of $file)"
+              echo "Available files in $temp_encrypt_dir:"
+              ls -la "$temp_encrypt_dir" 2>/dev/null | head -20
+              exit 1
+            fi
+
+            # Verify the file was actually modified
+            before_hash="$(sha256sum "$file" | awk '{print $1}')"
+            cp "$encrypted_file" "$file"
+            after_hash="$(sha256sum "$file" | awk '{print $1}')"
+
+            if [[ "$before_hash" == "$after_hash" ]]; then
+              echo "::error::Encryption did not modify $file (hashes match)"
+              exit 1
+            fi
+
+            echo "✓ Encrypted $(basename "$file") (${before_hash:0:8} → ${after_hash:0:8})"
+          done
+
+          # Final verification: at least one encrypted page contains Staticrypt output
+          if ! grep -qi 'staticrypt' "${target_files[0]}"; then
             echo "::error::Staticrypt verification failed - no encrypted content in ${target_files[0]}"
+            cat /tmp/staticrypt.log
             exit 1
           fi
 
