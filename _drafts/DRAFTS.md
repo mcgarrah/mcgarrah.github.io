@@ -42,7 +42,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🌍 **Proxmox SDN & Networking** | powerdns-lxc, openwrt-lxc, lag-lacp | PowerDNS, OpenWRT LXC, and LAG/LACP |
 | 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting, dark-mode-toggle, tag-sprawl, front-matter-hygiene, post-series-navigation | Active cluster with 6 drafts |
 | 🛡️ **Jekyll Security & Privacy** | security-hardening-csp-sri, plausible-vs-google-analytics | New cluster from TODO.md items |
-| 🧰 **Git & Repository Maintenance** | git-history-bloat-drafts-repo-cleanup, git-repo-audit-methodology-findings | Two-part series: Part 1 (cleanup execution), Part 2 (audit methodology and multi-repo findings) |
+| 🧰 **Git & Repository Maintenance** | git-history-bloat-drafts-repo-cleanup, git-repo-audit-methodology-findings, git-health-monitoring-github-actions-outline | Series in progress: Part 1 (cleanup execution), Part 2 (audit methodology), Part 3 outline (future automation) |
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
@@ -60,7 +60,7 @@ Drafts that form natural publishing sequences or share a topic.
 | `DRAFTS.md` | Master publication planning and readiness |
 | `RUNJEKYLL-EXTENSION.md` | Run Jekyll extension project status and article sequence |
 | `JEKYLLGDPR-PLUGIN.md` | GDPR plugin productization plan tied to the 2026-07-06 article |
-| `GITREPO-CLEAN.md` | Git repository cleanup and audit project tracking (2-part series) |
+| `GITREPO-CLEAN.md` | Git repository cleanup, audit, and future automation project tracking |
 
 ---
 
@@ -196,6 +196,12 @@ Drafts that form natural publishing sequences or share a topic.
 
 ## Tier 3: Substantial Work Needed (3+ hours)
 
+### `2026-07-24-git-health-monitoring-github-actions-outline.md` — 🧰 Git & Repository Maintenance
+
+- Outline only for a future Part 3 focused on GitHub Actions-based git-health reporting.
+- **What's needed:** Convert outline into a real article after Part 1 is executed and Part 2 is revised with actual results.
+- **Effort:** 3-4 hours
+
 ### `2024-11-18-research-as-a-model-for-data-science.md` — 🧠 Data Science & AI/ML
 
 - Core thesis: DS fails more than it succeeds (1 in 5 vs SD's 4 in 5).
@@ -309,10 +315,10 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 44 |
+| Drafts in `_drafts/` | 45 |
 | Ready to publish (Tier 1) | 1 |
 | Near-complete (Tier 2) | 17 |
-| Substantial work (Tier 3) | 12 |
+| Substantial work (Tier 3) | 13 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
 | Scheduled (July) | 11 |

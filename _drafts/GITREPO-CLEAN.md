@@ -6,7 +6,7 @@ sitemap: false
 
 # Git Repository Cleanup & Performance Audit — Project Tracker
 
-Systematic audit and cleanup of personal repository bloat. Series documents methodology for identifying historical binary blobs, safe execution of git history rewrites, and findings across mcgarrah.github.io and related projects.
+Systematic audit and cleanup of personal repository bloat. Series documents methodology for identifying historical binary blobs, safe execution of git history rewrites, findings across related repositories, and a future automation path for git-health monitoring.
 
 Last updated: 2026-04-20
 
@@ -78,6 +78,25 @@ Target after cleanup:
 
 ---
 
+### Part 3: Git Health Monitoring with GitHub Actions (Outline) (2026-07-24)
+
+**Status:** Outline only  
+**Focus:** Future automation after Parts 1 and 2 are validated with real results  
+**Includes:**
+- Why automation belongs after manual cleanup, not before it
+- Candidate git-health metrics and thresholds
+- Scheduled, push, PR, and manual workflow options
+- Reporting options for GitHub Actions summaries and warnings
+- Repo-specific policy differences
+- A phased rollout approach that starts with reporting before enforcement
+
+**Current Decision:**
+- Not immediate work
+- Keep as a future follow-up after Part 2 is finalized or revised
+- Good candidate for a later article once the manual process is proven
+
+---
+
 ## Execution Phases
 
 ### Phase 1: Baseline & Audit (Complete)
@@ -109,6 +128,13 @@ Target after cleanup:
 - [ ] Determine if exe files are still needed
 - [ ] If removing: apply same git filter-repo approach from Part 1
 - [ ] If keeping: document why and dismiss this cleanup task
+
+### Phase 5: Future Automation (Part 3)
+
+- [x] Create Part 3 outline draft
+- [ ] Revisit after Part 2 is finalized with real cleanup outcomes
+- [ ] Decide whether GitHub Actions reporting is worth the maintenance cost
+- [ ] If yes: implement a lightweight git-health workflow and document it
 
 ---
 
@@ -161,6 +187,7 @@ git clone <url> <repo>-fresh
 | Should `k8s-proxmox` get a `git gc` cleanup (purely aesthetic)? | No | Repo too small to justify |
 | Should `resume` and `jekyll-run` be monitored? | Later, periodically | Baseline set for future audits |
 | Should git-health automation be added? | Maybe, future Part 3 | Good candidate for a GitHub Action once manual cleanup path is proven |
+| Should Part 3 stay report-only at first? | Probably | Safer way to learn signal quality before enforcing thresholds |
 
 ---
 
@@ -169,4 +196,5 @@ git clone <url> <repo>-fresh
 - **Part 1 draft:** Ready for validation run and replacement of target metrics with actual results
 - **Part 2 draft:** Reframed around staged evaluation and future follow-up
 - **mcgarrah.github.io decision:** Deferred until Part 1 proves out cleanly
-- **Overall:** Audit complete; immediate focus is one successful cleanup, not a broad rewrite campaign
+- **Part 3 outline:** Created and parked for later implementation
+- **Overall:** Audit complete; immediate focus is one successful cleanup, not a broad rewrite campaign or early automation push
