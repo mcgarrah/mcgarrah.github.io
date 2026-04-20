@@ -48,7 +48,7 @@ The blog has three GitHub Actions workflows (build/deploy, CodeQL, SEO health ch
 - [ ] Implement breadcrumb navigation — Show the path (Home > Category > Post) at the top of each page. Helps readers understand site structure and navigate up. Also generates breadcrumb structured data that Google displays in search results.
 - [ ] Add tag cloud visualization — A visual representation of all tags weighted by post count on the `/tags/` page. More engaging than the current flat list. Should be done after tag hygiene cleanup to avoid displaying 138 singleton tags.
 - [ ] Add automated "related posts" to post layout — 16 of 139 posts have hand-curated "Related Posts" sections (all from Sep 2025 onward). Manual cross-references are higher quality but don't scale to the 123 older posts. An automated solution via `site.related_posts` or tag-based matching would provide baseline related content for every post. Could coexist with manual sections where they exist.
-- [ ] Fix "read more" links — The post title is currently used as the link text for "read more" links, making them excessively long. Move the title into a `title=""` tooltip attribute instead and use short link text like "Read more" or "Continue reading". Keeps the links compact while preserving the context on hover.
+- [x] Fix "read more" links — The post title is currently used as the link text for "read more" links, making them excessively long. Move the title into a `title=""` tooltip attribute instead and use short link text like "Read more" or "Continue reading". Keeps the links compact while preserving the context on hover.
 
 ## Performance
 

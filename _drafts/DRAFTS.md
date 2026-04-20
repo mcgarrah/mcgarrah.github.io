@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-04-20
+Last updated: 2026-06-20
 
 ---
 
@@ -19,6 +19,12 @@ Last updated: 2026-04-20
 | 07-01 | Wed | StarVoyager: Legacy SDL to Cross-Platform | Screenshots, verify repo links |
 | 07-03 | Fri | Godot Tower Defense Game | Retitle, verify repo, trim roadmap |
 | 07-06 | Mon | Jekyll GDPR Plugin Development | Finish plugin, write companion article |
+| 07-08 | Wed | Jekyll Dark Mode Toggle | Implement toggle, document |
+| 07-10 | Fri | Tag Sprawl Consolidation | Audit, merge 138 singletons |
+| 07-13 | Mon | Front Matter Hygiene Audit | Script + batch update 139 posts |
+| 07-15 | Wed | Security Hardening (CSP, SRI) | Add integrity hashes, CSP meta tag |
+| 07-17 | Fri | Plausible vs Google Analytics | Evaluate, decide, document |
+| 07-20 | Mon | Post Series Navigation | Implement prev/next for multi-part series |
 
 ---
 
@@ -31,7 +37,8 @@ Drafts that form natural publishing sequences or share a topic.
 | 🌐 **Domain & Email Migration** | email-forwarding-evaluation | Registrars published; email is the follow-up |
 | 🎮 **Game Development** | starvoyager, godot-vscode | Independent but pair well (July 1, 3) |
 | 🌍 **Proxmox SDN & Networking** | powerdns-lxc, openwrt-lxc, lag-lacp | PowerDNS, OpenWRT LXC, and LAG/LACP |
-| 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting | Remaining Jekyll drafts |
+| 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting, dark-mode-toggle, tag-sprawl, front-matter-hygiene, post-series-navigation | Active cluster with 6 drafts |
+| 🛡️ **Jekyll Security & Privacy** | security-hardening-csp-sri, plausible-vs-google-analytics | New cluster from TODO.md items |
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
@@ -59,6 +66,8 @@ Drafts that form natural publishing sequences or share a topic.
 | `email-forwarding-evaluation.md` | 15 min | 🌐 Domain & Email |
 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
+| `jekyll-tag-sprawl-consolidation.md` | 1 hr | 📝 Jekyll Deep Dives |
+| `plausible-vs-google-analytics.md` | 1 hr | 🛡️ Security & Privacy |
 
 ---
 
@@ -127,6 +136,42 @@ Drafts that form natural publishing sequences or share a topic.
 - Georgia Tech PyPhotoSynthExport retrospective, Photosynth shutdown, open-source alternatives.
 - **What's needed:** Split into retrospective + companion implementation article.
 - **Effort:** 1 hour (retrospective) or 3-4 hours (with implementation)
+
+### `2026-07-08-jekyll-dark-mode-toggle.md` — 📝 Jekyll Deep Dives
+
+- Site already has `prefers-color-scheme` CSS but no user override.
+- **What's needed:** Implement toggle, refactor SASS to dual system, prevent FOWT, handle Mermaid/Giscus.
+- **Effort:** 2-3 hours
+
+### `2026-07-10-jekyll-tag-sprawl-consolidation.md` — 📝 Jekyll Deep Dives
+
+- 138 of 237 tags used on exactly one post. Each generates a useless tag page.
+- **What's needed:** Audit script, decision framework, perform merges, document results.
+- **Effort:** 1-2 hours
+
+### `2026-07-13-jekyll-front-matter-hygiene.md` — 📝 Jekyll Deep Dives
+
+- 120 posts missing description, 50 missing tags, 34 missing excerpt separator, 62 missing last_modified_at.
+- **What's needed:** Audit script, batch updates, prioritize by traffic.
+- **Effort:** 2-3 hours
+
+### `2026-07-15-jekyll-security-hardening-csp-sri.md` — 🛡️ Security & Privacy
+
+- CDN scripts load with no integrity verification, no CSP restricting execution.
+- **What's needed:** Generate SRI hashes, draft CSP, evaluate self-hosting.
+- **Effort:** 2-3 hours
+
+### `2026-07-17-plausible-vs-google-analytics.md` — 🛡️ Security & Privacy
+
+- GA requires GDPR consent overhead. Plausible is cookie-free and $9/month.
+- **What's needed:** Feature comparison, GDPR simplification analysis, decision.
+- **Effort:** 1-2 hours
+
+### `2026-07-20-jekyll-post-series-navigation.md` — 📝 Jekyll Deep Dives
+
+- Multi-part series have manual cross-references that don't scale.
+- **What's needed:** Design front matter convention, build Liquid include, retrofit existing series.
+- **Effort:** 2-3 hours
 
 ### `2024-03-11-lag-lacp-nic-bonding.md` — 🌍 SDN & Networking
 
@@ -251,13 +296,13 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 36 |
+| Drafts in `_drafts/` | 42 |
 | Ready to publish (Tier 1) | 1 |
-| Near-complete (Tier 2) | 10 |
+| Near-complete (Tier 2) | 16 |
 | Substantial work (Tier 3) | 12 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
-| Scheduled (July) | 3 |
+| Scheduled (July) | 9 |
 | Tracker files | 3 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`) |
 
 ---
@@ -269,4 +314,6 @@ Drafts that form natural publishing sequences or share a topic.
 | 2026-04-04 | From Homelabs to Machine Learning | Infrastructure series |
 | 2026-04-20 | From Markdown to Production | Jekyll series |
 | 2026-05-18 | When Storage Breaks | Ceph & ZFS series |
+| 2026-06-15 | From Bug Fix to VS Code Marketplace | Run Jekyll extension series |
+| 2026-07-13 | Building in Public | Preview site, domain migration, Google tax |
 | TBD | Machine Learning (planned) | AI/ML research, phonemes, cloud DS platforms |
