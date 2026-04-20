@@ -270,6 +270,19 @@ The resume lives in a separate repo and builds independently. Links to `/resume/
 
 Two Jekyll builds per push to `main`. Both run in a public repo, so GitHub Actions minutes are unlimited. Total build time for the drafts workflow (Jekyll + Staticrypt on ~140 posts) should be 2-4 minutes.
 
+## Implementation Challenges Encountered
+
+As soon as I started running real deployments, the design hit a few practical edge cases:
+
+1. **Staticrypt looked hung in Actions**: Encrypting hundreds of pages made one step look stalled for long periods. It was progressing, but the logs were hard to interpret.
+2. **First successful deploy still had no password prompt**: The workflow completed, but the deployed pages stayed plain HTML. The root issue was encryption output handling.
+3. **Large binary warnings during deploy**: The drafts deployment included oversized executable artifacts under `assets/exes`, which triggered GitHub large-file warnings and pointed to LFS concerns.
+4. **Encrypting the full site created avoidable churn**: Password-protecting already-public pages added build time and noise without adding value.
+5. **Verification logic produced false negatives**: A string-based post-encryption check failed on at least one encrypted target page and caused a run failure despite successful processing.
+6. **Runner portability details mattered**: Command forms that are fine locally can fail on Ubuntu runners without Linux-compatible syntax.
+
+These pushed the workflow toward selective encryption (draft + future posts only), safer deploy filtering for binaries, and stronger validation that checks whether files actually changed.
+
 ## Open Questions
 
 A few things I still need to decide before implementation:

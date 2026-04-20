@@ -500,6 +500,16 @@ Two Jekyll builds per push to `main` (production + drafts). Both run in a public
 - **Public drafts repo** — free GitHub Pages, no real security benefit from private given public source
 - **Build on every push** — both triggers (push to `main` + `workflow_dispatch`) enabled
 
+## Challenges Encountered During Implementation
+
+- **Empty-repo Pages trap**: GitHub Pages could not be enabled until the drafts repo had a real `main` branch with an initial commit.
+- **Giscus setup friction**: repository/category readiness and app criteria caused setup delays before IDs could be captured.
+- **Staticrypt runtime looked stalled**: encrypting hundreds of generated HTML pages made the workflow appear hung for long stretches.
+- **No-password deploy after first successful run**: workflow success did not guarantee in-place encrypted output was being deployed.
+- **Large binary artifacts in output**: deployment surfaced GitHub warnings for oversized executables and reinforced pruning/LFS boundaries.
+- **Selective encryption became necessary**: only draft and future article pages needed protection; encrypting the full site added avoidable churn.
+- **Verification false negatives**: content-string checks failed even when files were transformed, requiring a more reliable verification method.
+
 ## Implementation Checklist
 
 Organized by where the work happens. Each step is independent enough to do in a spare 5-15 minutes.
@@ -511,8 +521,8 @@ Organized by where the work happens. Each step is independent enough to do in a 
 - [x] **1.3** Enable GitHub Discussions on the drafts repo (Settings → General → Features → Discussions)
 - [ ] **1.4** Create a "Draft Reviews" category in Discussions (Discussions tab → Categories → New category)
 - [ ] **1.5** Generate a GitHub PAT with `repo` scope for cross-repo push (Settings → Developer settings → Personal access tokens → Fine-grained tokens, scope to `drafts.mcgarrah.org` repo only)
-- [ ] **1.6** Add `DRAFTS_DEPLOY_TOKEN` secret to `mcgarrah.github.io` repo (Settings → Secrets and variables → Actions → New repository secret)
-- [ ] **1.7** Pick a Staticrypt password and add `DRAFTS_PASSWORD` secret to `mcgarrah.github.io` repo
+- [x] **1.6** Add `DRAFTS_DEPLOY_TOKEN` secret to `mcgarrah.github.io` repo (Settings → Secrets and variables → Actions → New repository secret)
+- [x] **1.7** Pick a Staticrypt password and add `DRAFTS_PASSWORD` secret to `mcgarrah.github.io` repo
 
 **Important gotcha:** GitHub Pages cannot be configured for `main` until the repo has an initial commit and the `main` branch actually exists. Creating the repo as truly empty blocks Pages setup with an error. Initializing with a `README.md` (or creating any file and committing it) avoids that.
 
@@ -532,8 +542,8 @@ Organized by where the work happens. Each step is independent enough to do in a 
 
 ### Phase 4: Main Repo Files (IDE, ~20 minutes total)
 
-- [ ] **4.1** Create `_config_drafts.yml` in the main repo root with drafts URL, disabled analytics/ads, and Giscus config pointing to drafts repo (use IDs from Phase 3)
-- [ ] **4.2** Create `.github/workflows/deploy-drafts.yml` in the main repo (workflow sketch is in this document and Part 2)
+- [x] **4.1** Create `_config_drafts.yml` in the main repo root with drafts URL, disabled analytics/ads, and Giscus config pointing to drafts repo (use IDs from Phase 3)
+- [x] **4.2** Create `.github/workflows/deploy-drafts.yml` in the main repo (workflow sketch is in this document and Part 2)
 - [ ] **4.3** Add the draft preview banner to `_layouts/default.html` (Liquid conditional on `site.url contains 'drafts'`)
 - [ ] **4.4** Commit and push to `main`
 

@@ -23,7 +23,7 @@ This is Part 3 of a three-part series:
 - **Part 2**: [Refining the design — config, workflow, feedback, and gaps](/jekyll-draft-preview-site-part-2/)
 - **Part 3** (this post): The complete implementation
 
-> **TODO:** This post will be written after the implementation is complete. The sections below are placeholders for the content that will be filled in during implementation.
+> **Implementation status (in progress):** The system is live but still being tuned. The notes below include concrete issues encountered during first-run deployments so the final version of this post captures real behavior, not just design intent.
 
 ## Creating the Drafts Repo
 
@@ -67,7 +67,14 @@ This is Part 3 of a three-part series:
 
 ## What Didn't Work
 
-<!-- TODO: Problems encountered, workarounds, things I changed from the design -->
+Early runs surfaced several workflow-level issues:
+
+1. **GitHub Pages setup on empty repo failed**: the repo needed an initial commit before `main` could be selected in Pages settings.
+2. **Encryption step appeared hung**: processing many files made `Encrypt HTML with Staticrypt` look stuck even when still running.
+3. **Password prompt did not appear after first success**: pages were deployed unencrypted, which required tightening in-place encryption behavior.
+4. **Deployment included large executable files**: binaries in deploy output triggered GitHub large-file warnings and highlighted the need for artifact filtering.
+5. **Full-site encryption created unnecessary overhead**: encrypting already-public content increased runtime and complexity.
+6. **Initial verification check was too brittle**: string matching on encrypted output caused false failures; verification needed to validate file transformation more directly.
 
 ## Lessons Learned
 
