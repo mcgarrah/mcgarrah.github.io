@@ -1,3 +1,9 @@
+---
+layout: none
+date: 2038-01-18
+sitemap: false
+---
+
 # Drafts Review — Publish Readiness Analysis
 
 Reviewed: All 47 draft articles in `_drafts/` folder

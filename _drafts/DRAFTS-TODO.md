@@ -1,3 +1,9 @@
+---
+layout: none
+date: 2038-01-18
+sitemap: false
+---
+
 # Drafts TODO — Project Tracker
 
 Tracks projects that span code repositories, blog drafts, and external accounts.

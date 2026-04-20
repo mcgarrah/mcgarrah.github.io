@@ -1,3 +1,9 @@
+---
+layout: none
+date: 2038-01-18
+sitemap: false
+---
+
 # Drafts Site: Analysis & Options
 
 ## Goal
@@ -511,6 +517,7 @@ Two Jekyll builds per push to `main` (production + drafts). Both run in a public
 - **Verification false negatives**: content-string checks failed even when files were transformed, requiring a more reliable verification method.
 - **Staticrypt `-o` flag doesn't exist**: version 3.5.4+ uses `-d <directory>` for output; the invalid `-o` flag caused silent failures with no error message.
 - **Staticrypt flattens directory structures**: when processing multiple files with `-d <directory>`, all output goes to `<directory>/filename.html` (not preserving nested paths). Fixed by processing each file individually.
+- **Convenience files broke archive sort order**: The uppercase convenience files (`DRAFTS.md`, `SUBDOMAIN-DRAFTS.md`, `DRAFTS-TODO.md`) had no front matter, so Jekyll assigned them the file's filesystem mtime as their date. This caused them to appear at random positions in the archive depending on when they were last edited. Fixed by adding minimal front matter (`layout: none`, `date: 2038-01-18`, `sitemap: false`) — the pinned date sorts them to the top of the archive, `layout: none` preserves the raw markdown rendering without site chrome, and `sitemap: false` keeps them out of the sitemap. The date 2038-01-18 (day before the Unix Y2K38 epoch overflow) ensures they always sort above all real content.
 
 ## Implementation Checklist
 

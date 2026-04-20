@@ -146,11 +146,21 @@ Both checks are inert in production builds (without `--drafts`/`--future` flags)
 ### Drafts Convenience Files
 The `_drafts/` folder contains two types of files:
 - **Draft posts** — Markdown files with `YYYY-MM-DD-title.md` naming and front matter, intended for eventual promotion to `_posts/`
-- **Convenience files** — Uppercase Markdown files without front matter (e.g., `DRAFTS.md`, `SUBDOMAIN-DRAFTS.md`) used for planning, analysis, and reference
+- **Convenience files** — Uppercase Markdown files (e.g., `DRAFTS.md`, `SUBDOMAIN-DRAFTS.md`) used for planning, analysis, and reference
 
 Convenience files:
 - Use `UPPERCASE-NAME.md` naming to distinguish them from draft posts
-- Have **no front matter** — Jekyll still renders them at `--drafts` serve time, making them viewable in the browser for easy review
+- Have **minimal front matter** for sort order and rendering control:
+  ```yaml
+  ---
+  layout: none
+  date: 2038-01-18
+  sitemap: false
+  ---
+  ```
+- `layout: none` — renders as raw markdown→HTML without site chrome (no nav, CSS, or SEO tags)
+- `date: 2038-01-18` — pins sort position to the top of the archive (day before Unix Y2K38 epoch overflow); prevents filesystem mtime from causing random archive placement
+- `sitemap: false` — excludes from sitemap generation
 - Are **never promoted** to `_posts/` — they are working documents, not blog content
 - May inform blog posts (e.g., `SUBDOMAIN-DRAFTS.md` analysis → three-part blog series) but remain as reference material
 - `DRAFTS.md` is the master tracking file for all draft status, tiers, clusters, and promotion history

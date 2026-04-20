@@ -76,6 +76,7 @@ Early runs surfaced several workflow-level issues:
 5. **Full-site encryption created unnecessary overhead**: encrypting already-public content increased runtime and complexity.
 6. **Initial verification check was too brittle**: string matching on encrypted output caused false failures; replaced with hash-based verification to detect actual file transformation.
 7. **Special-case files broke encryption targeting**: utility documents like `DRAFTS.md` and `SUBDOMAIN-DRAFTS.md` (without front matter) were included in encryption scope. Fixed by filtering to only files matching `YYYY-MM-DD-*.md` pattern (actual posts).
+8. **Convenience files broke archive sort order**: The uppercase convenience files (`DRAFTS.md`, `SUBDOMAIN-DRAFTS.md`, `DRAFTS-TODO.md`) had no front matter, so Jekyll used the file's filesystem mtime as their date. This caused them to appear at random positions in the archive depending on when they were last edited — not where they belonged temporally. Fixed by adding minimal front matter (`layout: none`, `date: 2038-01-18`, `sitemap: false`). The pinned date of 2038-01-18 (day before the Unix Y2K38 epoch overflow) sorts them to the very top of the archive where they're easy to find. `layout: none` preserves the raw markdown rendering without any site chrome or CSS formatting. `sitemap: false` keeps them out of the sitemap.
 
 ## Lessons Learned
 
