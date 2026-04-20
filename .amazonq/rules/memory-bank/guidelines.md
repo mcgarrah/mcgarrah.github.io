@@ -164,6 +164,7 @@ Convenience files:
 - Are **never promoted** to `_posts/` — they are working documents, not blog content
 - May inform blog posts (e.g., `SUBDOMAIN-DRAFTS.md` analysis → three-part blog series) but remain as reference material
 - `DRAFTS.md` is the master tracking file for all draft status, tiers, clusters, and promotion history
+- `RUNJEKYLL-EXTENSION.md` tracks the Run Jekyll VS Code extension project phases and blog articles
 
 ### Publication Cadence
 - **Schedule**: Monday, Wednesday, Friday (MWF)

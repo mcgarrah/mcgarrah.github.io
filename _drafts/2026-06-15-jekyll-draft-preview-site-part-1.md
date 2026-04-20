@@ -14,7 +14,7 @@ seo:
   date_modified: 2026-06-15
 ---
 
-I write a lot of drafts. At any given time I have 30-40 posts in various stages of completion sitting in my `_drafts/` folder. Some are nearly done, some are research notes, and some are half-baked ideas that might never see the light of day.
+I write a lot of drafts. At any given time I have 40-50 posts in various stages of completion sitting in my `_drafts/` folder. Some are nearly done, some are research notes, and some are half-baked ideas that might never see the light of day.
 
 The problem: I want trusted reviewers to see the *rendered* site with drafts included — not raw markdown files on GitHub. I want them to give feedback before I publish. And I want Google to stay far away from unfinished content.
 
@@ -23,7 +23,7 @@ The problem: I want trusted reviewers to see the *rendered* site with drafts inc
 This is Part 1 of a three-part series:
 - **Part 1** (this post): Exploring every option I considered
 - **Part 2**: [Refining the approach — what survived and why](/jekyll-draft-preview-site-part-2/)
-- **Part 3**: Final implementation with all the pieces working (coming soon)
+- **Part 3**: [The complete implementation](/jekyll-draft-preview-site-part-3/)
 
 ## The Problem
 
@@ -147,4 +147,4 @@ In [Part 2](/jekyll-draft-preview-site-part-2/), I'll walk through the refined d
 *This is Part 1 of a three-part series on building a Jekyll draft preview site:*
 - **Part 1** (this post): Exploring every option I considered
 - **Part 2**: [Refining the approach — what survived and why](/jekyll-draft-preview-site-part-2/)
-- **Part 3**: Final implementation with all the pieces working (coming soon)
+- **Part 3**: [The complete implementation](/jekyll-draft-preview-site-part-3/)

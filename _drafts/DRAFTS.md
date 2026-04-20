@@ -1,6 +1,6 @@
 ---
 layout: none
-date: 2038-01-18
+date: 1999-12-31
 sitemap: false
 ---
 
@@ -464,7 +464,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
-| **Total tracked** | **47 drafts + 3 tracker files (`DRAFTS.md`, `DRAFTS-TODO.md`, `SUBDOMAIN-DRAFTS.md`)** |
+| **Total tracked** | **47 drafts + 2 tracker files (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`)** |
 
 ### Previously Removed
 

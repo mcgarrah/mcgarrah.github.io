@@ -8,6 +8,7 @@ description: "Detailed design for a Jekyll draft preview site using GitHub Pages
 date: 2026-06-17
 last_modified_at: 2026-06-17
 published: true
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-06-17
@@ -23,28 +24,32 @@ Now it's time to design the actual implementation. This is where the interesting
 This is Part 2 of a three-part series:
 - **Part 1**: [Exploring every option I considered](/jekyll-draft-preview-site-part-1/)
 - **Part 2** (this post): Refining the design — config, workflow, feedback, and gaps
-- **Part 3**: [Final implementation with all the pieces working](/jekyll-draft-preview-site-part-3/)
+- **Part 3**: [The complete implementation](/jekyll-draft-preview-site-part-3/)
 
 ## The Architecture
 
 The production site and drafts site share the same source but build differently:
 
-```
-mcgarrah.github.io repo (source of truth)
-  ├─ GitHub Actions: jekyll.yml
-  │    └─ Builds production → deploys to mcgarrah.org
-  │
-  └─ GitHub Actions: deploy-drafts.yml
-       ├─ Builds with --drafts --future
-       ├─ Applies _config_drafts.yml overlay
-       ├─ Encrypts HTML with Staticrypt
-       ├─ Removes feed.xml, sitemap.xml
-       ├─ Replaces robots.txt with Disallow: /
-       └─ Pushes _site/ → drafts.mcgarrah.org repo
-            └─ GitHub Pages serves → drafts.mcgarrah.org
+```mermaid
+flowchart TD
+    A["mcgarrah.github.io repo\n(push to main)"] --> B["jekyll.yml"]
+    A --> C["deploy-drafts.yml"]
+
+    B --> D["Build production"]
+    D --> E["mcgarrah.org"]
+
+    C --> F["Build with --drafts --future"]
+    F --> G["Apply _config_drafts.yml overlay"]
+    G --> H["Encrypt draft/future HTML\nwith Staticrypt"]
+    H --> I["Remove feeds, sitemaps\nReplace robots.txt"]
+    I --> J["Push _site/ to\ndrafts.mcgarrah.org repo"]
+    J --> K["drafts.mcgarrah.org\n(GitHub Pages)"]
+
+    style E fill:#2d8659,color:#fff
+    style K fill:#e67e00,color:#fff
 ```
 
-One push to `main` triggers both workflows. The production site builds normally. The drafts site builds with everything visible, encrypted, and pushed to a separate repo.
+One push to `main` triggers both workflows. The production site builds normally. The drafts site builds with everything visible, encrypts only draft and future post pages, and pushes to a separate repo.
 
 ## The Config Overlay
 
@@ -52,8 +57,15 @@ Jekyll supports multiple config files merged left-to-right. A `_config_drafts.ym
 
 ```yaml
 url: "https://drafts.mcgarrah.org"
+canonical_url: "https://drafts.mcgarrah.org"
+baseurl: ""
+draft_preview_site: true
+main_site_url: "https://mcgarrah.org"
+
+# Disable production tracking and ads on the drafts preview site.
 google_analytics: ""
 google_adsense: ""
+google_cse_id: ""
 
 # Redirect Giscus comments to the drafts repo
 giscus:
@@ -65,11 +77,23 @@ giscus:
   strict: 0
   reactions_enabled: 1
   emit_metadata: 0
-  input_position: bottom
+  input_position: top
   theme: preferred_color_scheme
   lang: en
   loading: lazy
+
+# Mark every rendered page as noindex on the drafts site.
+defaults:
+  - scope:
+      path: ""
+    values:
+      noindex: true
 ```
+
+A few things to note:
+- `draft_preview_site: true` and `main_site_url` power the preview banner (covered below)
+- The `defaults:` block sets `noindex: true` on every page site-wide, which the layout picks up as `<meta name="robots" content="noindex, follow">` — this is the primary defense against search engine indexing
+- `google_cse_id` is blanked to disable the custom search engine on the preview site
 
 Build command:
 
@@ -77,7 +101,7 @@ Build command:
 bundle exec jekyll build --drafts --future --config _config.yml,_config_drafts.yml
 ```
 
-This disables analytics and ads, changes the site URL, and — critically — redirects Giscus to a different repo for feedback.
+Jekyll merges configs left-to-right, so `_config_drafts.yml` overrides the production values without touching `_config.yml`.
 
 ## The Feedback Problem
 
@@ -89,7 +113,7 @@ The production site uses [Giscus](https://giscus.app/) for comments, configured 
 
 - Comments would land in the **production repo's** GitHub Discussions
 - Draft feedback would mix with real comments on published posts
-- Giscus requires the domain to be in its allowed origins — `drafts.mcgarrah.org` isn't configured there
+- When a draft is promoted to `_posts/`, the pathname changes — orphaning any feedback left on the draft URL
 
 ### The Solution: Giscus on the Drafts Repo
 
@@ -100,7 +124,7 @@ Enable GitHub Discussions on the `drafts.mcgarrah.org` repo with a "Draft Review
 - When a post graduates from `_drafts/` to `_posts/`, the draft comments stay behind — they served their purpose
 - Reviewers need a GitHub account (fine for my audience)
 
-One concern: Staticrypt decrypts the page in-browser, and the Giscus `<script>` tag lives inside the encrypted HTML. It *should* load after decryption since the browser parses the decrypted DOM, but this needs real testing.
+One concern worth testing: Staticrypt decrypts the page in-browser, and the Giscus `<script>` tag lives inside the encrypted HTML. It should load after decryption since the browser parses the decrypted DOM — but I'll verify this in Part 3.
 
 ## Staticrypt: The Details That Matter
 
@@ -149,7 +173,7 @@ Reviewers need to know they're on the preview site, not production. A Liquid con
 {% endif %}{% endraw %}
 ```
 
-This renders only when `draft_preview_site: true` is set in `_config_drafts.yml`, so it's invisible on production and explicit on the preview site. The link back to the main site turned out to be especially useful in practice.
+This renders only when `draft_preview_site: true` is set in `_config_drafts.yml`, so it's invisible on production. The link back to the main site gives reviewers a quick way to compare draft content against what's already published.
 
 ## DNS and GitHub Pages Routing
 
@@ -161,88 +185,37 @@ drafts.mcgarrah.org  CNAME  mcgarrah.github.io.
 
 Wait — `mcgarrah.github.io` already points to the production site. How does GitHub know which repo to serve?
 
-**This is the key insight:** The DNS CNAME points to GitHub's *apex domain* (`mcgarrah.github.io.`), not directly to your new repo. GitHub then uses the `CNAME` *file* inside your repo to route the request. This allows multiple repos under one account to each have their own custom domains.
+The DNS CNAME points to GitHub's *apex domain* (`mcgarrah.github.io.`), not directly to the new repo. GitHub then uses the `CNAME` *file* inside each repo to route the request. This is how multiple repos under one account can each have their own custom domains.
 
 GitHub Pages routes by `Host` header:
 1. Browser requests `drafts.mcgarrah.org`
 2. DNS resolves to GitHub's IPs (via the CNAME pointing to `mcgarrah.github.io.`)
 3. GitHub receives the request with `Host: drafts.mcgarrah.org`
-4. GitHub searches *all your repos* for a `CNAME` file containing `drafts.mcgarrah.org`
-5. Finds `mcgarrah/drafts.mcgarrah.org` with `CNAME: drafts.mcgarrah.org`
+4. GitHub searches all repos under the account for a `CNAME` file containing `drafts.mcgarrah.org`
+5. Finds `mcgarrah/drafts.mcgarrah.org` with matching `CNAME`
 6. Serves that repo's content
 
-The `CNAME` file in the drafts repo is the routing key. The workflow creates it automatically during deployment.
+The `CNAME` file is the routing key. The workflow creates it automatically during deployment.
+
+The subdomain approach also gives us a separate cookie and `localStorage` scope from the production site. This matters for Staticrypt's `--remember` feature — the decryption key stored in `localStorage` on `drafts.mcgarrah.org` is invisible to JavaScript on `mcgarrah.org`, keeping the two sites cleanly isolated.
 
 ## The Workflow Sketch
 
-This lives in the main repo as `.github/workflows/deploy-drafts.yml`:
+This lives in the main repo as `.github/workflows/deploy-drafts.yml`. Here's the high-level structure — the real workflow evolved significantly during implementation (covered in Part 3), but this captures the design intent:
 
-```yaml
-name: Deploy Drafts Site
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout main repo
-        uses: actions/checkout@v6
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2.6'
-          bundler-cache: true
-
-      - name: Setup Node (for Staticrypt)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Staticrypt
-        run: npm install -g staticrypt
-
-      - name: Build Jekyll with drafts and future
-        run: bundle exec jekyll build --drafts --future --config _config.yml,_config_drafts.yml
-        env:
-          JEKYLL_ENV: production
-
-      - name: Encrypt HTML with Staticrypt
-        run: |
-          find _site -name '*.html' -exec staticrypt {} \
-            -p "${{ secrets.DRAFTS_PASSWORD }}" \
-            --short --remember 30 \;
-
-      - name: Clean up feeds and sitemaps
-        run: |
-          printf "User-agent: *\nDisallow: /\n" > _site/robots.txt
-          rm -f _site/feed.xml _site/sitemap.xml _site/sitemapindex.xml
-
-      - name: Deploy to drafts repo
-        run: |
-          cd _site
-          git init
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          echo "drafts.mcgarrah.org" > CNAME
-          git add -A
-          git commit -m "Deploy drafts site from ${{ github.sha }}"
-          git push --force \
-            https://x-access-token:${{ secrets.DRAFTS_DEPLOY_TOKEN }}@github.com/mcgarrah/drafts.mcgarrah.org.git \
-            HEAD:main
-```
+1. **Build** — Jekyll with `--drafts --future` and the config overlay
+2. **Encrypt** — Staticrypt on draft and future post pages only (not the full site)
+3. **Clean** — Replace `robots.txt`, remove feeds/sitemaps, strip feed discovery links from HTML
+4. **Filter** — Remove oversized binaries from deploy output
+5. **Deploy** — Push to the drafts repo via PAT
 
 Two secrets needed:
 - `DRAFTS_PASSWORD` — the shared Staticrypt password
 - `DRAFTS_DEPLOY_TOKEN` — a GitHub PAT with `repo` scope for cross-repo push
 
-The drafts repo needs GitHub Pages configured to "Deploy from a branch" → `main` → `/ (root)`.
+The drafts repo needs GitHub Pages configured to "Deploy from a branch" → `main` → `/ (root)`. A concurrency group ensures only one drafts deployment runs at a time.
 
-One setup trap: an empty repo has no `main` branch yet, so GitHub Pages setup fails until the repo has an initial commit. Initialize the repo with a `README.md` or create any first commit before trying to configure Pages.
+One setup trap: an empty repo has no `main` branch yet, so GitHub Pages setup fails until the repo has an initial commit. Initialize the repo with a `README.md` or create any file before trying to configure Pages.
 
 ## Remaining Gaps
 
@@ -271,21 +244,6 @@ The resume lives in a separate repo and builds independently. Links to `/resume/
 
 Two Jekyll builds per push to `main`. Both run in a public repo, so GitHub Actions minutes are unlimited. Total build time for the drafts workflow (Jekyll + Staticrypt on ~140 posts) should be 2-4 minutes.
 
-## Implementation Challenges Encountered
-
-As soon as I started running real deployments, the design hit a few practical edge cases:
-
-1. **Staticrypt looked hung in Actions**: Encrypting hundreds of pages made one step look stalled for long periods. It was progressing, but the logs were hard to interpret.
-2. **First successful deploy still had no password prompt**: The workflow completed, but the deployed pages stayed plain HTML. Root cause: Staticrypt v3.5.4+ doesn't support the `-o` flag and silently ignores it. Switched to directory output (`-d <directory>`) for batch processing, but discovered it flattens directory structures — all output goes to `<directory>/filename.html` regardless of input nesting. Fixed by processing each file individually.
-3. **Large binary warnings during deploy**: The drafts deployment included oversized executable artifacts under `assets/exes`, which triggered GitHub large-file warnings and pointed to LFS concerns.
-4. **Encrypting the full site created avoidable churn**: Password-protecting already-public pages added build time and noise without adding value.
-5. **Verification logic produced false negatives**: A string-based post-encryption check failed on at least one encrypted target page and caused a run failure despite successful processing. Replaced with hash-based verification.
-6. **Runner portability details mattered**: Command forms that are fine locally can fail on Ubuntu runners without Linux-compatible syntax.
-7. **Special-case files broke encryption targeting**: Utility documents like `DRAFTS.md` and `SUBDOMAIN-DRAFTS.md` (lacking Jekyll front matter) were included in the encryption scope. Fixed by filtering to only files matching `YYYY-MM-DD-*.md` pattern.
-8. **Archive ordering drifted for convenience files**: Utility pages without front matter inherited filesystem modification times, which made them jump around in archive order. Fixed by adding minimal front matter with a pinned date (`2038-01-18`) so they sort deterministically at the top.
-
-These pushed the workflow toward selective encryption (draft + future posts only), safer deploy filtering for binaries, stronger validation that checks whether files actually changed, more precise targeting of actual post files, and individual-file processing to preserve directory structure.
-
 ## Open Questions
 
 A few things I still need to decide before implementation:
@@ -297,11 +255,11 @@ A few things I still need to decide before implementation:
 
 ## What's Next
 
-Part 3 will cover the actual implementation — creating the repo, configuring DNS, writing the final workflow, testing Staticrypt navigation, and verifying Giscus works through the encryption layer. I'll include the real config files and the results of testing with actual reviewers.
+Part 3 will cover the actual implementation — creating the repo, configuring DNS, the final workflow with all the edge cases I hit, Staticrypt testing results, and what I learned from the whole process.
 
 ---
 
 *This is Part 2 of a three-part series on building a Jekyll draft preview site:*
 - **Part 1**: [Exploring every option I considered](/jekyll-draft-preview-site-part-1/)
 - **Part 2** (this post): Refining the design — config, workflow, feedback, and gaps
-- **Part 3**: [Final implementation with all the pieces working](/jekyll-draft-preview-site-part-3/)
+- **Part 3**: [The complete implementation](/jekyll-draft-preview-site-part-3/)
