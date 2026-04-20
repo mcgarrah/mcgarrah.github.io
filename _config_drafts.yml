@@ -1,6 +1,8 @@
 url: "https://drafts.mcgarrah.org"
 canonical_url: "https://drafts.mcgarrah.org"
 baseurl: ""
+draft_preview_site: true
+main_site_url: "https://mcgarrah.org"
 
 # Disable production tracking and ads on the drafts preview site.
 google_analytics: ""
