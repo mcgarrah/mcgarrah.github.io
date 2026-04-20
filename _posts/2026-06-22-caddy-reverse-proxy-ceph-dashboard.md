@@ -5,7 +5,10 @@ categories: [technical, homelab]
 tags: [proxmox, ceph, caddy, reverse-proxy, dashboard, monitoring, homelab]
 date: 2026-06-22
 last_modified_at: 2026-06-22
+excerpt: "The Ceph Dashboard follows the active ceph-mgr node, breaking bookmarks on failover. Adding it to an existing Caddy reverse proxy with health checks gives you a single stable URL that automatically routes to whichever node is currently active."
+description: "How to add the Ceph Dashboard to a Caddy reverse proxy with health checks, solving the floating-IP problem when ceph-mgr fails over between nodes in a Proxmox cluster."
 seo:
+  type: BlogPosting
   date_published: 2026-06-22
   date_modified: 2026-06-22
 ---
@@ -203,56 +206,7 @@ https://192.168.86.30:9443 {
 
 ## The Complete Caddyfile
 
-For reference, here's the full `/etc/caddy/Caddyfile` with both proxy configurations:
-
-```caddyfile
-# Proxmox Web UI — all six cluster nodes
-https://192.168.86.30 {
-	reverse_proxy * {
-		to 192.168.86.11:8006
-		to 192.168.86.12:8006
-		to 192.168.86.13:8006
-		to 192.168.86.14:8006
-		to 192.168.86.15:8006
-		to 192.168.86.16:8006
-
-		lb_policy ip_hash
-		health_uri /
-		health_interval 10s
-		health_timeout 2s
-		health_status 200
-
-		transport http {
-			tls_insecure_skip_verify
-		}
-
-		header_up Upgrade {http.request.header.Upgrade}
-		header_up Connection {http.request.header.Connection}
-	}
-}
-
-# Ceph Dashboard — all ceph-mgr nodes
-https://192.168.86.30:8443 {
-	reverse_proxy * {
-		to 192.168.86.11:8443
-		to 192.168.86.12:8443
-		to 192.168.86.13:8443
-		to 192.168.86.14:8443
-		to 192.168.86.15:8443
-		to 192.168.86.16:8443
-
-		lb_policy first
-		health_uri /api/health
-		health_interval 10s
-		health_timeout 3s
-		health_status 200
-
-		transport http {
-			tls_insecure_skip_verify
-		}
-	}
-}
-```
+The full `/etc/caddy/Caddyfile` combines both site blocks shown above — the Proxmox Web UI proxy (from the [companion article](/caddy-reverse-proxy-proxmox-web-ui/)) and the Ceph Dashboard proxy added here. Both live in the same file and Caddy serves them simultaneously on different ports (443 and 8443).
 
 ## Future Improvements
 
