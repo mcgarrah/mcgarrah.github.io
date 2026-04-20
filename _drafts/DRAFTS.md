@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-06-20
+Last updated: 2026-04-20
 
 ---
 
@@ -36,8 +36,19 @@ Drafts that form natural publishing sequences or share a topic.
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
 | 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
+| 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
 | 🔒 **Draft Preview Site** | — | All 3 parts published |
 | 🔧 **Caddy Reverse Proxy** | — | Both articles published |
+
+---
+
+## Tracker Files
+
+| Tracker | Purpose |
+|---------|---------|
+| `DRAFTS.md` | Master publication planning and readiness |
+| `RUNJEKYLL-EXTENSION.md` | Run Jekyll extension project status and article sequence |
+| `JEKYLLGDPR-PLUGIN.md` | GDPR plugin productization plan tied to the 2026-07-06 article |
 
 ---
 
@@ -247,7 +258,7 @@ Drafts that form natural publishing sequences or share a topic.
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
 | Scheduled (July) | 3 |
-| Tracker files | 2 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`) |
+| Tracker files | 3 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`) |
 
 ---
 

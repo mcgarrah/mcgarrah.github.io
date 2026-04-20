@@ -34,6 +34,26 @@ Last updated: 2026-04-20
 | Published | 2026-04-06 | `_posts/2026-04-06-adsense-verification-gdpr-script-loading-fix.md` | Script loading and verification fixes |
 | Draft | 2026-07-06 | `_drafts/2026-07-06-jekyll-gdpr-plugin-development.md` | Plugin productization article |
 
+## Prior Plugin Infrastructure to Reuse
+
+This GDPR plugin should directly leverage the patterns already proven in the Pandoc/plugin and release-automation article cluster.
+
+| Status | Date | File | Reuse Target |
+|--------|------|------|--------------|
+| Published | 2026-04-11 | `_posts/2026-04-11-ruby-gem-release-automation.md` | Gem versioning, release flow, RubyGems publish steps |
+| Published | 2026-04-12 | `_posts/2026-04-12-jekyll-pandoc-exports-plugin.md` | Plugin packaging structure and implementation workflow |
+| Published | 2026-04-13 | `_posts/2026-04-13-jekyll-pandoc-exports-resume-integration.md` | Real-site integration pattern and migration strategy |
+| Published | 2026-05-08 | `_posts/2026-05-08-jekyll-github-actions-cicd-pipeline.md` | GitHub Actions test/build/release workflow patterns |
+| Published | 2026-05-15 | `_posts/2026-05-15-jekyll-content-distribution-pipeline.md` | Distribution and publication automation checkpoints |
+
+## Leverage Checklist (From Prior Work)
+
+- [ ] Reuse gemspec/versioning/release conventions from the Ruby gem automation work
+- [ ] Reuse plugin repo layout and docs pattern from the Pandoc plugin implementation
+- [ ] Reuse integration test approach from Pandoc resume integration
+- [ ] Reuse GitHub Actions CI/CD structure for build/test/release gates
+- [ ] Reuse publication/distribution checklist for release readiness
+
 ## Plugin Goals
 
 - [ ] Extract GDPR logic from site-specific templates into reusable plugin components
@@ -83,7 +103,7 @@ Last updated: 2026-04-20
 ### Phase 3 - Packaging and Release
 
 - [ ] Create dedicated GitHub repository
-- [ ] Add CI for Ruby/Jekyll matrix testing
+- [ ] Add CI for Ruby/Jekyll matrix testing (reuse prior GitHub Actions patterns)
 - [ ] Publish gem to RubyGems
 - [ ] Version changelog and release notes
 - [ ] Add usage examples and migration cookbook
