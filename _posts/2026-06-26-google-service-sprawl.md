@@ -3,14 +3,14 @@ title: "The Google Services Tax on a Simple Blog"
 layout: post
 categories: [web-development, technical]
 tags: [google, web-development, analytics, search, adsense, seo, frustration]
-date: 2026-06-29
-last_modified_at: 2026-06-29
+date: 2026-06-26
+last_modified_at: 2026-06-26
 excerpt: "Running a technical blog has turned into a maze of Google services, each with its own setup complexity, approval processes, and interconnected dependencies. What started as a simple Jekyll website has become an exercise in Google service integration frustration — and I'm still fighting."
 description: "An honest look at the overhead of integrating Google Analytics, Search Console, Custom Search, and AdSense into a Jekyll blog. The complexity tax is real, the approval process is opaque, and the battle continues."
 seo:
   type: BlogPosting
-  date_published: 2026-06-29
-  date_modified: 2026-06-29
+  date_published: 2026-06-26
+  date_modified: 2026-06-26
 ---
 
 Lions and Tigers and Adsense, oh my... All the Google Services I think I need. And all the overhead for them.
