@@ -14,15 +14,19 @@ series: "Repository Cleanup"
 series_part: 1
 ---
 
-**Part 1 of 2**: Repository bloat investigation and cleanup execution for `drafts.mcgarrah.org`.
+**Part 1 of 2**: Repository bloat investigation and planned cleanup execution for `drafts.mcgarrah.org`.
 
-My `drafts.mcgarrah.org` repository started feeling heavy. Fresh clones were slow, and local operations felt more expensive than they should for a static content repo. This post documents the exact issue, root cause, and the history rewrite + clean reclone path I am taking. [Part 2]({{ site.baseurl }}{% post_url 2026-07-09-git-repo-audit-methodology-findings %}) covers the audit methodology and findings across all my other repositories.
+`drafts.mcgarrah.org` was supposed to be the lightweight sibling site. It was brand new, narrowly scoped, and meant to be easier to move around than the main site. Instead, it felt chunky almost immediately. Fresh clones were slower than they had any right to be, and that kind of friction is exactly the sort of thing that keeps bothering me until I understand it.
+
+That annoyance turned out to be useful. A lot of cleanup work starts the same way: something is not broken enough to page you, but it is inefficient enough to keep stealing attention. This post documents the exact issue, root cause, and the history rewrite + clean reclone path I plan to take. [Part 2]({{ site.baseurl }}{% post_url 2026-07-09-git-repo-audit-methodology-findings %}) covers the audit methodology I used and how I will decide whether to apply the same cleanup to `mcgarrah.github.io` next.
 
 <!-- excerpt-end -->
 
 ## The Symptom
 
 A normal clone pulled far more data than expected for a drafts site.
+
+That was the first clue. A drafts-only repository should feel boring in a good way: small, fast, and cheap to clone. This one did not.
 
 From a fresh audit clone:
 
@@ -111,6 +115,18 @@ Cons:
 - Commit SHAs change
 - Requires coordination and clean communication
 - Everyone must re-clone (or hard reset carefully)
+
+## Why This Was Worth Solving
+
+I do not usually go looking for Git archaeology projects unless something starts wasting time in a repeatable way.
+
+This qualified.
+
+- The repo was new enough that it should have been lean
+- The clone cost felt out of proportion to what the site actually does
+- The friction was small, but constant, which is usually a sign that there is a real root cause hiding underneath
+
+That is a useful pattern in infrastructure work in general. Annoyance is often just early signal. If something keeps feeling heavier, slower, or more awkward than it should, it is usually worth stopping to measure it.
 
 ## The Path I Am Taking
 
@@ -224,7 +240,7 @@ prune-packable: 0
 garbage: 0
 ```
 
-**Success metrics:**
+**Target success metrics:**
 - **Before:** 5,894 packed objects, 305 MB pack  
 - **After:** 5,368 packed objects, 151 MB pack (50% reduction!)
 - Objects removed: 526 (mostly duplicates and historical exe versions)
@@ -285,7 +301,7 @@ $ du -sh drafts-fresh/.git
 151M    drafts-fresh/.git
 ```
 
-**Improvement:**
+**Target improvement:**
 - **Before cleanup:** 479 MB total, 384 MB .git
 - **After cleanup:** 152 MB total, 151 MB .git  
 - **Saved:** 327 MB (68% reduction!)
@@ -323,4 +339,4 @@ The repository was not slow because today’s content was huge. It was slow beca
 
 If your `.git` size dwarfs your working tree size, history cleanup is usually the real fix.
 
-For my `drafts.mcgarrah.org` repo, rewrite-history + clean reclone is the right long-term move.
+For my `drafts.mcgarrah.org` repo, rewrite-history + clean reclone is the right long-term move. The personal trigger for doing it was simple: the repo felt heavier than its job description. That kind of annoyance is often where the useful maintenance work starts.

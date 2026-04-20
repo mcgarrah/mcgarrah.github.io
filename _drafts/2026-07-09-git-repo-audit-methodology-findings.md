@@ -1,18 +1,18 @@
 ---
 layout: post
-title: "Repository Cleanup Part 2: Audit Methodology & Multi-Repo Findings"
+title: "Repository Cleanup Part 2: Audit Methodology & What I Will Evaluate Next"
 categories: [git, github, jekyll, infrastructure]
 tags: [git-history, repository-size, git-audit, performance, maintenance]
-excerpt: "Part 2 of a two-part series on repository bloat. After cleaning up drafts.mcgarrah.org, I audited my other major repositories using the same methodology. Not all need cleanup. Here's the audit approach, commands, and decision matrix for determining which repositories are worth fixing."
+excerpt: "Part 2 of a repository cleanup series. Before applying the same history-rewrite approach elsewhere, I audited my other major repositories to decide what is worth fixing next. Here is the audit method, the current findings, and why mcgarrah.github.io is the only likely follow-on candidate if drafts.mcgarrah.org goes well."
 date: 2026-07-09
 last_modified_at: 2026-07-09
 series: "Repository Cleanup"
 series_part: 2
 ---
 
-**Part 2 of 2**: Systematic audit methodology and findings across `mcgarrah.github.io`, `resume`, `k8s-proxmox`, and `jekyll-run` repositories. [Part 1]({{ site.baseurl }}{% post_url 2026-07-08-git-history-bloat-drafts-repo-cleanup %}) covered the detailed cleanup of `drafts.mcgarrah.org`.
+**Part 2**: Systematic audit methodology and findings across `mcgarrah.github.io`, `resume`, `k8s-proxmox`, and `jekyll-run`. [Part 1]({{ site.baseurl }}{% post_url 2026-07-08-git-history-bloat-drafts-repo-cleanup %}) covers the drafts repository problem and the cleanup plan I intend to validate first.
 
-After successfully cleaning up `drafts.mcgarrah.org`, I applied the same audit methodology to my other major repositories. This post documents the screening approach, audit commands, findings for each repo, and a decision matrix for determining what's worth cleaning up versus what's already healthy.
+I am not treating this as a blanket campaign to rewrite history across every repository I own. The point of this pass was to measure first, then narrow the next likely candidate if the `drafts.mcgarrah.org` cleanup goes smoothly. This post documents the screening approach, the current findings, and why `mcgarrah.github.io` is the only repository that currently looks worth evaluating for the same treatment.
 
 <!-- excerpt-end -->
 
@@ -83,7 +83,7 @@ $ git rev-list --all --objects \
 
 ## Results: Five Repositories Audited
 
-### 1. `drafts.mcgarrah.org` — ✅ Cleanup Complete
+### 1. `drafts.mcgarrah.org` — 🛠️ Cleanup Candidate Being Validated
 
 **Metrics:**
 ```
@@ -94,9 +94,9 @@ Objects:     506 loose + 5,894 packed
 
 **Root Cause:** 231 MB of old executable files in history.
 
-**Action Taken:** History rewrite (Part 1 of this series).
+**Planned Action:** History rewrite if the execution and verification steps in Part 1 behave as expected.
 
-**Outcome:**
+**Target Outcome:**
 ```
 Total:       152 MB (68% reduction)
 .git:        151 MB
@@ -105,7 +105,7 @@ Objects:     5,368 packed
 
 ---
 
-### 2. `mcgarrah.github.io` — ⚠️ CANDIDATE FOR CLEANUP
+### 2. `mcgarrah.github.io` — ⚠️ Next Repository To Evaluate If Part 1 Goes Well
 
 **Metrics:**
 ```
@@ -149,7 +149,7 @@ size-pack: 305477
 - **If removing exe files:** Apply the same history rewrite from Part 1 → **saves ~280 MB** (220 MB current + ~60 MB historical versions)
 - **If keeping exe files:** Clone will remain expensive regardless of git cleanup. These files are in HEAD, so every clone must pull them.
 
-**Recommendation:** Decide whether `assets/exes/` directory serves a purpose or is legacy from old hosting.
+**Recommendation:** If the `drafts.mcgarrah.org` cleanup goes well, this is the next repository worth evaluating. First decide whether `assets/exes/` still serves a purpose or is just legacy from older hosting.
 
 ---
 
@@ -190,7 +190,7 @@ size-pack: 7222
 (... all legitimate assets)
 ```
 
-**Verdict:** Healthy repository. All large files are legitimate (resume PDF, Font Awesome assets). No cleanup needed. Monitor baseline: 27 MB total.
+**Verdict:** Healthy repository. All large files are legitimate (resume PDF, Font Awesome assets). No cleanup work planned here.
 
 ---
 
@@ -229,7 +229,7 @@ size-pack: 0
 
 **Verdict:** High `.git` ratio (68%), but the entire repository is only 3.8 MB. This is a **false alarm**. The ratio looks bad because objects have never been repacked into a pack file (0 in-pack). Running `git gc` would improve the ratio visually, but it's not worth the effort for a tiny repo with legitimate content.
 
-**Recommendation:** Monitor only. No cleanup needed.
+**Recommendation:** No cleanup work planned here.
 
 ---
 
@@ -270,7 +270,7 @@ size-pack: 414
 
 **Verdict:** Excellent git repository hygiene. The large total size (887 MB) comes from build/test artifacts and node dependencies in the working tree, **not from git history**. The `.git` directory is lean (3.4 MB) and efficiently packed (493 objects). No cleanup needed.
 
-**Recommendation:** This is a model for how development projects should look. Continue monitoring.
+**Recommendation:** No cleanup work planned here. If I automate checks later, this repo can be part of periodic reporting, but it is not a candidate for intervention.
 
 ---
 
@@ -294,22 +294,31 @@ Use this matrix to quickly decide if a repository needs cleanup:
 
 | Repository | Status | Effort | Priority |
 |------------|--------|--------|----------|
-| `drafts.mcgarrah.org` | ✅ Cleaned | Complete | Done |
-| `mcgarrah.github.io` | ⚠️ Candidate | 1–2 hrs | Decide on exe files first |
-| `resume` | ✅ Healthy | — | Monitor only |
-| `k8s-proxmox` | ℹ️ Monitored | — | No action (too small) |
-| `jekyll-run` | ✅ Healthy | — | Monitor only |
+| `drafts.mcgarrah.org` | 🛠️ Validate cleanup plan | 1–2 hrs | First |
+| `mcgarrah.github.io` | ⚠️ Candidate | 1–2 hrs | Second, only if Part 1 goes well |
+| `resume` | ✅ Healthy | — | No action planned |
+| `k8s-proxmox` | ℹ️ Monitored | — | No action planned |
+| `jekyll-run` | ✅ Healthy | — | No action planned |
 
-### What I'm Doing Next
+## What I Am Actually Doing Next
 
-1. **Decide on `mcgarrah.github.io` exe files:** Are they still serving a purpose? If no → apply Part 1 cleanup approach and save 280 MB.
-2. **Monitor remaining repos:** Track baseline sizes to catch bloat early in future.
-3. **Implement guardrails** (per Part 1):
-   - CI check to fail PRs with files > 20 MB
-   - Pre-commit hook for local warnings
-   - Document binary asset policy
+1. **Validate Part 1 on `drafts.mcgarrah.org` first.** If the rewrite, push, and re-clone all behave cleanly, then I have a proven process instead of a theoretical one.
+2. **Re-evaluate `mcgarrah.github.io` after that.** It is the only repository from this audit that looks like a realistic follow-on candidate.
+3. **Leave periodic checks for later.** A GitHub Action that reports `.git` size, object counts, and oversized tracked files is a good future improvement, but it is not the immediate next step. That can live in a later follow-up article or a Part 3.
 
 ---
+
+## Future Follow-Up
+
+If this turns into an ongoing maintenance habit, the next useful increment is automation rather than more one-off archaeology.
+
+A future Part 3 could cover:
+
+- A GitHub Action that records `git count-objects -v`, largest tracked files, and repository size trends
+- Threshold-based alerts when large binaries get committed
+- A lightweight reporting job that helps catch drift before clone performance becomes annoying again
+
+For now, that is future work. The immediate decision tree is much smaller: validate the cleanup once on `drafts.mcgarrah.org`, then decide whether `mcgarrah.github.io` deserves the same treatment.
 
 ## Key Lessons
 

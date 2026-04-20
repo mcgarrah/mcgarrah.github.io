@@ -16,8 +16,8 @@ Last updated: 2026-04-20
 
 | Repo | Total Size | .git | Ratio | Status |
 |------|-----------|------|-------|--------|
-| `drafts.mcgarrah.org` | 479 MB | 384 MB | 80% | ✅ Part 1: Cleanup complete |
-| `mcgarrah.github.io` | 934 MB | 301 MB | 32% | ⚠️ Candidate for cleanup |
+| `drafts.mcgarrah.org` | 479 MB | 384 MB | 80% | 🛠️ Part 1 validation in progress |
+| `mcgarrah.github.io` | 934 MB | 301 MB | 32% | ⚠️ Evaluate after Part 1 |
 | `resume` | 27 MB | 7.3 MB | 27% | ✅ Healthy (no action) |
 | `k8s-proxmox` | 3.8 MB | 2.6 MB | 68% | ℹ️ False alarm (too small) |
 | `jekyll-run` | 887 MB | 3.4 MB | 0.4% | ✅ Excellent (dev artifacts, not history) |
@@ -29,7 +29,7 @@ Last updated: 2026-04-20
 ### Part 1: Git History Bloat — Drafts Repository Cleanup (2026-07-08)
 
 **Status:** Draft  
-**Focus:** Concrete walkthrough of drafts.mcgarrah.org cleanup  
+**Focus:** Concrete walkthrough of the drafts.mcgarrah.org problem and cleanup plan  
 **Includes:**
 - Symptoms and root cause (231 MB of historical exe files)
 - Options evaluated (do nothing, shallow clone, history rewrite)
@@ -37,6 +37,7 @@ Last updated: 2026-04-20
 - Console output from actual execution
 - Metrics: before/after clone and pack sizes
 - Rollback strategy and team communication
+- Personal motivation: why a brand new drafts repo feeling chunky was enough to investigate
 
 **Key Outputs:**
 ```
@@ -45,7 +46,7 @@ Before cleanup:
 - .git: 384 MB (80% of clone)
 - Largest blobs: FirefoxPortable (95.7 MB + 95.6 MB), jPortable (40.1 MB)
 
-After cleanup:
+Target after cleanup:
 - Total: ~220 MB (estimated)
 - .git: ~150 MB (estimated)
 - Clone time: ~50% reduction
@@ -56,23 +57,24 @@ After cleanup:
 ### Part 2: Repository Audit Methodology & Multi-Repo Findings (2026-07-09)
 
 **Status:** Draft  
-**Focus:** Methodology for discovering which repos need cleanup, findings across all 5 repos  
+**Focus:** Methodology for deciding what to evaluate next after validating Part 1  
 **Includes:**
 - Audit commands (git count-objects, du -sh, git ls-files)
 - Quick screening (total size, .git ratio, object count)
 - Deep inspection for root cause (executable files, large blobs, history)
 - Findings for each repo:
-  - `mcgarrah.github.io`: NEEDS CLEANUP (220 MB from active exe files)
-  - `resume`: Healthy (legitimate assets, no bloat)
-  - `k8s-proxmox`: False alarm (68% ratio, but only 3.8 MB total)
-  - `jekyll-run`: Excellent (dev artifacts in working tree, not history)
+  - `mcgarrah.github.io`: likely next candidate if Part 1 goes well
+  - `resume`: healthy, no action planned
+  - `k8s-proxmox`: false alarm (68% ratio, but only 3.8 MB total)
+  - `jekyll-run`: excellent (dev artifacts in working tree, not history)
 - Decision matrix: when to cleanup vs when to ignore
 - Console output from all audits
+- Future idea: GitHub Action for periodic git-health reporting, likely better as a Part 3
 
 **Key Recommendations:**
-- ✅ `mcgarrah.github.io`: Apply Part 1 approach (remove exe files or rewrite history)
-- ✅ `drafts.mcgarrah.org`: Execute Part 1 plan
-- ℹ️ Others: No action needed (already healthy or too small to matter)
+- 🛠️ `drafts.mcgarrah.org`: validate Part 1 plan first
+- ⚠️ `mcgarrah.github.io`: evaluate next only if Part 1 goes well
+- ℹ️ Others: no action needed right now
 
 ---
 
@@ -89,18 +91,18 @@ After cleanup:
 
 ### Phase 2: Part 1 Article & Execution
 
-- [ ] Document safe execution steps with real commands
+- [x] Document safe execution steps with real commands
 - [ ] Test git filter-repo commands in mirror (drafts.mcgarrah.org)
 - [ ] Execute rewrite and force-push
 - [ ] Verify new clone size and metrics
-- [ ] Document actual before/after numbers in article
+- [ ] Replace target metrics with actual post-cleanup numbers in article
 - [ ] Publish Part 1
 
 ### Phase 3: Part 2 Article & Decision
 
-- [ ] Document audit methodology with command explanations
-- [ ] Publish Part 2 with recommendations for each repo
-- [ ] Decide: Cleanup mcgarrah.github.io or leave exe files as-is?
+- [x] Document audit methodology with command explanations
+- [ ] Publish Part 2 with staged recommendations
+- [ ] Decide: if Part 1 goes well, should `mcgarrah.github.io` get the same treatment?
 
 ### Phase 4: Optional Cleanup of mcgarrah.github.io (if decided)
 
@@ -154,16 +156,17 @@ git clone <url> <repo>-fresh
 
 | Question | Answer | Impact |
 |----------|--------|--------|
-| Should `mcgarrah.github.io` exe files stay? | TBD | If no: saves 220 MB; if yes: skip cleanup |
+| Should `mcgarrah.github.io` exe files stay? | TBD after Part 1 | If no: saves 220 MB; if yes: skip cleanup |
 | Should `drafts.mcgarrah.org` cleanup be public or quiet? | TBD | Affects communication + PR metadata |
 | Should `k8s-proxmox` get a `git gc` cleanup (purely aesthetic)? | No | Repo too small to justify |
-| Should `resume` and `jekyll-run` be monitored? | Yes (monitor) | Baseline set for future audits |
+| Should `resume` and `jekyll-run` be monitored? | Later, periodically | Baseline set for future audits |
+| Should git-health automation be added? | Maybe, future Part 3 | Good candidate for a GitHub Action once manual cleanup path is proven |
 
 ---
 
 ## Status Summary
 
-- **Part 1 draft:** Ready for execution and console output documentation
-- **Part 2 draft:** Findings complete, awaiting write-up
-- **mcgarrah.github.io decision:** Pending (exe files: needed or removable?)
-- **Overall:** Audit complete; cleanup ready to execute; articles awaiting completion
+- **Part 1 draft:** Ready for validation run and replacement of target metrics with actual results
+- **Part 2 draft:** Reframed around staged evaluation and future follow-up
+- **mcgarrah.github.io decision:** Deferred until Part 1 proves out cleanly
+- **Overall:** Audit complete; immediate focus is one successful cleanup, not a broad rewrite campaign
