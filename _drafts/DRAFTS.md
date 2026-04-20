@@ -8,7 +8,7 @@ sitemap: false
 
 Reviewed: All 47 draft articles in `_drafts/` folder
 Cross-referenced against: All published posts in `_posts/` and `_substack/`
-Last updated: 2026-04-17
+Last updated: 2026-04-20
 
 ---
 
@@ -55,8 +55,8 @@ Last updated: 2026-04-17
 | ~~`2026-05-28-run-jekyll-vscode-marketplace-publisher-setup.md`~~ | `2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md` | Promoted 2026-06-20 |
 | ~~`2026-06-19-jekyll-draft-preview-site-part-3.md`~~ | `2026-06-17-jekyll-draft-preview-site-part-3.md` | Promoted 2026-06-20 |
 | ~~`2026-05-29-run-jekyll-bug-fixes-and-code-review.md`~~ | `2026-06-19-run-jekyll-bug-fixes-and-code-review.md` | Promoted 2026-06-20 |
-| ~~`2026-06-01-run-jekyll-testing-and-test-harness.md`~~ | `2026-06-22-run-jekyll-testing-and-test-harness.md` | Promoted 2026-06-20 |
-| ~~`2026-06-04-run-jekyll-new-features-clean-doctor-tests.md`~~ | `2026-06-24-run-jekyll-new-features-clean-doctor-tests.md` | Promoted 2026-06-20 |
+| ~~`2026-06-01-run-jekyll-testing-and-test-harness.md`~~ | `2026-06-24-run-jekyll-testing-and-test-harness.md` | Promoted 2026-06-20, rescheduled 2026-04-20 |
+| ~~`2026-06-04-run-jekyll-new-features-clean-doctor-tests.md`~~ | `2026-06-29-run-jekyll-new-features-clean-doctor-tests.md` | Promoted 2026-06-20, rescheduled 2026-04-20 |
 | ~~`SUBDOMAIN-DRAFTS.md`~~ | Content migrated to 3-part article series | Deleted 2026-06-20 |
 | ~~`DRAFTS-TODO.md`~~ | Run Jekyll content → `RUNJEKYLL-EXTENSION.md` | Deleted 2026-06-20 |
 
@@ -228,10 +228,11 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
   - `2026-06-10-forking-jekyll-run-to-run-jekyll.md` — PROMOTED
   - `2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md` — PROMOTED
   - `2026-06-19-run-jekyll-bug-fixes-and-code-review.md` — PROMOTED
-  - `2026-06-22-run-jekyll-testing-and-test-harness.md` — PROMOTED
-  - `2026-06-24-run-jekyll-new-features-clean-doctor-tests.md` — PROMOTED
+  - `2026-06-24-run-jekyll-testing-and-test-harness.md` — PROMOTED
+  - `2026-06-29-run-jekyll-new-features-clean-doctor-tests.md` — PROMOTED
   - Publish order: published article (done), macOS crash, fork/rename, publisher account, bug fixes, testing, new features
-  - All 6 promoted interleaved with Draft Preview Site series on MWF cadence (June 5–24)
+  - All 6 promoted interleaved with Draft Preview Site series on MWF cadence (June 5–29)
+  - Intentional open insertion slots for alternate subjects: **June 22** and **June 26**
 
 ### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
@@ -494,5 +495,5 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |
-| Promoted to _posts (2026-06-05–24 — Run Jekyll 6 + Draft Preview 3, interleaved MWF) | 9 |
+| Promoted to _posts (2026-06-05–29 — Run Jekyll 6 + Draft Preview 3, interleaved MWF with open slots on June 22 and June 26) | 9 |
 | Convenience files retired (SUBDOMAIN-DRAFTS.md, DRAFTS-TODO.md → RUNJEKYLL-EXTENSION.md) | 2 |

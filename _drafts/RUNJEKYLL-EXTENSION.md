@@ -8,7 +8,7 @@ sitemap: false
 
 Fork and overhaul of the abandoned [Jekyll Run](https://github.com/Kanna727/jekyll-run) VS Code extension.
 
-Last updated: 2026-04-18
+Last updated: 2026-04-20
 
 ---
 
@@ -128,10 +128,10 @@ Documented in `FEATURE.md` in the jekyll-run repo and the new features blog draf
 | 3 | ✅ Published | 2026-06-10 | `_posts/2026-06-10-forking-jekyll-run-to-run-jekyll.md` | Fork rationale and CI/CD |
 | 4 | ✅ Published | 2026-06-15 | `_posts/2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md` | Marketplace publisher setup |
 | 5 | ✅ Published | 2026-06-19 | `_posts/2026-06-19-run-jekyll-bug-fixes-and-code-review.md` | 18 issues documented |
-| 6 | ✅ Published | 2026-06-22 | `_posts/2026-06-22-run-jekyll-testing-and-test-harness.md` | Test harness and regression tests |
-| 7 | ✅ Published | 2026-06-24 | `_posts/2026-06-24-run-jekyll-new-features-clean-doctor-tests.md` | New features: Clean, Doctor, tests |
+| 6 | ✅ Published | 2026-06-24 | `_posts/2026-06-24-run-jekyll-testing-and-test-harness.md` | Test harness and regression tests |
+| 7 | ✅ Published | 2026-06-29 | `_posts/2026-06-29-run-jekyll-new-features-clean-doctor-tests.md` | New features: Clean, Doctor, tests |
 
-All 7 articles published. Articles 2–7 promoted 2026-06-20, interleaved with Draft Preview Site series on MWF cadence.
+All 7 articles published. Articles 2–7 promoted 2026-06-20, interleaved with Draft Preview Site series on MWF cadence, with open insertion slots on June 22 and June 26 for non-Run-Jekyll subjects.
 
 ## Notes
 
