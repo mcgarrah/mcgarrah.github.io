@@ -26,6 +26,27 @@ jobs:
           bundler-cache: true
           cache-version: 1
 
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Staticrypt
+        run: |
+          set -euo pipefail
+
+          # Install once so encryption does not depend on repeated npx fetches.
+          for i in 1 2 3; do
+            npm install --no-audit --no-fund --save-dev staticrypt && break
+            if [[ "$i" -eq 3 ]]; then
+              echo "::error::Failed to install staticrypt after 3 attempts"
+              exit 1
+            fi
+            echo "Retrying staticrypt install ($i/3)"
+            sleep 5
+          done
+
       - name: Build with Jekyll (drafts + future)
         run: bundle exec jekyll build --drafts --future --config _config.yml,_config_drafts.yml
         env:
@@ -35,45 +56,72 @@ jobs:
         env:
           DRAFTS_PASSWORD: ${{ secrets.DRAFTS_PASSWORD }}
         run: |
+          set -euo pipefail
+
           if [[ -z "$DRAFTS_PASSWORD" ]]; then
             echo "::error::Missing DRAFTS_PASSWORD secret"
             exit 1
           fi
 
-          while IFS= read -r -d '' file; do
-            npx --yes staticrypt "$file" \
+          mapfile -d '' html_files < <(find _site -type f -name '*.html' -print0)
+          echo "Encrypting ${#html_files[@]} HTML files"
+
+          if [[ "${#html_files[@]}" -eq 0 ]]; then
+            echo "::error::No HTML files found in _site"
+            exit 1
+          fi
+
+          for file in "${html_files[@]}"; do
+            ./node_modules/.bin/staticrypt "$file" \
               -o "$file" \
               -p "$DRAFTS_PASSWORD" \
               --short \
               --remember 30 \
               --template-title "Draft Preview - mcgarrah.org"
-          done < <(find _site -type f -name '*.html' -print0)
+          done
+
+          # Confirm the deployed homepage is actually wrapped by Staticrypt.
+          if ! grep -qi 'staticrypt' _site/index.html; then
+            echo "::error::Staticrypt verification failed for _site/index.html"
+            exit 1
+          fi
 
       - name: Remove oversized binaries from deploy output
         run: |
+          set -euo pipefail
+
           # Exclude executable payloads from the preview deployment.
           rm -rf _site/assets/exes
+          find _site -type f \( -iname '*.exe' -o -iname '*.msi' -o -iname '*.dmg' -o -iname '*.pkg' -o -iname '*.iso' \) -print -delete
 
           # Guard against accidental large-file deploys that should use LFS.
           find _site -type f -size +45M -print -delete
 
       - name: Apply crawler protections
         run: |
+          set -euo pipefail
+
           printf "User-agent: *\nDisallow: /\n" > _site/robots.txt
           rm -f _site/feed.xml _site/sitemap.xml _site/sitemapindex.xml
+
+          # Remove feed discovery hints from generated pages in preview output.
+          find _site -type f -name '*.html' -exec sed -i.bak '/type="application\/atom+xml"/d' {} +
+          find _site -type f -name '*.bak' -delete
 
       - name: Deploy to drafts.mcgarrah.org repo
         env:
           DRAFTS_DEPLOY_TOKEN: ${{ secrets.DRAFTS_DEPLOY_TOKEN }}
           TARGET_REPO: mcgarrah/drafts.mcgarrah.org
         run: |
+          set -euo pipefail
+
           if [[ -z "$DRAFTS_DEPLOY_TOKEN" ]]; then
             echo "::error::Missing DRAFTS_DEPLOY_TOKEN secret"
             exit 1
           fi
 
           deploy_dir="$(mktemp -d)"
-          git clone "https://x-access-token:${DRAFTS_DEPLOY_TOKEN}@github.com/${TARGET_REPO}.git" "$deploy_dir"
+          git clone --depth 1 --branch main "https://x-access-token:${DRAFTS_DEPLOY_TOKEN}@github.com/${TARGET_REPO}.git" "$deploy_dir"
 
           find "$deploy_dir" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
           cp -a _site/. "$deploy_dir"/
@@ -92,4 +140,4 @@ jobs:
           fi
 
           git commit -m "Deploy drafts site from ${GITHUB_SHA}"
-          git push origin main --force
+          git push origin HEAD:main --force-with-lease
