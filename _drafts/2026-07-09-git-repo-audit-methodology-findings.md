@@ -20,6 +20,86 @@ I am not treating this as a blanket campaign to rewrite history across every rep
 
 The goal: Quickly screen all repositories for signs of bloat, identify root causes, and decide which ones need cleanup.
 
+## Command Compatibility (macOS vs WSL2/Linux)
+
+The examples in this article are shell-oriented and work on both macOS and Linux/WSL2, but there are a few portability gotchas worth calling out.
+
+### Baseline Requirements
+
+Install these first:
+
+- `git`
+- `awk`
+- `sort`
+- `xargs`
+- `du`
+
+On Ubuntu/WSL2, these are typically available in core packages. On macOS, they are present by default, with BSD variants for some tools.
+
+### Quick Compatibility Notes
+
+- `du -sh` works on both macOS and Linux.
+- `du -k` works on both and is used here for consistent KB output.
+- Avoid `du -b` on macOS (GNU-only).
+- `sort -rn` works on both.
+- `xargs -0` works on both (used with `git ls-files -z`).
+- `head -20` works on both.
+
+### Step 1: Size Overview (Portable)
+
+macOS and WSL2/Linux:
+
+```bash
+for repo in mcgarrah.github.io resume k8s-proxmox jekyll-run; do
+  cd "$repo"
+  total_size=$(du -sh . | awk '{print $1}')
+  git_size=$(du -sh .git | awk '{print $1}')
+  echo "$repo: Total=$total_size, .git=$git_size"
+  cd - >/dev/null
+done
+```
+
+### Step 3: Largest Files in HEAD (Portable)
+
+macOS and WSL2/Linux:
+
+```bash
+git ls-files -z \
+| xargs -0 du -k \
+| sort -rn \
+| head -20
+```
+
+### Step 4: Largest Historical Blobs (Portable)
+
+macOS and WSL2/Linux:
+
+```bash
+git rev-list --all --objects \
+| git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
+| awk '$1=="blob"{print $3"\t"$4}' \
+| sort -nr \
+| head -20
+```
+
+### If You Need Strict Byte Counts
+
+For Linux/WSL2 (GNU coreutils), `du -b` is available. On macOS, use `stat` instead.
+
+Linux/WSL2:
+
+```bash
+du -b path/to/file
+```
+
+macOS:
+
+```bash
+stat -f%z path/to/file
+```
+
+If you keep your article examples at the KB/MB level (`du -k`, `du -sh`), you can avoid most GNU vs BSD differences entirely.
+
 ### Step 1: Size Overview (< 30 seconds)
 
 Start with the highest-level metrics to identify candidates:
