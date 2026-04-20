@@ -63,15 +63,53 @@ jobs:
             exit 1
           fi
 
-          mapfile -d '' html_files < <(find _site -type f -name '*.html' -print0)
-          echo "Encrypting ${#html_files[@]} HTML files"
+          slug_from_source_file() {
+            local source_file="$1"
+            local base
+            base="$(basename "$source_file")"
+            base="${base%.markdown}"
+            base="${base%.md}"
+            # Strip leading YYYY-MM-DD- when present.
+            echo "${base#????-??-??-}"
+          }
 
-          if [[ "${#html_files[@]}" -eq 0 ]]; then
-            echo "::error::No HTML files found in _site"
-            exit 1
-          fi
+          declare -A seen_targets=()
+          declare -a target_files=()
 
-          for file in "${html_files[@]}"; do
+          add_target_for_slug() {
+            local slug="$1"
+            local candidate
+
+            for candidate in "_site/${slug}/index.html" "_site/${slug}.html"; do
+              if [[ -f "$candidate" && -z "${seen_targets[$candidate]+x}" ]]; then
+                seen_targets[$candidate]=1
+                target_files+=("$candidate")
+              fi
+            done
+          }
+
+          # 1) Encrypt all draft article pages.
+          while IFS= read -r -d '' source_file; do
+            add_target_for_slug "$(slug_from_source_file "$source_file")"
+          done < <(find _drafts -maxdepth 1 -type f \( -name '*.md' -o -name '*.markdown' \) -print0)
+
+          # 2) Encrypt only future-dated _posts article pages.
+          today_epoch="$(date -u +%s)"
+          while IFS= read -r -d '' source_file; do
+            base="$(basename "$source_file")"
+            post_date="${base:0:10}"
+
+            if [[ "$post_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+              post_epoch="$(date -u -d "$post_date" +%s)"
+              if (( post_epoch > today_epoch )); then
+                add_target_for_slug "$(slug_from_source_file "$source_file")"
+              fi
+            fi
+          done < <(find _posts -maxdepth 1 -type f \( -name '*.md' -o -name '*.markdown' \) -print0)
+
+          echo "Encrypting ${#target_files[@]} draft/future article pages"
+
+          for file in "${target_files[@]}"; do
             ./node_modules/.bin/staticrypt "$file" \
               -o "$file" \
               -p "$DRAFTS_PASSWORD" \
@@ -80,9 +118,9 @@ jobs:
               --template-title "Draft Preview - mcgarrah.org"
           done
 
-          # Confirm the deployed homepage is actually wrapped by Staticrypt.
-          if ! grep -qi 'staticrypt' _site/index.html; then
-            echo "::error::Staticrypt verification failed for _site/index.html"
+          # Verify at least one encrypted page contains Staticrypt output.
+          if [[ "${#target_files[@]}" -gt 0 ]] && ! grep -qi 'staticrypt' "${target_files[0]}"; then
+            echo "::error::Staticrypt verification failed for ${target_files[0]}"
             exit 1
           fi
 
