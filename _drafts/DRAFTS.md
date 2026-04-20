@@ -40,7 +40,7 @@ Last updated: 2026-04-20
 | ~~`2026-05-10-jekyll-draft-future-visual-indicators.md`~~ | `2026-05-12-jekyll-draft-future-visual-indicators.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-10-jekyll-content-distribution-pipeline.md`~~ | `2026-05-14-jekyll-content-distribution-pipeline.md` | Promoted 2026-04-16 (batch) |
 | ~~`2026-05-15-caddy-reverse-proxy-proxmox-web-ui.md`~~ | `2026-05-16-caddy-reverse-proxy-proxmox-web-ui.md` | Promoted 2026-04-16 |
-| ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-06-26-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16, rescheduled 2026-04-20 |
+| ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ | `2026-06-22-caddy-reverse-proxy-ceph-dashboard.md` | Promoted 2026-04-16, rescheduled 2026-06-22 |
 | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | `2026-05-21-writing-to-think-two-decades-of-figuring-things-out.md` | Promoted 2026-04-16 |
 | ~~`2025-02-25-proxmox-zfs-boot-mirrors-part-1.md`~~ | `2026-05-25-proxmox-zfs-boot-mirrors-part-1.md` | Promoted 2026-04-16, rescheduled to MWF |
 | ~~`2024-09-23-zfs-boot-mirrors-proxmox8-part-1.md`~~ | Merged into `2026-05-25-proxmox-zfs-boot-mirrors-part-1.md` | Retired 2026-04-16 |
@@ -55,8 +55,10 @@ Last updated: 2026-04-20
 | ~~`2026-05-28-run-jekyll-vscode-marketplace-publisher-setup.md`~~ | `2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md` | Promoted 2026-06-20 |
 | ~~`2026-06-19-jekyll-draft-preview-site-part-3.md`~~ | `2026-06-17-jekyll-draft-preview-site-part-3.md` | Promoted 2026-06-20 |
 | ~~`2026-05-29-run-jekyll-bug-fixes-and-code-review.md`~~ | `2026-06-19-run-jekyll-bug-fixes-and-code-review.md` | Promoted 2026-06-20 |
-| ~~`2026-06-01-run-jekyll-testing-and-test-harness.md`~~ | `2026-06-24-run-jekyll-testing-and-test-harness.md` | Promoted 2026-06-20, rescheduled 2026-04-20 |
-| ~~`2026-06-04-run-jekyll-new-features-clean-doctor-tests.md`~~ | `2026-06-29-run-jekyll-new-features-clean-doctor-tests.md` | Promoted 2026-06-20, rescheduled 2026-04-20 |
+| ~~`2026-06-01-run-jekyll-testing-and-test-harness.md`~~ | `2026-06-24-run-jekyll-testing-and-test-harness.md` | Promoted 2026-06-20 |
+| ~~`2026-06-04-run-jekyll-new-features-clean-doctor-tests.md`~~ | `2026-06-29-run-jekyll-new-features-clean-doctor-tests.md` | Promoted 2026-06-20 |
+| ~~`2026-03-15-google-service-sprawl.md`~~ | `2026-06-26-google-service-sprawl.md` | Promoted 2026-06-20 |
+| ~~`2026-02-06-name-service-registrars.md`~~ | `2026-05-20-name-service-registrars.md` | Promoted 2026-06-20 |
 | ~~`SUBDOMAIN-DRAFTS.md`~~ | Content migrated to 3-part article series | Deleted 2026-06-20 |
 | ~~`DRAFTS-TODO.md`~~ | Run Jekyll content → `RUNJEKYLL-EXTENSION.md` | Deleted 2026-06-20 |
 
@@ -113,11 +115,10 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 - **Published as:** `2026-05-21-writing-to-think-two-decades-of-figuring-things-out.md`
 
-### 1. `2026-02-06-name-service-registrars.md` — 🌐 Domain & Email
+### 1. ~~`2026-02-06-name-service-registrars.md`~~ — 🌐 Domain & Email — PROMOTED
 
-- **Status:** Extremely detailed, well-structured, 56% migration complete with real data
-- **What's needed:** Update progress section if more domains migrated. Fix future date. Add `categories`/`tags` front matter.
-- **Estimated effort:** 30 minutes
+- **Published as:** `2026-05-20-name-service-registrars.md`
+- **Title:** "Migrating 16 Domains from SquareSpace to Porkbun"
 
 ### 2. `2026-02-07-email-forwarding-evaluation.md` — 🌐 Domain & Email
 
@@ -125,10 +126,10 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 - **What's needed:** Publish #1 first (referenced). Minor date fix.
 - **Estimated effort:** 15 minutes
 
-### 3. `2026-03-15-google-service-sprawl.md`
+### 3. ~~`2026-03-15-google-service-sprawl.md`~~ — PROMOTED
 
-- **Status:** Complete opinion piece, good personal voice
-- **What's needed:** Add links to GDPR/AdSense posts. Date fix.
+- **Published as:** `2026-06-26-google-service-sprawl.md`
+- **Title:** "The Google Services Tax on a Simple Blog"
 - **Related:** `2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`, `2026-04-06-adsense-verification-gdpr-script-loading-fix.md`
 - **Estimated effort:** 15 minutes
 
@@ -156,13 +157,17 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ## Tier 2: Near-Complete (1–2 hours each)
 
-### 9. `2026-02-15-starvoyager-game.md` — 🎮 Game Dev
+### 9. ~~`2026-02-15-starvoyager-game.md`~~ — 🎮 Game Dev — RESCHEDULED
+
+- **Rescheduled to:** `2026-07-01-starvoyager-game.md`
 
 - **Status:** Well-written overview of StarVoyager modernization
 - **What's needed:** Verify GitHub repo links and stats (87 files, 261 tests). Add screenshots.
 - **Estimated effort:** 1 hour
 
-### 10. `2026-03-01-godot-vscode.md` — 🎮 Game Dev
+### 10. ~~`2026-03-01-godot-vscode.md`~~ — 🎮 Game Dev — RESCHEDULED
+
+- **Rescheduled to:** `2026-07-03-godot-vscode.md`
 
 - **Status:** Solid tower defense game project overview with personal backstory
 - **What's needed:** Retitle (content is broader than "Godot VSCode"). Verify repo link. Trim roadmap sections.
@@ -262,7 +267,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ### 22b. ~~`2026-05-15-caddy-reverse-proxy-ceph-dashboard.md`~~ — 🔧 Caddy Reverse Proxy — PROMOTED
 
-- **Published as:** `2026-06-26-caddy-reverse-proxy-ceph-dashboard.md`
+- **Published as:** `2026-06-22-caddy-reverse-proxy-ceph-dashboard.md`
 
 - **Status:** Nice highway/traffic analogy. Includes critical LACP misconception about single TCP connections. HP ProCurve 2810 link.
 - **What's needed:** Add practical section — ProCurve config, Proxmox bond setup, performance results.
@@ -376,8 +381,9 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 ## Tier 4: Too Raw / Redundant — Hold or Archive
 
-### 38. `2025-12-18-jekyll-gdpr-plugin-development.md`
+### 38. ~~`2025-12-18-jekyll-gdpr-plugin-development.md`~~ — RESCHEDULED
 
+- **Rescheduled to:** `2026-07-06-jekyll-gdpr-plugin-development.md`
 - **Status:** Aspirational plugin development plan — no code shipped.
 - **Recommendation:** Complete the plugin, publish as a Ruby gem, and write a companion article following the same pattern as the Pandoc exports plugin (`2026-04-12-jekyll-pandoc-exports-plugin.md`) and gem release automation (`2026-04-11-ruby-gem-release-automation.md`). The GDPR implementation article (`2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`) is the starting point; this draft is the follow-through.
 - **Related:** `2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`, `2026-04-12-jekyll-pandoc-exports-plugin.md`, `2026-04-11-ruby-gem-release-automation.md`
@@ -445,9 +451,9 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | # | File | Effort | Cluster |
 |---|------|--------|---------|
-| 1 | `name-service-registrars.md` | 30 min | 🌐 Domain & Email |
+| ~~1~~ | ~~`name-service-registrars.md`~~ | PROMOTED | 🌐 Domain & Email |
 | 2 | `email-forwarding-evaluation.md` | 15 min | 🌐 Domain & Email |
-| 3 | `google-service-sprawl.md` | 15 min | — |
+| ~~3~~ | ~~`google-service-sprawl.md`~~ | PROMOTED | — |
 | ~~5~~ | ~~`proxmox-zfs-boot-mirrors-part-1.md`~~ | PROMOTED | 🖥️ ZFS |
 | ~~5~~ | ~~`writing-to-think-two-decades-of-figuring-things-out.md`~~ | PROMOTED | ✍️ Personal |
 | ~~6~~ | ~~`caddy-reverse-proxy-proxmox-web-ui.md`~~ | PROMOTED | 🔧 Caddy |
@@ -456,6 +462,8 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | ~~—~~ | ~~`proxmox-zfs-boot-mirrors-part-3.md`~~ | PROMOTED (as Part 2) | 🖥️ ZFS |
 | ~~—~~ | ~~`ai-coding-agent-context-files-reference.md`~~ | PROMOTED | 🤖 AI |
 | ~~—~~ | ~~`managing-cross-ai-agent-context.md`~~ | PROMOTED | 🤖 AI |
+| 8 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
+| 9 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
 
 **Note:** Posts written directly to `_posts` (not promoted from drafts): `2026-04-02-improving-eeat-jekyll-adsense.md`, `2026-04-06-adsense-verification-gdpr-script-loading-fix.md`, `2026-04-07-jekyll-sitemap-bloat-tags-categories-pagination.md`, `2026-04-08-jekyll-theme-missing-head-body-tags.md`
 | 8 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
@@ -470,14 +478,14 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | Category | Count |
 |----------|-------|
-| **Total drafts in `_drafts/`** | **38** |
-| Ready to publish — Tier 1 | 3 (+ 12 promoted) |
-| Near-complete — Tier 2 | 7 (+ 9 promoted) |
+| **Total drafts in `_drafts/`** | **36** |
+| Ready to publish — Tier 1 | 1 (+ 14 promoted) |
+| Near-complete — Tier 2 | 5 (+ 11 promoted/rescheduled) |
 | New drafts (untiered) | 0 (Draft Preview Site series promoted) |
 | Needs significant work — Tier 3 | 15 |
-| Too raw / hold — Tier 4 | 9 |
+| Too raw / hold — Tier 4 | 8 (1 rescheduled to July) |
 | Superseded / archive — Tier 5 | 3 |
-| **Total tracked** | **38 drafts + 2 tracker files (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`)** |
+| **Total tracked** | **36 drafts + 2 tracker files (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`)** |
 
 ### Previously Removed
 
@@ -495,5 +503,6 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |
-| Promoted to _posts (2026-06-05–29 — Run Jekyll 6 + Draft Preview 3, interleaved MWF with open slot on June 22) | 9 |
+| Promoted to _posts (2026-06-05–29 — Run Jekyll 6 + Draft Preview 3 + Caddy + Google Services, interleaved MWF) | 11 |
+| Promoted to _posts (2026-05-20 — Name Service Registrars) | 1 |
 | Convenience files retired (SUBDOMAIN-DRAFTS.md, DRAFTS-TODO.md → RUNJEKYLL-EXTENSION.md) | 2 |
