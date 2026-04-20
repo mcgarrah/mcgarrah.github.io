@@ -89,8 +89,13 @@ jobs:
           }
 
           # 1) Encrypt all draft article pages.
+          # Only process actual posts (files starting with YYYY-MM-DD), excluding utility docs.
           while IFS= read -r -d '' source_file; do
-            add_target_for_slug "$(slug_from_source_file "$source_file")"
+            base="$(basename "$source_file")"
+            # Only encrypt if it starts with YYYY-MM-DD pattern (actual post format).
+            if [[ "$base" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2} ]]; then
+              add_target_for_slug "$(slug_from_source_file "$source_file")"
+            fi
           done < <(find _drafts -maxdepth 1 -type f \( -name '*.md' -o -name '*.markdown' \) -print0)
 
           # 2) Encrypt only future-dated _posts article pages.
