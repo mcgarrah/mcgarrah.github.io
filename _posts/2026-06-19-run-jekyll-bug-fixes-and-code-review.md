@@ -5,13 +5,12 @@ categories: [web-development, technical]
 tags: [jekyll, vscode, vscode-extension, typescript, bug-fix, code-review, security]
 excerpt: "A deep code review of the Jekyll Run VS Code extension found 18 issues — 3 fixed in v1.7.1, 15 more waiting. From null rejections that swallow real errors to a boolean default that's secretly a truthy string, here's everything that's wrong and how to fix it."
 description: "Comprehensive code review of the Jekyll Run VS Code extension. Documents 18 issues across the codebase: 3 bugs fixed in v1.7.1 (getConfiguration scoping, null error rejection, lsof parsing), plus 15 additional issues found in a deep review including double rejections, Buffer/string confusion, missing error context, and a boolean config default that's actually a truthy string."
-date: 2026-05-29
-last_modified_at: 2026-05-29
-published: true
+date: 2026-06-19
+last_modified_at: 2026-06-19
 seo:
   type: BlogPosting
-  date_published: 2026-05-29
-  date_modified: 2026-05-29
+  date_published: 2026-06-19
+  date_modified: 2026-06-19
 ---
 
 The [Jekyll Run VS Code extension](https://github.com/Kanna727/jekyll-run) has been abandoned for five years. In the [previous post](/forking-jekyll-run-to-run-jekyll/), I covered forking the repository and modernizing the CI/CD infrastructure. This post covers the actual bugs — three fixed in v1.7.1, plus fifteen more found in a deep code review.

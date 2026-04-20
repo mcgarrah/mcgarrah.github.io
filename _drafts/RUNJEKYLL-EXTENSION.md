@@ -124,16 +124,14 @@ Documented in `FEATURE.md` in the jekyll-run repo and the new features blog draf
 | # | Status | Date | File | Topic |
 |---|--------|------|------|-------|
 | 1 | ✅ Published | 2026-05-11 | `_posts/2026-05-11-jekyll-run-vscode-plugin-local-development.md` | Configuration guide |
-| 2 | 📝 Draft | 2026-05-22 | `_drafts/2026-05-22-jekyll-run-plugin-multiroot-workspace-bug.md` | macOS debugging story |
-| 3 | 📝 Draft | 2026-05-25 | `_drafts/2026-05-25-forking-jekyll-run-to-run-jekyll.md` | Fork rationale and CI/CD |
-| 4 | 📝 Draft | 2026-05-28 | `_drafts/2026-05-28-run-jekyll-vscode-marketplace-publisher-setup.md` | Marketplace publisher setup |
-| 5 | 📝 Draft | 2026-05-29 | `_drafts/2026-05-29-run-jekyll-bug-fixes-and-code-review.md` | 18 issues documented |
-| 6 | 📝 Draft | 2026-06-01 | `_drafts/2026-06-01-run-jekyll-testing-and-test-harness.md` | Test harness and regression tests |
-| 7 | 📝 Draft | 2026-06-04 | `_drafts/2026-06-04-run-jekyll-new-features-clean-doctor-tests.md` | New features: Clean, Doctor, tests |
+| 2 | ✅ Published | 2026-06-05 | `_posts/2026-06-05-jekyll-run-plugin-multiroot-workspace-bug.md` | macOS debugging story |
+| 3 | ✅ Published | 2026-06-10 | `_posts/2026-06-10-forking-jekyll-run-to-run-jekyll.md` | Fork rationale and CI/CD |
+| 4 | ✅ Published | 2026-06-15 | `_posts/2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md` | Marketplace publisher setup |
+| 5 | ✅ Published | 2026-06-19 | `_posts/2026-06-19-run-jekyll-bug-fixes-and-code-review.md` | 18 issues documented |
+| 6 | ✅ Published | 2026-06-22 | `_posts/2026-06-22-run-jekyll-testing-and-test-harness.md` | Test harness and regression tests |
+| 7 | ✅ Published | 2026-06-24 | `_posts/2026-06-24-run-jekyll-new-features-clean-doctor-tests.md` | New features: Clean, Doctor, tests |
 
-Publish order: 2 → 3 → 4 → 5 → 6 → 7 (follows the narrative arc)
-
-All 6 drafts are marked `published: true` and content-complete — ready to promote to `_posts/` on MWF cadence using `git mv`. Remove `published: true` from front matter during promotion (the `_drafts/` directory is sufficient).
+All 7 articles published. Articles 2–7 promoted 2026-06-20, interleaved with Draft Preview Site series on MWF cadence.
 
 ## Notes
 

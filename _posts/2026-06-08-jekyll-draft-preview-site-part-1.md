@@ -5,13 +5,12 @@ categories: [jekyll, github-pages, devops]
 tags: [jekyll, github-pages, staticrypt, drafts, preview, ci-cd, github-actions]
 excerpt: "I wanted a way to share unfinished blog posts with reviewers before publishing. Sounds simple — but GitHub Pages has no authentication, serves one site per repo, and my drafts are already in a public repository. Here's every option I considered and why most of them didn't survive."
 description: "Exploration of options for creating a password-protected Jekyll draft preview site on GitHub Pages, including Staticrypt, Netlify, Cloudflare Access, self-hosting, and project pages. Part 1 of a three-part series."
-date: 2026-06-15
-last_modified_at: 2026-06-15
-published: true
+date: 2026-06-08
+last_modified_at: 2026-06-08
 seo:
   type: BlogPosting
-  date_published: 2026-06-15
-  date_modified: 2026-06-15
+  date_published: 2026-06-08
+  date_modified: 2026-06-08
 ---
 
 I write a lot of drafts. At any given time I have 40-50 posts in various stages of completion sitting in my `_drafts/` folder. Some are nearly done, some are research notes, and some are half-baked ideas that might never see the light of day.

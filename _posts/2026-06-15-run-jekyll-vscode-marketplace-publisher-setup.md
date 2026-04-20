@@ -5,13 +5,12 @@ categories: [web-development, technical]
 tags: [vscode, vscode-extension, marketplace, azure-devops, open-source, publishing, jekyll]
 excerpt: "If you need to fork and publish a VS Code extension — because the original maintainer disappeared five years ago — you first need a Marketplace publisher account. Here's the setup process: Microsoft account, Azure DevOps PAT, publisher profile, and the vsce CLI."
 description: "Step-by-step guide to creating a VS Code Marketplace publisher account for publishing extensions. Covers Microsoft account setup, Azure DevOps Personal Access Token generation, publisher profile creation, vsce CLI authentication, and package.json requirements. Written in the context of forking an abandoned extension."
-date: 2026-05-28
-last_modified_at: 2026-05-28
-published: true
+date: 2026-06-15
+last_modified_at: 2026-06-15
 seo:
   type: BlogPosting
-  date_published: 2026-05-28
-  date_modified: 2026-05-28
+  date_published: 2026-06-15
+  date_modified: 2026-06-15
 ---
 
 The [Jekyll Run VS Code extension](https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run) hasn't been updated in five years. I [diagnosed three bugs](/jekyll-run-plugin-multiroot-workspace-bug/) and [wrote the fixes](/forking-jekyll-run-to-run-jekyll/), but the upstream repository appears abandoned. If the PR sits without response, the next step is forking and publishing a maintained version.

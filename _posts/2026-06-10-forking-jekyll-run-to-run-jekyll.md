@@ -5,13 +5,12 @@ categories: [web-development, technical]
 tags: [jekyll, vscode, vscode-extension, open-source, github-actions, fork, publishing]
 excerpt: "The Jekyll Run VS Code extension hasn't been updated in five years. After fixing three bugs and modernizing the CI/CD pipeline, I'm forking it as 'Run Jekyll' — a maintained version with cross-platform testing, automated releases, and a path to the VS Code Marketplace."
 description: "How I forked the abandoned Jekyll Run VS Code extension, modernized its CI/CD infrastructure, and prepared it for independent publication as 'Run Jekyll'. Covers GitHub Actions upgrades, dependency updates, VSIX packaging, Marketplace publishing setup, and the etiquette of forking open source projects."
-date: 2026-05-25
-last_modified_at: 2026-05-25
-published: true
+date: 2026-06-10
+last_modified_at: 2026-06-10
 seo:
   type: BlogPosting
-  date_published: 2026-05-25
-  date_modified: 2026-05-25
+  date_published: 2026-06-10
+  date_modified: 2026-06-10
 ---
 
 The [Jekyll Run VS Code extension](https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run) hasn't been updated since 2020. I [found three bugs](/jekyll-run-plugin-multiroot-workspace-bug/), [fixed them](/run-jekyll-bug-fixes-and-code-review/), and modernized the build infrastructure. The original author appears to have moved on — the repository has open issues with no responses and the last commit was five years ago.

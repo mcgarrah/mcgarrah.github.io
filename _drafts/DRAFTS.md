@@ -48,6 +48,17 @@ Last updated: 2026-04-17
 | ~~`2025-02-26-proxmox-zfs-boot-mirrors-part-2.md`~~ | `2026-06-03-proxmox-zfs-boot-mirrors-part-3.md` | Promoted 2026-04-17, renumbered Part 2→3 |
 | ~~`2026-06-29-ai-coding-agent-context-files-reference.md`~~ | `2026-05-27-ai-coding-agent-context-files-reference.md` | Promoted 2026-04-17 |
 | ~~`2026-06-30-managing-cross-ai-agent-context.md`~~ | `2026-06-01-managing-cross-ai-agent-context.md` | Promoted 2026-04-17 |
+| ~~`2026-05-22-jekyll-run-plugin-multiroot-workspace-bug.md`~~ | `2026-06-05-jekyll-run-plugin-multiroot-workspace-bug.md` | Promoted 2026-06-20 |
+| ~~`2026-06-15-jekyll-draft-preview-site-part-1.md`~~ | `2026-06-08-jekyll-draft-preview-site-part-1.md` | Promoted 2026-06-20 |
+| ~~`2026-05-25-forking-jekyll-run-to-run-jekyll.md`~~ | `2026-06-10-forking-jekyll-run-to-run-jekyll.md` | Promoted 2026-06-20 |
+| ~~`2026-06-17-jekyll-draft-preview-site-part-2.md`~~ | `2026-06-12-jekyll-draft-preview-site-part-2.md` | Promoted 2026-06-20 |
+| ~~`2026-05-28-run-jekyll-vscode-marketplace-publisher-setup.md`~~ | `2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md` | Promoted 2026-06-20 |
+| ~~`2026-06-19-jekyll-draft-preview-site-part-3.md`~~ | `2026-06-17-jekyll-draft-preview-site-part-3.md` | Promoted 2026-06-20 |
+| ~~`2026-05-29-run-jekyll-bug-fixes-and-code-review.md`~~ | `2026-06-19-run-jekyll-bug-fixes-and-code-review.md` | Promoted 2026-06-20 |
+| ~~`2026-06-01-run-jekyll-testing-and-test-harness.md`~~ | `2026-06-22-run-jekyll-testing-and-test-harness.md` | Promoted 2026-06-20 |
+| ~~`2026-06-04-run-jekyll-new-features-clean-doctor-tests.md`~~ | `2026-06-24-run-jekyll-new-features-clean-doctor-tests.md` | Promoted 2026-06-20 |
+| ~~`SUBDOMAIN-DRAFTS.md`~~ | Content migrated to 3-part article series | Deleted 2026-06-20 |
+| ~~`DRAFTS-TODO.md`~~ | Run Jekyll content → `RUNJEKYLL-EXTENSION.md` | Deleted 2026-06-20 |
 
 ### MWF Cadence Correction (2026-04-17)
 
@@ -92,7 +103,7 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | 🔑 **SSH & Remote Access** | — | Published; prerequisite for #20 (WAL/DB benchmarks) |
 | 🏗️ **Homelab Infrastructure** (overlapping) | #24, #25, #26 | Pick ONE of these three to publish |
 | 🧠 **Data Science & AI/ML** | #23, #29 | Five Stages + Research model — merge or publish separately |
-| 🔒 **Draft Preview Site** | new | 3-part series: options exploration, design refinement, implementation |
+| 🔒 **Draft Preview Site** | — | All 3 parts promoted (Part 1 Mon 6/8, Part 2 Fri 6/12, Part 3 Wed 6/17) |
 
 ---
 
@@ -213,13 +224,14 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 - **Published as:** `2026-05-11-jekyll-run-vscode-plugin-local-development.md`
 - **Related series (🔌 Jekyll Run Plugin → Run Jekyll):**
-  - `_drafts/2026-05-22-jekyll-run-plugin-multiroot-workspace-bug.md` — macOS crash diagnosis, rbenv fix, terminal launch requirement
-  - `_drafts/2026-05-25-forking-jekyll-run-to-run-jekyll.md` — CI/CD modernization, fork rename, Marketplace publishing
-  - `_drafts/2026-05-28-run-jekyll-vscode-marketplace-publisher-setup.md` — Run Jekyll: VS Code Marketplace publisher account setup
-  - `_drafts/2026-05-29-run-jekyll-bug-fixes-and-code-review.md` — 3 bugs fixed in v1.7.1 + 15 more from deep code review
-  - `_drafts/2026-06-01-run-jekyll-testing-and-test-harness.md` — Test harness setup, unit and integration tests
-  - `_drafts/2026-06-04-run-jekyll-new-features-clean-doctor-tests.md` — New features: Clean, Doctor commands and automated test suite
+  - `2026-06-05-jekyll-run-plugin-multiroot-workspace-bug.md` — PROMOTED
+  - `2026-06-10-forking-jekyll-run-to-run-jekyll.md` — PROMOTED
+  - `2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md` — PROMOTED
+  - `2026-06-19-run-jekyll-bug-fixes-and-code-review.md` — PROMOTED
+  - `2026-06-22-run-jekyll-testing-and-test-harness.md` — PROMOTED
+  - `2026-06-24-run-jekyll-new-features-clean-doctor-tests.md` — PROMOTED
   - Publish order: published article (done), macOS crash, fork/rename, publisher account, bug fixes, testing, new features
+  - All 6 promoted interleaved with Draft Preview Site series on MWF cadence (June 5–24)
 
 ### 19b. ~~`2026-05-10-jekyll-liquid-code-fence-rendering-trap.md`~~ — 📝 Jekyll Deep Dives — PROMOTED
 
@@ -457,14 +469,14 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 
 | Category | Count |
 |----------|-------|
-| **Total drafts in `_drafts/`** | **47** |
+| **Total drafts in `_drafts/`** | **38** |
 | Ready to publish — Tier 1 | 3 (+ 12 promoted) |
 | Near-complete — Tier 2 | 7 (+ 9 promoted) |
-| New drafts (untiered) | 3 (Draft Preview Site series) |
+| New drafts (untiered) | 0 (Draft Preview Site series promoted) |
 | Needs significant work — Tier 3 | 15 |
 | Too raw / hold — Tier 4 | 9 |
 | Superseded / archive — Tier 5 | 3 |
-| **Total tracked** | **47 drafts + 2 tracker files (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`)** |
+| **Total tracked** | **38 drafts + 2 tracker files (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`)** |
 
 ### Previously Removed
 
@@ -482,3 +494,5 @@ Drafts that form natural publishing sequences or share a topic. Publish in order
 | Duplicate deleted (2026-04-12) | 1 |
 | Comments draft merged into #6 | 1 |
 | Template/test files (consolidated earlier) | 10 |
+| Promoted to _posts (2026-06-05–24 — Run Jekyll 6 + Draft Preview 3, interleaved MWF) | 9 |
+| Convenience files retired (SUBDOMAIN-DRAFTS.md, DRAFTS-TODO.md → RUNJEKYLL-EXTENSION.md) | 2 |

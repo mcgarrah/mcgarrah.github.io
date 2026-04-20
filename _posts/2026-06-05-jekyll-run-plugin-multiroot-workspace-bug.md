@@ -5,13 +5,12 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, vscode, multi-root-workspace, plugin-bug, github-pages, ruby, rbenv, macos]
 excerpt: "The Jekyll Run VS Code extension crashes with 'TypeError: Cannot read properties of null' in multi-root workspaces on macOS. The error is misleading — the real problem is macOS GUI apps don't inherit your shell PATH, so the plugin runs system Ruby 2.6. The fix is rbenv with Ruby 3.3, launching VS Code from a terminal, and understanding why every other approach fails."
 description: "Diagnosing and fixing the Jekyll Run VS Code extension crash in multi-root workspaces on macOS. A debugging story covering the misleading null toString TypeError, blind alleys through VS Code settings and plugin source code, the real root cause (macOS GUI PATH inheritance), and the complete solution using rbenv with Ruby 3.3."
-date: 2026-05-22
-last_modified_at: 2026-05-22
-published: true
+date: 2026-06-05
+last_modified_at: 2026-06-05
 seo:
   type: BlogPosting
-  date_published: 2026-05-22
-  date_modified: 2026-05-22
+  date_published: 2026-06-05
+  date_modified: 2026-06-05
 ---
 
 In my [previous post on the Jekyll Run plugin](/jekyll-run-vscode-plugin-local-development/), I covered how to configure the extension for local development — the flags that matter, settings precedence, and the `_config.yml` trap. That post assumed the plugin actually starts. This one covers what happens when it doesn't.

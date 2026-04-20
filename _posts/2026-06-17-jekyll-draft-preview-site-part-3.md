@@ -5,13 +5,12 @@ categories: [jekyll, github-pages, devops]
 tags: [jekyll, github-pages, staticrypt, drafts, preview, ci-cd, github-actions, giscus]
 excerpt: "The design is done. Time to build it. This post covers the complete implementation — repo creation, DNS configuration, the final GitHub Actions workflow, Staticrypt testing results, and every edge case I hit along the way."
 description: "Complete implementation guide for a Jekyll draft preview site using GitHub Pages, Staticrypt, and GitHub Actions. Includes repo setup, DNS configuration, final workflow, testing results, and lessons learned. Part 3 of a three-part series."
-date: 2026-06-19
-last_modified_at: 2026-06-19
-published: true
+date: 2026-06-17
+last_modified_at: 2026-06-17
 seo:
   type: BlogPosting
-  date_published: 2026-06-19
-  date_modified: 2026-06-19
+  date_published: 2026-06-17
+  date_modified: 2026-06-17
 ---
 
 In [Part 1](/jekyll-draft-preview-site-part-1/), I explored the options. In [Part 2](/jekyll-draft-preview-site-part-2/), I refined the design. Now it's time to build it.

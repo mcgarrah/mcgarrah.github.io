@@ -5,14 +5,13 @@ categories: [jekyll, github-pages, devops]
 tags: [jekyll, github-pages, staticrypt, drafts, preview, ci-cd, github-actions, giscus]
 excerpt: "With the options narrowed down to a separate GitHub repo with Staticrypt, I started designing the actual implementation. That's when the interesting problems showed up — Giscus feedback, Staticrypt navigation quirks, leaky RSS feeds, and the question of whether a password even matters when the source is public."
 description: "Detailed design for a Jekyll draft preview site using GitHub Pages, Staticrypt, and GitHub Actions. Covers config overlays, Giscus feedback on a separate repo, Staticrypt UX considerations, and remaining open questions. Part 2 of a three-part series."
-date: 2026-06-17
-last_modified_at: 2026-06-17
-published: true
+date: 2026-06-12
+last_modified_at: 2026-06-12
 mermaid: true
 seo:
   type: BlogPosting
-  date_published: 2026-06-17
-  date_modified: 2026-06-17
+  date_published: 2026-06-12
+  date_modified: 2026-06-12
 ---
 
 In [Part 1](/jekyll-draft-preview-site-part-1/), I explored seven options for creating a draft preview site and eliminated most of them. The survivor: a separate GitHub repo with Staticrypt encryption, automated via GitHub Actions, served at `drafts.mcgarrah.org`.

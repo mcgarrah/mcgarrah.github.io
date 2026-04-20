@@ -5,13 +5,12 @@ categories: [web-development, technical]
 tags: [vscode, vscode-extension, typescript, jekyll, open-source, testing]
 excerpt: "The Run Jekyll VS Code extension has five commands: Run, Build, Stop, Restart, and Open. After living with it daily, I know exactly what's missing — a Clean command for when stale caches hide new drafts, a Doctor command for quick diagnostics, and actual tests so I can ship these features without breaking what already works."
 description: "Proposed new features for the Run Jekyll VS Code extension: Jekyll Clean command with two-mode behavior (standalone and clean-restart), Jekyll Doctor diagnostic command, and an automated test suite replacing the placeholder test. Includes implementation plans, keybindings, and testing strategy."
-date: 2026-06-04
-last_modified_at: 2026-06-04
-published: true
+date: 2026-06-24
+last_modified_at: 2026-06-24
 seo:
   type: BlogPosting
-  date_published: 2026-06-04
-  date_modified: 2026-06-04
+  date_published: 2026-06-24
+  date_modified: 2026-06-24
 ---
 
 In the previous posts in this series, I've been [fixing bugs](/run-jekyll-bug-fixes-and-code-review/), [modernizing CI/CD](/forking-jekyll-run-to-run-jekyll/), and [building a test harness](/run-jekyll-testing-and-test-harness/) for the Run Jekyll VS Code extension. Now it's time to add features.
