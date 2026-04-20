@@ -1,0 +1,30 @@
+url: "https://drafts.mcgarrah.org"
+canonical_url: "https://drafts.mcgarrah.org"
+baseurl: ""
+
+# Disable production tracking and ads on the drafts preview site.
+google_analytics: ""
+google_adsense: ""
+google_cse_id: ""
+
+# Enable Giscus comments for the drafts preview site.
+giscus:
+  repo: mcgarrah/drafts.mcgarrah.org
+  repo_id: R_kgDOSG6Quw
+  category: Draft Reviews
+  category_id: DIC_kwDOSG6Qu84C7PMZ
+  mapping: pathname
+  strict: 0
+  reactions_enabled: 1
+  emit_metadata: 0
+  input_position: top
+  theme: preferred_color_scheme
+  lang: en
+  loading: lazy
+
+# Mark every rendered page as noindex on the drafts site.
+defaults:
+  - scope:
+      path: ""
+    values:
+      noindex: true

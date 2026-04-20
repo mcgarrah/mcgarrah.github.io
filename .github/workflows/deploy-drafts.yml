@@ -1,0 +1,86 @@
+name: Deploy Draft Preview Site
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: drafts-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.300.0
+        with:
+          ruby-version: "3.2.6"
+          bundler-cache: true
+          cache-version: 1
+
+      - name: Build with Jekyll (drafts + future)
+        run: bundle exec jekyll build --drafts --future --config _config.yml,_config_drafts.yml
+        env:
+          JEKYLL_ENV: production
+
+      - name: Encrypt HTML with Staticrypt
+        env:
+          DRAFTS_PASSWORD: ${{ secrets.DRAFTS_PASSWORD }}
+        run: |
+          if [[ -z "$DRAFTS_PASSWORD" ]]; then
+            echo "::error::Missing DRAFTS_PASSWORD secret"
+            exit 1
+          fi
+
+          while IFS= read -r -d '' file; do
+            npx --yes staticrypt "$file" \
+              -p "$DRAFTS_PASSWORD" \
+              --short \
+              --remember 30 \
+              --template-title "Draft Preview - mcgarrah.org"
+          done < <(find _site -type f -name '*.html' -print0)
+
+      - name: Apply crawler protections
+        run: |
+          printf "User-agent: *\nDisallow: /\n" > _site/robots.txt
+          rm -f _site/feed.xml _site/sitemap.xml _site/sitemapindex.xml
+
+      - name: Deploy to drafts.mcgarrah.org repo
+        env:
+          DRAFTS_DEPLOY_TOKEN: ${{ secrets.DRAFTS_DEPLOY_TOKEN }}
+          TARGET_REPO: mcgarrah/drafts.mcgarrah.org
+        run: |
+          if [[ -z "$DRAFTS_DEPLOY_TOKEN" ]]; then
+            echo "::error::Missing DRAFTS_DEPLOY_TOKEN secret"
+            exit 1
+          fi
+
+          deploy_dir="$(mktemp -d)"
+          git clone "https://x-access-token:${DRAFTS_DEPLOY_TOKEN}@github.com/${TARGET_REPO}.git" "$deploy_dir"
+
+          find "$deploy_dir" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          cp -a _site/. "$deploy_dir"/
+
+          echo "drafts.mcgarrah.org" > "$deploy_dir/CNAME"
+          touch "$deploy_dir/.nojekyll"
+
+          cd "$deploy_dir"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No drafts-site changes to deploy"
+            exit 0
+          fi
+
+          git commit -m "Deploy drafts site from ${GITHUB_SHA}"
+          git push origin main --force
