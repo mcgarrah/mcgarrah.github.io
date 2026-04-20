@@ -30,6 +30,61 @@ Last updated: 2026-04-20
 - Everything else (rename, tests, new features): commit directly on `main`
 - **Never merge `main` into `upstream-pr`** — the rename makes it un-PR-able
 
+### Execution Model (Deep Review Update)
+
+- **Track A: `upstream-pr` (critical-only stabilization)**
+  - Goal: small, low-risk bug fixes that are easy to review and accept upstream
+  - Include: crash/silent-failure fixes, deterministic error handling, and minimal CI/workflow modernization needed to validate fixes
+  - Exclude: rename/rebrand, large refactors, new commands/features, behavior changes beyond bug scope
+- **Track B: `main` (major improvements)**
+  - Goal: full overhaul (new features, deeper refactors, tests, Marketplace/publisher work)
+  - Can include dependency upgrades and broader CI/CD enhancements not appropriate for upstream PR scope
+
+---
+
+## Deep Review Findings (2026-04-20)
+
+Additional findings from deep code review and local build/test validation in `mcgarrah/jekyll-run`.
+
+### Critical (upstream-pr candidates)
+
+- [ ] **Dependency detection can misreport tools as installed**
+  - `!(await lookpath(...))?.startsWith(...)` can pass when value is undefined, allowing run/build flow to proceed with missing dependencies
+  - Files: `src/extension.ts` (run/build command checks)
+- [ ] **Restart race condition (stop not awaited before run)**
+  - Restart path calls stop and immediately starts new server, causing flaky port conflicts
+  - File: `src/extension.ts`
+- [ ] **Promise multi-settle and inconsistent rejection payloads in run/build/install**
+  - `stderr` can reject while `close` still resolves, and rejection types vary (Buffer/string/regex array/undefined)
+  - Files: `src/cmds/run.ts`, `src/cmds/build.ts`, `src/cmds/install.ts`
+- [ ] **Existing-server open flow can use stale/undefined URL**
+  - `openUrl(address)` may run before address is reliably initialized in already-running-server path
+  - File: `src/extension.ts`
+- [ ] **Unprotected `_config.yml` parse path can crash flow**
+  - sync YAML parse has no guard for malformed config
+  - File: `src/extension.ts`
+
+### High/Medium (main branch first unless kept very small)
+
+- [ ] Open command registration not added to disposables (`open` not pushed to `context.subscriptions`)
+- [ ] `stopServerOnExit` default type mismatch (`"false"` string vs boolean)
+- [ ] Unix kill path not awaited (`kill -9` fire-and-forget)
+- [ ] lsof parser still assumes a data line exists (header-only output crash risk)
+- [ ] whitespace parsing helpers are brittle (`split(' ')`, undefined-first-element assumptions)
+
+### Testing Reality Check
+
+- [ ] Build/compile passes and extension test harness runs, but test coverage is still effectively placeholder-level (`extension.test.ts` sample test only)
+- [ ] Critical paths above are not protected by focused unit tests yet (error handling, process parsing, restart flow)
+
+---
+
+## Open Questions (from Deep Review)
+
+- [ ] Should command-line argument parsing support quoted/escaped arguments, or keep current simple split behavior with documented limitations?
+- [ ] In already-running-server detection, should URL always be derived from configured port/baseurl instead of reused runtime address state?
+- [ ] For upstream PR acceptance, should CI/workflow updates be bundled with bug fixes in one PR or split into two small PRs?
+
 ## Current State
 
 - **v1.7.1 released** — 3 critical bugs fixed, CI/CD modernized, VSIX on GitHub Release
@@ -53,8 +108,17 @@ Last updated: 2026-04-20
 ## Phase 1 — Submit Upstream PR
 
 - [ ] Open PR from `mcgarrah/jekyll-run:upstream-pr` → `Kanna727/jekyll-run:master`
-  - Include the 3 bug fixes and CI modernization
-  - This is the goodwill gesture before diverging with the rename
+  - Include only critical stabilization fixes and minimal CI/workflow updates needed to validate those fixes
+  - Keep PR narrowly scoped and easy to review/merge
+  - This is the goodwill gesture before diverging with rename/new features on `main`
+
+### Phase 1 Candidate Scope (Critical Only)
+
+- [ ] Fix dependency detection guard logic in run/build command prechecks
+- [ ] Await stop in restart flow before launching new run
+- [ ] Normalize run/build/install promise behavior to settle once with consistent `Error` objects
+- [ ] Guard config parse path and report actionable errors
+- [ ] Fix existing-server open URL derivation/initialization path
 
 ## Phase 2 — Fix Remaining 15 Bugs (on `main`)
 
