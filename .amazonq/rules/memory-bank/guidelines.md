@@ -154,12 +154,12 @@ Convenience files:
   ```yaml
   ---
   layout: none
-  date: 2038-01-18
+  date: 1999-12-31
   sitemap: false
   ---
   ```
 - `layout: none` — renders as raw markdown→HTML without site chrome (no nav, CSS, or SEO tags)
-- `date: 2038-01-18` — pins sort position to the top of the archive (day before Unix Y2K38 epoch overflow); prevents filesystem mtime from causing random archive placement
+- `date: 1999-12-31` — pins sort position to the bottom of the archive (Y2K eve); prevents filesystem mtime from causing random archive placement
 - `sitemap: false` — excludes from sitemap generation
 - Are **never promoted** to `_posts/` — they are working documents, not blog content
 - May inform blog posts (e.g., `SUBDOMAIN-DRAFTS.md` analysis → three-part blog series) but remain as reference material

@@ -20,7 +20,7 @@ mcgarrah.github.io/
 - **_posts/** - Published articles with date-based naming (YYYY-MM-DD-title.md)
 - **_drafts/** - Work-in-progress articles without publication dates
   - Draft posts: `YYYY-MM-DD-title.md` with front matter (promoted to `_posts/` when ready)
-  - Convenience files: `UPPERCASE-NAME.md` with minimal front matter (`layout: none`, `date: 2038-01-18`, `sitemap: false`) for planning/reference docs, never promoted
+  - Convenience files: `UPPERCASE-NAME.md` with minimal front matter (`layout: none`, `date: 1999-12-31`, `sitemap: false`) for planning/reference docs, never promoted
   - `DRAFTS.md` - Master tracking file for all draft status, tiers, and promotion history
   - `RUNJEKYLL-EXTENSION.md` - Run Jekyll VS Code extension project tracker
 - **_data/font-awesome/** - Icon definitions for UI components
