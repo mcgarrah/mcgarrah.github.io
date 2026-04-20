@@ -123,52 +123,52 @@ jobs:
           temp_encrypt_dir="$(mktemp -d)"
           trap "rm -rf '$temp_encrypt_dir'" EXIT
 
-          # Staticrypt with individual files needs basename extraction, so we'll use a different approach:
-          # Create a list of files and process them with proper path reconstruction
-          declare -a files_to_encrypt=()
-          
+          # Encrypt files one at a time to avoid basename collisions
+          # (e.g., multiple _site/*/index.html files all output to temp/index.html)
           for file in "${target_files[@]}"; do
-            files_to_encrypt+=("$file")
-          done
-
-          # Encrypt all target files at once to a temp directory
-          # Use npm exec to ensure we have the right staticrypt binary
-          npm exec staticrypt -- \
-            "${files_to_encrypt[@]}" \
-            -p "$DRAFTS_PASSWORD" \
-            --short \
-            --remember 30 \
-            --template-title "Draft Preview - mcgarrah.org" \
-            -d "$temp_encrypt_dir" \
-            -c false \
-            2>&1 | tee /tmp/staticrypt.log
-
-          # Verify encryption and copy encrypted files back
-          for file in "${target_files[@]}"; do
-            basename_file="$(basename "$file")"
+            # Create unique temp file path for this encryption
+            relative_path="${file#_site/}"
+            unique_name="${relative_path//\//_}"  # Convert paths/to/file.html -> paths_to_file.html
             
-            # Look for the encrypted file in temp directory with just the basename
-            # (Staticrypt outputs to dir/basename.html when given full path)
-            encrypted_file="$temp_encrypt_dir/$basename_file"
-
-            if [[ ! -f "$encrypted_file" ]]; then
-              echo "::error::Encryption did not produce $encrypted_file (looked for basename of $file)"
-              echo "Available files in $temp_encrypt_dir:"
-              ls -la "$temp_encrypt_dir" 2>/dev/null | head -20
+            # Encrypt to a unique temporary file using input redirection
+            temp_specific_dir="$temp_encrypt_dir/$(basename "$file" .html)_$$_$RANDOM"
+            mkdir -p "$temp_specific_dir"
+            
+            npm exec staticrypt -- \
+              "$file" \
+              -p "$DRAFTS_PASSWORD" \
+              --short \
+              --remember 30 \
+              --template-title "Draft Preview - mcgarrah.org" \
+              -d "$temp_specific_dir" \
+              -c false \
+              2>&1 | tee /tmp/staticrypt-"${unique_name}.log"
+            
+            # Staticrypt outputs to temp_dir/basename.html (flattens paths)
+            actual_basename="$(basename "$file")"
+            encrypted_src="$temp_specific_dir/$actual_basename"
+            
+            if [[ ! -f "$encrypted_src" ]]; then
+              echo "::error::Encryption did not produce $actual_basename in $temp_specific_dir for $file"
+              echo "Available files in $temp_specific_dir:"
+              ls -la "$temp_specific_dir" 2>/dev/null | head -10
               exit 1
             fi
-
-            # Verify the file was actually modified
+            
+            # Verify the file was actually encrypted
             before_hash="$(sha256sum "$file" | awk '{print $1}')"
-            cp "$encrypted_file" "$file"
+            cp "$encrypted_src" "$file"
             after_hash="$(sha256sum "$file" | awk '{print $1}')"
 
             if [[ "$before_hash" == "$after_hash" ]]; then
-              echo "::error::Encryption did not modify $file (hashes match)"
+              echo "::error::Encryption did not modify $file (hashes match: $before_hash)"
               exit 1
             fi
 
             echo "✓ Encrypted $(basename "$file") (${before_hash:0:8} → ${after_hash:0:8})"
+            
+            # Clean up this file's temp directory
+            rm -rf "$temp_specific_dir"
           done
 
           # Final verification: at least one encrypted page contains Staticrypt output
