@@ -25,6 +25,7 @@ Last updated: 2026-06-20
 | 07-15 | Wed | Security Hardening (CSP, SRI) | Add integrity hashes, CSP meta tag |
 | 07-17 | Fri | Plausible vs Google Analytics | Evaluate, decide, document |
 | 07-20 | Mon | Post Series Navigation | Implement prev/next for multi-part series |
+| 07-22 | Wed | Git History Bloat Cleanup for drafts.mcgarrah.org | Validate rewrite runbook, execute cleanup, re-clone |
 
 ---
 
@@ -39,6 +40,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🌍 **Proxmox SDN & Networking** | powerdns-lxc, openwrt-lxc, lag-lacp | PowerDNS, OpenWRT LXC, and LAG/LACP |
 | 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting, dark-mode-toggle, tag-sprawl, front-matter-hygiene, post-series-navigation | Active cluster with 6 drafts |
 | 🛡️ **Jekyll Security & Privacy** | security-hardening-csp-sri, plausible-vs-google-analytics | New cluster from TODO.md items |
+| 🧰 **Git & Repository Maintenance** | git-history-bloat-drafts-repo-cleanup | History rewrite and clone performance remediation |
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
@@ -68,6 +70,7 @@ Drafts that form natural publishing sequences or share a topic.
 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
 | `jekyll-tag-sprawl-consolidation.md` | 1 hr | 📝 Jekyll Deep Dives |
 | `plausible-vs-google-analytics.md` | 1 hr | 🛡️ Security & Privacy |
+| `git-history-bloat-drafts-repo-cleanup.md` | 45 min | 🧰 Git & Repo Maintenance |
 
 ---
 
@@ -172,6 +175,12 @@ Drafts that form natural publishing sequences or share a topic.
 - Multi-part series have manual cross-references that don't scale.
 - **What's needed:** Design front matter convention, build Liquid include, retrofit existing series.
 - **Effort:** 2-3 hours
+
+### `2026-07-08-git-history-bloat-drafts-repo-cleanup.md` — 🧰 Git & Repository Maintenance
+
+- Complete draft documenting repo bloat root cause (historical binary blobs), mitigation options, and rewrite-history + re-clone runbook.
+- **What's needed:** Confirm final migration checklist details, add post-cleanup metrics once executed.
+- **Effort:** 30-45 minutes
 
 ### `2024-03-11-lag-lacp-nic-bonding.md` — 🌍 SDN & Networking
 
@@ -296,13 +305,13 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 42 |
+| Drafts in `_drafts/` | 43 |
 | Ready to publish (Tier 1) | 1 |
-| Near-complete (Tier 2) | 16 |
+| Near-complete (Tier 2) | 17 |
 | Substantial work (Tier 3) | 12 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
-| Scheduled (July) | 9 |
+| Scheduled (July) | 10 |
 | Tracker files | 3 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`) |
 
 ---
