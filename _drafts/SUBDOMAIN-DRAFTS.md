@@ -270,20 +270,24 @@ Create a `_config_drafts.yml` overlay in the main repo:
 
 ```yaml
 url: "https://drafts.mcgarrah.org"
+canonical_url: "https://drafts.mcgarrah.org"
+baseurl: ""
+draft_preview_site: true
+main_site_url: "https://mcgarrah.org"
 google_analytics: ""
 google_adsense: ""
 
 # Override Giscus to point to drafts repo (keeps feedback separate from production)
 giscus:
   repo: mcgarrah/drafts.mcgarrah.org
-  repo_id: "<drafts-repo-id>"         # Get from https://giscus.app after creating repo
+  repo_id: "R_kgDOSG6Quw"
   category: "Draft Reviews"
-  category_id: "<category-id>"         # Get from https://giscus.app after creating category
+  category_id: "DIC_kwDOSG6Qu84C7PMZ"
   mapping: pathname
   strict: 0
   reactions_enabled: 1
   emit_metadata: 0
-  input_position: bottom
+  input_position: top
   theme: preferred_color_scheme
   lang: en
   loading: lazy
@@ -302,14 +306,15 @@ Jekyll merges configs left-to-right, so `_config_drafts.yml` overrides the produ
 Add a banner to the drafts site so reviewers know they're on the preview:
 
 ```html
-{% if site.url contains 'drafts' %}
-<div style="background: #ff6600; color: white; text-align: center; padding: 8px; position: fixed; top: 0; width: 100%; z-index: 9999;">
-  ⚠️ DRAFT PREVIEW — Not for public distribution
+{% if site.draft_preview_site %}
+<div style="background:#e67e00;color:#fff;text-align:center;padding:0.5em 1em;font-size:0.9em;font-weight:bold;">
+  ⚠ DRAFT PREVIEW SITE — unpublished content, may change.
+  <a href="{{ site.main_site_url }}" style="color:#fff;text-decoration:underline;margin-left:0.5em;">Go to the main site →</a>
 </div>
 {% endif %}
 ```
 
-This goes in `_layouts/default.html` (or a new include). It renders only when the site URL contains "drafts" — invisible on production.
+This goes in `_layouts/default.html` (or a new include). It renders only when `draft_preview_site: true` is set in `_config_drafts.yml`, so production remains unaffected.
 
 ### Sketch of GitHub Actions Workflow
 
@@ -528,8 +533,8 @@ Organized by where the work happens. Each step is independent enough to do in a 
 - [x] **1.1** Create `mcgarrah/drafts.mcgarrah.org` repo on GitHub (public, initialized so `main` exists)
 - [x] **1.2** Enable GitHub Pages on the drafts repo (Settings → Pages → Deploy from branch → `main` → `/ (root)`)
 - [x] **1.3** Enable GitHub Discussions on the drafts repo (Settings → General → Features → Discussions)
-- [ ] **1.4** Create a "Draft Reviews" category in Discussions (Discussions tab → Categories → New category)
-- [ ] **1.5** Generate a GitHub PAT with `repo` scope for cross-repo push (Settings → Developer settings → Personal access tokens → Fine-grained tokens, scope to `drafts.mcgarrah.org` repo only)
+- [x] **1.4** Create a "Draft Reviews" category in Discussions (Discussions tab → Categories → New category)
+- [x] **1.5** Generate a GitHub PAT with `repo` scope for cross-repo push (Settings → Developer settings → Personal access tokens → Fine-grained tokens, scope to `drafts.mcgarrah.org` repo only)
 - [x] **1.6** Add `DRAFTS_DEPLOY_TOKEN` secret to `mcgarrah.github.io` repo (Settings → Secrets and variables → Actions → New repository secret)
 - [x] **1.7** Pick a Staticrypt password and add `DRAFTS_PASSWORD` secret to `mcgarrah.github.io` repo
 
@@ -537,34 +542,34 @@ Organized by where the work happens. Each step is independent enough to do in a 
 
 ### Phase 2: DNS (Porkbun, ~2 minutes)
 
-- [ ] **2.1** Add CNAME record in Porkbun: `drafts` → `mcgarrah.github.io.`
-- [ ] **2.2** Wait for DNS propagation (usually < 5 minutes, can verify with `dig drafts.mcgarrah.org`)
+- [x] **2.1** Add CNAME record in Porkbun: `drafts` → `mcgarrah.github.io.`
+- [x] **2.2** Wait for DNS propagation (usually < 5 minutes, can verify with `dig drafts.mcgarrah.org`)
 - [ ] **2.3** After first deployment, enable "Enforce HTTPS" in the drafts repo's Pages settings
 
 ### Phase 3: Giscus Configuration (browser, ~5 minutes)
 
-- [ ] **3.1** Go to https://giscus.app
-- [ ] **3.2** Enter `mcgarrah/drafts.mcgarrah.org` as the repo
-- [ ] **3.3** Select "Draft Reviews" as the Discussion category
-- [ ] **3.4** Copy the `data-repo-id` and `data-category-id` values
-- [ ] **3.5** Save these values — needed for `_config_drafts.yml` in Phase 4
+- [x] **3.1** Go to https://giscus.app
+- [x] **3.2** Enter `mcgarrah/drafts.mcgarrah.org` as the repo
+- [x] **3.3** Select "Draft Reviews" as the Discussion category
+- [x] **3.4** Copy the `data-repo-id` and `data-category-id` values
+- [x] **3.5** Save these values — needed for `_config_drafts.yml` in Phase 4
 
 ### Phase 4: Main Repo Files (IDE, ~20 minutes total)
 
 - [x] **4.1** Create `_config_drafts.yml` in the main repo root with drafts URL, disabled analytics/ads, and Giscus config pointing to drafts repo (use IDs from Phase 3)
 - [x] **4.2** Create `.github/workflows/deploy-drafts.yml` in the main repo (workflow sketch is in this document and Part 2)
-- [ ] **4.3** Add the draft preview banner to `_layouts/default.html` (Liquid conditional on `site.url contains 'drafts'`)
-- [ ] **4.4** Commit and push to `main`
+- [x] **4.3** Add the draft preview banner to `_layouts/default.html` (Liquid conditional on `draft_preview_site`)
+- [x] **4.4** Commit and push to `main`
 
 ### Phase 5: Testing (~30 minutes)
 
 - [ ] **5.1** Verify the `deploy-drafts.yml` workflow runs successfully in GitHub Actions
-- [ ] **5.2** Verify `drafts.mcgarrah.org` loads and shows the Staticrypt password prompt
+- [x] **5.2** Verify draft/future article pages on `drafts.mcgarrah.org` show the Staticrypt password prompt
 - [ ] **5.3** Enter the password — verify the site renders correctly with drafts and future posts visible
 - [ ] **5.4** Click through 3-4 internal links — verify `--remember` works (no re-prompting)
-- [ ] **5.5** Verify the orange "DRAFT PREVIEW" banner appears at the top
-- [ ] **5.6** Verify `robots.txt` at `drafts.mcgarrah.org/robots.txt` shows `Disallow: /`
-- [ ] **5.7** Verify `feed.xml` and `sitemap.xml` return 404
+- [x] **5.5** Verify the orange "DRAFT PREVIEW" banner appears at the top with a link back to `mcgarrah.org`
+- [x] **5.6** Verify `robots.txt` at `drafts.mcgarrah.org/robots.txt` shows `Disallow: /`
+- [x] **5.7** Verify `feed.xml` and `sitemap.xml` return 404
 - [ ] **5.8** Verify Google Analytics is NOT loading (check browser DevTools → Network)
 - [ ] **5.9** Scroll to bottom of a post — verify Giscus loads and points to the drafts repo Discussions
 - [ ] **5.10** Leave a test comment via Giscus — verify it appears in the drafts repo's Discussions
@@ -576,7 +581,15 @@ Organized by where the work happens. Each step is independent enough to do in a 
 - [ ] **6.1** Fill in Part 3 (`_drafts/2026-06-19-jekyll-draft-preview-site-part-3.md`) with real results from testing
 - [ ] **6.2** Document anything that didn't work as expected and workarounds applied
 - [ ] **6.3** Add screenshots of the password prompt, draft banner, and Giscus comments
-- [ ] **6.4** Update `SUBDOMAIN-DRAFTS.md` with any changes discovered during implementation
+- [x] **6.4** Update `SUBDOMAIN-DRAFTS.md` with any changes discovered during implementation
+
+### Current Live Status (2026-04-20)
+
+- Latest `deploy-drafts.yml` run completed successfully (`conclusion=success`).
+- Draft/future article pages are encrypted with Staticrypt and show the password prompt.
+- Archive ordering is now globally descending by date, with convenience files pinned at `2038-01-18`.
+- Preview banner is live across unencrypted pages and links back to `https://mcgarrah.org`.
+- Crawler protections are active: `robots.txt` is `Disallow: /`, and `feed.xml`, `sitemap.xml`, `sitemapindex.xml` return `404`.
 
 ### Phase 7: Share with Reviewers
 

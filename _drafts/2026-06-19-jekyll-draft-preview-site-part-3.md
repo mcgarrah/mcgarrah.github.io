@@ -23,47 +23,110 @@ This is Part 3 of a three-part series:
 - **Part 2**: [Refining the design — config, workflow, feedback, and gaps](/jekyll-draft-preview-site-part-2/)
 - **Part 3** (this post): The complete implementation
 
-> **Implementation status (in progress):** The system is live but still being tuned. The notes below include concrete issues encountered during first-run deployments so the final version of this post captures real behavior, not just design intent.
+> **Implementation status:** The system is live on `drafts.mcgarrah.org` and running reliably. The notes below capture the real issues and fixes from first-run deployments.
 
 ## Creating the Drafts Repo
 
-<!-- TODO: Document repo creation, Pages setup, Discussions enablement -->
+The deployment target repo is `mcgarrah/drafts.mcgarrah.org`.
+
+Implementation details:
+- Repo initialized so `main` existed before Pages setup
+- GitHub Pages enabled (`main` branch, root)
+- GitHub Discussions enabled with a dedicated `Draft Reviews` category for feedback
 
 > **Implementation note:** GitHub Pages setup fails on a truly empty repo because there is no `main` branch to select yet. The repo needs an initial commit first, so initialize with a `README.md` or create any file before enabling Pages.
 
 ## DNS Configuration
 
-<!-- TODO: Document Porkbun CNAME setup, GitHub Pages custom domain verification, HTTPS enforcement -->
+Porkbun is configured with:
+
+```text
+drafts.mcgarrah.org  CNAME  mcgarrah.github.io.
+```
+
+GitHub Pages routing then maps the host to the repo via the `CNAME` file in deploy output.
 
 ## The Final Config Overlay
 
-<!-- TODO: Final _config_drafts.yml with real Giscus repo_id and category_id -->
+`_config_drafts.yml` now contains concrete values, including a site-level preview flag for the banner:
+
+```yaml
+url: "https://drafts.mcgarrah.org"
+canonical_url: "https://drafts.mcgarrah.org"
+baseurl: ""
+draft_preview_site: true
+main_site_url: "https://mcgarrah.org"
+
+google_analytics: ""
+google_adsense: ""
+google_cse_id: ""
+
+giscus:
+  repo: mcgarrah/drafts.mcgarrah.org
+  repo_id: R_kgDOSG6Quw
+  category: Draft Reviews
+  category_id: DIC_kwDOSG6Qu84C7PMZ
+  mapping: pathname
+  strict: 0
+  reactions_enabled: 1
+  emit_metadata: 0
+  input_position: top
+  theme: preferred_color_scheme
+  lang: en
+  loading: lazy
+```
 
 ## The Final GitHub Actions Workflow
 
-<!-- TODO: Final deploy-drafts.yml with any changes from testing -->
+The final workflow stabilized around a few key decisions:
+
+- Build with `--drafts --future` and config overlay
+- Encrypt only draft and future article pages (not the full site)
+- Process encryption targets one-by-one in isolated temp directories to avoid Staticrypt basename collisions
+- Use hash checks to validate files were actually transformed
+- Remove executable artifacts and oversized binaries from deploy output
+- Enforce crawler protections (`robots.txt: Disallow /`, remove feed/sitemap files)
+- Force-push generated output to `mcgarrah/drafts.mcgarrah.org`
+
+Latest run status in this implementation cycle: `completed/success`.
 
 ## Staticrypt Testing Results
 
-<!-- TODO: Document testing of:
-  - Password prompt appearance
-  - --remember navigation between pages
-  - localStorage behavior across browsers
-  - Giscus loading after decryption
-  - Mobile experience
--->
+Validated:
+- Draft/future post pages present the Staticrypt password prompt
+- Encryption is present in deployed draft pages (`staticrypt` wrapper detected in generated HTML)
+- Workflow-level verification catches unchanged output via SHA-256 hash comparisons
+
+Still worth repeating before broad reviewer rollout:
+- Cross-browser `--remember` behavior over longer sessions
+- Mobile UX around password prompt + nav flow
 
 ## Giscus Feedback in Practice
 
-<!-- TODO: Document Giscus setup on drafts repo, testing with reviewers -->
+Giscus is now pointed to the drafts repo/category via `_config_drafts.yml`, keeping preview feedback separate from production discussions.
+
+Configuration is complete and active in the drafts build. Full end-to-end reviewer comment testing remains a final validation step.
 
 ## The Draft Preview Banner
 
-<!-- TODO: Final banner implementation, screenshot -->
+The banner is now implemented in `_layouts/default.html` behind a site-level flag (`draft_preview_site`).
+
+Current banner text:
+
+```text
+⚠ DRAFT PREVIEW SITE — unpublished content, may change.
+Go to the main site →
+```
+
+It appears on drafts pages and links directly to `https://mcgarrah.org`, which makes context-switching between preview and production much clearer for reviewers.
 
 ## What Worked
 
-<!-- TODO: Successes and things that went smoothly -->
+- Config overlay approach cleanly separated production and drafts behavior
+- Cross-repo deploy pipeline is now stable and repeatable
+- Selective encryption reduced runtime and removed unnecessary churn
+- The preview banner made reviewer context immediately clear
+- Archive ordering is now deterministic after adding front matter to convenience pages
 
 ## What Didn't Work
 
@@ -80,7 +143,11 @@ Early runs surfaced several workflow-level issues:
 
 ## Lessons Learned
 
-<!-- TODO: Retrospective on the whole process -->
+1. Static-site security controls are mostly UX signals unless source content is private.
+2. Build verification should check file transformation (hashes), not just string signatures.
+3. Tooling behavior under batch mode matters: Staticrypt output flattening was the key hidden trap.
+4. A tiny UI affordance (the banner) has outsized impact on reviewer clarity.
+5. Convenience/ops files should still get explicit front matter when they participate in Jekyll collections.
 
 ---
 

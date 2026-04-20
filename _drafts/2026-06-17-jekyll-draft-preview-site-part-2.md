@@ -23,7 +23,7 @@ Now it's time to design the actual implementation. This is where the interesting
 This is Part 2 of a three-part series:
 - **Part 1**: [Exploring every option I considered](/jekyll-draft-preview-site-part-1/)
 - **Part 2** (this post): Refining the design — config, workflow, feedback, and gaps
-- **Part 3**: Final implementation with all the pieces working (coming soon)
+- **Part 3**: [Final implementation with all the pieces working](/jekyll-draft-preview-site-part-3/)
 
 ## The Architecture
 
@@ -141,14 +141,15 @@ If it turns out to be more friction than value, I'll drop it and fall back to th
 Reviewers need to know they're on the preview site, not production. A Liquid conditional in the layout handles this:
 
 ```html
-{% raw %}{% if site.url contains 'drafts' %}
-<div style="background: #ff6600; color: white; text-align: center; padding: 8px; position: fixed; top: 0; width: 100%; z-index: 9999;">
-  ⚠️ DRAFT PREVIEW — Not for public distribution
+{% raw %}{% if site.draft_preview_site %}
+<div style="background:#e67e00;color:#fff;text-align:center;padding:0.5em 1em;font-size:0.9em;font-weight:bold;">
+  ⚠ DRAFT PREVIEW SITE — unpublished content, may change.
+  <a href="{{ site.main_site_url }}" style="color:#fff;text-decoration:underline;margin-left:0.5em;">Go to the main site →</a>
 </div>
 {% endif %}{% endraw %}
 ```
 
-This renders only when the site URL contains "drafts" — invisible on production, prominent on the preview site.
+This renders only when `draft_preview_site: true` is set in `_config_drafts.yml`, so it's invisible on production and explicit on the preview site. The link back to the main site turned out to be especially useful in practice.
 
 ## DNS and GitHub Pages Routing
 
@@ -281,6 +282,7 @@ As soon as I started running real deployments, the design hit a few practical ed
 5. **Verification logic produced false negatives**: A string-based post-encryption check failed on at least one encrypted target page and caused a run failure despite successful processing. Replaced with hash-based verification.
 6. **Runner portability details mattered**: Command forms that are fine locally can fail on Ubuntu runners without Linux-compatible syntax.
 7. **Special-case files broke encryption targeting**: Utility documents like `DRAFTS.md` and `SUBDOMAIN-DRAFTS.md` (lacking Jekyll front matter) were included in the encryption scope. Fixed by filtering to only files matching `YYYY-MM-DD-*.md` pattern.
+8. **Archive ordering drifted for convenience files**: Utility pages without front matter inherited filesystem modification times, which made them jump around in archive order. Fixed by adding minimal front matter with a pinned date (`2038-01-18`) so they sort deterministically at the top.
 
 These pushed the workflow toward selective encryption (draft + future posts only), safer deploy filtering for binaries, stronger validation that checks whether files actually changed, more precise targeting of actual post files, and individual-file processing to preserve directory structure.
 
@@ -302,4 +304,4 @@ Part 3 will cover the actual implementation — creating the repo, configuring D
 *This is Part 2 of a three-part series on building a Jekyll draft preview site:*
 - **Part 1**: [Exploring every option I considered](/jekyll-draft-preview-site-part-1/)
 - **Part 2** (this post): Refining the design — config, workflow, feedback, and gaps
-- **Part 3**: Final implementation with all the pieces working (coming soon)
+- **Part 3**: [Final implementation with all the pieces working](/jekyll-draft-preview-site-part-3/)
