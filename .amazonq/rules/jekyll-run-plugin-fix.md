@@ -100,6 +100,22 @@ rm -rf .jekyll-cache .jekyll-metadata _site
 - WSL2/Linux setups are typically more stable with incremental file detection
 - If staleness repeats on macOS, do a full stop/start instead of restart and re-run the cleanup above
 
+## Jekyll Cache and Clean Facts
+
+- `.jekyll-cache` is a **directory** (not a file). Use `[ -d ".jekyll-cache" ]` to check for it in shell scripts.
+- `bundle exec jekyll clean` removes `_site/` and `.jekyll-metadata` **but does NOT remove `.jekyll-cache`**.
+- To fully clear all incremental build state, remove all three explicitly:
+
+```bash
+bundle exec jekyll clean
+if [ -d ".jekyll-cache" ]; then
+    rm -rf .jekyll-cache
+fi
+```
+
+- The `jekyll-clean.sh` script in `mcgarrah.github.io/` does exactly this — it runs `jekyll clean` then conditionally removes `.jekyll-cache` if it exists.
+- For the planned `jekyll-run.Clean` VS Code command, `bundle exec jekyll clean` alone is **insufficient** for fixing incremental staleness — the command must also remove `.jekyll-cache`.
+
 ## References
 
 - Blog post: [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/)
