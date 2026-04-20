@@ -1,8 +1,16 @@
 ---
-title: "Google Services Sprawl"
+title: "The Google Services Tax on a Simple Blog"
 layout: post
 categories: [web-development, technical]
-tags: [google, web-development, analytics, search, tools, frustration]
+tags: [google, web-development, analytics, search, adsense, seo, frustration]
+date: 2026-06-29
+last_modified_at: 2026-06-29
+excerpt: "Running a technical blog has turned into a maze of Google services, each with its own setup complexity, approval processes, and interconnected dependencies. What started as a simple Jekyll website has become an exercise in Google service integration frustration — and I'm still fighting."
+description: "An honest look at the overhead of integrating Google Analytics, Search Console, Custom Search, and AdSense into a Jekyll blog. The complexity tax is real, the approval process is opaque, and the battle continues."
+seo:
+  type: BlogPosting
+  date_published: 2026-06-29
+  date_modified: 2026-06-29
 ---
 
 Lions and Tigers and Adsense, oh my... All the Google Services I think I need. And all the overhead for them.
@@ -64,5 +72,23 @@ The most maddening part? Google's own services don't integrate seamlessly with e
 Instead, each service feels like it was built by a different team with different assumptions about how websites work. The result is a fragmented experience that requires significant time investment to get working properly.
 
 Maybe I'm overthinking this, but for a simple technical blog, the overhead of managing all these Google services sometimes feels like it outweighs the benefits. I just want a blog site to publish fun stuff I'm doing outside of work. On the upside, I'm keeping current on a lot of the issues that happen for small to medium sized businesses which keeps me current on technology that might get me a future job. Occasionally, this stuff also overlaps with my real job too.
+
+## What I've Actually Done About It
+
+I'm not just complaining — I've been systematically attacking each of these problems. The results are mixed:
+
+- **GDPR compliance** — Built a full [cookie consent implementation](/implementing-gdpr-compliance-jekyll-adsense/) with region detection, consent management, and conditional script loading. This was a prerequisite for everything else.
+- **AdSense approval** — Documented the [debugging process](/adsense-approval-failure-remediation/) after repeated "site isn't ready" rejections. Fixed the [GDPR script loading interaction](/adsense-verification-gdpr-script-loading-fix/) that was blocking the verification crawler. Improved [E-E-A-T signals](/improving-eeat-jekyll-adsense/) across the site. **Still not approved.** The rejections continue with the same vague feedback.
+- **Sitemap issues** — Fixed [sitemap bloat](/jekyll-sitemap-bloat-tags-categories-pagination/) from tags, categories, and pagination pages that were diluting the signal for actual content.
+- **SEO infrastructure** — Built an [automated SEO health check](/jekyll-github-actions-cicd-pipeline/) into the CI/CD pipeline that validates canonical URLs, meta tags, structured data, and broken links on every push.
+- **Search Console crawling** — Still fighting crawler access issues. The Google bot reports pages it can't reach, but the same pages load fine in a browser. The debugging cycle is: wait for crawl → read vague error → change something → wait weeks for re-crawl → repeat.
+
+Months of work. Dozens of commits. Multiple published articles documenting the journey. And AdSense still says "no" without telling me why.
+
+## The Ongoing Battle
+
+The frustrating truth is that there's no finish line. Google's approval processes are opaque, their feedback is generic, and their timelines are measured in weeks. You can do everything right — proper structured data, clean sitemaps, GDPR compliance, quality content, good E-E-A-T signals — and still get rejected with "Your site isn't ready."
+
+I'll keep documenting the fight. At minimum, the infrastructure improvements make the site better regardless of whether Google ever approves the ads. And the knowledge transfers directly to professional work — every small business website faces these same integration challenges.
 
 Cheers from the Homelab.

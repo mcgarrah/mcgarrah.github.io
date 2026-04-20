@@ -5,12 +5,12 @@ categories: [web-development, technical]
 tags: [vscode, vscode-extension, testing, mocha, typescript, jekyll, open-source]
 excerpt: "The Jekyll Run VS Code extension has a test scaffold that does nothing — a single sample test that checks array indexOf. Here's how VS Code extension testing actually works, what the existing harness does, and how to add real tests for the three bugs I found."
 description: "A practical guide to VS Code extension testing using the Jekyll Run plugin as a case study. Covers the existing test scaffold, the Extension Development Host, Mocha integration, unit tests for pure functions, integration tests for VS Code API calls, and writing regression tests for the getConfiguration, lsof parsing, and null rejection bugs."
-date: 2026-06-22
-last_modified_at: 2026-06-22
+date: 2026-06-24
+last_modified_at: 2026-06-24
 seo:
   type: BlogPosting
-  date_published: 2026-06-22
-  date_modified: 2026-06-22
+  date_published: 2026-06-24
+  date_modified: 2026-06-24
 ---
 
 The [Jekyll Run VS Code extension](https://github.com/Kanna727/jekyll-run) has three bugs I've been [documenting](/jekyll-run-plugin-multiroot-workspace-bug/) and [fixing](/jekyll-run-plugin-pr-and-fork/). Before submitting a PR or publishing a fork, the fixes need tests. The extension already has a test scaffold — but it's the VS Code extension generator's default: a single sample test that checks `[1, 2, 3].indexOf(5)`.
