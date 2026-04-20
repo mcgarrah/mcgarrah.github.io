@@ -7,7 +7,7 @@
   <article{% if is_draft or is_future %} class="post-preview-unpublished"{% endif %}>
     {% include meta.html post=post preview=true is_draft=is_draft is_future=is_future %}
     {{ post.excerpt }}
-    <div class="more"><a href="{{ post.url | relative_url }}">read more: {{ post.title }}</a></div>
+    <div class="more"><a href="{{ post.url | relative_url }}" title="{{ post.title }}">read more…</a></div>
   </article>
 {% endfor %}
 
