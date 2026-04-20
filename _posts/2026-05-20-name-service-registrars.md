@@ -1,8 +1,13 @@
 ---
 title:  "Migrating 16 Domains from SquareSpace to Porkbun"
 layout: post
-date: 2026-02-06
+date: 2026-05-20
+last_modified_at: 2026-05-20
 excerpt: "Documenting the multi-week process of transferring 16 domains from SquareSpace to Porkbun in batches, managing costs, and dealing with transfer delays. Why Porkbun won for homelab domain management."
+seo:
+  type: BlogPosting
+  date_published: 2026-05-20
+  date_modified: 2026-05-20
 ---
 
 "He was in a bind 'cause he was way behind"
