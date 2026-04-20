@@ -73,6 +73,33 @@ If the plugin still misbehaves, use the bash script:
 ./start-jekyll.sh
 ```
 
+## Incremental Mode Staleness on macOS (Occasional)
+
+When using `--incremental` on macOS, Jekyll can occasionally get into a stale state where new drafts/future posts do not appear even after a plugin restart.
+
+### Symptom
+
+- Jekyll Run starts without errors
+- Existing pages render normally
+- New draft/future articles are missing from local output
+
+### Keep Incremental, But Use This Recovery Sequence
+
+1. Use **Jekyll Stop** in VS Code
+2. Run a one-time cleanup in the repo root:
+
+```bash
+rm -rf .jekyll-cache .jekyll-metadata _site
+```
+
+3. Start Jekyll again with the normal arguments (including `--incremental`)
+
+### Notes
+
+- This is an occasional recovery step, not a reason to disable `--incremental`
+- WSL2/Linux setups are typically more stable with incremental file detection
+- If staleness repeats on macOS, do a full stop/start instead of restart and re-run the cleanup above
+
 ## References
 
 - Blog post: [Jekyll Run Plugin: Local Development Settings That Actually Work](/jekyll-run-vscode-plugin-local-development/)
