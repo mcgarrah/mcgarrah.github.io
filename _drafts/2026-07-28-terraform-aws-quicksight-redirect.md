@@ -34,13 +34,12 @@ Enter a fortunate encounter with CloudFront Functions in an article I was readin
 <!--
 ## TODO (before promoting to _posts/)
 
-- [ ] Confirm GitHub repo is public: https://github.com/mcgarrah/terraform-aws-quicksight-redirect
-- [ ] Terraform Registry: decide whether to publish. If yes, update source references from
-      `github.com/mcgarrah/terraform-aws-quicksight-redirect` to
-      `registry.terraform.io/mcgarrah/quicksight-redirect` (or equivalent) throughout the article.
-      If no, add a note that the module is GitHub-sourced only.
+- [ ] Publish to Terraform Registry (registry.terraform.io) and OpenTofu Registry (search.opentofu.org).
+      Once published, add registry source examples alongside the GitHub source examples and update
+      the Source section with registry links and badges.
 - [ ] Add a rough cost estimate for CloudFront redirect traffic to make the "no EC2" argument
       concrete (e.g., approximate price per 10K or 100K requests at PriceClass_100 rates).
+      Check current pricing at https://aws.amazon.com/cloudfront/pricing/ under "Request Pricing".
 -->
 
 ## The Problem
@@ -203,4 +202,10 @@ A few non-obvious details that tripped me up during development:
 
 The module is on GitHub: [mcgarrah/terraform-aws-quicksight-redirect](https://github.com/mcgarrah/terraform-aws-quicksight-redirect). The `examples/quicksight` directory has a complete working example with a `terraform.tfvars.example` to get started quickly.
 
-<!-- TODO: If published to Terraform Registry, add registry badge and update source reference above. -->
+The module will also be published to the [Terraform Registry](https://registry.terraform.io) and [OpenTofu Registry](https://search.opentofu.org) — once available, you can reference it as:
+
+```hcl
+<!-- TODO: Replace with registry source once published to Terraform Registry and OpenTofu Registry -->
+source  = "mcgarrah/quicksight-redirect/aws"
+version = "~> 1.0"
+```
