@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-06-20
+Last updated: 2026-07-28
 
 ---
 
@@ -28,6 +28,7 @@ Last updated: 2026-06-20
 | 07-08 | Wed | Git History Bloat Cleanup (Part 1): drafts.mcgarrah.org | Complete audit, document execution, console outputs |
 | 07-09 | Thu | Git Repository Audit Methodology & Findings (Part 2) | Audit all repos, findings, decision matrix |
 | 07-22 | Wed | Execute drafts.mcgarrah.org cleanup (if Part 1 ready) | Validate rewrite runbook, re-clone, measure improvement |
+| 07-28 | Mon | Vanity URLs for AWS QuickSight with Terraform | Review, add real-world context |
 
 ---
 
@@ -46,6 +47,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
+| ☁️ **AWS Terraform Modules** | terraform-aws-quicksight-redirect | CloudFront vanity URL redirect for QuickSight |
 | 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
 | 🔒 **Draft Preview Site** | — | All 3 parts published |
@@ -75,6 +77,7 @@ Drafts that form natural publishing sequences or share a topic.
 | `plausible-vs-google-analytics.md` | 1 hr | 🛡️ Security & Privacy |
 | `git-history-bloat-drafts-repo-cleanup.md` (Part 1) | 45 min | 🧰 Git & Repo Maintenance |
 | `git-repo-audit-methodology-findings.md` (Part 2) | 45 min | 🧰 Git & Repo Maintenance |
+| `terraform-aws-quicksight-redirect.md` | 30-45 min | ☁️ AWS Terraform Modules |
 
 ---
 
@@ -179,6 +182,12 @@ Drafts that form natural publishing sequences or share a topic.
 - Multi-part series have manual cross-references that don't scale.
 - **What's needed:** Design front matter convention, build Liquid include, retrofit existing series.
 - **Effort:** 2-3 hours
+
+### `2026-07-28-terraform-aws-quicksight-redirect.md` — ☁️ AWS Terraform Modules
+
+- Complete draft covering CloudFront Function redirect pattern for QuickSight vanity URLs.
+- **What's needed:** Add real-world context (enterprise BI rollout, multi-account scenario). Confirm GitHub repo is public. Consider Terraform Registry publication.
+- **Effort:** 30-45 minutes
 
 ### `2026-07-08-git-history-bloat-drafts-repo-cleanup.md` — 🧰 Git & Repository Maintenance
 
@@ -315,13 +324,13 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 45 |
+| Drafts in `_drafts/` | 46 |
 | Ready to publish (Tier 1) | 1 |
-| Near-complete (Tier 2) | 17 |
+| Near-complete (Tier 2) | 18 |
 | Substantial work (Tier 3) | 13 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
-| Scheduled (July) | 11 |
+| Scheduled (July) | 12 |
 | Tracker files | 4 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`) |
 
 ---
