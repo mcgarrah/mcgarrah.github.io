@@ -2,6 +2,7 @@
 title: "Vanity URLs for AWS QuickSight with Terraform, CloudFront, and Route 53"
 date: 2026-07-28
 last_modified_at: 2026-07-28
+description: "A Terraform module that creates friendly vanity URLs for AWS QuickSight using CloudFront Functions, ACM, and Route 53 — one distribution, multiple domains, no servers."
 categories:
   - cloud
   - aws
@@ -24,11 +25,23 @@ AWS QuickSight is a powerful BI tool, but its default URLs are not something you
 
 I built a Terraform module — [terraform-aws-quicksight-redirect](https://github.com/mcgarrah/terraform-aws-quicksight-redirect) — that solves this with a CloudFront Function, ACM, and Route 53. One module call, one CloudFront distribution, as many vanity domains as you need.
 
-At first, people just had to deal with the ugly URL for Quicksight. But when we added a second Quicksight for non-prod testing and a prod for regular customers, the complexity hit and people got annoyed. A proposal was an Nginx proxy running on an EC2 burning cycles for no value for a couple of redirects here and there. That just did not sit well with me. THis felt like something that should be possible wihtout a VM burning costs all the time.
+At first, people just had to deal with the ugly URL for QuickSight. But when we added a second QuickSight for non-prod testing and a prod for regular customers, the complexity hit and people got annoyed. A proposal was an Nginx proxy running on an EC2 burning cycles for no value for a couple of redirects here and there. That just did not sit well with me. This felt like something that should be possible without a VM burning costs all the time.
 
-Enter a fortunate encounter with CFF in an article I reading and the idea of using it on the CDN edge to execute a small bit of code for a redirect. The original idea was more complete with an APIGW and Lambda setup, but that just became something that would annoy my collegues to maintain later.
+Enter a fortunate encounter with CloudFront Functions in an article I was reading and the idea of using it on the CDN edge to execute a small bit of code for a redirect. The original idea was more complete with an API Gateway and Lambda setup, but that just became something that would annoy my colleagues to maintain later.
 
 <!-- excerpt-end -->
+
+<!--
+## TODO (before promoting to _posts/)
+
+- [ ] Confirm GitHub repo is public: https://github.com/mcgarrah/terraform-aws-quicksight-redirect
+- [ ] Terraform Registry: decide whether to publish. If yes, update source references from
+      `github.com/mcgarrah/terraform-aws-quicksight-redirect` to
+      `registry.terraform.io/mcgarrah/quicksight-redirect` (or equivalent) throughout the article.
+      If no, add a note that the module is GitHub-sourced only.
+- [ ] Add a rough cost estimate for CloudFront redirect traffic to make the "no EC2" argument
+      concrete (e.g., approximate price per 10K or 100K requests at PriceClass_100 rates).
+-->
 
 ## The Problem
 
@@ -189,3 +202,5 @@ A few non-obvious details that tripped me up during development:
 ## Source
 
 The module is on GitHub: [mcgarrah/terraform-aws-quicksight-redirect](https://github.com/mcgarrah/terraform-aws-quicksight-redirect). The `examples/quicksight` directory has a complete working example with a `terraform.tfvars.example` to get started quickly.
+
+<!-- TODO: If published to Terraform Registry, add registry badge and update source reference above. -->
