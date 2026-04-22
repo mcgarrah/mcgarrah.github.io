@@ -30,20 +30,11 @@ I built a Terraform module — [terraform-aws-quicksight-redirect](https://githu
 
 At first, people just had to deal with the ugly URL for QuickSight. But when we added a second QuickSight for non-prod testing and a prod for regular customers, the complexity hit and people got annoyed. A proposal was an Nginx proxy running on an EC2 burning cycles for almost no value for a couple of redirects here and there. That just did not sit well with me. This felt like something that should be possible without a VM burning costs all the time.
 
-Enter a fortunate encounter with CloudFront Functions (CFF) in an article I was reading and the idea of using it on the CDN edge to execute a small bit of code for a redirect. The original idea was more complete with an API Gateway and Lambda setup, but that just became something that would annoy my colleagues to maintain later.
+Enter a fortunate encounter with CloudFront Functions (CFF) in an article I was reading and the idea of using it on the CDN edge to execute a small bit of code for a redirect. My original thoughts before the CFF idea, were along the lines of an API Gateway and Lambda setup, but that just felt like something complex and would annoy my colleagues down the road who would have to maintain it. The CFF is simple and just works.
 
 <!-- excerpt-end -->
 
-<!--
-## TODO (before promoting to _posts/)
-
-- [ ] Publish to Terraform Registry (registry.terraform.io) and OpenTofu Registry (search.opentofu.org).
-      Once published, add registry source examples alongside the GitHub source examples and update
-      the Source section with registry links and badges.
-- [ ] Add a rough cost estimate for CloudFront redirect traffic to make the "no EC2" argument
-      concrete (e.g., approximate price per 10K or 100K requests at PriceClass_100 rates).
-      Check current pricing at https://aws.amazon.com/cloudfront/pricing/ under "Request Pricing".
--->
+The CloudFront costs for a heavily used QuickSight deployment with multiple instances were less than $0.06 USD for a month. Since we configure the CloudFront distribution to use `PriceClass_100` (North America and Europe), the cost is extremely low. As of April 2026, AWS CloudFront pricing for HTTPS requests in these regions is just $0.0100 per 10,000 requests (or $1.00 per 1 million requests). Moreover, the CloudFront Always Free tier covers the first 10 million requests per month. This means you will likely pay nothing for the redirects themselves. S3 and ACM costs are so low they don't even register as independent costs in Cost Explorer.
 
 ## The Problem
 
@@ -134,6 +125,26 @@ module "quicksight_redirect" {
 ```
 
 ### Single redirect
+
+If you only need a single vanity URL for one QuickSight instance, the configuration is straightforward:
+
+```hcl
+module "quicksight_redirect" {
+  source  = "mcgarrah/quicksight-redirect/aws"
+  version = "~> 1.0"
+
+  name_prefix         = "quicksight"
+  r53_hosted_zone_id  = var.r53_hosted_zone_id
+  acm_certificate_arn = var.acm_certificate_arn
+
+  redirects = {
+    "analytics.example.com" = {
+      aws_region      = "us-east-1"
+      directory_alias = "analytics"
+    }
+  }
+}
+```
 
 ### Multiple redirects, one distribution
 
