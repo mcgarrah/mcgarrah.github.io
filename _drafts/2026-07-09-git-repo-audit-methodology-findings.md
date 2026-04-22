@@ -4,8 +4,13 @@ title: "Repository Cleanup Part 2: Audit Methodology & What I Will Evaluate Next
 categories: [git, github, jekyll, infrastructure]
 tags: [git-history, repository-size, git-audit, performance, maintenance]
 excerpt: "Part 2 of a repository cleanup series. Before applying the same history-rewrite approach elsewhere, I audited my other major repositories to decide what is worth fixing next. Here is the audit method, the current findings, and why mcgarrah.github.io is the only likely follow-on candidate if drafts.mcgarrah.org goes well."
+description: "Auditing multiple Git repositories for history bloat using a repeatable methodology. Covers size analysis, largest object detection, and prioritization for cleanup."
 date: 2026-07-09
 last_modified_at: 2026-07-09
+seo:
+  type: BlogPosting
+  date_published: 2026-07-09
+  date_modified: 2026-07-09
 series: "Repository Cleanup"
 series_part: 2
 ---

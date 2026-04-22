@@ -5,6 +5,8 @@ categories: ["gamedev", "c++", "programming", "retro-gaming"]
 tags: ["starvoyager", "sdl", "game-development", "cross-platform", "security", "refactoring"]
 date: 2026-07-01
 last_modified_at: 2026-07-01
+excerpt: "Modernizing a classic Star Trek-themed space combat game from SDL 1.2 on Debian to a cross-platform build with SDL2, modern C++, and automated security scanning. A retro gaming preservation project meets modern software engineering."
+description: "Modernizing StarVoyager, a Star Trek-themed space combat game, from legacy SDL 1.2 to cross-platform SDL2 with modern C++ practices, CI/CD, and security hardening."
 seo:
   type: BlogPosting
   date_published: 2026-07-01

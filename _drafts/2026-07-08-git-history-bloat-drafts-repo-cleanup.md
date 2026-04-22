@@ -4,6 +4,7 @@ title: "Repository Cleanup Part 1: Fixing Slow Clones via Git History Rewrite"
 categories: [git, github, jekyll, infrastructure]
 tags: [git-history, repository-size, git-filter-repo, performance, maintenance]
 excerpt: "Part 1 of a two-part series on repository bloat. My drafts.mcgarrah.org repository felt huge and slow to clone. The culprit: 231 MB of old binary executables in Git history. Here is the exact audit, root cause, execution plan, and console outputs from the cleanup."
+description: "Auditing and cleaning Git history bloat from a GitHub Pages repository. Using git-filter-repo to remove 231 MB of old binary executables that were inflating clone times."
 date: 2026-07-08
 last_modified_at: 2026-07-08
 seo:

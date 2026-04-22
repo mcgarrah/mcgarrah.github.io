@@ -4,8 +4,13 @@ title: "Repository Cleanup Part 3 Outline: Git Health Monitoring with GitHub Act
 categories: [git, github, jekyll, infrastructure]
 tags: [git-history, repository-size, github-actions, automation, maintenance]
 excerpt: "Outline for a future Part 3 follow-up after the repository cleanup work. Focus: use GitHub Actions to measure git-health metrics over time, flag oversized files before they become clone pain, and turn repository cleanup into a lightweight maintenance habit instead of a reactive archaeology project."
+description: "Planning a GitHub Actions workflow for ongoing Git repository health monitoring. Automated size tracking, large file detection, and history bloat prevention."
 date: 2026-07-24
 last_modified_at: 2026-07-24
+seo:
+  type: BlogPosting
+  date_published: 2026-07-24
+  date_modified: 2026-07-24
 series: "Repository Cleanup"
 series_part: 3
 ---

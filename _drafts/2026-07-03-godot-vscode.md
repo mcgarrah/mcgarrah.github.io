@@ -5,6 +5,8 @@ categories: ["gamedev", "godot", "programming"]
 tags: ["tower-defense", "game-development", "godot-engine", "web-games", "html5"]
 date: 2026-07-03
 last_modified_at: 2026-07-03
+excerpt: "After years of infrastructure and cloud work, I'm returning to game development with a Godot 4.5 tower defense game. From physics simulations at NC State to modern game patterns — building something fun while learning a new engine."
+description: "Building a tower defense game with Godot Engine 4.5, targeting web and multi-platform export. Covers project motivation, engine choice, development approach, and lessons from decades of dormant game dev interest."
 seo:
   type: BlogPosting
   date_published: 2026-07-03
