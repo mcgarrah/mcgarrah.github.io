@@ -47,6 +47,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
+| 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md` |
 | ☁️ **AWS Terraform Modules** | terraform-aws-quicksight-redirect | CloudFront vanity URL redirect for QuickSight |
 | 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
@@ -63,6 +64,8 @@ Drafts that form natural publishing sequences or share a topic.
 | `RUNJEKYLL-EXTENSION.md` | Run Jekyll extension project status and article sequence |
 | `JEKYLLGDPR-PLUGIN.md` | GDPR plugin productization plan tied to the 2026-07-06 article |
 | `GITREPO-CLEAN.md` | Git repository cleanup, audit, and future automation project tracking |
+| `AASR-PROJECT.md` | Autonomous AI Scientific Research — canonical project tracker and implementation reference |
+| `AME-GPT-EXPLORATION.md` | Autonomous Model Evolution — GPT deep dive extending the AASR project |
 
 ---
 
@@ -331,7 +334,7 @@ Drafts that form natural publishing sequences or share a topic.
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
 | Scheduled (July) | 12 |
-| Tracker files | 4 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`) |
+| Tracker files | 6 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`) |
 
 ---
 
