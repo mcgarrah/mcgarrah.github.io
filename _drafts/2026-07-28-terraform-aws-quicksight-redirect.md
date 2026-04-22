@@ -38,9 +38,13 @@ The CloudFront costs for a heavily used QuickSight deployment with multiple inst
 
 ## The Problem
 
-QuickSight's sign-in URL encodes both the AWS region and a directory alias as query parameters. If you have multiple QuickSight instances across regions or accounts, each one gets its own ugly URL. Sharing these with non-technical stakeholders is friction you don't need.
+QuickSight's sign-in page asks users to type their account name every time they visit:
 
-The goal: turn an ugly QuickSight URL into a clean vanity domain with a 301 redirect:
+![QuickSight sign-in page requiring users to type their account name](/assets/images/amazon-quicksight-sign-in.png)
+
+Without a vanity URL, users have to remember their directory alias, type it into this field, and then authenticate. With multiple QuickSight instances across regions or accounts, each one gets its own ugly URL with the alias baked into query parameters. Sharing these with non-technical stakeholders is friction you don't need.
+
+The goal: turn that manual step into a clean vanity domain that skips the account name prompt entirely with a 301 redirect:
 
 ```mermaid
 flowchart LR
