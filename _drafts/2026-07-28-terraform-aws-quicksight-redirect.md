@@ -104,11 +104,12 @@ One design decision worth noting: the redirect map is baked into the function co
 
 ## Using the Module
 
-### Single redirect
+The module is published on the [Terraform Registry](https://registry.terraform.io/modules/mcgarrah/quicksight-redirect/aws/latest):
 
 ```hcl
 module "quicksight_redirect" {
-  source = "github.com/mcgarrah/terraform-aws-quicksight-redirect"
+  source  = "mcgarrah/quicksight-redirect/aws"
+  version = "~> 1.0"
 
   name_prefix         = "quicksight"
   r53_hosted_zone_id  = "Z1234567890ABC"
@@ -123,13 +124,25 @@ module "quicksight_redirect" {
 }
 ```
 
+You can also reference the GitHub source directly, pinned to a version:
+
+```hcl
+module "quicksight_redirect" {
+  source = "github.com/mcgarrah/terraform-aws-quicksight-redirect?ref=v1.0.0"
+  # ...
+}
+```
+
+### Single redirect
+
 ### Multiple redirects, one distribution
 
 A single module instance handles multiple domains through one CloudFront distribution. This is the cost-efficient path — you pay for one distribution regardless of how many domains you add:
 
 ```hcl
 module "quicksight_redirects" {
-  source = "github.com/mcgarrah/terraform-aws-quicksight-redirect"
+  source  = "mcgarrah/quicksight-redirect/aws"
+  version = "~> 1.0"
 
   name_prefix         = "quicksight"
   r53_hosted_zone_id  = var.r53_hosted_zone_id
@@ -214,10 +227,17 @@ A few non-obvious details that tripped me up during development:
 
 The module is on GitHub: [mcgarrah/terraform-aws-quicksight-redirect](https://github.com/mcgarrah/terraform-aws-quicksight-redirect). The `examples/quicksight` directory has a complete working example with a `terraform.tfvars.example` to get started quickly.
 
-The module will also be published to the [Terraform Registry](https://registry.terraform.io) and [OpenTofu Registry](https://search.opentofu.org) — once available, you can reference it as:
+The module is published on the [Terraform Registry](https://registry.terraform.io/modules/mcgarrah/quicksight-redirect/aws/latest). Versions are driven by Git tags — each `vX.Y.Z` tag becomes a registry version automatically.
 
-```hcl
-<!-- TODO: Replace with registry source once published to Terraform Registry and OpenTofu Registry -->
-source  = "mcgarrah/quicksight-redirect/aws"
-version = "~> 1.0"
+To verify the module is available on the registry:
+
+```bash
+# Check the registry API directly
+curl -s https://registry.terraform.io/v1/modules/mcgarrah/quicksight-redirect/aws | jq '.version'
+
+# Or use terraform to validate
+terraform init   # downloads the module from the registry
+terraform validate
 ```
+
+You can also browse it at: `https://registry.terraform.io/modules/mcgarrah/quicksight-redirect/aws/latest`
