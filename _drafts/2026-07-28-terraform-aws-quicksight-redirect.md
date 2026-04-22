@@ -24,17 +24,11 @@ seo:
   date_modified: 2026-07-28
 ---
 
-AWS QuickSight is a powerful BI tool, but its default URLs are not something you hand to a business user. A URL like `https://quicksight.aws.amazon.com/?region=us-east-1&directory_alias=analytics` works, but `https://analytics.example.com` is what people actually remember and bookmark.
+When we added a second QuickSight instance for non-prod testing alongside production, the URL problem went from annoying to unworkable. Business users were mixing up environments, bookmarking the wrong one, and asking which account alias to type every time. Someone proposed an Nginx proxy on EC2 to handle the redirects. A VM burning money 24/7 for a handful of HTTP 301s felt wrong.
 
-I built a Terraform module — [terraform-aws-quicksight-redirect](https://github.com/mcgarrah/terraform-aws-quicksight-redirect) — that solves this with a CloudFront Function, ACM, and Route 53. One module call, one CloudFront distribution, as many vanity domains as you need.
-
-At first, people just had to deal with the ugly URL for QuickSight. But when we added a second QuickSight for non-prod testing and a prod for regular customers, the complexity hit and people got annoyed. A proposal was an Nginx proxy running on an EC2 burning cycles for almost no value for a couple of redirects here and there. That just did not sit well with me. This felt like something that should be possible without a VM burning costs all the time.
-
-Enter a fortunate encounter with CloudFront Functions (CFF) in an article I was reading and the idea of using it on the CDN edge to execute a small bit of code for a redirect. My original thoughts before the CFF idea, were along the lines of an API Gateway and Lambda setup, but that just felt like something complex and would annoy my colleagues down the road who would have to maintain it. The CFF is simple and just works.
+Then I stumbled across CloudFront Functions — lightweight JavaScript that runs at the CDN edge on every request, before it ever reaches an origin. No EC2, no Lambda, no API Gateway. Just a few lines of code that return a redirect. I built a Terraform module around it, and it's been running in production for over a year.
 
 <!-- excerpt-end -->
-
-The CloudFront costs for a heavily used QuickSight deployment with multiple instances were less than $0.06 USD for a month. Since we configure the CloudFront distribution to use `PriceClass_100` (North America and Europe), the cost is extremely low. As of April 2026, AWS CloudFront pricing for HTTPS requests in these regions is just $0.0100 per 10,000 requests (or $1.00 per 1 million requests). Moreover, the CloudFront Always Free tier covers the first 10 million requests per month. This means you will likely pay nothing for the redirects themselves. S3 and ACM costs are so low they don't even register as independent costs in Cost Explorer.
 
 ## The Problem
 
@@ -54,6 +48,20 @@ flowchart LR
 ```
 
 HTTPS, custom domain, no servers.
+
+## What It Costs
+
+This is the part that still surprises me. After a year of production use with multiple QuickSight instances, the CloudFront costs for all redirects combined were under **$0.06 per month**. Most months it's literally free.
+
+| Approach | Monthly Cost | What You're Paying For |
+|----------|-------------|----------------------|
+| EC2 t3.micro + Nginx | ~$8.50 | VM running 24/7 for a few redirects |
+| API Gateway + Lambda | ~$1-3 | Execution time, invocations, API Gateway requests |
+| **CloudFront Function** | **$0.00 - $0.06** | **Request pricing only, no compute** |
+
+CloudFront pricing for HTTPS requests in North America and Europe is $0.01 per 10,000 requests. The Always Free tier covers the first 10 million requests per month. For redirect traffic — which is what this is — you will likely never leave the free tier. ACM certificates are free. Route 53 hosted zone costs $0.50/month (which you're already paying if you have the domain). S3 logging costs don't register in Cost Explorer.
+
+The module uses `PriceClass_100` (North America and Europe) by default to keep costs minimal. Change to `PriceClass_All` if you need global edge coverage.
 
 ## Architecture
 
@@ -99,60 +107,7 @@ One design decision worth noting: the redirect map is baked into the function co
 
 ## Using the Module
 
-The module is published on the [Terraform Registry](https://registry.terraform.io/modules/mcgarrah/quicksight-redirect/aws/latest):
-
-```hcl
-module "quicksight_redirect" {
-  source  = "mcgarrah/quicksight-redirect/aws"
-  version = "~> 1.0"
-
-  name_prefix         = "quicksight"
-  r53_hosted_zone_id  = "Z1234567890ABC"
-  acm_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/..."
-
-  redirects = {
-    "analytics.example.com" = {
-      aws_region      = "us-east-1"
-      directory_alias = "analytics"
-    }
-  }
-}
-```
-
-You can also reference the GitHub source directly, pinned to a version:
-
-```hcl
-module "quicksight_redirect" {
-  source = "github.com/mcgarrah/terraform-aws-quicksight-redirect?ref=v1.0.0"
-  # ...
-}
-```
-
-### Single redirect
-
-If you only need a single vanity URL for one QuickSight instance, the configuration is straightforward:
-
-```hcl
-module "quicksight_redirect" {
-  source  = "mcgarrah/quicksight-redirect/aws"
-  version = "~> 1.0"
-
-  name_prefix         = "quicksight"
-  r53_hosted_zone_id  = var.r53_hosted_zone_id
-  acm_certificate_arn = var.acm_certificate_arn
-
-  redirects = {
-    "analytics.example.com" = {
-      aws_region      = "us-east-1"
-      directory_alias = "analytics"
-    }
-  }
-}
-```
-
-### Multiple redirects, one distribution
-
-A single module instance handles multiple domains through one CloudFront distribution. This is the cost-efficient path — you pay for one distribution regardless of how many domains you add:
+The module is published on the [Terraform Registry](https://registry.terraform.io/modules/mcgarrah/quicksight-redirect/aws/latest). A single module instance handles multiple domains through one CloudFront distribution — you pay for one distribution regardless of how many domains you add:
 
 ```hcl
 module "quicksight_redirects" {
@@ -176,7 +131,9 @@ module "quicksight_redirects" {
 }
 ```
 
-Pin to a specific version for production use:
+Works just as well with a single redirect — remove the second entry and you're done.
+
+You can also reference the GitHub source directly, pinned to a version:
 
 ```hcl
 source = "github.com/mcgarrah/terraform-aws-quicksight-redirect?ref=v1.0.0"
@@ -255,4 +212,8 @@ terraform init   # downloads the module from the registry
 terraform validate
 ```
 
-You can also browse it at: `https://registry.terraform.io/modules/mcgarrah/quicksight-redirect/aws/latest`
+## Wrapping Up
+
+The whole point of this module is that your users bookmark `analytics.example.com` and never see the account name prompt again. One `terraform apply`, a few DNS records, and a CloudFront Function that costs less per month than a cup of coffee. After a year in production, it's one of those rare infrastructure decisions I haven't had to think about since the day I deployed it.
+
+The module is open source — if you're running QuickSight and tired of sharing ugly URLs, give it a try.
