@@ -3,6 +3,7 @@ title: "Vanity URLs for AWS QuickSight with Terraform, CloudFront, and Route 53"
 layout: post
 date: 2026-07-28
 last_modified_at: 2026-07-28
+mermaid: true
 description: "A Terraform module that creates friendly vanity URLs for AWS QuickSight using CloudFront Functions, ACM, and Route 53 — one distribution, multiple domains, no servers."
 categories:
   - cloud
@@ -48,7 +49,16 @@ Enter a fortunate encounter with CloudFront Functions (CFF) in an article I was 
 
 QuickSight's sign-in URL encodes both the AWS region and a directory alias as query parameters. If you have multiple QuickSight instances across regions or accounts, each one gets its own ugly URL. Sharing these with non-technical stakeholders is friction you don't need.
 
-The goal: `https://analytics.example.com` → 301 redirect → QuickSight. HTTPS, custom domain, no servers.
+The goal: turn an ugly QuickSight URL into a clean vanity domain with a 301 redirect:
+
+```mermaid
+flowchart LR
+    A["analytics.example.com"] -->|301| B["quicksight.aws.amazon.com\n?region=us-east-1\n&directory_alias=analytics"]
+    style A fill:#2d8659,color:#fff
+    style B fill:#ff9900,color:#fff
+```
+
+HTTPS, custom domain, no servers.
 
 ## Architecture
 
