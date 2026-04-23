@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-07-28
+Last updated: 2026-07-29
 
 ---
 
@@ -16,19 +16,24 @@ Last updated: 2026-07-28
 
 | Date | Day | Article | Effort Needed |
 |------|-----|---------|---------------|
-| 07-01 | Wed | StarVoyager: Legacy SDL to Cross-Platform | Screenshots, verify repo links |
-| 07-03 | Fri | Godot Tower Defense Game | Retitle, verify repo, trim roadmap |
-| 07-06 | Mon | Jekyll GDPR Plugin Development | Finish plugin, write companion article |
-| 07-08 | Wed | Jekyll Dark Mode Toggle | Implement toggle, document |
-| 07-10 | Fri | Tag Sprawl Consolidation | Audit, merge 138 singletons |
-| 07-13 | Mon | Front Matter Hygiene Audit | Script + batch update 139 posts |
-| 07-15 | Wed | Security Hardening (CSP, SRI) | Add integrity hashes, CSP meta tag |
-| 07-17 | Fri | Plausible vs Google Analytics | Evaluate, decide, document |
-| 07-20 | Mon | Post Series Navigation | Implement prev/next for multi-part series |
-| 07-08 | Wed | Git History Bloat Cleanup (Part 1): drafts.mcgarrah.org | Complete audit, document execution, console outputs |
-| 07-09 | Thu | Git Repository Audit Methodology & Findings (Part 2) | Audit all repos, findings, decision matrix |
-| 07-22 | Wed | Execute drafts.mcgarrah.org cleanup (if Part 1 ready) | Validate rewrite runbook, re-clone, measure improvement |
-| 07-28 | Mon | Vanity URLs for AWS QuickSight with Terraform | Review, add real-world context |
+| 07-30 | Wed | StarVoyager: Legacy SDL to Cross-Platform | Screenshots, verify repo links |
+| 08-01 | Fri | Godot Tower Defense Game | Retitle, verify repo, trim roadmap |
+| 08-04 | Mon | AASR Series Overview | Review, verify series links |
+| 08-06 | Wed | AASR: AI Agent Cluster on Proxmox (Part 1) | Review, verify technical details |
+| 08-08 | Fri | Git History Bloat Cleanup (Part 1) | Complete audit, document execution, console outputs |
+| 08-11 | Mon | Git Repository Audit Methodology (Part 2) | Audit all repos, findings, decision matrix |
+| 08-13 | Wed | Git Health Monitoring Outline (Part 3) | Convert outline after Parts 1-2 done |
+| 08-15 | Fri | Claude Code Setup Guide | Fix front matter, fact-check claims |
+| 08-18 | Mon | Photosynth: Open Source Alternatives | Split retrospective, verify links |
+| 08-20 | Wed | Jekyll GDPR Plugin Development | Finish plugin, write companion article |
+| 08-22 | Fri | Jekyll Dark Mode Toggle | Implement toggle, document |
+| 08-25 | Mon | Tag Sprawl Consolidation | Audit, merge 138 singletons |
+| 08-27 | Wed | Front Matter Hygiene Audit | Script + batch update 139 posts |
+| 08-29 | Fri | Security Hardening (CSP, SRI) | Add integrity hashes, CSP meta tag |
+| 09-01 | Mon | Plausible vs Google Analytics | Evaluate, decide, document |
+| 09-03 | Wed | Post Series Navigation | Implement prev/next for multi-part series |
+| 09-05 | Fri | Vanity URLs for AWS QuickSight with Terraform | Review, add real-world context |
+| TBD | — | FastAPI Nutrition API (4-part series) | Build project first, then write articles |
 
 ---
 
@@ -49,6 +54,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
 | 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md` |
 | ☁️ **AWS Terraform Modules** | terraform-aws-quicksight-redirect | CloudFront vanity URL redirect for QuickSight |
+| 🍎 **FastAPI Nutrition API** | See `FASTAPI-NUTRITION-API.md` | 4-article series: architecture, implementation, deployment, observability. Unified Food Intelligence API with USDA FDC, Open Food Facts, GS1 GPC |
 | 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
 | 🔒 **Draft Preview Site** | — | All 3 parts published |
@@ -66,6 +72,7 @@ Drafts that form natural publishing sequences or share a topic.
 | `GITREPO-CLEAN.md` | Git repository cleanup, audit, and future automation project tracking |
 | `AASR-PROJECT.md` | Autonomous AI Scientific Research — canonical project tracker and implementation reference |
 | `AME-GPT-EXPLORATION.md` | Autonomous Model Evolution — GPT deep dive extending the AASR project |
+| `FASTAPI-NUTRITION-API.md` | FastAPI Nutrition API — project planning, Gemini conversation archive, 4-article series outline |
 
 ---
 
@@ -268,6 +275,16 @@ Drafts that form natural publishing sequences or share a topic.
 - Link collection — Ollama, LiteLLM, llama.cpp, Exo, GPU comparisons.
 - **Effort:** 1 hour (roundup) or 3-4 hours (with experiments)
 
+### FastAPI Nutrition API Series (4 articles) — 🍎 FastAPI Nutrition API
+
+- **Article 1:** Architecture & Design — Ranked Truth Model, Canonical Data Model, resume connections
+- **Article 2:** Implementation — async patterns, DataOrchestrator mapper, graceful degradation
+- **Article 3:** Infrastructure & Deployment — Dockerfile, `.do/app.yaml`, GitHub Actions CI/CD on DigitalOcean App Platform
+- **Article 4:** Observability & Production Readiness — OpenTelemetry, Prometheus, data freshness telemetry
+- **What's needed:** Build the project repo first (`fastapi-nutrition-api`), then write articles from working code. Requires `usda_fdc_python` and `gs1_gpc_python` async wrappers.
+- **Effort:** 3-4 hours per article (12-16 hours total), plus project implementation time
+- **Tracker:** `FASTAPI-NUTRITION-API.md`
+
 ---
 
 ## Tier 4: Too Raw / Hold / Archive
@@ -333,8 +350,8 @@ Drafts that form natural publishing sequences or share a topic.
 | Substantial work (Tier 3) | 13 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
-| Scheduled (July) | 12 |
-| Tracker files | 6 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`) |
+| Scheduled (upcoming) | 18 |
+| Tracker files | 7 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`, `FASTAPI-NUTRITION-API.md`) |
 
 ---
 
