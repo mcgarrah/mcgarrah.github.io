@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Fixing the Missing Markdown Preview Icon in VS Code Across Platforms"
+title: "VS Code Markdown Preview: Closing the macOS vs Windows Context Menu Gap"
 categories: [development-tools, wsl]
 tags: [vscode, wsl2, markdown, linux, macos, windows, troubleshooting]
-excerpt: "The Markdown 'Open Preview' icon disappears in VS Code on WSL2 and sometimes Windows. Here's how to fix it — and why Markdown Preview Enhanced might be the better long-term answer."
-description: "How to restore the default Markdown preview icon and keyboard shortcuts in VS Code on WSL2, Windows, and Linux — plus a look at Markdown Preview Enhanced as a cross-platform fix."
+excerpt: "On macOS, VS Code's right-click context menu gives you 'Open Preview' for Markdown files. On Windows and WSL2, you only get 'Open With...' and an extra click. Here's how to close that gap."
+description: "The macOS VS Code context menu includes 'Open Preview' for Markdown files, but Windows and WSL2 only show 'Open With...' — requiring an extra step. How to fix it, plus why Markdown Preview Enhanced is the better long-term answer."
 date: 2026-04-23
 last_modified_at: 2026-04-23
 seo:
@@ -13,34 +13,46 @@ seo:
   date_modified: 2026-04-23
 ---
 
-<!-- TODO: Screenshots needed for all three platforms showing the behavior difference.
-  - macOS: Screenshot of the editor title bar with the "Open Preview" split-pane icon visible (top-right)
-  - Windows: Screenshot of the editor title bar with the icon missing
-  - WSL2/Linux: Screenshot of the editor title bar with the icon missing
-  - macOS: Screenshot of the right-click context menu showing "Open Preview" option
-  - Windows/WSL2: Screenshot of the right-click context menu showing "Open With..." submenu instead
-  - "Open With..." dialog: Screenshot showing the "Configure default editor for '*.md'" option at the bottom
+<!-- TODO: Screenshots still needed:
+  - Windows/WSL2: Screenshot of the right-click context menu showing only "Open With..." (no "Open Preview")
+  - Windows/WSL2: Screenshot of the "Open With..." submenu showing the list of editors to choose from
+  - Windows/WSL2: Screenshot of the "Configure default editor for '*.md'" option at the bottom of the list
+  - Linux: Screenshot of the right-click context menu for comparison
   - MPE: Screenshot of the Markdown Preview Enhanced icon in the editor title bar after installation
   - MPE: Screenshot of the side-by-side preview rendering a Mermaid diagram or KaTeX formula
 -->
 
 <!-- excerpt-end -->
 
-If you use VS Code across macOS, Windows, and WSL2, you have probably noticed that the Markdown preview experience is not consistent. On macOS, the "Open Preview" icon — a split-pane with a magnifying glass — sits in the top-right corner of the editor title bar. Click it and you get a rendered preview immediately.
+If you use VS Code across macOS, Windows, and WSL2, you have probably noticed that the Markdown preview experience is not consistent across platforms.
 
-On Windows or VS Code connected to WSL2/Linux, that icon often disappears. Instead you are forced to right-click the file, navigate through an "Open With..." submenu, and pick from a list. The keyboard shortcut `Ctrl+Shift+V` still works, but losing the one-click icon is a paper cut that adds up when you edit Markdown all day.
+All three platforms have the "Open Preview to the Side" button in the editor title bar — the split-pane icon in the top-right corner. That button is always there:
 
-This article covers two fixes: restoring the built-in icon, and switching to Markdown Preview Enhanced for a more consistent cross-platform experience.
+![macOS VS Code title bar showing the Open Preview to the Side button](/assets/images/markdown-preview-macos-titlebar.png)
 
-## Why Does the Icon Disappear on WSL2?
+Here is a closer look at that button area:
 
-VS Code treats WSL as a "Remote" environment. Extensions, settings, and default file associations do not always sync between the local host (macOS or Windows) and the remote WSL instance. The built-in Markdown Language Features extension can end up disabled or overridden in the remote context, which removes the preview icon from the title bar.
+![Close-up of the VS Code title bar preview button](/assets/images/markdown-preview-macos-sidebyside.png)
 
-The same issue occasionally appears on native Windows or Linux installs when another extension claims the `.md` file type.
+The difference is in the right-click context menu. On macOS, right-clicking a Markdown file in the Explorer gives you "Open Preview" and "Open Preview to the Side" right at the top of the menu — one click and you are in the preview:
 
-## Fix 1: Restore the Built-In Preview Icon
+![macOS VS Code context menu showing Open Preview at the top](/assets/images/markdown-preview-macos-context-menu.png)
 
-If the icon is missing, the built-in Markdown Language Features extension is likely disabled in your current environment.
+On Windows and WSL2/Linux, those options are missing from the context menu. Instead you only get "Open With..." which opens a secondary list of editors to choose from. It is an extra click and a hunt through a submenu every time you want to preview a Markdown file.
+
+The keyboard shortcut `Ctrl+Shift+V` still works on all platforms, but if you are a mouse-driven user or just want the same quick context menu experience everywhere, this gap is a daily annoyance.
+
+This article covers how to close that gap — both with built-in settings and with Markdown Preview Enhanced as a longer-term fix.
+
+## Why Is the Context Menu Different?
+
+VS Code treats WSL as a "Remote" environment. Extensions, settings, and default file associations do not always sync between the local host (macOS or Windows) and the remote WSL instance. The built-in Markdown Language Features extension can end up disabled or overridden in the remote context, which removes the preview options from the context menu.
+
+The same issue appears on native Windows or Linux installs when another extension claims the `.md` file type or when the built-in Markdown extension is not the default handler.
+
+## Fix 1: Re-Enable the Built-In Markdown Extension
+
+If the context menu is missing the preview options, the built-in Markdown Language Features extension is likely disabled in your current environment.
 
 1. Open the Extensions view (`Ctrl+Shift+X`).
 2. Search for `@builtin markdown`.
@@ -48,7 +60,7 @@ If the icon is missing, the built-in Markdown Language Features extension is lik
 
 ## Fix 2: Set the Default Editor for Markdown
 
-To stop the "Open With..." prompt and make preview the default when double-clicking a `.md` file in the sidebar:
+Even with the extension enabled, VS Code may still show "Open With..." instead of "Open Preview" in the context menu. Setting the default editor for `.md` files tells VS Code to stop asking:
 
 1. Right-click any `.md` file in the Explorer.
 2. Select **Open With...**
@@ -69,7 +81,7 @@ On macOS, substitute `Cmd` for `Ctrl`.
 
 ## The Better Fix: Markdown Preview Enhanced
 
-The built-in preview is functional but minimal. [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) (MPE) is the power-user alternative — and it fixes the missing icon problem as a side effect, because it registers its own dedicated command and title bar icon that works consistently across all platforms.
+The built-in preview is functional but minimal. [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) (MPE) is the power-user alternative — and it fixes the context menu gap as a side effect, because it registers its own dedicated commands and context menu entries that work consistently across all platforms.
 
 ### Why MPE Is an Upgrade
 
@@ -92,4 +104,4 @@ MPE uses a heavier rendering engine than the built-in preview. On very large fil
 
 ## Summary
 
-The missing Markdown preview icon is a VS Code quirk caused by remote environment extension sync issues. You can fix it by re-enabling the built-in Markdown Language Features extension and setting the default editor — or skip the workaround entirely by installing Markdown Preview Enhanced, which provides a consistent, feature-rich preview across macOS, Windows, and WSL2.
+The Markdown preview context menu gap between macOS and Windows/WSL2 is a VS Code quirk caused by remote environment extension sync and default editor associations. You can fix it by re-enabling the built-in Markdown Language Features extension and setting the default editor for `.md` files — or skip the workaround entirely by installing Markdown Preview Enhanced, which provides consistent context menu entries and a feature-rich preview across macOS, Windows, and WSL2.
