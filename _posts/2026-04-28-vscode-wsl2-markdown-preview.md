@@ -5,22 +5,13 @@ categories: [development-tools, wsl]
 tags: [vscode, wsl2, markdown, linux, macos, windows, troubleshooting]
 excerpt: "On macOS, VS Code's right-click context menu gives you 'Open Preview' for Markdown files. On Windows and WSL2, you only get 'Open With...' and an extra click. Here's how to close that gap."
 description: "The macOS VS Code context menu includes 'Open Preview' for Markdown files, but Windows and WSL2 only show 'Open With...' — requiring an extra step. How to fix it, plus why Markdown Preview Enhanced is the better long-term answer."
-date: 2026-04-23
-last_modified_at: 2026-04-23
+date: 2026-04-28
+last_modified_at: 2026-04-28
 seo:
   type: BlogPosting
-  date_published: 2026-04-23
-  date_modified: 2026-04-23
+  date_published: 2026-04-28
+  date_modified: 2026-04-28
 ---
-
-<!-- TODO: Screenshots still needed:
-  - Windows/WSL2: Screenshot of the right-click context menu showing only "Open With..." (no "Open Preview")
-  - Windows/WSL2: Screenshot of the "Open With..." submenu showing the list of editors to choose from
-  - Windows/WSL2: Screenshot of the "Configure default editor for '*.md'" option at the bottom of the list
-  - Linux: Screenshot of the right-click context menu for comparison
-  - MPE: Screenshot of the Markdown Preview Enhanced icon in the editor title bar after installation
-  - MPE: Screenshot of the side-by-side preview rendering a Mermaid diagram or KaTeX formula
--->
 
 <!-- excerpt-end -->
 
@@ -38,7 +29,13 @@ The difference is in the right-click context menu. On macOS, right-clicking a Ma
 
 ![macOS VS Code context menu showing Open Preview at the top](/assets/images/markdown-preview-macos-context-menu.png)
 
-On Windows and WSL2/Linux, those options are missing from the context menu. Instead you only get "Open With..." which opens a secondary list of editors to choose from. It is an extra click and a hunt through a submenu every time you want to preview a Markdown file.
+On Windows and WSL2/Linux, those options are missing from the context menu. Instead you only get "Open With..." which opens a secondary list of editors to choose from:
+
+![Windows/WSL2 VS Code context menu showing only Open With instead of Open Preview](/assets/images/markdown-preview-wsl2-context-menu.png)
+
+Clicking "Open With..." reveals a submenu where you have to pick the editor — an extra click and a hunt every time you want to preview a Markdown file:
+
+![Windows/WSL2 Open With submenu showing the list of editors to choose from](/assets/images/markdown-preview-wsl2-open-with-submenu.png)
 
 The keyboard shortcut `Ctrl+Shift+V` still works on all platforms, but if you are a mouse-driven user or just want the same quick context menu experience everywhere, this gap is a daily annoyance.
 
@@ -83,12 +80,20 @@ On macOS, substitute `Cmd` for `Ctrl`.
 
 The built-in preview is functional but minimal. [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) (MPE) is the power-user alternative — and it fixes the context menu gap as a side effect, because it registers its own dedicated commands and context menu entries that work consistently across all platforms.
 
+After installing MPE, you get a dedicated preview icon in the editor title bar that works reliably across all platforms:
+
+![Markdown Preview Enhanced icon in the VS Code editor title bar on Windows/WSL2](/assets/images/markdown-preview-wsl2-mpe-icon.png)
+
 ### Why MPE Is an Upgrade
 
 - **Math and diagrams**: Native KaTeX/MathJax support for formulas, plus Mermaid, PlantUML, and Flowchart.js for diagrams — no extra extensions needed.
 - **Image path handling**: Resolves local image paths in WSL more gracefully than the built-in preview, which sometimes struggles with `\\wsl$` file resolution.
 - **Export options**: Direct export to PDF, PNG, HTML, ePub, and Marp/Pandoc presentations.
 - **Code chunk execution**: Can run code blocks in your Markdown (if the compiler is installed in your environment) and render the output inline in the preview.
+
+Here is MPE rendering a side-by-side preview with rich content that the built-in preview cannot handle:
+
+![Markdown Preview Enhanced side-by-side preview on Windows/WSL2](/assets/images/markdown-preview-wsl2-mpe-sidebyside-preview.png)
 
 ### Auto-Open Preview
 
