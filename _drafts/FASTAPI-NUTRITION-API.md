@@ -270,6 +270,7 @@ class DataOrchestrator:
 
 ## Existing Repositories
 
+- [openfoodfacts-python](https://github.com/openfoodfacts/openfoodfacts-python) — Open Food Facts Python SDK
 - [usda_fdc_python](https://github.com/mcgarrah/usda_fdc_python) — Python package for USDA FoodData Central
 - [gs1_gpc_python](https://github.com/mcgarrah/gs1_gpc_python) — Python package for GS1 Global Product Classification
 - [oneworldsync_python](https://github.com/mcgarrah/oneworldsync_python) — Python package (key expired, $40k/yr — dropped)
