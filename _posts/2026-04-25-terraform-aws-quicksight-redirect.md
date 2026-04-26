@@ -1,8 +1,8 @@
 ---
 title: "Vanity URLs for AWS QuickSight with Terraform, CloudFront, and Route 53"
 layout: post
-date: 2026-07-28
-last_modified_at: 2026-07-28
+date: 2026-04-25
+last_modified_at: 2026-04-25
 mermaid: true
 description: "A Terraform module that creates friendly vanity URLs for AWS QuickSight using CloudFront Functions, ACM, and Route 53 — one distribution, multiple domains, no servers."
 categories:
@@ -20,8 +20,8 @@ tags:
 excerpt: "AWS QuickSight URLs are long and unmemorable. I built a Terraform module that creates friendly vanity URLs using CloudFront Functions, ACM, and Route 53 — a single distribution handles multiple domains with zero origin cost."
 seo:
   type: BlogPosting
-  date_published: 2026-07-28
-  date_modified: 2026-07-28
+  date_published: 2026-04-25
+  date_modified: 2026-04-25
 ---
 
 When we added a second QuickSight instance for non-prod testing alongside production, the URL problem went from annoying to unworkable. Business users were mixing up environments, bookmarking the wrong one, and asking which account alias to type every time. Someone proposed an Nginx proxy on EC2 to handle the redirects. A VM burning money 24/7 for a handful of HTTP 301s felt wrong.
