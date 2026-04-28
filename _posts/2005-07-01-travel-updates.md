@@ -1,9 +1,10 @@
 ---
 title: "Travel updates"
 layout: post
+last_modified_at: 2026-04-28
 ---
 
-Katie is going to China. She setup a blog on livejournal [Kate Escape](http://www.livejournal.com/~kate_escape/) to talk about her travels here and in China.
+Katie is going to China. She setup a blog on livejournal [Kate Escape](https://web.archive.org/web/2024/http://www.livejournal.com/~kate_escape/) *(archived — LiveJournal profile defunct)* to talk about her travels here and in China.
 
 Sam just got back from Spain Monday. He is taking entrance exams at NC State and Wake Tech CC. He did really well on them.
 

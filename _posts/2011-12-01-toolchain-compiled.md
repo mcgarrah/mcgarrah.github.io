@@ -2,6 +2,7 @@
 title:  "Toolchains compiled"
 layout: post
 categories: personal black_armor hardware nas seagate
+last_modified_at: 2026-04-28
 ---
 
 Two full toolchains built and a third that I still think might be made to work.  The first is using older versions of everything and was mostly done as a test to get the build environment working against known sources that are known to build. Even this known build process required some effort to get working in a current OS environment. Those docs, notes and scripts will be coming in the near future.
@@ -10,7 +11,7 @@ Two full toolchains built and a third that I still think might be made to work. 
 
 So to outline what works and not, I give you the following.
 
-Toolchain that comes from older versions of software and the docs from [Tom Walsh](http://openhardware.net/Embedded_ARM/Toolchain/):
+Toolchain that comes from older versions of software and the docs from [Tom Walsh](https://openhardware.net/Embedded_ARM/Toolchain/):
 
 * binutils-2.19.1a.tar.bz2
 * gcc-4.3.2.tar.bz2 (with a patch from Tom)
@@ -31,7 +32,7 @@ Newest versions that fails to compile in GCC in zlib:
 * newlib-1.19.0.tar.gz
 * insight-CVS-20111130.tar.bz2 (pulled from CVS head and required patching by me)
 
-The issue in GCC is well documented (if you know what you are looking for) as a bug in the ```"--enabled-multilib"``` during the build. The [zlib](http://en.wikipedia.org/wiki/Zlib) library that is packaged with the GCC source fails to build in a cross-compiled configuration. Who knew that GCC packages their own copy of zlib in the GCC sources? There appear to be a couple of solutions which might fix the problem. The first is to just use the native zlib from the host system and pass in ```"--with-system-zlib"``` but that feels like a hack instead of a fix. The other is to revert a change in GCC that is documented in a couple of places ([Bug45174](http://gcc.gnu.org/bugzilla/show_bug.cgi?id=45174) and [Bug43328](http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43328)). This is a bug in the "configure" phase of the standard "configure;make;make install" but shows up in the "make" stage. So, I'll revisit this as time permits and see about getting the latest GCC 4.6 series working.
+The issue in GCC is well documented (if you know what you are looking for) as a bug in the ```"--enabled-multilib"``` during the build. The [zlib](https://en.wikipedia.org/wiki/Zlib) library that is packaged with the GCC source fails to build in a cross-compiled configuration. Who knew that GCC packages their own copy of zlib in the GCC sources? There appear to be a couple of solutions which might fix the problem. The first is to just use the native zlib from the host system and pass in ```"--with-system-zlib"``` but that feels like a hack instead of a fix. The other is to revert a change in GCC that is documented in a couple of places ([Bug45174](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=45174) and [Bug43328](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=43328)). This is a bug in the "configure" phase of the standard "configure;make;make install" but shows up in the "make" stage. So, I'll revisit this as time permits and see about getting the latest GCC 4.6 series working.
 
 The more exciting thing is that it looks like both GCC versions that compiled will compile code to an intermediate state.  That is not proof that it generates a working executable but it is a step in the right direction.
 

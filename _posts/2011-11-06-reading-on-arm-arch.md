@@ -2,6 +2,7 @@
 title:  "Black Armor Reading on ARM Architecture"
 layout: post
 categories: personal black_armor hardware nas seagate linux arm armv5
+last_modified_at: 2026-04-28
 ---
 
 So earlier I was digging around trying to find out more about the Black Armor NAS hardware and pulled some interesting information.  Unfortunately, I don't have a lot of ARM background so a good bit of it was confusing as I reviewed it.
@@ -15,11 +16,11 @@ $ cat /proc/cpuinfo
 Processor       : ARM926EJ-S rev 1 (v5l)
 ```
 
-To rectify my lack of knowledge I started reading on Wikipedia and found the [ARM architecture](http://en.wikipedia.org/wiki/ARM_architecture) which made me realize that I've been missing out on an entirely different ecology of technologic innovation.  The features that are available for each processor was an interesting ride down memory lane with my memory of Intel CPU features, that I'm familiar with, running parallel to the ARM decisions in the same areas. They have two completely different paths but seem to have interchange between the two. ARM has an interesting history as a company as well.
+To rectify my lack of knowledge I started reading on Wikipedia and found the [ARM architecture](https://en.wikipedia.org/wiki/ARM_architecture) which made me realize that I've been missing out on an entirely different ecology of technologic innovation.  The features that are available for each processor was an interesting ride down memory lane with my memory of Intel CPU features, that I'm familiar with, running parallel to the ARM decisions in the same areas. They have two completely different paths but seem to have interchange between the two. ARM has an interesting history as a company as well.
 
 <!-- excerpt-end -->
 
-So, I found information on the processor on the Wikipedia page for [List of ARM Cores](http://en.wikipedia.org/wiki/List_of_ARM_microprocessor_cores) and the earlier reading on architecture helped me understand the differences between the Family, Arch and Core. Again, interesting ecology of processor technology.
+So, I found information on the processor on the Wikipedia page for [List of ARM Cores](https://en.wikipedia.org/wiki/List_of_ARM_microprocessor_cores) and the earlier reading on architecture helped me understand the differences between the Family, Arch and Core. Again, interesting ecology of processor technology.
 
 ```text
 ARM Family:       ARM9E

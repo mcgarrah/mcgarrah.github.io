@@ -4,7 +4,7 @@ layout: post
 categories: [technical, troubleshooting]
 tags: [linux, debian, bash, recovery, proxmox, homelab, dell-wyse-3040]
 published: true
-last_modified_at: 2026-04-14
+last_modified_at: 2026-04-28
 ---
 
 We have all done it if you work long enough. I blew up my Debian Linux system with an incredibly stupid mistake breaking the whole system. It is actually one of the questions I have when interviewing someone. "What is the worst mistake you've ever made?" And if they admit one, the follow up question, "What did you learn?"
@@ -478,7 +478,7 @@ The migration freed up over 3GB of space on the root filesystem, allowing the Pr
 These resources helped me understand bash-only recovery techniques:
 
 - [Bash Copy Function](https://www.qfbox.info/bashcp)
-- [Rescuing a Hosed System Using Only Bash](http://fendrich.se/blog/2010/08/27/rescuing-hosed-system-using-only-bash/)
+- [Rescuing a Hosed System Using Only Bash](https://web.archive.org/web/2024/http://fendrich.se/blog/2010/08/27/rescuing-hosed-system-using-only-bash/) *(archived — domain defunct)*
 - [Unix StackExchange: After accidentally renaming /usr](https://unix.stackexchange.com/questions/432002/after-accidentally-renaming-usr-how-do-i-rename-it-back)
 - [Unix StackExchange: Moved /bin and other folders](https://unix.stackexchange.com/questions/17428/moved-bin-and-other-folders-how-to-get-them-back)
 

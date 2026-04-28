@@ -2,15 +2,16 @@
 title:  "Mininet network simulator"
 layout: post
 categories: vmware technical
+last_modified_at: 2026-04-28
 ---
 
 I’m taking a graduate course in computer networking at Georgia Tech. The tools they are asking us to use are all open source and allow for some pretty interesting projects.
 
-One such tool is the [Mininet](http://mininet.org/) software that allows for building realistic virtual networks with real switches, routers and applications running on a single system. We are using a virtual machine that contains a copy of the Linux operating system and the virtual networking software. So far we are encountering minor issues with the OS and VM software.
+One such tool is the [Mininet](https://mininet.org/) software that allows for building realistic virtual networks with real switches, routers and applications running on a single system. We are using a virtual machine that contains a copy of the Linux operating system and the virtual networking software. So far we are encountering minor issues with the OS and VM software.
 
 <!-- excerpt-end -->
 
-The base VM for Mininet has an [option#2 building from source code](http://mininet.org/download/) but it needs to also include the [Pyretic software](http://frenetic-lang.org/pyretic/) to allow for Python coding of the network. I’m reviewing the documentation on [building a Pyretic VM](https://github.com/frenetic-lang/pyretic/wiki/Building-the-Pyretic-VM) on their website now. There are a lot of moving pieces in this configuration.
+The base VM for Mininet has an [option#2 building from source code](https://mininet.org/download/) but it needs to also include the [Pyretic software](http://frenetic-lang.org/pyretic/) to allow for Python coding of the network. I’m reviewing the documentation on [building a Pyretic VM](https://github.com/frenetic-lang/pyretic/wiki/Building-the-Pyretic-VM) on their website now. There are a lot of moving pieces in this configuration.
 
 For my class, we have a VM that is not an LTS release several versions back for Ubuntu. It is in an unsupported version as of now. This is why I’m interested in getting this completely built from source.
 

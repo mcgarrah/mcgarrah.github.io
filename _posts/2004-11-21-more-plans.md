@@ -1,6 +1,7 @@
 ---
 title: "More Plans"
 layout: post
+last_modified_at: 2026-04-28
 ---
 
 ## GameDev
@@ -9,7 +10,7 @@ Well the full time game development job went exactly the way I expected. I'm jus
 
 ## Resume
 
-Something exciting in the job area. Someone asked me for a resume. I've updated my resume and posted HTML and MSWord copies at [http://www.mcgarware.com/resume/](http://www.mcgarware.com/resume/) for public consumption. I'll get the OpenOffice and PDF versions up sometime soon. I just love creative writing.
+Something exciting in the job area. Someone asked me for a resume. I've updated my resume and posted HTML and MSWord copies at [http://www.mcgarware.com/resume/](https://web.archive.org/web/2024/http://www.mcgarware.com/resume/) *(archived — domain defunct)* for public consumption. I'll get the OpenOffice and PDF versions up sometime soon. I just love creative writing.
 
 ## MKPTracker
 

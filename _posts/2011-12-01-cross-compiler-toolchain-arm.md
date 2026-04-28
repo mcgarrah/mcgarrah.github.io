@@ -2,9 +2,10 @@
 title:  "Cross-compiler toolchain update"
 layout: post
 categories: personal black_armor hardware nas seagate
+last_modified_at: 2026-04-28
 ---
 
-I've been working on building a toolchain using the notes from OpenHardware [Building the ARM GNU 4.3.2](http://openhardware.net/Embedded_ARM/Toolchain/) with some success. I finally got the base set of GCC 4.3.2 tools to build successfully. I have not used the resulting GCC to produce an ARM executable or verified the executable works on the Black Armor NAS. Those are tests for tomorrow evening when I can get the NAS setup again on the network. It is currently in a box in the corner.
+I've been working on building a toolchain using the notes from OpenHardware [Building the ARM GNU 4.3.2](https://openhardware.net/Embedded_ARM/Toolchain/) with some success. I finally got the base set of GCC 4.3.2 tools to build successfully. I have not used the resulting GCC to produce an ARM executable or verified the executable works on the Black Armor NAS. Those are tests for tomorrow evening when I can get the NAS setup again on the network. It is currently in a box in the corner.
 
 There were several minor things that needed to be updated and modified to get the scripts and environment to work. I've kept careful notes and will post those in the next couple of days once I've tested the output from the compiler works. I'm also attempting to update the versions of the libraries and software to more current versions as well. The GCC 4.3.2 and associated libraries are several years old and I'm trying to get the GCC 4.6.x to build along with newer newlib, binutils and insight/gdb using the same basic set of notes and scripts. I bumped into a zlib issues in the second phase GCC build that stumped me for the night. I'll hit it again tomorrow. Again, I'm keeping careful notes and build docs for the newer version as well.
 

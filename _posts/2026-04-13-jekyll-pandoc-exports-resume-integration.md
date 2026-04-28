@@ -6,12 +6,12 @@ tags: [jekyll-plugin, pandoc, pdf-generation, docx, ruby-gem, resume, github-pag
 excerpt: "What happens when you integrate your own Jekyll plugin into a real project: three patch releases, a Ruby language gotcha, and the surprising difficulty of converting themed HTML into clean documents."
 description: "Real-world integration of the jekyll-pandoc-exports plugin into a resume site, covering Jekyll 3.x compatibility bugs, nil safety issues, Pandoc's CSS limitations, regex-based HTML cleanup for document exports, and the value of eating your own dog food."
 date: 2026-04-13
-last_modified_at: 2026-04-13
+last_modified_at: 2026-04-28
 published: true
 seo:
   type: BlogPosting
   date_published: 2026-04-13
-  date_modified: 2026-04-13
+  date_modified: 2026-04-28
 ---
 
 What happens when you integrate your own plugin into a real project? Three patch releases in one session, a Ruby language subtlety that only manifests in Jekyll 3.x, and the discovery that Pandoc completely ignores your CSS.
@@ -120,7 +120,7 @@ Additionally, the regex used `Regexp.new(pattern)` without the `MULTILINE` flag.
 
 ```html
 <li class="website"><i class="fas fa-globe-americas"></i>
-  <a href="http://www.mcgarrah.org" target="_blank">www.mcgarrah.org</a>
+  <a href="https://www.mcgarrah.org" target="_blank">www.mcgarrah.org</a>
 </li>
 ```
 

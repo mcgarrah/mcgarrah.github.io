@@ -2,9 +2,10 @@
 title:  "Building the GNU ARM Toolchain: Part 1"
 layout: post
 categories: personal black_armor hardware nas seagate arm armv5 toolchain
+last_modified_at: 2026-04-28
 ---
 
-I found the [GNU ARM Toolchain](http://www.gnuarm.com/) website awhile back and that they have several different versions out there for the toolchain. A toolchain is just the basic tools needed to build software.  In this case it is the standard libraries, the compiler, debugger and various other tools needed to write software.  The version of the toolchain that is provided by Seagate is version 3.0 and a very old version.  The oldest on the ARM website is 3.3 with 4.1 being the newest.
+I found the [GNU ARM Toolchain](https://www.gnuarm.com/) website awhile back and that they have several different versions out there for the toolchain. A toolchain is just the basic tools needed to build software.  In this case it is the standard libraries, the compiler, debugger and various other tools needed to write software.  The version of the toolchain that is provided by Seagate is version 3.0 and a very old version.  The oldest on the ARM website is 3.3 with 4.1 being the newest.
 
 <!-- excerpt-end -->
 

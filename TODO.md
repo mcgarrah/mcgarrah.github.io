@@ -41,7 +41,7 @@ The resume site at `mcgarrah.org/resume/` has two Gemfile issues that could caus
 ## Quick Wins
 
 - [x] Create proper favicon set (16x16, 32x32, 180x180 Apple Touch, `site.webmanifest`) — Full set generated and deployed. Blog post: `2026-06-02-jekyll-modern-favicon-set.md`.
-- [ ] Upgrade `http://` links to `https://` in old posts (2011-2015 era) — Several old posts link to Wikipedia, blogspot, SourceForge, and other sites using `http://`. These sites all support HTTPS now. Mixed content warnings aside, `https://` links are a minor trust signal and prevent browser security warnings. Simple find-and-replace across the affected posts.
+- [x] Upgrade `http://` links to `https://` in old posts (2011-2015 era) — Several old posts link to Wikipedia, blogspot, SourceForge, and other sites using `http://`. These sites all support HTTPS now. Mixed content warnings aside, `https://` links are a minor trust signal and prevent browser security warnings. Simple find-and-replace across the affected posts.
 
 ## Resume Repo CI/CD Parity
 
