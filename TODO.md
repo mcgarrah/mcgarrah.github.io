@@ -2,6 +2,17 @@
 
 ## High Impact
 
+### Run Jekyll VS Code Extension
+
+Forked the abandoned Jekyll Run extension (Dedsec727.jekyll-run v1.7.0) to [mcgarrah/jekyll-run](https://github.com/mcgarrah/jekyll-run). All 7 blog articles are published. The extension code still has significant remaining work across 6 phases tracked in `_drafts/RUNJEKYLL-EXTENSION.md`.
+
+- [ ] Submit upstream PR (`upstream-pr` → `Kanna727/jekyll-run:master`) with 5 critical stabilization fixes
+- [ ] Fix remaining 15 bugs on `main` branch (6 high, 5 medium, 4 low priority)
+- [ ] Add real test suite — replace placeholder test with focused unit and integration tests
+- [ ] Implement new features: Jekyll Clean command (`ctrl+f10`) and Jekyll Doctor command (`ctrl+f11`)
+- [ ] Rename to "Run Jekyll" — update package.json, README, CHANGELOG, LICENSE, extension.ts, workflows
+- [ ] Publish to VS Code Marketplace — create publisher, configure PAT, tag v1.8.0 release
+
 ### GDPR Cookie Consent Ruby Plugin
 
 - [ ] Complete the GDPR cookie consent Ruby plugin as a proper Jekyll gem — The GDPR article (`2025-09-17-implementing-gdpr-compliance-jekyll-adsense.md`) and the plugin development draft (`_drafts/2025-12-18-jekyll-gdpr-plugin-development.md`) cover the implementation, but the plugin needs a follow-through article about packaging it as a published Ruby gem. Follow the same pattern as the Pandoc exports plugin (`2026-04-12-jekyll-pandoc-exports-plugin.md`) and the gem release automation article (`2026-04-11-ruby-gem-release-automation.md`). Write the companion article and publish the gem.
