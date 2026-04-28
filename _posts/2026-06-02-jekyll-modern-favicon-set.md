@@ -14,11 +14,13 @@ seo:
   date_modified: 2026-06-02
 ---
 
-In my recent article on [The Small Things: Polish Features That Make a Jekyll Blog Feel Professional](/jekyll-small-things-polish-features/), I confessed that my favicon implementation was the bare minimum: a single `favicon.ico` file dropped in the site root.
+In my recent article on [The Small Things: Polish Features That Make a Jekyll Blog Feel Professional](/jekyll-small-things-polish-features/), I confessed that my favicon implementation was the bare minimum: a single resolution `favicon.ico` file dropped in the site root. It barely qualifies as solving the problem.
 
 While that prevents the standard 404 error when a desktop browser requests the icon, it completely ignores the modern web. Mobile devices, tablets, and modern browsers expect high-resolution PNGs, Apple Touch icons, and web manifests. Without them, users bookmarking the site to their home screens get a generic, ugly letter block instead of a proper logo.
 
-It was sitting on my `TODO.md` as a "Quick Win" for far too long. Here is how I finally fixed it and implemented a modern favicon set.
+It was sitting on my internal `TODO.md` as a "Quick Win" for far too long. Here is how I finally fixed it and implemented a modern favicon set.
+
+> "It's the small things that matter. The details." — The Twelfth Doctor
 
 <!-- excerpt-end -->
 
@@ -29,6 +31,10 @@ If you check your web server logs, you'll likely see a stream of 404 errors for 
 - `/apple-touch-icon.png`
 
 iOS devices automatically request these files when a user adds your site to their home screen. Android devices look for an Android Chrome manifest. If they aren't there, you get degraded UX and messy logs.
+
+Here is the source image I started with — a TARDIS icon at 1067x1067 pixels with a solid white background:
+
+![Original TARDIS icon with white background](/assets/images/favicon/tardis-icon-1067x1067px.png){: width="256" }
 
 ## Step 1: Generate the Assets
 
@@ -56,6 +62,10 @@ The trick is the fuzz factor. A naive `-transparent white` only removes exact `#
 ```bash
 convert logo.png -fuzz 10% -transparent white transparent-logo.png
 ```
+
+Here is the result — the same icon after stripping the white background at 10% fuzz. The anti-aliased edges are clean with no visible halo:
+
+![TARDIS icon after transparency processing](/assets/images/favicon/tardis-icon-transparent.png){: width="256" style="background: #ccc; padding: 8px;" }
 
 *(If you do this, just substitute `transparent-logo.png` for `logo.png` in the sizing commands below.)*
 
@@ -131,11 +141,21 @@ Beyond the icons themselves, I verified that the HTML changes in `_layouts/defau
 
 The transparency fuzz factor was the main thing I iterated on locally. Each time I regenerated the PNGs with a different percentage, I restarted Jekyll and checked the Apple Touch icon at 180x180 to see if the halo was gone. That feedback loop — regenerate, restart, hard-refresh — is much faster against a local server than waiting for a GitHub Pages deploy.
 
-Once everything looked right locally, I pushed to GitHub and verified on the live site at mcgarrah.org. The deploy picked it up on the next build and the icons rendered identically to what I saw in local testing.
+Once everything looked right locally, I pushed to GitHub and verified on the live site at [mcgarrah.org](https://mcgarrah.org). The deploy picked it up on the next build and the icons rendered identically to what I saw in local testing.
 
 ## The Result
 
 The whole process took about thirty minutes of actual work, spread across an hour of wall time because I was multitasking. Most of that was the local iteration on ImageMagick transparency — the favicon generation and HTML changes themselves were genuinely quick. After deploying, the stream of `/apple-touch-icon.png` 404 errors in my server logs disappeared immediately. More importantly, bookmarking the site to an iPhone home screen now shows my actual logo instead of a generic gray letter "M" in a rounded square.
+
+Here is the final set of generated icons at their actual sizes, from the 512x512 Android Chrome icon down to the 16x16 browser tab favicon:
+
+| Icon | Size | Preview |
+|------|------|---------|
+| favicon-512x512.png | 512x512 | ![512x512 favicon](/favicon-512x512.png){: width="128" } |
+| favicon-192x192.png | 192x192 | ![192x192 favicon](/favicon-192x192.png){: width="96" } |
+| apple-touch-icon.png | 180x180 | ![Apple Touch icon](/apple-touch-icon.png){: width="90" } |
+| favicon-32x32.png | 32x32 | ![32x32 favicon](/favicon-32x32.png) |
+| favicon-16x16.png | 16x16 | ![16x16 favicon](/favicon-16x16.png) |
 
 If you have a Jekyll site with just a bare `favicon.ico`, check your logs — you are almost certainly serving 404s for assets that mobile devices expect to exist. A few generated PNGs and six lines of HTML in your layout is all it takes to fix it.
 
