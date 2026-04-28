@@ -7,7 +7,7 @@ Personal technical blog and website for Michael McGarrah, a technologist special
 
 ### Content Management
 - **Jekyll-powered static site** with GitHub Pages hosting
-- **Extensive blog archive** with 139 technical articles spanning 2001-2026
+- **Extensive blog archive** spanning 2001-2026 with technical articles
 - **Category and tag organization** for easy content discovery
 - **Draft management system** for content development
 - **RSS feed** for content syndication

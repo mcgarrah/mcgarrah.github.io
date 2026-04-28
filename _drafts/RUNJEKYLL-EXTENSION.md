@@ -8,7 +8,7 @@ sitemap: false
 
 Fork and overhaul of the abandoned [Jekyll Run](https://github.com/Kanna727/jekyll-run) VS Code extension.
 
-Last updated: 2026-04-20
+Last updated: 2026-06-29
 
 ---
 

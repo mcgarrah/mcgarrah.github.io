@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-07-29
+Last updated: 2026-07-30
 
 ---
 
@@ -27,12 +27,12 @@ Last updated: 2026-07-29
 | 08-18 | Mon | Photosynth: Open Source Alternatives | Split retrospective, verify links |
 | 08-20 | Wed | Jekyll GDPR Plugin Development | Finish plugin, write companion article |
 | 08-22 | Fri | Jekyll Dark Mode Toggle | Implement toggle, document |
-| 08-25 | Mon | Tag Sprawl Consolidation | Audit, merge 138 singletons |
-| 08-27 | Wed | Front Matter Hygiene Audit | Script + batch update 139 posts |
+| 08-25 | Mon | Tag Sprawl Consolidation | Audit, merge 189 singletons |
+| 08-27 | Wed | Front Matter Hygiene Audit | Script + batch update 173 posts |
 | 08-29 | Fri | Security Hardening (CSP, SRI) | Add integrity hashes, CSP meta tag |
 | 09-01 | Mon | Plausible vs Google Analytics | Evaluate, decide, document |
 | 09-03 | Wed | Post Series Navigation | Implement prev/next for multi-part series |
-| 09-05 | Fri | Vanity URLs for AWS QuickSight with Terraform | Review, add real-world context |
+| 09-05 | Fri | macOS Dock Jumping Between Monitors | Light edit, verify tips |
 | TBD | — | FastAPI Nutrition API (4-part series) | Build project first, then write articles |
 
 ---
@@ -52,8 +52,8 @@ Drafts that form natural publishing sequences or share a topic.
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
-| 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md` |
-| ☁️ **AWS Terraform Modules** | terraform-aws-quicksight-redirect | CloudFront vanity URL redirect for QuickSight |
+| 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md`, Part 1: `2026-07-01-aasr-proxmox-overview.md` |
+| ☁️ **AWS Terraform Modules** | — | QuickSight vanity URL article published (`2026-04-25-quicksight-vanity-urls-serverless-edge-redirects.md`) |
 | 🍎 **FastAPI Nutrition API** | See `FASTAPI-NUTRITION-API.md` | 4-article series: architecture, implementation, deployment, observability. Unified Food Intelligence API with USDA FDC, Open Food Facts, GS1 GPC |
 | 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
@@ -73,6 +73,8 @@ Drafts that form natural publishing sequences or share a topic.
 | `AASR-PROJECT.md` | Autonomous AI Scientific Research — canonical project tracker and implementation reference |
 | `AME-GPT-EXPLORATION.md` | Autonomous Model Evolution — GPT deep dive extending the AASR project |
 | `FASTAPI-NUTRITION-API.md` | FastAPI Nutrition API — project planning, Gemini conversation archive, 4-article series outline |
+| `FASTAPI-DATASRCS.md` | Additional open food data sources research (companion to FASTAPI-NUTRITION-API) |
+| `FASTAPI-FOOD-API.md` | Unified food nutrition lookup API design notes (companion to FASTAPI-NUTRITION-API) |
 
 ---
 
@@ -87,7 +89,7 @@ Drafts that form natural publishing sequences or share a topic.
 | `plausible-vs-google-analytics.md` | 1 hr | 🛡️ Security & Privacy |
 | `git-history-bloat-drafts-repo-cleanup.md` (Part 1) | 45 min | 🧰 Git & Repo Maintenance |
 | `git-repo-audit-methodology-findings.md` (Part 2) | 45 min | 🧰 Git & Repo Maintenance |
-| `terraform-aws-quicksight-redirect.md` | 30-45 min | ☁️ AWS Terraform Modules |
+| `macos-dock-jumping-between-monitors.md` | 30 min | 🖥️ macOS Tips |
 
 ---
 
@@ -165,13 +167,13 @@ Drafts that form natural publishing sequences or share a topic.
 
 ### `2026-07-10-jekyll-tag-sprawl-consolidation.md` — 📝 Jekyll Deep Dives
 
-- 138 of 237 tags used on exactly one post. Each generates a useless tag page.
+- 189 of 334 tags used on exactly one post. Each generates a useless tag page.
 - **What's needed:** Audit script, decision framework, perform merges, document results.
 - **Effort:** 1-2 hours
 
 ### `2026-07-13-jekyll-front-matter-hygiene.md` — 📝 Jekyll Deep Dives
 
-- 120 posts missing description, 50 missing tags, 34 missing excerpt separator, 62 missing last_modified_at.
+- 122 posts missing description, 51 missing tags, 35 missing excerpt separator, 62 missing last_modified_at.
 - **What's needed:** Audit script, batch updates, prioritize by traffic.
 - **Effort:** 2-3 hours
 
@@ -193,11 +195,23 @@ Drafts that form natural publishing sequences or share a topic.
 - **What's needed:** Design front matter convention, build Liquid include, retrofit existing series.
 - **Effort:** 2-3 hours
 
-### `2026-07-28-terraform-aws-quicksight-redirect.md` — ☁️ AWS Terraform Modules
+### `2026-04-01-macos-dock-jumping-between-monitors.md` — 🖥️ macOS Tips
 
-- Complete draft covering CloudFront Function redirect pattern for QuickSight vanity URLs.
-- **What's needed:** Add real-world context (enterprise BI rollout, multi-account scenario). Confirm GitHub repo is public. Consider Terraform Registry publication.
-- **Effort:** 30-45 minutes
+- Practical tip for stopping macOS Dock from jumping between monitors in multi-display setups.
+- **What's needed:** Light editing, verify tips still apply to current macOS version.
+- **Effort:** 30 minutes
+
+### `2026-07-01-aasr-proxmox-overview.md` — 🤖 AASR / AME
+
+- Part 1 of the AASR series: building an AI agent cluster on Proxmox.
+- **What's needed:** Review technical details, verify alignment with series overview.
+- **Effort:** 1 hour
+
+### `2026-07-09-git-repo-audit-methodology-findings.md` — 🧰 Git & Repository Maintenance
+
+- Part 2 of the git series: audit methodology and findings across all repos.
+- **What's needed:** Complete audit of all repos, populate findings, build decision matrix.
+- **Effort:** 45 minutes
 
 ### `2026-07-08-git-history-bloat-drafts-repo-cleanup.md` — 🧰 Git & Repository Maintenance
 
@@ -344,14 +358,14 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 46 |
+| Drafts in `_drafts/` | 48 |
 | Ready to publish (Tier 1) | 1 |
-| Near-complete (Tier 2) | 18 |
+| Near-complete (Tier 2) | 21 |
 | Substantial work (Tier 3) | 13 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
 | Scheduled (upcoming) | 18 |
-| Tracker files | 7 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`, `FASTAPI-NUTRITION-API.md`) |
+| Convenience/tracker files | 9 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`, `FASTAPI-NUTRITION-API.md`, `FASTAPI-DATASRCS.md`, `FASTAPI-FOOD-API.md`) |
 
 ---
 

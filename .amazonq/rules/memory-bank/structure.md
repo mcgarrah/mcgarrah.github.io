@@ -9,7 +9,7 @@ mcgarrah.github.io/
 ├── _layouts/                 # Page templates (default, post, page, etc.)
 ├── _includes/               # Reusable HTML components
 ├── _sass/                   # SCSS stylesheets and variables
-├── _posts/                  # Blog articles (130+ markdown files)
+├── _posts/                  # Published blog articles (date-prefixed markdown)
 ├── _drafts/                 # Unpublished content in development
 ├── _plugins/                # Custom Ruby plugins
 ├── _data/                   # YAML data files (Font Awesome icons)

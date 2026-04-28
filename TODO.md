@@ -8,17 +8,17 @@
 
 ### Front Matter Hygiene
 
-The blog has 139 published posts but front matter completeness varies widely. Older posts (2001-2016) have minimal front matter while newer posts have full SEO optimization. Filling these gaps improves search engine visibility across the entire archive.
+The blog has 173 published posts but front matter completeness varies widely. Older posts (2001-2016) have minimal front matter while newer posts have full SEO optimization. Filling these gaps improves search engine visibility across the entire archive.
 
-- [ ] Add `description` to posts missing it (120 of 139 posts) — Google uses this for search result snippets in SERPs. Without it, Google auto-generates a snippet from page content, which is often a poor representation of the article. The `jekyll-seo-tag` plugin renders this as `<meta name="description">`. Target 150-160 characters per post.
-- [ ] Add `tags` to posts missing them (50 of 139 posts) — Tags drive the tag page generator and help readers discover related content. Posts without tags are invisible to tag-based navigation. Many of the 50 untagged posts are from 2001-2015 and predate the tag system.
-- [ ] Add `<!-- excerpt-end -->` separator to posts missing it (34 of 139, mostly 2004-2015) — Without the custom separator, Jekyll uses the first paragraph as the excerpt. For technical posts that start with context-setting, this produces unhelpful homepage previews. The 34 missing posts are deep in pagination but still appear in RSS feeds and search results.
-- [ ] Add `last_modified_at` to posts missing it (62 of 139) — The `jekyll-seo-tag` plugin uses this to generate `<meta property="article:modified_time">`, signaling content freshness to search engines. Posts updated since original publication should reflect the update date. Google may rank recently-modified content higher for competitive queries.
+- [ ] Add `description` to posts missing it (122 of 173 posts) — Google uses this for search result snippets in SERPs. Without it, Google auto-generates a snippet from page content, which is often a poor representation of the article. The `jekyll-seo-tag` plugin renders this as `<meta name="description">`. Target 150-160 characters per post.
+- [ ] Add `tags` to posts missing them (51 of 173 posts) — Tags drive the tag page generator and help readers discover related content. Posts without tags are invisible to tag-based navigation. Many of the 50 untagged posts are from 2001-2015 and predate the tag system.
+- [ ] Add `<!-- excerpt-end -->` separator to posts missing it (35 of 173, mostly 2004-2015) — Without the custom separator, Jekyll uses the first paragraph as the excerpt. For technical posts that start with context-setting, this produces unhelpful homepage previews. The 34 missing posts are deep in pagination but still appear in RSS feeds and search results.
+- [ ] Add `last_modified_at` to posts missing it (62 of 173) — The `jekyll-seo-tag` plugin uses this to generate `<meta property="article:modified_time">`, signaling content freshness to search engines. Posts updated since original publication should reflect the update date. Google may rank recently-modified content higher for competitive queries.
 - [ ] Add missing alt tags to images — Required for accessibility (screen readers) and SEO (Google Image Search). The SEO health check workflow already flags these but doesn't block deploys.
 
 ### Tag Hygiene
 
-- [ ] Consolidate singleton tags — 138 of 237 tags are used on only one post. Each generates a tag page with a single post, marked `noindex` by the tag generator plugin. These dilute the tag system's usefulness for navigation. Merge singleton tags into existing broader tags where possible (e.g., merge `dart-sass` into `sass`, merge `serial-console` into `configuration`). This would reduce generated pages and make the `/tags/` index more useful.
+- [ ] Consolidate singleton tags — 189 of 334 tags are used on only one post. Each generates a tag page with a single post, marked `noindex` by the tag generator plugin. These dilute the tag system's usefulness for navigation. Merge singleton tags into existing broader tags where possible (e.g., merge `dart-sass` into `sass`, merge `serial-console` into `configuration`). This would reduce generated pages and make the `/tags/` index more useful.
 
 ### Resume Repo Gemfile
 
@@ -29,7 +29,7 @@ The resume site at `mcgarrah.org/resume/` has two Gemfile issues that could caus
 
 ## Quick Wins
 
-- [ ] Create proper favicon set (16x16, 32x32, 180x180 Apple Touch, `site.webmanifest`) — Currently only a basic `favicon.ico` exists at the site root. Modern browsers and mobile devices expect multiple sizes. Missing favicons cause 404s in server logs and a generic icon on mobile home screens. Tools like [RealFaviconGenerator](https://realfavicongenerator.net/) can generate the full set from a single source image.
+- [x] Create proper favicon set (16x16, 32x32, 180x180 Apple Touch, `site.webmanifest`) — Full set generated and deployed. Blog post: `2026-06-02-jekyll-modern-favicon-set.md`.
 - [ ] Upgrade `http://` links to `https://` in old posts (2011-2015 era) — Several old posts link to Wikipedia, blogspot, SourceForge, and other sites using `http://`. These sites all support HTTPS now. Mixed content warnings aside, `https://` links are a minor trust signal and prevent browser security warnings. Simple find-and-replace across the affected posts.
 
 ## Resume Repo CI/CD Parity
