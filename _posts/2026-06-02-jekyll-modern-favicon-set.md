@@ -160,3 +160,9 @@ Here is the final set of generated icons at their actual sizes, from the 512x512
 If you have a Jekyll site with just a bare `favicon.ico`, check your logs — you are almost certainly serving 404s for assets that mobile devices expect to exist. A few generated PNGs and six lines of HTML in your layout is all it takes to fix it.
 
 My [resume site](https://www.mcgarrah.org/resume/) runs as a sub-path off the same domain, so it picks up the root-level favicon assets automatically. Its Jekyll theme has its own `_includes/head.html`, which needed the same `<link>` block added, but the image files are shared. If you run multiple Jekyll projects under one domain, that is one less thing to duplicate.
+
+> "Never ignore the little things. In the whole wide universe, the little things are the most important." — The Eleventh Doctor
+
+![Gallifreyan script](/assets/images/gallifreyan-script.png)
+
+*Gallifreyan script generated with the [Gallifreyan Translation Helper](https://mightyfrong.github.io/gallifreyan-translation-helper/).*
