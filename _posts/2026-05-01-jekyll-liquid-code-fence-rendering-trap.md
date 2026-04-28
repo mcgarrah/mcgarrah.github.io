@@ -97,26 +97,22 @@ Needs to become:
 
 ### The Nested raw/endraw Problem
 
-You can't show literal <code>{&#37; raw %}</code> or <code>{&#37; endraw %}</code> text inside a <code>{&#37; raw %}</code> block — Liquid sees the inner <code>{&#37; endraw %}</code> and terminates the block early. For posts that need to display the raw/endraw tags themselves (like this one), use HTML character entities:
+You can't show literal <code>&#123;&#37; raw &#37;&#125;</code> or <code>&#123;&#37; endraw &#37;&#125;</code> text inside a <code>&#123;&#37; raw &#37;&#125;</code> block — Liquid sees the inner <code>&#123;&#37; endraw &#37;&#125;</code> and terminates the block early. For posts that need to display the raw/endraw tags themselves (like this one), use HTML character entities:
 
-```
-<code>{&#37; raw %}</code> and <code>{&#37; endraw %}</code>
-```
+<pre><code>&lt;code&gt;&#123;&#38;#37; raw &#37;&#125;&lt;/code&gt; and &lt;code&gt;&#123;&#38;#37; endraw &#37;&#125;&lt;/code&gt;</code></pre>
 
-The `&#37;` entity renders as `%`, producing <code>{&#37; raw %}</code> visually while avoiding Liquid parsing.
+The `&#37;` entity renders as `%`, producing <code>&#123;&#37; raw &#37;&#125;</code> visually while avoiding Liquid parsing.
 
 ### GitHub Actions Expressions
 
 GitHub Actions uses {% raw %}`${{ }}`{% endraw %} syntax which Liquid also intercepts. Any workflow YAML in a code block needs the same treatment:
 
-````markdown
-```yaml
-{&#37; raw %}
-{% raw %}- name: Build
-  run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-{% endraw %}{&#37; endraw %}
-```
-````
+<pre><code class="language-markdown">```yaml
+&#123;&#37; raw &#37;&#125;
+- name: Build
+  run: bundle exec jekyll build --baseurl "$&#123;&#123; steps.pages.outputs.base_path &#125;&#125;"
+&#123;&#37; endraw &#37;&#125;
+```</code></pre>
 
 ## Finding Every Affected File
 
