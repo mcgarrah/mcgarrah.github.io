@@ -94,7 +94,7 @@ The `{% seo %}` tag generates meta tags.
 Needs to become:
 
 ```markdown
-The {% raw %}`{&#37; seo %}`{% endraw %} tag generates meta tags.
+The {&#37; raw %}`{&#37; seo %}`{&#37; endraw %} tag generates meta tags.
 ```
 
 ### The Nested raw/endraw Problem
