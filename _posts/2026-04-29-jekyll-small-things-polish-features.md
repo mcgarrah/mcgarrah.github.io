@@ -197,6 +197,8 @@ The blog has a basic `favicon.ico` file at the site root. It's the minimum viabl
 
 This is one of the items still on the TODO list for improvement — a proper favicon set would include multiple sizes (16x16, 32x32, 180x180 for Apple Touch), PNG format, and a `site.webmanifest` file. But the basic `.ico` works and prevents the 404 that browsers generate when they request `/favicon.ico` and find nothing.
 
+**Update:** This has since been addressed — you will see an upcoming favicon post shortly.
+
 ## The Compound Effect
 
 None of these features would justify a blog post on their own. But together they create a compound effect:
