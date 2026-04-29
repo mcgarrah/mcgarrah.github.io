@@ -1,10 +1,17 @@
 ---
 title: "Homelab Storage Economics: Ceph vs Single Drive Costs"
 layout: post
+date: 2025-11-26
 categories: [homelab, storage]
 tags: [ceph, storage, costs, homelab, economics, backup]
+excerpt: "Real-world cost-per-GB analysis of distributed Ceph storage versus single-drive solutions in a homelab — the same infrastructure investment framework applies at any scale."
+description: "Cost analysis of Ceph distributed storage versus traditional single-drive solutions in a homelab environment. Breaks down actual cost per GB across different storage strategies including raw drives, Ceph replication overhead, and the economics of resilience."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-11-26
+  date_modified: 2026-04-14
 ---
 
 After building and running a Ceph cluster for my homelab, I've gained valuable insights into the real-world economics of distributed storage versus traditional single-drive solutions. Understanding storage cost per GB at different resilience levels is the same analysis you'd do for any infrastructure investment — the numbers are smaller in a homelab, but the decision framework is identical. This analysis breaks down the actual costs per GB across different storage strategies in my setup.

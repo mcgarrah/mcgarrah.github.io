@@ -1,10 +1,17 @@
 ---
 title: "Adding Ceph Dashboard to Your Proxmox Cluster"
 layout: post
+date: 2025-09-14
 categories: [technical, homelab]
 tags: [proxmox, ceph, dashboard, monitoring, cluster, web-interface]
+excerpt: "The Ceph Dashboard is essential for monitoring cluster health without SSH, but setting it up on Proxmox isn't straightforward. Here's how to get it working with SSL and proper authentication."
+description: "How to enable and configure the Ceph Dashboard on a Proxmox cluster, including SSL certificate setup, password policy configuration, and monitoring integration for OSD status, pool usage, and cluster health."
 published: true
 last_modified_at: 2026-04-02
+seo:
+  type: BlogPosting
+  date_published: 2025-09-14
+  date_modified: 2026-04-02
 ---
 
 The Ceph Dashboard is incredibly useful for monitoring your cluster's health, but setting it up on Proxmox isn't as straightforward as the documentation suggests. After wrestling with SSL certificates and password policies, here's how to get it working properly.

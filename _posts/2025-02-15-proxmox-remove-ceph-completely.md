@@ -1,10 +1,17 @@
 ---
 title:  "Ceph Cluster Complete Removal on Proxmox for the Homelabs"
 layout: post
+date: 2025-02-15
 categories: [technical, homelab, troubleshooting]
 tags: [proxmox, ceph, removal, cleanup, homelab, storage, troubleshooting]
+excerpt: "How to completely remove a broken Ceph cluster from Proxmox — every service, package, config file, and orphaned mount point — so you can start fresh."
+description: "Step-by-step guide to completely removing a Ceph cluster from Proxmox VE 8.2/8.3, including stopping services, purging packages, unlocking OSD media with dmsetup, cleaning shared storage entries, and removing orphaned VMs and LXCs."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2025-02-15
+  date_modified: 2026-04-05
 ---
 
 My test Proxmox Cluster is used for *testing* and along the way I broke the Ceph Cluster part of it badly while doing a lot of physical media replacements. The test cluster is the right place to try out risky stuff instead of on my main cluster that is loaded up with my data. Fixing it often teaches you something but in this case I already know the lessons and just want to fast track getting a clean ceph cluster back online.

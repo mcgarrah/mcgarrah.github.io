@@ -5,7 +5,12 @@ date: 2026-02-04
 categories: [homelab, proxmox, jellyfin, ceph]
 tags: [proxmox, jellyfin, cephfs, lxc, storage, high-availability, virtualization]
 excerpt: "A comprehensive guide to resolving Jellyfin LXC disk space issues by migrating metadata to CephFS and optimizing container size for faster HA failovers."
+description: "Resolving Jellyfin LXC disk space issues on Proxmox by separating application state from compute. Covers migrating metadata and image cache to CephFS, shrinking container footprints for faster HA failovers, and the architectural pattern of decoupling storage from compute."
 published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-02-04
+  date_modified: 2026-02-04
 ---
 
 When your Jellyfin LXC container hits 95% disk usage, it's more than just a storage problem — it's an architectural opportunity. Separating application state from compute is a fundamental infrastructure pattern: it enables smaller container footprints, faster HA failovers, and independent scaling of storage and compute. This guide documents the journey from a disk space crisis to a scalable, high-availability media server configuration using Proxmox 8.4.16 and CephFS.

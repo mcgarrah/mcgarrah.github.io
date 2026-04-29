@@ -1,10 +1,17 @@
 ---
 title: "Using Github Actions with pip-audit to audit pip library versions"
 layout: post
+date: 2025-09-09
 categories: [technical, security]
 tags: [github-actions, python, security, automation, ci-cd, pip]
+excerpt: "Dependabot misses Python pip security issues that pip-audit catches. Here's a GitHub Actions workflow that audits dependencies automatically without requiring pinned versions."
+description: "GitHub Actions workflow for automated Python dependency security auditing with pip-audit. Handles flexible version constraints, generates PR comments with findings, and catches vulnerabilities that Dependabot misses."
 published: true
 last_modified_at: 2025-09-14
+seo:
+  type: BlogPosting
+  date_published: 2025-09-09
+  date_modified: 2025-09-14
 ---
 
 I've got several Python and TypeScript projects scattered around that need constant dependency babysitting. Dependabot does a decent job but keeps missing Python pip security issues that `pip-audit` catches. The problem is `pip-audit` wants everything pinned to exact versions, but I prefer flexible `>=` constraints in my requirements files.

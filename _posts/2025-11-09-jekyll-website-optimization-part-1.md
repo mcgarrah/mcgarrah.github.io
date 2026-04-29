@@ -1,10 +1,17 @@
 ---
 title: "Jekyll Website Optimization for GitHub Pages - Part 1"
 layout: post
+date: 2025-11-09
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, seo, performance, website]
+excerpt: "Foundational optimizations for a Jekyll blog on GitHub Pages — the changes that made the biggest difference across 100+ posts over two years."
+description: "Part 1 of Jekyll website optimization for GitHub Pages, covering foundational improvements to SEO, performance, content organization, and site structure that compound over time across 100+ posts."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-11-09
+  date_modified: 2026-04-14
 ---
 
 After running this Jekyll-based website for a couple years (since July of 2023), I've learned valuable lessons about optimizing Jekyll sites for GitHub Pages. Site performance and SEO aren't afterthoughts — they're architectural concerns that compound over time. A slow site with poor metadata loses readers before they ever see the content. This blog initially started as a consolidation of several blog websites I'd published over the years. This is Part 1 of a two-part series covering the foundational optimizations that have made the biggest difference.

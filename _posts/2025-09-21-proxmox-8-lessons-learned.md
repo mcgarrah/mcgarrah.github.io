@@ -1,10 +1,17 @@
 ---
 title: "Proxmox 8 Lessons Learned in the Homelab"
 layout: post
+date: 2025-09-21
 categories: [technical, homelab]
 tags: [proxmox, ceph, virtualization, homelab, storage, clustering, dell-wyse-3040]
+excerpt: "Hard-won lessons from running Proxmox since version 7.4 through 8.2.2 — upgrade gotchas, Ceph integration tips, and the patterns that apply at any scale."
+description: "Lessons learned from running Proxmox VE in a homelab from version 7.4 through 8.2.2, covering upgrade procedures, Ceph integration, clustering, storage management, and operational tips applicable to Proxmox 9."
 published: true
 last_modified_at: 2026-04-02
+seo:
+  type: BlogPosting
+  date_published: 2025-09-21
+  date_modified: 2026-04-02
 ---
 
 I've been running Proxmox in my homelab since version 7.4, and the journey to Proxmox 8.2.2 was educational. Having managed infrastructure upgrades in enterprise environments, I can say the patterns are the same at any scale — the difference is that in a homelab, you're the only one on call when something breaks at 2 AM. Let me share some hard-won lessons that might save you some headaches. These even apply to the Proxmox 9 upgrades as well which I have not scheduled in my cluster yet. I'm pretty sure I'll have updates when I get to that upgrade to share.

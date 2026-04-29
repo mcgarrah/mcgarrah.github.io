@@ -1,10 +1,17 @@
 ---
 title:  "Managing Ceph Nearfull Warnings in Proxmox Homelab"
 layout: post
+date: 2025-09-28
 categories: [technical, homelab]
 tags: [proxmox, ceph, storage, monitoring, capacity, homelab, dell-wyse-3040]
+excerpt: "Ceph's nearfull warnings are capacity planning signals, not emergencies — if you understand the thresholds and respond before the cluster goes read-only."
+description: "Understanding and managing Ceph nearfull and full ratio warnings in a Proxmox homelab. Covers OSD capacity thresholds, rebalancing strategies, and preventing read-only cluster states on resource-constrained hardware."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-09-28
+  date_modified: 2026-04-14
 ---
 
 When running Ceph in a homelab environment, especially on resource-constrained hardware like my [Dell Wyse 3040 cluster](/proxmox-8-dell-wyse-3040/), managing storage capacity becomes critical. Capacity planning and threshold management are fundamental to any distributed storage system — the same nearfull warnings that matter in a homelab matter in a petabyte-scale production cluster. Understanding Ceph's **Nearfull** warnings and how to respond to them can prevent your cluster from going read-only unexpectedly.

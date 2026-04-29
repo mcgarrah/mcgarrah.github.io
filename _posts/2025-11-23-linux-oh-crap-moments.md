@@ -1,10 +1,17 @@
 ---
 title:  "Debian Linux Oh-Crap Moment in the Homelab"
 layout: post
+date: 2025-11-23
 categories: [technical, troubleshooting]
 tags: [linux, debian, bash, recovery, proxmox, homelab, dell-wyse-3040]
+excerpt: "I renamed /usr to /usr-root as root. On a live system. Here's the recovery — and what the mistake teaches about operational discipline."
+description: "Recovering from accidentally renaming /usr on a live Debian Linux system. Covers the immediate impact, recovery using existing root SSH sessions, and the operational discipline lessons that apply to any infrastructure role."
 published: true
 last_modified_at: 2026-04-28
+seo:
+  type: BlogPosting
+  date_published: 2025-11-23
+  date_modified: 2026-04-28
 ---
 
 We have all done it if you work long enough. I blew up my Debian Linux system with an incredibly stupid mistake breaking the whole system. It is actually one of the questions I ask when interviewing candidates: "What is the worst mistake you've ever made?" And if they admit one, the follow up: "What did you learn?" The answer tells you more about someone's experience and judgment than any technical question.

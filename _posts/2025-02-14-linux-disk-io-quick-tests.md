@@ -1,10 +1,17 @@
 ---
 title:  "Linux Disk I/O Performance in the Homelab"
 layout: post
+date: 2025-02-14
 categories: [technical, homelab, hardware]
 tags: [linux, storage, performance, iops, benchmarking, homelab, testing]
+excerpt: "Quick disk I/O benchmarks comparing eMMC and USB3 storage on Dell Wyse 3040s — understanding the performance characteristics of your storage tier before making capacity decisions."
+description: "Quick Linux disk I/O performance comparison between eMMC and USB3 storage using dd benchmarks on Dell Wyse 3040 homelab nodes. Covers write speed, read speed, cache effects, and the surprising 4x write advantage of USB3 over soldered eMMC."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2025-02-14
+  date_modified: 2026-04-05
 ---
 
 I swapped my physical disks around in my low-end testing hardware cluster. I have a mixture of soldered to the motherboard eMMC and an external USB3 Thumbdrive serving for a root file systems and external `/usr` volumes now. Understanding the I/O performance characteristics of your storage tier is fundamental to capacity planning — whether you're sizing a Ceph cluster or deciding if a USB3 drive can serve as a viable boot volume. I just want some quick results without setting up a full benchmark suite.

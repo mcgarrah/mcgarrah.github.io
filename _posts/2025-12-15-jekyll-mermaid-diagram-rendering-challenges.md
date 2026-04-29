@@ -1,12 +1,18 @@
 ---
 title: "Jekyll Mermaid Diagram Rendering: Why Client-Side Beats Plugins"
 layout: post
+date: 2025-12-15
 categories: [web-development, jekyll]
 tags: [jekyll, mermaid, diagrams, javascript, plugins, rouge, syntax-highlighting]
 excerpt: "How Jekyll 4.4's Rouge syntax highlighter interferes with Mermaid diagram rendering and why client-side rendering with Mermaid 11 is better than plugins."
+description: "Resolving the conflict between Jekyll's Rouge syntax highlighter and Mermaid diagram rendering. Covers why server-side plugins fail, how client-side Mermaid 11 rendering works, and the integration pattern that handles both code highlighting and diagram generation."
 published: true
 mermaid: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-12-15
+  date_modified: 2026-04-14
 ---
 
 While working on my [SASS architecture article](/sass-circular-dependency-nightmare/), I encountered a frustrating issue: my carefully crafted Mermaid diagram wasn't rendering. What seemed like a simple diagram display problem revealed a deeper architectural conflict between Jekyll's syntax highlighting pipeline and client-side diagram rendering — the kind of integration issue that surfaces when two systems both claim ownership of the same content.

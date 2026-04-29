@@ -1,10 +1,17 @@
 ---
 title:  "Introducing oneworldsync: A Python Module for 1WorldSync Content1 API Access"
 layout: post
+date: 2025-05-28
 categories: [development, programming]
 tags: [python, api, module, development, programming, automation, data-integration]
+excerpt: "A Python library for programmatic access to 1WorldSync Content1 product data — built from scratch because the existing tooling was a Java SDK and some PDFs."
+description: "Introducing oneworldsync, a Python library and CLI for accessing the 1WorldSync Content1 API. Covers the motivation for building it, PyPI publishing, ReadTheDocs documentation, and the Python packaging ecosystem."
 published: true
 last_modified_at: 2025-09-13
+seo:
+  type: BlogPosting
+  date_published: 2025-05-28
+  date_modified: 2025-09-13
 ---
 
 ## Introducing `oneworldsync`

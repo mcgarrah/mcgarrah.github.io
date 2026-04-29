@@ -1,12 +1,18 @@
 ---
 title: "SASS Circular Dependency Nightmare: Lessons from Jekyll Architecture"
 layout: post
+date: 2025-12-14
 categories: [web-development, technical]
 tags: [sass, jekyll, circular-dependency, architecture, debugging, github-pages]
 excerpt: "How a simple print stylesheet addition turned into a deep dive into SASS module architecture and the perils of circular dependencies."
+description: "Debugging and resolving SASS circular dependencies in a Jekyll site. Covers the module architecture that causes circular imports, the misleading error messages, and the restructuring pattern that fixes them — applicable to any module system."
 published: true
 last_modified_at: 2026-04-14
 mermaid: true
+seo:
+  type: BlogPosting
+  date_published: 2025-12-14
+  date_modified: 2026-04-14
 ---
 
 What started as a simple task to add a print stylesheet to my Jekyll website turned into a multi-hour debugging session that taught me valuable lessons about SASS module architecture. Circular dependencies in any module system — SASS, Python, JavaScript, Terraform — are the same class of problem: implicit coupling that works until it doesn't. Here's the story of how circular dependencies can break your build and how to fix them properly.

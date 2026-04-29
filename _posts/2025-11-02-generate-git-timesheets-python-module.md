@@ -1,10 +1,17 @@
 ---
 title: "Generate Git Timesheet from Commit Logs"
 layout: post
+date: 2025-11-02
 categories: [technical, development]
 tags: [python, git, timetracking, automation, cli, development]
+excerpt: "A Python tool that generates timesheets from git commit history — because your commits are already timestamped and reflect when you were actually working."
+description: "Python CLI tool for generating timesheets from git commit logs. Leverages existing commit timestamps to produce time tracking reports without manual timer management or workflow interruption."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-11-02
+  date_modified: 2026-04-14
 ---
 
 I hate time tracking. Seriously. Most time tracking tools require you to remember to start timers, categorize work, and generally interrupt your flow to feed some system that's probably going to be wrong anyway. But when you're freelancing or need to report hours on projects, you're stuck with it.
