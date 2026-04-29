@@ -554,6 +554,8 @@ A few things stand out after surveying all of these:
 - **Exclusions are fragmented**: Some use `.gitignore`, some have their own ignore files, some use admin policies
 - **Model Context Protocol (MCP)**: MCP standardizes how agents connect to external tools and data sources, but it does not address project-level rules or coding conventions — that gap remains unfilled
 
+When your team uses multiple AI tools — and increasingly, teams do — context file management becomes infrastructure. It's a standardization problem that no vendor has solved yet, and until someone does, the strategies in the companion article are the best available workaround.
+
 The companion article [Managing Context and Rules Across Multiple AI Coding Assistants](/managing-cross-ai-agent-context/) covers strategies for dealing with this fragmentation.
 
 ## Revision History

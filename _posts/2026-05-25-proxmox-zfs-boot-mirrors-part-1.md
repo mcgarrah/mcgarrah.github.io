@@ -14,7 +14,7 @@ seo:
   date_modified: 2026-05-25
 ---
 
-From my earlier post [ProxMox 8 for the Homelabs](/proxmox-8-homelab/), I offhandedly mentioned that using Proxmox ZFS boot drive mirrors saved my bacon a couple of times. Having set up email alerting for ZFS failures, I've now dealt with this recovery procedure enough times — and made enough mistakes — that it's worth writing down properly.
+ZFS boot mirrors are the minimum viable resilience for any Proxmox node. The cost is one extra drive per node. The alternative is a full reinstall from scratch when a boot drive fails — a procedure I've documented in Part 2 because I've had to do it. Having set up email alerting for ZFS failures, I've now dealt with this recovery procedure enough times — and made enough mistakes — that it's worth writing down properly.
 
 This is the procedure for replacing a failed drive in a Proxmox ZFS boot mirror. Part 2 covers the emergency recovery when both drives fail simultaneously. Part 3 covers the planned migration to smaller SSDs with a UEFI upgrade.
 

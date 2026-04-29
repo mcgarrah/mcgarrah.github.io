@@ -16,7 +16,7 @@ seo:
 
 I write a markdown file, push to GitHub, and GitHub Actions builds the site. That's the publishing step. But publishing isn't distribution — a post that exists on a server isn't a post that reaches readers.
 
-This blog has six distribution channels, each serving a different audience and timeline. Here's how they work together.
+This blog has six distribution channels, each serving a different audience and timeline. The same content distribution pipeline concept applies to any content platform — documentation sites, developer portals, knowledge bases — the channels differ but the architecture is the same. Here's how they work together.
 
 <!-- excerpt-end -->
 

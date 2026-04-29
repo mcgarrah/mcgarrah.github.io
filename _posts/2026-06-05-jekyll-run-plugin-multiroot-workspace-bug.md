@@ -21,7 +21,7 @@ If you use a multi-root workspace in VS Code on macOS, the Jekyll Run extension 
 TypeError: Cannot read properties of null (reading 'toString')
 ```
 
-No stack trace in the UI. No hint about what's null. Just a dead button. I spent hours chasing this through VS Code settings, plugin source code, and compiled JavaScript patches before finding the real cause — and it had nothing to do with any of that.
+No stack trace in the UI. No hint about what's null. Just a dead button. I spent hours chasing this through VS Code settings, plugin source code, and compiled JavaScript patches before finding the real cause — and it had nothing to do with any of that. Misleading error messages that point to the wrong layer are the most expensive bugs to diagnose — true in VS Code extensions and equally true in distributed systems.
 
 <!-- excerpt-end -->
 

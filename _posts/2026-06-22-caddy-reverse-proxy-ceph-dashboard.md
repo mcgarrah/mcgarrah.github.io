@@ -21,7 +21,7 @@ The Ceph Dashboard has a frustrating quirk — it runs on whichever node is the 
 
 As covered in [Adding Ceph Dashboard to Your Proxmox Cluster](/proxmox-add-ceph-dashboard/), the dashboard follows the active ceph-mgr service. In my cluster, all six nodes run ceph-mgr, and the dashboard is only accessible on the currently active manager. When a failover happens, your bookmark breaks.
 
-The fix: proxy through Caddy with health checks across all mgr nodes. Caddy automatically detects which node is serving the dashboard and routes traffic there.
+The fix: proxy through Caddy with health checks across all mgr nodes. Caddy automatically detects which node is serving the dashboard and routes traffic there. This is the same active/standby service discovery pattern you'd use for any floating-VIP service — database clusters, message brokers, or any HA service where the active endpoint moves between nodes on failover.
 
 ## Prerequisites
 

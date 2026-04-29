@@ -13,7 +13,7 @@ seo:
   date_modified: 2026-06-24
 ---
 
-The [Jekyll Run VS Code extension](https://github.com/Kanna727/jekyll-run) has three bugs I've been [documenting](/jekyll-run-plugin-multiroot-workspace-bug/) and [fixing](/jekyll-run-plugin-pr-and-fork/). Before submitting a PR or publishing a fork, the fixes need tests. The extension already has a test scaffold — but it's the VS Code extension generator's default: a single sample test that checks `[1, 2, 3].indexOf(5)`.
+The [Jekyll Run VS Code extension](https://github.com/Kanna727/jekyll-run) has three bugs I've been [documenting](/jekyll-run-plugin-multiroot-workspace-bug/) and [fixing](/jekyll-run-plugin-pr-and-fork/). Before submitting a PR or publishing a fork, the fixes need tests. The extension already has a test scaffold — but it's the VS Code extension generator's default: a single sample test that checks `[1, 2, 3].indexOf(5)`. A test suite that doesn't test anything is worse than no tests — it creates false confidence that the code is validated when nothing has actually been verified.
 
 This post covers how VS Code extension testing works, what the existing harness does, and how to write real tests for the bugs I found.
 

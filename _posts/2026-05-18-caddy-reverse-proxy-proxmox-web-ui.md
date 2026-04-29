@@ -9,7 +9,7 @@ seo:
   date_modified: 2026-05-18
 ---
 
-Managing a six-node Proxmox cluster means six different web interfaces on six different IPs, all on port 8006 with self-signed certificates. A Caddy reverse proxy in an LXC container gives you a single entry point with load balancing, health checks, and working WebSocket support for the console — all in about 30 lines of configuration.
+Managing a six-node Proxmox cluster means six different web interfaces on six different IPs, all on port 8006 with self-signed certificates. A Caddy reverse proxy in an LXC container gives you a single entry point with load balancing, health checks, and working WebSocket support for the console — all in about 30 lines of configuration. This is the same pattern you'd use for any clustered management plane — Kubernetes dashboards, Grafana instances, database admin consoles — a reverse proxy that abstracts the individual nodes behind a stable endpoint.
 
 <!-- excerpt-end -->
 

@@ -13,7 +13,7 @@ seo:
   date_modified: 2026-06-19
 ---
 
-The [Jekyll Run VS Code extension](https://github.com/Kanna727/jekyll-run) has been abandoned for five years. In the [previous post](/forking-jekyll-run-to-run-jekyll/), I covered forking the repository and modernizing the CI/CD infrastructure. This post covers the actual bugs — three fixed in v1.7.1, plus fifteen more found in a deep code review.
+The [Jekyll Run VS Code extension](https://github.com/Kanna727/jekyll-run) has been abandoned for five years. In the [previous post](/forking-jekyll-run-to-run-jekyll/), I covered forking the repository and modernizing the CI/CD infrastructure. This post covers the actual bugs — three fixed in v1.7.1, plus fifteen more found in a deep code review. This is the same pattern I'd apply when evaluating any third-party dependency for an engineering organization: you're not just fixing bugs, you're assessing technical debt and maintenance risk before deciding whether to adopt, fork, or replace.
 
 <!-- excerpt-end -->
 

@@ -16,7 +16,7 @@ seo:
 
 My previous article on [Jekyll Run plugin configuration](/jekyll-run-vscode-plugin-local-development/) documented a frustrating problem: when you run `jekyll serve --drafts --future`, draft and future-dated posts appear in your listings but look identical to published posts. You can't tell at a glance which articles are live on production and which are still waiting.
 
-After scrolling past 130+ posts trying to spot my drafts one too many times, I added visual indicators — a pencil icon for drafts, a robot icon for future-dated posts (because robots are cool and futuristic), and italic text for both. The indicators only appear during local development because drafts and future posts don't exist in production builds.
+After scrolling past 130+ posts trying to spot my drafts one too many times, I added visual indicators — a pencil icon for drafts, a robot icon for future-dated posts (because robots are cool and futuristic), and italic text for both. The indicators only appear during local development because drafts and future posts don't exist in production builds. Making system state visible at a glance is a UX principle that applies equally to monitoring dashboards, CI/CD pipelines, and content management — if you have to dig to find the status, the status isn't working.
 
 | Drafts | Future |
 | :---: | :---: |

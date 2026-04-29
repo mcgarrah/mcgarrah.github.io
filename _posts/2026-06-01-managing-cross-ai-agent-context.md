@@ -23,6 +23,8 @@ For a detailed reference of what each agent expects, see the companion article [
 
 ## The Problem: N Tools × M Rules = Drift
 
+This is fundamentally the same configuration management problem as maintaining Terraform modules, Ansible roles, or Kubernetes manifests across environments — a single source of truth that needs to be projected into multiple vendor-specific formats. The tooling is different, but the drift pattern is identical.
+
 Here's what a repository looks like when you try to support every agent natively:
 
 ```

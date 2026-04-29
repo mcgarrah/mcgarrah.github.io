@@ -15,7 +15,7 @@ seo:
 
 [Part 1](/proxmox-zfs-boot-mirrors-part-1/) covers replacing a failed drive with one of the same size. This part covers the scenario that procedure can't fix — when both drives in the mirror fail at the same time and you're doing an emergency recovery. [Part 3](/proxmox-zfs-boot-mirrors-part-3/) covers the planned migration path — downsizing from large HDDs to smaller SSDs with a fresh install and UEFI upgrade, applying the lessons learned here.
 
-That's what happened to harlan, one of the six nodes in my homelab cluster. Both 500GB HDDs developed simultaneous checksum errors and permanent data corruption. The root cause wasn't two independent drive deaths — it was a shared failure point, most likely a bad SATA cable or failing controller causing I/O errors that corrupted both sides of the mirror before ZFS could self-heal.
+That's what happened to harlan, one of the six nodes in my homelab cluster. Both 500GB HDDs developed simultaneous checksum errors and permanent data corruption. The root cause wasn't two independent drive deaths — it was a shared failure point, most likely a bad SATA cable or failing controller causing I/O errors that corrupted both sides of the mirror before ZFS could self-heal. This is why I treat shared failure points — cables, controllers, backplanes — as the first thing to investigate when correlated failures appear. Independent drive deaths are statistically rare; shared infrastructure failures are common.
 
 The recovery path is a fresh Proxmox install. The goal is to get the OS back without touching the Ceph OSD drives, then rejoin the cluster and reactivate the OSDs from their existing LVM metadata.
 

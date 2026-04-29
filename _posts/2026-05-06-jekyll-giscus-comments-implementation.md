@@ -16,7 +16,7 @@ seo:
 
 Jekyll is a static site generator. There's no server, no database, no backend. When someone visits a page, they get pre-built HTML files served from a CDN. That's the whole point — it's fast, cheap, and secure.
 
-But comments need state. Someone writes a comment, it has to be stored somewhere, and the next visitor needs to see it. This is the fundamental tension of adding comments to a static site: you need a data store, but you chose a platform specifically because it doesn't have one.
+But comments need state. Someone writes a comment, it has to be stored somewhere, and the next visitor needs to see it. Adding state to a stateless platform is a fundamental design tension — you need a data store, but you chose a platform specifically because it doesn't have one.
 
 <!-- excerpt-end -->
 
@@ -296,6 +296,8 @@ What I find elegant about this setup is how the pieces reinforce each other:
 Everything is in one place. One login, one set of permissions, one backup strategy (the git repository itself). If GitHub goes down, the whole blog is down anyway — there's no additional point of failure from the comment system.
 
 Comments are also version-controlled in a sense — GitHub Discussions have full edit history, and they're tied to the repository. If I ever migrate the blog, the Discussions come with the repo.
+
+The broader pattern here is worth noting: keeping your entire operational surface area in a single ecosystem — source, build, hosting, comments, security scanning, dependency management — reduces the number of vendor relationships, authentication boundaries, and failure domains you have to manage. It's the same principle behind choosing a single cloud provider for tightly coupled services.
 
 ## What I'd Do Differently
 

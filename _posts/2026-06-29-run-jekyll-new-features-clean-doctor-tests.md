@@ -15,7 +15,7 @@ seo:
 
 In the previous posts in this series, I've been [fixing bugs](/run-jekyll-bug-fixes-and-code-review/), [modernizing CI/CD](/forking-jekyll-run-to-run-jekyll/), and [building a test harness](/run-jekyll-testing-and-test-harness/) for the Run Jekyll VS Code extension. Now it's time to add features.
 
-The extension currently has five commands: Run, Build, Stop, Restart, and Open in Browser. After using it daily on my [Jekyll blog](https://mcgarrah.org), I've hit the same friction points enough times to know exactly what's missing.
+The extension currently has five commands: Run, Build, Stop, Restart, and Open in Browser. After using it daily on my [Jekyll blog](https://mcgarrah.org), I've hit the same friction points enough times to know exactly what's missing. The prioritization follows the same framework I'd apply to any product backlog: Clean and Doctor address the most common daily friction points, and tests are the prerequisite for shipping anything safely.
 
 <!-- excerpt-end -->
 

@@ -15,7 +15,7 @@ seo:
 
 [Part 1](/proxmox-zfs-boot-mirrors-part-1/) covered replacing a failed ZFS boot mirror drive with one of the same size. [Part 2](/proxmox-zfs-boot-mirrors-part-2/) covered the emergency recovery when both drives fail simultaneously. This is the planned version of that same fresh-install procedure — applied deliberately when your replacement drives are *smaller* than the originals, with a UEFI upgrade included.
 
-The backup checklist and recovery steps here were refined across the Harlan emergency (Part 2), the Quell sequential drive swap, and the Edgar planned migration. This is the procedure I'll follow for the remaining cluster nodes as their spinning rust ages out.
+The backup checklist and recovery steps here were refined across the Harlan emergency (Part 2), the Quell sequential drive swap, and the Edgar planned migration. Any planned infrastructure migration should have a documented rollback path before you start — the Golden Backup checklist below is that path. This is the procedure I'll follow for the remaining cluster nodes as their spinning rust ages out.
 
 In my case, the cluster nodes have 500GB or 1TB spinning rust HDDs as boot mirrors but only use 3-7GB of actual space — Ceph handles all the real storage. Replacing them with 128GB SSDs makes sense on cost, speed, and reliability grounds. But ZFS won't let you add a smaller drive to an existing mirror:
 

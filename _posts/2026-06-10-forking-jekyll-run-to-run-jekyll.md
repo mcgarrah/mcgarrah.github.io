@@ -15,7 +15,7 @@ seo:
 
 The [Jekyll Run VS Code extension](https://marketplace.visualstudio.com/items?itemName=Dedsec727.jekyll-run) hasn't been updated since 2020. I [found three bugs](/jekyll-run-plugin-multiroot-workspace-bug/), [fixed them](/run-jekyll-bug-fixes-and-code-review/), and modernized the build infrastructure. The original author appears to have moved on — the repository has open issues with no responses and the last commit was five years ago.
 
-Rather than wait indefinitely for a PR review, I'm forking the extension as **Run Jekyll** — a maintained version that acknowledges the original work while providing a path forward for bug fixes and improvements.
+Rather than wait indefinitely for a PR review, I'm forking the extension as **Run Jekyll** — a maintained version that acknowledges the original work while providing a path forward for bug fixes and improvements. This is a build-vs-buy evaluation applied to open source: assess the upstream maintenance posture, weigh the cost of waiting against the cost of forking, and make a deliberate decision. That's how I approach any third-party dependency, whether it's a VS Code extension or a production library.
 
 <!-- excerpt-end -->
 
