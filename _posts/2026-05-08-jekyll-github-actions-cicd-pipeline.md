@@ -27,7 +27,7 @@ graph LR
     A[git push to main] --> B[Jekyll Build & Deploy]
     A --> C[CodeQL Security Scan]
     A --> D[SEO Health Check]
-    E[Daily 00:05 UTC] --> B
+    E[Daily 10:05 UTC] --> B
     F[Weekly Friday 02:43 UTC] --> C
     G[Weekly Monday 06:00 UTC] --> D
     H[Dependabot] --> I[PRs for dependency updates]
@@ -52,7 +52,7 @@ on:
   push:
     branches: ["main"]
   schedule:
-    - cron: '5 0 * * *'
+    - cron: '5 10 * * *'
   workflow_dispatch:
 
 permissions:
@@ -79,12 +79,12 @@ The `schedule` trigger is the key feature that makes future-dated posts work:
 
 ```yaml
 schedule:
-  - cron: '5 0 * * *'  # 00:05 UTC daily (8:05 PM EST)
+  - cron: '5 10 * * *'  # 10:05 UTC daily (6:05 AM EDT)
 ```
 
 See [GitHub's scheduled events documentation](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule) for cron syntax details.
 
-Jekyll's `future: false` setting (the default) excludes posts with dates in the future from the build output. When a post's date arrives, the next build picks it up. The daily cron at 00:05 UTC means a post dated `2026-05-15` will go live within 24 hours of that date — close enough for a blog.
+Jekyll's `future: false` setting (the default) excludes posts with dates in the future from the build output. When a post's date arrives, the next build picks it up. The daily cron at 10:05 UTC (6:05 AM EDT) means a post dated `2026-05-15` will go live within 24 hours of that date — close enough for a blog.
 
 Without this, I'd have to manually push a commit or trigger a build on the day I want a post to go live.
 

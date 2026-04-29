@@ -172,7 +172,7 @@ Convenience files:
 - When promoting a batch of drafts, assign dates sequentially on MWF slots starting from the next available date
 - When rescheduling posts, maintain MWF alignment and update all four date fields (filename, `date:`, `seo.date_published`, `seo.date_modified` / `last_modified_at`)
 - Multi-part series should publish on consecutive MWF slots (e.g., Part 1 Monday, Part 2 Wednesday, Part 3 Friday)
-- The daily GitHub Actions cron build (`jekyll.yml` at 05:00 UTC) publishes future-dated posts when their date arrives — no manual intervention needed
+- The daily GitHub Actions cron build (`jekyll.yml` at 10:05 UTC / 6:05 AM EDT) publishes future-dated posts when their date arrives — no manual intervention needed
 
 ### Asset Organization
 - **Image Optimization** - Compress images for web delivery
