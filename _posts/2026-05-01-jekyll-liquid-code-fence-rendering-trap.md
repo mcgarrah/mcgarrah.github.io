@@ -8,6 +8,7 @@ description: "A deep dive into Jekyll's Liquid rendering behavior inside Markdow
 date: 2026-05-01
 last_modified_at: 2026-05-01
 published: true
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-05-01
@@ -168,7 +169,33 @@ Jekyll's rendering pipeline processes files in this order:
 2. **Markdown processor** (Kramdown) — converts Markdown to HTML
 3. **Layout rendering** — wraps content in layout templates
 
-Liquid runs first because Jekyll needs to resolve template variables and includes before Markdown processing. This is the correct design for a template engine — but it means Liquid has no concept of Markdown code fences. By the time Kramdown sees your triple-backtick block, Liquid has already consumed or evaluated everything inside it.
+Here's the pipeline visualized — notice that Liquid runs before Markdown has any chance to identify code fences:
+
+```mermaid
+flowchart TD
+    A["📄 Markdown Source File"] --> B["1️⃣ Liquid Template Engine"]
+    B --> |"Evaluates ALL &#123;&#123; &#125;&#125; and &#123;% %&#125; tags"| C{"Tag inside<br/>raw/endraw?"}
+    C --> |Yes| D["Pass through as literal text"]
+    C --> |No| E{"Valid variable<br/>or tag?"}
+    E --> |"Yes — e.g. site.url"| F["🔇 Silent substitution<br/>renders actual value"]
+    E --> |"No — e.g. nil variable"| G["💥 Build crash<br/>undefined method error"]
+    E --> |"Unbalanced tag"| H["💥 Build crash<br/>Liquid syntax error"]
+    D --> I["2️⃣ Kramdown Markdown Processor"]
+    F --> I
+    I --> |"NOW identifies code fences<br/>but Liquid already ran"| J["HTML Output"]
+    J --> K["3️⃣ Layout Rendering"]
+    K --> L["📄 Final Page"]
+
+    style B fill:#e74c3c,color:#fff
+    style I fill:#3498db,color:#fff
+    style K fill:#2ecc71,color:#fff
+    style F fill:#f39c12,color:#fff
+    style G fill:#c0392b,color:#fff
+    style H fill:#c0392b,color:#fff
+    style D fill:#27ae60,color:#fff
+```
+
+The key insight: **Liquid has no concept of Markdown code fences.** By the time Kramdown identifies your triple-backtick block, Liquid has already consumed or evaluated everything inside it.
 
 This is documented in [Jekyll's Liquid processing docs](https://jekyllrb.com/docs/liquid/), but it's easy to miss because every other context where you write code (GitHub READMEs, Stack Overflow, documentation sites) treats code fences as sacred.
 
