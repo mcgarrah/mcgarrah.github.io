@@ -1,7 +1,7 @@
 # McGarrah Technical Blog - Product Overview
 
 ## Project Purpose
-Personal technical blog and website for Michael McGarrah, a technologist specializing in cloud architecture, machine learning, and enterprise infrastructure. The site serves as both a professional portfolio and knowledge sharing platform for technical content.
+Personal technical blog and website for Michael McGarrah — currently a Lead Principal Engineer (individual contributor), with prior experience as IT Director, Enterprise Architect, Development/Operations Manager, and Security Specialist across a 30+ year career spanning cloud architecture, machine learning, and enterprise infrastructure. The site serves as both a professional platform and knowledge sharing resource, written from the perspective of someone who has led teams, designed enterprise-scale architectures, passed federal security audits, and still builds systems hands-on. The Senior Director voice reflects the leadership trajectory he is pursuing for his next role.
 
 ## Key Features
 
@@ -50,9 +50,9 @@ Personal technical blog and website for Michael McGarrah, a technologist special
 - **Students and researchers** in computer science and networking
 
 ### Secondary Audience
-- **Potential employers** reviewing technical expertise and communication skills
+- **Hiring managers and executives** evaluating senior technical leadership and communication skills
 - **Open source contributors** interested in Jekyll plugins and automation
 - **Hardware enthusiasts** working with refurbished enterprise equipment
 
 ## Value Proposition
-Provides in-depth technical documentation and real-world implementation experiences that bridge the gap between enterprise technologies and homelab environments, offering practical insights for both learning and professional development.
+Provides in-depth technical documentation and architectural decision-making from a senior technical leader who bridges enterprise strategy and hands-on implementation. The homelab serves as a technology evaluation lab where enterprise patterns (GitOps, IaC, observability, HA) are validated with the same rigor applied to production environments. Content reflects the perspective of someone who makes technology strategy decisions, designs systems at scale, and still writes the code. The ML and data science content draws on a Georgia Tech MS in Computer Science (Interactive Intelligence / Machine Learning) and production ML experience — positioning the blog at the intersection of cloud infrastructure, machine learning, and technical leadership.

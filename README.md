@@ -4,11 +4,11 @@ permalink: "/about/"
 layout: page
 ---
 
-Hello, my name is Michael McGarrah and I am a technologist at heart. This is my hobby and personal website combination.
+Hello, my name is Michael McGarrah and I am a technologist at heart. This is my professional platform and personal website combination.
 
 ## Professional Background
 
-I am primarily working in **Cloud Architecture** for enterprise infrastructure with a mixture of **Machine Learning** or other domain expertise I have picked up over the years. I'm a jack of all trades and master of some. Part of what makes jobs interesting to me is gathering up domain expertise in lots of areas. I have over 25 years of professional experience in software engineering, system administration, and infrastructure design.
+I work at the intersection of **technology leadership**, **enterprise architecture**, and **hands-on engineering**. My career spans **Senior Director** roles leading engineering organizations, **IT Architect** positions designing enterprise-scale cloud and infrastructure systems, and **Principal Engineer** work where I still write code, debug systems, and build infrastructure. I bring additional depth in **Security** and **DevOps** — disciplines I treat as default practice rather than separate concerns. I have over 25 years of professional experience in software engineering, system administration, and infrastructure design, with domain expertise across **Cloud Architecture**, **Machine Learning**, and enterprise infrastructure.
 
 My [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/) page covers my professional career. For an insanely detailed version of my resume, you can view the [full print version](/resume/print).
 

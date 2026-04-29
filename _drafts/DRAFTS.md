@@ -12,6 +12,43 @@ Last updated: 2026-07-30
 
 ---
 
+## Active Initiative: Authorial Voice & Persona Alignment
+
+**Status:** In progress (started 2026-07-30)
+
+Shifting the blog's authorial voice to project all three professional roles simultaneously:
+
+| Priority | Role | Source | Why It Matters |
+|----------|------|--------|----------------|
+| **Primary** | Senior Director | Career experience + EMBA + next role target | Strategic framing, business outcomes, technology strategy decisions |
+| Core | IT Architect | Career experience | Trade-off analysis, design rationale, enterprise patterns |
+| Core | Principal Engineer | Current role | Hands-on depth, precision, internals mastery |
+| Supporting | Security | Woven throughout | Defense-in-depth, compliance, threat modeling |
+| Supporting | DevOps | Woven throughout | CI/CD, IaC, observability, operational rigor |
+
+**Key nuance:** Michael is currently an IC (Principal Engineer) and midway through an Executive MBA at UNC Wilmington. The Senior Director and Architect voices draw on real career experience in those roles, and the EMBA is deliberately filling in the business strategy and organizational leadership dimensions. The blog should project leadership perspective earned through experience — not claim a current title. "Having led teams through similar migrations" is honest; "as the director of my current org" is not.
+
+**What changed:**
+- Created `.amazonq/rules/authorial-voice.md` — defines the tri-role persona and voice guidelines
+- Updated `.amazonq/rules/memory-bank/product.md` — project purpose, audience, and value proposition now reflect senior leadership identity
+- Updated `README.md` (About page) — professional background section reflects all three roles
+
+**What to do when promoting drafts:**
+- Review each draft's opening paragraph — does it establish *why this matters* from a leadership/architecture perspective, or does it read like weekend tinkering?
+- Ensure at least one architectural trade-off or design decision per article
+- Frame homelab content as a technology evaluation lab, not a hobby project
+- Close with implications: what this enables at scale, what comes next in the larger system
+- Avoid passive discovery language ("I stumbled across", "I was surprised to find")
+
+**Drafts most needing voice adjustment:**
+- `starvoyager-game.md` — Lead with *why* a senior technologist modernizes legacy codebases (security posture, CI/CD patterns, cross-platform builds), not just "I'm working on a game"
+- `godot-vscode.md` — Frame as returning to real-time systems after decades of enterprise work, not "I wanted to try game dev"
+- `claude-code-setup-guide.md` — Position as evaluating AI coding tools for engineering team adoption, not just personal setup
+- `plausible-vs-google-analytics.md` — Frame as a build-vs-buy / privacy architecture decision
+- `jekyll-*` cluster — These are engineering discipline articles (SEO hygiene, security hardening, tag taxonomy) — frame them that way
+
+---
+
 ## Upcoming Schedule (Drafts)
 
 | Date | Day | Article | Effort Needed |
