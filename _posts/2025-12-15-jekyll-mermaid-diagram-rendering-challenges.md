@@ -9,7 +9,7 @@ mermaid: true
 last_modified_at: 2026-04-14
 ---
 
-While working on my [SASS architecture article](/sass-circular-dependency-nightmare/), I encountered a frustrating issue: my carefully crafted Mermaid diagram wasn't rendering. What seemed like a simple diagram display problem revealed deeper challenges with Jekyll's syntax highlighting and diagram integration.
+While working on my [SASS architecture article](/sass-circular-dependency-nightmare/), I encountered a frustrating issue: my carefully crafted Mermaid diagram wasn't rendering. What seemed like a simple diagram display problem revealed a deeper architectural conflict between Jekyll's syntax highlighting pipeline and client-side diagram rendering — the kind of integration issue that surfaces when two systems both claim ownership of the same content.
 
 <!-- excerpt-end -->
 

@@ -9,7 +9,7 @@ last_modified_at: 2026-04-14
 mermaid: true
 ---
 
-What started as a simple task to add a print stylesheet to my Jekyll website turned into a multi-hour debugging session that taught me valuable lessons about SASS module architecture. Here's the story of how circular dependencies can break your build and how to fix them properly.
+What started as a simple task to add a print stylesheet to my Jekyll website turned into a multi-hour debugging session that taught me valuable lessons about SASS module architecture. Circular dependencies in any module system — SASS, Python, JavaScript, Terraform — are the same class of problem: implicit coupling that works until it doesn't. Here's the story of how circular dependencies can break your build and how to fix them properly.
 
 <!-- excerpt-end -->
 

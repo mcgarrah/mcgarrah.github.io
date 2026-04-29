@@ -7,7 +7,7 @@ published: true
 last_modified_at: 2026-04-14
 ---
 
-When running Ceph in a homelab environment, especially on resource-constrained hardware like my [Dell Wyse 3040 cluster](/proxmox-8-dell-wyse-3040/), managing storage capacity becomes critical. Understanding Ceph's **Nearfull** warnings and how to respond to them can prevent your cluster from going read-only unexpectedly.
+When running Ceph in a homelab environment, especially on resource-constrained hardware like my [Dell Wyse 3040 cluster](/proxmox-8-dell-wyse-3040/), managing storage capacity becomes critical. Capacity planning and threshold management are fundamental to any distributed storage system — the same nearfull warnings that matter in a homelab matter in a petabyte-scale production cluster. Understanding Ceph's **Nearfull** warnings and how to respond to them can prevent your cluster from going read-only unexpectedly.
 
 <!-- excerpt-end -->
 

@@ -14,7 +14,7 @@ seo:
   date_modified: 2026-04-16
 ---
 
-Running Ceph in a homelab means making tradeoffs. You want distributed storage — high availability, scalability, data protection — but enterprise hardware costs spiral fast. My answer: put the brains on SSD and the bulk on cheap USB drives.
+Running Ceph in a homelab means making tradeoffs — the same cost-performance-resilience triangle that drives every storage architecture decision. You want distributed storage — high availability, scalability, data protection — but enterprise hardware costs spiral fast. My answer: put the brains on SSD and the bulk on cheap USB drives.
 
 After building a [15-OSD Ceph cluster](/proxmox-ceph-homelab-settings/) with 69 TiB of raw storage across five Dell OptiPlex 990 nodes, I've learned that separating the WAL (Write-Ahead Log) and DB (RocksDB metadata) onto fast SSDs while keeping bulk data on 5TB USB drives delivers excellent performance at a fraction of all-SSD costs.
 

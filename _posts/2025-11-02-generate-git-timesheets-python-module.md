@@ -9,7 +9,7 @@ last_modified_at: 2026-04-14
 
 I hate time tracking. Seriously. Most time tracking tools require you to remember to start timers, categorize work, and generally interrupt your flow to feed some system that's probably going to be wrong anyway. But when you're freelancing or need to report hours on projects, you're stuck with it.
 
-So I built a Python tool that generates timesheets from git commit history - because your commits are already there, they're timestamped, and they actually reflect when you were working on stuff.
+So I built a Python tool that generates timesheets from git commit history — because your commits are already there, they're timestamped, and they actually reflect when you were working. The best automation leverages data you're already producing as a side effect of doing the work.
 
 <!-- excerpt-end -->
 

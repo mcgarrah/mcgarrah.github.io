@@ -7,7 +7,7 @@ published: true
 last_modified_at: 2026-04-14
 ---
 
-After building and running a Ceph cluster for my homelab, I've gained valuable insights into the real-world economics of distributed storage versus traditional single-drive solutions. This analysis breaks down the actual costs per GB across different storage strategies in my setup.
+After building and running a Ceph cluster for my homelab, I've gained valuable insights into the real-world economics of distributed storage versus traditional single-drive solutions. Understanding storage cost per GB at different resilience levels is the same analysis you'd do for any infrastructure investment — the numbers are smaller in a homelab, but the decision framework is identical. This analysis breaks down the actual costs per GB across different storage strategies in my setup.
 
 <!-- excerpt-end -->
 

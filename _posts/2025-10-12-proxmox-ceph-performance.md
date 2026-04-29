@@ -7,7 +7,7 @@ published: true
 last_modified_at: 2026-04-14
 ---
 
-Performance tuning Ceph in a homelab environment presents unique challenges, especially when running on USB storage and constrained hardware. After dealing with performance issues during cluster rebalancing and OSD expansion, I've learned valuable lessons about mClock configuration, IOPS optimization, and the realities of USB 3.0 storage performance.
+Performance tuning Ceph in a homelab environment presents unique challenges, especially when running on USB storage and constrained hardware. The tuning principles are the same as production — understand your I/O scheduler, measure before changing, and know which bottleneck you're actually hitting. After dealing with performance issues during cluster rebalancing and OSD expansion, I've learned valuable lessons about mClock configuration, IOPS optimization, and the realities of USB 3.0 storage performance.
 
 [![Ceph Performance and Rebalance](/assets/images/ceph-performance-osds-new-node.png){:width="30%" height="30%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/ceph-performance-osds-new-node.png){:target="_blank"}
 

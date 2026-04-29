@@ -9,7 +9,7 @@ last_modified_at: 2025-09-14
 
 I've got several Python and TypeScript projects scattered around that need constant dependency babysitting. Dependabot does a decent job but keeps missing Python pip security issues that `pip-audit` catches. The problem is `pip-audit` wants everything pinned to exact versions, but I prefer flexible `>=` constraints in my requirements files.
 
-After getting tired of manually running security audits and then forgetting about them for months, I built this GitHub Actions workflow to handle it automatically. You can see it in action on my [Shiny Quiz](https://github.com/mcgarrah/shiny-quiz) repository and Django demo application.
+After getting tired of manually running security audits and then forgetting about them for months, I built this GitHub Actions workflow to handle it automatically. Automating security scanning into CI/CD is the same pattern whether you're protecting a Flask demo app or a production microservice — the cost of not doing it is finding out about vulnerabilities from someone else. You can see it in action on my [Shiny Quiz](https://github.com/mcgarrah/shiny-quiz) repository and Django demo application.
 
 <!-- excerpt-end -->
 

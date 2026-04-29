@@ -7,7 +7,7 @@ published: true
 last_modified_at: 2026-04-28
 ---
 
-We have all done it if you work long enough. I blew up my Debian Linux system with an incredibly stupid mistake breaking the whole system. It is actually one of the questions I have when interviewing someone. "What is the worst mistake you've ever made?" And if they admit one, the follow up question, "What did you learn?"
+We have all done it if you work long enough. I blew up my Debian Linux system with an incredibly stupid mistake breaking the whole system. It is actually one of the questions I ask when interviewing candidates: "What is the worst mistake you've ever made?" And if they admit one, the follow up: "What did you learn?" The answer tells you more about someone's experience and judgment than any technical question.
 
 I renamed my `/usr` directory to `/usr-root` with a `mv /usr /usr-root` as the root user. I knew I was treading on dangerous ground so I fortunately had two `ssh` console sessions up and both running as `root`. The goal was to migrate the `/usr` to separate storage to recover space for the very full root disk.
 

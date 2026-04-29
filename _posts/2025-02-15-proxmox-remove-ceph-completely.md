@@ -9,7 +9,7 @@ last_modified_at: 2026-04-05
 
 My test Proxmox Cluster is used for *testing* and along the way I broke the Ceph Cluster part of it badly while doing a lot of physical media replacements. The test cluster is the right place to try out risky stuff instead of on my main cluster that is loaded up with my data. Fixing it often teaches you something but in this case I already know the lessons and just want to fast track getting a clean ceph cluster back online.
 
-I need it back in place to test the Proxmox 8.2 to Proxmox 8.3 upgrade of my main cluster. So this is a quick guide on how to completely clean out your Ceph Cluster installation as if it never existed on your Proxmox Cluster 8.2 or 8.3 environment.
+I need it back in place to test the Proxmox 8.2 to Proxmox 8.3 upgrade of my main cluster. Knowing how to cleanly tear down and rebuild a Ceph cluster is essential operational knowledge — the same skill applies when decommissioning a production cluster or recovering from a catastrophic misconfiguration. So this is a quick guide on how to completely clean out your Ceph Cluster installation as if it never existed on your Proxmox Cluster 8.2 or 8.3 environment.
 
 [![proxmox ceph install dialog](/assets/images/proxmox-ceph-upgrade.png "proxmox ceph install dialog"){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/proxmox-ceph-upgrade.png){:target="_blank"}
 

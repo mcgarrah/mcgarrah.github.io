@@ -8,7 +8,7 @@ excerpt: "A comprehensive guide to resolving Jellyfin LXC disk space issues by m
 published: true
 ---
 
-When your Jellyfin LXC container hits 95% disk usage, it's more than just a storage problem—it's an architectural opportunity. This guide documents the journey from a disk space crisis to a scalable, high-availability media server configuration using Proxmox 8.4.16 and CephFS.
+When your Jellyfin LXC container hits 95% disk usage, it's more than just a storage problem — it's an architectural opportunity. Separating application state from compute is a fundamental infrastructure pattern: it enables smaller container footprints, faster HA failovers, and independent scaling of storage and compute. This guide documents the journey from a disk space crisis to a scalable, high-availability media server configuration using Proxmox 8.4.16 and CephFS.
 
 <!-- excerpt-end -->
 

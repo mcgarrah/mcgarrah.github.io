@@ -7,7 +7,7 @@ published: true
 last_modified_at: 2026-04-14
 ---
 
-After running this Jekyll-based website for a couple years (since July of 2023), I've learned valuable lessons about optimizing Jekyll sites for GitHub Pages. This blog initially started as a consolidation of several blog websites I'd published over the years. This is Part 1 of a two-part series covering the foundational optimizations that have made the biggest difference for my homelab blog.
+After running this Jekyll-based website for a couple years (since July of 2023), I've learned valuable lessons about optimizing Jekyll sites for GitHub Pages. Site performance and SEO aren't afterthoughts — they're architectural concerns that compound over time. A slow site with poor metadata loses readers before they ever see the content. This blog initially started as a consolidation of several blog websites I'd published over the years. This is Part 1 of a two-part series covering the foundational optimizations that have made the biggest difference.
 
 <!-- excerpt-end -->
 

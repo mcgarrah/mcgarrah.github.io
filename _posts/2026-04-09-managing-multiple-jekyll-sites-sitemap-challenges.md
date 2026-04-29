@@ -14,7 +14,7 @@ seo:
   date_modified: 2026-04-09
 ---
 
-Running multiple Jekyll sites under a single custom domain creates unique challenges for SEO and sitemap management. This post explores the complexities of managing **mcgarrah.org** (main blog) and **mcgarrah.org/resume** (separate Jekyll site) as distinct GitHub repositories while maintaining proper search engine indexing.
+Running multiple Jekyll sites under a single custom domain creates unique challenges for SEO and sitemap management. This is fundamentally a multi-service architecture problem — two independent deployments sharing a domain need coordinated metadata, and the coordination mechanisms available on GitHub Pages are limited. This post explores the complexities of managing **mcgarrah.org** (main blog) and **mcgarrah.org/resume** (separate Jekyll site) as distinct GitHub repositories while maintaining proper search engine indexing.
 
 <!-- excerpt-end -->
 

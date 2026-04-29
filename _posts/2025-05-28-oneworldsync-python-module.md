@@ -11,7 +11,7 @@ last_modified_at: 2025-09-13
 
 ### A Python Module for 1WorldSync Content1 API Access
 
-I'm pleased to introduce a Python module I've developed from scratch called `oneworldsync`. For those who need to programmatically access product content data from the 1WorldSync Content1 API, finding a streamlined solution was challenging to say the least. The only path provided was a very simple Python example, some older PDF documentation and a reference Java SDK. I work primarily in the Machine Learning space so Python first was a priority. Those were my primary motivations behind creating `oneworldsync` as I stumbled towards building a library.
+I'm pleased to introduce a Python module I've developed from scratch called `oneworldsync`. For those who need to programmatically access product content data from the 1WorldSync Content1 API, finding a streamlined solution was challenging. The only path provided was a very simple Python example, some older PDF documentation and a reference Java SDK. I work primarily in the Machine Learning and data engineering space, so Python-first was a priority — and when the existing tooling doesn't meet your requirements, you build what you need.
 
 <!-- excerpt-end -->
 

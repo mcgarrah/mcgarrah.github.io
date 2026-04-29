@@ -11,7 +11,7 @@ The Ceph Dashboard is incredibly useful for monitoring your cluster's health, bu
 
 ## Why You Want the Ceph Dashboard
 
-The dashboard gives you a web interface to monitor your Ceph cluster without SSH'ing into nodes and running CLI commands. You can see OSD status, pool usage, performance metrics, and cluster health at a glance. It's essential for any serious homelab running Ceph. Or if you are doing something unusual like use USB Drives for your storage media and want additional metrics for performance evaluation. I also have fast SSDs for my DB/WAL with the USB Drives for Data.
+The dashboard gives you a web interface to monitor your Ceph cluster without SSH'ing into nodes and running CLI commands. You can see OSD status, pool usage, performance metrics, and cluster health at a glance. For any distributed storage system, a centralized monitoring dashboard isn't optional — it's how you catch problems before they become outages. It's essential for any serious homelab running Ceph. Or if you are doing something unusual like use USB Drives for your storage media and want additional metrics for performance evaluation. I also have fast SSDs for my DB/WAL with the USB Drives for Data.
 
 <!-- excerpt-end -->
 

@@ -7,7 +7,7 @@ published: true
 last_modified_at: 2026-04-02
 ---
 
-I've been running Proxmox in my homelab since version 7.4, and the journey to Proxmox 8.2.2 was to say the least... educational. Let me share some hard-won lessons that might save you some headaches. These even apply to the Proxmox 9 upgrades as well which I have not scheduled in my cluster yet. I'm pretty sure I'll have updates when I get to that upgrade to share.
+I've been running Proxmox in my homelab since version 7.4, and the journey to Proxmox 8.2.2 was educational. Having managed infrastructure upgrades in enterprise environments, I can say the patterns are the same at any scale — the difference is that in a homelab, you're the only one on call when something breaks at 2 AM. Let me share some hard-won lessons that might save you some headaches. These even apply to the Proxmox 9 upgrades as well which I have not scheduled in my cluster yet. I'm pretty sure I'll have updates when I get to that upgrade to share.
 
 <!-- excerpt-end -->
 
