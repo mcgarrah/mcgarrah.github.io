@@ -14,9 +14,9 @@ seo:
   date_modified: 2026-05-04
 ---
 
-GitHub Pages with Jekyll gives you tags and categories in front matter, but no pages for them. You can tag a post `proxmox` all day long — there's no `/tags/proxmox/` page unless you build one. Manually creating a page for each tag doesn't scale. At 139 posts with 237 unique tags and 53 categories, that's not an option.
+Content taxonomy at scale creates an architectural tension: you want granular tagging for discoverability, but every auto-generated tag page dilutes your sitemap and SEO signal. At 139 posts with 237 unique tags and 53 categories, this blog hit that tension head-on — and the solution evolved through three versions, each driven by a real operational signal.
 
-This plugin solves it: a single Ruby file that generates a page for every tag and every category at build time.
+GitHub Pages with Jekyll gives you tags and categories in front matter, but no pages for them. You can tag a post `proxmox` all day long — there's no `/tags/proxmox/` page unless you build one. Manually creating a page for each tag doesn't scale. This plugin solves it: a single Ruby file that generates a page for every tag and every category at build time.
 
 <!-- excerpt-end -->
 

@@ -10,10 +10,16 @@ seo:
   date_modified: 2026-05-20
 ---
 
-"He was in a bind 'cause he was way behind"
--- Charlie Daniels from "The Devil Went Down to Georgia"
+When a vendor you depend on gets acquired, the technical debt lands on your desk whether you planned for it or not. Google killed Google Domains, SquareSpace inherited the customers, and SquareSpace's walled garden — no API, no DNS export, no automation hooks — made it incompatible with the DNS automation I need for Technitium, PowerDNS, and cert-manager DNS-01 challenges. Sixteen domains had to move.
 
-## Google Domains - Gone But Not Forgotten
+> "He was in a bind 'cause he was way behind"
+> — Charlie Daniels, "The Devil Went Down to Georgia"
+
+This is the story of that migration: the batching strategy, the cost management, the DNS backup process that SquareSpace makes unnecessarily painful, and why Porkbun won the evaluation.
+
+<!-- excerpt-end -->
+
+## Google Domains — Gone But Not Forgotten
 
 **Google Domains** was highly recommended for good reason: transparent pricing, clean interface, and reliable service. Google's decision to shut down and sell to **SquareSpace** forced this entire migration project. A reminder that even Google services aren't permanent. This left me with a technical debt to resolve on something that I had been able to ignore for a long time since the service had just worked.
 
@@ -476,6 +482,10 @@ All successfully transferred to Porkbun and renewed through 2027:
 **Batch Wisely:** Group by renewal date to manage cash flow
 **API Matters:** For homelab automation, API access is non-negotiable
 **Cost Planning:** Budget for all renewals upfront - transfers aren't free
+
+## What This Migration Enables
+
+With Porkbun's API in place, the domains become programmable infrastructure rather than manually managed assets. This unlocks the DNS automation chain I've been building toward: cert-manager with Porkbun DNS-01 webhooks for wildcard TLS certificates, external-dns for automatic record management from Kubernetes, and Technitium split-horizon DNS for internal resolution — all driven by API calls rather than clicking through a registrar's web UI. The migration cost roughly $182 and several weeks of elapsed time, but it eliminates a vendor dependency that was blocking three other infrastructure projects.
 
 ---
 

@@ -14,7 +14,9 @@ seo:
   date_modified: 2026-05-08
 ---
 
-Most Jekyll blogs on GitHub Pages use the default build. Push to main, GitHub builds it, done. That worked for me too — until I needed custom plugins, scheduled future posts, and wanted to stop deploying broken sitemaps. Now I have three GitHub Actions workflows, Dependabot watching three package ecosystems, and a Lighthouse config that blocks my own ad scripts.
+Any content platform that publishes on a schedule, validates quality automatically, and scans for security regressions needs a CI/CD pipeline — even if the "platform" is a personal blog. This site runs three GitHub Actions workflows that form a feedback loop: build and deploy with scheduled future-post publishing, CodeQL security scanning of the workflow YAML itself, and an SEO health check that validates sitemaps, canonical URLs, structured data, and accessibility on every content push. Dependabot closes the loop on dependency hygiene across three package ecosystems.
+
+Most Jekyll blogs on GitHub Pages use the default build. Push to main, GitHub builds it, done. That worked for me too — until I needed custom plugins, scheduled future posts, and wanted to stop deploying broken sitemaps.
 
 Here's how it all fits together.
 

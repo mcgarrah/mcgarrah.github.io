@@ -15,7 +15,9 @@ seo:
   date_modified: 2026-05-01
 ---
 
-I had a blog post about reading time calculation that crashed my Jekyll build. The error pointed to a draft file, but the code it complained about was inside a Markdown code fence — supposedly safe, display-only text. It wasn't.
+Jekyll's rendering pipeline has a design decision that bites anyone who writes about template systems: Liquid processes every tag in your Markdown files *before* the Markdown processor sees them. Code fences, backtick spans, indented blocks — none of them protect Liquid syntax from execution. If you maintain a Jekyll-based documentation platform and your content includes template examples, this is a content integrity problem that silently corrupts output or crashes builds.
+
+I discovered this when a blog post about reading time calculation crashed my build. The error pointed to a draft file, but the code it complained about was inside a Markdown code fence — supposedly safe, display-only text. It wasn't.
 
 {% raw %}Jekyll's Liquid template engine processes **every** `{{ }}` and `{% %}` tag in your Markdown files before the Markdown processor ever sees them.{% endraw %} Code fences, backtick spans, indented code blocks — none of them protect Liquid syntax from execution. If you write posts about Jekyll, Liquid, GitHub Actions, or anything else that uses double-curly-brace syntax, your examples are being silently eaten or actively breaking your build.
 

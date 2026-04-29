@@ -32,6 +32,8 @@ Jekyll Run wraps this into a button in the VS Code status bar. Click to start, c
 
 For a blog with 130+ posts where I'm constantly previewing drafts and future-dated articles, the convenience is worth the occasional quirk.
 
+Developer experience is a platform engineering concern, whether you're standardizing IDE settings across a 50-person engineering organization or configuring a Jekyll plugin for a solo blog. The time lost to tooling friction — a missing CLI flag, a settings precedence conflict, a stale incremental build — compounds. Getting the local development environment right once means every future writing session starts clean.
+
 ## The Flags That Matter
 
 Here's what each flag does and why I use all of them:

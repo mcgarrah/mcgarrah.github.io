@@ -13,9 +13,9 @@ seo:
   date_modified: 2026-06-26
 ---
 
-Lions and Tigers and Adsense, oh my... All the Google Services I think I need. And all the overhead for them.
+Vendor service sprawl is a real operational cost, and Google is a case study in how "free" services accumulate complexity. Running a technical blog now requires integrating Analytics, Search Console, Custom Search, and AdSense — each with its own dashboard, approval process, privacy implications, and integration quirks. What should be a solved problem for a static site has become a multi-month project with opaque feedback loops and interconnected dependencies that don't always play nicely together.
 
-Running a technical blog has turned into a maze of Google services, each with its own setup complexity, approval processes, and interconnected dependencies. What started as a simple Jekyll website has become an exercise in Google service integration frustration.
+Lions and Tigers and AdSense, oh my.
 
 <!-- excerpt-end -->
 
@@ -71,7 +71,7 @@ The most maddening part? Google's own services don't integrate seamlessly with e
 
 Instead, each service feels like it was built by a different team with different assumptions about how websites work. The result is a fragmented experience that requires significant time investment to get working properly.
 
-Maybe I'm overthinking this, but for a simple technical blog, the overhead of managing all these Google services sometimes feels like it outweighs the benefits. I just want a blog site to publish fun stuff I'm doing outside of work. On the upside, I'm keeping current on a lot of the issues that happen for small to medium sized businesses which keeps me current on technology that might get me a future job. Occasionally, this stuff also overlaps with my real job too.
+Maybe I'm overthinking this, but for a simple technical blog, the overhead of managing all these Google services sometimes feels like it outweighs the benefits. I just want a blog site to publish fun stuff I'm doing outside of work. On the upside, I'm keeping current on the same integration challenges that small and medium businesses face every day — vendor service sprawl, opaque approval processes, and the hidden cost of "free" platforms. Having managed similar vendor integration complexity in enterprise environments, I can say the pattern is identical at any scale — it just costs more when the stakes are higher.
 
 ## What I've Actually Done About It
 
