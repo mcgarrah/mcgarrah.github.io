@@ -119,7 +119,7 @@ The `_includes/archive.html` gets the detection logic and conditional rendering:
 {% endfor %}{% endraw %}
 ```
 
-Draft entries get a ✏️ pencil icon. Future entries get a 🤖 robot icon. Both get italic text. Published posts render normally with no extra markup.
+Draft entries get a <svg aria-label="Draft" class="icon icon-status" style="height:1em;width:1em" title="Draft"><use xlink:href="/assets/fontawesome/icons.svg#pencil-alt"></use></svg> pencil icon. Future entries get a <svg aria-label="Future" class="icon icon-status" style="height:1em;width:1em" title="Scheduled"><use xlink:href="/assets/fontawesome/icons.svg#robot"></use></svg> robot icon. Both get italic text. Published posts render normally with no extra markup.
 
 Here's what future-dated posts look like in the archive with the robot icon and italic styling:
 
