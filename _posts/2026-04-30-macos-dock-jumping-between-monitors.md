@@ -5,12 +5,12 @@ categories: [macos, hardware]
 tags: [macos, multi-monitor, dock, display, tips, productivity]
 excerpt: "The macOS Dock has a habit of jumping to whichever monitor you accidentally nudge the cursor toward. Here's how to pin it to one display and keep it there."
 description: "How to stop the macOS Dock from jumping between monitors in a multi-display setup. Covers the click-and-hold trick, Mission Control settings, and display arrangement fixes."
-date: 2026-04-01
-last_modified_at: 2026-04-01
+date: 2026-04-30
+last_modified_at: 2026-04-30
 seo:
   type: BlogPosting
-  date_published: 2026-04-01
-  date_modified: 2026-04-01
+  date_published: 2026-04-30
+  date_modified: 2026-04-30
 ---
 
 If you use multiple monitors on macOS, you have almost certainly experienced this: you move your mouse to the bottom of the wrong screen and the Dock teleports away from where you put it. You drag it back, and five minutes later it jumps again. It is one of those small annoyances that compounds into genuine frustration over a workday.
@@ -53,6 +53,10 @@ While you are in that settings panel, also check:
 
 - **"Displays have separate Spaces"** should be **enabled**. This gives each monitor its own menu bar and improves multi-monitor behavior overall. Without it, macOS treats all displays as one continuous Space, which makes the Dock even more prone to wandering.
 
+[![Desktop & Dock settings showing Spaces configuration — disable auto-rearrange Spaces and enable Displays have separate Spaces](/assets/images/macos-dock-04.png){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/macos-dock-04.png){:target="_blank"}
+
+Note that toggling "Displays have separate Spaces" requires a logout and login to take effect.
+
 ## Display Arrangement Matters
 
 If your monitors are physically side by side but macOS thinks one is above the other, the Dock will behave strangely. Check your arrangement:
@@ -66,12 +70,17 @@ The key detail: the Dock lives on the display with the white menu bar by default
 
 Vertical arrangements are particularly problematic because the bottom edge of the top display and the top edge of the bottom display share a boundary. The Dock can get confused about which display owns the bottom edge.
 
-<!-- TODO: Add screenshots showing:
-  1. The Arrange display panel with the white menu bar on the primary monitor
-  2. The same panel with displays rearranged side-by-side vs vertically
-  3. How the Dock stays on one monitor while the main monitor (white bar) is on another display
-  4. The difference in behavior between the two arrangements and how it impacts a multi-monitor environment
--->
+The Displays settings panel is the starting point — note the **Arrange...** button in the lower right corner:
+
+[![macOS System Settings Displays panel with the Arrange button in the lower right corner](/assets/images/macos-dock-01.png){:width="45%" height="45%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/macos-dock-01.png){:target="_blank"}
+
+Clicking **Arrange...** opens the arrangement view where you drag displays to match your physical layout. The key detail is the instruction at the top: "To relocate the menu bar, drag it to a different display." The menu bar — and by default the Dock — is hard-wired to whichever display has that white bar:
+
+[![Display arrangement showing the menu bar position on the primary display](/assets/images/macos-dock-02.png){:width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/macos-dock-02.png){:target="_blank"}
+
+[![Display arrangement with an alternative layout](/assets/images/macos-dock-03.png){:width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/macos-dock-03.png){:target="_blank"}
+
+Vertical arrangements are particularly problematic because the bottom edge of the top display and the top edge of the bottom display share a boundary. The Dock can get confused about which display owns the bottom edge.
 
 ## Summary
 
