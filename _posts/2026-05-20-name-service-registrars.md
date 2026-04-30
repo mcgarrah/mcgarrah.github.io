@@ -10,10 +10,10 @@ seo:
   date_modified: 2026-05-20
 ---
 
-When a vendor you depend on gets acquired, the technical debt lands on your desk whether you planned for it or not. Google killed Google Domains, SquareSpace inherited the customers, and SquareSpace's walled garden — no API, no DNS export, no automation hooks — made it incompatible with the DNS automation I need for Technitium, PowerDNS, and cert-manager DNS-01 challenges. Sixteen domains had to move.
+When a vendor you depend on gets acquired, the technical debt lands on your desk whether you planned for it or not. Google killed Google Domains, SquareSpace inherited the customers, and SquareSpace's walled garden — no API, no DNS export, no automation hooks — made it incompatible with the DNS automation I need for Technitium, PowerDNS, and cert-manager DNS-01 challenges. Sixteen domains had to move, renewal dates were approaching, and I was already behind before I started.
 
 > "He was in a bind 'cause he was way behind"
-> — Charlie Daniels, "The Devil Went Down to Georgia"
+> — Charlie Daniels Band, *The Devil Went Down to Georgia*
 
 This is the story of that migration: the batching strategy, the cost management, the DNS backup process that SquareSpace makes unnecessarily painful, and why Porkbun won the evaluation.
 
