@@ -24,6 +24,14 @@ mcgarrah.github.io/
   - `DRAFTS.md` - Master tracking file for all draft status, tiers, and promotion history
   - `RUNJEKYLL-EXTENSION.md` - Run Jekyll VS Code extension project tracker
 - **_data/font-awesome/** - Icon definitions for UI components
+- **_substack/** - Archived Substack newsletter articles (excluded from Jekyll build). Long-form
+  content written in an executive and leadership tone that bundles blog posts into strategic
+  narratives or presents standalone thought leadership pieces. Substack is the canonical home
+  for leadership-voiced content; the blog remains the technical source of truth.
+- **_linkedin/** - Archived LinkedIn hook posts (excluded from Jekyll build). Short-form posts
+  (300-800 words) that distill key insights from Substack articles and link to the full piece.
+  LinkedIn amplifies content to the professional network. Both directories use `_` prefix so
+  Jekyll ignores them during builds.
 - **categories.html** - Category listing page
 - **tags.html** - Tag cloud and organization
 - **archive.html** - Chronological post listing

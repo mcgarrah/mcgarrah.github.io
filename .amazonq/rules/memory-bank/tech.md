@@ -118,11 +118,12 @@ bundle exec jekyll clean
 - **Structured Data** - Schema.org markup for search engines
 
 ### Social and Professional
-- **GitHub** - Source code hosting and issue tracking
-- **LinkedIn** - Professional networking integration
-- **ORCID (0000-0001-8935-1293)** - Academic identifier
-- **Google Scholar** - Research publication tracking
-- **ResearchGate** - Academic networking
+- **GitHub** ([mcgarrah](https://github.com/mcgarrah)) - Source code hosting and issue tracking
+- **LinkedIn** ([michaelmcgarrah](https://www.linkedin.com/in/michaelmcgarrah/)) - Professional networking and content amplification
+- **Substack** ([mcgarrah](https://mcgarrah.substack.com/)) - Long-form newsletters and leadership articles
+- **ORCID** ([0000-0001-8935-1293](https://orcid.org/0000-0001-8935-1293)) - Academic identifier
+- **Google Scholar** ([Lt7T2SwAAAAJ](https://scholar.google.com/citations?user=Lt7T2SwAAAAJ)) - Research publication tracking
+- **ResearchGate** ([James-Mcgarrah](https://www.researchgate.net/profile/James-Mcgarrah)) - Academic networking
 
 ### Content Features
 - **Giscus Comments** - GitHub Discussions-based commenting

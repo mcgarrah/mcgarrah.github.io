@@ -10,8 +10,19 @@ Personal technical blog and website for Michael McGarrah — currently a Lead Pr
 - **Extensive blog archive** spanning 2001-2026 with technical articles
 - **Category and tag organization** for easy content discovery
 - **Draft management system** for content development
+### Content Distribution
+- **Blog** (mcgarrah.org) — Technical source of truth with full-depth articles
+- **Substack** (mcgarrah.substack.com) — Long-form newsletters and leadership articles written
+  in an executive tone, bundling blog content with strategic framing or presenting standalone
+  thought leadership on technology strategy, enterprise architecture, and AI/ML
+- **LinkedIn** — Short-form professional posts (300-800 words) that distill key insights from
+  Substack articles and link to the full piece, amplifying content to the professional network
+  and occasionally for a well writen piece in the mcgarrah.org blog.
 - **RSS feed** for content syndication
 - **Redirect support** for renamed or moved pages via jekyll-redirect-from
+
+Substack and LinkedIn content is archived in `_substack/` and `_linkedin/` directories
+(excluded from Jekyll build via `_` prefix) for version control and permanent reference.
 
 ### Technical Content Focus
 - **Homelab infrastructure** - Proxmox, Ceph, virtualization
@@ -34,7 +45,7 @@ Personal technical blog and website for Michael McGarrah — currently a Lead Pr
 - **Google Analytics** integration for traffic insights
 - **Sitemap generation** for search engine indexing
 - **Canonical URL management** for duplicate content prevention
-- **Social media integration** with LinkedIn, GitHub, ORCID profiles
+- **Social media integration** with [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/), [GitHub](https://github.com/mcgarrah), [ORCID](https://orcid.org/0000-0001-8935-1293) profiles
 
 ### Privacy and Compliance
 - **GDPR compliance** with cookie consent management
@@ -55,4 +66,20 @@ Personal technical blog and website for Michael McGarrah — currently a Lead Pr
 - **Hardware enthusiasts** working with refurbished enterprise equipment
 
 ## Value Proposition
-Provides in-depth technical documentation and architectural decision-making from a senior technical leader who bridges enterprise strategy and hands-on implementation. The homelab serves as a technology evaluation lab where enterprise patterns (GitOps, IaC, observability, HA) are validated with the same rigor applied to production environments. Content reflects the perspective of someone who makes technology strategy decisions, designs systems at scale, and still writes the code. The ML and data science content draws on a Georgia Tech MS in Computer Science (Interactive Intelligence / Machine Learning) and production ML experience — positioning the blog at the intersection of cloud infrastructure, machine learning, and technical leadership.
+Provides in-depth technical documentation and architectural decision-making from a senior
+technical leader who bridges enterprise strategy and hands-on implementation. The homelab
+serves as a technology evaluation lab where enterprise patterns (GitOps, IaC, observability,
+HA) are validated with the same rigor applied to production environments.
+
+The blog demonstrates technical depth — the "still builds things" credibility. Substack and
+LinkedIn extend that into leadership and strategic territory, connecting technical work to
+business outcomes, organizational impact, and technology strategy decisions. Together, the
+three channels present a complete picture: someone who makes technology strategy decisions,
+designs systems at scale, writes the code, and communicates the implications to both
+engineering teams and executive stakeholders.
+
+The ML and data science content draws on a Georgia Tech MS in Computer Science (Interactive
+Intelligence / Machine Learning) and production ML experience — positioning the platform at
+the intersection of cloud infrastructure, machine learning, and technical leadership. The
+Executive MBA at UNC Wilmington complements the technical depth with business strategy,
+finance, and organizational leadership.

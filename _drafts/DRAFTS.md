@@ -104,6 +104,12 @@ Drafts that form natural publishing sequences or share a topic.
 | Tracker | Purpose |
 |---------|---------|
 | `DRAFTS.md` | Master publication planning and readiness |
+| `PERSONA.md` | Persona voice guide — applying the Senior Director lens to drafts |
+| `PERSONA-NOTES.md` | Persona promotion readiness assessment — per-draft evaluation and promotion order |
+| `PERSONA-SVP.md` | SVP / Head of AI positioning plan — three-channel strategy (blog, Substack, LinkedIn) + article strengthening roadmap |
+| `PERSONA-LINKEDIN.md` | LinkedIn profile snapshot (2026-04-29) and SVP positioning review with rewrite recommendations |
+| `PERSONA-RESUME.md` | Resume ↔ LinkedIn cross-reference, title discrepancies, and proposed rewrites |
+| `ENVESTNET-RESUME.md` | Consolidated Envestnet work history (2021–2026) with temporal progression and SVP highlights |
 | `RUNJEKYLL-EXTENSION.md` | Run Jekyll extension project status and article sequence |
 | `JEKYLLGDPR-PLUGIN.md` | GDPR plugin productization plan tied to the 2026-07-06 article |
 | `GITREPO-CLEAN.md` | Git repository cleanup, audit, and future automation project tracking |

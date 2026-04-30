@@ -180,6 +180,55 @@ Convenience files:
 - **Directory Structure** - Organize assets by type and purpose
 - **Version Control** - Include all assets in repository for reproducibility
 
+## External Platform Content
+
+### Multi-Channel Distribution
+The blog is the technical source of truth. Content is also distributed through two external
+platforms, each with a distinct voice and audience. Archived copies of all external content
+live in this repository for version control and reference.
+
+| Channel | Directory | Voice | Content |
+|---------|-----------|-------|--------|
+| Blog (mcgarrah.org) | `_posts/` | Technical, hands-on, architectural | Full-depth articles |
+| Substack (mcgarrah.substack.com) | `_substack/` | Executive, leadership, strategic | Long-form newsletters and thought leadership |
+| LinkedIn | `_linkedin/` | Concise, professional, business-framed | Short hooks linking to Substack |
+
+### Substack Newsletters (`_substack/`)
+- **Excluded from Jekyll build** via `_` prefix — content is archived here, published on Substack
+- **Two types of articles:**
+  - **Retrospectives** (mid-month) — Bundle recent blog posts with strategic framing and leadership perspective
+  - **Leadership articles** (end-of-month) — Standalone thought leadership on technology strategy, enterprise architecture, AI/ML, and organizational leadership
+- **Tone:** Executive and leadership voice. Frame technical work in terms of business outcomes,
+  organizational impact, trade-off analysis, and technology strategy. Connect homelab and blog
+  content to enterprise patterns. Reference professional experience across enterprise architecture,
+  data science platforms, security/compliance, and the Executive MBA naturally where relevant.
+- **File format:** Markdown with title, subtitle, author, date, URL, tags, and body
+- **Naming:** `YYYY-MM-DD-short-title.md`
+- **README:** `_substack/README.md` tracks publication schedule and cross-references
+
+### LinkedIn Posts (`_linkedin/`)
+- **Excluded from Jekyll build** via `_` prefix — content is archived here, published on LinkedIn
+- **Purpose:** Short-form hooks (300-800 words) that distill the key insight from a Substack
+  article and link to the full piece. LinkedIn amplifies content to the professional network.
+- **Tone:** Concise, business-framed, accessible to non-engineers. One clear argument per post.
+  Written for someone scrolling between meetings — they should get the core insight in 60 seconds
+  and click through to Substack for depth.
+- **File format:** Markdown with title, Substack URL, LinkedIn URL (post-publication), tags, and body
+- **Naming:** `YYYY-MM-DD-short-title.md`
+- **README:** `_linkedin/README.md` tracks publication schedule and maps posts to Substack articles
+
+### When Writing External Platform Content
+- **Substack articles** should stand alone — a reader who never visits the blog should still
+  get the full argument. Link to blog posts for technical depth, not as a prerequisite.
+- **LinkedIn posts** should stand alone — a reader who doesn't click through should still
+  understand the key insight. The Substack link is for readers who want more.
+- **Both platforms** use a leadership and executive tone that complements the blog's technical
+  voice. The blog says "here's how I built it." Substack says "here's why it matters and what
+  it teaches about leading technology organizations." LinkedIn says "here's the one insight
+  you should take away."
+- **Archive everything** in the repository. External platforms can change policies, shut down,
+  or lose content. The `_substack/` and `_linkedin/` directories are the permanent record.
+
 ## Security Practices
 
 ### Homelab SSH Access
