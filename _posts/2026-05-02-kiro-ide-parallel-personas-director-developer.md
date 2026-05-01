@@ -5,13 +5,13 @@ categories: [technical, devtools, kiro]
 tags: [kiro, vscode, ide, personas, macos, windows, mcp, powers, configuration, productivity]
 excerpt: "Kiro's ~/.kiro directory stores powers, hooks, agents, and MCP server configs globally — but there's no built-in way to switch between profiles. If you need a Senior Director persona loaded with Atlassian, GitLab, and observability MCPs running alongside a stripped-down developer persona focused on code, you have to get creative. Here's how the path resolution actually works and three approaches to running both simultaneously on macOS and Windows."
 description: "Deep technical analysis of Kiro IDE's configuration path resolution and practical approaches to running parallel Kiro instances with isolated powers, hooks, agents, and MCP server configurations on macOS and Windows 11 Pro."
-date: 2025-05-02
-last_modified_at: 2025-05-02
+date: 2026-05-02
+last_modified_at: 2026-05-02
 published: true
 seo:
   type: BlogPosting
-  date_published: 2025-05-02
-  date_modified: 2025-05-02
+  date_published: 2026-05-02
+  date_modified: 2026-05-02
 ---
 
 Kiro is a compelling IDE — particularly for agentic workflows where powers, hooks, and MCP servers turn it into something closer to a command center than a text editor. The problem surfaces when you need that command center configured two fundamentally different ways at the same time.

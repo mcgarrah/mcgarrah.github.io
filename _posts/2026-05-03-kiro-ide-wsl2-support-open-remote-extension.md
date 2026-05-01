@@ -5,13 +5,13 @@ categories: [technical, devtools, kiro]
 tags: [kiro, vscode, wsl2, windows, linux, mcp, remote-development, open-vsx]
 excerpt: "Kiro doesn't ship with Microsoft's WSL extension, and the official extension isn't available on Open VSX. The Open Remote - WSL extension by jeanp413 bridges the gap — but it requires an easy-to-miss argv.json configuration step, breaks predictably on Kiro updates, and has terminal routing quirks that will cost you an hour if you don't know about them. Here's the complete setup, the failure modes, and the recovery procedures."
 description: "Complete guide to enabling WSL2 support in Kiro IDE on Windows using the Open Remote - WSL community extension. Covers the required argv.json configuration, kiro-server breakage recovery after updates, terminal default profile fix, MCP server execution within Linux, and known limitations."
-date: 2025-05-05
-last_modified_at: 2025-05-05
+date: 2026-05-03
+last_modified_at: 2026-05-03
 published: true
 seo:
   type: BlogPosting
-  date_published: 2025-05-05
-  date_modified: 2025-05-05
+  date_published: 2026-05-03
+  date_modified: 2026-05-03
 ---
 
 Kiro is a VS Code fork, but it doesn't include Microsoft's proprietary Remote - WSL extension. That extension isn't published to Open VSX (the extension marketplace Kiro uses), and Microsoft's marketplace terms restrict it to official VS Code builds. If you're running Kiro on Windows with WSL2 as your primary development environment, this is a hard stop — unless you know where to look.
