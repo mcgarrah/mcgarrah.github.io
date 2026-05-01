@@ -13,7 +13,7 @@ seo:
   date_modified: 2026-05-01
 ---
 
-I've been using Amazon Q Developer with the VS Code plugin as my primary AI coding assistant for a while now. With Amazon Q being deprecated in favor of [Amazon Kiro](https://kiro.dev/), I started looking at alternatives. Claude Code from Anthropic caught my attention — but it's a very different experience. There's no IDE plugin. It's a CLI tool. If you're coming from a comfortable VS Code integration, that shift takes some adjustment. As someone who grew up on UNIX terminals, the CLI itself isn't the problem — it's losing the IDE conveniences I've gotten comfortable with.
+I've been using Amazon Q Developer with the VS Code plugin as my primary AI coding assistant for a while now. On May 1, 2026, AWS made it official: [Amazon Q Developer is reaching end of support](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/), with the plugin being retired in favor of [Kiro](https://kiro.dev/). There's now a hard deadline on the migration — if you're still on Amazon Q Developer, the clock is running. I started looking at alternatives before the announcement, and Claude Code from Anthropic is where I landed first. Claude Code from Anthropic caught my attention — but it's a very different experience. There's no IDE plugin. It's a CLI tool. If you're coming from a comfortable VS Code integration, that shift takes some adjustment. As someone who grew up on UNIX terminals, the CLI itself isn't the problem — it's losing the IDE conveniences I've gotten comfortable with.
 
 <!-- excerpt-end -->
 
@@ -172,7 +172,12 @@ The Anthropic Max subscription provides a fixed monthly cost which may be more p
 
 ## What About Kiro?
 
-Amazon Kiro is the successor to Amazon Q Developer. It's a full IDE (not a plugin) with spec-driven development, automated agents, and steering hooks. It also has access to the latest Claude models, which is a nice perk. It's a different philosophy from both Amazon Q and Claude Code. I may write about Kiro separately once it matures, but for now, Claude Code fills the gap left by Amazon Q's deprecation if you want a capable AI assistant without adopting an entirely new IDE.
+Kiro is AWS's designated successor to Amazon Q Developer — a full IDE (not a plugin) built on VS Code with spec-driven development, automated agents, steering hooks, and MCP server integration. With the [official end-of-support announcement](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/) now published, Kiro is the intended migration path for Amazon Q Developer users. I've written about Kiro's configuration model and WSL2 support separately:
+
+- [Kiro IDE: Running Parallel Personas for Director and Developer Workflows](/kiro-ide-parallel-personas-director-developer/)
+- [Kiro IDE on Windows: WSL2 Support via Open Remote Extension](/kiro-ide-wsl2-support-open-remote-extension/)
+
+For developers who want to stay in a familiar IDE-plugin model rather than adopt an entirely new IDE, Claude Code fills the gap during the transition period. The two tools aren't mutually exclusive — I've been running both.
 
 ## Conclusion
 

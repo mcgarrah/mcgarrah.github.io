@@ -182,7 +182,7 @@ Drafts that form natural publishing sequences or share a topic.
 ### `2026-05-01-claude-code-setup-guide.md`
 
 - Well-written, complete guide
-- **What's needed:** Fix broken front matter. Fact-check the Amazon Q / Kiro claim.
+- **What's needed:** Fix broken front matter. ~~Fact-check the Amazon Q / Kiro claim.~~ Confirmed by [official AWS announcement](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/) (May 1, 2026). Ready to promote.
 - **Effort:** 1 hour
 
 ### `2026-05-10-jekyll-internal-formatting-front-matter.md` — 📝 Jekyll Deep Dives

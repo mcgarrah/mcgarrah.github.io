@@ -16,6 +16,8 @@ seo:
 
 Kiro is a VS Code fork, but it doesn't include Microsoft's proprietary Remote - WSL extension. That extension isn't published to Open VSX (the extension marketplace Kiro uses), and Microsoft's marketplace terms restrict it to official VS Code builds. If you're running Kiro on Windows with WSL2 as your primary development environment, this is a hard stop — unless you know where to look.
 
+> **Migration context:** On May 1, 2026, AWS published the [Amazon Q Developer end-of-support announcement](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/). If you're migrating from Amazon Q Developer to Kiro on Windows, WSL2 support is likely a hard requirement. This article covers exactly that gap.
+
 The [Open Remote - WSL](https://open-vsx.org/extension/jeanp413/open-remote-wsl) extension by jeanp413 fills this gap. It's a community-built, Open VSX-compatible implementation that enables WSL2 support in any VS Code fork, including Kiro. The [Kiro GitHub issue #17](https://github.com/kirodotdev/Kiro/issues/17) tracks the ongoing community experience — 38+ comments of workarounds, breakage reports, and fixes that inform everything in this article.
 
 The extension works. It also breaks predictably on Kiro updates, has an easy-to-miss configuration requirement, and routes terminal commands to the wrong shell if you don't set a default profile. None of these are dealbreakers, but they'll cost you time if you don't know about them going in.

@@ -16,6 +16,8 @@ seo:
 
 Kiro is a compelling IDE — particularly for agentic workflows where powers, hooks, and MCP servers turn it into something closer to a command center than a text editor. The problem surfaces when you need that command center configured two fundamentally different ways at the same time.
 
+> **Migration context:** On May 1, 2026, AWS published the [Amazon Q Developer end-of-support announcement](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/). If you're evaluating Kiro as the migration path from Amazon Q Developer, the timeline is now official. The configuration depth covered here is worth understanding before you commit to the switch.
+
 My use case: a Senior Director persona loaded with Atlassian (Jira, Confluence), GitLab, NewRelic, Wiz, and AWS pricing MCPs for ticket management, architecture reviews, and operational oversight — running alongside a developer persona stripped down to Terraform, AWS docs, and code-focused tooling. These configurations don't overlap well. The director's MCP servers add latency, consume resources, and clutter the tool list when I'm writing code. The developer's minimal setup lacks the integrations I need when triaging incidents or managing a sprint.
 
 VS Code solved this years ago with profiles. Kiro inherited the `--profile` flag, but it doesn't do what you'd expect.
