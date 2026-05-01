@@ -70,7 +70,7 @@ WSL2 and Linux are not affected — VS Code Remote Server runs inside a login sh
 If the plugin still misbehaves, use the bash script:
 
 ```bash
-./start-jekyll.sh
+./jekyll-start.sh
 ```
 
 ## Incremental Mode Staleness on macOS (Occasional)

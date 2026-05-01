@@ -56,7 +56,7 @@ npm install
 # Start development server
 bundle exec jekyll serve
 # or
-./start-jekyll.sh
+./jekyll-start.sh
 
 # Build for production
 bundle exec jekyll build
@@ -167,5 +167,5 @@ bundle install
 npm install
 
 # Start development
-./start-jekyll.sh
+./jekyll-start.sh
 ```

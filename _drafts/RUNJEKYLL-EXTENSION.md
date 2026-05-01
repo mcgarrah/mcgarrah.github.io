@@ -163,7 +163,38 @@ Documented in `FEATURE.md` in the jekyll-run repo and the new features blog draf
 
 - [ ] Jekyll Clean command (`jekyll-run.Clean` / `ctrl+f10`) — cleans cache, restarts if running
 - [ ] Jekyll Doctor command (`jekyll-run.Doctor` / `ctrl+f11`) — read-only diagnostic
+- [ ] Multi-workspace Jekyll site selection (see below)
 - [ ] Tests for new commands
+
+### Multi-Workspace Jekyll Site Selection
+
+**Problem:** In a multi-root workspace with multiple Jekyll repos (e.g., `mcgarrah.github.io`
+and `resume`), the extension always serves the first workspace folder. There is no way to
+choose which Jekyll site to run.
+
+The root cause is in `isStaticWebsiteWorkspace()` (`src/extension.ts:79-96`). When no editor
+is active, it falls back to `workspace.workspaceFolders[0]`. When an editor *is* active, it
+uses that file's workspace folder — but this is implicit and not obvious to the user.
+
+**Desired behavior (evaluate these options):**
+
+1. **Active workspace folder** — If a file from a Jekyll repo is open and focused in the
+   editor, serve that repo. This partially works today but is not communicated to the user
+   (no indicator of which site will be served).
+
+2. **Quick pick prompt** — When multiple workspace folders contain `_config.yml`, show a
+   VS Code QuickPick letting the user choose which site to serve. Could fire on Run if
+   multiple Jekyll sites are detected.
+
+3. **Configuration setting** — Add a `jekyll-run.workspaceFolder` setting that lets the
+   user pin a specific workspace folder by name. Falls back to current behavior if unset.
+
+4. **Status bar indicator** — Show which Jekyll site is currently targeted in the status
+   bar (e.g., "Jekyll: mcgarrah.github.io"). Clicking it could open the QuickPick.
+
+Option 2 + 4 combined is probably the best UX — prompt on ambiguity, show current selection.
+
+**Branch:** `main` only (new feature, not upstream-compatible)
 
 ## Phase 5 — Rename to "Run Jekyll" (on `main`)
 
