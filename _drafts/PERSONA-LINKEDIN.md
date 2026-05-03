@@ -14,6 +14,13 @@ Reference: `_drafts/PERSONA.md`, `_drafts/PERSONA-SVP.md`
 Created: 2026-04-29
 Source: ~/Downloads/LinkedInProfile-2026-04-29.pdf
 
+**NOTE (2026-08-01):** This file is a snapshot of the LinkedIn profile as of 2026-04-29.
+The resume has been extensively rewritten since this snapshot was taken. For current
+resume summaries ready to paste into LinkedIn, see `_drafts/PERSONA-RESUME.md` — that
+file is the authoritative source for all LinkedIn update actions. The "SVP Positioning
+Review" and "Priority Actions" sections below reflect the original assessment and are
+superseded by PERSONA-RESUME.md.
+
 ---
 
 ## Current Profile (as of 2026-04-29)
@@ -239,7 +246,11 @@ June 1998 – January 1999 (8 months)
 
 ---
 
-## SVP Positioning Review
+## SVP Positioning Review (Original Assessment — Superseded by PERSONA-RESUME.md)
+
+**See `_drafts/PERSONA-RESUME.md` for current resume summaries ready to paste into LinkedIn.**
+The proposed rewrites below were written before the resume was updated and are now stale.
+They are preserved here as historical context for the original assessment.
 
 ### What's Working Well
 
@@ -326,7 +337,10 @@ NC State TA/Library/Operator) add length without adding SVP signal. Consider:
 Only one publication listed. If you have others (Georgia Tech research, conference papers),
 add them. The Google Scholar profile shows publications — make sure LinkedIn matches.
 
-### Priority Actions
+### Priority Actions (Original — Superseded by PERSONA-RESUME.md)
+
+**See `_drafts/PERSONA-RESUME.md` for the current LinkedIn action list with accurate
+resume summaries reflecting all changes through 2026-08-01.**
 
 | Priority | Action | Effort |
 |----------|--------|--------|
