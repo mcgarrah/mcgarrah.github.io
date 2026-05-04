@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-05-01
+Last updated: 2026-05-04
 
 ---
 

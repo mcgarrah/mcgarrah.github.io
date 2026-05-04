@@ -17,9 +17,9 @@ Full-year calendar showing published articles (✅), future-dated/scheduled arti
 
 **Cadence:** Monday / Wednesday / Friday (MWF) primary. Occasional Tue/Thu/Sat/Sun for series bursts.
 
-**Today:** 2026-05-02
+**Today:** 2026-05-04
 
-Last updated: 2026-05-02
+Last updated: 2026-05-04
 
 ---
 
@@ -82,13 +82,14 @@ Last updated: 2026-05-02
 
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-----|-----|-----|-----|-----|-----|-----|
-| | | | | **1** ✅ [Jekyll Liquid Code Fence Trap](/jekyll-liquid-code-fence-rendering-trap/) | **2** ✅ [Kiro IDE Parallel Personas](/kiro-ide-parallel-personas-director-developer/) | **3** 📅 [Kiro IDE WSL2 Support](/kiro-ide-wsl2-support-open-remote-extension/) |
-| **4** 📅 [Jekyll Tag/Category Generator](/jekyll-tag-category-generator-plugin/) | 5 | **6** 📅 [Jekyll Giscus Comments](/jekyll-giscus-comments-implementation/) | 7 | **8** 📅 [Jekyll GitHub Actions CI/CD](/jekyll-github-actions-cicd-pipeline/) | 9 | 10 |
-| **11** 📅 [Jekyll Run Plugin Config](/jekyll-run-vscode-plugin-local-development/) | 12 | **13** 📅 [Draft/Future Visual Indicators](/jekyll-draft-future-visual-indicators/) | 14 | **15** 📅 [Content Distribution Pipeline](/jekyll-content-distribution-pipeline/) | 16 | 17 |
-| **18** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) | 19 | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | 21 | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | 23 | 24 |
-| **25** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 26 | **27** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 28 | **29** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 30 | 31 |
+| | | | | | **1** ✅ [Jekyll Liquid Code Fence Trap](/jekyll-liquid-code-fence-rendering-trap/) | **2** ✅ [Kiro IDE Parallel Personas](/kiro-ide-parallel-personas-director-developer/) |
+| **3** ✅ [Kiro IDE WSL2 Support](/kiro-ide-wsl2-support-open-remote-extension/) | **4** 📅 [Jekyll Tag/Category Generator](/jekyll-tag-category-generator-plugin/) | 5 | **6** 📅 [Jekyll Giscus Comments](/jekyll-giscus-comments-implementation/) | 7 | **8** 📅 [Jekyll GitHub Actions CI/CD](/jekyll-github-actions-cicd-pipeline/) | **9** 📅 [Jekyll Modern Favicon](/jekyll-modern-favicon-set/) |
+| 10 | **11** 📅 [Jekyll Run Plugin Config](/jekyll-run-vscode-plugin-local-development/) | 12 | **13** 📅 [Draft/Future Visual Indicators](/jekyll-draft-future-visual-indicators/) | 14 | **15** 📅 [Content Distribution Pipeline](/jekyll-content-distribution-pipeline/) | 16 |
+| 17 | **18** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) | 19 | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | 21 | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | 23 |
+| 24 | **25** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 26 | **27** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 28 | **29** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 30 |
+| 31 | | | | | | |
 
-**Summary:** 15 articles (2 published, 13 scheduled). MWF cadence with Sun/Mon fills for series. Strong month.
+**Summary:** 16 articles (3 published, 13 scheduled). MWF cadence from May 4 onward. Kiro IDE pair (Sat/Sun May 2–3) and Favicon (Sat May 9) are off-cycle bonus releases.
 
 ---
 
@@ -96,13 +97,13 @@ Last updated: 2026-05-02
 
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-----|-----|-----|-----|-----|-----|-----|
-| **1** 📅 [Managing Cross-AI Context](/managing-cross-ai-agent-context/) | **2** 📅 [Jekyll Modern Favicon](/jekyll-modern-favicon-set/) | **3** 📅 [ZFS Boot Mirrors Part 3](/proxmox-zfs-boot-mirrors-part-3/) | 4 | **5** 📅 [Jekyll Run Multiroot Bug](/jekyll-run-plugin-multiroot-workspace-bug/) | 6 | 7 |
-| **8** 📅 [Draft Preview Site Part 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** 📅 [Forking Jekyll Run](/forking-jekyll-run-to-run-jekyll/) | 11 | **12** 📅 [Draft Preview Site Part 2](/jekyll-draft-preview-site-part-2/) | 13 | 14 |
-| **15** 📅 [Run Jekyll Marketplace Setup](/run-jekyll-vscode-marketplace-publisher-setup/) | 16 | **17** 📅 [Draft Preview Site Part 3](/jekyll-draft-preview-site-part-3/) | 18 | **19** 📅 [Run Jekyll Bug Fixes](/run-jekyll-bug-fixes-and-code-review/) | 20 | 21 |
-| **22** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | 23 | **24** 📅 [Run Jekyll Testing](/run-jekyll-testing-and-test-harness/) | 25 | **26** 📅 [Google Service Sprawl](/google-service-sprawl/) | 27 | 28 |
-| **29** 📅 [Run Jekyll New Features](/run-jekyll-new-features-clean-doctor-tests/) | 30 | | | | | |
+| | **1** 📅 [Managing Cross-AI Context](/managing-cross-ai-agent-context/) | 2 | **3** 📅 [ZFS Boot Mirrors Part 3](/proxmox-zfs-boot-mirrors-part-3/) | 4 | **5** 📅 [Jekyll Run Multiroot Bug](/jekyll-run-plugin-multiroot-workspace-bug/) | 6 |
+| 7 | **8** 📅 [Draft Preview Site Part 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** 📅 [Forking Jekyll Run](/forking-jekyll-run-to-run-jekyll/) | 11 | **12** 📅 [Draft Preview Site Part 2](/jekyll-draft-preview-site-part-2/) | 13 |
+| 14 | **15** 📅 [Run Jekyll Marketplace Setup](/run-jekyll-vscode-marketplace-publisher-setup/) | 16 | **17** 📅 [Draft Preview Site Part 3](/jekyll-draft-preview-site-part-3/) | 18 | **19** 📅 [Run Jekyll Bug Fixes](/run-jekyll-bug-fixes-and-code-review/) | 20 |
+| 21 | **22** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | 23 | **24** 📅 [Run Jekyll Testing](/run-jekyll-testing-and-test-harness/) | 25 | **26** 📅 [Google Service Sprawl](/google-service-sprawl/) | 27 |
+| 28 | **29** 📅 [Run Jekyll New Features](/run-jekyll-new-features-clean-doctor-tests/) | 30 | | | | |
 
-**Summary:** 14 articles scheduled. MWF cadence with Sun/Mon fills. Run Jekyll and Draft Preview series interleaved.
+**Summary:** 13 articles scheduled. Clean MWF cadence throughout. Run Jekyll and Draft Preview series interleaved.
 
 ---
 
@@ -200,15 +201,15 @@ Last updated: 2026-05-02
 | February | 3 | — | — | — | 3 |
 | March | 1 | — | — | — | 1 |
 | April | 25 | — | — | — | 25 |
-| May | 2 | 13 | — | — | 15 |
-| June | — | 14 | — | — | 14 |
+| May | 3 | 13 | — | — | 16 |
+| June | — | 13 | — | — | 13 |
 | July | — | — | 14 | — | 14 |
 | August | — | — | 13 | — | 13 |
 | September | — | — | 10 | 5 | 15 |
 | October | — | — | — | 14 | 14 |
 | November | — | — | — | 12 | 12 |
 | December | — | — | — | 14 | 14 |
-| **Total** | **33** | **27** | **37** | **45** | **142** |
+| **Total** | **34** | **26** | **37** | **45** | **142** |
 
 ### Draft Inventory vs Slots
 
