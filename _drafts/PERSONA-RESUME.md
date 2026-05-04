@@ -49,6 +49,27 @@ and Virtual Reality Aids) were added to `data.yml` in commit `0ff0014`.
 
 ---
 
+## Career Profile vs LinkedIn About — Intentionally Different
+
+The resume `career-profile` in `data.yml` and the LinkedIn "About" section are **not
+identical and that's by design**. They cover the same themes in the same SVP voice but
+are tailored to their medium:
+
+| Field | Length | Content |
+|-------|--------|---------|
+| Resume `career-profile` | ~6 lines | Condensed. Adds SOC 1/SOC 2 (8 audits). No narrative paragraphs. |
+| LinkedIn About | ~6 paragraphs | Full narrative. EMBA framing paragraph, "Areas of depth" keyword list, "best technology leaders never stop being engineers" close. |
+
+The resume version is tighter because it sits above a detailed experience section —
+the reader scrolls down for depth. The LinkedIn version is longer because it may be
+the only thing a recruiter reads before deciding to scroll further.
+
+**Do not overwrite one with the other.** If updating either, keep both SVP-voiced and
+covering the same core claims (leadership, enterprise architecture, AI/ML, security,
+EMBA) but at their respective lengths.
+
+---
+
 ## Remaining LinkedIn Actions
 
 | # | Action | Status |
