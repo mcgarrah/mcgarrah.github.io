@@ -12,7 +12,7 @@ Cross-reference between the full resume (mcgarrah.org/resume/print, sourced from
 Reference: `_drafts/PERSONA-SVP.md`
 
 Created: 2026-04-29
-Updated: 2026-08-04
+Updated: 2026-05-04
 Resume source: `../resume/_data/data.yml`
 Resume URL: https://mcgarrah.org/resume/print
 
@@ -20,7 +20,7 @@ Resume URL: https://mcgarrah.org/resume/print
 
 ## Status: Synchronized ✅
 
-As of 2026-08-04, the resume `data.yml` and LinkedIn profile are fully synchronized.
+As of 2026-05-04, the resume `data.yml` and LinkedIn profile are fully synchronized.
 All experience descriptions, titles, certifications, and education entries match.
 
 The LinkedIn PDF export from 2026-05-04 was cross-referenced against `data.yml` and
@@ -34,8 +34,8 @@ and Virtual Reality Aids) were added to `data.yml` in commit `0ff0014`.
 | 2026-04-29 | Original assessment — identified IC-voiced descriptions, missing certs, title gaps |
 | 2026-05-03 | Resume `data.yml` major overhaul (commit `a1ec0cb`) — SVP-voiced rewrites for all positions |
 | 2026-05-04 | LinkedIn profile updated to match resume summaries |
-| 2026-08-01 | Resume `details` sections expanded (Envestnet ACE/IMPACT, EKS Working Group, QuickSight, EMR on EKS, etc.) |
-| 2026-08-04 | Cross-reference verified — all summaries, titles, certs match. Dr. Freeman and VRA consulting roles added to resume. |
+| 2026-05-03 | Resume `details` sections expanded (Envestnet ACE/IMPACT, EKS Working Group, QuickSight, EMR on EKS, etc.) |
+| 2026-05-04 | Cross-reference verified — all summaries, titles, certs match. Dr. Freeman and VRA consulting roles added to resume. |
 
 ### What Was Completed
 
@@ -80,7 +80,7 @@ None. All items are closed.
   BCBSNC CarePath program, not personal awards. They are appropriately referenced in
   the Blue Cross NC experience details in `data.yml` (lines ~436, ~511-512) and in the
   LinkedIn BCBSNC description — not in LinkedIn Honors & Awards.
-- **Education descriptions:** Verified in sync (2026-08-04).
+- **Education descriptions:** Verified in sync (2026-05-04).
 
 ---
 

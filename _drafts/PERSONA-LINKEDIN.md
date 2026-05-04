@@ -13,7 +13,7 @@ Preserved as historical context for the persona positioning work.
 for current synchronization status.
 
 Created: 2026-04-29
-Superseded: 2026-08-04
+Superseded: 2026-05-04
 
 ---
 
@@ -34,8 +34,8 @@ The April 2026 assessment identified these gaps between the resume and LinkedIn:
 All items were addressed:
 - Resume `data.yml` rewritten May 3, 2026 (commit `a1ec0cb`)
 - LinkedIn profile updated May 4, 2026
-- Certifications added to LinkedIn by August 2026
-- Consulting roles (Dr. Freeman DDS, Virtual Reality Aids) added to resume August 2026
+- Certifications added to LinkedIn by May 2026
+- Consulting roles (Dr. Freeman DDS, Virtual Reality Aids) added to resume May 2026
 
 ---
 
