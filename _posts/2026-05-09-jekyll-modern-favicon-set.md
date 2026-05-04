@@ -5,13 +5,13 @@ categories: [web-development, technical, jekyll]
 tags: [jekyll, favicon, ux, github-pages, html, imagemagick]
 excerpt: "A single favicon.ico is no longer enough. Here is how I upgraded my Jekyll site to support high-resolution Apple Touch icons, Android manifests, and modern browser standards using ImageMagick and a few lines of HTML."
 description: "How to properly implement a modern favicon set in a Jekyll blog on GitHub Pages. Covers using RealFaviconGenerator for the fast track, or ImageMagick for local CLI generation, plus the necessary HTML head tags."
-date: 2026-06-02
-last_modified_at: 2026-06-02
+date: 2026-05-09
+last_modified_at: 2026-05-09
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-06-02
-  date_modified: 2026-06-02
+  date_published: 2026-05-09
+  date_modified: 2026-05-09
 ---
 
 In my recent article on [The Small Things: Polish Features That Make a Jekyll Blog Feel Professional](/jekyll-small-things-polish-features/), I confessed that my favicon implementation was the bare minimum: a single resolution `favicon.ico` file dropped in the site root. It barely qualifies as solving the problem.

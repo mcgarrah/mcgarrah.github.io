@@ -105,6 +105,7 @@ Drafts that form natural publishing sequences or share a topic.
 | Tracker | Purpose |
 |---------|---------|
 | `DRAFTS.md` | Master publication planning and readiness |
+| `SCHEDULED.md` | Full-year 2026 calendar with Sun–Sat weekly view of published, scheduled, and proposed articles |
 | `PERSONA.md` | Persona voice guide — applying the Senior Director lens to drafts |
 | `PERSONA-NOTES.md` | Persona promotion readiness assessment — per-draft evaluation and promotion order |
 | `PERSONA-SVP.md` | SVP / Head of AI positioning plan — three-channel strategy (blog, Substack, LinkedIn) + article strengthening roadmap |
