@@ -72,13 +72,15 @@ EMBA) but at their respective lengths.
 
 ## Remaining LinkedIn Actions
 
-| # | Action | Status |
-|---|--------|--------|
-| 1 | Add ISSIP Excellence in Service Innovation Award to Honors & Awards | ❓ Verify |
-| 2 | Add Healthcare Innovation Innovator Award to Honors & Awards | ❓ Verify |
-| 3 | Verify education descriptions match resume (EMBA, Georgia Tech, NC State) | ❓ Verify |
+None. All items are closed.
 
-These are minor items that require checking the live LinkedIn profile.
+### Closed Items
+
+- **ISSIP Excellence / Healthcare Innovation awards:** These are team awards for the
+  BCBSNC CarePath program, not personal awards. They are appropriately referenced in
+  the Blue Cross NC experience details in `data.yml` (lines ~436, ~511-512) and in the
+  LinkedIn BCBSNC description — not in LinkedIn Honors & Awards.
+- **Education descriptions:** Verified in sync (2026-08-04).
 
 ---
 
