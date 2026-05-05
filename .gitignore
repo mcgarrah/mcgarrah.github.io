@@ -1,16 +1,23 @@
-.DS_Store
-.bundle
-.jekyll-cache
+# Jekyll build output
+_site/
+.sass-cache/
+.jekyll-cache/
 .jekyll-metadata
-.sass-cache
+
+# Ruby / Bundler
+vendor/
+.bundle/
 Gemfile.lock
-_site
+bin/
 *.gem
-bin
-vendor
 
 # Python virtual environment
-.venv
+.venv/
 
-# For Weird WSLv2 issue
+# Node.js
+node_modules/
+package-lock.json
+
+# OS artifacts
+.DS_Store
 *Zone.Identifier
