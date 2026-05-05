@@ -93,6 +93,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🖥️ **Kiro IDE** | — | Both articles published: Parallel Personas (`2026-05-02`) and WSL2 Support (`2026-05-03`) |
 | ☁️ **AWS Terraform Modules** | — | QuickSight vanity URL article published (`2026-04-25-quicksight-vanity-urls-serverless-edge-redirects.md`) |
 | 🍎 **FastAPI Nutrition API** | See `FASTAPI-NUTRITION-API.md` | 4-article series: architecture, implementation, deployment, observability. Unified Food Intelligence API with USDA FDC, Open Food Facts, GS1 GPC |
+| 🧠 **Project Nexus** | See `PROJECT-NEXUS.md` | Hybrid-cloud intelligence gateway for resume + blog. Phased: local search → LiteLLM proxy → P620 edge → AI fit analysis. Depends on resume refactor completion. |
 | 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
 | 🔒 **Draft Preview Site** | — | All 3 parts published |
@@ -120,6 +121,7 @@ Drafts that form natural publishing sequences or share a topic.
 | `FASTAPI-NUTRITION-API.md` | FastAPI Nutrition API — project planning, Gemini conversation archive, 4-article series outline |
 | `FASTAPI-DATASRCS.md` | Additional open food data sources research (companion to FASTAPI-NUTRITION-API) |
 | `FASTAPI-FOOD-API.md` | Unified food nutrition lookup API design notes (companion to FASTAPI-NUTRITION-API) |
+| `PROJECT-NEXUS.md` | Project Nexus: Strategic Fit Engine — hybrid-cloud intelligence gateway for resume + blog (architecture, phased rollout, LiteLLM, P620 edge, task checklist) |
 
 ---
 
@@ -410,7 +412,7 @@ Drafts that form natural publishing sequences or share a topic.
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
 | Scheduled (upcoming) | 18 |
-| Convenience/tracker files | 16 (`DRAFTS.md`, `SCHEDULED.md`, `PERSONA.md`, `PERSONA-NOTES.md`, `PERSONA-SVP.md`, `PERSONA-LINKEDIN.md`, `PERSONA-RESUME.md`, `ENVESTNET-RESUME.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`, `FASTAPI-NUTRITION-API.md`, `FASTAPI-DATASRCS.md`, `FASTAPI-FOOD-API.md`) |
+| Convenience/tracker files | 17 (`DRAFTS.md`, `SCHEDULED.md`, `PERSONA.md`, `PERSONA-NOTES.md`, `PERSONA-SVP.md`, `PERSONA-LINKEDIN.md`, `PERSONA-RESUME.md`, `ENVESTNET-RESUME.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`, `FASTAPI-NUTRITION-API.md`, `FASTAPI-DATASRCS.md`, `FASTAPI-FOOD-API.md`, `PROJECT-NEXUS.md`) |
 
 ---
 
@@ -426,6 +428,7 @@ These are not drafts that need editing — they are projects that need building.
 | **FastAPI Nutrition API** | `FASTAPI-NUTRITION-API.md` | Needs `nutrition_api` repo built to working state with async wrappers for `usda_fdc_python` and `gs1_gpc_python` | 4-part series (architecture, implementation, deployment, observability) | ⭐⭐ High — demonstrates full-stack data engineering and API design |
 | **Jekyll GDPR Plugin** | `JEKYLLGDPR-PLUGIN.md` | Needs plugin extracted from blog, packaged as Ruby gem, published to RubyGems | 1 article (plugin development + CI/CD) | ⭐ Medium — demonstrates open-source contribution pattern |
 | **Kubernetes on Proxmox** | `k8s-proxmox` repo | Cluster deployment blocked on site-to-site VPN and dedicated time for Terraform/Ansible runs | Series of articles from `k8s-proxmox/articles/` (20 planned) | ⭐⭐ High — demonstrates IaC, GitOps, and platform engineering at scale |
+| **Project Nexus** | `PROJECT-NEXUS.md` | Resume refactor (Phases 1–4) must complete first; then Nexus Phase 1 (local search) can begin. Edge layer needs Tailscale Funnel on Proxmox. | Potential blog series on hybrid-cloud AI architecture | ⭐⭐⭐ Critical — demonstrates AI governance, hybrid-cloud architecture, and executive-level system design |
 
 ### What "Blocked" Means
 
@@ -435,10 +438,11 @@ working code. The blog articles document what was built, not what is planned.
 
 **When time opens up, priority order:**
 1. AASR (highest SVP impact, most differentiated content)
-2. FastAPI Nutrition API (builds on existing `gs1_gpc_python` and `usda_fdc_python` repos)
-3. Kubernetes on Proxmox (infrastructure already partially in place)
-4. AME (depends on AASR)
-5. Jekyll GDPR Plugin (lowest priority, smallest scope)
+2. Project Nexus (resume refactor prerequisite, then hybrid-cloud AI showcase)
+3. FastAPI Nutrition API (builds on existing `gs1_gpc_python` and `usda_fdc_python` repos)
+4. Kubernetes on Proxmox (infrastructure already partially in place)
+5. AME (depends on AASR)
+6. Jekyll GDPR Plugin (lowest priority, smallest scope)
 
 ---
 
