@@ -2,15 +2,15 @@
 title: "Improving E-E-A-T Signals for Google AdSense Approval on Jekyll"
 layout: post
 categories: [web-development, technical]
-tags: [google, adsense, jekyll, github-pages, seo, eeat, structured-data, wikidata]
+tags: [google, adsense, jekyll, github-pages, seo, eeat, structured-data]
 excerpt: "After another AdSense rejection, I shifted focus from technical fixes to E-E-A-T — Experience, Expertise, Authoritativeness, and Trustworthiness. Here's what I changed and why."
 description: "Practical E-E-A-T improvements for a Jekyll blog targeting Google AdSense approval, including structured author data, Wikidata entries, content clustering, and dateModified signals."
-last_modified_at: 2026-04-02
+last_modified_at: 2026-05-05
 published: true
 seo:
   type: BlogPosting
   date_published: 2026-04-02
-  date_modified: 2026-04-02
+  date_modified: 2026-05-05
 ---
 
 In my [previous post on AdSense rejection debugging](/adsense-approval-failure-remediation/), I focused on technical issues — sitemap 404 errors, missing contact pages, and thin content analysis. Those were real problems worth fixing, but they weren't the whole story.
@@ -123,6 +123,8 @@ This was the most unexpected change. [Wikidata](https://www.wikidata.org/) is th
 
 This is the most reliable path to getting a Google Knowledge Panel, which is the ultimate E-E-A-T signal — Google itself vouching for your identity.
 
+**Update (May 2026):** The Wikidata entry [Q138858864](https://www.wikidata.org/wiki/Q138858864) was deleted on April 20, 2026 for not meeting Wikidata's [notability policy](https://www.wikidata.org/wiki/Wikidata:Notability). The deletion rationale was straightforward — I don't have a Wikipedia article or sufficient independent secondary sources to establish notability under their criteria. This is a fair assessment; Wikidata isn't LinkedIn. The lesson: Wikidata entries require external notability evidence (press coverage, Wikipedia article, significant third-party references), not just self-reported credentials. The other E-E-A-T signals in this post remain valid and arguably more sustainable since they don't depend on a third party's editorial judgment.
+
 ## Fix 8: Content Cluster Hub Page
 
 My Proxmox and Ceph posts are my strongest content — deep technical articles based on hands-on homelab experience. But several had **zero internal links** to related posts. Google uses internal link structure to identify topical authority.
@@ -147,7 +149,7 @@ Then added "Related Articles" sections to the 5 orphaned posts that had no inter
 | `rel="me"` on profile links | Authoritativeness | `_includes/menu.html` |
 | About page restructured | All four pillars | `README.md` |
 | `dateModified` on 63 posts | Trustworthiness | 59 post files |
-| Wikidata entry (Q138858864) | Authoritativeness | External |
+| ~~Wikidata entry (Q138858864)~~ | ~~Authoritativeness~~ | ~~External~~ (deleted for notability) |
 | Hub page + cross-links | Expertise, Experience | 6 files + new page |
 | Google Search Console DNS verification | Trustworthiness | External |
 
