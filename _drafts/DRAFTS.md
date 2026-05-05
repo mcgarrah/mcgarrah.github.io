@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-05-04
+Last updated: 2026-05-05
 
 ---
 
@@ -410,7 +410,60 @@ Drafts that form natural publishing sequences or share a topic.
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |
 | Scheduled (upcoming) | 18 |
-| Convenience/tracker files | 9 (`DRAFTS.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`, `FASTAPI-NUTRITION-API.md`, `FASTAPI-DATASRCS.md`, `FASTAPI-FOOD-API.md`) |
+| Convenience/tracker files | 16 (`DRAFTS.md`, `SCHEDULED.md`, `PERSONA.md`, `PERSONA-NOTES.md`, `PERSONA-SVP.md`, `PERSONA-LINKEDIN.md`, `PERSONA-RESUME.md`, `ENVESTNET-RESUME.md`, `RUNJEKYLL-EXTENSION.md`, `JEKYLLGDPR-PLUGIN.md`, `GITREPO-CLEAN.md`, `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md`, `FASTAPI-NUTRITION-API.md`, `FASTAPI-DATASRCS.md`, `FASTAPI-FOOD-API.md`) |
+
+---
+
+## Blocked Projects — Waiting on Time Commitment
+
+Projects that require significant hands-on implementation before articles can be written.
+These are not drafts that need editing — they are projects that need building.
+
+| Project | Tracker | Blocker | Articles Blocked | SVP Impact |
+|---------|---------|---------|-----------------|------------|
+| **AASR** | `AASR-PROJECT.md` | Needs dedicated GPU time on AlteredCarbon cluster, Manager-Worker loop implementation, and initial experiment runs | Series overview + 5 parts (infrastructure, agent design, experiment loop, results, lessons) | ⭐⭐⭐ Critical — demonstrates hands-on AI/ML depth and platform engineering intersection |
+| **AME** | `AME-GPT-EXPLORATION.md` | Depends on AASR infrastructure being operational; extends the evolutionary loop to GPT internals | 2-3 articles on Transformer architecture evolution | ⭐⭐⭐ Critical — demonstrates ML research depth beyond applied ML |
+| **FastAPI Nutrition API** | `FASTAPI-NUTRITION-API.md` | Needs `nutrition_api` repo built to working state with async wrappers for `usda_fdc_python` and `gs1_gpc_python` | 4-part series (architecture, implementation, deployment, observability) | ⭐⭐ High — demonstrates full-stack data engineering and API design |
+| **Jekyll GDPR Plugin** | `JEKYLLGDPR-PLUGIN.md` | Needs plugin extracted from blog, packaged as Ruby gem, published to RubyGems | 1 article (plugin development + CI/CD) | ⭐ Medium — demonstrates open-source contribution pattern |
+| **Kubernetes on Proxmox** | `k8s-proxmox` repo | Cluster deployment blocked on site-to-site VPN and dedicated time for Terraform/Ansible runs | Series of articles from `k8s-proxmox/articles/` (20 planned) | ⭐⭐ High — demonstrates IaC, GitOps, and platform engineering at scale |
+
+### What "Blocked" Means
+
+These projects are not abandoned — they are queued behind available time. Each requires
+4-20+ hours of hands-on implementation work before the first article can be written from
+working code. The blog articles document what was built, not what is planned.
+
+**When time opens up, priority order:**
+1. AASR (highest SVP impact, most differentiated content)
+2. FastAPI Nutrition API (builds on existing `gs1_gpc_python` and `usda_fdc_python` repos)
+3. Kubernetes on Proxmox (infrastructure already partially in place)
+4. AME (depends on AASR)
+5. Jekyll GDPR Plugin (lowest priority, smallest scope)
+
+---
+
+## SVP Strengthening — Published Article Edits
+
+**Status:** Not started (identified 2026-07-30 in `PERSONA-SVP.md`)
+
+Eight published articles need targeted additions (2-3 paragraphs each) to surface the
+leadership, enterprise architecture, and business dimensions already implicit in the work.
+None of these are rewrites — they are strategic insertions.
+
+| Article | Addition | Effort | Impact |
+|---------|----------|--------|--------|
+| QuickSight Vanity URLs (2026-04-25) | NC DIT reference + AI platform adoption friction paragraph | 30 min | ⭐⭐⭐ |
+| Managing AI Agent Context (2026-06-01) | Leadership opening + "Team Adoption" section + EMBA reference | 45 min | ⭐⭐⭐ |
+| AI Context Files Reference (2026-05-27) | Expand "What's Missing" with enterprise governance framing | 20 min | ⭐⭐ |
+| Google Service Sprawl (2026-06-26) | Enterprise AI sprawl parallel + NC DIT vendor evaluation reference | 30 min | ⭐⭐ |
+| Content Distribution Pipeline (2026-05-15) | One sentence connecting to ML model deployment pipelines | 10 min | ⭐ |
+| CI/CD Pipeline (2026-05-08) | One paragraph connecting to ML pipeline patterns | 10 min | ⭐ |
+| Ceph OSD Recovery (2026-04-14) | Incident response discipline paragraph + security background reference | 15 min | ⭐ |
+| Writing to Think (2026-05-22) | One sentence mentioning EMBA in the seven-year gap section | 5 min | ⭐ |
+
+**Total effort:** ~2.5 hours for all 8 articles.
+**Recommended approach:** Do the top 4 (QuickSight, AI Agent Context, AI Reference, Google Sprawl)
+in one session (~2 hours). The bottom 4 are quick wins that can be done anytime.
 
 ---
 
