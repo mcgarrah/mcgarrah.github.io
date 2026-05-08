@@ -18,6 +18,9 @@ bin/
 node_modules/
 package-lock.json
 
+# Kiro IDE
+.kiro/
+
 # OS artifacts
 .DS_Store
 *Zone.Identifier
