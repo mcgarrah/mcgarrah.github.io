@@ -3,6 +3,7 @@ author:
   name: "Michael McGarrah"
   email: "mcgarrah@gmail.com"
   uri: "https://mcgarrah.org/about/"
+  url: "https://mcgarrah.org"
 description: "Technical blog covering homelab infrastructure, Proxmox/Ceph, Dell Wyse 3040, Jekyll development, and networking. Deep dives into virtualization, storage clustering, and system administration."
 lang: "en"
 url: "https://mcgarrah.org"
@@ -118,6 +119,11 @@ defaults:
       path: "assets/pdfs"
     values:
       sitemap: false
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      image: /assets/images/og-resume.png
 giscus:
   repo: mcgarrah/mcgarrah.github.io
   repo_id: R_kgDOKBKIdw
