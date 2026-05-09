@@ -1,5 +1,6 @@
 ---
 title: "Kiro IDE on Windows: WSL2 Support via Open Remote Extension"
+image: /assets/images/og/kiro-ide-wsl2-support-open-remote-extension.png
 layout: post
 categories: [technical, devtools, kiro]
 tags: [kiro, vscode, wsl2, windows, linux, mcp, remote-development, open-vsx]

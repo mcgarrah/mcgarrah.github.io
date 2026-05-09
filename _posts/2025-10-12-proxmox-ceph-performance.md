@@ -1,5 +1,6 @@
 ---
 title:  "Optimizing Ceph Performance in Proxmox Homelab"
+image: /assets/images/og/proxmox-ceph-performance.png
 layout: post
 date: 2025-10-12
 categories: [technical, homelab]

@@ -1,5 +1,6 @@
 ---
 title: "Merging Two Jekyll Websites: Architectural Analysis and Integration Strategies"
+image: /assets/images/og/merging-two-jekyll-websites-architectural-analysis.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, github-pages, architecture, website-migration, multi-site, integration]

@@ -1,5 +1,6 @@
 ---
 title:  "Diagnosing a broken microwave"
+image: /assets/images/og/fixing-microwave.png
 layout: post
 categories: [personal, hardware]
 tags: [repair, microwave, troubleshooting, diy, electronics]

@@ -1,5 +1,6 @@
 ---
 title:  "Buying a 10Gbps or higher network on a homelab budget"
+image: /assets/images/og/homelab-sfp-plus-networking.png
 layout: post
 categories: [technical, networking, homelab, hardware]
 tags: [networking, homelab, 10gbps, sfp+, switches, procurve, mikrotik, budget]

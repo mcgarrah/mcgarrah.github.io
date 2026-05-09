@@ -1,5 +1,6 @@
 ---
 title: "SASS Circular Dependency Nightmare: Lessons from Jekyll Architecture"
+image: /assets/images/og/sass-circular-dependency-nightmare.png
 layout: post
 date: 2025-12-14
 categories: [web-development, technical]

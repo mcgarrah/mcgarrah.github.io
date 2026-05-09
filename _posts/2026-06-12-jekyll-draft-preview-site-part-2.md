@@ -1,5 +1,6 @@
 ---
 title: "Building a Draft Preview Site for Jekyll — Part 2: Refining the Design"
+image: /assets/images/og/jekyll-draft-preview-site-part-2.png
 layout: post
 categories: [jekyll, github-pages, devops]
 tags: [jekyll, github-pages, staticrypt, drafts, preview, ci-cd, github-actions, giscus]

@@ -1,5 +1,6 @@
 ---
 title: "The Google Services Tax on a Simple Blog"
+image: /assets/images/og/google-service-sprawl.png
 layout: post
 categories: [web-development, technical]
 tags: [google, web-development, analytics, search, adsense, seo, frustration]

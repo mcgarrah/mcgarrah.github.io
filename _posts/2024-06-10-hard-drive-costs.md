@@ -1,5 +1,6 @@
 ---
 title:  "Hard Drives for the Homelabs"
+image: /assets/images/og/hard-drive-costs.png
 layout: post
 categories: [technical, homelab, hardware]
 tags: [storage, hard-drives, homelab, hardware, ceph, cost-analysis, technical]

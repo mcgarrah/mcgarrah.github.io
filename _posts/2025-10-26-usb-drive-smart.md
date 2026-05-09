@@ -1,5 +1,6 @@
 ---
 title: "Enabling SMART Monitoring on Seagate USB Drives"
+image: /assets/images/og/usb-drive-smart.png
 layout: post
 categories: [technical, hardware]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab]

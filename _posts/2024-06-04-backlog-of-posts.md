@@ -1,5 +1,6 @@
 ---
 title:  "Backlog of Posts"
+image: /assets/images/og/backlog-of-posts.png
 layout: post
 categories: [organization, writing]
 tags: [backlog, planning, homelab, projects, writing, organization]

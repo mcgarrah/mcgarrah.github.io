@@ -1,5 +1,6 @@
 ---
 title:  "ProxMox 8.2 for the Homelabs"
+image: /assets/images/og/proxmox-8-homelab.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, virtualization, homelab, storage, clustering]

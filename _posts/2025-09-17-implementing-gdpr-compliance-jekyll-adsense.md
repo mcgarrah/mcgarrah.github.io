@@ -1,5 +1,6 @@
 ---
 title: "Implementing GDPR Compliance for Jekyll Sites: A Real-World AdSense Integration Story"
+image: /assets/images/og/implementing-gdpr-compliance-jekyll-adsense.png
 layout: post
 categories: [web-development, privacy, jekyll]
 tags: [gdpr, jekyll, adsense, analytics, privacy, compliance, javascript]

@@ -1,5 +1,6 @@
 ---
 title: "Your Jekyll Sitemap Is 60% Garbage"
+image: /assets/images/og/jekyll-sitemap-bloat-tags-categories-pagination.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, sitemap, seo, tags, categories, pagination, github-pages, ruby, plugins]

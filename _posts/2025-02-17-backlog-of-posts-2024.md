@@ -1,5 +1,6 @@
 ---
 title:  "Backlog of Posts from 2024"
+image: /assets/images/og/backlog-of-posts-2024.png
 layout: post
 published: true
 last_modified_at: 2026-04-05

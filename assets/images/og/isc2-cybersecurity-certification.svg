@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#003366"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#00CC66"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#00CC66" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#00CC66" opacity="0.05"/>
+
+  <!-- Icon -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <path d="M24 4 L40 12 L40 24 C40 34 32 42 24 44 C16 42 8 34 8 24 L8 12 Z" fill="none" stroke="#00CC66" stroke-width="2.5"/><polyline points="16,24 22,30 34,18" fill="none" stroke="#00CC66" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Title -->
+    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">ISC2 Cybersecurity Certification</text>
+
+  <!-- Tags -->
+    <rect x="80" y="420" width="60" height="30" rx="15" fill="#00CC66" opacity="0.3"/>
+    <text x="92" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00CC66">isc2</text>
+    <rect x="152" y="420" width="141" height="30" rx="15" fill="#00CC66" opacity="0.3"/>
+    <text x="164" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00CC66">cybersecurity</text>
+    <rect x="305" y="420" width="141" height="30" rx="15" fill="#00CC66" opacity="0.3"/>
+    <text x="317" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00CC66">certification</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#00CC66" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2024-11-18</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

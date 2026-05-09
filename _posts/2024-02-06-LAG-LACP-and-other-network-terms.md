@@ -1,5 +1,6 @@
 ---
 title:  "Aggregated Network Connections with LAG/LACP"
+image: /assets/images/og/LAG-LACP-and-other-network-terms.png
 layout: post
 categories: [technical, networking]
 tags: [networking, lacp, lag, procurve, switches, aggregation, performance]

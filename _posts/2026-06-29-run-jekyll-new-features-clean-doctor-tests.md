@@ -1,5 +1,6 @@
 ---
 title: "Run Jekyll: New Features — Clean, Doctor, and Real Tests"
+image: /assets/images/og/run-jekyll-new-features-clean-doctor-tests.png
 layout: post
 categories: [web-development, technical]
 tags: [vscode, vscode-extension, typescript, jekyll, open-source, testing]

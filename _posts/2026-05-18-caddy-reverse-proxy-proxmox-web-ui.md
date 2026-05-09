@@ -1,5 +1,6 @@
 ---
 title: "Caddy Reverse Proxy for Proxmox Web UI"
+image: /assets/images/og/caddy-reverse-proxy-proxmox-web-ui.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, caddy, reverse-proxy, lxc, ssl, web-interface, homelab]

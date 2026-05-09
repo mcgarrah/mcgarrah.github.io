@@ -1,5 +1,6 @@
 ---
 title:  "Thinkpad T480 WWAN SSD"
+image: /assets/images/og/thinkpad-t480-wwan-ssd.png
 permalink: /thinkpad-t480-wwan-ssd/
 redirect_from:
   - /thinkpad-t480-wwan-sdd/

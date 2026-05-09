@@ -1,5 +1,6 @@
 ---
 title:  "Proxmox VE 8.1 to 8.2 upgrade issues in the Homelabs"
+image: /assets/images/og/proxmox-upgrade-issues.png
 layout: post
 categories: [technical, troubleshooting]
 tags: [proxmox, upgrade, troubleshooting, homelab, hardware, dell-optiplex]

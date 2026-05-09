@@ -1,5 +1,6 @@
 ---
 title:  "ISC2 Cybersecurity Certification"
+image: /assets/images/og/isc2-cybersecurity-certification.png
 layout: post
 categories: [security, certifications]
 tags: [isc2, cybersecurity, certification, security, professional-development]

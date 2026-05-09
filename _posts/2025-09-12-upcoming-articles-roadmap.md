@@ -1,5 +1,6 @@
 ---
 title: "Upcoming Articles Roadmap: September - December 2025"
+image: /assets/images/og/upcoming-articles-roadmap.png
 layout: post
 categories: [organization, writing]
 tags: [planning, roadmap, homelab, proxmox, ceph, jekyll, development, writing]

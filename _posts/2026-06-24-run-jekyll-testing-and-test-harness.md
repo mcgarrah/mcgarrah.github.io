@@ -1,5 +1,6 @@
 ---
 title: "Run Jekyll: Testing and Test Harness"
+image: /assets/images/og/run-jekyll-testing-and-test-harness.png
 layout: post
 categories: [web-development, technical]
 tags: [vscode, vscode-extension, testing, mocha, typescript, jekyll, open-source]

@@ -1,5 +1,6 @@
 ---
 title: "ZFS Boot Mirrors on Proxmox 8 for the Homelab - Part 2"
+image: /assets/images/og/proxmox-zfs-boot-mirrors-part-2.png
 layout: post
 categories: [proxmox, zfs, storage, homelab, ceph]
 tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror, ceph, recovery, disaster-recovery]

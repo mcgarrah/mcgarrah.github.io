@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "VS Code Markdown Preview: Closing the macOS vs Windows Context Menu Gap"
+image: /assets/images/og/vscode-wsl2-markdown-preview.png
 categories: [development-tools, wsl]
 tags: [vscode, wsl2, markdown, linux, macos, windows, troubleshooting]
 excerpt: "On macOS, VS Code's right-click context menu gives you 'Open Preview' for Markdown files. On Windows and WSL2, you only get 'Open With...' and an extra click. Here's how to close that gap."

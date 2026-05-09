@@ -1,5 +1,6 @@
 ---
 title: "Windows Sandbox for Safe Testing"
+image: /assets/images/og/windows-sandbox.png
 layout: post
 categories: [technical]
 tags: [windows, vm, sandbox, virtualization]

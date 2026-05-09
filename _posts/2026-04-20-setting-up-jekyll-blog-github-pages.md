@@ -1,5 +1,6 @@
 ---
 title: "Building This Blog: Jekyll on GitHub Pages from Zero to 130+ Posts"
+image: /assets/images/og/setting-up-jekyll-blog-github-pages.png
 layout: post
 categories: [web-development, jekyll]
 tags: [jekyll, github-pages, tutorial, getting-started, seo, gdpr, giscus, pandoc, github-actions]

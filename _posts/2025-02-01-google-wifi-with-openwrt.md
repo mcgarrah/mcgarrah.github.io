@@ -1,5 +1,6 @@
 ---
 title:  "Google Wifi running OpenWRT"
+image: /assets/images/og/google-wifi-with-openwrt.png
 layout: post
 categories: [technical, networking]
 tags: [openwrt, networking, hacking, google-wifi, router, firmware]

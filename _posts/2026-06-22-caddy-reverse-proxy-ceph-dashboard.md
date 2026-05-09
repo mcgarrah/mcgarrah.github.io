@@ -1,5 +1,6 @@
 ---
 title: "Caddy Reverse Proxy for Ceph Dashboard"
+image: /assets/images/og/caddy-reverse-proxy-ceph-dashboard.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, caddy, reverse-proxy, dashboard, monitoring, homelab]

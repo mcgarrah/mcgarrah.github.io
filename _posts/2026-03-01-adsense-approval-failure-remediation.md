@@ -1,5 +1,6 @@
 ---
 title: "Google AdSense Approval Failure: Debugging the 'Site Isn't Ready' Rejection"
+image: /assets/images/og/adsense-approval-failure-remediation.png
 layout: post
 categories: [web-development, technical, frustration]
 tags: [google, adsense, jekyll, github-pages, seo, debugging, gdpr]

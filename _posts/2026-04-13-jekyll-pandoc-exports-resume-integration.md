@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Integrating Jekyll-Pandoc-Exports Into a Real Project - Part 3: Bugs, Fixes, and HTML Cleanup"
+image: /assets/images/og/jekyll-pandoc-exports-resume-integration.png
 categories: [jekyll, ruby, pandoc, automation]
 tags: [jekyll-plugin, pandoc, pdf-generation, docx, ruby-gem, resume, github-pages, debugging]
 excerpt: "What happens when you integrate your own Jekyll plugin into a real project: three patch releases, a Ruby language gotcha, and the surprising difficulty of converting themed HTML into clean documents."

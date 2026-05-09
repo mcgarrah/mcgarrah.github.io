@@ -1,5 +1,6 @@
 ---
 title: "Measuring the WAL vs DB Performance Gap on Ceph USB OSDs"
+image: /assets/images/og/ceph-wal-vs-db-performance-test.png
 layout: post
 categories: [proxmox, ceph, homelab, storage]
 tags: [proxmox, ceph, ssd, wal, db, bluestore, performance, benchmarking, homelab]

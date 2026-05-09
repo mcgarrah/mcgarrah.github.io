@@ -1,5 +1,6 @@
 ---
 title:  "A long time between posts"
+image: /assets/images/og/consolidated-articles.png
 layout: post
 categories: [personal, writing, web-development]
 tags: [personal, career, education, georgia-tech, machine-learning, jekyll, github-pages, website, migration]

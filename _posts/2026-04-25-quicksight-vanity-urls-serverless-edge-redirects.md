@@ -1,5 +1,6 @@
 ---
 title: "QuickSight Vanity URLs: Serverless Edge Redirects with Terraform and CloudFront"
+image: /assets/images/og/quicksight-vanity-urls-serverless-edge-redirects.png
 layout: post
 date: 2026-04-25
 last_modified_at: 2026-04-26

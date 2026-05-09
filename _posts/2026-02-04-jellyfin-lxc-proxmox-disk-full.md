@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Optimizing Jellyfin on Proxmox: Moving Metadata to CephFS and Shrinking LXC Footprints"
+image: /assets/images/og/jellyfin-lxc-proxmox-disk-full.png
 date: 2026-02-04
 categories: [homelab, proxmox, jellyfin, ceph]
 tags: [proxmox, jellyfin, cephfs, lxc, storage, high-availability, virtualization]

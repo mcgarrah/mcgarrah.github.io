@@ -1,5 +1,6 @@
 ---
 title: "USB Drive SMART Updates: Fast-Track to the GRUB Solution"
+image: /assets/images/og/usb-drive-smart-updates.png
 layout: post
 categories: [technical, hardware, proxmox]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab, ceph, cluster]

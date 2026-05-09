@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1A1A2E"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#76B900"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#76B900" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#76B900" opacity="0.05"/>
+
+  <!-- Icon -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <rect x="10" y="10" width="28" height="28" rx="3" fill="none" stroke="#76B900" stroke-width="2.5"/><rect x="16" y="16" width="16" height="16" rx="1" fill="none" stroke="#76B900" stroke-width="2"/><g stroke="#76B900" stroke-width="2"><line x1="18" y1="10" x2="18" y2="4"/><line x1="24" y1="10" x2="24" y2="4"/><line x1="30" y1="10" x2="30" y2="4"/><line x1="18" y1="38" x2="18" y2="44"/><line x1="24" y1="38" x2="24" y2="44"/><line x1="30" y1="38" x2="30" y2="44"/></g>
+  </g>
+
+  <!-- Title -->
+    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Power Supply upgrade for GPUs in the</text>
+    <text x="80" y="258" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Homelab</text>
+
+  <!-- Tags -->
+    <rect x="80" y="420" width="51" height="30" rx="15" fill="#76B900" opacity="0.3"/>
+    <text x="92" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#76B900">gpu</text>
+    <rect x="143" y="420" width="132" height="30" rx="15" fill="#76B900" opacity="0.3"/>
+    <text x="155" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#76B900">power-supply</text>
+    <rect x="287" y="420" width="96" height="30" rx="15" fill="#76B900" opacity="0.3"/>
+    <text x="299" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#76B900">hardware</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#76B900" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2025-02-16</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

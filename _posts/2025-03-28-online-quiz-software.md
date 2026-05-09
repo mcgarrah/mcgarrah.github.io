@@ -1,5 +1,6 @@
 ---
 title:  "Online Quiz Software for Certifications"
+image: /assets/images/og/online-quiz-software.png
 layout: post
 categories: [reference, education]
 tags: [certification, education, quiz, software, learning, study-tools]

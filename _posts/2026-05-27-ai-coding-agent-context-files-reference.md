@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "AI Coding Agent Context Files: A Reference Guide"
+image: /assets/images/og/ai-coding-agent-context-files-reference.png
 categories: [technical, development]
 tags: [ai, amazon-q, claude-code, github-copilot, cursor, windsurf, gemini, cline, aider, kiro, productivity, tooling]
 excerpt: "A practical reference for the context and rules files used by every major AI coding assistant — Amazon Q, Claude Code, GitHub Copilot, Cursor, Windsurf, Gemini, Cline, Aider, and Kiro."

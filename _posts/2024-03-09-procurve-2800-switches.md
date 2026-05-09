@@ -1,5 +1,6 @@
 ---
 title:  "HP ProCurve 2800 initial setup"
+image: /assets/images/og/procurve-2800-switches.png
 layout: post
 categories: [technical, networking, hardware]
 tags: [hp, procurve, networking, switches, configuration, serial-console, setup]

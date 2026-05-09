@@ -1,5 +1,6 @@
 ---
 title: "When ZFS and Ceph Problems Collide: Diagnosing Overlapping Failures on Proxmox"
+image: /assets/images/og/zfs-ceph-overlapping-failures.png
 layout: post
 categories: [proxmox, zfs, ceph, homelab]
 tags: [proxmox, zfs, ceph, osd, usb, debugging, homelab, storage, bluestore, dell-optiplex-990]

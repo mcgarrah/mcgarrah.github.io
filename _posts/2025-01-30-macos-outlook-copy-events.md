@@ -1,5 +1,6 @@
 ---
 title:  "MacOS Outlook Calendar Copy Events"
+image: /assets/images/og/macos-outlook-copy-events.png
 layout: post
 categories: [technical, reference]
 tags: [macos, outlook, calendar, productivity, microsoft]

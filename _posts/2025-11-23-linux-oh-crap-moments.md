@@ -1,5 +1,6 @@
 ---
 title:  "Debian Linux Oh-Crap Moment in the Homelab"
+image: /assets/images/og/linux-oh-crap-moments.png
 layout: post
 date: 2025-11-23
 categories: [technical, troubleshooting]

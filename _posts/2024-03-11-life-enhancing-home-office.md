@@ -1,5 +1,6 @@
 ---
 title:  "Life Enhancing Home Office Items"
+image: /assets/images/og/life-enhancing-home-office.png
 layout: post
 categories: [personal, productivity]
 tags: [office, productivity, furniture, ergonomics, work-from-home, personal]

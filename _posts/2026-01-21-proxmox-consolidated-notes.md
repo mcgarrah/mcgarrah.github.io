@@ -1,5 +1,6 @@
 ---
 title: "Consolidating Proxmox Notes: A Python Export Script"
+image: /assets/images/og/proxmox-consolidated-notes.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, python, backup, automation, scripting]

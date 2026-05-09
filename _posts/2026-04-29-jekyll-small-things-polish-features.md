@@ -1,5 +1,6 @@
 ---
 title: "The Small Things: Polish Features That Make a Jekyll Blog Feel Professional"
+image: /assets/images/og/jekyll-small-things-polish-features.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, dark-mode, print-stylesheet, 404-page, favicon, archive, author-bio, ux, github-pages, e-e-a-t]

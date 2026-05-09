@@ -1,5 +1,6 @@
 ---
 title: "Start the Windows screensaver with a Shortcut"
+image: /assets/images/og/screensaver-shortcut.png
 layout: post
 categories: [technical]
 tags: [windows, screensaver]

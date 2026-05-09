@@ -1,5 +1,6 @@
 ---
 title:  "Managing Context and Rules Across Multiple AI Coding Assistants"
+image: /assets/images/og/managing-cross-ai-agent-context.png
 layout: post
 categories: [technical, development]
 tags: [ai, gemini, amazon-q, github-copilot, claude-code, cursor, windsurf, productivity, tooling]

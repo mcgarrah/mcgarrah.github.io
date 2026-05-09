@@ -1,5 +1,6 @@
 ---
 title: "Stop the macOS Dock from Jumping Between Monitors"
+image: /assets/images/og/macos-dock-jumping-between-monitors.png
 layout: post
 categories: [macos, hardware]
 tags: [macos, multi-monitor, dock, display, tips, productivity]

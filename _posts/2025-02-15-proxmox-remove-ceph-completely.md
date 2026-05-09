@@ -1,5 +1,6 @@
 ---
 title:  "Ceph Cluster Complete Removal on Proxmox for the Homelabs"
+image: /assets/images/og/proxmox-remove-ceph-completely.png
 layout: post
 date: 2025-02-15
 categories: [technical, homelab, troubleshooting]

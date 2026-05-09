@@ -1,5 +1,6 @@
 ---
 title: "ZFS Boot Mirrors on Proxmox 8 for the Homelab - Part 1"
+image: /assets/images/og/proxmox-zfs-boot-mirrors-part-1.png
 layout: post
 categories: [proxmox, zfs, storage, homelab]
 tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror]

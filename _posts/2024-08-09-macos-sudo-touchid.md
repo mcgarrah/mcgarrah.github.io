@@ -1,5 +1,6 @@
 ---
 title:  "MacOS Touch ID for Sudo with TMUX and DisplayLink"
+image: /assets/images/og/macos-sudo-touchid.png
 layout: post
 categories: [technical, productivity]
 tags: [macos, sudo, touchid, tmux, displaylink, security, productivity, configuration]

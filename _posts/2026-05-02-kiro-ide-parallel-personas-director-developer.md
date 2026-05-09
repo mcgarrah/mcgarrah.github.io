@@ -1,5 +1,6 @@
 ---
 title: "Kiro IDE: Running Parallel Personas for Director and Developer Workflows"
+image: /assets/images/og/kiro-ide-parallel-personas-director-developer.png
 layout: post
 categories: [technical, devtools, kiro]
 tags: [kiro, vscode, ide, personas, macos, windows, mcp, powers, configuration, productivity]

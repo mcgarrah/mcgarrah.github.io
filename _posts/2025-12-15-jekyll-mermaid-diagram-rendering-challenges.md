@@ -1,5 +1,6 @@
 ---
 title: "Jekyll Mermaid Diagram Rendering: Why Client-Side Beats Plugins"
+image: /assets/images/og/jekyll-mermaid-diagram-rendering-challenges.png
 layout: post
 date: 2025-12-15
 categories: [web-development, jekyll]

@@ -1,5 +1,6 @@
 ---
 title:  "Tailscale on Dell Wyse 3040 with Debian 12"
+image: /assets/images/og/dell-wyse-3040-tailscale.png
 layout: post
 categories: [technical, networking]
 tags: [dell-wyse-3040, debian, tailscale, vpn, networking, homelab]

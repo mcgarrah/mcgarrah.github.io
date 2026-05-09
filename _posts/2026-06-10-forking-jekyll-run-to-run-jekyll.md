@@ -1,5 +1,6 @@
 ---
 title: "Forking Jekyll Run: From Abandoned Plugin to Run Jekyll"
+image: /assets/images/og/forking-jekyll-run-to-run-jekyll.png
 layout: post
 categories: [web-development, technical]
 tags: [jekyll, vscode, vscode-extension, open-source, github-actions, fork, publishing]

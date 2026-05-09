@@ -1,5 +1,6 @@
 ---
 title: "Jekyll's Invisible Bug: When Code Fences Don't Protect Your Liquid Examples"
+image: /assets/images/og/jekyll-liquid-code-fence-rendering-trap.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, liquid, markdown, debugging, code-blocks, github-pages, raw-tag]

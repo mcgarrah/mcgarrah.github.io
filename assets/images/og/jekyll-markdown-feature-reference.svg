@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#CC0000"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#FFFFFF"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#FFFFFF" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#FFFFFF" opacity="0.05"/>
+
+  <!-- Icon -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <polygon points="24,4 40,16 24,44 8,16" fill="none" stroke="#FFFFFF" stroke-width="2.5"/><line x1="8" y1="16" x2="40" y2="16" stroke="#FFFFFF" stroke-width="2.5"/>
+  </g>
+
+  <!-- Title -->
+    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">How the Sausage Is Made: Every Feature</text>
+    <text x="80" y="258" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Powering This Jekyll Blog</text>
+
+  <!-- Tags -->
+    <rect x="80" y="420" width="78" height="30" rx="15" fill="#FFFFFF" opacity="0.3"/>
+    <text x="92" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#FFFFFF">jekyll</text>
+    <rect x="170" y="420" width="96" height="30" rx="15" fill="#FFFFFF" opacity="0.3"/>
+    <text x="182" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#FFFFFF">markdown</text>
+    <rect x="278" y="420" width="87" height="30" rx="15" fill="#FFFFFF" opacity="0.3"/>
+    <text x="290" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#FFFFFF">mermaid</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-04-22</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

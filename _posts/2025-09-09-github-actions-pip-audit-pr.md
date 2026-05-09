@@ -1,5 +1,6 @@
 ---
 title: "Using Github Actions with pip-audit to audit pip library versions"
+image: /assets/images/og/github-actions-pip-audit-pr.png
 layout: post
 date: 2025-09-09
 categories: [technical, security]

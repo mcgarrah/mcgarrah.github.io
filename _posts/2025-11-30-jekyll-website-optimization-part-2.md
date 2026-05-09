@@ -1,5 +1,6 @@
 ---
 title: "Jekyll Website Optimization for GitHub Pages - Part 2"
+image: /assets/images/og/jekyll-website-optimization-part-2.png
 layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, analytics, performance, monitoring]

@@ -1,5 +1,6 @@
 ---
 title: "Building a Custom Tag and Category Generator Plugin for Jekyll"
+image: /assets/images/og/jekyll-tag-category-generator-plugin.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, ruby, plugins, tags, categories, github-pages, seo, github-actions]

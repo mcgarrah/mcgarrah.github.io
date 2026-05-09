@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1A1A2E"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#00D4AA"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#00D4AA" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#00D4AA" opacity="0.05"/>
+
+  <!-- Icon -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <rect x="8" y="12" width="32" height="28" rx="4" fill="none" stroke="#00D4AA" stroke-width="2.5"/><circle cx="18" cy="26" r="4" fill="#00D4AA"/><circle cx="30" cy="26" r="4" fill="#00D4AA"/><line x1="24" y1="4" x2="24" y2="12" stroke="#00D4AA" stroke-width="2.5"/><circle cx="24" cy="4" r="3" fill="#00D4AA"/>
+  </g>
+
+  <!-- Title -->
+    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Kiro IDE: Running Parallel Personas</text>
+    <text x="80" y="258" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">for Director and Developer Workflows</text>
+
+  <!-- Tags -->
+    <rect x="80" y="420" width="60" height="30" rx="15" fill="#00D4AA" opacity="0.3"/>
+    <text x="92" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00D4AA">kiro</text>
+    <rect x="152" y="420" width="78" height="30" rx="15" fill="#00D4AA" opacity="0.3"/>
+    <text x="164" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00D4AA">vscode</text>
+    <rect x="242" y="420" width="51" height="30" rx="15" fill="#00D4AA" opacity="0.3"/>
+    <text x="254" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00D4AA">ide</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#00D4AA" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-05-02</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

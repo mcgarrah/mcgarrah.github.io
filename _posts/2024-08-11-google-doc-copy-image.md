@@ -1,5 +1,6 @@
 ---
 title:  "Google Documents - copy an image"
+image: /assets/images/og/google-doc-copy-image.png
 layout: post
 categories: [technical, reference]
 tags: [google-docs, images, productivity, web-development]

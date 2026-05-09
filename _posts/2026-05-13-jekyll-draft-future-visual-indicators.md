@@ -1,5 +1,6 @@
 ---
 title: "Visual Indicators for Draft and Future Posts in Jekyll"
+image: /assets/images/og/jekyll-draft-future-visual-indicators.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, drafts, future-posts, font-awesome, local-development, github-pages, ux]

@@ -1,5 +1,6 @@
 ---
 title:  "Dell Wyse 3040 CMOS CR2032 Battery Replacement"
+image: /assets/images/og/dell-wyse-3040-cmos-battery.png
 layout: post
 categories: [technical, hardware]
 tags: [dell-wyse-3040, hardware, cmos, battery, repair, homelab]

@@ -1,5 +1,6 @@
 ---
 title:  "Sharing file systems between WSLv2 instances"
+image: /assets/images/og/wsl2-shared-filesystems.png
 layout: post
 categories: [technical, development]
 tags: [wsl, windows, linux, filesystems, development, technical, troubleshooting]

@@ -1,5 +1,6 @@
 ---
 title: "Jekyll Website Optimization for GitHub Pages - Part 1"
+image: /assets/images/og/jekyll-website-optimization-part-1.png
 layout: post
 date: 2025-11-09
 categories: [web-development, technical]

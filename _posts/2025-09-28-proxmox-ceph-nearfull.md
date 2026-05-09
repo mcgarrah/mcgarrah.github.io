@@ -1,5 +1,6 @@
 ---
 title:  "Managing Ceph Nearfull Warnings in Proxmox Homelab"
+image: /assets/images/og/proxmox-ceph-nearfull.png
 layout: post
 date: 2025-09-28
 categories: [technical, homelab]

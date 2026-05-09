@@ -1,5 +1,6 @@
 ---
 title: "SSH Key-Based Access to a Proxmox Cluster"
+image: /assets/images/og/ssh-key-access-proxmox-cluster.png
 layout: post
 categories: [proxmox, homelab, security]
 tags: [proxmox, ssh, homelab, security, clustering, dell-optiplex-990]

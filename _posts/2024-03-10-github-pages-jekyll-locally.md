@@ -1,5 +1,6 @@
 ---
 title:  "Running Github Pages locally"
+image: /assets/images/og/github-pages-jekyll-locally.png
 layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, ruby, bundler, wsl, development, local-development, troubleshooting]

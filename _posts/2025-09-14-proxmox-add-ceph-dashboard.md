@@ -1,5 +1,6 @@
 ---
 title: "Adding Ceph Dashboard to Your Proxmox Cluster"
+image: /assets/images/og/proxmox-add-ceph-dashboard.png
 layout: post
 date: 2025-09-14
 categories: [technical, homelab]

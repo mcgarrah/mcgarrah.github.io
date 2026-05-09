@@ -1,5 +1,6 @@
 ---
 title: "Jekyll Run Plugin: Fixing the Multi-Root Workspace Crash"
+image: /assets/images/og/jekyll-run-plugin-multiroot-workspace-bug.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, vscode, multi-root-workspace, plugin-bug, github-pages, ruby, rbenv, macos]

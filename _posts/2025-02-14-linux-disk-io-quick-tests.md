@@ -1,5 +1,6 @@
 ---
 title:  "Linux Disk I/O Performance in the Homelab"
+image: /assets/images/og/linux-disk-io-quick-tests.png
 layout: post
 date: 2025-02-14
 categories: [technical, homelab, hardware]

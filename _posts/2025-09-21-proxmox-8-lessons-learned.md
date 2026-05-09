@@ -1,5 +1,6 @@
 ---
 title: "Proxmox 8 Lessons Learned in the Homelab"
+image: /assets/images/og/proxmox-8-lessons-learned.png
 layout: post
 date: 2025-09-21
 categories: [technical, homelab]

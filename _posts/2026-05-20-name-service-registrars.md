@@ -1,5 +1,6 @@
 ---
 title:  "Migrating 16 Domains from SquareSpace to Porkbun"
+image: /assets/images/og/name-service-registrars.png
 layout: post
 date: 2026-05-20
 last_modified_at: 2026-05-20

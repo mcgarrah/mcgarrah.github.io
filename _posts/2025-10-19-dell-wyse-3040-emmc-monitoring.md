@@ -1,5 +1,6 @@
 ---
 title:  "Dell Wyse 3040 eMMC Storage Health Monitoring"
+image: /assets/images/og/dell-wyse-3040-emmc-monitoring.png
 layout: post
 categories: [technical, hardware]
 tags: [dell-wyse-3040, emmc, monitoring, storage, health, homelab]

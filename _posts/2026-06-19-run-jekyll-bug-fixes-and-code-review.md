@@ -1,5 +1,6 @@
 ---
 title: "Run Jekyll: Bug Fixes and Code Review"
+image: /assets/images/og/run-jekyll-bug-fixes-and-code-review.png
 layout: post
 categories: [web-development, technical]
 tags: [jekyll, vscode, vscode-extension, typescript, bug-fix, code-review, security]

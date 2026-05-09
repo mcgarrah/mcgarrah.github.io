@@ -1,5 +1,6 @@
 ---
 title: "How the Sausage Is Made: Every Feature Powering This Jekyll Blog"
+image: /assets/images/og/jekyll-markdown-feature-reference.png
 layout: post
 categories: [web-development, jekyll]
 tags: [jekyll, markdown, mermaid, katex, giscus, tutorial, reference, pandoc, seo, gdpr, github-pages]

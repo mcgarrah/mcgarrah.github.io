@@ -1,5 +1,6 @@
 ---
 title:  "ASR with PyTorch"
+image: /assets/images/og/pytorch-asr-example.png
 layout: post
 categories: [development, machine-learning]
 tags: [pytorch, asr, machine-learning, python, speech-recognition, ai, deep-learning]

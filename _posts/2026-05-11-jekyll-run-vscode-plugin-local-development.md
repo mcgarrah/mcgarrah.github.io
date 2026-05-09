@@ -1,5 +1,6 @@
 ---
 title: "Jekyll Run Plugin: Local Development Settings That Actually Work"
+image: /assets/images/og/jekyll-run-vscode-plugin-local-development.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, vscode, local-development, github-pages, future-posts, drafts, configuration]

@@ -1,5 +1,6 @@
 ---
 title: "New Features: Copy Buttons, Comments, Tags, and More!"
+image: /assets/images/og/website-feature-enhancements.png
 layout: post
 published: true
 last_modified_at: 2025-09-13

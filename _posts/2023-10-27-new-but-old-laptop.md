@@ -1,5 +1,6 @@
 ---
 title:  "A new to me but old laptop"
+image: /assets/images/og/new-but-old-laptop.png
 layout: post
 last_modified_at: 2025-09-13
 categories: [personal, hardware]

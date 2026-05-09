@@ -1,5 +1,6 @@
 ---
 title:  "Proxmox Ceph settings for the Homelab"
+image: /assets/images/og/proxmox-ceph-homelab-settings.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, homelab, storage, optimization, performance]

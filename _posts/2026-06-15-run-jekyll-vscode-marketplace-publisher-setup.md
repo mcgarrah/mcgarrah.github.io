@@ -1,5 +1,6 @@
 ---
 title: "Run Jekyll: VS Code Marketplace Publisher Account Setup"
+image: /assets/images/og/run-jekyll-vscode-marketplace-publisher-setup.png
 layout: post
 categories: [web-development, technical]
 tags: [vscode, vscode-extension, marketplace, azure-devops, open-source, publishing, jekyll]

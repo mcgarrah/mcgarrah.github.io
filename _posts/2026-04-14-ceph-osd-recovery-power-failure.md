@@ -1,5 +1,6 @@
 ---
 title: "Ceph OSD Recovery After Power Failure: SAN Switch Was Dead the Whole Time"
+image: /assets/images/og/ceph-osd-recovery-power-failure.png
 layout: post
 categories: [proxmox, ceph, homelab, networking]
 tags: [proxmox, ceph, osd, debugging, homelab, storage, networking, bluestore, power-failure, dell-optiplex-990]

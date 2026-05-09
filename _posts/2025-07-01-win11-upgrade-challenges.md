@@ -1,5 +1,6 @@
 ---
 title: "Windows 11 Upgrade Challenges on ThinkPad T480"
+image: /assets/images/og/win11-upgrade-challenges.png
 layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, windows11, webcam, performance]

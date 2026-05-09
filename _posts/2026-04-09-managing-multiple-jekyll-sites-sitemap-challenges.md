@@ -1,5 +1,6 @@
 ---
 title: "Managing Multiple Jekyll Sites Under One Domain: Sitemap Challenges"
+image: /assets/images/og/managing-multiple-jekyll-sites-sitemap-challenges.png
 layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, sitemap, multi-site, domain-management, seo, adsense]

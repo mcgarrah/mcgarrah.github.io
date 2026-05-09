@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#2C3E50"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#3498DB"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#3498DB" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#3498DB" opacity="0.05"/>
+
+  <!-- Icon -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <line x1="12" y1="10" x2="40" y2="10" stroke="#3498DB" stroke-width="3" stroke-linecap="round"/><line x1="12" y1="20" x2="40" y2="20" stroke="#3498DB" stroke-width="3" stroke-linecap="round"/><line x1="12" y1="30" x2="40" y2="30" stroke="#3498DB" stroke-width="3" stroke-linecap="round"/><line x1="12" y1="40" x2="32" y2="40" stroke="#3498DB" stroke-width="3" stroke-linecap="round"/><circle cx="5" cy="10" r="3" fill="#3498DB"/><circle cx="5" cy="20" r="3" fill="#3498DB"/><circle cx="5" cy="30" r="3" fill="#3498DB"/><circle cx="5" cy="40" r="3" fill="#3498DB"/>
+  </g>
+
+  <!-- Title -->
+    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Backlog of Posts from 2024</text>
+
+  <!-- Tags -->
+    <rect x="80" y="420" width="96" height="30" rx="15" fill="#3498DB" opacity="0.3"/>
+    <text x="92" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#3498DB">planning</text>
+    <rect x="188" y="420" width="78" height="30" rx="15" fill="#3498DB" opacity="0.3"/>
+    <text x="200" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#3498DB">jekyll</text>
+    <rect x="278" y="420" width="87" height="30" rx="15" fill="#3498DB" opacity="0.3"/>
+    <text x="290" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#3498DB">backlog</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#3498DB" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2025-02-17</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

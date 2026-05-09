@@ -1,5 +1,6 @@
 ---
 title: "Improving E-E-A-T Signals for Google AdSense Approval on Jekyll"
+image: /assets/images/og/improving-eeat-jekyll-adsense.png
 layout: post
 categories: [web-development, technical]
 tags: [google, adsense, jekyll, github-pages, seo, eeat, structured-data]

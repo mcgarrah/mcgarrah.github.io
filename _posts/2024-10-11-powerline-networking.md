@@ -1,5 +1,6 @@
 ---
 title:  "Powerline Networking for the Homelabs"
+image: /assets/images/og/powerline-networking.png
 layout: post
 categories: [technical, networking]
 tags: [networking, powerline, homelab, hardware, troubleshooting]

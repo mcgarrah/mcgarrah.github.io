@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1A3A5C"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#FFD43B"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#FFD43B" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#FFD43B" opacity="0.05"/>
+
+  <!-- Icon -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <polyline points="14,12 4,24 14,36" fill="none" stroke="#FFD43B" stroke-width="3" stroke-linecap="round"/><polyline points="34,12 44,24 34,36" fill="none" stroke="#FFD43B" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="6" x2="20" y2="42" stroke="#FFD43B" stroke-width="2.5"/>
+  </g>
+
+  <!-- Title -->
+    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Generate Git Timesheet from Commit</text>
+    <text x="80" y="258" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Logs</text>
+
+  <!-- Tags -->
+    <rect x="80" y="420" width="78" height="30" rx="15" fill="#FFD43B" opacity="0.3"/>
+    <text x="92" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#FFD43B">python</text>
+    <rect x="170" y="420" width="51" height="30" rx="15" fill="#FFD43B" opacity="0.3"/>
+    <text x="182" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#FFD43B">git</text>
+    <rect x="233" y="420" width="132" height="30" rx="15" fill="#FFD43B" opacity="0.3"/>
+    <text x="245" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#FFD43B">timetracking</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#FFD43B" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2025-11-02</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

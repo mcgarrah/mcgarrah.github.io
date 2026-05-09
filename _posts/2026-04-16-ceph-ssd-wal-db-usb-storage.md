@@ -1,5 +1,6 @@
 ---
 title: "Hybrid Ceph Storage: SSD WAL/DB Acceleration with USB Drive Data"
+image: /assets/images/og/ceph-ssd-wal-db-usb-storage.png
 layout: post
 categories: [proxmox, ceph, homelab, storage]
 tags: [proxmox, ceph, ssd, usb, storage, performance, homelab, wal, db, bluestore, dell-optiplex-990, seagate]

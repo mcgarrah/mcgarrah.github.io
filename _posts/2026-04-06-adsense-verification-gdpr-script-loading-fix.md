@@ -1,5 +1,6 @@
 ---
 title: "Fixing AdSense Verification Without Breaking GDPR: The Script Loading Mistake"
+image: /assets/images/og/adsense-verification-gdpr-script-loading-fix.png
 layout: post
 categories: [web-development, privacy, jekyll]
 tags: [gdpr, jekyll, adsense, analytics, privacy, compliance, javascript, seo, debugging]

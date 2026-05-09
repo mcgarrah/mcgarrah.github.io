@@ -1,5 +1,6 @@
 ---
 title: "Homelab Storage Economics: Ceph vs Single Drive Costs"
+image: /assets/images/og/homelab-storage-economics.png
 layout: post
 date: 2025-11-26
 categories: [homelab, storage]

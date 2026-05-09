@@ -1,5 +1,6 @@
 ---
 title: "Writing to Think: Two Decades of Figuring Things Out in Public"
+image: /assets/images/og/writing-to-think-two-decades-of-figuring-things-out.png
 layout: post
 categories: [writing, personal]
 tags: [writing, blogging, substack, reflection, motivation]

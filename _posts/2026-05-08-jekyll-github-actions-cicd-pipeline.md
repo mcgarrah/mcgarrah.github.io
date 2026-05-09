@@ -1,5 +1,6 @@
 ---
 title: "The CI/CD Pipeline Behind This Jekyll Blog"
+image: /assets/images/og/jekyll-github-actions-cicd-pipeline.png
 layout: post
 categories: [web-development, technical, jekyll]
 tags: [jekyll, github-actions, ci-cd, codeql, seo, lighthouse, dependabot, automation, github-pages, security]

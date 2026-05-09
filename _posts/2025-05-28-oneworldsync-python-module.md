@@ -1,5 +1,6 @@
 ---
 title:  "Introducing oneworldsync: A Python Module for 1WorldSync Content1 API Access"
+image: /assets/images/og/oneworldsync-python-module.png
 layout: post
 date: 2025-05-28
 categories: [development, programming]

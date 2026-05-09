@@ -1,5 +1,6 @@
 ---
 title:  "New Laptop update"
+image: /assets/images/og/new-laptop-update.png
 layout: post
 last_modified_at: 2025-09-13
 categories: [personal, hardware]

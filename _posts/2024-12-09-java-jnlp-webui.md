@@ -1,5 +1,6 @@
 ---
 title:  "HP ProCurve Switch Java WebUI"
+image: /assets/images/og/java-jnlp-webui.png
 layout: post
 categories: [technical, networking]
 tags: [hp, procurve, java, webui, networking, legacy, troubleshooting]

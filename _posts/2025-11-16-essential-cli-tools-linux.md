@@ -1,5 +1,6 @@
 ---
 title: "Essential CLI Tools for Linux System Management"
+image: /assets/images/og/essential-cli-tools-linux.png
 layout: post
 categories: [technical, reference]
 tags: [linux, cli, monitoring, tools, sysadmin, homelab]

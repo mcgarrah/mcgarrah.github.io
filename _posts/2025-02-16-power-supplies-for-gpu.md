@@ -1,5 +1,6 @@
 ---
 title:  "Power Supply upgrade for GPUs in the Homelab"
+image: /assets/images/og/power-supplies-for-gpu.png
 layout: post
 published: true
 last_modified_at: 2025-09-13

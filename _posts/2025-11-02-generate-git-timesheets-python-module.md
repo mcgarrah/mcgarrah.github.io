@@ -1,5 +1,6 @@
 ---
 title: "Generate Git Timesheet from Commit Logs"
+image: /assets/images/og/generate-git-timesheets-python-module.png
 layout: post
 date: 2025-11-02
 categories: [technical, development]
