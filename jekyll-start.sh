@@ -155,6 +155,39 @@ if [ "$CLEAN" = true ]; then
     echo ""
 fi
 
+# =============================================================================
+# Check for missing OG images
+# =============================================================================
+check_og_images() {
+    local missing=0
+    local missing_files=""
+
+    for post in _posts/*.md; do
+        # Extract the image path from front matter
+        local img=$(grep -m1 "^image:" "$post" | sed 's/^image: *//' | tr -d '"' | tr -d "'")
+        if [ -z "$img" ]; then
+            continue
+        fi
+
+        # Strip leading slash — paths are relative to repo root
+        local file="${img#/}"
+        if [ ! -f "$file" ]; then
+            missing=$((missing + 1))
+            missing_files="$missing_files\n  • $post → $file"
+        fi
+    done
+
+    if [ "$missing" -gt 0 ]; then
+        echo "⚠ Missing OG images ($missing posts):"
+        echo -e "$missing_files"
+        echo ""
+        echo "  Generate with: python3 bin/generate-og-images.py"
+        echo ""
+    fi
+}
+
+check_og_images
+
 echo "Starting Jekyll on port $PORT..."
 echo ""
 bundle exec jekyll serve --trace --drafts --future --unpublished --livereload --incremental

@@ -59,6 +59,25 @@ jobs:
             exit 1
           fi
           echo "Sitemap OK: all URLs use production domain"
+      - name: Check for missing OG images
+        run: |
+          missing=0
+          for post in _posts/*.md; do
+            img=$(grep -m1 "^image:" "$post" | sed 's/^image: *//' | tr -d '"' | tr -d "'")
+            if [ -z "$img" ]; then
+              continue
+            fi
+            file="${img#/}"
+            if [ ! -f "$file" ]; then
+              echo "::warning file=$post::Missing OG image: $file"
+              missing=$((missing + 1))
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::warning::$missing posts are missing OG images. Run: python3 bin/generate-og-images.py"
+          else
+            echo "OG images OK: all posts have their image files"
+          fi
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v4
