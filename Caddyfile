@@ -1,0 +1,57 @@
+# Caddyfile — Local development reverse proxy
+#
+# Merges the blog (webroot) and resume (/resume/) under one port,
+# replicating the production URL structure at mcgarrah.org.
+#
+# Usage:
+#   caddy run --config Caddyfile
+#
+# Expects:
+#   - Blog Jekyll server on :4001 (this repo, baseurl: "")
+#   - Resume Jekyll server on :4002 (../resume, baseurl: "/resume")
+#
+# Ports 4001/4002 are used instead of 4000 to avoid colliding with
+# a standalone jekyll-start.sh already running on the default port.
+#
+# Routing:
+#   /resume/*  → forward to :4002 WITH the /resume prefix intact
+#                (resume server expects it because baseurl: /resume)
+#   /*         → forward to :4001 (blog at webroot)
+#
+# Why handle (not handle_path):
+#   The resume server is configured with baseurl: "/resume" — it expects
+#   requests to arrive WITH the /resume prefix. handle_path would strip it,
+#   causing the resume server to 404.
+#
+# Browse: http://localhost:8080/
+#         http://localhost:8080/resume/
+#         http://localhost:8080/resume/print/
+#         http://localhost:8080/resume/machine/
+
+:8080 {
+    # Access log — useful for debugging routing issues
+    log {
+        output stdout
+        format console
+        level ERROR
+    }
+
+    # Compression — Jekyll's WEBrick doesn't gzip, so Caddy adds it
+    encode gzip
+
+    # Resume site at /resume/ — forward full path because the
+    # resume server expects the /resume prefix (baseurl: /resume)
+    handle /resume/* {
+        reverse_proxy localhost:4002
+    }
+
+    # Exact /resume (no trailing slash) — redirect to canonical
+    handle /resume {
+        redir /resume/ permanent
+    }
+
+    # Blog (everything else) — webroot
+    handle {
+        reverse_proxy localhost:4001
+    }
+}
