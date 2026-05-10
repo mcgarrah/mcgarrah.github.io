@@ -6,13 +6,13 @@ categories: [proxmox, zfs, storage, homelab]
 tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror]
 excerpt: "ZFS boot mirrors saved my homelab cluster more than once. Here's the complete procedure for replacing a failed drive in a Proxmox ZFS boot mirror — including the mistakes I made so you don't have to."
 description: "Step-by-step guide to replacing a failed drive in a Proxmox ZFS boot mirror, covering partition copying, zpool replace, proxmox-boot-tool, and scrub verification. Includes common mistakes and a multi-node recovery example."
-date: 2026-05-25
-last_modified_at: 2026-05-25
+date: 2026-05-26
+last_modified_at: 2026-05-26
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-25
-  date_modified: 2026-05-25
+  date_published: 2026-05-26
+  date_modified: 2026-05-26
 ---
 
 ZFS boot mirrors are the minimum viable resilience for any Proxmox node. The cost is one extra drive per node. The alternative is a full reinstall from scratch when a boot drive fails — a procedure I've documented in Part 2 because I've had to do it. Having set up email alerting for ZFS failures, I've now dealt with this recovery procedure enough times — and made enough mistakes — that it's worth writing down properly.

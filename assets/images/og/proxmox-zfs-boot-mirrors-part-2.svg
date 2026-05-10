@@ -30,7 +30,7 @@
   <!-- Footer: site + date -->
   <line x1="80" y1="520" x2="1120" y2="520" stroke="#E67E22" stroke-opacity="0.3" stroke-width="1"/>
   <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
-  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-05-29</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-05-30</text>
 
   <!-- Author -->
   <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
