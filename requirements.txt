@@ -1,0 +1,9 @@
+# Python dependencies for blog utility scripts (local development only)
+# These scripts are NOT run in CI — their outputs are committed to the repo.
+#
+# Scripts:
+#   bin/generate-og-images.py  — generates OG social preview images (SVG + PNG)
+#   bin/update-og-frontmatter.py — adds image: field to post front matter
+#
+PyYAML==6.0.3
+cairosvg==2.9.0
