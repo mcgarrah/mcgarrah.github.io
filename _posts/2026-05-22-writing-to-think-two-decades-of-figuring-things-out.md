@@ -5,7 +5,7 @@ layout: post
 categories: [writing, personal]
 tags: [writing, blogging, substack, reflection, motivation]
 mermaid: true
-excerpt: "I don't write to share what I know. I write to figure out what I know. After 151 posts across 20+ years, I'm finally honest about why I do this — and why I'm moving to Substack to find the conversation I've been looking for."
+excerpt: "I don't write to share what I know. I write to figure out what I know. After 178 posts across 20+ years, I'm finally honest about why I do this — and why I'm moving to Substack to find the conversation I've been looking for."
 description: "A reflection on two decades of technical blogging, the real motivation behind writing things down, and why Substack is the next step for finding the interaction that static sites can't provide."
 date: 2026-05-22
 last_modified_at: 2026-05-22
@@ -44,18 +44,18 @@ My publishing history has a pattern:
 xychart-beta
   title "Blog Posts Published Per Year"
   x-axis [2001, 2004, 2005, 2007, 2008, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
-  y-axis "Posts" 0 --> 35
-  bar [1, 3, 2, 2, 1, 4, 17, 9, 2, 9, 7, 2, 0, 0, 0, 0, 0, 0, 3, 24, 33, 32]
+  y-axis "Posts" 0 --> 60
+  bar [1, 3, 2, 2, 1, 4, 17, 9, 2, 9, 7, 2, 0, 0, 0, 0, 0, 0, 3, 24, 33, 59]
 ```
 
-2026 is on pace to be the biggest year yet — thirty-five posts published or scheduled with fourteen more drafts in the pipeline. The bar chart doesn't even know about those yet.
+2026 is on pace to be the biggest year yet — fifty-nine posts published or scheduled with forty-seven more drafts in the pipeline. The bar chart doesn't even know about those yet.
 
 ```mermaid
 xychart-beta
   title "2026 Projection: Published + Drafts"
   x-axis [2023, 2024, 2025, "2026 published", "2026 projected"]
-  y-axis "Posts" 0 --> 55
-  bar [3, 24, 33, 35, 49]
+  y-axis "Posts" 0 --> 110
+  bar [3, 24, 33, 59, 106]
 ```
 
 The seven-year gap from 2017–2022 is hard to miss. So is the explosion after it.
@@ -67,7 +67,7 @@ The seven-year gap from 2017–2022 is hard to miss. So is the explosion after i
 - **2023** — Three posts. Testing the waters again.
 - **2024** — Twenty-four posts. The homelab buildout year. Proxmox, Ceph, ZFS, networking — every week brought a new problem that needed to be written through.
 - **2025** — Thirty-three posts. The writing habit fully locked in. Jekyll deep dives, Ceph storage, Proxmox lessons learned — a post nearly every week.
-- **2026** — Thirty-five posts already published or scheduled and we're not even halfway through the year. Fourteen more drafts in the pipeline. Something broke open.
+- **2026** — Fifty-nine posts already published or scheduled and we're not even halfway through the year. Forty-seven more drafts in the pipeline. Something broke open.
 
 The seven-year gap is the most interesting part. I didn't stop writing during that time — I was producing more words per year than I ever had. Academic papers, architecture documents, security assessments, policy justifications. The writing was constant, but it was all locked behind corporate firewalls and academic walls. None of it was public, none of it was searchable, and none of it fed back into the kind of community conversation that a blog enables. Looking back, I think I lost something during that period. Not knowledge or even writing discipline, but *reach*. The kind of reach you only get when you force yourself to explain what you're doing in a way that anyone can find and respond to.
 
@@ -126,13 +126,13 @@ But Substack solves the specific problem I have:
 
 The plan is straightforward: continue writing on the Jekyll blog as the source of truth, cross-post to Substack for distribution and discussion. The writing process doesn't change. The thinking-through-writing doesn't change. What changes is that the writing might actually start conversations instead of sitting in a well-organized archive.
 
-## 151 Posts Later
+## 178 Posts Later
 
-I've published 151 posts across twenty-plus years. The topics range from NAS hacking to Ceph cluster economics to Jekyll plugin development to tankless water heater maintenance. The through-line isn't the technology — it's the process of encountering something I don't fully understand and writing my way to understanding it.
+I've published 178 posts across twenty-plus years. The topics range from NAS hacking to Ceph cluster economics to Jekyll plugin development to tankless water heater maintenance. The through-line isn't the technology — it's the process of encountering something I don't fully understand and writing my way to understanding it.
 
 The bursts in my publishing history correspond exactly to periods when I was building something new and struggling with it. The silences correspond to periods when I was either too busy to write or — more honestly — not struggling enough to need the writing.
 
-I'm in a burst right now. Fourteen drafts in the pipeline, posts scheduled through mid-2026, and a Kubernetes-on-Proxmox project generating new material every week. The homelab keeps breaking in interesting ways, and every break is a post waiting to happen.
+I'm in a burst right now. Forty-seven drafts in the pipeline, posts scheduled through mid-2026, and a Kubernetes-on-Proxmox project generating new material every week. The homelab keeps breaking in interesting ways, and every break is a post waiting to happen.
 
 If you've read this far, you're probably someone who thinks by writing too. Or you're considering starting. My advice is simple: don't write for an audience. Write for the confused version of yourself. The audience, if it comes, is a bonus. The understanding is the point.
 
