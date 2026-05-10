@@ -1,18 +1,18 @@
 ---
 layout: post
-title: "Running Multiple Jekyll Sites Locally Under One Domain"
-image: /assets/images/og/jekyll-multi-site-local-development.png
+title: "Caddy Reverse Proxy for Local Multi-Site Jekyll Development"
+image: /assets/images/og/caddy-reverse-proxy-local-multi-site-jekyll.png
 categories: [web-development, technical, jekyll]
 tags: [jekyll, local-development, reverse-proxy, caddy, macos, wsl2, github-pages]
 excerpt: "My blog serves from the webroot and my resume lives at /resume/ — both Jekyll sites on the same domain in production. Replicating that URL structure locally without a heavy web server required a lightweight reverse proxy and some Jekyll livereload lore."
 description: "How to run multiple Jekyll sites locally under one domain with correct path routing using Caddy reverse proxy, including livereload through the proxy, handle vs handle_path path-ownership semantics, and the architectural principles behind development-production parity."
-date: 2026-05-16
-last_modified_at: 2026-05-16
+date: 2026-05-23
+last_modified_at: 2026-05-23
 published: true
 seo:
   type: BlogPosting
-  date_published: 2026-05-16
-  date_modified: 2026-05-16
+  date_published: 2026-05-23
+  date_modified: 2026-05-23
 ---
 
 In production, my blog serves from the webroot (`mcgarrah.org/`) and my resume lives at `mcgarrah.org/resume/` — two separate Jekyll repositories deployed to the same GitHub Pages domain. Links between them use absolute paths: the blog's navigation links to `/resume/`, the resume's header links back to `/`. GitHub Pages merges both repos under one domain and the routing is invisible.

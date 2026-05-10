@@ -4,14 +4,14 @@ image: /assets/images/og/caddy-reverse-proxy-ceph-dashboard.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, caddy, reverse-proxy, dashboard, monitoring, homelab]
-date: 2026-06-22
-last_modified_at: 2026-06-22
+date: 2026-05-21
+last_modified_at: 2026-05-21
 excerpt: "The Ceph Dashboard follows the active ceph-mgr node, breaking bookmarks on failover. Adding it to an existing Caddy reverse proxy with health checks gives you a single stable URL that automatically routes to whichever node is currently active."
 description: "How to add the Ceph Dashboard to a Caddy reverse proxy with health checks, solving the floating-IP problem when ceph-mgr fails over between nodes in a Proxmox cluster."
 seo:
   type: BlogPosting
-  date_published: 2026-06-22
-  date_modified: 2026-06-22
+  date_published: 2026-05-21
+  date_modified: 2026-05-21
 ---
 
 The Ceph Dashboard has a frustrating quirk — it runs on whichever node is the active ceph-mgr, and that can change during failovers. One day it's on `https://192.168.86.12:8443`, the next it's on `.13`. Since I already have a Caddy reverse proxy LXC handling Proxmox Web UI access, adding the Ceph Dashboard as a second site block is straightforward and solves the floating-IP problem.

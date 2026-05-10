@@ -16,8 +16,8 @@
   </g>
 
   <!-- Title -->
-    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Running Multiple Jekyll Sites Locally</text>
-    <text x="80" y="258" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Under One Domain</text>
+    <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Caddy Reverse Proxy for Local Multi-</text>
+    <text x="80" y="258" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">Site Jekyll Development</text>
 
   <!-- Tags -->
     <rect x="80" y="420" width="78" height="30" rx="15" fill="#FFFFFF" opacity="0.3"/>
@@ -30,7 +30,7 @@
   <!-- Footer: site + date -->
   <line x1="80" y1="520" x2="1120" y2="520" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1"/>
   <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
-  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-05-16</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-05-23</text>
 
   <!-- Author -->
   <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
