@@ -56,12 +56,17 @@ Lives in the blog repo root (since the blog owns the webroot):
 
 ```caddyfile
 :8080 {
+    # Only log errors — keeps terminal quiet during normal use,
+    # but surfaces routing problems (502s, timeouts) immediately
     log {
         output stdout
         format console
         level ERROR
     }
 
+    # Gzip responses — Jekyll's WEBrick does not compress, so
+    # Caddy adds it. Useful for testing real-world page weights
+    # and catching bloated assets during development.
     encode gzip
 
     handle /resume/* {
