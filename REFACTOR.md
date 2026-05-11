@@ -332,18 +332,24 @@ No link integrity check (html-proofer), no config sanity check (doctor), no post
 
 ## Priority and Sequencing
 
-| Priority | Item | Effort | Risk if skipped | Dependencies |
-|----------|------|--------|-----------------|--------------|
-| 1 | Jekyll Doctor in CI | 1 line | Low — but free insurance | None |
-| 2 | html-proofer in CI | Gemfile + workflow + cleanup pass | Medium — broken links accumulate | None |
-| 3 | Sitemap count validation | 5 lines in workflow | Low — catches catastrophic exclusions | None |
-| 4 | Enhanced JSON-LD | 1 include file + config | Medium — AI discoverability gap | None |
-| 5 | Pagefind search | Build step + page rewrite | Low — Google CSE works fine today | Items 1–3 done first (clean foundation) |
-| 6 | Weekly apt cache rotation | Pattern ready, apply when needed | N/A until apt deps are added | Adding html-proofer or other apt deps |
+| Priority | Item | Effort | Risk if skipped | Dependencies | Status |
+|----------|------|--------|-----------------|--------------|--------|
+| 1 | Jekyll Doctor in CI | 1 line | Low — but free insurance | None | ✅ Done |
+| 2 | html-proofer in CI | Gemfile + workflow + cleanup pass | Medium — broken links accumulate | None | Pending |
+| 3 | Sitemap count validation | 5 lines in workflow | Low — catches catastrophic exclusions | None | ✅ Done |
+| 4 | Enhanced JSON-LD | 1 include file + config | Medium — AI discoverability gap | None | Pending |
+| 5 | Pagefind search | Build step + page rewrite | Low — Google CSE works fine today | Items 1–3 done first (clean foundation) | Pending |
+| 6 | Weekly apt cache rotation | Pattern ready, apply when needed | N/A until apt deps are added | Adding html-proofer or other apt deps | Pending |
 
 Items 1–3 are quick wins that improve CI reliability. Item 4 improves discoverability. Item 5 is a larger project that removes an external dependency. Item 6 is a pattern to apply when the time comes.
 
 ---
+
+## Completed
+
+- [x] **Jekyll Doctor in CI** (2026-05-05) — Added before build step. Zero config, catches deprecated settings and plugin conflicts.
+- [x] **Sitemap count validation** (2026-05-05) — Fails build if sitemap has <150 URLs. Catches accidental mass exclusion.
+- [x] **Action version pinning** (2026-05-05) — `ruby/setup-ruby` v1.300.0 → v1.306.0, `upload-pages-artifact` v4 → v5. Matches resume repo.
 
 ## Decision Log
 
