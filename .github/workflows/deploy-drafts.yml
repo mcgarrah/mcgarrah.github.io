@@ -3,6 +3,10 @@ name: Deploy Draft Preview Site
 on:
   push:
     branches: ["main"]
+  # Rebuild daily to promote future-dated posts that have reached their publish date.
+  # Runs 10 minutes after the main site build (which runs at 10:05 UTC).
+  schedule:
+    - cron: '15 10 * * *'
   workflow_dispatch:
 
 permissions:
@@ -227,6 +231,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Squash to a single commit to prevent repo bloat.
+          # The drafts site is a build artifact — history has no value.
+          git checkout --orphan deploy
           git add -A
           if git diff --cached --quiet; then
             echo "No drafts-site changes to deploy"
@@ -234,4 +241,4 @@ jobs:
           fi
 
           git commit -m "Deploy drafts site from ${GITHUB_SHA}"
-          git push origin HEAD:main --force-with-lease
+          git push origin deploy:main --force
