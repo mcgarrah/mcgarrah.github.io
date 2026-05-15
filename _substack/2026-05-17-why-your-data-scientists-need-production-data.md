@@ -14,6 +14,8 @@
 
 A quick note before we begin: if you've been reading my earlier newsletters — [From Homelabs to Machine Learning](https://mcgarrah.substack.com/p/from-homelabs-to-machine-learning) and [From Markdown to Production](https://mcgarrah.substack.com/p/from-markdown-to-production-building) — you'll notice a shift in tone here. Those pieces established the technical foundation: the infrastructure I build, the engineering discipline I practice, the tools I create. This newsletter builds on that foundation but steps back to the strategic level. The question is no longer "how do I build this?" but "how do I design the platform architecture that lets an entire data science organization succeed?" That shift reflects where I am professionally — bridging deep technical execution with the organizational and business strategy decisions that determine whether AI initiatives deliver value or die in pilot.
 
+I am not abandoning the technical articles — those will continue roughly once a month as the foundation they have always been. What I am adding is a second thread focused on the "why" and the architecture: the platform decisions, the organizational patterns, and the leadership thinking that sits above the implementation. Think of it as two cadences: the technical pieces show I still build things; the strategic pieces show I know which things to build and why.
+
 ---
 
 Every enterprise I have worked in over the past decade has hit the same wall.
@@ -64,9 +66,10 @@ This is a negotiation artifact, not a technical specification. The framework suc
 
 This is not theoretical. I have built or operated variants of this framework across:
 
-- **Healthcare (BCBSNC)** — ML platform on EKS with GPU-enabled spot instances for model training under HIPAA constraints. The production data access model required exactly this kind of controlled-but-flexible environment.
-- **Financial services (Envestnet)** — Managed SageMaker infrastructure across four AWS accounts for the Data Science team. Migrated ML resources to dedicated environments. Created VPC endpoints for inference pipeline connectivity. Delivered the first AI/ML production workload on the billing platform.
-- **Government (NC DIT)** — Enterprise architecture for state government. IRS Safeguard data classification and access control patterns that inform the security layer of this framework.
+- **Regulated industries (BD Biosciences, NC DOR, SAS Institute — 2006–2013)** — FDA quality systems, IRS Safeguard compliance, and pharmaceutical clinical trial data under CFR Part 11. These roles established the principle that interactive access to sensitive data and auditable controls are not mutually exclusive — you design for both simultaneously.
+- **Machine learning at scale (Measurement Incorporated — 2013–2015)** — PhD researchers building NLP models for automated essay scoring. The chaos of researchers breaking production with untested model changes is where I first witnessed the DS-vs-SDLC conflict and began evolving toward this framework.
+- **Healthcare (BCBSNC — 2019–2021)** — Where the framework was fully realized and tested. CarePath ML platform on EKS under HIPAA constraints, processing claims data from all NC members. It survived production pressure and became the standard I carried forward.
+- **Financial services (Envestnet — 2021–present)** — SageMaker and Bedrock across shared services and workload accounts. The mature DataLake (vEMR, Snowflake, Airflow) exemplifies this model in data engineering — phased promotion with gates at every stage.
 
 The pattern is consistent across industries: the organizations that get this right build the platform first, then scale AI initiatives on top of it. The organizations that get it wrong try to bolt security onto an ad-hoc data access model after the data scientists have already built dependencies on it.
 
