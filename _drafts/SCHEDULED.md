@@ -84,11 +84,11 @@ Last updated: 2026-05-09
 |-----|-----|-----|-----|-----|-----|-----|
 | | | | | | **1** ✅ [Jekyll Liquid Code Fence Trap](/jekyll-liquid-code-fence-rendering-trap/) | **2** ✅ [Kiro IDE Parallel Personas](/kiro-ide-parallel-personas-director-developer/) |
 | **3** ✅ [Kiro IDE WSL2 Support](/kiro-ide-wsl2-support-open-remote-extension/) | **4** 📅 [Jekyll Tag/Category Generator](/jekyll-tag-category-generator-plugin/) | 5 | **6** 📅 [Jekyll Giscus Comments](/jekyll-giscus-comments-implementation/) | 7 | **8** 📅 [Jekyll GitHub Actions CI/CD](/jekyll-github-actions-cicd-pipeline/) | **9** 📅 [Jekyll Modern Favicon](/jekyll-modern-favicon-set/) |
-| 10 | **11** 📅 [Jekyll Run Plugin Config](/jekyll-run-vscode-plugin-local-development/) | 12 | **13** 📅 [Draft/Future Visual Indicators](/jekyll-draft-future-visual-indicators/) | **14** 📅 [Resume Site Rebuild](/resume-site-ground-up-rebuild/) | **15** 📅 [Content Distribution Pipeline](/jekyll-content-distribution-pipeline/) | 16 |
-| 17 | **19** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | **21** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | **23** 📅 [Caddy Proxy: Multi-Site Jekyll](/caddy-reverse-proxy-local-multi-site-jekyll/) | 24 |
+| 10 | **11** 📅 [Jekyll Run Plugin Config](/jekyll-run-vscode-plugin-local-development/) | 12 | **13** 📅 [Draft/Future Visual Indicators](/jekyll-draft-future-visual-indicators/) | **14** 📅 [Resume Site Rebuild](/resume-site-ground-up-rebuild/) | **15** 📅 [Content Distribution Pipeline](/jekyll-content-distribution-pipeline/) | **16** 📅 [Five Stages: Cloud DS Platform](/five-stages-cloud-data-science-platform/) |
+| **17** 📰 [Substack: Why DS Needs Prod Data](/_substack/2026-05-17-why-data-scientists-need-production-data.md) | **19** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | **21** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | **23** 📅 [Caddy Proxy: Multi-Site Jekyll](/caddy-reverse-proxy-local-multi-site-jekyll/) | 24 |
 | 25 | **26** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 27 | **28** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 29 | **30** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 31 |
 
-**Summary:** 19 articles (3 published, 16 scheduled). MWF cadence from May 4 onward with Caddy series on MWF May 19/21/23. Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
+**Summary:** 20 articles (3 published, 17 scheduled) + 1 Substack newsletter. MWF cadence from May 4 onward with Caddy series on MWF May 19/21/23. Five Stages DS Platform (Fri May 16) + Substack companion (Sat May 17). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
 
 ---
 
@@ -127,7 +127,7 @@ Last updated: 2026-05-09
 | | | | | | 1 | 2 |
 | 3 | **4** 📝 [Security Hardening CSP/SRI](/_drafts/2026-07-15-jekyll-security-hardening-csp-sri.md) | 5 | **6** 📝 [Jekyll Post Series Nav](/_drafts/2026-07-20-jekyll-post-series-navigation.md) | 7 | **8** 📝 [Jekyll Enhancements w/o Plugins](/_drafts/2026-05-10-jekyll-enhancements-without-plugins.md) | 9 |
 | 10 | **11** 📝 [Jekyll Internal Formatting](/_drafts/2026-05-10-jekyll-internal-formatting-front-matter.md) | 12 | **13** 📝 [PowerDNS LXC + Proxmox SDN](/_drafts/2026-02-01-powerdns-lxc-proxmox-sdn-integration.md) | 14 | **15** 📝 [OpenWRT LXC Journey](/_drafts/2026-02-02-openwrt-lxc-native-implementation-journey.md) | 16 |
-| 17 | **18** 📝 [LAG/LACP NIC Bonding](/_drafts/2024-03-11-lag-lacp-nic-bonding.md) | 19 | **20** 📝 [Five Stages Cloud DS Platform](/_drafts/2024-11-18-five-stages-cloud-data-science-platform.md) | 21 | **22** 📝 [Ceph OSD Moving Disks](/_drafts/2024-06-21-ceph-osd-moving-disks.md) | 23 |
+| 17 | **18** 📝 [LAG/LACP NIC Bonding](/_drafts/2024-03-11-lag-lacp-nic-bonding.md) | 19 | **20** 🔲 *Open* | 21 | **22** 📝 [Ceph OSD Moving Disks](/_drafts/2024-06-21-ceph-osd-moving-disks.md) | 23 |
 | 24 | **25** 📝 [Jekyll GDPR Plugin](/_drafts/2026-07-06-jekyll-gdpr-plugin-development.md) | 26 | **27** 📝 [Phonemes AI/ML Research](/_drafts/2026-04-01-phonemes-aiml-research.md) | 28 | **29** 📝 [Proxmox Homelab Overview](/_drafts/2026-02-12-proxmox-homelab-infrastructure-overview.md) | 30 |
 | 31 | | | | | | |
 
