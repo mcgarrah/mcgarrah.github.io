@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Data Science Is Not Software Development (And Managing It Like Software Development Is Why Your AI Initiatives Fail)"
+date: 2026-06-14
+---
+
 # Data Science Is Not Software Development (And Managing It Like Software Development Is Why Your AI Initiatives Fail)
 
 **Subtitle:** Why the research model — not the SDLC — is the correct operational framework for machine learning teams

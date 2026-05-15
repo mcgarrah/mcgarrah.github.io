@@ -1,3 +1,9 @@
+---
+layout: post
+title: "When Storage Breaks: Ceph Failures, Recovery, and the Case for Hybrid Drives"
+date: 2026-05-24
+---
+
 # When Storage Breaks: Ceph Failures, Recovery, and the Case for Hybrid Drives
 
 **Subtitle:** Power Failures, Dead Switches, Overlapping Failures, and Why USB Drives With SSD Acceleration Actually Work

@@ -1,3 +1,9 @@
+---
+layout: post
+title: "From Bug Fix to VS Code Marketplace: Reviving an Abandoned Extension"
+date: 2026-07-05
+---
+
 # From Bug Fix to VS Code Marketplace: Reviving an Abandoned Extension
 
 **Subtitle:** How a TypeError in a multi-root workspace led to forking, fixing, testing, and publishing a VS Code extension

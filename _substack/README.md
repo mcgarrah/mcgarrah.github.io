@@ -1,3 +1,7 @@
+---
+published: false
+---
+
 # Substack Newsletter Archive
 
 Archived copies of Substack newsletter articles for version control and reference.

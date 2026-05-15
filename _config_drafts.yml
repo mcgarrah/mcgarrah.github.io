@@ -4,6 +4,17 @@ baseurl: ""
 draft_preview_site: true
 main_site_url: "https://mcgarrah.org"
 
+# Render Substack and LinkedIn drafts as reviewable pages on the preview site.
+# These collections are NOT defined in the main _config.yml, so they never
+# appear on mcgarrah.org — only on drafts.mcgarrah.org.
+collections:
+  substack:
+    output: true
+    permalink: /substack/:name/
+  linkedin:
+    output: true
+    permalink: /linkedin/:name/
+
 # Disable production tracking and ads on the drafts preview site.
 google_analytics: ""
 google_adsense: ""
@@ -29,4 +40,14 @@ defaults:
   - scope:
       path: ""
     values:
+      noindex: true
+  - scope:
+      type: substack
+    values:
+      layout: post
+      noindex: true
+  - scope:
+      type: linkedin
+    values:
+      layout: post
       noindex: true

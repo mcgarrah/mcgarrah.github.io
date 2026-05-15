@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Why Your Data Scientists Need Production Data (And How to Give It to Them Safely)"
+date: 2026-05-17
+---
+
 # Why Your Data Scientists Need Production Data (And How to Give It to Them Safely)
 
 **Subtitle:** A five-stage framework for the platform decision that determines whether your AI initiatives succeed or fail

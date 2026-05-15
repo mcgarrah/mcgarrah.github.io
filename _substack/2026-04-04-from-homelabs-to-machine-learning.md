@@ -1,3 +1,9 @@
+---
+layout: post
+title: "From Homelabs to Machine Learning"
+date: 2026-04-04
+---
+
 # From Homelabs to Machine Learning
 
 **Subtitle:** Building Infrastructure That Teaches You Everything

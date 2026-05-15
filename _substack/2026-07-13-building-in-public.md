@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Building in Public: Preview Sites, Domain Migrations, and the Google Tax"
+date: 2026-07-13
+---
+
 # Building in Public: Preview Sites, Domain Migrations, and the Google Tax
 
 **Subtitle:** Infrastructure for writing, the registrar migration saga, and why Google makes simple things hard

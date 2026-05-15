@@ -1,3 +1,9 @@
+---
+layout: post
+title: "From Markdown to Production: Building a Technical Blog That Actually Works"
+date: 2026-04-20
+---
+
 # From Markdown to Production: Building a Technical Blog That Actually Works
 
 **Subtitle:** Jekyll, GitHub Pages, and the Engineering Behind Writing About Engineering
