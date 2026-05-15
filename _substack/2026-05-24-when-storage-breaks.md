@@ -4,7 +4,7 @@
 
 **Author:** McGarrah
 
-**Planned:** May 18, 2026
+**Planned:** May 24, 2026
 
 **URL:** TBD
 
@@ -52,13 +52,13 @@ The compromise: keep the USB drives for bulk data, but move the metadata (WAL an
 
 - [Measuring the WAL vs DB Performance Gap on Ceph USB OSDs](https://mcgarrah.org/ceph-wal-vs-db-performance-test/) — I benchmarked WAL-only acceleration against full DB acceleration across the cluster. The headline result: DB is 5-15% faster on reads in matched-hardware comparisons. But the real discovery was that the USB 3.0 hardware ceiling dominates everything — the bus speed is the bottleneck, not the metadata placement. Includes ready-to-run benchmark scripts.
 
-## The Prerequisite Nobody Writes About
+## The Prerequisite Nobody Documents
 
-All of this debugging required SSH access to six Proxmox nodes, repeatedly, under pressure. Typing passwords every time was not an option.
+All of this debugging required SSH access to six Proxmox nodes, repeatedly, under pressure. Typing passwords during an incident is not just annoying — it is a friction cost that compounds when you are cycling through nodes isolating a failure.
 
 - [SSH Key-Based Access to a Proxmox Cluster](https://mcgarrah.org/ssh-key-access-proxmox-cluster/) — The setup that makes everything else possible. SSH key authentication, named hosts in SSH config, and the Proxmox-specific detail that shared authorized_keys across cluster nodes means you only deploy the key once.
 
-This is the kind of foundational infrastructure that doesn't make for exciting reading until you're debugging a storage failure at midnight and every second of password typing feels like an eternity.
+This is the kind of foundational infrastructure that does not make for exciting reading until you are debugging a storage failure at midnight. Every production environment I have managed has the equivalent — the access patterns and tooling that nobody thinks about until they are the bottleneck during an incident.
 
 ## The Bigger Picture: Storage Economics
 
