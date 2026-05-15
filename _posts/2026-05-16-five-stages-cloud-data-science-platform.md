@@ -27,6 +27,9 @@ This is not a tooling problem. It is an organizational architecture problem that
 In classic SDLC, the environment hierarchy is straightforward:
 
 ```mermaid
+---
+title: Classic SDLC Environment Promotion
+---
 graph LR
     DEV[Development<br/>Synthetic data<br/>Maximum flexibility] --> MID[Staging / QA / UAT<br/>Sanitized data<br/>Moderate controls]
     MID --> PROD[Production<br/>Real data<br/>Maximum security]
@@ -50,11 +53,14 @@ I have had this argument with development managers, project managers, and securi
 The resolution is a promotion framework designed specifically for data science workloads. Instead of forcing DS into the SDLC model, you build a parallel track that acknowledges the production data requirement from the start.
 
 ```mermaid
+---
+title: Five-Stage Data Science Platform
+---
 graph TD
-    subgraph "Infrastructure Track"
+    subgraph "**Infrastructure Track**"
         IDEV[Infrastructure<br/>Development] --> IPRE[Infrastructure<br/>Pre-Production]
     end
-    subgraph "Data Science Track (Production Data)"
+    subgraph "**Data Science Track** (Production Data)"
         DISC[Prod Discovery<br/>DS Interactive] --> INT[Prod Integration<br/>DS Automation]
         INT --> FINAL[Production<br/>Final Prod]
     end
@@ -150,19 +156,25 @@ The last point is pragmatic but important. When a SOC 2 auditor sees an environm
 
 ## Where I Have Applied This
 
-This framework is not theoretical. I have built or operated variants of it across multiple organizations — and the thinking evolved from watching the problem manifest before I had a name for it.
+This framework is not theoretical. It evolved from watching the problem manifest across multiple organizations over fifteen years — each role adding a layer to the thinking.
 
-- **NC Department of Revenue (2007–2011)** — While predating modern cloud DS platforms, the data classification and access control patterns — particularly around IRS Safeguard data and Publication 1075 compliance — established the security thinking that informs this framework. The principle that production data requires production-grade controls regardless of who is accessing it came directly from this work. When you manage taxpayer data under federal audit, you learn that "development environment with production data" is not a contradiction — it is an architecture requirement that demands specific controls.
+### The Compliance Foundation (2006–2013)
 
-- **SAS Institute (2011–2013)** — Administered validated systems for the pharmaceutical industry under FDA CFR Part 11 compliance — where every action is auditable, every installation documented, and every change request traceable for federal audit. Designed multi-tier SAS architectures for 80+ customers in unique configurations, each managing clinical trial data across dozens of pharmaceutical companies. This was production data at its most sensitive: patient health records, drug efficacy data, and trial outcomes under regulatory scrutiny. The environment demanded the same separation this framework describes — researchers (biostatisticians) needed interactive access to trial data for analysis, while the validated production systems required change-controlled, auditable deployments. The tension between analytical flexibility and regulatory compliance is the pharmaceutical version of the DS-vs-SDLC conflict. The difference is that FDA auditors have enforcement authority that makes SOC 2 look gentle.
+Three roles established the security and data governance principles that underpin this framework. At **BD Biosciences (2006–2007)**, I managed IT for a medical device manufacturing plant under FDA quality system regulations — where every system change required documented validation. At **NC Department of Revenue (2007–2011)**, I managed taxpayer data under IRS Safeguard compliance (Publication 1075), passed a seven-month federal audit producing a 1,300-page report, and learned that production data requires production-grade controls regardless of who is accessing it. At **SAS Institute (2011–2013)**, I administered validated systems for 80+ pharmaceutical customers under FDA CFR Part 11 — clinical trial data across dozens of companies where biostatisticians needed interactive access for analysis while the production systems required change-controlled, auditable deployments. The pharmaceutical tension between analytical flexibility and regulatory compliance is the same DS-vs-SDLC conflict described above, just with FDA enforcement authority behind it.
 
-- **Measurement Incorporated (2013–2015)** — This is where the seed was planted. MI had a team of PhD researchers building NLP and machine learning models for automated essay scoring — production AI/ML serving millions of student assessments annually. The environment was chaotic in the way early ML organizations always are: multiple copies of code, data, and infrastructure scattered across researchers' workstations, shared drives, and production servers. The PhD researchers needed to iterate rapidly on models (the research model), while the production system needed stability and predictable releases (the SDLC model). These two needs were in constant tension, and the organization had not yet separated them architecturally. I watched the conflict play out daily — researchers breaking production by deploying untested model changes, production freezes blocking research progress, data copies proliferating without version control. The five-stage framework I describe here is the solution I wish we had built. Instead, we evolved toward it incrementally — separating research environments from production, adding gates between experimentation and deployment, documenting which data versions produced which models. The progression from chaos to structure taught me that this is not a problem you solve once; it is an organizational capability you build over years.
+The common thread: regulated industries figured out decades ago that "interactive access to sensitive data" is not incompatible with "auditable, controlled environments." You just have to design for both simultaneously rather than treating them as mutually exclusive.
 
-- **NC Department of Information Technology (2015–2016)** — Enterprise architecture for state government. Defining statewide technology standards and vendor evaluation frameworks across dozens of agencies. The cross-organizational coordination patterns — getting independent agencies with different requirements to agree on shared infrastructure — directly informed the "three constituencies" negotiation model described above.
+### The Catalyst (2013–2016)
 
-- **BCBSNC (2019–2021)** — Built the CarePath ML platform on EKS with GPU-enabled spot instances for model training. Scale-to-zero workload patterns kept costs viable. The production data access model for healthcare (HIPAA) required exactly this kind of controlled-but-flexible environment. The lessons from MI's chaos informed the architecture from day one — separate the research phase from the engineering phase, and build the gates between them before the data scientists arrive.
+- **Measurement Incorporated (2013–2015)** — This is where the seed was planted. MI had PhD researchers building NLP and machine learning models for automated essay scoring — production AI/ML serving millions of student assessments annually. The environment was chaotic: multiple copies of code, data, and infrastructure scattered across researchers' workstations, shared drives, and production servers. The researchers needed to iterate rapidly (the research model), while the production system needed stability (the SDLC model). I watched the conflict daily — researchers breaking production with untested model changes, production freezes blocking research, data copies proliferating without version control. The five-stage framework is the solution I wish we had built. Instead, we evolved toward it incrementally. The progression from chaos to structure taught me this is an organizational capability you build over years, not a one-time architecture decision.
 
-- **Envestnet (2021–present)** — Managed the SageMaker infrastructure across four AWS accounts (Dev/QA/UAT/Prod) for the Data Science team. Migrated ML resources from shared accounts to dedicated DataScience-SharedServices environments. Created VPC endpoints for Lambda→SageMaker batch transform connectivity. The account structure maps directly to this framework. Delivered the first AI/ML production workload (AWS Bedrock Data Automation) on the billing platform — the full arc from evaluation through production, with the five-stage thinking embedded in the account architecture. Envestnet also operates a mature DataLake built on vEMR (virtual Enterprise Master Record) and Snowflake, where data engineering treats data as a first-class citizen — versioned, cataloged, and governed through promotion stages that mirror this framework. The DataLake's Airflow-orchestrated pipelines moving data from ingestion through transformation to consumption are the data engineering equivalent of the DS promotion path: raw data in, curated features out, with gates and validation at every stage. That maturity in data engineering is what makes the AI/ML layer viable — you cannot build reliable models on ungoverned data.
+- **NC Department of Information Technology (2015–2016)** — Enterprise architecture for state government. Getting independent agencies with different requirements to agree on shared infrastructure directly informed the "three constituencies" negotiation model described below.
+
+### Full Implementation (2019–present)
+
+- **BCBSNC (2019–2021)** — Built the CarePath ML platform on EKS with GPU-enabled spot instances for model training under HIPAA constraints. Scale-to-zero workload patterns kept costs viable. The lessons from MI's chaos informed the architecture from day one — separate the research phase from the engineering phase, and build the gates between them before the data scientists arrive.
+
+- **Envestnet (2021–present)** — Managed SageMaker infrastructure across four AWS accounts (Dev/QA/UAT/Prod) for the Data Science team. Migrated ML resources to dedicated DataScience-SharedServices environments. Delivered the first AI/ML production workload (AWS Bedrock Data Automation) on the billing platform — the full arc from evaluation through production with the five-stage thinking embedded in the account architecture. Envestnet also operates a mature DataLake built on vEMR and Snowflake, where data engineering treats data as a first-class citizen — versioned, cataloged, and governed through Airflow-orchestrated promotion stages that mirror this framework. Raw data in, curated features out, with gates and validation at every stage. That maturity in data engineering is what makes the AI/ML layer viable — you cannot build reliable models on ungoverned data.
 
 ## The Organizational Challenge
 
