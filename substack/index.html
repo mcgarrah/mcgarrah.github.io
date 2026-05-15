@@ -1,0 +1,24 @@
+---
+layout: page
+title: "Substack Newsletters"
+permalink: /substack/
+noindex: true
+---
+
+{% if site.draft_preview_site %}
+<p>Draft and published Substack newsletters for review.</p>
+
+<ul>
+{% assign substacks = site.substack | sort: 'date' | reverse %}
+{% for article in substacks %}
+  {% if article.title %}
+  <li>
+    <strong>{{ article.date | date: "%Y-%m-%d" }}</strong> —
+    <a href="{{ article.url }}">{{ article.title }}</a>
+  </li>
+  {% endif %}
+{% endfor %}
+</ul>
+{% else %}
+<p>Visit <a href="https://mcgarrah.substack.com/">mcgarrah.substack.com</a> for newsletters.</p>
+{% endif %}
