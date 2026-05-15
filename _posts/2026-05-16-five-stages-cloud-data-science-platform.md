@@ -16,7 +16,7 @@ seo:
   date_modified: 2026-05-16
 ---
 
-Every enterprise I have worked in over the past decade has hit the same wall: data scientists need production data to build useful models, but the standard software development lifecycle assumes production data stays in production. The SDLC model that works perfectly for application development — synthetic data in dev, sanitized data in staging, real data only in prod — fundamentally breaks when applied to machine learning.
+Every enterprise I have worked in for over a decade has hit the same wall: data scientists need production data to build useful models, but the standard software development lifecycle assumes production data stays in production. The SDLC model that works perfectly for application development — synthetic data in dev, sanitized data in staging, real data only in prod — fundamentally breaks when applied to machine learning.
 
 This is not a tooling problem. It is an organizational architecture problem that sits at the intersection of data engineering, security, compliance, and platform engineering. Getting it wrong means either your data scientists train on garbage data and produce garbage models, or your security team grants exceptions that erode your compliance posture. Getting it right requires a promotion framework purpose-built for the constraints of data science work.
 
