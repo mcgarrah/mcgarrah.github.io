@@ -85,10 +85,10 @@ Last updated: 2026-05-09
 | | | | | | **1** ✅ [Jekyll Liquid Code Fence Trap](/jekyll-liquid-code-fence-rendering-trap/) | **2** ✅ [Kiro IDE Parallel Personas](/kiro-ide-parallel-personas-director-developer/) |
 | **3** ✅ [Kiro IDE WSL2 Support](/kiro-ide-wsl2-support-open-remote-extension/) | **4** 📅 [Jekyll Tag/Category Generator](/jekyll-tag-category-generator-plugin/) | 5 | **6** 📅 [Jekyll Giscus Comments](/jekyll-giscus-comments-implementation/) | 7 | **8** 📅 [Jekyll GitHub Actions CI/CD](/jekyll-github-actions-cicd-pipeline/) | **9** 📅 [Jekyll Modern Favicon](/jekyll-modern-favicon-set/) |
 | 10 | **11** 📅 [Jekyll Run Plugin Config](/jekyll-run-vscode-plugin-local-development/) | 12 | **13** 📅 [Draft/Future Visual Indicators](/jekyll-draft-future-visual-indicators/) | **14** 📅 [Resume Site Rebuild](/resume-site-ground-up-rebuild/) | **15** 📅 [Content Distribution Pipeline](/jekyll-content-distribution-pipeline/) | **16** 📅 [Five Stages: Cloud DS Platform](/five-stages-cloud-data-science-platform/) |
-| **17** 📰 [Substack: Why DS Needs Prod Data](/_substack/2026-05-17-why-data-scientists-need-production-data.md) | **19** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | **21** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | **23** 📅 [Caddy Proxy: Multi-Site Jekyll](/caddy-reverse-proxy-local-multi-site-jekyll/) | 24 |
+| **17** 📰 [Substack: Why DS Needs Prod Data](/_substack/2026-05-17-why-your-data-scientists-need-production-data.md) | **19** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | **21** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | **23** 📅 [Caddy Proxy: Multi-Site Jekyll](/caddy-reverse-proxy-local-multi-site-jekyll/) | **24** 📰 [Substack: When Storage Breaks](/_substack/2026-05-24-when-storage-breaks.md) |
 | 25 | **26** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 27 | **28** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 29 | **30** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 31 |
 
-**Summary:** 20 articles (3 published, 17 scheduled) + 1 Substack newsletter. MWF cadence from May 4 onward with Caddy series on MWF May 19/21/23. Five Stages DS Platform (Fri May 16) + Substack companion (Sat May 17). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
+**Summary:** 20 articles (3 published, 17 scheduled) + 2 Substack newsletters. MWF cadence from May 4 onward with Caddy series on MWF May 19/21/23. Five Stages DS Platform (Fri May 16) + Substack companion (Sat May 17). Technical Substack (Sat May 24). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
 
 ---
 
@@ -97,12 +97,12 @@ Last updated: 2026-05-09
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-----|-----|-----|-----|-----|-----|-----|
 | | **1** 📅 [Managing Cross-AI Context](/managing-cross-ai-agent-context/) | 2 | **3** 📅 [ZFS Boot Mirrors Part 3](/proxmox-zfs-boot-mirrors-part-3/) | 4 | **5** 📅 [Jekyll Run Multiroot Bug](/jekyll-run-plugin-multiroot-workspace-bug/) | 6 |
-| 7 | **8** 📅 [Draft Preview Site Part 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** 📅 [Forking Jekyll Run](/forking-jekyll-run-to-run-jekyll/) | 11 | **12** 📅 [Draft Preview Site Part 2](/jekyll-draft-preview-site-part-2/) | 13 |
-| 14 | **15** 📅 [Run Jekyll Marketplace Setup](/run-jekyll-vscode-marketplace-publisher-setup/) | 16 | **17** 📅 [Draft Preview Site Part 3](/jekyll-draft-preview-site-part-3/) | 18 | **19** 📅 [Run Jekyll Bug Fixes](/run-jekyll-bug-fixes-and-code-review/) | 20 |
+| 7 | **8** 📅 [Draft Preview Site Part 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** 📅 [Forking Jekyll Run](/forking-jekyll-run-to-run-jekyll/) | 11 | **12** 📅 [Draft Preview Site Part 2](/jekyll-draft-preview-site-part-2/) | **13** 📅 [Research Model for DS](/research-model-for-data-science/) |
+| **14** 📰 [Substack: DS Is Not SD](/_substack/2026-06-14-data-science-is-not-software-development.md) | **15** 📅 [Run Jekyll Marketplace Setup](/run-jekyll-vscode-marketplace-publisher-setup/) | 16 | **17** 📅 [Draft Preview Site Part 3](/jekyll-draft-preview-site-part-3/) | 18 | **19** 📅 [Run Jekyll Bug Fixes](/run-jekyll-bug-fixes-and-code-review/) | 20 |
 | 21 | **22** 🔲 *Open* | 23 | **24** 📅 [Run Jekyll Testing](/run-jekyll-testing-and-test-harness/) | 25 | **26** 📅 [Google Service Sprawl](/google-service-sprawl/) | 27 |
 | 28 | **29** 📅 [Run Jekyll New Features](/run-jekyll-new-features-clean-doctor-tests/) | 30 | | | | |
 
-**Summary:** 12 articles scheduled + 1 open slot. Caddy Ceph Dashboard moved to May 21. Run Jekyll and Draft Preview series interleaved.
+**Summary:** 13 articles scheduled + 1 open slot + 1 Substack newsletter. Research Model for DS (Sat Jun 13) + Substack companion (Sun Jun 14). Run Jekyll and Draft Preview series interleaved.
 
 ---
 

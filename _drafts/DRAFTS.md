@@ -88,7 +88,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🧰 **Git & Repository Maintenance** | git-history-bloat-drafts-repo-cleanup, git-repo-audit-methodology-findings, git-health-monitoring-github-actions-outline | Series in progress: Part 1 (cleanup execution), Part 2 (audit methodology), Part 3 outline (future automation) |
 | 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
-| 🧠 **Data Science & AI/ML** | five-stages, research-model, phonemes, multi-gpu | Merge or publish separately |
+| 🧠 **Data Science & AI/ML** | five-stages ✅, research-model ✅, phonemes, multi-gpu | Two promoted with Substack companions; remaining drafts standalone |
 | 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md`, Part 1: `2026-07-01-aasr-proxmox-overview.md` |
 | 🖥️ **Kiro IDE** | — | Both articles published: Parallel Personas (`2026-05-02`) and WSL2 Support (`2026-05-03`) |
 | ☁️ **AWS Terraform Modules** | — | QuickSight vanity URL article published (`2026-04-25-quicksight-vanity-urls-serverless-edge-redirects.md`) |
@@ -196,9 +196,8 @@ Drafts that form natural publishing sequences or share a topic.
 
 ### `2024-11-18-five-stages-cloud-data-science-platform.md` — 🧠 Data Science & AI/ML
 
-- Strong opinion piece. Core insight: DS needs production data in dev-like environments.
-- **What's needed:** Light editing. Could use a real-world example or diagram.
-- **Effort:** 1-2 hours
+- ✅ **PROMOTED** to `_posts/2026-05-16-five-stages-cloud-data-science-platform.md`
+- Companion Substack: `_substack/2026-05-17-why-your-data-scientists-need-production-data.md`
 
 ### `2026-01-01-photosynth-update.md`
 
@@ -284,8 +283,8 @@ Drafts that form natural publishing sequences or share a topic.
 
 ### `2024-11-18-research-as-a-model-for-data-science.md` — 🧠 Data Science & AI/ML
 
-- Core thesis: DS fails more than it succeeds (1 in 5 vs SD's 4 in 5).
-- **Recommendation:** Merge into five-stages article, or expand standalone.
+- ✅ **PROMOTED** to `_posts/2026-06-13-research-model-for-data-science.md`
+- Companion Substack: `_substack/2026-06-14-data-science-is-not-software-development.md`
 
 ### `2026-02-12-proxmox-homelab-infrastructure-overview.md` — 🏗️ Homelab Infrastructure
 ### `2026-02-13-pre-kubernetes-homelab-checklist.md` — 🏗️ Homelab Infrastructure
