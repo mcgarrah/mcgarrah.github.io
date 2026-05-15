@@ -12,7 +12,9 @@
 
 ---
 
-My third newsletter covered [when storage breaks](https://mcgarrah.substack.com/p/when-storage-breaks). This one covers a different kind of recovery — taking an abandoned open-source project, diagnosing its failures, and shipping a fixed version to the world.
+When your engineering team depends on an open-source tool whose maintainer has disappeared, you face a build-vs-buy decision that most organizations get wrong. They either wait indefinitely for upstream fixes, or they vendor the dependency without evaluating the maintenance cost. The right answer is a deliberate fork decision — assess the codebase, scope the fix, and decide whether the ongoing maintenance burden is worth owning.
+
+My previous newsletter covered [when storage breaks](https://mcgarrah.substack.com/p/when-storage-breaks). This one covers a different kind of recovery — taking an abandoned open-source project, diagnosing its failures, and shipping a fixed version to the world. It is the same evaluation framework I would apply to any dependency decision in an engineering organization: what is the maintenance posture of the upstream? What is the cost of waiting vs. forking? What is the exit strategy if the fork diverges too far?
 
 It started with a crash. The Jekyll Run VS Code extension — the only plugin that lets you build and serve a Jekyll site from inside VS Code — threw a `TypeError: Cannot read properties of null` every time I opened my multi-root workspace. The original author hadn't committed since 2020. No one was coming to fix this.
 
@@ -58,15 +60,15 @@ With the bugs fixed and tests in place, I added two new commands that Jekyll dev
 
 ## The Open Source Pattern
 
-This whole project follows a pattern I've seen repeatedly in open source:
+This whole project follows a pattern I have seen repeatedly — both in open source and in enterprise dependency management:
 
-1. **Find broken software** that solves a real problem
-2. **Fix it for yourself** (the minimum viable contribution)
-3. **Give back upstream** (PR with just the fixes)
-4. **Diverge when needed** (fork for larger vision)
-5. **Ship it** (Marketplace, documentation, tests)
+1. **Find broken software** that solves a real problem (or a vendor tool that no longer meets requirements)
+2. **Fix it for yourself** (the minimum viable contribution — prove the fix works)
+3. **Give back upstream** (PR with just the fixes — maintain the relationship)
+4. **Diverge when needed** (fork for larger vision when upstream is unresponsive)
+5. **Ship it** (Marketplace, documentation, tests — own the maintenance)
 
-The extension went from "crashes on launch" to "18 bugs documented, 3 fixed, CI/CD modernized, cross-platform tested, VSIX published" in about two weeks of evening work. That's the power of focused open-source contribution — you don't need to rewrite everything, just fix what's broken and ship.
+This is the same decision framework that applies to any dependency in an engineering organization. The extension went from "crashes on launch" to "18 bugs documented, 3 fixed, CI/CD modernized, cross-platform tested, VSIX published" in about two weeks of evening work. That is the power of focused contribution with a clear evaluation framework — you do not need to rewrite everything, just fix what is broken and ship.
 
 ## What's Next
 
@@ -77,6 +79,6 @@ The extension went from "crashes on launch" to "18 bugs documented, 3 fixed, CI/
 
 ## About Me
 
-I'm Michael McGarrah — a cloud architect and data scientist with 25+ years in enterprise infrastructure. I hold an M.S. in Computer Science (AI/ML) from Georgia Tech, a B.S. in Computer Science from NC State, and I'm currently pursuing an Executive MBA at UNC Wilmington.
+I'm Michael McGarrah. I've spent 30 years building and leading technology organizations — from enterprise architecture for North Carolina state government to cloud platforms running production ML models in healthcare and financial services. I hold an M.S. in Computer Science (AI/ML) from Georgia Tech and I'm completing an Executive MBA at UNC Wilmington, deliberately bridging the gap between technical depth and business strategy. I still write code, debug distributed systems, and build infrastructure — because the best technology leaders never stop being engineers.
 
 You can find more of my writing at [mcgarrah.org](https://mcgarrah.org), my detailed resume at [mcgarrah.org/resume](https://mcgarrah.org/resume), and my profiles on [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/), [GitHub](https://github.com/mcgarrah), and [Google Scholar](https://scholar.google.com/citations?user=Lt7T2SwAAAAJ).

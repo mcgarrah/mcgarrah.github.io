@@ -11,9 +11,9 @@ The `_substack/` prefix ensures Jekyll ignores this directory during builds — 
 | 2026-04-04 | `2026-04-04-from-homelabs-to-machine-learning.md` | From Homelabs to Machine Learning | https://mcgarrah.substack.com/p/from-homelabs-to-machine-learning |
 | 2026-04-20 | `2026-04-20-from-markdown-to-production.md` | From Markdown to Production | https://mcgarrah.substack.com/p/from-markdown-to-production-building |
 | 2026-05-17 | `2026-05-17-why-your-data-scientists-need-production-data.md` | Why Your Data Scientists Need Production Data | TBD |
-| 2026-05-18 | `2026-05-18-when-storage-breaks.md` | When Storage Breaks | TBD |
+| 2026-05-24 | `2026-05-24-when-storage-breaks.md` | When Storage Breaks | TBD |
 | 2026-06-14 | `2026-06-14-data-science-is-not-software-development.md` | Data Science Is Not Software Development | TBD |
-| 2026-06-15 | `2026-06-15-from-bug-fix-to-marketplace.md` | From Bug Fix to VS Code Marketplace | TBD |
+| 2026-07-05 | `2026-07-05-from-bug-fix-to-marketplace.md` | From Bug Fix to VS Code Marketplace | TBD |
 | 2026-07-13 | `2026-07-13-building-in-public.md` | Building in Public: Preview Sites, Domain Migrations, and the Google Tax | TBD |
 | TBD | — | Machine Learning (planned) | — |
 

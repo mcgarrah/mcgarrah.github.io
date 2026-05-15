@@ -12,7 +12,9 @@
 
 ---
 
-My first newsletter covered [building the homelab](https://mcgarrah.substack.com/p/from-homelabs-to-machine-learning). My second covered [the blog platform](https://mcgarrah.substack.com/p/from-markdown-to-production). This one covers what happens when the infrastructure breaks — and the engineering decisions that determine whether recovery takes minutes or days.
+Incident response discipline is a leadership competency, not just an engineering skill. How your team debugs overlapping failures — the systematic isolation of variables, the staged recovery, the post-incident documentation — tells you more about engineering maturity than any architecture diagram.
+
+My first newsletter covered [building the homelab](https://mcgarrah.substack.com/p/from-homelabs-to-machine-learning). My second covered [the blog platform](https://mcgarrah.substack.com/p/from-markdown-to-production-building). This one covers what happens when the infrastructure breaks — and the engineering decisions that determine whether recovery takes minutes or days. Having managed similar failure cascades in production environments — including systems under federal security audit — the debugging methodology is identical. The stakes change; the discipline doesn't.
 
 In April 2026, a power outage knocked my 15-OSD Ceph cluster down to 4 healthy OSDs. The recovery took days, not because Ceph is fragile, but because three separate problems were hiding behind each other: a dead SAN switch, a ceph.conf misconfiguration, and a USB drive that had silently failed weeks earlier. Untangling overlapping failures in a distributed storage system is the kind of debugging that teaches you more than any certification course.
 
@@ -80,7 +82,7 @@ Every failure in this series maps to a distributed systems concept that shows up
 - **Tiered storage** — The same hot/cold data pattern used in every cloud provider's storage offering, implemented with consumer hardware
 - **Hardware ceilings** — The USB 3.0 bus speed bottleneck is the same class of problem as network bandwidth limits in distributed training
 
-The homelab is where I learn these lessons at low cost. The enterprise is where I apply them at scale.
+The homelab is where I learn these lessons at low cost. The enterprise is where I apply them at scale — and where the same debugging methodology has resolved production incidents across healthcare platforms under HIPAA audit, financial services systems processing billions in assets, and state government infrastructure serving millions of citizens.
 
 ## What's Next
 
@@ -92,6 +94,6 @@ The cluster is stable and the hybrid architecture is performing well. Next prior
 
 ## About Me
 
-I'm Michael McGarrah — a cloud architect and data scientist with 25+ years in enterprise infrastructure. I hold an M.S. in Computer Science (AI/ML) from Georgia Tech, a B.S. in Computer Science from NC State, and I'm currently pursuing an Executive MBA at UNC Wilmington.
+I'm Michael McGarrah. I've spent 30 years building and leading technology organizations — from enterprise architecture for North Carolina state government to cloud platforms running production ML models in healthcare and financial services. I hold an M.S. in Computer Science (AI/ML) from Georgia Tech and I'm completing an Executive MBA at UNC Wilmington, deliberately bridging the gap between technical depth and business strategy. I still write code, debug distributed systems, and build infrastructure — because the best technology leaders never stop being engineers.
 
 You can find more of my writing at [mcgarrah.org](https://mcgarrah.org), my detailed resume at [mcgarrah.org/resume](https://mcgarrah.org/resume), and my profiles on [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/), [GitHub](https://github.com/mcgarrah), and [Google Scholar](https://scholar.google.com/citations?user=Lt7T2SwAAAAJ).
