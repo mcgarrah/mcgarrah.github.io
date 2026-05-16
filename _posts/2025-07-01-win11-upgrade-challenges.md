@@ -4,8 +4,14 @@ image: /assets/images/og/win11-upgrade-challenges.png
 layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, windows11, webcam, performance]
+excerpt: "Upgrading two ThinkPad T480 laptops to Windows 11 exposed hardware-specific performance regressions, a broken Logitech C930e webcam, and the counterintuitive fix of switching from Best Performance to Balanced power mode."
+description: "Troubleshooting Windows 11 upgrade performance issues on ThinkPad T480 hardware. Covers Logitech C930e webcam and microphone failures, Snipping Tool auto-save slowdowns, the counterintuitive Best Performance vs Balanced power mode regression, and a USB hub incompatibility — with fixes for each."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2025-07-01
+  date_modified: 2026-04-05
 ---
 
 Upgrading to Windows 11 on my ThinkPad T480 laptops turned into a performance nightmare with some unexpected solutions.

@@ -4,8 +4,14 @@ image: /assets/images/og/usb-drive-smart-updates.png
 layout: post
 categories: [technical, hardware, proxmox]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab, ceph, cluster]
+excerpt: "New Seagate USB drives arrived for the Ceph cluster and predictably won't report SMART data. After months of production use, GRUB boot parameters are the only method that reliably survives kernel updates and cluster reboots."
+description: "Updated USB SMART monitoring guide for Proxmox Ceph clusters with expanded Seagate device ID coverage for 2025-era drives. Covers why GRUB boot parameters outperform modprobe and runtime quirks in production, real-world results from 4+ months of cluster operation, and a multi-node deployment script using CephFS shared storage."
 published: true
 last_modified_at: 2026-02-04
+seo:
+  type: BlogPosting
+  date_published: 2026-02-03
+  date_modified: 2026-02-04
 ---
 
 New USB drives arrived for my Ceph cluster, and they're not reporting SMART data. Again. After solving this problem in my [October 2025 article](/2025/10/26/usb-drive-smart/), I need to update the configuration with new device IDs and share the lessons learned from running this solution across my entire cluster.

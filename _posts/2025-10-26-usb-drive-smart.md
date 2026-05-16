@@ -4,8 +4,14 @@ image: /assets/images/og/usb-drive-smart.png
 layout: post
 categories: [technical, hardware]
 tags: [seagate, usb, smart, monitoring, storage, linux, proxmox, homelab]
+excerpt: "Seagate USB drives hide SMART data behind UAS quirks. Disabling UAS via GRUB boot parameters unlocks full health monitoring without sacrificing stability."
+description: "How to enable SMART monitoring on Seagate USB drives in Linux by applying USB storage quirks to disable UAS. Covers three methods — runtime, modprobe, and GRUB boot parameters — with the vendor:product IDs for common Seagate BUP, One Touch, and Expansion drive series used in Proxmox homelab clusters."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-10-26
+  date_modified: 2026-04-14
 ---
 
 USB drives are notorious for hiding their SMART data behind finicky USB-to-SATA bridges. If you've ever tried to check the health of a Seagate USB drive and gotten frustrated with "unsupported field in scsi command" errors, you're not alone.

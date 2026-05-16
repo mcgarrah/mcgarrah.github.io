@@ -2,10 +2,16 @@
 title: "New Features: Copy Buttons, Comments, Tags, and More!"
 image: /assets/images/og/website-feature-enhancements.png
 layout: post
+excerpt: "A batch of new features for the blog: clipboard copy buttons on code blocks, Giscus GitHub Discussions comments, a full tags and categories system, reading time estimates, and a round of security and SASS modernization fixes."
+description: "Announcing new blog features including clipboard.js copy buttons for code blocks, Giscus comment system powered by GitHub Discussions, a comprehensive tags and categories taxonomy, reading time indicators, and under-the-hood improvements including CodeQL scanning, Dependabot, SASS module system migration, and CDN-hosted KaTeX."
 published: true
 last_modified_at: 2025-09-13
 categories: [web-development, website]
 tags: [feature, clipboard, giscus, tags, categories, jekyll, github-pages, website]
+seo:
+  type: BlogPosting
+  date_published: 2025-05-31
+  date_modified: 2025-09-13
 ---
 
 I'm happy to announce a batch of new features that enhance the functionality and user experience of this blog. These improvements make the content more interactive, organized, and user-friendly. Hopefully, you like the changes.

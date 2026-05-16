@@ -4,8 +4,14 @@ image: /assets/images/og/proxmox-consolidated-notes.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, python, backup, automation, scripting]
+excerpt: "A Python script to extract and consolidate the Notes fields from every Proxmox datacenter, node, VM, and LXC config into a single Markdown engineering log."
+description: "How to back up Proxmox cluster notes using a Python script that traverses /etc/pve/nodes/, decodes URL-encoded characters, and consolidates datacenter, node, VM, and LXC documentation into a single Markdown file. Covers the pmxcfs directory structure, why top-level shortcuts miss cluster-wide configs, and optional HTML detection for community script metadata."
 published: true
 last_modified_at: 2026-04-02
+seo:
+  type: BlogPosting
+  date_published: 2026-01-21
+  date_modified: 2026-04-02
 ---
 
 One of the underrated features of Proxmox is the ability to leave notes on the individual resources like the Datacenter, individual nodes, and every VM or Container. However, these notes are tucked away in individual configuration files within the Proxmox Cluster File System (`/etc/pve`).

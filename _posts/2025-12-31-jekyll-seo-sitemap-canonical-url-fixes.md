@@ -8,8 +8,11 @@ description: "Complete guide to fixing canonical URL mismatches, redirect warnin
 image: /assets/images/jekyll-seo-canonical.png
 author: Michael McGarrah
 published: true
+last_modified_at: 2025-12-31
 seo:
   type: BlogPosting
+  date_published: 2025-12-31
+  date_modified: 2025-12-31
 ---
 
 After running this Jekyll blog for a couple of years, Google Search Console revealed several SEO issues that were impacting indexing and search visibility. This post documents the systematic approach to resolving canonical URL conflicts, redirect warnings, and 404 errors that commonly affect Jekyll sites on GitHub Pages.

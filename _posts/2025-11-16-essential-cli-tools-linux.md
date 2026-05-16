@@ -4,8 +4,14 @@ image: /assets/images/og/essential-cli-tools-linux.png
 layout: post
 categories: [technical, reference]
 tags: [linux, cli, monitoring, tools, sysadmin, homelab]
+excerpt: "The CLI tools I actually reach for when Linux systems misbehave: htop, iotop, ncdu, iftop, mtr, and a handful of specialists for hardware and performance diagnosis."
+description: "A practical reference for Linux system management CLI tools built from years of homelab and production experience. Covers process monitoring with htop and btop, storage diagnostics with ncdu and iotop, network troubleshooting with mtr and nethogs, hardware monitoring with lm-sensors and smartctl, and performance testing with iperf3 and ioping."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-11-16
+  date_modified: 2026-04-14
 ---
 
 After years of managing Linux systems - from my [Dell Wyse 3040 Proxmox cluster](/tags/wyse3040/) to various VMs and containers - I've accumulated a collection of command-line tools that I reach for constantly. These aren't exotic utilities, but rather the practical tools that help me figure out what's actually happening when systems misbehave.

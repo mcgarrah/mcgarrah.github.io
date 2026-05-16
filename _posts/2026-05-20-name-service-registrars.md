@@ -4,7 +4,10 @@ image: /assets/images/og/name-service-registrars.png
 layout: post
 date: 2026-05-20
 last_modified_at: 2026-05-20
+categories: [technical, infrastructure]
+tags: [dns, domains, porkbun, squarespace, migration, homelab, automation]
 excerpt: "Documenting the multi-week process of transferring 16 domains from SquareSpace to Porkbun in batches, managing costs, and dealing with transfer delays. Why Porkbun won for homelab domain management."
+description: "Migrating 16 domains from SquareSpace to Porkbun after Google Domains was sold. Covers the batching strategy by renewal date, cost breakdown across TLDs, SquareSpace's lack of DNS export and why you must back up records before transfer, the accelerated transfer process, and why Porkbun's API access was the deciding factor for homelab DNS automation."
 seo:
   type: BlogPosting
   date_published: 2026-05-20

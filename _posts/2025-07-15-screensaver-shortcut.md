@@ -4,8 +4,14 @@ image: /assets/images/og/screensaver-shortcut.png
 layout: post
 categories: [technical]
 tags: [windows, screensaver]
+excerpt: "How to create a keyboard shortcut that starts the Windows screensaver without locking the computer, using a desktop shortcut to a .scr file."
+description: "Creating a Windows keyboard shortcut to launch the screensaver without triggering a lock screen. Covers locating screensaver .scr files in System32, creating a desktop shortcut, assigning a hotkey, and why this is preferable to Hot Corners when using PowerToys Mouse Without Borders."
 published: true
 last_modified_at: 2025-07-18
+seo:
+  type: BlogPosting
+  date_published: 2025-07-15
+  date_modified: 2025-07-18
 ---
 
 After my Windows 11 upgrade, I have a need for a quick way to start my screensaver but not lock my computer. So the Windows-L (lock) is not a desired options for this use-case. I want to quickly get back to my screen without logging back in.

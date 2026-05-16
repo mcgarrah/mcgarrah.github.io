@@ -4,8 +4,14 @@ image: /assets/images/og/pytorch-asr-example.png
 layout: post
 categories: [development, machine-learning]
 tags: [pytorch, asr, machine-learning, python, speech-recognition, ai, deep-learning]
+excerpt: "Exploring whether modern PyTorch ASR pipelines expose phoneme-level representations, using Wav2Vec 2.0 to extract and visualize phoneme probabilities from speech."
+description: "Using PyTorch and Wav2Vec 2.0 to extract phoneme-level representations from speech signals. Covers the Wav2Vec 2.0 architecture, CTC decoding, phoneme probability visualization, and comparison with a specialized phoneme recognition model — motivated by a graduate school interest in whether ASR internals expose the sound units of language."
 published: true
 last_modified_at: 2025-09-13
+seo:
+  type: BlogPosting
+  date_published: 2025-05-29
+  date_modified: 2025-09-13
 ---
 
 # ASR with PyTorch: Exploring Phoneme Representations

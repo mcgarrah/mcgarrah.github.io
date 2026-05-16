@@ -4,8 +4,14 @@ image: /assets/images/og/dell-wyse-3040-emmc-monitoring.png
 layout: post
 categories: [technical, hardware]
 tags: [dell-wyse-3040, emmc, monitoring, storage, health, homelab]
+excerpt: "eMMC storage doesn't support SMART, but the JEDEC health reporting built into mmc-utils gives you life time estimation and pre-EOL status for Dell Wyse 3040 boot drives."
+description: "Monitoring eMMC storage health on Dell Wyse 3040 Proxmox nodes using mmc-utils. Covers the difference between SMART and JEDEC health reporting, interpreting Device Life Time Estimation and Pre EOL values, and a simple bash script to check health across a cluster of fanless nodes running 24/7."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-10-19
+  date_modified: 2026-04-14
 ---
 
 I found out awhile ago that eMMC storage is a different thing entirely when it comes to health monitoring. This is especially true when you're booting from it like on the [Dell Wyse 3040s](/tags/wyse3040/) of which I have several in my homelab. The goal is to get some status information on the eMMC storage health, but the usual SMART utilities don't work on eMMC.

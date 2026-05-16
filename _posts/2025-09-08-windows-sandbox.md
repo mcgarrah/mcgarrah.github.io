@@ -4,8 +4,14 @@ image: /assets/images/og/windows-sandbox.png
 layout: post
 categories: [technical]
 tags: [windows, vm, sandbox, virtualization]
+excerpt: "Windows Sandbox provides a disposable, isolated VM that resets on close — ideal for testing scripts and software without risking the host system."
+description: "Using Windows Sandbox as a lightweight disposable VM for safe testing on Windows 11. Covers enabling the feature via DISM or PowerShell, a setup script that installs Chocolatey and essential tools, WSB configuration files, and practical guidance on when Sandbox is and isn't the right tool."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2025-09-08
+  date_modified: 2025-09-11
 ---
 
 I've been doing more experimental stuff on my Windows 11 laptops lately - testing sketchy PowerShell scripts, trying out random software, and generally doing things that could completely wreck my system. While I have disk images for recovery, that's a nuclear option that would cost me a day or two of rebuilding.

@@ -4,8 +4,14 @@ image: /assets/images/og/online-quiz-software.png
 layout: post
 categories: [reference, education]
 tags: [certification, education, quiz, software, learning, study-tools]
+excerpt: "Building a Flask-based multiple-choice quiz webapp from scratch after evaluating existing open source options and finding them all lacking."
+description: "Evaluating open source quiz applications for certification study and deciding to build a custom Flask webapp instead. Covers requirements gathering, framework selection, SQLAlchemy with SQLite, and lessons learned from a rapid prototype that grew into a functional certification practice tool."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2025-03-28
+  date_modified: 2026-04-05
 ---
 
 I have been studying for [several technical certifications](/isc2-cybersecurity-certification/) and recently an online MBA program with Exams that require studying. A goal in the back of my mind was to study for those using an application that replicates the certification and exam process. With that in mind, I started looking around for a simple test or quiz web application that lets me plugin a pile of questions in multiple-choice format with a timer as a baseline.

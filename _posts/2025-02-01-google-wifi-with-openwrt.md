@@ -4,8 +4,14 @@ image: /assets/images/og/google-wifi-with-openwrt.png
 layout: post
 categories: [technical, networking]
 tags: [openwrt, networking, hacking, google-wifi, router, firmware]
+excerpt: "Repurposing first-generation Google Wifi units by flashing OpenWRT using the SuzyQ CCD cable and Closed Case Debugging."
+description: "How to flash OpenWRT onto first-generation Google Wifi (Gale) units using Closed Case Debugging and the SuzyQ cable. Covers the hardware requirements, CCD access method, and why OpenWRT beats the GaleForce root access approach for full router control."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2025-02-01
+  date_modified: 2025-09-11
 ---
 
 I have a pile of first generation [**Google Wifi**](https://en.wikipedia.org/wiki/Nest_Wifi#First_generation) units that I'm upgrading from to the latest [Nest Wifi Pro](https://store.google.com/product/nest_wifi_pro) that has WiFi 6e support. I want to reuse the older network devices for a secondary network but want greater control over them.

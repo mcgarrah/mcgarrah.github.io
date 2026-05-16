@@ -4,11 +4,13 @@ image: /assets/images/og/caddy-reverse-proxy-proxmox-web-ui.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, caddy, reverse-proxy, lxc, ssl, web-interface, homelab]
-date: 2026-05-19
-last_modified_at: 2026-05-19
+excerpt: "A Caddy reverse proxy in a Debian LXC container gives a six-node Proxmox cluster a single HTTPS entry point with load balancing, health checks, and working noVNC console support in about 30 lines of Caddyfile."
+description: "Setting up Caddy as a reverse proxy for a multi-node Proxmox cluster web UI. Covers LXC container creation, Caddy installation, Caddyfile configuration with ip_hash sticky sessions, health checks, TLS skip-verify for self-signed Proxmox certificates, and WebSocket header forwarding required for the noVNC and xterm.js consoles."
+last_modified_at: 2026-05-18
 seo:
-  date_published: 2026-05-19
-  date_modified: 2026-05-19
+  type: BlogPosting
+  date_published: 2026-05-18
+  date_modified: 2026-05-18
 ---
 
 Managing a six-node Proxmox cluster means six different web interfaces on six different IPs, all on port 8006 with self-signed certificates. A Caddy reverse proxy in an LXC container gives you a single entry point with load balancing, health checks, and working WebSocket support for the console — all in about 30 lines of configuration. This is the same pattern you'd use for any clustered management plane — Kubernetes dashboards, Grafana instances, database admin consoles — a reverse proxy that abstracts the individual nodes behind a stable endpoint.

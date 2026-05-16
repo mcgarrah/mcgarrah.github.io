@@ -4,8 +4,14 @@ image: /assets/images/og/dell-wyse-3040-reboot.png
 layout: post
 categories: [technical, hardware, troubleshooting]
 tags: [dell-wyse-3040, debian, systemd, automation, homelab, scheduling, linux]
+excerpt: "Adding a nightly reboot schedule to RAM-constrained Dell Wyse 3040 Proxmox nodes using SystemD timers instead of crontab."
+description: "How to schedule nightly reboots on Debian 12 Proxmox nodes using SystemD service and timer units. Covers the classic crontab approach, the SystemD equivalent with randomized delay, verification commands, and why a nightly reboot helps stability on memory-constrained Dell Wyse 3040 hardware."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2025-03-24
+  date_modified: 2026-04-05
 ---
 
 My super lean Proxmox 8.3 testbed cluster running Ceph occasionally just decides to lockup a node based on it being incredibly limited on RAM and CPU. As much as I hate rebooting Linux/UNIX systems, this is a case where a nightly reboot of the nodes might help with reliability.

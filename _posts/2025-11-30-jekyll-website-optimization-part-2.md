@@ -4,8 +4,14 @@ image: /assets/images/og/jekyll-website-optimization-part-2.png
 layout: post
 categories: [web-development, technical]
 tags: [jekyll, github-pages, optimization, analytics, performance, monitoring]
+excerpt: "Advanced analytics, Core Web Vitals tracking, and the lessons learned from running a 100+ post technical blog — plus the remaining optimization roadmap."
+description: "Part 2 of Jekyll optimization for GitHub Pages. Covers GA4 custom event tracking, Core Web Vitals measurement, dark mode implementation, reading progress indicators, breadcrumb navigation, lazy loading, and performance metrics from before and after the optimization work — with lessons learned from 100+ posts and an international audience."
 published: true
 last_modified_at: 2026-04-14
+seo:
+  type: BlogPosting
+  date_published: 2025-11-30
+  date_modified: 2026-04-14
 ---
 
 In [Part 1](/jekyll-website-optimization-part-1/) of this series, we covered the foundational optimizations for Jekyll sites on GitHub Pages. Part 2 dives into advanced analytics, performance monitoring, and the lessons learned from running a technical blog with 100+ posts.

@@ -3,9 +3,15 @@ layout: post
 title: "Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters"
 image: /assets/images/og/proxmox-zfs-boot-mirror-smart-analysis.png
 excerpt: "Automated SMART monitoring and cost planning for ZFS boot mirrors across a six-node Proxmox homelab cluster with mixed SSD/HDD hardware. Track drive health, plan replacements, and manage homelab storage costs effectively."
+description: "Building automated SMART health monitoring for ZFS boot mirrors across a six-node Proxmox 8 cluster. Covers two bash scripts for disk inventory and SMART analysis, replacement priority triage based on reallocated sectors and power-on hours, a phased SSD migration strategy, and lessons from two emergency HDD failures that validated the ZFS mirror investment."
 categories: [proxmox, zfs, storage, monitoring]
 tags: [proxmox, zfs, smart, storage, cluster, hardware]
 published: true
+last_modified_at: 2026-02-05
+seo:
+  type: BlogPosting
+  date_published: 2026-02-05
+  date_modified: 2026-02-05
 ---
 
 # ZFS Boot Mirror Drive Analysis

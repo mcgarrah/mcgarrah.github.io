@@ -2,12 +2,18 @@
 title:  "Backlog of Posts from 2024"
 image: /assets/images/og/backlog-of-posts-2024.png
 layout: post
+excerpt: "A status update on the growing draft backlog heading into 2025 — what got written, what's still waiting, and what keeps getting added."
+description: "Mid-2025 review of the blog post backlog inherited from 2024. Covers completed posts, stalled drafts across Proxmox, Ceph, networking, and development topics, and the ongoing challenge of writing consistently while managing a homelab, MBA program, and full-time job."
 published: true
 last_modified_at: 2026-04-05
 tags: [planning, jekyll, backlog, organization, writing, projects, homelab]
 categories:
   - organization
   - writing
+seo:
+  type: BlogPosting
+  date_published: 2025-02-17
+  date_modified: 2026-04-05
 ---
 
 My past write up for a [Backlog of Posts](/backlog-of-posts/) had all the things that I wanted to write about in mid-2024. It has been updated with links to the released posts that covered each as I finished up in 2024. I got a lot of them written but the backlog of drafts and things I wanted to write about also grew as I picked off drafts and added new posts.

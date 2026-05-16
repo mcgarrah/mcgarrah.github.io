@@ -4,8 +4,14 @@ image: /assets/images/og/upcoming-articles-roadmap.png
 layout: post
 categories: [organization, writing]
 tags: [planning, roadmap, homelab, proxmox, ceph, jekyll, development, writing]
+excerpt: "A publishing schedule for the remaining 16 articles planned through end of 2025, covering Proxmox, Ceph, hardware monitoring, CLI tools, and Jekyll optimization."
+description: "Publishing roadmap for September through December 2025. Covers planned articles on Proxmox and Ceph deep dives, Dell Wyse 3040 hardware monitoring, essential Linux CLI tools, Jekyll optimization, and development automation — with honest commentary on the challenge of sticking to a schedule."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2025-09-12
+  date_modified: 2026-04-05
 ---
 
 I've got a pile of articles I want to get out before the end of 2025, and I'm trying to stick to at least one post per week. That's roughly 16 more articles between now and December, which sounds doable if I don't get distracted by shiny new projects.
