@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v6
         
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.300.0
+        uses: ruby/setup-ruby@v1.307.0
         with:
           ruby-version: '3.2'
           bundler-cache: true
@@ -184,9 +184,9 @@ jobs:
             xmllint --noout _site/feed.xml
             echo "✅ RSS feed XML is valid"
             
-            # Check feed contains recent posts
-            ITEMS=$(grep -c "<item>" _site/feed.xml || true)
-            echo "📊 RSS feed contains $ITEMS items"
+            # Check feed contains recent posts (jekyll-feed generates Atom <entry> tags)
+            ITEMS=$(grep -c "<entry>" _site/feed.xml || true)
+            echo "📊 RSS feed contains $ITEMS entries"
           else
             echo "❌ RSS feed not found"
             exit 1
@@ -257,7 +257,7 @@ jobs:
           
           # Check for large images (basic check)
           find _site -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" | while read img; do
-            SIZE=$(stat -f%z "$img" 2>/dev/null || stat -c%s "$img" 2>/dev/null || echo 0)
+            SIZE=$(stat -c%s "$img" 2>/dev/null || echo 0)
             if [ "$SIZE" -gt 500000 ]; then  # 500KB
               echo "⚠️  Large image: $img ($(($SIZE/1024))KB)"
             fi
@@ -281,12 +281,12 @@ jobs:
           
           # Find generic link text patterns — match only exact non-descriptive text
           # Exclude "read more: Title" which is descriptive
-          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
           echo "⚠️  Generic link text found: $GENERIC_LINKS"
           
           if [ "$GENERIC_LINKS" -gt 0 ]; then
             echo "Links with generic text:"
-            find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | head -10
+            find _site -name "*.html" -exec grep -oP '<a\s[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | head -10
           fi
           
       - name: Check anchor elements
@@ -294,16 +294,17 @@ jobs:
           echo "Checking for anchor elements without proper href..."
           
           # Find anchor elements without href or with empty/invalid href
-          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
+          # Use '<a\s' to avoid false matches on <aside>, <article>, etc.
+          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
           echo "⚠️  Anchor elements without proper href: $INVALID_ANCHORS"
           
           # Find disabled/empty anchors
-          DISABLED_ANCHORS=$(find _site -name "*.html" -exec grep -o '<a[^>]*class="[^"]*disabled[^"]*"[^>]*>' {} \; | wc -l || true)
+          DISABLED_ANCHORS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*class="[^"]*disabled[^"]*"[^>]*>' {} \; | wc -l || true)
           echo "⚠️  Disabled anchor elements: $DISABLED_ANCHORS"
           
           if [ "$INVALID_ANCHORS" -gt 0 ] || [ "$DISABLED_ANCHORS" -gt 0 ]; then
             echo "Files with invalid anchors:"
-            find _site -name "*.html" -exec grep -l '<a[^>]*class="[^"]*disabled' {} \; | head -5
+            find _site -name "*.html" -exec grep -lP '<a\s[^>]*class="[^"]*disabled' {} \; | head -5
           fi
           
       - name: Check tap target sizes
@@ -311,7 +312,7 @@ jobs:
           echo "Checking for small tap targets..."
           
           # This is a basic check - full validation requires CSS analysis
-          SMALL_LINKS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>[^<]*</a>' {} \; | grep -E '^.{1,20}$' | wc -l || true)
+          SMALL_LINKS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>[^<]*</a>' {} \; | grep -E '^.{1,20}$' | wc -l || true)
           echo "⚠️  Potentially small tap targets: $SMALL_LINKS"
           
           echo "Note: Full tap target validation requires CSS analysis and browser testing"
@@ -332,12 +333,11 @@ jobs:
           fi
           
           # Check for duplicate meta descriptions
-          find _site -name "*.html" -exec grep -l 'name="description"' {} \; | xargs grep -o 'name="description" content="[^"]*"' | sort | uniq -d > duplicate-descriptions.txt
+          find _site -name "*.html" -exec grep -oh 'name="description" content="[^"]*"' {} \; | sort | uniq -d > duplicate-descriptions.txt
           DUPLICATE_DESC=$(wc -l < duplicate-descriptions.txt)
           if [ "$DUPLICATE_DESC" -gt 0 ]; then
             echo "⚠️  Duplicate meta descriptions: $DUPLICATE_DESC"
-            echo "Files with duplicate descriptions:"
-            find _site -name "*.html" -exec grep -l 'name="description"' {} \; | xargs grep -l "$(head -1 duplicate-descriptions.txt | sed 's/.*content="//;s/".*//')" | head -5
+            head -5 duplicate-descriptions.txt
           else
             echo "✅ No duplicate meta descriptions"
           fi
@@ -369,7 +369,7 @@ jobs:
           echo "### Site Statistics" >> seo-report.md
           echo "- Total HTML pages: $(find _site -name "*.html" | wc -l)" >> seo-report.md
           echo "- Sitemap URLs: $(grep -c "<url>" _site/sitemap.xml)" >> seo-report.md
-          echo "- RSS feed items: $(grep -c "<item>" _site/feed.xml || echo "0")" >> seo-report.md
+          echo "- RSS feed entries: $(grep -c "<entry>" _site/feed.xml || echo "0")" >> seo-report.md
           echo "- Pages with JSON-LD: $(find _site -name "*.html" -exec grep -l 'application/ld+json' {} \; | wc -l)" >> seo-report.md
           echo "- Pages with viewport meta: $(find _site -name "*.html" -exec grep -l 'name="viewport"' {} \; | wc -l)" >> seo-report.md
           echo "" >> seo-report.md
@@ -402,11 +402,11 @@ jobs:
           echo "- Duplicate titles: $DUPLICATE_TITLES" >> seo-report.md
           
           # Generic link text
-          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
           echo "- Generic link text: $GENERIC_LINKS" >> seo-report.md
           
           # Invalid anchor elements
-          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -o '<a[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
+          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
           echo "- Anchor elements without proper href: $INVALID_ANCHORS" >> seo-report.md
           
           echo "" >> seo-report.md
