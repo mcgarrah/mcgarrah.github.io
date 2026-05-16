@@ -4,8 +4,14 @@ image: /assets/images/og/consolidated-articles.png
 layout: post
 categories: [personal, writing, web-development]
 tags: [personal, career, education, georgia-tech, machine-learning, jekyll, github-pages, website, migration]
+excerpt: "Resurrecting a technical blog after seven years away — migrating old WordPress archives, Google Blogger posts, and 1990s DarkMagic.org content into a new Jekyll site on GitHub Pages."
+description: "Returning to technical blogging after graduating from Georgia Tech's Machine Learning program and several years of full-time work. Covers the decision to use Jekyll on GitHub Pages over WordPress or serverless options, migrating archives from multiple platforms, and plans for future content on homelab infrastructure and ML work."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2023-06-29
+  date_modified: 2026-04-05
 ---
 
 So it's been quite awhile since I posted anything to any blog. I did post a couple updates as I did projects in grad school. The Wordpress site I used for this earlier died and was hosted on a VMware ESXi server in my homelab. I didn't have time to fix it while in school so no postings since mid-2016.

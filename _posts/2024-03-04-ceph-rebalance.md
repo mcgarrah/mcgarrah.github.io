@@ -4,8 +4,14 @@ image: /assets/images/og/ceph-rebalance.png
 layout: post
 categories: [technical, homelab, troubleshooting]
 tags: [ceph, proxmox, storage, clustering, rebalance, troubleshooting, homelab]
+excerpt: "Fixing a severely imbalanced Ceph cluster where OSDs added in batches left the first three drives at 75-85% while newer ones sat nearly empty — by tuning backfill and recovery parallelism."
+description: "Resolving Ceph OSD imbalance caused by adding drives in batches while loading data. Covers tuning osd_max_backfills and osd_recovery_max_active to accelerate rebalancing, the upmap-based manual remapping approach as an alternative, and when to disable scrubbing to reduce I/O contention during recovery on a 1Gbps SAN."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2024-03-04
+  date_modified: 2026-04-05
 ---
 
 This is rough draft that I'm just pushing out as it might be useful to someone not stay in my drafts folder forever...  Good enough beats Perfect that never ships every time.

@@ -4,8 +4,14 @@ image: /assets/images/og/isc2-cybersecurity-certification.png
 layout: post
 categories: [security, certifications]
 tags: [isc2, cybersecurity, certification, security, professional-development]
+excerpt: "The ISC2 CC certification was offered free through end of 2024 — a solid entry point into security fundamentals and a direct stepping stone toward CCSP and CISSP."
+description: "Review of the ISC2 Certified in Cybersecurity (CC) certification offered free through 2024. Covers the training content quality, how it fills gaps in IT-focused security knowledge with proper security terminology and standards context, its relationship to the CCSP and CISSP certification paths, and why a SOC 2 audit was the catalyst for pursuing it."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-11-18
+  date_modified: 2025-09-11
 ---
 
 [ISC2 Cybersecurity Certificate (CC)](https://www.isc2.org/landing/1mcc) offered for free through the end of 2024 is a nice opportunity to add some skills for people interested in Information Security. The offer includes a full set of online self-paced training materials along with a voucher for taking the certification. No professional experience is required to take and receive this certification. You do have to register with ISC2 for their yearly membership, called an Annual Maintenance Fee (AMF) at $50 USD, but only after you pass the certification. That is a reasonable price to join a professional organization and to get tracked into a future path for the professional certification like the [SSCP, CCSP, and CISSP](https://www.isc2.org/certifications).

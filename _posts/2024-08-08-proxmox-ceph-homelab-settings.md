@@ -4,8 +4,14 @@ image: /assets/images/og/proxmox-ceph-homelab-settings.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, homelab, storage, optimization, performance]
+excerpt: "Tuning Ceph scrub and deep-scrub intervals to reduce wear on spinning rust drives in a homelab cluster — spreading daily scrubs over 7 days and weekly deep scrubs over 28 days."
+description: "Optimizing Ceph scrub scheduling for homelab hardware. Covers the difference between scrubbing and deep scrubbing, the osd_scrub_min_interval, osd_scrub_interval_randomize_ratio, osd_scrub_max_interval, and osd_deep_scrub_interval config values, and the specific settings that spread I/O-intensive operations over longer windows to reduce wear on USB-attached spinning rust drives."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-08-08
+  date_modified: 2025-09-11
 ---
 
 What is Ceph? Ceph is an open source software-defined storage system designed and built to address block, file and object storage needs for a modern homelab. [Proxmox Virtual Environment (PVE)](https://pve.proxmox.com/) makes creating and managing a [Hyper-Converged Ceph Cluster](https://pve.proxmox.com/pve-docs/chapter-pveceph.html) relatively easy for initially configuring and setting it up.

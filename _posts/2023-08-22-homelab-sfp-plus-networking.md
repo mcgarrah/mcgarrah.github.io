@@ -4,8 +4,14 @@ image: /assets/images/og/homelab-sfp-plus-networking.png
 layout: post
 categories: [technical, networking, homelab, hardware]
 tags: [networking, homelab, 10gbps, sfp+, switches, procurve, mikrotik, budget]
+excerpt: "Evaluating the options for 10Gbps homelab networking on a budget: DAC point-to-point rings, affordable MikroTik SFP+ switches, and the HP ProCurve 5406zl chassis — with no decision reached yet."
+description: "Comparing 10Gbps homelab networking options including DAC cables with dual-port NICs, MikroTik CRS switches (CRS305, CRS309, CRS317), and HP ProCurve 5406zl ZL chassis modules. Covers pricing, port density, power consumption, and the trade-offs between new budget switches and used enterprise hardware for a Proxmox and Ceph SAN."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2023-08-22
+  date_modified: 2026-04-05
 ---
 
 This is a project I've been thinking about for a long time...  how to get 10Gbps+ networking in a homelab without breaking the bank.

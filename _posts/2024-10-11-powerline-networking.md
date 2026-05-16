@@ -4,8 +4,14 @@ image: /assets/images/og/powerline-networking.png
 layout: post
 categories: [technical, networking]
 tags: [networking, powerline, homelab, hardware, troubleshooting]
+excerpt: "Powerline networking repeatedly tripped the AFCI breakers in a modern house — turns out arc fault interrupters and powerline adapters are fundamentally incompatible."
+description: "Why Netgear Powerline 500 adapters fail in modern homes with AFCI breakers. Covers the IEEE 1901 standard, how AFCI breakers detect powerline network traffic as arc faults and trip the circuit, and why this only manifests when the second adapter starts negotiating — making the root cause non-obvious."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-10-11
+  date_modified: 2025-09-11
 ---
 
 I inherited, from a stack of old junk hardware, two [Netgear Powerline 500 Nano XAVB5101](https://www.netgear.com/support/product/xavb5101/) plugs. I thought I would try it out for a quick network connection between two floors in my new house using the existing power cabling.

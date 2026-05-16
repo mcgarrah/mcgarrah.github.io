@@ -4,8 +4,14 @@ image: /assets/images/og/wsl2-shared-filesystems.png
 layout: post
 categories: [technical, development]
 tags: [wsl, windows, linux, filesystems, development, technical, troubleshooting]
+excerpt: "Sharing 500GB of ML models and repos between WSL2 Ubuntu 22.04 and 24.04 instances using bind mounts in /etc/fstab without duplicating data."
+description: "How to share file systems between two WSL2 instances using /etc/fstab bind mounts and a delayed mount boot command. Covers the fstab entry, wsl.conf configuration, the wsl --shutdown cycle, easyWSL for managing instances, and the UID/GID mismatch that requires sudo for cross-instance access."
 published: true
 last_modified_at: 2025-09-13
+seo:
+  type: BlogPosting
+  date_published: 2024-06-19
+  date_modified: 2025-09-13
 ---
 
 *[WSLv2]: Windows Subsystem for Linux

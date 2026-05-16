@@ -4,8 +4,14 @@ image: /assets/images/og/proxmox-upgrade-issues.png
 layout: post
 categories: [technical, troubleshooting]
 tags: [proxmox, upgrade, troubleshooting, homelab, hardware, dell-optiplex]
+excerpt: "An extended power outage plus a remote kernel upgrade left half the cluster unbootable, video outputs dead, and Ceph unstable — a crash cart recovery story with four overlapping root causes."
+description: "Recovering a six-node Proxmox 8 cluster after an extended power outage exposed overlapping failures: dead CMOS batteries clearing BIOS settings, an AIMOS KVM blocking video signal, a broken motherboard DisplayPort connector, and a bad SAN cable causing intermittent Ceph instability. Covers the crash cart approach, the Dell OptiPlex 990 Multi-Display BIOS option, and lessons on remote kernel upgrades."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-09-21
+  date_modified: 2025-09-11
 ---
 
 An extended power loss for my primary Proxmox 8 cluster, while I was remote, took half of my cluster nodes out of commission into an unbootable state. This unbootable half of the cluster would not show up on the network after the power came back even with manual physical rebooting. The other half would boot up and show on the network. All the nodes had a second problem that they would not open a PVE WebUI Console Shell or show any output on any of the video output ports for either the Nvidia PCIe GPU or the Intel iGPU. So I have to figure out what looks to be a set of overlapping issues and clean up this mess. There were several lessons learned and re-learned along the way.

@@ -4,8 +4,14 @@ image: /assets/images/og/dell-wyse-3040-cmos-battery.png
 layout: post
 categories: [technical, hardware]
 tags: [dell-wyse-3040, hardware, cmos, battery, repair, homelab]
+excerpt: "Replacing the proprietary CMOS battery connector on Dell Wyse 3040 thin clients using heat shrink tubing and standard CR2032 cells — $23 for nine units versus $90 for pre-made replacements."
+description: "How to replace the Dell Wyse 3040 CMOS battery without buying the $10 proprietary replacement. Covers extracting the spot-welded metal tabs from the dead battery, reusing the original wires with heat shrink tubing and double-sided tape to hold a standard CR2032, with step-by-step photos of the full process."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-07-15
+  date_modified: 2025-09-11
 ---
 
 *[CMOS]: Complementary Metal-Oxide-Semiconductor - A CMOS chip stores the settings like date & time, fan speed, booting sequence.

@@ -4,8 +4,14 @@ image: /assets/images/og/proxmox-8-homelab.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, virtualization, homelab, storage, clustering]
+excerpt: "Building a Proxmox 8 + Ceph HA cluster on decade-old Dell OptiPlex 990 hardware with Seagate USB drives — the background, the hardware inventory, and why Ceph beat a Synology NAS."
+description: "Overview of a Proxmox 8 and Ceph homelab cluster built on six Dell OptiPlex 990 nodes with USB-attached Seagate drives. Covers the migration from Windows Storage Spaces and Plex Media Server, the decision to use Ceph over Synology NAS, hardware inventory including Nvidia Quadro GPUs and HP ProCurve switches, and the honest trade-offs of running Ceph on 1Gbps SAN with UAS-attached drives."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-06-03
+  date_modified: 2025-09-11
 ---
 
 I am in the process of building a [Proxmox 8 Cluster](https://www.proxmox.com/) with [Ceph](https://ceph.io/) in an HA (high availability) configuration using very low-end hardware and questionable options for the various [hardware buses](https://en.wikipedia.org/wiki/Bus_(computing)). I'm going for HA, ~~cheap~~frugal and reuse of hardware that I've gathered up over the years.

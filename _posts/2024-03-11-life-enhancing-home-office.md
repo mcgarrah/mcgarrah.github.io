@@ -4,8 +4,14 @@ image: /assets/images/og/life-enhancing-home-office.png
 layout: post
 categories: [personal, productivity]
 tags: [office, productivity, furniture, ergonomics, work-from-home, personal]
+excerpt: "Two surprisingly impactful home office upgrades: rollerblade-style chair wheels that glide on carpet and hard floors, and replacement arm rests that make an old chair feel new."
+description: "Small home office upgrades with outsized quality-of-life impact. Covers rollerblade-style chair caster replacements and padded arm rest upgrades for older office chairs, with Amazon affiliate links and notes on finding the same products at Lowe's. Also a brief introduction to Amazon's affiliate program."
 published: true
 last_modified_at: 2025-09-13
+seo:
+  type: BlogPosting
+  date_published: 2024-03-11
+  date_modified: 2025-09-13
 ---
 
 Recently, I have been bouncing between my two home office spaces, hotels and an occasional visit to a cubical in my companies building. My home office spaces are nicely equipped with dual 28" or larger monitors (which I'll post about later), full office desks. I went overboard on some really nice high-end office chairs years ago as a business I worked for went under and sold off equipment and furniture. So my home office space is often nicer than what is provided at most businesses.

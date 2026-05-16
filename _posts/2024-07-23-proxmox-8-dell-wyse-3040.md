@@ -4,8 +4,14 @@ image: /assets/images/og/proxmox-8-dell-wyse-3040.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, ceph, dell-wyse-3040, virtualization, homelab, clustering]
+excerpt: "Building a three-node Proxmox 8 + Ceph test cluster on Dell Wyse 3040 thin clients to safely evaluate SDN and Ceph configuration changes without risking the semi-production cluster."
+description: "Installing Proxmox 8.2.2 on top of Debian 12 on three Dell Wyse 3040 thin clients to create a low-cost test cluster. Covers the Proxmox overlay install process, kernel swap, helper scripts for post-install and microcode updates, USB Gigabit adapters for a second network interface, USB thumb drives as Ceph OSDs, and the hardware constraints of 2GB RAM and 8GB eMMC."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2024-07-23
+  date_modified: 2026-04-05
 ---
 
 I want a place to test and try out new features and capabilities in [Proxmox 8.2.2 SDN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html) ([Software Defined Networking](https://en.wikipedia.org/wiki/Software-defined_networking)). I would also like to be able to test some Ceph Cluster configuration changes that are risky as well. I do not want to do it on my semi-production Proxmox 8.2.2 Ceph enabled Cluster that I have mentioned in earlier posts. With 55TiB of raw storage and 29TiB of it loaded up with content, that would be painful to rebuild or reload if I made a mistake during my testing of SDN or Ceph capabilities.

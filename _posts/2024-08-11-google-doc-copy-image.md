@@ -4,8 +4,14 @@ image: /assets/images/og/google-doc-copy-image.png
 layout: post
 categories: [technical, reference]
 tags: [google-docs, images, productivity, web-development]
+excerpt: "Google Docs uses URL-based clipboard for images, which breaks when you need an actual file. Double-click then Shift+right-click forces the browser to expose the raw image."
+description: "How to extract an actual image file from a Google Document when copy/paste only gives you a URL. The technique uses double-click to select the image followed by Shift+right-click (or Ctrl+Shift+click on macOS) to access the browser's native Save Image As option, bypassing Google Docs' URL-based clipboard."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2024-08-11
+  date_modified: 2026-04-05
 ---
 
 Google Docs uses a URL based clipboard method to copy/cut and paste images and other media. That happens to works great between Google Docs but it completely fails when I try to take images from Google Docs to my Jekyll Posts when I need an actual image file. This is a small things but took some digging to figure it out for both Windows and MacOS.

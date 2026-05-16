@@ -4,8 +4,14 @@ image: /assets/images/og/dell-wyse-3040-tailscale.png
 layout: post
 categories: [technical, networking]
 tags: [dell-wyse-3040, debian, tailscale, vpn, networking, homelab]
+excerpt: "Deploying Tailscale on Dell Wyse 3040 thin clients as always-on subnet router nodes connecting three geographically separate homelab networks."
+description: "Installing and configuring Tailscale on Debian 12 Dell Wyse 3040 nodes as persistent VPN subnet routers. Covers the install script, tailscale up authentication flow, enabling IP forwarding for subnet advertisement, key expiry management, and BIOS settings for automatic power-on after outages — for nodes running 24/7 at remote locations."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-08-10
+  date_modified: 2025-09-11
 ---
 
 I have been using the [Dell Wyse 3040](https://www.parkytowers.me.uk/thin/wyse/3040/) as awesome little systems for my [Tailscale](https://tailscale.com/) nodes in my multiple joint homelab networks. These systems are super low power consuming and physically small enough to just plug and go. Truly, deploying a WireGuard®-based VPN solution could not be any easier. I have four of these units connecting my homelab networks across three geographically diverse locations.

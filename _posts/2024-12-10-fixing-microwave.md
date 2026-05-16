@@ -4,8 +4,14 @@ image: /assets/images/og/fixing-microwave.png
 layout: post
 categories: [personal, hardware]
 tags: [repair, microwave, troubleshooting, diy, electronics]
+excerpt: "A three-year-old microwave stopped heating. The diode was bad — confirmed with a 9V battery and multimeter — but replacing it didn't fix it, and the repair cost more than the appliance."
+description: "Diagnosing a microwave that runs but won't heat. Covers visually inspecting and continuity-testing the fuse, testing the high-voltage diode with a 9V battery and multimeter to confirm back-feed failure, extracting the capacitor safely, and the update where replacing the CL01-12 diode didn't fully resolve the issue — pointing to a failed magnetron or transformer."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-12-10
+  date_modified: 2025-09-11
 ---
 
 My relatively new microwave just stopped heating things for no apparent reason one morning. We bought it a couple years back (about 3 years ago), so I was not happy as I expect these to work awhile with several working for ten (10) plus years. We picked up a new one from the local white box retailer as we wanted a replacement quickly. But my wife while digging around on Youtube found [Microwave works but wont heat - Cheap and easy fix](https://www.youtube.com/watch?v=z0FON4p_4ZA) which was exactly what we experienced.

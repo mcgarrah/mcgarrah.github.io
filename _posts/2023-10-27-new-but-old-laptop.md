@@ -5,6 +5,12 @@ layout: post
 last_modified_at: 2025-09-13
 categories: [personal, hardware]
 tags: [thinkpad, t480, laptop, hardware, refurbished, personal, technology]
+excerpt: "Upgrading from a 2016 ThinkPad T460p to a used T480 for $670 all-in: 64GB RAM, 4TB NVMe, WiFi 6E, and a GPU capable of running LLM models."
+description: "Selecting and speccing a used Lenovo ThinkPad T480 as a cost-effective upgrade from a T460p. Covers the T480's advantages (removable batteries, dual SODIMM slots, Thunderbolt 3, WWAN slot), component selection for 64GB RAM, 4TB NVMe, Intel AX210 WiFi 6E, and the full upgrade checklist with pricing."
+seo:
+  type: BlogPosting
+  date_published: 2023-10-27
+  date_modified: 2025-09-13
 ---
 
 I've been using an older Lenovo Thinkpad T460p laptop that I bought brand new May 2017 for $2210 USD with a pretty impressive discount for the time. The Thinkpad T460p released April 2016 over a year earlier from when I bought it. I over bought on the CPU/processor and bought extra power adapters and batteries upfront. It has been a great laptop but starting to show its age and I've been looking for a new laptop with a little more pep. Older USB is starting to be limiting and I'd like to go beyond 32Gb RAM.

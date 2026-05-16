@@ -4,8 +4,14 @@ image: /assets/images/og/LAG-LACP-and-other-network-terms.png
 layout: post
 categories: [technical, networking]
 tags: [networking, lacp, lag, procurve, switches, aggregation, performance]
+excerpt: "Attempting to use LAG/LACP on a Netgear GS105Ev2 for Ceph SAN throughput, discovering the feature is disabled on 5/8-port models, and landing on HP ProCurve 2800 switches as the real solution."
+description: "Investigating LAG and LACP port aggregation for a Proxmox Ceph SAN on a budget. Covers why Netgear's smart switch marketing is misleading for small port-count models, the HP ProCurve 2800 series as a full-featured 1Gbps enterprise alternative under $25 on eBay, and the background on a 16TB media collection driving the storage upgrade."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2024-02-06
+  date_modified: 2026-04-05
 ---
 
 This is a meandering post without an immediate happy outcome.

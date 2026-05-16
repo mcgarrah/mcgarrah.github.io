@@ -4,8 +4,14 @@ image: /assets/images/og/backlog-of-posts.png
 layout: post
 categories: [organization, writing]
 tags: [backlog, planning, homelab, projects, writing, organization]
+excerpt: "A mid-2024 status dump of unpublished drafts and stalled projects: site-to-site VPN, LAG/LACP, PiKVM, Ceph performance, Kubernetes, and a growing media server backlog."
+description: "Mid-2024 review of the blog post backlog. Covers completed posts with links, stalled drafts across Proxmox, Ceph, networking, and development topics, and the ongoing challenge of balancing homelab projects with an MBA program and full-time work. Includes notes on Tailscale replacing the WireGuard VPN project and the media server dependency chain."
 published: true
 last_modified_at: 2025-09-17
+seo:
+  type: BlogPosting
+  date_published: 2024-06-04
+  date_modified: 2025-09-17
 ---
 
 I've got a backlog of posts I want to do on various topics. A couple of recent posts, I figured getting out something rough was better than not getting it out and just posted something that felt like it needed another draft or two. I'll likely review those quickly posted items and update them as time permits.

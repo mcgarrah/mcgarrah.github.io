@@ -4,8 +4,14 @@ image: /assets/images/og/proxmox-8-dell-wyse-3040-upgrade.png
 layout: post
 categories: [technical, homelab]
 tags: [proxmox, dell-wyse-3040, upgrade, ceph, homelab, troubleshooting]
+excerpt: "Ceph Monitor refuses to start after a Proxmox 8.2.4 upgrade because root partitions hit 95% — fixed by clearing apt cache, removing atop logs, and purging old PVE and Debian kernels."
+description: "Troubleshooting Ceph Monitor startup failure after upgrading a Dell Wyse 3040 Proxmox cluster from 8.2.2 to 8.2.4. Covers the 5% free disk space requirement for ceph-mon, recovering space by cleaning apt cache, removing atop daily logs, purging old Proxmox kernels, and cleaning leftover Debian kernel images — bringing root usage from 95% down to 70%."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-08-26
+  date_modified: 2025-09-11
 ---
 
 My earlier post for [ProxMox 8.2.2 Cluster on Dell Wyse 3040s](/proxmox-8-dell-wyse-3040/) mentioned the tight constraints of the cluster both with RAM and DISK space. There are some extra steps involved in keeping a very lean Proxmox 8 cluster running on these extremely resource limited boxes. I am running Proxmox 8.2 and Ceph Reef on them which leaves them slightly under resourced as a default. So when the Ceph would not start up the Ceph Monitors after my upgrade from Proxmox 8.2.2 to 8.2.4, I had to dig a bit to find the problem.

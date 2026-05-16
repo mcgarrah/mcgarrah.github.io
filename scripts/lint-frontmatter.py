@@ -4,8 +4,9 @@ Front matter linter for mcgarrah.github.io blog posts.
 
 Enforces a tiered schema based on post date:
   - Legacy  (before 2023-01-01): title, layout required — warnings only, never fails CI
-  - Standard (2023-01-01 to 2024-12-31): adds categories, tags, last_modified_at
-  - Full    (2025-01-01 and later): adds excerpt, description, seo.type, seo.date_published
+  - Full    (2023-01-01 and later): title, layout, categories, tags, last_modified_at,
+                                    excerpt, description, seo.type, seo.date_published
+                                    — errors, fails CI
 
 Usage:
   python3 scripts/lint-frontmatter.py [--strict] [path ...]
@@ -39,7 +40,7 @@ except ImportError:
 # ---------------------------------------------------------------------------
 
 LEGACY_CUTOFF   = date(2023, 1, 1)
-STANDARD_CUTOFF = date(2025, 1, 1)
+STANDARD_CUTOFF = date(2023, 1, 1)  # full schema enforced from 2023-01-01 onward
 
 LEGACY_REQUIRED   = {"title", "layout"}
 STANDARD_REQUIRED = LEGACY_REQUIRED | {"categories", "tags", "last_modified_at"}

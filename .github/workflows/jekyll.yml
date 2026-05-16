@@ -49,7 +49,7 @@ jobs:
       - name: Jekyll Doctor
         run: bundle exec jekyll doctor
       - name: Lint front matter
-        run: python3 scripts/lint-frontmatter.py _posts/ || true
+        run: python3 scripts/lint-frontmatter.py _posts/
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"

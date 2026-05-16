@@ -4,8 +4,14 @@ image: /assets/images/og/procurve-2800-switches.png
 layout: post
 categories: [technical, networking, hardware]
 tags: [hp, procurve, networking, switches, configuration, serial-console, setup]
+excerpt: "Getting into an HP ProCurve 2810-24 via serial console, clearing the password with the Reset+Clear button combo, and doing initial configuration including IP, SNTP, and SSH setup."
+description: "Initial configuration of HP ProCurve 2810-24G switches acquired from eBay. Covers the USB-to-RJ45 console cable, FTDI driver setup, PuTTY serial settings, the Reset+Clear password clearing procedure, basic CLI setup for IP and SNTP, and links to the full PDF documentation set for the 2810 series."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2024-03-09
+  date_modified: 2026-04-05
 ---
 
 ## Get access to switch console

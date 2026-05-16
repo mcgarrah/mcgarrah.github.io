@@ -4,8 +4,14 @@ image: /assets/images/og/java-jnlp-webui.png
 layout: post
 categories: [technical, networking]
 tags: [hp, procurve, java, webui, networking, legacy, troubleshooting]
+excerpt: "Getting the HP ProCurve Java WebUI working in 2024 using Firefox 51.0.1 Portable and Java 8 Update 121 Portable — the last versions with NPAPI support before it was removed from browsers."
+description: "How to run the HP ProCurve switch Java WebUI on a modern Windows 10 machine using PortableApps editions of Firefox 51.0.1 and Java 8 Update 121. Covers the history of NPAPI and Java Web Start deprecation, the 32-bit requirement, FirefoxPortable.ini configuration for AllowMultipleInstances and AlwaysUse32Bit, and Java Control Panel exception site list setup."
 published: true
 last_modified_at: 2025-09-11
+seo:
+  type: BlogPosting
+  date_published: 2024-12-09
+  date_modified: 2025-09-11
 ---
 
 > "Don't bury the lede"

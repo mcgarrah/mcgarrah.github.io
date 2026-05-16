@@ -7,8 +7,14 @@ redirect_from:
 layout: post
 categories: [technical, hardware]
 tags: [thinkpad, t480, ssd, wwan, hardware, upgrade, laptop, storage]
+excerpt: "Adding a 1TB NVMe SSD to the ThinkPad T480's WWAN M.2 slot using a 2230-to-2242 B+M key adapter — a cheap way to get a separate data volume for LLM models."
+description: "How to add storage to the ThinkPad T480 WWAN M.2 2242 B+M key slot using a 2230mm NVMe SSD and a $10 M-to-B+M key adapter. Covers the key type differences, compatible drive options with April 2024 pricing, and why this beats using a large SD card for separating LLM model storage from the OS drive."
 published: true
 last_modified_at: 2026-04-05
+seo:
+  type: BlogPosting
+  date_published: 2024-04-04
+  date_modified: 2026-04-05
 ---
 
 ## Adding another SSD Drive

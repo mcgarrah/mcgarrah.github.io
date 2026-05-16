@@ -4,8 +4,14 @@ image: /assets/images/og/hard-drive-costs.png
 layout: post
 categories: [technical, homelab, hardware]
 tags: [storage, hard-drives, homelab, hardware, ceph, cost-analysis, technical]
+excerpt: "Storage has hit a penny per GB. A 20TB renewed drive for $200 and a 20TB USB-C enclosure for $220 make the math work for a Ceph offsite backup strategy."
+description: "Storage cost analysis for homelab Ceph expansion in mid-2024. Covers the penny-per-GB milestone, a 20TB renewed NAS drive at $199 with 5-year warranty, a 20TB USB-C portable drive for offsite backup, and the 3-2-1 backup strategy applied to a 60TB raw Ceph cluster with 20TB of usable storage."
 published: true
 last_modified_at: 2025-09-13
+seo:
+  type: BlogPosting
+  date_published: 2024-06-10
+  date_modified: 2025-09-13
 ---
 
 We live in a world with a penny ($0.01 USD) per GB of storage. I just found this bare drive [MDD (MD20TS25672NAS) 20TB 7200 RPM 256MB Cache SATA 6.0Gb/s 3.5" Internal Hard Drive (for NAS, Network Storage) - 5 Years Warranty (Renewed)](https://amzn.to/45fYeRH) for $199.99 USD. I also found [Avolusion PRO-X USB 3.0 External Hard Drive (Black) - 2 Year Warranty (20TB)](https://amzn.to/3VBhwxC) for ~~$229.99~~ $219.99 USD with the USB C enclosure.

@@ -5,6 +5,12 @@ layout: post
 last_modified_at: 2025-09-13
 categories: [personal, hardware]
 tags: [thinkpad, t480, laptop, hardware, upgrade, personal]
+excerpt: "All T480 upgrades complete: 64GB RAM, 4TB NVMe, WiFi 6E, IR camera, backlit keyboard, and 72Wh extended battery. A used laptop that now outperforms what I could buy new at twice the price."
+description: "Final status on the ThinkPad T480 upgrade project. All planned components installed including 64GB DDR4, 4TB NVMe via WWAN caddy, Intel AX210 WiFi 6E, IR camera, backlit keyboard, and extended 72Wh battery. Covers what worked, what didn't (X1 glass trackpad), and why this refurbished platform remains a strong choice for ML workloads."
+seo:
+  type: BlogPosting
+  date_published: 2024-01-26
+  date_modified: 2025-09-13
 ---
 
 My [_new to me_ Thinkpad T480](/new-but-old-laptop/) is doing great. The better processor and the upgraded Nvidia MX150 GPU are both getting a workout with several of the new LLM models. I maxed out the RAM, Wifi, Hard Drive, and swapped around adding all the best components/features to one laptop consolidated from several different junkers I purchased. Those components include IR Camera, WWAN, backlit keyboard, good batteries, and a nice case.

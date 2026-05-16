@@ -4,8 +4,14 @@ image: /assets/images/og/macos-sudo-touchid.png
 layout: post
 categories: [technical, productivity]
 tags: [macos, sudo, touchid, tmux, displaylink, security, productivity, configuration]
+excerpt: "Enabling Touch ID for sudo on macOS Sonoma, then fixing the two cases where it silently falls back to password: tmux sessions and DisplayLink external displays."
+description: "How to configure Touch ID authentication for sudo on macOS Sonoma using sudo_local.template, then fix the two common failure modes: tmux sessions require pam_reattach via Homebrew, and DisplayLink requires setting the ignoreArd security default. Also covers the iTerm2 preference change needed for Touch ID to work in terminal sessions."
 published: true
 last_modified_at: 2025-09-13
+seo:
+  type: BlogPosting
+  date_published: 2024-08-09
+  date_modified: 2025-09-13
 ---
 
 This is an out of place post but I figured if setting up **Touch ID** with `sudo` on my MacBook Pro stumped me that it would cause others issues and worth a quick write up. Also worth having around when I get a new MacBook Pro in the future.
