@@ -15,6 +15,11 @@ collections:
     output: true
     permalink: /linkedin/:name/
 
+# Additional navigation items for the drafts preview site
+drafts_navigation:
+  - {url: "/substack/", title: Substack Drafts, icon: newspaper}
+  - {url: "/linkedin/", title: LinkedIn Drafts, icon: linkedin}
+
 # Disable production tracking and ads on the drafts preview site.
 google_analytics: ""
 google_adsense: ""

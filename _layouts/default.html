@@ -68,6 +68,16 @@
 <header>
   <a href="{{ "/" | relative_url }}" class="title">{{ site.title | escape }}</a>
   {% include menu.html menu=pages %}
+  {% if site.draft_preview_site and site.drafts_navigation %}
+  <nav class="drafts-nav">
+    {%- for item in site.drafts_navigation -%}
+    <a href="{{ item.url | relative_url }}">
+      {%- if item.icon -%}<svg aria-label="{{ item.title }}" class="icon"><use xlink:href="{{ "/assets/fontawesome/icons.svg" | relative_url }}#{{ item.icon }}"></use></svg>{%- endif -%}
+      <span>{{ item.title }}</span>
+    </a>
+    {%- endfor -%}
+  </nav>
+  {% endif %}
 </header>
 
 {{ content }}

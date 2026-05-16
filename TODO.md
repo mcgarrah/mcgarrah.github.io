@@ -41,8 +41,8 @@ The resume site at `mcgarrah.org/resume/` has two Gemfile issues that could caus
 
 ## Quick Wins
 
-- [ ] Add Substack link to site navigation/sidebar — Add https://mcgarrah.substack.com/ alongside the existing GitHub, GitLab, and LinkedIn profile links in the site header/footer/sidebar.
-- [ ] Add Substack/LinkedIn collection links to drafts site sidebar — Below "Archive", add conditional links to `/substack/` and `/linkedin/` that only render when `site.draft_preview_site` is true (set in `_config_drafts.yml`). These should list the collection articles for review but never appear on production.
+- [x] Add Substack link to site navigation/sidebar — Add https://mcgarrah.substack.com/ alongside the existing GitHub, GitLab, and LinkedIn profile links in the site header/footer/sidebar.
+- [x] Add Substack/LinkedIn collection links to drafts site sidebar — Below "Archive", add conditional links to `/substack/` and `/linkedin/` that only render when `site.draft_preview_site` is true (set in `_config_drafts.yml`). These should list the collection articles for review but never appear on production.
 - [x] Create proper favicon set (16x16, 32x32, 180x180 Apple Touch, `site.webmanifest`) — Full set generated and deployed. Blog post: `2026-06-02-jekyll-modern-favicon-set.md`.
 - [x] Upgrade `http://` links to `https://` in old posts (2011-2015 era) — Several old posts link to Wikipedia, blogspot, SourceForge, and other sites using `http://`. These sites all support HTTPS now. Mixed content warnings aside, `https://` links are a minor trust signal and prevent browser security warnings. Simple find-and-replace across the affected posts.
 
