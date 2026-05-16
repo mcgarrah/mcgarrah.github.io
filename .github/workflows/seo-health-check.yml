@@ -195,7 +195,7 @@ jobs:
       - name: Check links with Lychee
         uses: lycheeverse/lychee-action@v2.7.0
         with:
-          args: --config .lychee.toml --base ${{ github.workspace }}/_site --no-progress --exclude-path '_site/resume' '_site/**/*.html'
+          args: --config .lychee.toml --base _site --no-progress --exclude-path 'resume' '**/*.html'
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
