@@ -48,11 +48,22 @@ jobs:
         uses: actions/configure-pages@v6
       - name: Jekyll Doctor
         run: bundle exec jekyll doctor
+      - name: Lint front matter
+        run: python3 scripts/lint-frontmatter.py _posts/ || true
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+      - name: HTML Proofer
+        run: |
+          bundle exec htmlproofer _site \
+            --ignore-urls "/fonts.googleapis.com/,/fonts.gstatic.com/,/linkedin.com/,/twitter.com/" \
+            --ignore-status-codes "999,403" \
+            --no-enforce-https \
+            --ignore-missing-alt \
+            --allow-missing-href \
+            --disable-external
       - name: Validate sitemap URLs
         run: |
           if grep -q 'localhost' ./_site/sitemap.xml; then
