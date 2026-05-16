@@ -3,14 +3,16 @@
 
 # Exclude patterns that are expected to fail in CI
 exclude = [
-    # LinkedIn blocks automated requests with 999 status
+    # LinkedIn blocks automated requests with 999/404 status
     "linkedin\\.com",
-    # ResearchGate blocks bots
+    # ResearchGate blocks bots with 403
     "researchgate\\.net",
     # Google Scholar blocks bots
     "scholar\\.google\\.com",
     # ORCID may rate-limit
     "orcid\\.org",
+    # YouTube embed URLs return 404 to crawlers
+    "youtube\\.com/embed",
     # Localhost references in blog content
     "localhost",
     "127\\.0\\.0\\.1",
