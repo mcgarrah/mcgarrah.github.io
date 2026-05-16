@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="627" viewBox="0 0 1200 627" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background -->
+  <rect width="1200" height="627" fill="#0F0F23"/>
+  
+  <!-- Subtle grid pattern (code/tech feel) -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a1a3e" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#grid)"/>
+  
+  <!-- Decorative code lines (left side, faded) -->
+  <g opacity="0.15" font-family="monospace" font-size="11" fill="#00D4AA">
+    <text x="30" y="80">import tensorflow as tf</text>
+    <text x="30" y="96">from sklearn.model_selection import train_test_split</text>
+    <text x="30" y="112">import pandas as pd</text>
+    <text x="30" y="128"></text>
+    <text x="30" y="144">def train_model(X_train, y_train):</text>
+    <text x="30" y="160">    model = tf.keras.Sequential([</text>
+    <text x="30" y="176">        tf.keras.layers.Dense(128, activation='relu'),</text>
+    <text x="30" y="192">        tf.keras.layers.Dropout(0.3),</text>
+    <text x="30" y="208">        tf.keras.layers.Dense(64, activation='relu'),</text>
+    <text x="30" y="224">        tf.keras.layers.Dense(1, activation='sigmoid')</text>
+    <text x="30" y="240">    ])</text>
+    <text x="30" y="256">    model.compile(optimizer='adam', loss='binary_crossentropy')</text>
+    <text x="30" y="272">    return model.fit(X_train, y_train, epochs=50)</text>
+  </g>
+  
+  <!-- Decorative infrastructure diagram (right side, faded) -->
+  <g opacity="0.12" transform="translate(850, 350)">
+    <!-- Boxes representing environments -->
+    <rect x="0" y="0" width="80" height="40" rx="4" fill="none" stroke="#7fb3c8" stroke-width="1.5"/>
+    <rect x="100" y="0" width="80" height="40" rx="4" fill="none" stroke="#FF9800" stroke-width="1.5"/>
+    <rect x="200" y="0" width="80" height="40" rx="4" fill="none" stroke="#f44336" stroke-width="1.5"/>
+    <!-- Arrows -->
+    <line x1="80" y1="20" x2="100" y2="20" stroke="#7fb3c8" stroke-width="1.5"/>
+    <line x1="180" y1="20" x2="200" y2="20" stroke="#FF9800" stroke-width="1.5"/>
+    <!-- Second row -->
+    <rect x="0" y="70" width="80" height="40" rx="4" fill="none" stroke="#4CAF50" stroke-width="1.5"/>
+    <rect x="100" y="70" width="80" height="40" rx="4" fill="none" stroke="#8BC34A" stroke-width="1.5"/>
+    <!-- Dotted connections -->
+    <line x1="140" y1="70" x2="140" y2="40" stroke="#8BC34A" stroke-width="1" stroke-dasharray="4,3"/>
+    <line x1="40" y1="70" x2="40" y2="40" stroke="#4CAF50" stroke-width="1" stroke-dasharray="4,3"/>
+  </g>
+  
+  <!-- Neural network visualization (bottom right, faded) -->
+  <g opacity="0.1" transform="translate(900, 100)">
+    <!-- Input layer -->
+    <circle cx="0" cy="0" r="8" fill="#00D4AA"/>
+    <circle cx="0" cy="30" r="8" fill="#00D4AA"/>
+    <circle cx="0" cy="60" r="8" fill="#00D4AA"/>
+    <circle cx="0" cy="90" r="8" fill="#00D4AA"/>
+    <!-- Hidden layer 1 -->
+    <circle cx="60" cy="15" r="8" fill="#7fb3c8"/>
+    <circle cx="60" cy="45" r="8" fill="#7fb3c8"/>
+    <circle cx="60" cy="75" r="8" fill="#7fb3c8"/>
+    <!-- Hidden layer 2 -->
+    <circle cx="120" cy="30" r="8" fill="#FF9800"/>
+    <circle cx="120" cy="60" r="8" fill="#FF9800"/>
+    <!-- Output -->
+    <circle cx="180" cy="45" r="8" fill="#f44336"/>
+    <!-- Connections (sample) -->
+    <line x1="8" y1="0" x2="52" y2="15" stroke="#00D4AA" stroke-width="0.5"/>
+    <line x1="8" y1="0" x2="52" y2="45" stroke="#00D4AA" stroke-width="0.5"/>
+    <line x1="8" y1="30" x2="52" y2="15" stroke="#00D4AA" stroke-width="0.5"/>
+    <line x1="8" y1="30" x2="52" y2="45" stroke="#00D4AA" stroke-width="0.5"/>
+    <line x1="8" y1="60" x2="52" y2="45" stroke="#00D4AA" stroke-width="0.5"/>
+    <line x1="8" y1="60" x2="52" y2="75" stroke="#00D4AA" stroke-width="0.5"/>
+    <line x1="8" y1="90" x2="52" y2="75" stroke="#00D4AA" stroke-width="0.5"/>
+    <line x1="68" y1="15" x2="112" y2="30" stroke="#7fb3c8" stroke-width="0.5"/>
+    <line x1="68" y1="45" x2="112" y2="30" stroke="#7fb3c8" stroke-width="0.5"/>
+    <line x1="68" y1="45" x2="112" y2="60" stroke="#7fb3c8" stroke-width="0.5"/>
+    <line x1="68" y1="75" x2="112" y2="60" stroke="#7fb3c8" stroke-width="0.5"/>
+    <line x1="128" y1="30" x2="172" y2="45" stroke="#FF9800" stroke-width="0.5"/>
+    <line x1="128" y1="60" x2="172" y2="45" stroke="#FF9800" stroke-width="0.5"/>
+  </g>
+
+  <!-- Accent bar -->
+  <rect x="0" y="0" width="6" height="627" fill="#00D4AA"/>
+  
+  <!-- Title -->
+  <text x="80" y="340" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="#ffffff">Your Data Scientists Are Training</text>
+  <text x="80" y="392" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="#ffffff">on Garbage Data</text>
+  <text x="80" y="444" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="28" font-weight="400" fill="#7fb3c8">(And Your SDLC Is Why)</text>
+
+  <!-- Five colored stage indicators -->
+  <g transform="translate(80, 490)">
+    <rect x="0" y="0" width="60" height="6" rx="3" fill="#4CAF50"/>
+    <rect x="70" y="0" width="60" height="6" rx="3" fill="#8BC34A"/>
+    <rect x="140" y="0" width="60" height="6" rx="3" fill="#FF9800"/>
+    <rect x="210" y="0" width="60" height="6" rx="3" fill="#FF5722"/>
+    <rect x="280" y="0" width="60" height="6" rx="3" fill="#f44336"/>
+    <text x="0" y="24" font-family="system-ui, sans-serif" font-size="11" fill="#888">Infra Dev</text>
+    <text x="70" y="24" font-family="system-ui, sans-serif" font-size="11" fill="#888">Infra Pre</text>
+    <text x="140" y="24" font-family="system-ui, sans-serif" font-size="11" fill="#888">Discovery</text>
+    <text x="210" y="24" font-family="system-ui, sans-serif" font-size="11" fill="#888">Integration</text>
+    <text x="280" y="24" font-family="system-ui, sans-serif" font-size="11" fill="#888">Production</text>
+  </g>
+
+  <!-- Footer -->
+  <line x1="80" y1="570" x2="1120" y2="570" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1"/>
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.5)">Michael McGarrah · mcgarrah.org</text>
+  <text x="1120" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.5)" text-anchor="end">Five-Stage DS Platform Framework</text>
+</svg>
