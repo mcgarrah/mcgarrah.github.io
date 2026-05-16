@@ -74,7 +74,7 @@ minimal: true             # use a dark header
 # Menu
 
 navigation:                # accepts {file, title, url, icon, sidebaricon}
-  - {file: "index.html", icon: blog}
+  - {url: "/", title: Home, icon: blog}
   - {file: "archive.html", icon: list}
   - {file: "tags.html", title: Tags, icon: tags}
   - {file: "categories.html", title: Categories, icon: th-list}
