@@ -1,3 +1,7 @@
+---
+published: false
+---
+
 # LinkedIn Post Archive
 
 Archived copies of LinkedIn posts for version control and reference.
