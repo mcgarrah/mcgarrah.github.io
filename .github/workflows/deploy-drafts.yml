@@ -116,6 +116,30 @@ jobs:
             fi
           done < <(find _posts -maxdepth 1 -type f \( -name '*.md' -o -name '*.markdown' \) -print0)
 
+          # 3) Encrypt future-dated _substack and _linkedin collection pages.
+          # These render at /substack/{slug}/index.html and /linkedin/{slug}/index.html
+          for collection_dir in _substack _linkedin; do
+            collection_name="${collection_dir#_}"
+            if [[ -d "$collection_dir" ]]; then
+              while IFS= read -r -d '' source_file; do
+                base="$(basename "$source_file")"
+                post_date="${base:0:10}"
+
+                if [[ "$post_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+                  post_epoch="$(date -u -d "$post_date" +%s)"
+                  if (( post_epoch > today_epoch )); then
+                    slug="$(slug_from_source_file "$source_file")"
+                    candidate="_site/${collection_name}/${base%.md}/index.html"
+                    if [[ -f "$candidate" && -z "${seen_targets[$candidate]+x}" ]]; then
+                      seen_targets[$candidate]=1
+                      target_files+=("$candidate")
+                    fi
+                  fi
+                fi
+              done < <(find "$collection_dir" -maxdepth 1 -type f \( -name '*.md' -o -name '*.markdown' \) -print0)
+            fi
+          done
+
           echo "Encrypting ${#target_files[@]} draft/future article pages"
 
           if [[ "${#target_files[@]}" -eq 0 ]]; then
