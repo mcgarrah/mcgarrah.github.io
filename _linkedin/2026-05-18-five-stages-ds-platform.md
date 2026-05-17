@@ -6,6 +6,11 @@ date: 2026-05-18
 
 # Your Data Scientists Are Training on Garbage Data (And Your SDLC Is Why)
 
+<!-- STATUS: DELAYED — Received feedback on the May 17 Substack article that
+     influences direction. Substack will be updated/re-released first, then
+     this LinkedIn hook will be revised to align. Do not publish until the
+     Substack revision is complete. -->
+
 **Published:** May 18, 2026
 
 **LinkedIn URL:** TBD
@@ -28,11 +33,11 @@ date: 2026-05-18
 
 ---
 
-Here's a question I've asked in every enterprise I've worked in for the past decade:
+Here's a question I've been asked in every enterprise I've worked in for the past decade:
 
 "Why can't the data scientists just use the staging data?"
 
-And the answer is always the same: because staging data is not production data, and the model quality difference is measurable.
+And my answer is: because staging data is not production data, and the model quality difference is measurable without production data.
 
 The standard SDLC model — synthetic data in dev, sanitized data in staging, real data only in prod — works perfectly for application development. But it fundamentally breaks for machine learning. Training a model on synthetic data produces a model that has learned the patterns of synthetic data. Not your business. Not your customers. Not reality.
 
