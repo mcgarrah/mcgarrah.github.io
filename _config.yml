@@ -4,7 +4,7 @@ author:
   email: "mcgarrah@gmail.com"
   uri: "https://mcgarrah.org/about/"
   url: "https://mcgarrah.org"
-description: "Technical blog covering homelab infrastructure, Proxmox/Ceph, Dell Wyse 3040, Jekyll development, and networking. Deep dives into virtualization, storage clustering, and system administration."
+description: "Engineering deep dives on infrastructure, distributed systems, and AI/ML — from homelab experiments to enterprise architecture."
 lang: "en"
 url: "https://mcgarrah.org"
 baseurl: ""
