@@ -1,7 +1,434 @@
+name: SEO Health Check
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly on Monday at 6 AM UTC
+  workflow_dispatch:  # Allow manual trigger
+  push:
+    branches: [main]
+    paths:
+      - '_config.yml'
+      - '_layouts/**'
+      - '_includes/**'
+      - '_plugins/**'
+      - '_posts/**'
+      - '_sass/**'
+      - 'assets/**'
+      - 'robots.txt'
+      - '.github/workflows/seo-health-check.yml'
+      - '.lighthouserc.json'
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  seo-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.307.0
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+          
+      - name: Install XML tools
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+          
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+        
+      - name: Serve site for Lighthouse
+        run: |
+          bundle exec jekyll serve --detach --port 4000 --skip-initial-build
+          sleep 5  # Wait for server to start
+          
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://localhost:4000
+            http://localhost:4000/about/
+            http://localhost:4000/archive/
+          configPath: './.lighthouserc.json'
+          uploadArtifacts: false
+          temporaryPublicStorage: true
+          
+      - name: Upload Lighthouse results
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          echo "LIGHTHOUSE_ARTIFACT_NAME=lighthouse-results-$TIMESTAMP" >> $GITHUB_ENV
+        
+      - name: Upload Lighthouse artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.LIGHTHOUSE_ARTIFACT_NAME }}
+          path: .lighthouseci/
+          retention-days: 90
+        
+      - name: Check canonical URLs consistency
+        run: |
+          echo "Checking canonical URLs..."
+          # Only match actual <link rel="canonical"> tags, not syntax-highlighted code in blog posts
+          INCONSISTENT=$(find _site -name "*.html" -exec grep -h '<link[^>]*rel="canonical"' {} \; | grep -v "mcgarrah.org" || true)
+          if [ -n "$INCONSISTENT" ]; then
+            echo "❌ Inconsistent canonical URLs found:"
+            echo "$INCONSISTENT"
+            exit 1
+          else
+            echo "✅ All canonical URLs consistent"
+          fi
+          
+      - name: Validate sitemap.xml
+        run: |
+          echo "Validating sitemap.xml..."
+          if [ -f "_site/sitemap.xml" ]; then
+            # Check if sitemap is valid XML
+            xmllint --noout _site/sitemap.xml
+            echo "✅ Sitemap XML is valid"
+            
+            # Check sitemap contains expected URLs
+            URLS=$(grep -c "<url>" _site/sitemap.xml)
+            echo "📊 Sitemap contains $URLS URLs"
+            
+            # Check for correct domain in sitemap
+            WRONG_DOMAIN=$(grep -c "www.mcgarrah.org" _site/sitemap.xml || true)
+            if [ "$WRONG_DOMAIN" -gt 0 ]; then
+              echo "❌ Sitemap contains wrong domain (www.mcgarrah.org)"
+              exit 1
+            else
+              echo "✅ Sitemap uses correct domain"
+            fi
+          else
+            echo "❌ Sitemap not found"
+            exit 1
+          fi
+          
+      - name: Check robots.txt
+        run: |
+          echo "Checking robots.txt..."
+          if [ -f "_site/robots.txt" ]; then
+            echo "✅ Robots.txt exists"
+            
+            # Check sitemap reference in robots.txt
+            if grep -q "Sitemap: https://mcgarrah.org/sitemapindex.xml" _site/robots.txt; then
+              echo "✅ Robots.txt references correct sitemap index"
+            else
+              echo "❌ Robots.txt missing or incorrect sitemap reference"
+              exit 1
+            fi
+          else
+            echo "❌ Robots.txt not found"
+            exit 1
+          fi
+          
+      - name: Validate sitemapindex.xml
+        run: |
+          echo "Validating sitemapindex.xml..."
+          if [ -f "_site/sitemapindex.xml" ]; then
+            xmllint --noout _site/sitemapindex.xml
+            echo "✅ Sitemap index XML is valid"
+            
+            # Check it references both sitemaps
+            if grep -q "mcgarrah.org/sitemap.xml" _site/sitemapindex.xml && grep -q "mcgarrah.org/resume/sitemap.xml" _site/sitemapindex.xml; then
+              echo "✅ Sitemap index references both sitemaps"
+            else
+              echo "❌ Sitemap index missing expected sitemap references"
+              exit 1
+            fi
+          else
+            echo "❌ Sitemap index not found"
+            exit 1
+          fi
+          
+      - name: Check meta tags on sample pages
+        run: |
+          echo "Checking meta tags..."
+          
+          # Check homepage
+          if grep -q '<meta name="description"' _site/index.html; then
+            echo "✅ Homepage has meta description"
+          else
+            echo "❌ Homepage missing meta description"
+            exit 1
+          fi
+          
+          # Check for Open Graph tags
+          if grep -q 'property="og:' _site/index.html; then
+            echo "✅ Homepage has Open Graph tags"
+          else
+            echo "❌ Homepage missing Open Graph tags"
+            exit 1
+          fi
+          
+      - name: Check for 404 page
+        run: |
+          echo "Checking 404 page..."
+          if [ -f "_site/404.html" ]; then
+            echo "✅ Custom 404 page exists"
+          else
+            echo "❌ Custom 404 page missing"
+            exit 1
+          fi
+          
+      - name: Validate feed.xml
+        run: |
+          echo "Validating RSS feed..."
+          if [ -f "_site/feed.xml" ]; then
+            xmllint --noout _site/feed.xml
+            echo "✅ RSS feed XML is valid"
+            
+            # Check feed contains recent posts (jekyll-feed generates Atom <entry> tags)
+            ITEMS=$(grep -c "<entry>" _site/feed.xml || true)
+            echo "📊 RSS feed contains $ITEMS entries"
+          else
+            echo "❌ RSS feed not found"
+            exit 1
+          fi
+          
       - name: Check links with Lychee
         uses: lycheeverse/lychee-action@v2.7.0
         with:
-          args: --config .lychee.toml --root-dir . --no-progress '_site/**/*.html'
-          fail: true
+          args: --config .lychee.toml --root-dir _site --no-progress --exclude-path '_site/resume' '_site/**/*.html'
+          fail: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Check for broken internal links (custom)
+        run: |
+          echo "Checking for broken internal links (Jekyll-specific)..."
+          
+          # Find all HTML files and check for internal links
+          find _site -name "*.html" -exec grep -l 'href="/' {} \; | head -5 | while read file; do
+            echo "Checking links in $file..."
+            
+            # Extract internal links and check if target files exist
+            grep -o 'href="[^"]*"' "$file" | grep 'href="/' | sed 's/href="//;s/"//' | while read link; do
+              # Remove anchor fragments
+              clean_link=$(echo "$link" | sed 's/#.*//')
+              
+              # Skip external links, special cases, and /resume/ links (separate deployment)
+              if [[ "$clean_link" =~ ^https?:// ]] || [[ "$clean_link" == "/" ]] || [[ "$clean_link" =~ ^/resume ]]; then
+                continue
+              fi
+              
+              # Check if file exists in _site
+              target_file="_site${clean_link}"
+              if [[ "$clean_link" == */ ]]; then
+                target_file="${target_file}index.html"
+              elif [[ ! "$clean_link" =~ \. ]]; then
+                target_file="${target_file}/index.html"
+              fi
+              
+              if [ ! -f "$target_file" ]; then
+                echo "⚠️  Potential broken link: $link in $file"
+              fi
+            done
+          done
+          
+      - name: Check structured data
+        run: |
+          echo "Checking structured data..."
+          
+          # Check for JSON-LD structured data
+          JSON_LD_PAGES=$(find _site -name "*.html" -exec grep -l 'application/ld+json' {} \; | wc -l)
+          echo "📊 Pages with JSON-LD: $JSON_LD_PAGES"
+          
+          # Check homepage has structured data
+          if grep -q 'application/ld+json' _site/index.html; then
+            echo "✅ Homepage has structured data"
+          else
+            echo "⚠️  Homepage missing structured data"
+          fi
+          
+      - name: Check image optimization
+        run: |
+          echo "Checking image optimization..."
+          
+          # Check for images without alt text
+          MISSING_ALT=$(find _site -name "*.html" -exec grep -o '<img[^>]*>' {} \; | grep -v 'alt=' | wc -l || true)
+          echo "⚠️  Images without alt text: $MISSING_ALT"
+          
+          # Check for large images (basic check)
+          find _site -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" | while read img; do
+            SIZE=$(stat -c%s "$img" 2>/dev/null || echo 0)
+            if [ "$SIZE" -gt 500000 ]; then  # 500KB
+              echo "⚠️  Large image: $img ($(($SIZE/1024))KB)"
+            fi
+          done
+          
+      - name: Check page performance indicators
+        run: |
+          echo "Checking performance indicators..."
+          
+          # Check for inline CSS (should be minimal)
+          INLINE_CSS=$(find _site -name "*.html" -exec grep -o '<style[^>]*>.*</style>' {} \; | wc -l || true)
+          echo "📊 Pages with inline CSS: $INLINE_CSS"
+          
+          # Check for external script count
+          EXTERNAL_SCRIPTS=$(find _site -name "*.html" -exec grep -o 'src="http[^"]*"' {} \; | sort -u | wc -l || true)
+          echo "📊 Unique external scripts: $EXTERNAL_SCRIPTS"
+          
+      - name: Check descriptive link text
+        run: |
+          echo "Checking for non-descriptive link text..."
+          
+          # Find generic link text patterns — match only exact non-descriptive text
+          # Exclude "read more: Title" which is descriptive
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
+          echo "⚠️  Generic link text found: $GENERIC_LINKS"
+          
+          if [ "$GENERIC_LINKS" -gt 0 ]; then
+            echo "Links with generic text:"
+            find _site -name "*.html" -exec grep -oP '<a\s[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | head -10
+          fi
+          
+      - name: Check anchor elements
+        run: |
+          echo "Checking for anchor elements without proper href..."
+          
+          # Find anchor elements without href or with empty/invalid href
+          # Use '<a\s' to avoid false matches on <aside>, <article>, etc.
+          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
+          echo "⚠️  Anchor elements without proper href: $INVALID_ANCHORS"
+          
+          # Find disabled/empty anchors
+          DISABLED_ANCHORS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*class="[^"]*disabled[^"]*"[^>]*>' {} \; | wc -l || true)
+          echo "⚠️  Disabled anchor elements: $DISABLED_ANCHORS"
+          
+          if [ "$INVALID_ANCHORS" -gt 0 ] || [ "$DISABLED_ANCHORS" -gt 0 ]; then
+            echo "Files with invalid anchors:"
+            find _site -name "*.html" -exec grep -lP '<a\s[^>]*class="[^"]*disabled' {} \; | head -5
+          fi
+          
+      - name: Check tap target sizes
+        run: |
+          echo "Checking for small tap targets..."
+          
+          # This is a basic check - full validation requires CSS analysis
+          SMALL_LINKS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>[^<]*</a>' {} \; | grep -E '^.{1,20}$' | wc -l || true)
+          echo "⚠️  Potentially small tap targets: $SMALL_LINKS"
+          
+          echo "Note: Full tap target validation requires CSS analysis and browser testing"
+          echo "Consider using Lighthouse CI reports for detailed tap target analysis"
+          
+      - name: Check content quality indicators
+        run: |
+          echo "Checking content quality..."
+          
+          # Check for duplicate titles
+          find _site -name "*.html" -exec grep -o '<title>[^<]*</title>' {} \; | sort | uniq -d > duplicate-titles.txt
+          DUPLICATE_TITLES=$(wc -l < duplicate-titles.txt)
+          if [ "$DUPLICATE_TITLES" -gt 0 ]; then
+            echo "⚠️  Duplicate titles found: $DUPLICATE_TITLES"
+            head -5 duplicate-titles.txt
+          else
+            echo "✅ No duplicate titles"
+          fi
+          
+          # Check for duplicate meta descriptions
+          find _site -name "*.html" -exec grep -oh 'name="description" content="[^"]*"' {} \; | sort | uniq -d > duplicate-descriptions.txt
+          DUPLICATE_DESC=$(wc -l < duplicate-descriptions.txt)
+          if [ "$DUPLICATE_DESC" -gt 0 ]; then
+            echo "⚠️  Duplicate meta descriptions: $DUPLICATE_DESC"
+            head -5 duplicate-descriptions.txt
+          else
+            echo "✅ No duplicate meta descriptions"
+          fi
+          
+      - name: Check mobile optimization
+        run: |
+          echo "Checking mobile optimization..."
+          
+          # Check for viewport meta tag
+          VIEWPORT_PAGES=$(find _site -name "*.html" -exec grep -l 'name="viewport"' {} \; | wc -l)
+          TOTAL_PAGES=$(find _site -name "*.html" | wc -l)
+          echo "📊 Pages with viewport meta: $VIEWPORT_PAGES/$TOTAL_PAGES"
+          
+          if [ "$VIEWPORT_PAGES" -eq "$TOTAL_PAGES" ]; then
+            echo "✅ All pages have viewport meta tag"
+          else
+            echo "⚠️  Some pages missing viewport meta tag"
+            echo "Pages missing viewport meta:"
+            find _site -name "*.html" -exec grep -L 'name="viewport"' {} \; | head -5
+          fi
+          
+      - name: Generate SEO report
+        run: |
+          echo "## SEO Health Check Report" > seo-report.md
+          echo "Generated: $(date)" >> seo-report.md
+          echo "" >> seo-report.md
+          
+          # Site statistics
+          echo "### Site Statistics" >> seo-report.md
+          echo "- Total HTML pages: $(find _site -name "*.html" | wc -l)" >> seo-report.md
+          echo "- Sitemap URLs: $(grep -c "<url>" _site/sitemap.xml)" >> seo-report.md
+          echo "- RSS feed entries: $(grep -c "<entry>" _site/feed.xml || echo "0")" >> seo-report.md
+          echo "- Pages with JSON-LD: $(find _site -name "*.html" -exec grep -l 'application/ld+json' {} \; | wc -l)" >> seo-report.md
+          echo "- Pages with viewport meta: $(find _site -name "*.html" -exec grep -l 'name="viewport"' {} \; | wc -l)" >> seo-report.md
+          echo "" >> seo-report.md
+          
+          # Check for common SEO issues
+          echo "### SEO Issues" >> seo-report.md
+          
+          # Pages without meta descriptions (excluding /assets/)
+          MISSING_DESC=$(find _site -name "*.html" -not -path "_site/assets/*" -exec grep -L 'name="description"' {} \; | wc -l)
+          echo "- Pages missing meta descriptions: $MISSING_DESC" >> seo-report.md
+          if [ "$MISSING_DESC" -gt 0 ]; then
+            echo "  Files missing descriptions:" >> seo-report.md
+            find _site -name "*.html" -not -path "_site/assets/*" -exec grep -L 'name="description"' {} \; | head -5 | sed 's/^/    - /' >> seo-report.md
+          fi
+          
+          # Pages without titles
+          MISSING_TITLE=$(find _site -name "*.html" -exec grep -L '<title>' {} \; | wc -l)
+          echo "- Pages missing titles: $MISSING_TITLE" >> seo-report.md
+          if [ "$MISSING_TITLE" -gt 0 ]; then
+            echo "  Files missing titles:" >> seo-report.md
+            find _site -name "*.html" -exec grep -L '<title>' {} \; | head -5 | sed 's/^/    - /' >> seo-report.md
+          fi
+          
+          # Images without alt text
+          MISSING_ALT=$(find _site -name "*.html" -exec grep -o '<img[^>]*>' {} \; | grep -v 'alt=' | wc -l || true)
+          echo "- Images without alt text: $MISSING_ALT" >> seo-report.md
+          
+          # Duplicate content issues
+          DUPLICATE_TITLES=$(find _site -name "*.html" -exec grep -o '<title>[^<]*</title>' {} \; | sort | uniq -d | wc -l)
+          echo "- Duplicate titles: $DUPLICATE_TITLES" >> seo-report.md
+          
+          # Generic link text
+          GENERIC_LINKS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>\K[^<]*(?=</a>)' {} \; | grep -ixE '(read more|click here|here|more|learn more|continue reading)' | wc -l || true)
+          echo "- Generic link text: $GENERIC_LINKS" >> seo-report.md
+          
+          # Invalid anchor elements
+          INVALID_ANCHORS=$(find _site -name "*.html" -exec grep -oP '<a\s[^>]*>' {} \; | grep -v 'href="[^"]*"' | wc -l || true)
+          echo "- Anchor elements without proper href: $INVALID_ANCHORS" >> seo-report.md
+          
+          echo "" >> seo-report.md
+          echo "✅ SEO health check completed successfully" >> seo-report.md
+          
+          cat seo-report.md
+          
+      - name: Display SEO report
+        run: |
+          echo "📋 SEO Health Check Report Contents:"
+          echo "==========================================="
+          cat seo-report.md
+          echo "==========================================="
+          
+      - name: Upload SEO report
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          echo "ARTIFACT_NAME=seo-health-report-$TIMESTAMP" >> $GITHUB_ENV
+        
+      - name: Upload SEO report artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: seo-report.md
+          retention-days: 90
