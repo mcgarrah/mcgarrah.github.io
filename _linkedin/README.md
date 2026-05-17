@@ -39,19 +39,11 @@ Each file includes:
 
 ## Publication Schedule
 
-| Date | File | Substack Article | LinkedIn URL |
-|------|------|-----------------|-------------|
-| TBD | — | Why Your DS Need Production Data | — |
-| TBD | — | What My EMBA Is Teaching Me | — |
-| TBD | — | When Storage Breaks | — |
-| TBD | — | The Hidden Cost of AI Tool Sprawl | — |
-| TBD | — | From Bug Fix to Marketplace | — |
-| TBD | — | EA as Career Accelerator | — |
-| TBD | — | Building in Public | — |
-| TBD | — | Building AI Organizations | — |
-| TBD | — | ML: From Research to Production | — |
-| TBD | — | AI Tooling Governance | — |
-| TBD | — | The Business of Technical Leadership (capstone) | — |
+| Date | File | Title | LinkedIn URL |
+|------|------|-------|-------------|
+| 2024-11-18 | `2024-11-18-isc2-cybersecurity-cert.md` | ISC2 Cybersecurity Certification | [Published](https://www.linkedin.com/pulse/isc2-cybersecurity-certification-michael-mcgarrah-ermfe/) |
+| 2026-05-18 | `2026-05-18-five-stages-ds-platform.md` | Your Data Scientists Are Training on Garbage Data | TBD |
+| 2026-06-15 | `2026-06-15-data-science-is-not-software-development.md` | If You Manage Data Scientists Like Software Engineers... | TBD |
 
 ## Cross-References
 

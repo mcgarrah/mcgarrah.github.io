@@ -19,7 +19,7 @@ Full-year calendar showing published articles (✅), future-dated/scheduled arti
 
 **Today:** 2026-05-09
 
-Last updated: 2026-05-09
+Last updated: 2026-05-14
 
 ---
 
@@ -88,7 +88,7 @@ Last updated: 2026-05-09
 | **17** 📰 [Substack: Why DS Needs Prod Data](/_substack/2026-05-17-why-your-data-scientists-need-production-data.md) | **19** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | **21** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | **23** 📅 [Caddy Proxy: Multi-Site Jekyll](/caddy-reverse-proxy-local-multi-site-jekyll/) | **24** 📰 [Substack: When Storage Breaks](/_substack/2026-05-24-when-storage-breaks.md) |
 | 25 | **26** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 27 | **28** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 29 | **30** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 31 |
 
-**Summary:** 20 articles (3 published, 17 scheduled) + 2 Substack newsletters. MWF cadence from May 4 onward with Caddy series on MWF May 19/21/23. Five Stages DS Platform (Fri May 16) + Substack companion (Sat May 17). Technical Substack (Sat May 24). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
+**Summary:** 20 articles (3 published, 17 scheduled) + 2 Substack newsletters + 1 LinkedIn post. MWF cadence from May 4 onward with Caddy series on MWF May 19/21/23. Five Stages DS Platform (Fri May 16) + Substack companion (Sat May 17) + LinkedIn hook (Mon May 18). Technical Substack (Sat May 24). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
 
 ---
 
@@ -98,11 +98,11 @@ Last updated: 2026-05-09
 |-----|-----|-----|-----|-----|-----|-----|
 | | **1** 📅 [Managing Cross-AI Context](/managing-cross-ai-agent-context/) | 2 | **3** 📅 [ZFS Boot Mirrors Part 3](/proxmox-zfs-boot-mirrors-part-3/) | 4 | **5** 📅 [Jekyll Run Multiroot Bug](/jekyll-run-plugin-multiroot-workspace-bug/) | 6 |
 | 7 | **8** 📅 [Draft Preview Site Part 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** 📅 [Forking Jekyll Run](/forking-jekyll-run-to-run-jekyll/) | 11 | **12** 📅 [Draft Preview Site Part 2](/jekyll-draft-preview-site-part-2/) | **13** 📅 [Research Model for DS](/research-model-for-data-science/) |
-| **14** 📰 [Substack: DS Is Not SD](/_substack/2026-06-14-data-science-is-not-software-development.md) | **15** 📅 [Run Jekyll Marketplace Setup](/run-jekyll-vscode-marketplace-publisher-setup/) | 16 | **17** 📅 [Draft Preview Site Part 3](/jekyll-draft-preview-site-part-3/) | 18 | **19** 📅 [Run Jekyll Bug Fixes](/run-jekyll-bug-fixes-and-code-review/) | 20 |
+| **14** 📰 [Substack: DS Is Not SD](/_substack/2026-06-14-data-science-is-not-software-development.md) | **15** 📅 [Run Jekyll Marketplace Setup](/run-jekyll-vscode-marketplace-publisher-setup/) · 🔗 [LinkedIn: DS ≠ SD](/_linkedin/2026-06-15-data-science-is-not-software-development.md) | 16 | **17** 📅 [Draft Preview Site Part 3](/jekyll-draft-preview-site-part-3/) | 18 | **19** 📅 [Run Jekyll Bug Fixes](/run-jekyll-bug-fixes-and-code-review/) | 20 |
 | 21 | **22** 🔲 *Open* | 23 | **24** 📅 [Run Jekyll Testing](/run-jekyll-testing-and-test-harness/) | 25 | **26** 📅 [Google Service Sprawl](/google-service-sprawl/) | 27 |
 | 28 | **29** 📅 [Run Jekyll New Features](/run-jekyll-new-features-clean-doctor-tests/) | 30 | | | | |
 
-**Summary:** 13 articles scheduled + 1 open slot + 1 Substack newsletter. Research Model for DS (Sat Jun 13) + Substack companion (Sun Jun 14). Run Jekyll and Draft Preview series interleaved.
+**Summary:** 13 articles scheduled + 1 open slot + 1 Substack newsletter + 1 LinkedIn post. Research Model for DS (Sat Jun 13) + Substack companion (Sun Jun 14) + LinkedIn hook (Mon Jun 15). Run Jekyll and Draft Preview series interleaved.
 
 ---
 
@@ -111,8 +111,8 @@ Last updated: 2026-05-09
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-----|-----|-----|-----|-----|-----|-----|
 | | | | **1** 📝 [StarVoyager Game](/_drafts/2026-07-01-starvoyager-game.md) | 2 | **3** 📝 [Godot Tower Defense](/_drafts/2026-07-03-godot-vscode.md) | 4 |
-| 5 | **6** 📝 [AASR Series Overview](/_drafts/2026-07-01-aasr-project-series-overview.md) | 7 | **8** 📝 [AASR: Proxmox AI Cluster](/_drafts/2026-07-01-aasr-proxmox-overview.md) | 9 | **10** 📝 [Git History Bloat (Part 1)](/_drafts/2026-07-08-git-history-bloat-drafts-repo-cleanup.md) | 11 |
-| 12 | **13** 📝 [Git Repo Audit (Part 2)](/_drafts/2026-07-09-git-repo-audit-methodology-findings.md) | 14 | **15** 📝 [Git Health Monitoring (Part 3)](/_drafts/2026-07-24-git-health-monitoring-github-actions-outline.md) | 16 | **17** 📝 [Claude Code Setup Guide](/_drafts/2026-05-01-claude-code-setup-guide.md) | 18 |
+| **5** 📰 [Substack: Bug Fix to Marketplace](/_substack/2026-07-05-from-bug-fix-to-marketplace.md) | **6** 📝 [AASR Series Overview](/_drafts/2026-07-01-aasr-project-series-overview.md) | 7 | **8** 📝 [AASR: Proxmox AI Cluster](/_drafts/2026-07-01-aasr-proxmox-overview.md) | 9 | **10** 📝 [Git History Bloat (Part 1)](/_drafts/2026-07-08-git-history-bloat-drafts-repo-cleanup.md) | 11 |
+| 12 | **13** 📝 [Git Repo Audit (Part 2)](/_drafts/2026-07-09-git-repo-audit-methodology-findings.md) · 📰 [Substack: Building in Public](/_substack/2026-07-13-building-in-public.md) | 14 | **15** 📝 [Git Health Monitoring (Part 3)](/_drafts/2026-07-24-git-health-monitoring-github-actions-outline.md) | 16 | **17** 📝 [Claude Code Setup Guide](/_drafts/2026-05-01-claude-code-setup-guide.md) | 18 |
 | 19 | **20** 📝 [Email Forwarding Eval](/_drafts/2026-02-07-email-forwarding-evaluation.md) | 21 | **22** 📝 [Photosynth Retrospective](/_drafts/2026-01-01-photosynth-update.md) | 23 | **24** 📝 [Plausible vs Google Analytics](/_drafts/2026-07-17-plausible-vs-google-analytics.md) | 25 |
 | 26 | **27** 📝 [Jekyll Dark Mode Toggle](/_drafts/2026-07-08-jekyll-dark-mode-toggle.md) | 28 | **29** 📝 [Jekyll Tag Sprawl](/_drafts/2026-07-10-jekyll-tag-sprawl-consolidation.md) | 30 | **31** 📝 [Jekyll Front Matter Hygiene](/_drafts/2026-07-13-jekyll-front-matter-hygiene.md) | |
 
