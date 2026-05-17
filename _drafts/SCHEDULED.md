@@ -88,7 +88,7 @@ Last updated: 2026-05-14
 | **17** 📰 [Substack: Why DS Needs Prod Data](/_substack/2026-05-17-why-your-data-scientists-need-production-data.md) | **18** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) · 🔗 [LinkedIn: DS Platform](/_linkedin/2026-05-18-five-stages-ds-platform.md) | 🔲 *19 Open* | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | **21** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | **23** 📅 [Caddy Proxy: Multi-Site Jekyll](/caddy-reverse-proxy-local-multi-site-jekyll/) |
 | **24** 📰 [Substack: When Storage Breaks](/_substack/2026-05-24-when-storage-breaks.md) | **26** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 27 | **28** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 29 | **30** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 31 |
 
-**Summary:** 20 articles (3 published, 17 scheduled) + 2 Substack newsletters + 1 LinkedIn post. MWF cadence from May 4 onward with Caddy series on MWF May 19/21/23. Five Stages DS Platform (Fri May 16) + Substack companion (Sat May 17) + LinkedIn hook (Mon May 18). Technical Substack (Sat May 24). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
+**Summary:** 20 articles (3 published, 17 scheduled) + 2 Substack newsletters + 1 LinkedIn post. Caddy series on Mon/Thu/Sat May 18/21/23. Five Stages DS Platform (Sat May 16) + Substack companion (Sun May 17) + LinkedIn hook (Mon May 18). Technical Substack (Sun May 24). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
 
 ---
 
