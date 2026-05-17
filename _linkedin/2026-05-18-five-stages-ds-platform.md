@@ -22,17 +22,19 @@ The standard SDLC model — synthetic data in dev, sanitized data in staging, re
 
 So you have a conflict: data scientists need the interactive flexibility of a development environment combined with access to production data that requires production-grade security controls. These two requirements are architecturally opposed in the standard SDLC model.
 
-**I've spent 15 years watching organizations get this wrong.** They either:
+**The two outcomes organizations settle for:**
 - Give data scientists garbage data → garbage models → "AI doesn't work here"
 - Grant security exceptions → compliance erosion → audit findings
 
-Neither is acceptable.
+Neither is acceptable. And the standard SDLC has no answer because it was never designed for this problem.
 
 ---
 
-I wrote a framework for resolving this — a five-stage promotion model designed specifically for data science workloads. It's not theoretical. I've built or operated variants of it across pharmaceutical clinical trials (FDA CFR Part 11), healthcare ML platforms (HIPAA), financial services (SOC 2), and state government (IRS Safeguard).
+The resolution is a concept called **Prod Discovery** — an environment that carries the "Production" designation (with all the security controls, audit logging, and compliance posture that implies) while providing the interactive flexibility data scientists need to explore, experiment, and iterate. It is not a development environment with production data bolted on. It is a production environment with research capabilities designed in.
 
-The core insight: you don't force data science into the SDLC model. You build a parallel track that acknowledges the production data requirement from the start — with appropriate controls at every stage.
+The key insight: regulatory data minimization (masking a Social Security Number) is not the same as data sanitization (fabricating distributions). You can remove direct identifiers while preserving the raw statistical patterns that models actually learn from. The CISO sleeps at night because every access is logged, the network is segmented, and the environment carries production-grade controls. The data scientist gets real data because the mathematical integrity is preserved.
+
+I have built or operated variants of this framework across pharmaceutical clinical trials (FDA CFR Part 11), healthcare ML platforms (HIPAA), financial services (SOC 2), and state government (IRS Safeguard). The pattern is consistent: organizations that build the platform first succeed at AI. Organizations that bolt security onto ad-hoc data access fail.
 
 **The full framework:**
 📝 Blog (technical depth + architecture diagrams): [Five Stages of a Successful Cloud Data Science Platform](https://mcgarrah.org/five-stages-cloud-data-science-platform/)

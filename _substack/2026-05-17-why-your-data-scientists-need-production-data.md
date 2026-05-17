@@ -42,15 +42,17 @@ I have had this argument with development managers, project managers, and securi
 
 The resolution is a promotion framework designed specifically for data science workloads. Instead of forcing DS into the SDLC model, you build a parallel track that acknowledges the production data requirement from the start.
 
-**Five stages:**
+**Five stages — framed by who owns them and what risk they mitigate:**
 
-1. **Infrastructure Development** — where you develop the platform itself. No production data. Standard IaC development.
-2. **Infrastructure Pre-Production** — validated infra changes before release to production-data environments.
-3. **Prod Discovery** — the interactive, exploratory environment where data scientists work. **Has production data.** Notebooks, feature engineering, model experimentation. Extensive monitoring and audit logging.
-4. **Prod Integration** — automation layer. No interactive work. Automated pipelines validate DS work before it reaches customers.
-5. **Production (Final Prod)** — where customers consume AI/ML insights. Most restrictive controls.
+1. **Infrastructure Development** (Owner: Platform Engineering | Risk: None — no production data) — where you develop the platform itself. Standard IaC development. Break things here, not in the environments your data scientists depend on.
 
-The "Prod" prefix on Discovery is deliberate. It signals to security and compliance teams that this environment holds real data and requires production-grade controls — while also providing the interactive flexibility data scientists need to do their work.
+2. **Infrastructure Pre-Production** (Owner: Platform Engineering | Risk: Deployment consistency) — validated infra changes before release to production-data environments. The gate between "we're experimenting with Terraform" and "this is ready for the people who use real data."
+
+3. **Prod Discovery: The Safe Space for Messy Data Science** (Owner: Data Science | Risk: Data exposure — mitigated by audit logging, network segmentation, read-only access, no public internet) — the interactive, exploratory environment where data scientists work. **Has production data with real statistical distributions intact.** The CISO can sleep at night because: every query is logged, the network is isolated, direct identifiers (SSN, patient name) are masked while preserving the mathematical properties models actually learn from, and there is no path from this environment to the public internet.
+
+4. **Prod Integration: The Factory Gate** (Owner: MLOps/Platform Engineering | Risk: Unvalidated logic reaching production) — no interactive work. This is where experimental notebooks become version-controlled, automated Python packages or containers. The research model hands off to the engineering model. If a pipeline fails here, customers never see it.
+
+5. **Production (Final Prod)** (Owner: Operations | Risk: Customer impact) — where customers consume AI/ML insights. Most restrictive controls. Changes arrive only through automated promotion from Integration.
 
 For the full technical framework with architecture diagrams and implementation details, I wrote a companion blog post: [Five Stages of a Successful Cloud Data Science Platform](https://mcgarrah.org/five-stages-cloud-data-science-platform/).
 

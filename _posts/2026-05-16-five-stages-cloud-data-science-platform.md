@@ -95,17 +95,21 @@ This is where the SDLC model breaks and the DS model begins. **Discovery has pro
 The "Prod" prefix is deliberate and important. It signals to security and compliance teams that this environment holds real data and requires production-grade controls. But it also has development-like flexibility: data scientists can install packages, run experiments, create copies of datasets for feature engineering, and iterate rapidly.
 
 Key characteristics:
-- **Production data access** — read access to production datasets, possibly with row-level or column-level restrictions for the most sensitive fields
+- **Production data access** — read access to production datasets with the real, unadulterated statistical distributions intact
 - **Interactive workloads** — Jupyter notebooks, SageMaker Studio, interactive Spark sessions
 - **Heavy storage** — feature engineering creates many copies and transformations of data
 - **Extensive monitoring and auditing** — every data access is logged because this is production data in a flexible environment
 - **Cross-environment reach** — may access datasets in Final Prod for model training, and datasets being developed by data engineers in the same environment
 
+**A critical distinction on data access:** Regulatory data minimization is not the same as data sanitization. Masking a Social Security Number or a patient's name while leaving the raw, unadulterated transactional distributions intact preserves the mathematical integrity of the data. Data scientists do not need to see a customer's actual name to predict churn — they need the unskewed, un-truncated behavioral patterns and anomalies. What destroys model quality is *structural sanitization*: mocking schemas, fabricating distributions, truncating outliers, or replacing real values with synthetic ones that alter the statistical properties of the dataset. The former is a compliance control; the latter is data poisoning dressed up as security.
+
 ### Stage 4: Prod Integration (Data Science Pre-Production)
 
 No interactive work happens here. This is the automation layer — where data science work is promoted from Discovery for validation before reaching Final Prod.
 
-Automated pipelines run here: model training jobs, data pipeline promotions, scheduled retraining. If something breaks in Integration, it does not affect customers in Final Prod. This is the same concept as a staging environment in SDLC, but with production data and stricter controls than Discovery.
+The promotion mechanism is critical: experimental work in Discovery lives in Jupyter notebooks, ad-hoc scripts, and iterative exploration. **Stage 4 forces the transition from experimental `.ipynb` files into version-controlled, automated Python packages or containers managed by an MLOps pipeline.** This is where the research model hands off to the engineering model — the hypothesis has been confirmed in Discovery, and Integration validates that it can run reproducibly, at scale, without human intervention.
+
+Automated pipelines run here: model training jobs, data pipeline promotions, scheduled retraining. If something breaks in Integration, it does not affect customers in Final Prod.
 
 ### Stage 5: Production (Final Prod)
 
@@ -140,7 +144,7 @@ graph LR
     style FINAL2 fill:#f44336,color:#fff
 ```
 
-This is the startup model: data scientists work directly in an environment with production data, and promotions go straight to Final Prod. It works until your first compliance audit asks how you validate ML pipeline changes before they affect customers.
+This is the startup model: data scientists work directly in an environment with production data, and promotions go straight to Final Prod. It works until your first compliance audit asks how you validate ML pipeline changes before they affect customers. It also creates an operational dependency loop: if a model retrains automatically on live data and mutates its weights without an integration gate, you are deploying unvalidated probabilistic logic directly to consumers. One distribution shift in the training data produces a silently degraded model with no gate to catch it.
 
 ## Security and Compliance Implications
 
@@ -148,7 +152,7 @@ The "Prod" designation on Discovery is not just naming — it carries real conse
 
 - **Access controls** — IAM policies, role-based access, least-privilege principles apply even in the interactive environment
 - **Audit logging** — every data access, every query, every file creation is logged (CloudTrail, VPC Flow Logs, application-level audit)
-- **Data classification** — not all production data needs to be in Discovery. PII columns can be masked; only the features needed for training need to be accessible
+- **Data classification** — regulatory data minimization (masking identifiers like SSN, patient name) preserves model-relevant distributions while satisfying compliance. This is not sanitization — the statistical properties of the data remain intact. Only direct identifiers are removed.
 - **Network segmentation** — Discovery can reach production data stores but is isolated from the public internet and from non-DS systems
 - **Compliance framework mapping** — SOC 2, HIPAA, PCI-DSS all have controls that apply to any environment with production data. Removing the word "Development" from the environment name simplifies compliance conversations significantly
 
