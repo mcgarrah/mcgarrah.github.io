@@ -97,7 +97,7 @@ Here's the part that took me twenty years to be honest about: sharing is a bypro
 
 I publish these posts because making them public raises the stakes just enough. If it's just notes in a private wiki, I'll cut corners. I'll write "do the thing with the config" and move on. But if someone might actually read it — even if nobody does — I'll make sure the commands actually work, the explanations actually explain, and the logic actually holds.
 
-The audience is a forcing function for quality. But it's not the motivation.
+The audience is a forcing function for quality because nobody wants to look foolish in public. But it's not the motivation.
 
 The motivation is that I genuinely cannot figure out complex things without writing them down. My brain needs the structure that sentences and paragraphs impose on messy, nonlinear problem-solving. Code is one kind of thinking. Writing is another. I need both.
 
@@ -111,20 +111,28 @@ I set up [Giscus comments](/jekyll-giscus-comments-implementation/) backed by Gi
 
 What I actually want is the back-and-forth. Someone who reads a post about Ceph storage economics and says "have you considered this other approach?" or "I tried that and here's what happened." Not engagement metrics. Not likes. Actual technical conversation with people who are working on similar problems.
 
-That's the piece a static blog can't provide, and it's why I'm setting up [Substack](https://mcgarrah.substack.com/) for the coming year.
+That's the piece a static blog can't provide, and it's why I have set up [Substack](https://mcgarrah.substack.com/) for the coming year.
 
-## Why Substack
+## Why Substack (and LinkedIn)
 
-I'm not abandoning the blog. The Jekyll site is the permanent archive — version controlled, self-hosted, no platform risk. Every post I've written since 2001 lives there and will continue to live there.
+I'm not abandoning the blog. The Jekyll site is the permanent archive — version controlled, self-hosted, no platform risk. Every post I've written since 2001 lives there and will continue to live there. It is where I write about whatever interests me — technical deep dives, homelab experiments, infrastructure patterns, and the occasional tangent into things that have nothing to do with my career.
 
-But Substack solves the specific problem I have:
+But a static blog is a one-way street. I needed two more channels, each solving a different problem:
+
+**[Substack](https://mcgarrah.substack.com/)** solves the interaction problem:
 
 - **Email delivery** — Posts land in inboxes instead of waiting to be discovered. The people who want to read them don't have to remember to check a website.
 - **Reply culture** — Substack's comment and reply model is lower friction than GitHub Discussions. People actually respond.
 - **Discovery** — Substack has a built-in network of readers interested in technical content. My Jekyll blog has whatever Google decides to send my way.
-- **Conversation threading** — The discussion happens alongside the content, not in a separate system.
+- **Depth** — Longer-form strategic and leadership pieces live here as the persistent, shareable versions.
 
-The plan is straightforward: continue writing on the Jekyll blog as the source of truth, cross-post to Substack for distribution and discussion. The writing process doesn't change. The thinking-through-writing doesn't change. What changes is that the writing might actually start conversations instead of sitting in a well-organized archive.
+**[LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/)** solves the reach problem:
+
+- **Network access** — 500+ connections who are former colleagues, managers, and industry peers. A Substack article that nobody reads doesn't move the needle. A LinkedIn post that hooks former colleagues into reading the full piece — and commenting from their own experience — is worth more than anonymous page views.
+- **Professional context** — LinkedIn is where recruiters, hiring managers, and executive peers see your thinking. The blog proves you build things. LinkedIn proves you think about why.
+- **Amplification** — Short posts (300–800 words) that distill the key insight from a Substack article into a hook, then link to the full piece.
+
+The three channels reinforce each other: the blog is the technical source of truth, Substack is where the conversation happens, and LinkedIn is the amplifier that drives reach into my professional network. The writing process doesn't change. The thinking-through-writing doesn't change. What changes is that the writing reaches people who can respond to it.
 
 ## 178 Posts Later
 
@@ -136,4 +144,4 @@ I'm in a burst right now. Forty-seven drafts in the pipeline, posts scheduled th
 
 If you've read this far, you're probably someone who thinks by writing too. Or you're considering starting. My advice is simple: don't write for an audience. Write for the confused version of yourself. The audience, if it comes, is a bonus. The understanding is the point.
 
-And if you want to actually talk about any of this — that's what the [Substack](https://mcgarrah.substack.com/) is for.
+And if you want to actually talk about any of this — [Substack](https://mcgarrah.substack.com/) is for the conversation, [LinkedIn](https://www.linkedin.com/in/michaelmcgarrah/) is for the professional context, and the blog is where it all starts.
