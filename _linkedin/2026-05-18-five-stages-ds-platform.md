@@ -12,6 +12,22 @@ date: 2026-05-18
 
 ---
 
+**Feed Post:**
+
+> Your data scientists are training on garbage data.
+>
+> Not because they're bad at their jobs — because your SDLC forces them to choose between synthetic data that produces useless models, or security exceptions that erode your compliance posture.
+>
+> I wrote about why this happens and a framework for fixing it — drawn from 15 years of building ML platforms across pharma, healthcare, financial services, and government.
+>
+> The short version: you need a "Prod Discovery" environment. Production-grade security controls. Real statistical distributions. Interactive flexibility. The CISO sleeps at night because every access is logged and the network is segmented. The data scientist gets real data because you're masking identifiers, not fabricating distributions.
+>
+> Full article below. If you manage data scientists using sprint velocity, this might explain why it's not working.
+>
+> #DataScience #MachineLearning #PlatformEngineering #AI #EnterpriseArchitecture #MLOps
+
+---
+
 Here's a question I've asked in every enterprise I've worked in for the past decade:
 
 "Why can't the data scientists just use the staging data?"
