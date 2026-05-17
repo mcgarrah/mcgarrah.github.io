@@ -20,6 +20,7 @@ noindex: true
 {% endfor %}
 </ul>
 {% else %}
-<meta http-equiv="refresh" content="0;url=https://mcgarrah.substack.com/">
-<p>Redirecting to <a href="https://mcgarrah.substack.com/">mcgarrah.substack.com</a>...</p>
+{% assign substack_link = site.external | where: "title", "Substack" | first %}
+<meta http-equiv="refresh" content="0;url={{ substack_link.url }}">
+<p>Redirecting to <a href="{{ substack_link.url }}">{{ substack_link.url }}</a>...</p>
 {% endif %}

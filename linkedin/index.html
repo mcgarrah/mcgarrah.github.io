@@ -24,6 +24,7 @@ noindex: true
 <p><em>No LinkedIn posts yet.</em></p>
 {% endif %}
 {% else %}
-<meta http-equiv="refresh" content="0;url=https://www.linkedin.com/in/michaelmcgarrah/">
-<p>Redirecting to <a href="https://www.linkedin.com/in/michaelmcgarrah/">LinkedIn</a>...</p>
+{% assign linkedin_link = site.external | where: "title", "LinkedIn" | first %}
+<meta http-equiv="refresh" content="0;url={{ linkedin_link.url }}">
+<p>Redirecting to <a href="{{ linkedin_link.url }}">LinkedIn</a>...</p>
 {% endif %}
