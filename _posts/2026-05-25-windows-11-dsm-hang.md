@@ -17,13 +17,13 @@ seo:
 
 [![DISM Stuck at 62.3%](/assets/images/dism-hang-000.png){:width="60%" height="60%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/dism-hang-000.png){:target="_blank"}
 
-<!-- excerpt-end -->
-
 If you're running Windows 11 (especially 24H2) and attempting to repair your system using the `DISM /Online /Cleanup-Image /RestoreHealth` command, you might have run into a frustrating issue: the progress bar appears to get completely stuck at **62.3%** for minutes or even hours. 
 
 You might be asking yourself, "What is my system doing? Is it hung?" 
 
 The short answer is: **No, it's not hanging.** Your system is actively busy checking, downloading, applying, and verifying packages.
+
+<!-- excerpt-end -->
 
 Here's a breakdown of why this happens, how to monitor the actual progress, and what to look out for on Windows 11 24H2.
 
