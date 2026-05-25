@@ -17,9 +17,9 @@ Full-year calendar showing published articles (✅), future-dated/scheduled arti
 
 **Cadence:** Monday / Wednesday / Friday (MWF) primary. Occasional Tue/Thu/Sat/Sun for series bursts.
 
-**Today:** 2026-05-09
+**Today:** 2026-05-25
 
-Last updated: 2026-05-14
+Last updated: 2026-05-25
 
 ---
 
@@ -86,9 +86,9 @@ Last updated: 2026-05-14
 | **3** ✅ [Kiro IDE WSL2 Support](/kiro-ide-wsl2-support-open-remote-extension/) | **4** 📅 [Jekyll Tag/Category Generator](/jekyll-tag-category-generator-plugin/) | 5 | **6** 📅 [Jekyll Giscus Comments](/jekyll-giscus-comments-implementation/) | 7 | **8** 📅 [Jekyll GitHub Actions CI/CD](/jekyll-github-actions-cicd-pipeline/) | **9** 📅 [Jekyll Modern Favicon](/jekyll-modern-favicon-set/) |
 | 10 | **11** 📅 [Jekyll Run Plugin Config](/jekyll-run-vscode-plugin-local-development/) | 12 | **13** 📅 [Draft/Future Visual Indicators](/jekyll-draft-future-visual-indicators/) | **14** 📅 [Resume Site Rebuild](/resume-site-ground-up-rebuild/) | **15** 📅 [Content Distribution Pipeline](/jekyll-content-distribution-pipeline/) | **16** 📅 [Five Stages: Cloud DS Platform](/five-stages-cloud-data-science-platform/) |
 | **17** 📰 [Substack: Why DS Needs Prod Data](/_substack/2026-05-17-why-your-data-scientists-need-production-data.md) | **18** 📅 [Caddy Proxy: Proxmox UI](/caddy-reverse-proxy-proxmox-web-ui/) · 🔗 [LinkedIn: DS Platform](/_linkedin/2026-05-18-five-stages-ds-platform.md) | 🔲 *19 Open* | **20** 📅 [Domain Registrar Migration](/name-service-registrars/) | **21** 📅 [Caddy Proxy: Ceph Dashboard](/caddy-reverse-proxy-ceph-dashboard/) | **22** 📅 [Writing to Think](/writing-to-think-two-decades-of-figuring-things-out/) | **23** 📅 [Caddy Proxy: Multi-Site Jekyll](/caddy-reverse-proxy-local-multi-site-jekyll/) |
-| **24** 📰 [Substack: When Storage Breaks](/_substack/2026-05-24-when-storage-breaks.md) | **26** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 27 | **28** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 29 | **30** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 31 |
+| **24** 📰 [Substack: When Storage Breaks](/_substack/2026-05-24-when-storage-breaks.md) | **25** ✅ [DISM Stuck at 62.3%](/windows-11-dsm-hang/) | **26** 📅 [ZFS Boot Mirrors Part 1](/proxmox-zfs-boot-mirrors-part-1/) | 27 | **28** 📅 [AI Agent Context Files](/ai-coding-agent-context-files-reference/) | 29 | **30** 📅 [ZFS Boot Mirrors Part 2](/proxmox-zfs-boot-mirrors-part-2/) | 31 |
 
-**Summary:** 20 articles (3 published, 17 scheduled) + 2 Substack newsletters + 1 LinkedIn post. Caddy series on Mon/Thu/Sat May 18/21/23. Five Stages DS Platform (Sat May 16) + Substack companion (Sun May 17) + LinkedIn hook (Mon May 18). Technical Substack (Sun May 24). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
+**Summary:** 21 articles (4 published, 17 scheduled) + 2 Substack newsletters + 1 LinkedIn post. Caddy series on Mon/Thu/Sat May 18/21/23. Five Stages DS Platform (Sat May 16) + Substack companion (Sun May 17) + LinkedIn hook (Mon May 18). Technical Substack (Sun May 24). DISM troubleshooting (Sun May 25). Resume rebuild (Thu May 14) and Kiro IDE pair (Sat/Sun May 2–3) are off-cycle.
 
 ---
 
@@ -200,7 +200,7 @@ Last updated: 2026-05-14
 | February | 3 | — | — | — | 3 |
 | March | 1 | — | — | — | 1 |
 | April | 25 | — | — | — | 25 |
-| May | 3 | 16 | — | — | 19 |
+| May | 4 | 16 | — | — | 20 |
 | June | — | 12 | — | 1 | 13 |
 | July | — | — | 14 | — | 14 |
 | August | — | — | 13 | — | 13 |
@@ -208,7 +208,7 @@ Last updated: 2026-05-14
 | October | — | — | — | 14 | 14 |
 | November | — | — | — | 12 | 12 |
 | December | — | — | — | 14 | 14 |
-| **Total** | **34** | **28** | **37** | **46** | **145** |
+| **Total** | **35** | **28** | **37** | **46** | **146** |
 
 ### Draft Inventory vs Slots
 

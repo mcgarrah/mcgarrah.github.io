@@ -2,13 +2,17 @@
 title: "DISM RestoreHealth Stuck at 62.3% on Windows 11? Here's What's Actually Happening"
 image: /assets/images/dism-hang-000.png
 layout: post
-categories: [Windows, Troubleshooting]
-tags: [Windows 11, DISM, SysAdmin, PowerShell]
+categories: [windows, troubleshooting]
+tags: [windows 11, dism, sysadmin, powershell, windows update]
 excerpt: "If you are running Windows 11 and attempting to repair your system using the DISM /RestoreHealth command, you might have noticed the progress bar getting stuck at 62.3%. Here is what is actually happening and how to monitor it."
 description: "A deep dive into why DISM /RestoreHealth gets stuck at 62.3% on Windows 11 24H2, how to monitor the CBS.log with PowerShell, and what the finalization output looks like."
 date: 2026-05-25
 last_modified_at: 2026-05-25
 published: true
+seo:
+  type: BlogPosting
+  date_published: 2026-05-25
+  date_modified: 2026-05-25
 ---
 
 [![DISM Stuck at 62.3%](/assets/images/dism-hang-000.png){:width="60%" height="60%" style="display:block; margin-left:auto; margin-right:auto"}](/assets/images/dism-hang-000.png){:target="_blank"}
