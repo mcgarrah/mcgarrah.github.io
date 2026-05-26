@@ -9,6 +9,7 @@ description: "The complete content distribution pipeline for a Jekyll blog on Gi
 date: 2026-05-15
 last_modified_at: 2026-05-15
 published: true
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-05-15
