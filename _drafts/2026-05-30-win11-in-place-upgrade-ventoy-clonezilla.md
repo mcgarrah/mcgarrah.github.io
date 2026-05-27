@@ -185,6 +185,13 @@ The Windows Installer service was started successfully.
 
 We have renamed and restarted all the services.  This should have both the cache and the pending updates cleared.  Let's try Windows Update again and see if it can now install the May 2026 Security Patches. Reboot and retry once more.
 
+After the reboot, we have `Install error - 0x80070490` back.
+
+## Remove Windows Sandbox
+
+Let us try removing the Windows Sandbox feature and redo the above steps again.
+
+
 ## Step 2: Clear the Applicability Evaluation Cache
 
 One more low-risk attempt — clearing the registry cache that CBS uses to evaluate package applicability:
