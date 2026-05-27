@@ -21,9 +21,60 @@ In [Part 1](/windows-11-dsm-hang/), DISM got stuck at 62.3% on one ThinkPad — 
 
 It wasn't.
 
-After three hours of DISM and SFC, a reboot, and another attempt at Windows Update — same error. The corrupted FodMetadataServicing and Windows Defender Application Guard packages survived the repair pass. Time to escalate, but with a safety net. I'm skipping the risky package removal (Step 3 from Part 2) entirely and going straight to the in-place upgrade — but not before backing up the entire disk.
-
 <!-- excerpt-end -->
+
+Clean DISM and SFC runs.
+
+```console
+C:\Users\McGarrah>DISM /Online /Cleanup-Image /RestoreHealth
+
+Deployment Image Servicing and Management tool
+Version: 10.0.26100.5074
+
+Image Version: 10.0.26200.8039
+
+[==========================100.0%==========================] The restore operation completed successfully.
+The operation completed successfully.
+
+C:\Users\McGarrah>sfc /scannow
+
+Beginning system scan.  This process will take some time.
+
+Beginning verification phase of system scan.
+Verification 100% complete.
+
+Windows Resource Protection did not find any integrity violations.
+```
+
+No recent errors in `CBS.log` found.
+
+```powershell
+PS C:\Users\McGarrah> Get-Content "C:\Windows\Logs\CBS\CBS.log" | Select-String "0x80070490" | Select-Object -Last 20
+PS C:\Users\McGarrah>
+```
+
+After three hours of DISM and SFC, a reboot, and another attempt at Windows Update — new error when I try to install the May 2026 Security Patches.
+
+Screenshot: assets/images/win11-update-001.png
+
+`Install error - 0x80028017`
+
+Install error `0x80028017` typically occurs on Windows 11, specifically when attempting to install Insider Preview or Quality updates. It usually indicates a broken metadata issue, an incompatible Windows feature (like Windows Sandbox), or corrupted system and update caches.
+
+The corrupted FodMetadataServicing and Windows Defender Application Guard packages are gone from the `CBS.log` but we have this new error.
+
+```powershell
+PS C:\Users\McGarrah> Get-Content "C:\Windows\Logs\CBS\CBS.log" | Select-String "0x800" | Select-Object -Last 20
+PS C:\Users\McGarrah> Get-Content "C:\Windows\Logs\CBS\CBS.log" | Select-String "0x80028017" | Select-Object -Last 20
+PS C:\Users\McGarrah> Get-Content "C:\Windows\Logs\CBS\CBS.log" | Select-String "0x80070490" | Select-Object -Last 20
+PS C:\Users\McGarrah>
+```
+
+I have the "Windows Sandbox" Feature installed on both my systems but only use it occasionally now. It was being used extensively when I was testing software packages earlier but that slowed down. This could be the root cause of these issues.
+
+We can try Step #1 and Step #2 below to see about cleaning up the logs and caches.
+
+---
 
 ## Step 1: Reset Windows Update Components
 
@@ -44,7 +95,42 @@ net start bits
 net start msiserver
 ```
 
-Reboot and try Windows Update one more time. If it still fails (it did for me), continue below.
+Failed to rename the `catroot2` folder due to access denied. This is expected because it's protected by the system. However, the `SoftwareDistribution` folder was renamed successfully, which means the Windows Update cache has been cleared.
+
+```powershell
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\McGarrah> net stop wuauserv
+The Windows Update service is stopping.
+The Windows Update service was stopped successfully.
+
+PS C:\Users\McGarrah> net stop cryptSvc
+The Cryptographic Services service is stopping..
+The Cryptographic Services service could not be stopped.
+
+PS C:\Users\McGarrah> net stop bits
+The Background Intelligent Transfer Service service is stopping..
+The Background Intelligent Transfer Service service was stopped successfully.
+
+PS C:\Users\McGarrah> net stop msiserver
+The Windows Installer service is not started.
+
+More help is available by typing NET HELPMSG 3521.
+
+PS C:\Users\McGarrah> ren C:\Windows\SoftwareDistribution SoftwareDistribution.old
+PS C:\Users\McGarrah> ren C:\Windows\System32\catroot2 catroot2.old
+ren : Access to the path 'C:\Windows\System32\catroot2' is denied.
+At line:1 char:1
++ ren C:\Windows\System32\catroot2 catroot2.old
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (C:\Windows\System32\catroot2:String) [Rename-Item], IOException
+    + FullyQualifiedErrorId : RenameItemIOError,Microsoft.PowerShell.Commands.RenameItemCommand
+
+PS C:\Users\McGarrah>
+```
 
 ## Step 2: Clear the Applicability Evaluation Cache
 
@@ -57,6 +143,8 @@ One more low-risk attempt — clearing the registry cache that CBS uses to evalu
 5. Reboot and try Windows Update again
 
 If this doesn't resolve it either, we're past the point of incremental fixes. The component store itself needs to be replaced wholesale.
+
+Time to escalate, but with a safety net. I'm skipping the risky package removal (Step 3 from Part 2) entirely and going straight to the in-place upgrade — but not before backing up the entire disk.
 
 ## Why I'm Skipping Step 3 (Package Removal)
 
@@ -75,6 +163,7 @@ TODO: Document Ventoy download and USB preparation
 ### Download the Windows 11 ISO
 
 TODO: Document getting the official Windows 11 ISO from Microsoft
+
 - Media Creation Tool vs direct ISO download
 - Which edition (matching the installed edition)
 - Version considerations for 24H2
