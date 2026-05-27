@@ -132,6 +132,59 @@ At line:1 char:1
 PS C:\Users\McGarrah>
 ```
 
+```powershell
+net stop bits
+net stop wuauserv
+net stop cryptsvc
+```
+
+```
+PS C:\Users\McGarrah> net stop bits
+The Background Intelligent Transfer Service service is not started.
+
+More help is available by typing NET HELPMSG 3521.
+
+PS C:\Users\McGarrah> net stop wuauserv
+The Windows Update service is not started.
+
+More help is available by typing NET HELPMSG 3521.
+
+PS C:\Users\McGarrah> net stop cryptsvc
+The Cryptographic Services service is stopping..
+The Cryptographic Services service was stopped successfully.
+
+PS C:\Users\McGarrah> ren C:\Windows\System32\catroot2 catroot2.old
+PS C:\Users\McGarrah>
+```
+
+```powershell
+net start wuauserv
+net start cryptSvc
+net start bits
+net start msiserver
+```
+
+```powershell
+PS C:\Users\McGarrah> net start wuauserv
+The Windows Update service is starting.
+The Windows Update service was started successfully.
+
+PS C:\Users\McGarrah> net start cryptSvc
+The requested service has already been started.
+
+More help is available by typing NET HELPMSG 2182.
+
+PS C:\Users\McGarrah> net start bits
+The Background Intelligent Transfer Service service is starting..
+The Background Intelligent Transfer Service service was started successfully.
+
+PS C:\Users\McGarrah> net start msiserver
+The Windows Installer service is starting.
+The Windows Installer service was started successfully.
+```
+
+We have renamed and restarted all the services.  This should have both the cache and the pending updates cleared.  Let's try Windows Update again and see if it can now install the May 2026 Security Patches. Reboot and retry once more.
+
 ## Step 2: Clear the Applicability Evaluation Cache
 
 One more low-risk attempt — clearing the registry cache that CBS uses to evaluate package applicability:
