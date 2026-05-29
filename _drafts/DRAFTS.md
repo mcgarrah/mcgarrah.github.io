@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-05-25
+Last updated: 2026-05-29
 
 ---
 
@@ -91,14 +91,16 @@ Drafts that form natural publishing sequences or share a topic.
 | 🧠 **Data Science & AI/ML** | five-stages ✅, research-model ✅, phonemes, multi-gpu | Two promoted with Substack companions; remaining drafts standalone |
 | 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md`, Part 1: `2026-07-01-aasr-proxmox-overview.md` |
 | 🖥️ **Kiro IDE** | — | Both articles published: Parallel Personas (`2026-05-02`) and WSL2 Support (`2026-05-03`) |
-| 🪟 **Windows SysAdmin** | — | DISM RestoreHealth 62.3% hang article published (`2026-05-25-windows-11-dsm-hang.md`) |
+| 🪟 **Windows SysAdmin** | win11-in-place-upgrade-ventoy-clonezilla | DISM 62.3% hang published (`2026-05-25`), Error 0x80070490 published (`2026-05-27`), Part 3 in-place upgrade draft (`2026-05-30`) |
 | ☁️ **AWS Terraform Modules** | — | QuickSight vanity URL article published (`2026-04-25-quicksight-vanity-urls-serverless-edge-redirects.md`) |
+| 🤖 **AI Agent Tooling** | mcp-vs-cli-vs-api-access-patterns, ai-generated-html-reports-jekyll-github-pages, proxmox-ceph-dashboard-ai-generated-html | MCP vs CLI vs API comparison, AI-generated HTML reports pattern (Part 1), Proxmox dashboard implementation (Part 2) |
+| 📄 **Resume & Career** | resume-machine-view-ats-validation | ATS validation and machine-readable resume analysis |
 | 🍎 **FastAPI Nutrition API** | See `FASTAPI-NUTRITION-API.md` | 4-article series: architecture, implementation, deployment, observability. Unified Food Intelligence API with USDA FDC, Open Food Facts, GS1 GPC |
 | 🧠 **Project Nexus** | See `PROJECT-NEXUS.md` | Hybrid-cloud intelligence gateway for resume + blog. Phased: local search → LiteLLM proxy → P620 edge → AI fit analysis. Depends on resume refactor completion. |
 | 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
 | 🔒 **Draft Preview Site** | — | All 3 parts published |
-| 🔧 **Caddy Reverse Proxy** | — | Both articles published |
+| 🔧 **Caddy Reverse Proxy** | — | All 3 articles published (Proxmox UI, Ceph Dashboard, Multi-Site Jekyll) |
 
 ---
 
