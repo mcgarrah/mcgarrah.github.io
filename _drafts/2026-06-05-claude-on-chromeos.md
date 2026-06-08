@@ -1,53 +1,132 @@
 ---
-title:  "Claude on ChromeOS"
+title: "Claude Code on a $79 Chromebook"
 layout: post
 categories: [technical]
-tags: [chromeos, claude, ai]
+tags: [chromeos, claude, ai, development]
+excerpt: "A discontinued Lenovo Chromebook with 8GB RAM and a Celeron N-series CPU makes a surprisingly capable portable terminal for AI-assisted development with Claude Code — if you understand the constraints."
+description: "Setting up Claude Code CLI on ChromeOS via Crostini Linux, evaluating the resource constraints of running an AI coding agent on budget hardware, and connecting it to VS Code for a lightweight portable development workflow."
 ---
 
-I have an idea of using my Lenovo ChromeOS as a quick spot for doing development.
+I picked up two Lenovo Chromebooks in 2022 — N-series Celeron, 8GB RAM, 64GB eMMC, around $79 each after rebates. Lenovo was discontinuing the model and clearing inventory. The machines still have ChromeOS update support for several more years, and at that price point I bought two without hesitation.
 
 <!-- excerpt-end -->
 
-I already have the VS Code, Github and Crostini/Linux setup on that system.
+These machines still boot in under ten seconds, run a full Linux container via Crostini, and have enough RAM to do real work — provided you're deliberate about what "real work" means on 8GB shared between ChromeOS and a Linux VM. The question I wanted to answer: can a budget Chromebook serve as a portable AI-assisted development terminal running Claude Code?
 
+The short answer is yes, with caveats worth understanding.
 
-You can run Claude Code and the Claude Chrome extension on ChromeOS via the Linux development environment (Crostini). This gives you a native, terminal-based AI coding assistant that seamlessly connects with your browser for testing and debugging. [1, 2]  
+## Why Bother
 
-1. Set Up Your Linux Environment 
+The strategic case for a disposable dev terminal is straightforward:
 
-• Open Settings &gt; Advanced &gt; Developers on your Chromebook. 
-• Turn on the Linux development environment and follow the on-screen prompts. 
-• Update your packages and install  and : [2, 3, 4, 5]  
+- **Travel machine** — If it gets lost, stolen, or broken, you're out $79 and zero sensitive data (everything lives in Git and the cloud)
+- **Secure-by-default posture** — ChromeOS's verified boot and sandboxed architecture mean the base OS is hardened by design, and Crostini runs inside a VM boundary
+- **Instant-on terminal** — Open the lid, open the Linux terminal, you're working. No Windows Update surprises, no macOS upgrade prompts
+- **Budget hardware, real capability** — At $79 per unit, these are effectively disposable. Buying two means one lives at home and one travels and I let my five year old grandson play with either without worrying about it.
 
-2. Install Claude Code 
+The pattern here is similar to how I think about homelab infrastructure — purpose-built, disposable where appropriate, and designed so that losing any single node costs you nothing but time.
 
-• Open your Linux terminal. 
-• Run the official zero-dependency installation script: 
-• Once installed, run  to sign in with your paid Claude account (Pro, Team, or Enterprise). [6]  
+## The Resource Reality
 
-3. Install the Claude Chrome Extension 
+Claude Code's memory footprint is the primary constraint. Based on reported usage and GitHub issues, a single Claude Code session typically consumes 1.5–2GB RAM. On a system with 8GB total, ChromeOS itself takes 2–3GB, and the Crostini VM overhead adds another 500MB–1GB. That leaves roughly 3–4GB for your Linux userspace, which is tight but workable for a single Claude Code session with a small project context.
 
-• Open your regular Chrome browser (not the Linux app). 
-• Download the Claude Chrome Extension from the Chrome Web Store. 
-• Sign in and pin the extension to your toolbar. [7, 8, 9]  
+What this means in practice:
 
-4. Connect Claude Code to Chrome 
+- **Close Chrome tabs** before starting Claude Code. Each tab is its own process and ChromeOS will OOM-kill your Linux container before it touches browser processes.
+- **Don't run parallel sessions**. One Claude Code instance at a time.
+- **Small-to-medium repos only**. Large monorepos with deep file trees will push context window usage (and memory) beyond what's comfortable here.
+- **The 64GB eMMC is fine** — Claude Code itself is small, and you're not storing build artifacts locally. Git repos and Node.js/tooling fit easily.
 
-• In your Linux terminal, start Claude Code with the Chrome integration flag: 
-• Once inside the CLI, type  to verify the connection. [10]  
+The Celeron N-series CPU is not the bottleneck. Claude Code is I/O and network-bound — the heavy computation happens on Anthropic's servers. Your local CPU mostly handles terminal rendering and file operations.
 
-Now you can write and modify code in your terminal, then ask Claude to open your local web app, read console logs, and click through your UI. Review the Claude Chrome Documentation for full examples of build-test-verify workflows. [1]  
+## Setting Up the Environment
 
-AI responses may include mistakes.
+### Enable Linux (Crostini)
 
-[1] https://code.claude.com/docs/en/chrome
-[2] https://www.linkedin.com/posts/jonathan-lees-548a32115_i-finally-got-claude-cowork-on-my-chromebook-activity-7447639060178866176-tL3_
-[3] https://medium.com/google-cloud/who-said-you-cant-code-on-a-chromebook-local-development-with-cloud-functions-4e68dca1240b
-[4] https://www.youtube.com/shorts/f-mrDx3yTgY
-[5] https://www.quantvps.com/blog/how-to-install-claude-code-on-vps
-[6] https://www.nxcode.io/resources/news/install-claude-code-setup-guide-2026
-[7] https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome
-[8] https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn
-[9] https://www.youtube.com/watch?v=niRLNJz-tCI
-[10] https://www.reddit.com/r/ClaudeAI/comments/1pthd5z/spent_this_weekend_with_claude_code_chrome/
+If you haven't already:
+
+1. Open **Settings → Advanced → Developers**
+2. Turn on **Linux development environment**
+3. Accept the defaults (or increase disk allocation if you have room on your 64GB)
+
+Once the container is running, update it:
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### Install Claude Code
+
+The recommended path as of 2026 is the native installer, which bundles its own runtime and requires zero dependencies:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+This puts `claude` on your PATH and sets up background auto-updates. No Node.js required.
+
+Alternatively, if you prefer version pinning or already have Node.js in your environment:
+
+```bash
+# Requires Node.js 18+ and npm
+npm install -g @anthropic-ai/claude-code
+```
+
+### Authenticate
+
+```bash
+claude
+```
+
+On first run, Claude Code walks you through authentication. You need a paid Claude account — Pro ($20/month), Max, Team, or Enterprise. The free tier does not include CLI access.
+
+### VS Code Integration
+
+Since I already have VS Code running in Crostini, the natural integration point is the Claude Code VS Code extension rather than trying to wire things through the Chrome browser. Install it from the Extensions marketplace inside VS Code:
+
+1. Open VS Code (the Linux `.deb` version running in Crostini)
+2. Install the **Claude Code** extension from the marketplace
+3. The extension runs a local MCP server that connects the CLI to VS Code's diff viewer
+
+This gives you inline diff review, file navigation, and the ability to accept or reject changes from within the editor — while Claude Code's agent logic still runs in the terminal.
+
+## Crostini Constraints Worth Knowing
+
+A few ChromeOS-specific behaviors that will bite you if you're not aware:
+
+- **Lid close kills processes** — By default, closing the Chromebook lid suspends the Crostini VM. Long-running Claude Code sessions will die. You can change this in ChromeOS settings under "Power" (keep awake when lid is closed), or use `crosh` to adjust VM behavior.
+- **No GPU passthrough** — Irrelevant for Claude Code specifically, but worth noting if you're considering other ML workloads in the same container.
+- **Shared filesystem performance** — The Crostini container accesses ChromeOS files through a 9P filesystem bridge. It's not fast. Keep your working repos inside the Linux container's native filesystem (`/home/username/`) rather than in shared folders.
+- **Network is straightforward** — Crostini shares the host network. No port forwarding or bridge configuration needed. Claude Code's API calls just work.
+
+## What This Actually Looks Like
+
+My workflow on this machine:
+
+1. Open the lid, open Terminal
+2. `cd` into the project directory
+3. Run `claude` and start working — quick bug fixes, code review, drafting implementations
+4. Push to GitHub when done
+5. Close the lid and walk away
+
+For anything requiring sustained multi-file refactoring on a large codebase, I use my primary workstation. But for the kind of focused, single-context work that Claude Code excels at — answering architectural questions against a repo, drafting a new module, fixing a bug with full context — this $79 Chromebook is genuinely useful.
+
+The machine doesn't need to be powerful. It needs to be present, fast to wake, and capable of running a terminal with network access. Everything else is Anthropic's problem.
+
+## Security Posture
+
+ChromeOS is a reasonable choice for a portable dev terminal precisely because of its security model:
+
+- **Verified boot** ensures the OS integrity chain on every startup
+- **Crostini's VM boundary** isolates your Linux environment from the ChromeOS host
+- **No sensitive data at rest** — credentials live in Claude's auth token (refreshable), code lives in Git, nothing irreplaceable is stored locally
+- **Minimal attack surface** — this device initiates outbound HTTPS connections to GitHub and Anthropic's API. It doesn't run services or accept inbound connections.
+- **Active updates** — unlike a Windows machine you'd have to patch yourself, ChromeOS updates are automatic and the AUE date is still years out
+
+The machine is purpose-built for one job: be a portable terminal that talks to remote services. ChromeOS is arguably better suited to that role than a full desktop OS.
+
+## Final Thoughts
+
+The combination of a sub-$100 Chromebook, Crostini Linux, and Claude Code creates a surprisingly capable portable development setup. The constraints are real — 8GB RAM means you're disciplined about resource usage — but the constraints also enforce good habits. You focus on one thing at a time, you keep your repos lean, and you let the AI agent handle the heavy cognitive lifting while your local machine just provides the interface.
+
+If you spot a Chromebook clearance deal with 8GB RAM, it's worth grabbing one for this purpose alone. The hardware doesn't need to be impressive — it just needs to run a terminal, authenticate to an API, and stay out of your way.
