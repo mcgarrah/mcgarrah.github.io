@@ -21,7 +21,7 @@ The specific model is the [Lenovo IdeaPad 3 CB 11IGL05](https://psref.lenovo.com
 
 | Component | Spec |
 |-----------|------|
-| Processor | Intel Celeron N4020 (2C/2T, 1.1–2.8GHz, 4MB cache) |
+| Processor | Intel Celeron N4020 (2C/2T, 1.1GHz base / 2.8GHz burst, 4MB cache) |
 | Memory | 4GB LPDDR4-2400 (soldered, not upgradable) |
 | Storage | 64GB eMMC 5.1 |
 | Display | 11.6" HD (1366×768) TN, 250 nits |
@@ -55,10 +55,10 @@ What this means in practice:
 - **Close all Chrome tabs** before starting Claude Code. This is non-negotiable at 4GB. Each tab is its own process and ChromeOS will OOM-kill your Linux container before it touches browser processes.
 - **Don't run parallel sessions**. One Claude Code instance at a time — and even that may require closing VS Code's GUI in favor of terminal-only workflow.
 - **Small repos only**. Large monorepos with deep file trees will push context window usage (and memory) beyond what's feasible here.
-- **The 64GB eMMC is fine** — Claude Code itself is small, and you're not storing build artifacts locally. Git repos and Node.js/tooling fit easily.
+- **The 64GB eMMC is shared** — ChromeOS and Crostini carve up the same 64GB. When you enable Crostini, you allocate a portion of that storage to the Linux container (the default is around 10GB, but you can increase it during setup). Between ChromeOS itself, Android apps, and Linux, plan your allocation deliberately. Git repos and Claude Code tooling fit comfortably in 15–20GB of Linux space.
 - **Consider swap** — Configuring swap space inside Crostini can provide a buffer when memory pressure spikes, at the cost of eMMC write wear.
 
-The Celeron N4020 CPU is not the bottleneck. Claude Code is I/O and network-bound — the heavy computation happens on Anthropic's servers. Your local CPU mostly handles terminal rendering and file operations. The dual-core/dual-thread N4020 is adequate for that.
+The Celeron N4020 is not the bottleneck. It's a dual-core chip running at 1.1GHz base with burst to 2.8GHz — modest by any measure — but Claude Code is I/O and network-bound. The heavy computation happens on Anthropic's servers. Your local CPU mostly handles terminal rendering and file operations, and two threads at burst clock is adequate for that.
 
 ## Setting Up the Environment
 
@@ -68,7 +68,7 @@ If you haven't already:
 
 1. Open **Settings → Advanced → Developers**
 2. Turn on **Linux development environment**
-3. Accept the defaults (or increase disk allocation if you have room on your 64GB)
+3. Set the disk size allocation — the default is small (~10GB). I'd recommend 15–20GB if you plan to keep multiple repos and have Node.js or other tooling installed. Remember this comes out of your shared 64GB eMMC.
 
 Once the container is running, update it:
 
