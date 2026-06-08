@@ -94,6 +94,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🪟 **Windows SysAdmin** | win11-in-place-upgrade-ventoy-clonezilla | DISM 62.3% hang published (`2026-05-25`), Error 0x80070490 published (`2026-05-27`), Part 3 in-place upgrade draft (`2026-05-30`) |
 | ☁️ **AWS Terraform Modules** | — | QuickSight vanity URL article published (`2026-04-25-quicksight-vanity-urls-serverless-edge-redirects.md`) |
 | 🤖 **AI Agent Tooling** | mcp-vs-cli-vs-api-access-patterns, ai-generated-html-reports-jekyll-github-pages, proxmox-ceph-dashboard-ai-generated-html | MCP vs CLI vs API comparison, AI-generated HTML reports pattern (Part 1), Proxmox dashboard implementation (Part 2) |
+| 💻 **ChromeOS / Coderdeck** | claude-on-chromeos, chromebook-to-debian-terminal | Claude Code on budget Chromebook, then converting to bare Debian terminal-only system |
 | 📄 **Resume & Career** | resume-machine-view-ats-validation | ATS validation and machine-readable resume analysis |
 | 🍎 **FastAPI Nutrition API** | See `FASTAPI-NUTRITION-API.md` | 4-article series: architecture, implementation, deployment, observability. Unified Food Intelligence API with USDA FDC, Open Food Facts, GS1 GPC |
 | 🧠 **Project Nexus** | See `PROJECT-NEXUS.md` | Hybrid-cloud intelligence gateway for resume + blog. Phased: local search → LiteLLM proxy → P620 edge → AI fit analysis. Depends on resume refactor completion. |
@@ -268,6 +269,18 @@ Drafts that form natural publishing sequences or share a topic.
 - **What's needed:** Confirm final migration checklist details, add post-cleanup metrics once executed.
 - **Effort:** 30-45 minutes
 
+### `2026-06-05-claude-on-chromeos.md` — 💻 ChromeOS / Coderdeck
+
+- Running Claude Code on a $79 Lenovo IdeaPad 3 Chromebook via Crostini Linux. Covers hardware specs, resource constraints, installation, VS Code integration, and the security posture of ChromeOS as a dev terminal.
+- **What's needed:** Actually run Claude Code on the Chromebook to validate claims, add real session examples, verify memory usage firsthand.
+- **Effort:** 1-2 hours (hands-on testing + minor edits)
+
+### `2026-06-06-chromebook-to-debian-terminal.md` — 💻 ChromeOS / Coderdeck
+
+- Converting the Chromebook to a bare Debian text-console system ("coderdeck"). Three options (Crostini, Developer Mode, full UEFI replacement), TTY configuration with kmscon/tmux, Google services via rclone/neomutt/w3m, local help file.
+- **What's needed:** Actually perform the conversion on one of the two Chromebooks, validate MrChromebox firmware support for this board, document real results.
+- **Effort:** 3-4 hours (hardware work + firmware flash + configuration + writeup of results)
+
 ### `2024-03-11-lag-lacp-nic-bonding.md` — 🌍 SDN & Networking
 
 - Nice highway/traffic analogy. Includes critical LACP misconception about single TCP connections.
@@ -407,9 +420,9 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 48 |
+| Drafts in `_drafts/` | 50 |
 | Ready to publish (Tier 1) | 1 |
-| Near-complete (Tier 2) | 21 |
+| Near-complete (Tier 2) | 23 |
 | Substantial work (Tier 3) | 13 |
 | Too raw / hold (Tier 4) | 8 |
 | Superseded (Tier 5) | 3 |

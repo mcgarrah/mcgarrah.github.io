@@ -153,13 +153,13 @@ Last updated: 2026-05-29
 
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-----|-----|-----|-----|-----|-----|-----|
-| | | | **1** 🔲 *Open* | 2 | **3** 🔲 *Open* | 4 |
+| | | | **1** 📝 [Claude Code on ChromeOS](/_drafts/2026-06-05-claude-on-chromeos.md) | 2 | **3** 📝 [Chromebook to Debian Terminal](/_drafts/2026-06-06-chromebook-to-debian-terminal.md) | 4 |
 | 5 | **6** 🔲 *Open* | 7 | **8** 🔲 *Open* | 9 | **10** 🔲 *Open* | 11 |
 | 12 | **13** 🔲 *Open* | 14 | **15** 🔲 *Open* | 16 | **17** 🔲 *Open* | 18 |
 | 19 | **20** 🔲 *Open* | 21 | **22** 🔲 *Open* | 23 | **24** 🔲 *Open* | 25 |
 | 26 | **27** 🔲 *Open* | 28 | **29** 🔲 *Open* | 30 | **31** 🔲 *Open* | |
 
-**Summary:** 14 open MWF slots. Available for: FastAPI series overflow, new drafts, K8s-on-Proxmox series, or Substack retrospectives.
+**Summary:** 2 proposed + 12 open MWF slots. ChromeOS/Coderdeck pair kicks off the month. Remaining slots available for: FastAPI series overflow, new drafts, K8s-on-Proxmox series, or Substack retrospectives.
 
 ---
 
@@ -205,17 +205,17 @@ Last updated: 2026-05-29
 | July | — | — | 14 | — | 14 |
 | August | — | — | 13 | — | 13 |
 | September | — | — | 10 | 5 | 15 |
-| October | — | — | — | 14 | 14 |
+| October | — | — | 2 | 12 | 14 |
 | November | — | — | — | 12 | 12 |
 | December | — | — | — | 14 | 14 |
-| **Total** | **52** | **14** | **37** | **46** | **149** |
+| **Total** | **52** | **14** | **39** | **44** | **149** |
 
 ### Draft Inventory vs Slots
 
-- **Drafts available:** 48 (per DRAFTS.md)
-- **Proposed slots (Jul–Sep):** 37 assigned
+- **Drafts available:** 50 (per DRAFTS.md)
+- **Proposed slots (Jul–Oct):** 39 assigned
 - **Remaining unscheduled drafts:** ~11 (Tier 4/5 — raw, hold, or superseded)
-- **Open Q4 slots:** 45 — available for new content, series from k8s-proxmox, FastAPI overflow, or reduced cadence
+- **Open Q4 slots:** 38 — available for new content, series from k8s-proxmox, FastAPI overflow, or reduced cadence
 
 ### Cluster Distribution
 
@@ -232,6 +232,7 @@ Last updated: 2026-05-29
 | 🏗️ Homelab Infrastructure | 2 | August–September |
 | 🌐 Domain & Email | 1 | July |
 | 🖥️ Dev Environment | 2 | September |
+| 💻 ChromeOS / Coderdeck | 2 | October |
 | 🍎 FastAPI Nutrition API | 4 | September (tentative) |
 
 ---
