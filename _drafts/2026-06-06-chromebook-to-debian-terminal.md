@@ -319,6 +319,98 @@ alias help-me='less /usr/local/share/doc/system-help.txt'
 
 Having this on-device matters. When you're at a coffee shop with nothing but a TTY and no browser, the answer to "how do I reconnect WiFi" needs to be one command away.
 
+## Google Services from the Terminal
+
+A pure writerdeck intentionally cuts off the internet. My coderdeck can't — Claude Code needs it. And since I'm already online, I want occasional access to Google Drive and Gmail without installing a browser or desktop.
+
+### Google Drive: rclone
+
+[rclone](https://rclone.org/) is rsync for cloud storage. It supports Google Drive (and 70+ other backends) via a single CLI with a consistent interface. Install it:
+
+```bash
+sudo apt install rclone
+```
+
+Configure a Google Drive remote (one-time setup — this requires a browser for OAuth, so do it before you strip the desktop, or use `rclone authorize` on another machine):
+
+```bash
+rclone config
+# Follow prompts: name it "gdrive", select Google Drive, complete OAuth
+```
+
+Then upload, download, and sync from the terminal:
+
+```bash
+# Upload a file to Drive
+rclone copy ./my-document.md gdrive:Documents/
+
+# List files in a Drive folder
+rclone ls gdrive:Documents/
+
+# Sync a local directory to Drive
+rclone sync ./projects gdrive:Backups/projects/
+
+# Download from Drive
+rclone copy gdrive:Documents/notes.md ./
+```
+
+For headless OAuth (when you no longer have a browser on-device), you can run `rclone authorize "drive"` on a machine that does have a browser, then paste the resulting token into the config on the Chromebook.
+
+### Gmail: neomutt
+
+[NeoMutt](https://neomutt.org/) is a terminal email client that works well with Gmail via IMAP/SMTP. Install:
+
+```bash
+sudo apt install neomutt
+```
+
+Gmail configuration requires an App Password (since Google deprecated standard password auth for IMAP). Generate one at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords), then configure `~/.config/neomutt/neomuttrc`:
+
+```bash
+# Gmail IMAP
+set imap_user = "your.email@gmail.com"
+set imap_pass = "your-app-password"
+set folder = "imaps://imap.gmail.com:993/"
+set spoolfile = "+INBOX"
+set postponed = "+[Gmail]/Drafts"
+set record = "+[Gmail]/Sent Mail"
+set trash = "+[Gmail]/Trash"
+
+# Gmail SMTP for sending
+set smtp_url = "smtps://your.email@gmail.com@smtp.gmail.com:465/"
+set smtp_pass = "your-app-password"
+set from = "your.email@gmail.com"
+set realname = "Your Name"
+
+# Practical defaults
+set sort = reverse-date
+set editor = "vim"
+set mail_check = 120
+```
+
+This gives you read, compose, reply, search, and folder management — all from a TUI. It's not the Gmail web interface, but for occasional email access (checking messages, sending a quick reply, receiving OTP codes), it's more than sufficient.
+
+**Alternative: `aerc`** — If neomutt's configuration feels heavy, [aerc](https://aerc-mail.org/) is a newer terminal email client with a simpler setup and built-in Gmail support. It's not in Debian stable yet but may be available from backports or as a Go binary.
+
+### Adding to the help file
+
+These commands belong in the local reference:
+
+```
+GOOGLE DRIVE (rclone)
+  rclone copy ./file gdrive:path/     Upload file
+  rclone ls gdrive:path/              List remote files
+  rclone sync ./dir gdrive:path/      Sync directory to Drive
+  rclone copy gdrive:path/file ./     Download file
+
+EMAIL (neomutt)
+  neomutt                             Open email client
+  m                                   Compose new message
+  r                                   Reply
+  /                                   Search
+  q                                   Quit
+```
+
 ## The Math
 
 | Configuration | RAM for ChromeOS/VM | RAM for Linux system | RAM available for work |
