@@ -7,7 +7,7 @@ excerpt: "A discontinued Lenovo Chromebook with 4GB RAM and a Celeron N4020 make
 description: "Setting up Claude Code CLI on ChromeOS via Crostini Linux, evaluating the resource constraints of running an AI coding agent on a sub-$100 Chromebook, and connecting it to VS Code for a lightweight portable development workflow."
 ---
 
-I picked up two Lenovo IdeaPad 3 Chromebooks (11IGL05) when Best Buy was clearing them out — $79 marked down from $139, and I got one down to $70 with additional discounts. Lenovo was discontinuing the model. The machines still have ChromeOS update support for several more years, and at that price point I bought two without hesitation.
+I picked up two Lenovo IdeaPad 3 Chromebooks (11IGL05) back in 2022 when Best Buy was clearing them out — $79 marked down from $139, and I got one down to $70 with additional discounts. Lenovo was discontinuing the model. The machines still have ChromeOS update support for several more years, and at that price point I bought two without hesitation.
 
 <!-- excerpt-end -->
 
@@ -55,7 +55,7 @@ What this means in practice:
 - **Close all Chrome tabs** before starting Claude Code. This is non-negotiable at 4GB. Each tab is its own process and ChromeOS will OOM-kill your Linux container before it touches browser processes.
 - **Don't run parallel sessions**. One Claude Code instance at a time — and even that may require closing VS Code's GUI in favor of terminal-only workflow.
 - **Small repos only**. Large monorepos with deep file trees will push context window usage (and memory) beyond what's feasible here.
-- **The 64GB eMMC is shared** — ChromeOS and Crostini carve up the same 64GB. When you enable Crostini, you allocate a portion of that storage to the Linux container (the default is around 10GB, but you can increase it during setup). Between ChromeOS itself, Android apps, and Linux, plan your allocation deliberately. Git repos and Claude Code tooling fit comfortably in 15–20GB of Linux space.
+- **The 64GB eMMC is shared** — ChromeOS and Crostini carve up the same 64GB. When you enable Crostini, you allocate a portion of that storage to the Linux container. I'm running 10GB for Linux currently and it's sufficient — Git repos and Claude Code tooling don't take much space, and you can resize later if needed.
 - **Consider swap** — Configuring swap space inside Crostini can provide a buffer when memory pressure spikes, at the cost of eMMC write wear.
 
 The Celeron N4020 is not the bottleneck. It's a dual-core chip running at 1.1GHz base with burst to 2.8GHz — modest by any measure — but Claude Code is I/O and network-bound. The heavy computation happens on Anthropic's servers. Your local CPU mostly handles terminal rendering and file operations, and two threads at burst clock is adequate for that.
@@ -68,7 +68,7 @@ If you haven't already:
 
 1. Open **Settings → Advanced → Developers**
 2. Turn on **Linux development environment**
-3. Set the disk size allocation — the default is small (~10GB). I'd recommend 15–20GB if you plan to keep multiple repos and have Node.js or other tooling installed. Remember this comes out of your shared 64GB eMMC.
+3. Set the disk size allocation — the default is around 10GB, which is where I'm currently running with room to grow. This comes out of your shared 64GB eMMC, so you'll want to balance it against ChromeOS and any Android apps you keep installed.
 
 Once the container is running, update it:
 
