@@ -141,7 +141,12 @@ sudo apt install -y \
   ripgrep \
   jq \
   tree \
-  unzip
+  unzip \
+  w3m \
+  w3m-img \
+  ca-certificates \
+  rclone \
+  neomutt
 ```
 
 **What you don't install:**
@@ -392,6 +397,41 @@ This gives you read, compose, reply, search, and folder management — all from 
 
 **Alternative: `aerc`** — If neomutt's configuration feels heavy, [aerc](https://aerc-mail.org/) is a newer terminal email client with a simpler setup and built-in Gmail support. It's not in Debian stable yet but may be available from backports or as a Go binary.
 
+### Lightweight Web Browsing: w3m
+
+Sometimes you need to look something up — a man page, API documentation, a Stack Overflow answer. Installing a full graphical browser defeats the purpose of a console-only system, but `w3m` gives you a text-mode browser that uses under 15MB of RAM:
+
+```bash
+sudo apt install w3m w3m-img ca-certificates
+```
+
+**Essential navigation:**
+
+| Key | Action |
+|-----|--------|
+| `Shift-U` | Open a new URL |
+| `Tab` / `Shift-Tab` | Next / previous hyperlink |
+| `Enter` | Follow link |
+| `B` | Back one page |
+| `Shift-B` | Browsing history |
+| `Shift-H` | Help menu |
+| `Q` | Quit |
+
+**Quick search alias** — DuckDuckGo serves a lightweight HTML version that renders cleanly in text browsers. Add to `~/.bashrc`:
+
+```bash
+alias search='w3m "https://duckduckgo.com/lite"'
+```
+
+Then look up documentation from the prompt:
+
+```bash
+search "debian apt pinning"
+search "Claude Code CLI flags"
+```
+
+This gives you on-demand access to documentation without the RAM overhead or distraction of a full browser. You're still in the terminal, you're still focused, but you can answer a question without reaching for your phone.
+
 ### Adding to the help file
 
 These commands belong in the local reference:
@@ -409,6 +449,14 @@ EMAIL (neomutt)
   r                                   Reply
   /                                   Search
   q                                   Quit
+
+WEB (w3m)
+  w3m <url>                           Open URL in text browser
+  search "query"                      DuckDuckGo search (alias)
+  Shift-U                             New URL from within w3m
+  Tab / Shift-Tab                     Next / prev link
+  B                                   Back
+  Q                                   Quit
 ```
 
 ## The Math
