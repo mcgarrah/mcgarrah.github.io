@@ -7,7 +7,7 @@ excerpt: "A discontinued Lenovo Chromebook with 4GB RAM and a Celeron N4020 make
 description: "Setting up Claude Code CLI on ChromeOS via Crostini Linux, evaluating the resource constraints of running an AI coding agent on a sub-$100 Chromebook, and connecting it to VS Code for a lightweight portable development workflow."
 ---
 
-I picked up two Lenovo IdeaPad 3 Chromebooks (11IGL05) back in 2022 when Best Buy was clearing them out — $79 marked down from $139, and I got one down to $70 with additional discounts. Lenovo was discontinuing the model. The machines still have ChromeOS update support for several more years, and at that price point I bought two without hesitation.
+I picked up two Lenovo IdeaPad 3 Chromebooks (11IGL05) back in 2022 when Best Buy was clearing them out — $79 marked down from $139, and I got one down to $70 with additional discounts. Lenovo was discontinuing the model. The machines are at or near their ChromeOS Auto Update Expiration (AUE) date — sources vary between June 2026 and June 2027 for this platform — so they're either just past end-of-support or have one more year. Either way, at that price point I bought two without hesitation and got four solid years of use out of them.
 
 <!-- excerpt-end -->
 
@@ -140,15 +140,15 @@ The machine doesn't need to be powerful. It needs to be present, fast to wake, a
 
 ## Security Posture
 
-ChromeOS is a reasonable choice for a portable dev terminal precisely because of its security model:
+ChromeOS is a reasonable choice for a portable dev terminal because of its security model — even past AUE:
 
-- **Verified boot** ensures the OS integrity chain on every startup
+- **Verified boot** still functions — the OS integrity chain doesn't require active updates to operate
 - **Crostini's VM boundary** isolates your Linux environment from the ChromeOS host
 - **No sensitive data at rest** — credentials live in Claude's auth token (refreshable), code lives in Git, nothing irreplaceable is stored locally
 - **Minimal attack surface** — this device initiates outbound HTTPS connections to GitHub and Anthropic's API. It doesn't run services or accept inbound connections.
-- **Active updates** — unlike a Windows machine you'd have to patch yourself, ChromeOS updates are automatic and the AUE date is still years out
+- **AUE trade-off is acceptable here** — Whether these are already past EOL or have one more year, it doesn't change the use case. I wouldn't use a near-EOL device for banking or corporate SSO, but as a terminal that clones repos, runs Claude Code, and pushes commits, the threat model works. The Crostini container's Debian packages still receive upstream updates independently of ChromeOS.
 
-The machine is purpose-built for one job: be a portable terminal that talks to remote services. ChromeOS is arguably better suited to that role than a full desktop OS.
+The machine is purpose-built for one job: be a portable terminal that talks to remote services. Whether the AUE has passed or not, the hardened boot chain, VM isolation, and limited use case keep the risk profile low.
 
 ## Final Thoughts
 
