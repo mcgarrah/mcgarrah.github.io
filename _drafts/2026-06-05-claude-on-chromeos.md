@@ -33,7 +33,7 @@ The specific model is the [Lenovo IdeaPad 3 CB 11IGL05](https://psref.lenovo.com
 | OS | ChromeOS |
 | Security | Google H1 Security Chip, Kensington slot |
 
-At 2.46 lbs with a 10-hour battery and USB-C charging, it's a genuinely portable machine. That 10 hours is if you are doing lightweight email and writing. You get closer to 5-6 hours when doing more stressful Linux and Coding. The dual USB-C ports with Power Delivery and DisplayPort mean you can run it off any USB-C charger and connect an external monitor if needed. The Lenovo 65W USB-C charger is also useful with my Samsung S23 and S25 cell phones and I often share that charger.
+At 2.46 lbs with a 10-hour battery and USB-C charging, it's a genuinely portable machine. That 10 hours is if you are doing lightweight email and writing. You get closer to 5-6 hours when doing more stressful Linux and Coding. The dual USB-C ports with Power Delivery and DisplayPort mean you can run it off any USB-C charger and connect an external monitor if needed. The Lenovo 45W and 65W USB-C charger is also useful with my Samsung S23 and S25 cell phones and I often share that charger.
 
 It is an easy to carry portable machine.
 
