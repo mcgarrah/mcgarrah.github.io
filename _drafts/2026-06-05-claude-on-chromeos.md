@@ -3,17 +3,37 @@ title: "Claude Code on a $79 Chromebook"
 layout: post
 categories: [technical]
 tags: [chromeos, claude, ai, development]
-excerpt: "A discontinued Lenovo Chromebook with 8GB RAM and a Celeron N-series CPU makes a surprisingly capable portable terminal for AI-assisted development with Claude Code — if you understand the constraints."
-description: "Setting up Claude Code CLI on ChromeOS via Crostini Linux, evaluating the resource constraints of running an AI coding agent on budget hardware, and connecting it to VS Code for a lightweight portable development workflow."
+excerpt: "A discontinued Lenovo Chromebook with 4GB RAM and a Celeron N4020 makes a surprisingly capable portable terminal for AI-assisted development with Claude Code — if you understand the constraints."
+description: "Setting up Claude Code CLI on ChromeOS via Crostini Linux, evaluating the resource constraints of running an AI coding agent on a sub-$100 Chromebook, and connecting it to VS Code for a lightweight portable development workflow."
 ---
 
-I picked up two Lenovo Chromebooks in 2022 — N-series Celeron, 8GB RAM, 64GB eMMC, around $79 each after rebates. Lenovo was discontinuing the model and clearing inventory. The machines still have ChromeOS update support for several more years, and at that price point I bought two without hesitation.
+I picked up two Lenovo IdeaPad 3 Chromebooks (11IGL05) when Best Buy was clearing them out — $79 marked down from $139, and I got one down to $70 with additional discounts. Lenovo was discontinuing the model. The machines still have ChromeOS update support for several more years, and at that price point I bought two without hesitation.
 
 <!-- excerpt-end -->
 
-These machines still boot in under ten seconds, run a full Linux container via Crostini, and have enough RAM to do real work — provided you're deliberate about what "real work" means on 8GB shared between ChromeOS and a Linux VM. The question I wanted to answer: can a budget Chromebook serve as a portable AI-assisted development terminal running Claude Code?
+These machines boot in under ten seconds, run a full Linux container via Crostini, and have enough storage and connectivity to do real work — provided you're deliberate about what "real work" means on 4GB RAM shared between ChromeOS and a Linux VM. The question I wanted to answer: can a budget Chromebook serve as a portable AI-assisted development terminal running Claude Code?
 
 The short answer is yes, with caveats worth understanding.
+
+## The Hardware
+
+The specific model is the [Lenovo IdeaPad 3 CB 11IGL05](https://psref.lenovo.com/Detail/IdeaPad/IdeaPad_3_CB_11IGL05?M=82BA001FUS) (Part Number: 82BA001FUS):
+
+| Component | Spec |
+|-----------|------|
+| Processor | Intel Celeron N4020 (2C/2T, 1.1–2.8GHz, 4MB cache) |
+| Memory | 4GB LPDDR4-2400 (soldered, not upgradable) |
+| Storage | 64GB eMMC 5.1 |
+| Display | 11.6" HD (1366×768) TN, 250 nits |
+| Graphics | Intel UHD Graphics 600 (integrated) |
+| Wireless | Intel 9560 802.11ac 2×2 + Bluetooth 4.2 |
+| Ports | 2× USB-A 3.2 Gen 1, 2× USB-C 3.2 Gen 1 (data + PD + DP), MicroSD, 3.5mm combo |
+| Battery | 42Wh integrated (~10 hours) |
+| Weight | 1.12 kg (2.46 lbs) |
+| OS | ChromeOS |
+| Security | Google H1 Security Chip, Kensington slot |
+
+At 2.46 lbs with a 10-hour battery and USB-C charging, it's a genuinely portable machine. The dual USB-C ports with Power Delivery and DisplayPort mean you can run it off any USB-C charger and connect an external monitor if needed.
 
 ## Why Bother
 
@@ -22,22 +42,23 @@ The strategic case for a disposable dev terminal is straightforward:
 - **Travel machine** — If it gets lost, stolen, or broken, you're out $79 and zero sensitive data (everything lives in Git and the cloud)
 - **Secure-by-default posture** — ChromeOS's verified boot and sandboxed architecture mean the base OS is hardened by design, and Crostini runs inside a VM boundary
 - **Instant-on terminal** — Open the lid, open the Linux terminal, you're working. No Windows Update surprises, no macOS upgrade prompts
-- **Budget hardware, real capability** — At $79 per unit, these are effectively disposable. Buying two means one lives at home and one travels and I let my five year old grandson play with either without worrying about it.
+- **Budget hardware, real capability** — At $70–79 per unit, these are effectively disposable. Buying two means one lives at home and one travels and I let my five year old grandson play with either without worrying about it.
 
 The pattern here is similar to how I think about homelab infrastructure — purpose-built, disposable where appropriate, and designed so that losing any single node costs you nothing but time.
 
 ## The Resource Reality
 
-Claude Code's memory footprint is the primary constraint. Based on reported usage and GitHub issues, a single Claude Code session typically consumes 1.5–2GB RAM. On a system with 8GB total, ChromeOS itself takes 2–3GB, and the Crostini VM overhead adds another 500MB–1GB. That leaves roughly 3–4GB for your Linux userspace, which is tight but workable for a single Claude Code session with a small project context.
+Claude Code's memory footprint is the primary constraint — and with only 4GB total RAM, this is where things get interesting. Based on reported usage and GitHub issues, a single Claude Code session typically consumes 1.5–2GB RAM. On a system with 4GB total, ChromeOS itself takes 1.5–2GB, and the Crostini VM overhead adds several hundred MB. That leaves very little headroom.
 
 What this means in practice:
 
-- **Close Chrome tabs** before starting Claude Code. Each tab is its own process and ChromeOS will OOM-kill your Linux container before it touches browser processes.
-- **Don't run parallel sessions**. One Claude Code instance at a time.
-- **Small-to-medium repos only**. Large monorepos with deep file trees will push context window usage (and memory) beyond what's comfortable here.
+- **Close all Chrome tabs** before starting Claude Code. This is non-negotiable at 4GB. Each tab is its own process and ChromeOS will OOM-kill your Linux container before it touches browser processes.
+- **Don't run parallel sessions**. One Claude Code instance at a time — and even that may require closing VS Code's GUI in favor of terminal-only workflow.
+- **Small repos only**. Large monorepos with deep file trees will push context window usage (and memory) beyond what's feasible here.
 - **The 64GB eMMC is fine** — Claude Code itself is small, and you're not storing build artifacts locally. Git repos and Node.js/tooling fit easily.
+- **Consider swap** — Configuring swap space inside Crostini can provide a buffer when memory pressure spikes, at the cost of eMMC write wear.
 
-The Celeron N-series CPU is not the bottleneck. Claude Code is I/O and network-bound — the heavy computation happens on Anthropic's servers. Your local CPU mostly handles terminal rendering and file operations.
+The Celeron N4020 CPU is not the bottleneck. Claude Code is I/O and network-bound — the heavy computation happens on Anthropic's servers. Your local CPU mostly handles terminal rendering and file operations. The dual-core/dual-thread N4020 is adequate for that.
 
 ## Setting Up the Environment
 
@@ -127,110 +148,6 @@ The machine is purpose-built for one job: be a portable terminal that talks to r
 
 ## Final Thoughts
 
-The combination of a sub-$100 Chromebook, Crostini Linux, and Claude Code creates a surprisingly capable portable development setup. The constraints are real — 8GB RAM means you're disciplined about resource usage — but the constraints also enforce good habits. You focus on one thing at a time, you keep your repos lean, and you let the AI agent handle the heavy cognitive lifting while your local machine just provides the interface.
+The combination of a sub-$100 Chromebook, Crostini Linux, and Claude Code creates a surprisingly capable portable development setup. The constraints are real — 4GB RAM means you're extremely disciplined about resource usage — but the constraints also enforce good habits. You focus on one thing at a time, you keep your repos lean, and you let the AI agent handle the heavy cognitive lifting while your local machine just provides the interface.
 
-If you spot a Chromebook clearance deal with 8GB RAM, it's worth grabbing one for this purpose alone. The hardware doesn't need to be impressive — it just needs to run a terminal, authenticate to an API, and stay out of your way.
-
----
-
-https://psref.lenovo.com/Detail/IdeaPad/IdeaPad_3_CB_11IGL05?M=82BA001FUS
-
-IdeaPad 3 CB 11IGL05
-Part Number : 82BA001FUS
-
-
-PERFORMANCE
-Processor
-Intel Celeron N4020 (2C / 2T, 1.1 / 2.8GHz, 4MB)
-Graphics
-Integrated Intel UHD Graphics 600
-Chipset
-Intel SoC Platform
-Memory
-4GB Soldered LPDDR4-2400
-Memory Slots
-Memory soldered to systemboard, no slots
-Max Memory
-4GB soldered memory, not upgradable
-Storage
-64GB eMMC 5.1
-Storage Support
-64GB eMMC 5.1 on systemboard
-Card Reader
-MicroSD Card Reader
-Optical
-None
-Audio Chip
-High Definition (HD) Audio
-Speakers
-Stereo speakers, 2W x2
-Camera
-HD 720p
-Microphone
-Mono
-Battery
-Integrated 42Wh
-Max Battery Life
-Google power load test: 10 hr
-Power Adapter
-45W USB-C (3-pin)
-DESIGN
-Display
-11.6" HD (1366x768) TN 250nits Anti-glare
-Touchscreen
-None
-Keyboard
-Non-backlit, English
-Case Color
-Onyx Black
-Surface Treatment
-IMR (In-Mold Decoration by Roller)
-Case Material
-PC + ABS (Top), PC + ABS (Bottom)
-Dimensions (WxDxH)
-286.7 x 205.5 x 18.05 mm (11.29 x 8.09 x 0.71 inches)
-Weight
-Starting at 1.12 kg (2.46 lbs)
-SOFTWARE
-Operating System
-Chrome OS
-Bundled Software
-None
-CONNECTIVITY
-Onboard Ethernet
-None
-WLAN + Bluetooth
-Intel 9560 11ac, 2x2 + BT4.2
-Standard Ports
-2x USB 3.2 Gen 1
-2x USB-C 3.2 Gen 1 (support data transfer, Power Delivery, and DisplayPort)
-1x Card reader
-1x Headphone / microphone combo jack (3.5mm)
-SECURITY & PRIVACY
-Security Chip
-Google Security Chip H1
-Fingerprint Reader
-None
-Physical Locks
-Kensington Security Slot, 3 x 7 mm
-SERVICE
-Base Warranty
-1-year, Mail-in
-Included Upgrade
-None
-CERTIFICATIONS
-Green Certifications
-ENERGY STAR 8.0
-ErP Lot 3
-RoHS compliant
-
----
-
-Lenovo Chromebook 3 11.6" HD Laptop Celeron N4020 4GB 64GB Black $79
-
-Best Buy had it for $79 and brought it down to $70 with discounts.
-$139 -> $79 (+rebates)
-
----
-
-
+If you spot a Chromebook clearance deal with at least 4GB RAM (8GB preferred), it's worth grabbing one for this purpose alone. The hardware doesn't need to be impressive — it just needs to run a terminal, authenticate to an API, and stay out of your way.
