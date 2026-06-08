@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-05-29
+Last updated: 2026-06-08
 
 ---
 
@@ -98,7 +98,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 📄 **Resume & Career** | resume-machine-view-ats-validation | ATS validation and machine-readable resume analysis |
 | 🍎 **FastAPI Nutrition API** | See `FASTAPI-NUTRITION-API.md` | 4-article series: architecture, implementation, deployment, observability. Unified Food Intelligence API with USDA FDC, Open Food Facts, GS1 GPC |
 | 🧠 **Project Nexus** | See `PROJECT-NEXUS.md` | Hybrid-cloud intelligence gateway for resume + blog. Phased: local search → LiteLLM proxy → P620 edge → AI fit analysis. Depends on resume refactor completion. |
-| 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | All 7 articles published |
+| 🔌 **Run Jekyll Extension** | See `RUNJEKYLL-EXTENSION.md` | 1 published (May 11), 6 moved back to drafts — work incomplete |
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
 | 🔒 **Draft Preview Site** | — | All 3 parts published |
 | 🔧 **Caddy Reverse Proxy** | — | All 3 articles published (Proxmox UI, Ceph Dashboard, Multi-Site Jekyll) |
@@ -420,7 +420,7 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Category | Count |
 |----------|-------|
-| Drafts in `_drafts/` | 50 |
+| Drafts in `_drafts/` | 56 |
 | Ready to publish (Tier 1) | 1 |
 | Near-complete (Tier 2) | 23 |
 | Substantial work (Tier 3) | 13 |
