@@ -152,6 +152,87 @@ sudo apt install -y \
 
 **Expected idle memory footprint:** 150–300MB for the kernel, systemd, and basic services. That's it.
 
+## Inspiration: The Writerdeck Concept
+
+This idea isn't new. Veronica Explains has an excellent video on building a ["Writerdeck" — a tty-only laptop for maximum focus](https://www.youtube.com/watch?v=E7vFdy4BEAY). She repurposed a System76 Galago Pro with Debian Trixie, stripped down to nothing but a text console. No desktop environment, no display manager — just a TTY and the tools needed for writing.
+
+The writerdeck approach solves many of the same technical problems we need to sort out here:
+
+- **Console font sizing** — On a bare TTY, the default font is tiny on modern screens. The writerdeck video covers using `kmscon` (a userspace terminal emulator that replaces the kernel's built-in virtual terminals) for scalable fonts, or configuring `/etc/default/console-setup` with larger bitmap fonts like Terminus.
+- **TUI-based configuration** — Without a GUI, you need terminal interfaces for system management. NetworkManager's `nm-tui` provides a curses-based interface for WiFi configuration that works perfectly in a pure console environment.
+- **Single-purpose philosophy** — The writerdeck is designed for writing. Mine is designed for AI-assisted development. Same principle: remove everything that isn't the core task.
+
+The [writerdeckOS project](https://github.com/tinkersec/tinkerwriterdeck) takes this further with a turn-key OS image that explicitly supports Chromebooks with 64-bit Intel/AMD processors — which is exactly our hardware.
+
+My use case differs from a writerdeck in one important way: I need network access (for Claude Code's API calls and git operations). A pure writerdeck intentionally removes networking. But the underlying TTY configuration — font scaling, console setup, and the philosophy of radical minimalism — translates directly.
+
+## TTY Configuration Details
+
+Running a TTY-only system on an 11.6" 1366×768 display requires deliberate configuration. The default Linux console font is roughly 8×16 pixels — workable on this resolution but could be more comfortable.
+
+### Console Font Sizing
+
+**Option A: `console-setup` (simple, built-in)**
+
+```bash
+sudo dpkg-reconfigure console-setup
+```
+
+Select UTF-8 encoding, then choose a font like **Terminus** at a size that works for your screen. For 1366×768, `Terminus 16×32` or `TerminusBold 14×28` are good starting points. The config lives in `/etc/default/console-setup`:
+
+```
+CODESET="guess"
+FONTFACE="Terminus"
+FONTSIZE="16x32"
+```
+
+**Option B: `kmscon` (advanced, scalable)**
+
+`kmscon` is a userspace terminal emulator that replaces the kernel VTs. It supports TrueType fonts, Unicode, and hardware-accelerated rendering — all without X11 or Wayland.
+
+```bash
+sudo apt install kmscon
+```
+
+Kmscon gives you proper font scaling, scrollback, and multiple terminal sessions managed outside the kernel. It's what the writerdeck video uses for a polished TTY experience.
+
+### Network Management (TUI)
+
+Without a desktop environment, WiFi management needs a terminal interface:
+
+```bash
+sudo apt install network-manager
+```
+
+Then use `nm-tui` for an interactive curses interface, or `nmcli` for scripted/command-line operations:
+
+```bash
+# Interactive TUI for WiFi
+nm-tui
+
+# Command-line WiFi connection
+nmcli device wifi list
+nmcli device wifi connect "SSID" password "password"
+
+# Check connection status
+nmcli general status
+```
+
+### Local Help File
+
+On a console-only system with no browser, you need documentation available locally. I plan to create a `/usr/local/share/doc/system-help.txt` with essential commands and configuration notes — a cheat sheet accessible via `less /usr/local/share/doc/system-help.txt` or aliased to a short command.
+
+The help file should cover:
+
+- WiFi connection (`nm-tui` and `nmcli` usage)
+- Font size adjustment (`setfont`, `console-setup` reconfiguration)
+- tmux basics (session management, splits, detach/reattach)
+- Claude Code quick-reference (auth, common flags)
+- System maintenance (apt update, disk usage, battery status)
+- Power management (suspend, lid behavior, shutdown)
+
+Having this on-device matters. When you're sitting in a coffee shop with nothing but a TTY and no browser, the answer to "how do I do X" needs to be local.
+
 ## The Math
 
 | Configuration | RAM for ChromeOS/VM | RAM for Linux system | RAM available for work |
