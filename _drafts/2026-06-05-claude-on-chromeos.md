@@ -130,3 +130,107 @@ The machine is purpose-built for one job: be a portable terminal that talks to r
 The combination of a sub-$100 Chromebook, Crostini Linux, and Claude Code creates a surprisingly capable portable development setup. The constraints are real — 8GB RAM means you're disciplined about resource usage — but the constraints also enforce good habits. You focus on one thing at a time, you keep your repos lean, and you let the AI agent handle the heavy cognitive lifting while your local machine just provides the interface.
 
 If you spot a Chromebook clearance deal with 8GB RAM, it's worth grabbing one for this purpose alone. The hardware doesn't need to be impressive — it just needs to run a terminal, authenticate to an API, and stay out of your way.
+
+---
+
+https://psref.lenovo.com/Detail/IdeaPad/IdeaPad_3_CB_11IGL05?M=82BA001FUS
+
+IdeaPad 3 CB 11IGL05
+Part Number : 82BA001FUS
+
+
+PERFORMANCE
+Processor
+Intel Celeron N4020 (2C / 2T, 1.1 / 2.8GHz, 4MB)
+Graphics
+Integrated Intel UHD Graphics 600
+Chipset
+Intel SoC Platform
+Memory
+4GB Soldered LPDDR4-2400
+Memory Slots
+Memory soldered to systemboard, no slots
+Max Memory
+4GB soldered memory, not upgradable
+Storage
+64GB eMMC 5.1
+Storage Support
+64GB eMMC 5.1 on systemboard
+Card Reader
+MicroSD Card Reader
+Optical
+None
+Audio Chip
+High Definition (HD) Audio
+Speakers
+Stereo speakers, 2W x2
+Camera
+HD 720p
+Microphone
+Mono
+Battery
+Integrated 42Wh
+Max Battery Life
+Google power load test: 10 hr
+Power Adapter
+45W USB-C (3-pin)
+DESIGN
+Display
+11.6" HD (1366x768) TN 250nits Anti-glare
+Touchscreen
+None
+Keyboard
+Non-backlit, English
+Case Color
+Onyx Black
+Surface Treatment
+IMR (In-Mold Decoration by Roller)
+Case Material
+PC + ABS (Top), PC + ABS (Bottom)
+Dimensions (WxDxH)
+286.7 x 205.5 x 18.05 mm (11.29 x 8.09 x 0.71 inches)
+Weight
+Starting at 1.12 kg (2.46 lbs)
+SOFTWARE
+Operating System
+Chrome OS
+Bundled Software
+None
+CONNECTIVITY
+Onboard Ethernet
+None
+WLAN + Bluetooth
+Intel 9560 11ac, 2x2 + BT4.2
+Standard Ports
+2x USB 3.2 Gen 1
+2x USB-C 3.2 Gen 1 (support data transfer, Power Delivery, and DisplayPort)
+1x Card reader
+1x Headphone / microphone combo jack (3.5mm)
+SECURITY & PRIVACY
+Security Chip
+Google Security Chip H1
+Fingerprint Reader
+None
+Physical Locks
+Kensington Security Slot, 3 x 7 mm
+SERVICE
+Base Warranty
+1-year, Mail-in
+Included Upgrade
+None
+CERTIFICATIONS
+Green Certifications
+ENERGY STAR 8.0
+ErP Lot 3
+RoHS compliant
+
+---
+
+Lenovo Chromebook 3 11.6" HD Laptop Celeron N4020 4GB 64GB Black $79
+
+Best Buy had it for $79 and brought it down to $70 with discounts.
+$139 -> $79 (+rebates)
+
+---
+
+
