@@ -154,84 +154,170 @@ sudo apt install -y \
 
 ## Inspiration: The Writerdeck Concept
 
-This idea isn't new. Veronica Explains has an excellent video on building a ["Writerdeck" — a tty-only laptop for maximum focus](https://www.youtube.com/watch?v=E7vFdy4BEAY). She repurposed a System76 Galago Pro with Debian Trixie, stripped down to nothing but a text console. No desktop environment, no display manager — just a TTY and the tools needed for writing.
+This idea isn't new. Veronica Explains has an excellent [video](https://www.youtube.com/watch?v=E7vFdy4BEAY) and [blog post](https://veronicaexplains.net/my-first-writerdeck/) on building a "Writerdeck" — a tty-only laptop for maximum focus. She took a System76 Galago Pro, installed console-only Debian Trixie (no X11, no Wayland, no desktop), and set up a dedicated writing environment in about 20 minutes. Her [FAQ follow-up](https://veronicaexplains.net/writerdeck-faq/) covers the inevitable questions about why not just use a desktop with no browser, or switch to a TTY on an existing system.
 
-The writerdeck approach solves many of the same technical problems we need to sort out here:
+Her setup solves the exact same technical problems we need to address for a "coderdeck":
 
-- **Console font sizing** — On a bare TTY, the default font is tiny on modern screens. The writerdeck video covers using `kmscon` (a userspace terminal emulator that replaces the kernel's built-in virtual terminals) for scalable fonts, or configuring `/etc/default/console-setup` with larger bitmap fonts like Terminus.
-- **TUI-based configuration** — Without a GUI, you need terminal interfaces for system management. NetworkManager's `nm-tui` provides a curses-based interface for WiFi configuration that works perfectly in a pure console environment.
-- **Single-purpose philosophy** — The writerdeck is designed for writing. Mine is designed for AI-assisted development. Same principle: remove everything that isn't the core task.
+- **`kmscon`** — A userspace terminal emulator that replaces the kernel's built-in virtual terminals. It provides scalable fonts (`Ctrl-Plus`/`Ctrl-Minus` to resize, like a browser), more than 16 colors, and proper Unicode support. On Debian Trixie it's available from backports. This is the key piece for making a TTY usable on a modern screen without a GUI.
+- **`network-manager` + `nm-tui`** — A curses-based TUI for WiFi management. Connect to hotspots, manage saved networks, all without a browser or desktop. Essential for our use case since Claude Code needs network access.
+- **`tmux`** — Terminal multiplexing with a status bar showing battery level (via `acpi`) and brightness control (via `light` bound to function keys). This gives you pane tiling, detachable sessions, and system info without any GUI.
+- **Autologin via kmscon** — Edit the kmscon systemd service to auto-login on boot, then launch tmux from `.bashrc` on the primary TTY. Open the lid, you're at a prompt in seconds.
 
-The [writerdeckOS project](https://github.com/tinkersec/tinkerwriterdeck) takes this further with a turn-key OS image that explicitly supports Chromebooks with 64-bit Intel/AMD processors — which is exactly our hardware.
+The [writerdeckOS project](https://github.com/tinkersec/tinkerdeckos) takes this further with a turn-key OS image that explicitly supports Chromebooks with 64-bit Intel/AMD processors — which is exactly our hardware.
 
-My use case differs from a writerdeck in one important way: I need network access (for Claude Code's API calls and git operations). A pure writerdeck intentionally removes networking. But the underlying TTY configuration — font scaling, console setup, and the philosophy of radical minimalism — translates directly.
+My use case differs from a writerdeck in one important way: I need persistent network access (for Claude Code's API calls and git operations). A pure writerdeck intentionally removes networking to eliminate distraction. But the underlying TTY configuration — kmscon for font scaling, tmux for session management, and the philosophy of radical minimalism — translates directly to a "coderdeck" setup.
 
 ## TTY Configuration Details
 
-Running a TTY-only system on an 11.6" 1366×768 display requires deliberate configuration. The default Linux console font is roughly 8×16 pixels — workable on this resolution but could be more comfortable.
+Running a TTY-only system on an 11.6" 1366×768 display requires deliberate configuration. The default Linux console font is roughly 8×16 pixels — workable on this resolution but not comfortable for long sessions.
 
-### Console Font Sizing
+### kmscon (Recommended)
 
-**Option A: `console-setup` (simple, built-in)**
+Based on Veronica's writerdeck setup, `kmscon` is the clear choice for a usable TTY experience. It replaces the kernel's virtual terminals with a userspace implementation that supports:
+
+- Scalable fonts (resize with `Ctrl-Plus` / `Ctrl-Minus`)
+- More than 16 colors
+- Proper Unicode rendering
+- Hardware-accelerated rendering without X11/Wayland
+
+On Debian Trixie, install from backports:
+
+```bash
+# Add backports to sources.list
+echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
+sudo apt update
+sudo apt install -t trixie-backports kmscon
+```
+
+After install, kmscon starts automatically on boot. On the 1366×768 display, you'll want to scale up a few notches from the default.
+
+### Autologin with kmscon
+
+To boot straight to a prompt (no login screen delay), edit the kmscon systemd service:
+
+```bash
+sudo systemctl edit kmsconvt@tty1.service
+```
+
+Add:
+
+```ini
+[Service]
+ExecStart=
+ExecStart=/usr/bin/kmscon --login -- /bin/login -f your_username
+```
+
+### Console Font Fallback (Without kmscon)
+
+If kmscon causes issues on Chromebook hardware, the fallback is configuring the standard console font:
 
 ```bash
 sudo dpkg-reconfigure console-setup
 ```
 
-Select UTF-8 encoding, then choose a font like **Terminus** at a size that works for your screen. For 1366×768, `Terminus 16×32` or `TerminusBold 14×28` are good starting points. The config lives in `/etc/default/console-setup`:
+Select UTF-8 encoding, then choose **Terminus** at a size appropriate for the display. For 1366×768, `TerminusBold 14×28` or `Terminus 16×32` are reasonable. Config lives in `/etc/default/console-setup`.
 
-```
-CODESET="guess"
-FONTFACE="Terminus"
-FONTSIZE="16x32"
-```
+### tmux Configuration
 
-**Option B: `kmscon` (advanced, scalable)**
-
-`kmscon` is a userspace terminal emulator that replaces the kernel VTs. It supports TrueType fonts, Unicode, and hardware-accelerated rendering — all without X11 or Wayland.
+Veronica's tmux setup is directly applicable. Install tmux with battery and brightness tools:
 
 ```bash
-sudo apt install kmscon
+sudo apt install tmux acpi light
 ```
 
-Kmscon gives you proper font scaling, scrollback, and multiple terminal sessions managed outside the kernel. It's what the writerdeck video uses for a polished TTY experience.
+Create `~/.tmux.conf`:
+
+```bash
+# Status bar at top (neovim uses the bottom)
+set -g status-position top
+set -g status-style bg=green
+
+# Battery readout in status bar
+set-window-option -g status-right "#(acpi -b | grep -m1 -o -P '.{0,2}%')"
+
+# Brightness control via function keys
+bind -n F8 run-shell 'light -U 10'
+bind -n F9 run-shell 'light -A 10'
+```
+
+Then auto-launch tmux on login by adding to `~/.bashrc`:
+
+```bash
+# Launch tmux on the primary TTY if not already in tmux
+if [ -z "${TMUX}" ] && [ $(tty) == "/dev/pts/0" ]; then
+    exec tmux new-session
+fi
+```
 
 ### Network Management (TUI)
 
-Without a desktop environment, WiFi management needs a terminal interface:
+Without a desktop, WiFi needs a terminal interface:
 
 ```bash
 sudo apt install network-manager
 ```
 
-Then use `nm-tui` for an interactive curses interface, or `nmcli` for scripted/command-line operations:
+Then use `nm-tui` for interactive WiFi management:
 
 ```bash
-# Interactive TUI for WiFi
+# Interactive TUI — scan networks, connect, manage saved connections
 nm-tui
 
-# Command-line WiFi connection
+# Command-line alternative
 nmcli device wifi list
 nmcli device wifi connect "SSID" password "password"
-
-# Check connection status
 nmcli general status
 ```
 
 ### Local Help File
 
-On a console-only system with no browser, you need documentation available locally. I plan to create a `/usr/local/share/doc/system-help.txt` with essential commands and configuration notes — a cheat sheet accessible via `less /usr/local/share/doc/system-help.txt` or aliased to a short command.
+On a console-only system with no browser, documentation must be local. I plan to create a help file accessible via a short alias:
 
-The help file should cover:
+```bash
+sudo mkdir -p /usr/local/share/doc
+sudo tee /usr/local/share/doc/system-help.txt << 'EOF'
+=== CODERDECK QUICK REFERENCE ===
 
-- WiFi connection (`nm-tui` and `nmcli` usage)
-- Font size adjustment (`setfont`, `console-setup` reconfiguration)
-- tmux basics (session management, splits, detach/reattach)
-- Claude Code quick-reference (auth, common flags)
-- System maintenance (apt update, disk usage, battery status)
-- Power management (suspend, lid behavior, shutdown)
+NETWORK
+  nm-tui              Interactive WiFi manager
+  nmcli device wifi list    Show available networks
+  nmcli device wifi connect "SSID" password "pass"
+  nmcli general status      Connection status
 
-Having this on-device matters. When you're sitting in a coffee shop with nothing but a TTY and no browser, the answer to "how do I do X" needs to be local.
+DISPLAY
+  Ctrl-Plus / Ctrl-Minus    Resize font (kmscon)
+  light -A 10               Increase brightness
+  light -U 10               Decrease brightness
+
+TMUX
+  Ctrl-B %         Split vertical
+  Ctrl-B "         Split horizontal
+  Ctrl-B arrow     Move between panes
+  Ctrl-B d         Detach session
+  tmux attach      Reattach
+
+CLAUDE CODE
+  claude           Start Claude Code
+  claude --resume  Resume last session
+  /help            In-session help
+
+SYSTEM
+  acpi -b          Battery status
+  df -h            Disk usage
+  htop             Process monitor
+  sudo apt update && sudo apt upgrade   Update packages
+  sudo systemctl poweroff               Shutdown
+  sudo systemctl suspend                Suspend
+EOF
+```
+
+Add an alias in `~/.bashrc`:
+
+```bash
+alias help-me='less /usr/local/share/doc/system-help.txt'
+```
+
+Having this on-device matters. When you're at a coffee shop with nothing but a TTY and no browser, the answer to "how do I reconnect WiFi" needs to be one command away.
 
 ## The Math
 
