@@ -11,7 +11,7 @@ I picked up two Lenovo IdeaPad 3 Chromebooks (11IGL05) back in 2022 when Best Bu
 
 <!-- excerpt-end -->
 
-These machines boot in under ten seconds, run a full Linux container via Crostini, and have enough storage and connectivity to do real work — provided you're deliberate about what "real work" means on 4GB RAM shared between ChromeOS and a Linux VM. The question I wanted to answer: can a budget Chromebook serve as a portable AI-assisted development terminal running Claude Code?
+These machines boot in under ten seconds, run a full Linux container via Crostini, and have enough storage and connectivity to do real work — provided you're deliberate about what "real work" means on 4GB RAM shared between ChromeOS and a Linux VM. I've been using them successfully with Google Colab and Google Gemini for a while now — the browser-based workflow fits ChromeOS naturally. Adding Claude Code via the Linux terminal is the next use case I wanted to validate: can a budget Chromebook serve as a portable AI-assisted development terminal running a local CLI agent?
 
 The short answer is yes, with caveats worth understanding.
 
@@ -33,7 +33,11 @@ The specific model is the [Lenovo IdeaPad 3 CB 11IGL05](https://psref.lenovo.com
 | OS | ChromeOS |
 | Security | Google H1 Security Chip, Kensington slot |
 
-At 2.46 lbs with a 10-hour battery and USB-C charging, it's a genuinely portable machine. The dual USB-C ports with Power Delivery and DisplayPort mean you can run it off any USB-C charger and connect an external monitor if needed.
+At 2.46 lbs with a 10-hour battery and USB-C charging, it's a genuinely portable machine. That 10 hours is if you are doing lightweight email and writing. You get closer to 5-6 hours when doing more stressful Linux and Coding. The dual USB-C ports with Power Delivery and DisplayPort mean you can run it off any USB-C charger and connect an external monitor if needed. The Lenovo 65W USB-C charger is also useful with my Samsung S23 and S25 cell phones and I often share that charger.
+
+It is an easy to carry portable machine.
+
+[A PICTURE of my BAG and gear goes HERE]
 
 ## Why Bother
 
