@@ -3,7 +3,7 @@ title:  "Migrating 16 Domains from SquareSpace to Porkbun"
 image: /assets/images/og/name-service-registrars.png
 layout: post
 date: 2026-05-20
-last_modified_at: 2026-05-20
+last_modified_at: 2026-06-10
 categories: [technical, infrastructure]
 tags: [dns, domains, porkbun, squarespace, migration, homelab, automation]
 excerpt: "Documenting the multi-week process of transferring 16 domains from SquareSpace to Porkbun in batches, managing costs, and dealing with transfer delays. Why Porkbun won for homelab domain management."
@@ -11,7 +11,7 @@ description: "Migrating 16 domains from SquareSpace to Porkbun after Google Doma
 seo:
   type: BlogPosting
   date_published: 2026-05-20
-  date_modified: 2026-05-20
+  date_modified: 2026-06-10
 ---
 
 When a vendor you depend on gets acquired, the technical debt lands on your desk whether you planned for it or not. Google killed Google Domains, SquareSpace inherited the customers, and SquareSpace's walled garden — no API, no DNS export, no automation hooks — made it incompatible with the DNS automation I need for Technitium, PowerDNS, and cert-manager DNS-01 challenges. Sixteen domains had to move, renewal dates were approaching, and I was already behind before I started.
@@ -20,6 +20,8 @@ When a vendor you depend on gets acquired, the technical debt lands on your desk
 > — Charlie Daniels Band, *The Devil Went Down to Georgia*
 
 This is the story of that migration: the batching strategy, the cost management, the DNS backup process that SquareSpace makes unnecessarily painful, and why Porkbun won the evaluation.
+
+**Update:** [Part 2](/name-service-registrars-part-2/) covers the sprint finish — transferring the remaining domains in a rush week before renewal deadlines hit.
 
 <!-- excerpt-end -->
 
