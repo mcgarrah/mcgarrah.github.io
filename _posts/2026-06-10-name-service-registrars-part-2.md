@@ -56,7 +56,7 @@ Having done this nine times already in Batch 1 and 2, the process was mechanical
 7. Recreate DNS records at Porkbun
 8. Verify propagation
 
-The bottleneck remained the same: SquareSpace's 24-48 hour auth code delivery and the 5-day mandatory hold. Porkbun's accelerated transfer process cut that hold significantly, but I was still at the mercy of email round-trips across multiple domains simultaneously.
+The bottleneck remained the same: SquareSpace's initial 24 hour auth code delivery and the 5-day hold unless you contact their support for an accelerated transfer process which cuts that hold to round trip email responses, but I was still at the mercy of email round-trips, catching a support person and dealing with multiple domains simultaneously. Hectic but with organization, it is manageable.
 
 ### Credit Where It's Due: SquareSpace Support
 
