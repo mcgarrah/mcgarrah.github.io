@@ -8,7 +8,7 @@ sitemap: false
 
 Working document for draft management. Focus: what needs work, what's next, and how drafts cluster together.
 
-Last updated: 2026-06-08
+Last updated: 2026-06-10
 
 ---
 
@@ -80,7 +80,7 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Cluster | Drafts | Notes |
 |---------|--------|-------|
-| 🌐 **Domain & Email Migration** | email-forwarding-evaluation | Registrars published; email is the follow-up |
+| 🌐 **Domain & Email Migration** | email-forwarding-evaluation | Registrars Part 1 & Part 2 published; email is the follow-up |
 | 🎮 **Game Development** | starvoyager, godot-vscode | Independent but pair well (July 1, 3) |
 | 🌍 **Proxmox SDN & Networking** | powerdns-lxc, openwrt-lxc, lag-lacp | PowerDNS, OpenWRT LXC, and LAG/LACP |
 | 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting, dark-mode-toggle, tag-sprawl, front-matter-hygiene, post-series-navigation | Active cluster with 6 drafts |
@@ -149,7 +149,7 @@ Drafts that form natural publishing sequences or share a topic.
 ### `2026-02-07-email-forwarding-evaluation.md` — 🌐 Domain & Email
 
 - Complete evaluation with cost comparison tables, migration strategy, decision matrix
-- **What's needed:** Minor date fix. Registrars article (prerequisite) is now published.
+- **What's needed:** Minor date fix. Registrars articles (Parts 1 & 2) are now published. May not be needed if Porkbun aliases suffice — see Part 2 discussion.
 - **Effort:** 15 minutes
 
 ---
@@ -494,5 +494,5 @@ in one session (~2 hours). The bottom 4 are quick wins that can be done anytime.
 | 2026-04-20 | From Markdown to Production | Jekyll series |
 | 2026-05-18 | When Storage Breaks | Ceph & ZFS series |
 | 2026-06-15 | From Bug Fix to VS Code Marketplace | Run Jekyll extension series |
-| 2026-07-13 | Building in Public | Preview site, domain migration, Google tax |
+| 2026-07-13 | Building in Public | Preview site, domain migration (Part 1 & 2), Google tax |
 | TBD | Machine Learning (planned) | AI/ML research, phonemes, cloud DS platforms |

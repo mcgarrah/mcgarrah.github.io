@@ -17,9 +17,9 @@ Full-year calendar showing published articles (✅), future-dated/scheduled arti
 
 **Cadence:** Monday / Wednesday / Friday (MWF) primary. Occasional Tue/Thu/Sat/Sun for series bursts.
 
-**Today:** 2026-06-08
+**Today:** 2026-06-10
 
-Last updated: 2026-06-08
+Last updated: 2026-06-10
 
 ---
 
@@ -97,12 +97,12 @@ Last updated: 2026-06-08
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-----|-----|-----|-----|-----|-----|-----|
 | | **1** 📅 [Managing Cross-AI Context](/managing-cross-ai-agent-context/) | 2 | **3** 📅 [ZFS Boot Mirrors Part 3](/proxmox-zfs-boot-mirrors-part-3/) | 4 | **5** 📝 [Jekyll Run Multiroot Bug](/_drafts/2026-06-05-jekyll-run-plugin-multiroot-workspace-bug.md) | 6 |
-| 7 | **8** 📅 [Draft Preview Site Part 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** 📝 [Forking Jekyll Run](/_drafts/2026-06-10-forking-jekyll-run-to-run-jekyll.md) | 11 | **12** 📅 [Draft Preview Site Part 2](/jekyll-draft-preview-site-part-2/) | **13** 📅 [Research Model for DS](/research-model-for-data-science/) |
+| 7 | **8** 📅 [Draft Preview Site Part 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** ✅ [Domain Migration Part 2](/name-service-registrars-part-2/) | 11 | **12** 📅 [Draft Preview Site Part 2](/jekyll-draft-preview-site-part-2/) | **13** 📅 [Research Model for DS](/research-model-for-data-science/) |
 | **14** 📰 [Substack: DS Is Not SD](/_substack/2026-06-14-data-science-is-not-software-development.md) | **15** 📝 [Run Jekyll Marketplace Setup](/_drafts/2026-06-15-run-jekyll-vscode-marketplace-publisher-setup.md) · 🔗 [LinkedIn: DS ≠ SD](/_linkedin/2026-06-15-data-science-is-not-software-development.md) | 16 | **17** 📅 [Draft Preview Site Part 3](/jekyll-draft-preview-site-part-3/) | 18 | **19** 📝 [Run Jekyll Bug Fixes](/_drafts/2026-06-19-run-jekyll-bug-fixes-and-code-review.md) | 20 |
 | 21 | **22** 🔲 *Open* | 23 | **24** 📝 [Run Jekyll Testing](/_drafts/2026-06-24-run-jekyll-testing-and-test-harness.md) | 25 | **26** 📅 [Google Service Sprawl](/google-service-sprawl/) | 27 |
 | 28 | **29** 📝 [Run Jekyll New Features](/_drafts/2026-06-29-run-jekyll-new-features-clean-doctor-tests.md) | 30 | | | | |
 
-**Summary:** 7 articles scheduled + 6 moved to drafts (Run Jekyll series — work incomplete) + 1 open slot + 1 Substack newsletter + 1 LinkedIn post. Research Model for DS (Sat Jun 13) + Substack companion (Sun Jun 14) + LinkedIn hook (Mon Jun 15). Draft Preview series remains scheduled.
+**Summary:** 7 articles scheduled + 1 published (domain migration) + 5 moved to drafts (Run Jekyll series — work incomplete) + 1 open slot + 1 Substack newsletter + 1 LinkedIn post. Research Model for DS (Sat Jun 13) + Substack companion (Sun Jun 14) + LinkedIn hook (Mon Jun 15). Draft Preview series remains scheduled.
 
 ---
 
@@ -201,14 +201,14 @@ Last updated: 2026-06-08
 | March | 1 | — | — | — | 1 |
 | April | 25 | — | — | — | 25 |
 | May | 21 | 1 | — | — | 22 |
-| June | — | 7 | 6 | 1 | 14 |
+| June | 1 | 7 | 5 | 1 | 14 |
 | July | — | — | 14 | — | 14 |
 | August | — | — | 13 | — | 13 |
 | September | — | — | 10 | 5 | 15 |
 | October | — | — | 2 | 12 | 14 |
 | November | — | — | — | 12 | 12 |
 | December | — | — | — | 14 | 14 |
-| **Total** | **52** | **8** | **45** | **44** | **149** |
+| **Total** | **53** | **8** | **44** | **44** | **149** |
 
 ### Draft Inventory vs Slots
 
