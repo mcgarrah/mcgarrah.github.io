@@ -195,11 +195,11 @@ I fed each major AI system the same prompt against the machine view URL:
 
 > "Please parse my resume at https://mcgarrah.org/resume/machine/ and extract the useful ATS information with a summary."
 
-**Claude (Anthropic):** Took several minutes ("A bit longer, thanks for your patience..." appeared), but produced the most comprehensive summary. It found the most positions and correctly distinguished between full-time primary roles and part-time/concurrent/advisory roles — a nuance the others missed.
+**Claude (Anthropic):** Took the longest to respond ("A bit longer, thanks for your patience..." appeared for several minutes), but produced the most comprehensive summary. It found the most positions and correctly distinguished between full-time primary roles and part-time/concurrent/advisory roles — a nuance the others missed.
 
-**ChatGPT (OpenAI):** Good parse, but clipped the results to the last 10 years as a typical ATS would. Produced a solid candidate summary. Took the longest to respond but did the best job of framing my candidacy in context.
+**ChatGPT (OpenAI):** Responded faster than Claude but still took some time. Good parse, but clipped the results to the last 10 years as a typical ATS would. Produced a solid candidate summary and did the best job of framing my candidacy in context.
 
-**Gemini (Google):** Returned results almost immediately. Least aware of career history older than 10 years and over-focused on the current role at Envestnet.
+**Gemini (Google):** Responded almost immediately. Least aware of career history older than 10 years and over-focused on the current role at Envestnet.
 
 **Verdict:** Claude produced the best structured extraction by far. ChatGPT and Gemini performed adequately, with ChatGPT slightly ahead in synthesizing a candidate narrative. All three successfully parsed the JSON-LD and semantic markup — the machine view works as intended.
 
