@@ -9,6 +9,7 @@ description: "How to validate a machine-readable resume with JSON-LD structured 
 date: 2026-06-01
 last_modified_at: 2026-06-01
 published: true
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-06-01
@@ -71,7 +72,17 @@ After the page is live and indexed:
 
 ## Validation Layer 2: ATS Resume Parsers
 
-ATS systems parse uploaded documents through a pipeline: text extraction → tokenization → section detection → named entity recognition → structured output. Each major system implements this differently, which means a resume that parses perfectly in Greenhouse might lose data in Workday.
+ATS systems parse uploaded documents through a pipeline:
+
+```mermaid
+flowchart LR
+    A[Text Extraction] --> B[Tokenization]
+    B --> C[Section Detection]
+    C --> D[Named Entity Recognition]
+    D --> E[Structured Output]
+```
+
+Each major system implements this differently, which means a resume that parses perfectly in Greenhouse might lose data in Workday.
 
 ### Testing Tools
 
