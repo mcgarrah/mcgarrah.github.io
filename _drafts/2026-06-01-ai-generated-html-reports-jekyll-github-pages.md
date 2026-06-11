@@ -2,19 +2,20 @@
 title: "AI-Generated HTML Reports on GitHub Pages: A Pattern for Lightweight Dashboards"
 layout: post
 categories: [technical, devtools, jekyll]
-tags: [ai agents, kiro, html, github pages, jekyll, dashboards, automation, static sites, reporting]
+tags: [ai agents, kiro, html, github pages, jekyll, dashboards, automation, static sites, reporting, mermaid]
 excerpt: "AI coding agents produce HTML instinctively — self-contained, zero-dependency, renders anywhere. Instead of letting those reports die in a chat window, publish them to a Jekyll site on GitHub Pages for stable URLs, version history, and instant sharing. Here's the pattern."
 description: "A pattern for using AI coding agents to generate self-contained HTML reports and dashboards, then publishing them to a Jekyll site on GitHub Pages for stable URLs, git-tracked history, and zero-infrastructure sharing. Covers the markdown-first content workflow, report design standards, GitHub Actions automation, and when to use HTML vs markdown posts."
 date: 2026-06-01
 last_modified_at: 2026-06-01
 published: false
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-06-01
   date_modified: 2026-06-01
 ---
 
-Every time I ask an AI coding agent to visualize something — a cost breakdown, a comparison table, an architecture diagram, a status scorecard — I have it reach for HTML. Not markdown. Not a chart library. Just a single `.html` file with inlined CSS and JS that opens in any browser.
+Every time I ask an AI coding agent to visualize something — a cost breakdown, a comparison table, an architecture diagram, a status scorecard — it reaches for HTML. Not markdown. Not a chart library. Just a single `.html` file with inlined CSS and JS that opens in any browser.
 
 These reports are genuinely useful. The problem is they die in the chat window. You save them to your desktop, maybe share one in Slack, and a week later nobody can find it. The URL doesn't exist because there is no URL.
 
@@ -26,7 +27,7 @@ That one-off solution sat in my head until AI coding agents started producing th
 
 ## Why HTML Is the Agent's Native Visual Language
 
-HTML is the format AI coding agents are best at producing. When you ask Kiro (or Claude, or Cursor) to create a chart, a dashboard, or a one-off analysis visual, I have it now reach for HTML instinctively — and for good reason:
+HTML is the format AI coding agents produce best. When you ask an agent to create a chart, a dashboard, or a one-off analysis visual, it defaults to HTML — and for good reason:
 
 - **No toolchain required.** HTML renders in any browser. No build step, no package install, no framework boilerplate.
 - **Self-contained by default.** A single `.html` file with inlined CSS and JS is a complete deliverable. Drop it in Slack, attach it to a ticket, open it from your desktop — it just works.
@@ -51,24 +52,12 @@ An AI agent generates a single `.html` file from data you provide. You commit it
 
 ## Architecture
 
-```text
-┌─────────────────┐     ┌──────────────┐     ┌─────────────────────┐
-│  Data Sources   │     │  AI Agent    │     │  Jekyll Site Repo   │
-│  (CSV, JSON,    │────▶│  (Kiro)      │────▶│  reports/           │
-│   API output)   │     │              │     │    dashboard.html   │
-└─────────────────┘     └──────────────┘     └─────────┬───────────┘
-                                                       │
-                                             ┌─────────▼───────────┐
-                                             │  GitHub Actions     │
-                                             │  (Jekyll build +    │
-                                             │   deploy to Pages)  │
-                                             └─────────┬───────────┘
-                                                       │
-                                             ┌─────────▼───────────┐
-                                             │  GitHub Pages       │
-                                             │  https://site.org/  │
-                                             │  reports/dashboard  │
-                                             └─────────────────────┘
+```mermaid
+flowchart LR
+    A["Data Sources<br/>(CSV, JSON, API output)"] --> B["AI Agent<br/>(Kiro, Claude, Cursor)"]
+    B --> C["Jekyll Site Repo<br/>reports/dashboard.html"]
+    C --> D["GitHub Actions<br/>(Jekyll build + deploy)"]
+    D --> E["GitHub Pages<br/>https://site.org/reports/dashboard"]
 ```
 
 ### Jekyll Site Layout
@@ -109,7 +98,8 @@ The `reports/` directory sits alongside your regular Jekyll content. Jekyll pass
 | Part-of-whole (< 6 segments) | Donut/ring | CSS `conic-gradient` |
 | Two values compared per row | Grouped bar | CSS divs side by side |
 | Time-series trend (compact) | Sparkline | Inline SVG `<polyline>` |
-| Architecture diagrams | Box-and-arrow | Inline SVG with fixed `viewBox` |
+| Architecture diagrams | Box-and-arrow | Inline SVG or Mermaid (if Jekyll-rendered) |
+| Flow/sequence diagrams | Flowchart, sequence | Mermaid in markdown posts; inline SVG in HTML reports |
 
 ### Interactivity
 
@@ -119,6 +109,10 @@ The `reports/` directory sits alongside your regular Jekyll content. Jekyll pass
 
 All of this works without any external dependencies. The agent knows these patterns well.
 
+### A note on Mermaid
+
+For diagrams in markdown blog posts (like this one), [Mermaid](https://mermaid.js.org/) is the better choice — it renders from text descriptions during the Jekyll build, stays version-controllable, and diffs cleanly. For self-contained HTML reports, inline SVG is preferable since Mermaid requires a JS library. The rule: Mermaid for blog content, inline SVG for standalone reports.
+
 ## Content Development Workflow
 
 ### Markdown First, HTML Second
@@ -127,12 +121,10 @@ A report has two layers: the **content** (what it says) and the **presentation**
 
 The recommended workflow separates these concerns:
 
-```text
-┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│  1. Draft in     │     │  2. Finalize     │     │  3. Generate     │
-│     Markdown     │────▶│     structure &  │────▶│     HTML         │
-│  (cheap, fast)   │     │     data         │     │  (build step)    │
-└──────────────────┘     └──────────────────┘     └──────────────────┘
+```mermaid
+flowchart LR
+    A["1. Draft in Markdown<br/>(cheap, fast)"] --> B["2. Finalize structure<br/>& data pipeline"]
+    B --> C["3. Generate HTML<br/>(build step)"]
 ```
 
 | Concern | Markdown iteration | Direct HTML iteration |
@@ -329,7 +321,7 @@ if __name__ == "__main__":
     )
 ```
 
-The key insight from production implementations of this pattern: **`report-content.json` is where you iterate with the agent.** Changing what the report says (title, methodology notes, assumptions, section headings) is cheap — it's just editing a JSON file. Changing how it looks (the generator) is expensive. Separating them means you can refine content in 10 iterations for the token cost of one HTML rewrite.
+The key insight from working with this pattern: **`report-content.json` is where you iterate with the agent.** Changing what the report says (title, methodology notes, assumptions, section headings) is cheap — just editing a JSON file. Changing how it looks (the generator) is expensive. Separating them means you can refine content in 10 iterations for the token cost of one HTML rewrite.
 
 ## Why Not Just Use a Dashboard Tool?
 
@@ -352,6 +344,7 @@ They're not a replacement for Grafana. They're a replacement for "let me paste t
 
 ## Related Posts
 
+- [PyTorch ASR Phoneme Analysis](/pytorch-asr-example/) — The original notebook-to-HTML export that planted this idea
 - [Managing Cross-AI Agent Context](/managing-cross-ai-agent-context/) — How context and steering files guide agent output
 - [AI Coding Agent Context Files Reference](/ai-coding-agent-context-files-reference/) — Configuration patterns for AI coding tools
 - [From Publish to Reader: The Content Distribution Pipeline](/jekyll-content-distribution-pipeline/) — How content reaches readers once published
