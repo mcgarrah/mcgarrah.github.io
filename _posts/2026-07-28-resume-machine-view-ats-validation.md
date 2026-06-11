@@ -179,15 +179,7 @@ All three validators show clean results:
 
 ### ATS Parse Testing (PDF/DOCX uploads)
 
-*Not yet completed — requires hands-on testing with real ATS portals.*
-
-- Brief PDF → Jobscan (3 target job descriptions)
-- Brief PDF → Resume Worded structural analysis
-- Brief PDF → direct Greenhouse upload: verify parsed fields
-- Brief PDF → direct Workday upload: verify parsed fields
-- Ultra-Brief PDF → Jobscan (same 3 job descriptions — compare scores)
-- DOCX → Jobscan (same 3 job descriptions — compare to PDF scores)
-- DOCX → direct Lever upload: verify parsed fields
+This would be a valuable next step — uploading the brief PDF and DOCX exports to tools like Jobscan, Resume Worded, and real ATS portals (Greenhouse, Workday, Lever) to verify parse fidelity. That testing is out of scope for this round but remains on the list for a future pass when I'm actively applying to positions and can observe real parsed output.
 
 ### AI Agent Extraction (Machine View)
 
