@@ -149,6 +149,8 @@ The renewal isn't until August 2, 2027. There's no financial pressure. I'm holdi
 
 The migration that started as a careful multi-month project ended as a one-week sprint driven by renewal deadlines. Not how I planned it, but the result is the same: vendor lock-in eliminated, API access gained, and the path to DNS automation is clear. One domain remains, and it'll get the careful migration it deserves — just not this week.
 
+**Part 3** will cover the final mcgarrah.org transfer and a deeper look at Porkbun's included services that I glossed over in the rush — automatic SSL/TLS certificates, email aliases, DNSSEC, API access for DNS automation, and other features I didn't fully explore while focused on getting domains moved.
+
 ---
 
 ## References
