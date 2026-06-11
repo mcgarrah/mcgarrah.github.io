@@ -14,17 +14,19 @@ seo:
   date_modified: 2026-06-01
 ---
 
-Every time I ask an AI coding agent to visualize something — a cost breakdown, a comparison table, an architecture diagram, a status scorecard — it reaches for HTML. Not markdown. Not a chart library. Just a single `.html` file with inlined CSS and JS that opens in any browser.
+Every time I ask an AI coding agent to visualize something — a cost breakdown, a comparison table, an architecture diagram, a status scorecard — I have it reach for HTML. Not markdown. Not a chart library. Just a single `.html` file with inlined CSS and JS that opens in any browser.
 
 These reports are genuinely useful. The problem is they die in the chat window. You save them to your desktop, maybe share one in Slack, and a week later nobody can find it. The URL doesn't exist because there is no URL.
 
-The fix is obvious in hindsight: publish them to a static site. Same Jekyll blog, same GitHub Pages hosting, same GitHub Actions pipeline — but instead of markdown posts, you're serving self-contained HTML reports at stable, bookmarkable URLs.
+The kernel of this pattern came from earlier machine learning work. When I published a [PyTorch ASR phoneme analysis](/pytorch-asr-example/), the Jupyter notebook's richest output — inline graphs, model activation heatmaps, audio spectrograms — couldn't live in a markdown post. So I exported the notebook to a self-contained HTML file and [served it directly from the Jekyll site](/assets/pdfs/pytorch_asr_phonemes.html). No processing, no layout wrapping — just an `.html` file committed to the repo and deployed alongside everything else. It worked immediately. Stable URL, version-tracked in git, viewable by anyone with the link.
+
+That one-off solution sat in my head until AI coding agents started producing the same kind of output: single-file HTML with inlined styles, rich visuals, zero dependencies. The difference is volume — agents produce these constantly. The fix is the same: publish them to the static site. Same Jekyll blog, same GitHub Pages hosting, same GitHub Actions pipeline — but instead of one notebook export, you're serving a collection of generated reports at stable, bookmarkable URLs.
 
 <!-- excerpt-end -->
 
 ## Why HTML Is the Agent's Native Visual Language
 
-HTML is the format AI coding agents are best at producing. When you ask Kiro (or Claude, or Cursor) to create a chart, a dashboard, or a one-off analysis visual, it reaches for HTML instinctively — and for good reason:
+HTML is the format AI coding agents are best at producing. When you ask Kiro (or Claude, or Cursor) to create a chart, a dashboard, or a one-off analysis visual, I have it now reach for HTML instinctively — and for good reason:
 
 - **No toolchain required.** HTML renders in any browser. No build step, no package install, no framework boilerplate.
 - **Self-contained by default.** A single `.html` file with inlined CSS and JS is a complete deliverable. Drop it in Slack, attach it to a ticket, open it from your desktop — it just works.
