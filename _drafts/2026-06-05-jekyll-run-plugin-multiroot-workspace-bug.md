@@ -258,7 +258,7 @@ This happens because the plugin's port-detection code parses `lsof` output by sp
 
 The workaround is to not run both simultaneously — use either `./start-jekyll.sh` or the Jekyll Run button, not both. Kill the terminal server first (`Ctrl+C`) before using the plugin.
 
-This is a separate plugin bug covered in [Jekyll Run Plugin: Patching the Source and Submitting a PR](/jekyll-run-plugin-pr-and-fork/).
+This is a separate plugin bug that will be covered in a future article on patching the source and submitting a PR.
 
 ## Summary
 
