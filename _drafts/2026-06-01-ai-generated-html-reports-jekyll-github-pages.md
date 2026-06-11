@@ -123,8 +123,17 @@ The recommended workflow separates these concerns:
 
 ```mermaid
 flowchart LR
-    A["1. Draft in Markdown"] --> B["2. Finalize structure"]
-    B --> C["3. Generate HTML"]
+    subgraph Iterate["Iterate (cheap)"]
+        A[Draft in Markdown]
+    end
+    subgraph Build["Stabilize"]
+        B[Finalize structure & data]
+    end
+    subgraph Publish["Generate (one-shot)"]
+        C[Produce HTML report]
+    end
+    A -->|content locked| B
+    B -->|data pipeline ready| C
 ```
 
 | Concern | Markdown iteration | Direct HTML iteration |
