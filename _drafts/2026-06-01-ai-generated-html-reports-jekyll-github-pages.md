@@ -54,10 +54,10 @@ An AI agent generates a single `.html` file from data you provide. You commit it
 
 ```mermaid
 flowchart LR
-    A["Data Sources<br/>(CSV, JSON, API output)"] --> B["AI Agent<br/>(Kiro, Claude, Cursor)"]
-    B --> C["Jekyll Site Repo<br/>reports/dashboard.html"]
-    C --> D["GitHub Actions<br/>(Jekyll build + deploy)"]
-    D --> E["GitHub Pages<br/>https://site.org/reports/dashboard"]
+    A["Data Sources"] --> B["AI Agent"]
+    B --> C["Jekyll Site Repo"]
+    C --> D["GitHub Actions"]
+    D --> E["GitHub Pages"]
 ```
 
 ### Jekyll Site Layout
@@ -123,8 +123,8 @@ The recommended workflow separates these concerns:
 
 ```mermaid
 flowchart LR
-    A["1. Draft in Markdown<br/>(cheap, fast)"] --> B["2. Finalize structure<br/>& data pipeline"]
-    B --> C["3. Generate HTML<br/>(build step)"]
+    A["1. Draft in Markdown"] --> B["2. Finalize structure"]
+    B --> C["3. Generate HTML"]
 ```
 
 | Concern | Markdown iteration | Direct HTML iteration |
