@@ -36,6 +36,18 @@ evaluation was unnecessary for 80% of the domains. Only application-sending
 domains need a real email service.
 
 Target publish: July 2026 (after mcgarrah.org migration is complete)
+
+PROMISED FEATURES FROM PART 2 TEASER:
+Part 2 ends with this teaser paragraph that commits us to covering:
+  - Final mcgarrah.org transfer (the complex 25+ record domain)
+  - Automatic SSL/TLS certificates (Porkbun provides these free)
+  - Email aliases (Porkbun's 20-alias-per-domain free forwarding)
+  - DNSSEC (Porkbun supports enabling this per domain)
+  - API access for DNS automation (Porkbun REST API)
+  - Any other Porkbun services missed during the rush migration
+
+Make sure each of these gets at least a section or meaningful mention.
+Don't forget to link back to Part 1 and Part 2.
 -->
 
 
