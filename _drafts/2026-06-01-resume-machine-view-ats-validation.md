@@ -44,7 +44,7 @@ The primary validator for JSON-LD structured data intended for Google Search.
 - **Input**: `https://mcgarrah.org/resume/machine/`
 - **What it validates**: JSON-LD syntax, Schema.org type correctness, required properties for rich result eligibility
 
-![Google Rich Results Test showing structured data validation for the machine-readable resume view](/assets/images/resume-ats-validatation-001.png)
+![Google Rich Results Test showing structured data validation for the machine-readable resume view](/assets/images/resume-ats-validation-001.png)
 
 My initial submission flagged `ScholarlyArticle` warnings in the publications section — the type requires `headline` and `image` properties that I hadn't included. After adding `<meta itemprop="headline">` and `<meta itemprop="image">` tags, the warnings resolved.
 
@@ -56,7 +56,7 @@ My initial submission flagged `ScholarlyArticle` warnings in the publications se
 - **Input**: paste URL or raw HTML
 - **What it validates**: Schema.org vocabulary correctness, nesting, property value types
 
-![Schema.org Markup Validator results for the machine-readable resume](/assets/images/resume-ats-validatation-002.png)
+![Schema.org Markup Validator results for the machine-readable resume](/assets/images/resume-ats-validation-002.png)
 
 More permissive than Google's tool because it validates against the full Schema.org specification, not just the subset Google supports for rich results. Useful for catching structural errors that Google's tool might not flag.
 
@@ -67,7 +67,7 @@ After the page is live and indexed:
 - Check **Performance** → filter by page to see if rich results are appearing
 - Monitor over time — structured data issues can appear days after indexing
 
-![Google Search Console showing structured data indexing status](/assets/images/resume-ats-validatation-003.png)
+![Google Search Console showing structured data indexing status](/assets/images/resume-ats-validation-003.png)
 
 ## Validation Layer 2: ATS Resume Parsers
 
