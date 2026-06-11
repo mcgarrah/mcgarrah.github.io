@@ -121,9 +121,9 @@ Last updated: 2026-06-11
 
 | Monday | Proposed Article | Effort |
 |--------|-----------------|--------|
-| Jul 14 | Claude Code Setup Guide | 10 min |
-| Jul 21 | MCP vs CLI vs API Access Patterns | 15 min |
-| Jul 28 | AI-Generated HTML Reports (Jekyll/GitHub Pages) | 15 min |
+| Jul 14 | Jekyll Run: Multi-Root Workspace Bug | **Promoted ✅** |
+| Jul 21 | Claude Code Setup Guide | 10 min |
+| Jul 28 | MCP vs CLI vs API Access Patterns | 15 min |
 
 ---
 
@@ -142,10 +142,10 @@ Last updated: 2026-06-11
 
 | Monday | Proposed Article | Effort |
 |--------|-----------------|--------|
-| Aug 4 | StarVoyager: Legacy SDL to Cross-Platform | 25 min |
-| Aug 11 | Godot Tower Defense Game | 30 min |
-| Aug 18 | Photosynth: Open Source Alternatives | 20 min |
-| Aug 25 | Domain Migration Part 3 (final transfer + Porkbun services) | 2-3 hrs |
+| Aug 4 | AI-Generated HTML Reports (Jekyll/GitHub Pages) | 15 min |
+| Aug 11 | StarVoyager: Legacy SDL to Cross-Platform | 25 min |
+| Aug 18 | Godot Tower Defense Game | 30 min |
+| Aug 25 | Photosynth: Open Source Alternatives | 20 min |
 
 ---
 
@@ -165,11 +165,11 @@ Last updated: 2026-06-11
 
 | Monday | Proposed Article | Effort |
 |--------|-----------------|--------|
-| Sep 1 | Git History Bloat Cleanup (Part 1) | 25 min |
-| Sep 8 | Git Repo Audit Methodology (Part 2) | 25 min |
-| Sep 15 | PowerDNS LXC + Proxmox SDN | 30 min |
-| Sep 22 | OpenWRT LXC Native Implementation | 35 min |
-| Sep 29 | Jekyll Run: Multi-Root Workspace Bug | 10 min |
+| Sep 1 | Domain Migration Part 3 (final transfer + Porkbun services) | 2-3 hrs |
+| Sep 8 | Git History Bloat Cleanup (Part 1) | 25 min |
+| Sep 15 | Git Repo Audit Methodology (Part 2) | 25 min |
+| Sep 22 | PowerDNS LXC + Proxmox SDN | 30 min |
+| Sep 29 | OpenWRT LXC Native Implementation | 35 min |
 
 ---
 
