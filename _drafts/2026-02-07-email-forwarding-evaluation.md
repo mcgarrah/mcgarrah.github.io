@@ -7,6 +7,38 @@ tags: [porkbun, forward-email, mailgun, email-forwarding, dns, mx-records]
 excerpt: "After migrating 16 domains from SquareSpace to Porkbun, evaluating email forwarding options. Comparing Porkbun's built-in service, Mailgun (current), and Forward Email for cost-effective, privacy-focused email routing."
 ---
 
+<!--
+PART 3 NARRATIVE PLAN (June 2026):
+
+This draft becomes source material for Part 3 of the domain migration series.
+The article structure should contrast theory vs reality:
+
+1. "The February Evaluation" — What I researched and planned before the migration
+   sprint. This draft's comparison table, cost analysis, and Forward Email
+   recommendation represent the theoretical ideal.
+
+2. "What Actually Happened" — The June rush migration (Part 2) revealed that
+   Porkbun's 20 aliases per domain is sufficient for base/personal domains.
+   No external forwarding service needed for most domains.
+
+3. "The Real Split" — Two categories emerged:
+   - Base domains (personal, legacy, family): Porkbun aliases. Done.
+   - Application domains (transactional email — registration, notifications,
+     password resets): Mailgun or Forward Email Enhanced for SMTP sending.
+
+4. Final mcgarrah.org migration — the last domain, complex DNS, careful weekend.
+
+5. Porkbun services deep dive — automatic SSL/TLS, email aliases, DNSSEC,
+   API access, and other included features discovered post-migration.
+
+Key theme: Planning is useful but reality simplifies the decision. The elaborate
+evaluation was unnecessary for 80% of the domains. Only application-sending
+domains need a real email service.
+
+Target publish: July 2026 (after mcgarrah.org migration is complete)
+-->
+
+
 ## The Email Forwarding Challenge
 
 After [migrating 16 domains from SquareSpace to Porkbun](/name-service-registrars/), I need to decide on an email forwarding strategy. At SquareSpace, I used **Mailgun** for MX records and email forwarding as it was free and easy to use. Now at Porkbun, I have several options to evaluate.
