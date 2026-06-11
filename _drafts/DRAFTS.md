@@ -80,7 +80,7 @@ Drafts that form natural publishing sequences or share a topic.
 
 | Cluster | Drafts | Notes |
 |---------|--------|-------|
-| 🌐 **Domain & Email Migration** | email-forwarding-evaluation | Registrars Part 1 & Part 2 published; email is the follow-up |
+| 🌐 **Domain & Email Migration** | name-service-registrars-part-3 | Registrars Part 1 & Part 2 published; Part 3 covers final mcgarrah.org transfer, Porkbun services (SSL/TLS, DNSSEC, API), and email forwarding evaluation (theory vs reality) |
 | 🎮 **Game Development** | starvoyager, godot-vscode | Independent but pair well (July 1, 3) |
 | 🌍 **Proxmox SDN & Networking** | powerdns-lxc, openwrt-lxc, lag-lacp | PowerDNS, OpenWRT LXC, and LAG/LACP |
 | 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting, dark-mode-toggle, tag-sprawl, front-matter-hygiene, post-series-navigation | Active cluster with 6 drafts |
@@ -133,7 +133,7 @@ Drafts that form natural publishing sequences or share a topic.
 
 | File | Effort | Cluster |
 |------|--------|---------|
-| `email-forwarding-evaluation.md` | 15 min | 🌐 Domain & Email |
+| `name-service-registrars-part-3.md` | 2-3 hrs | 🌐 Domain & Email |
 | `starvoyager-game.md` | 1 hr | 🎮 Game Dev |
 | `godot-vscode.md` | 1 hr | 🎮 Game Dev |
 | `jekyll-tag-sprawl-consolidation.md` | 1 hr | 📝 Jekyll Deep Dives |
@@ -146,11 +146,11 @@ Drafts that form natural publishing sequences or share a topic.
 
 ## Tier 1: Ready to Publish (< 30 min)
 
-### `2026-02-07-email-forwarding-evaluation.md` — 🌐 Domain & Email
+### `2026-07-15-name-service-registrars-part-3.md` — 🌐 Domain & Email
 
-- Complete evaluation with cost comparison tables, migration strategy, decision matrix
-- **What's needed:** Minor date fix. Registrars articles (Parts 1 & 2) are now published. May not be needed if Porkbun aliases suffice — see Part 2 discussion.
-- **Effort:** 15 minutes
+- Part 3 of the domain migration series. Incorporates the February email forwarding evaluation as "theory vs reality."
+- **What's needed:** Rewrite framing around: (1) mcgarrah.org final transfer, (2) Porkbun services deep dive (SSL/TLS, DNSSEC, email aliases, API access), (3) email forwarding evaluation from Feb contrasted with real-world outcome — Porkbun aliases suffice for base domains, Mailgun/Forward Email only needed for application-sending domains. Update domain counts (15 active, not 16). Remove stale Mailgun-for-everything assumption.
+- **Effort:** 2-3 hours (substantial rewrite, not a quick fix)
 
 ---
 

@@ -113,7 +113,7 @@ Last updated: 2026-06-10
 | | | | **1** 📝 [StarVoyager Game](/_drafts/2026-07-01-starvoyager-game.md) | 2 | **3** 📝 [Godot Tower Defense](/_drafts/2026-07-03-godot-vscode.md) | 4 |
 | **5** 📰 [Substack: Bug Fix to Marketplace](/_substack/2026-07-05-from-bug-fix-to-marketplace.md) | **6** 📝 [AASR Series Overview](/_drafts/2026-07-01-aasr-project-series-overview.md) | 7 | **8** 📝 [AASR: Proxmox AI Cluster](/_drafts/2026-07-01-aasr-proxmox-overview.md) | 9 | **10** 📝 [Git History Bloat (Part 1)](/_drafts/2026-07-08-git-history-bloat-drafts-repo-cleanup.md) | 11 |
 | 12 | **13** 📝 [Git Repo Audit (Part 2)](/_drafts/2026-07-09-git-repo-audit-methodology-findings.md) · 📰 [Substack: Building in Public](/_substack/2026-07-13-building-in-public.md) | 14 | **15** 📝 [Git Health Monitoring (Part 3)](/_drafts/2026-07-24-git-health-monitoring-github-actions-outline.md) | 16 | **17** 📝 [Claude Code Setup Guide](/_drafts/2026-05-01-claude-code-setup-guide.md) | 18 |
-| 19 | **20** 📝 [Email Forwarding Eval](/_drafts/2026-02-07-email-forwarding-evaluation.md) | 21 | **22** 📝 [Photosynth Retrospective](/_drafts/2026-01-01-photosynth-update.md) | 23 | **24** 📝 [Plausible vs Google Analytics](/_drafts/2026-07-17-plausible-vs-google-analytics.md) | 25 |
+| 19 | **20** 📝 [Domain Migration Part 3](/_drafts/2026-07-15-name-service-registrars-part-3.md) | 21 | **22** 📝 [Photosynth Retrospective](/_drafts/2026-01-01-photosynth-update.md) | 23 | **24** 📝 [Plausible vs Google Analytics](/_drafts/2026-07-17-plausible-vs-google-analytics.md) | 25 |
 | 26 | **27** 📝 [Jekyll Dark Mode Toggle](/_drafts/2026-07-08-jekyll-dark-mode-toggle.md) | 28 | **29** 📝 [Jekyll Tag Sprawl](/_drafts/2026-07-10-jekyll-tag-sprawl-consolidation.md) | 30 | **31** 📝 [Jekyll Front Matter Hygiene](/_drafts/2026-07-13-jekyll-front-matter-hygiene.md) | |
 
 **Summary:** 14 proposed articles. 🎮 Game Dev pair → 🤖 AASR series → 🧰 Git series → standalone articles → 📝 Jekyll cluster starts.
@@ -230,7 +230,7 @@ Last updated: 2026-06-10
 | 🧠 Data Science & AI/ML | 2 | August |
 | 🗄️ Ceph Storage | 2 | August–September |
 | 🏗️ Homelab Infrastructure | 2 | August–September |
-| 🌐 Domain & Email | 1 | July |
+| 🌐 Domain & Email | 1 | July (Part 3: final transfer + Porkbun services + email evaluation) |
 | 🖥️ Dev Environment | 2 | September |
 | 💻 ChromeOS / Coderdeck | 2 | October |
 | 🍎 FastAPI Nutrition API | 4 | September (tentative) |
