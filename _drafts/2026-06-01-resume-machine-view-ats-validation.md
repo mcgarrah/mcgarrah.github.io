@@ -44,6 +44,8 @@ The primary validator for JSON-LD structured data intended for Google Search.
 - **Input**: `https://mcgarrah.org/resume/machine/`
 - **What it validates**: JSON-LD syntax, Schema.org type correctness, required properties for rich result eligibility
 
+![Google Rich Results Test showing structured data validation for the machine-readable resume view](/assets/images/resume-ats-validatation-001.png)
+
 My initial submission flagged `ScholarlyArticle` warnings in the publications section — the type requires `headline` and `image` properties that I hadn't included. After adding `<meta itemprop="headline">` and `<meta itemprop="image">` tags, the warnings resolved.
 
 **Key learning**: Google's validator is strict about properties it considers "recommended" for types that are eligible for rich results. Schema.org itself is more permissive — a property can be valid Schema.org but still produce a Google warning if Google has specific expectations for that type.
@@ -54,6 +56,8 @@ My initial submission flagged `ScholarlyArticle` warnings in the publications se
 - **Input**: paste URL or raw HTML
 - **What it validates**: Schema.org vocabulary correctness, nesting, property value types
 
+![Schema.org Markup Validator results for the machine-readable resume](/assets/images/resume-ats-validatation-002.png)
+
 More permissive than Google's tool because it validates against the full Schema.org specification, not just the subset Google supports for rich results. Useful for catching structural errors that Google's tool might not flag.
 
 ### Google Search Console
@@ -62,6 +66,8 @@ After the page is live and indexed:
 - Check **Enhancements** → **Unparsable structured data** for any indexing failures
 - Check **Performance** → filter by page to see if rich results are appearing
 - Monitor over time — structured data issues can appear days after indexing
+
+![Google Search Console showing structured data indexing status](/assets/images/resume-ats-validatation-003.png)
 
 ## Validation Layer 2: ATS Resume Parsers
 
