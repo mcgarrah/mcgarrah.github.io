@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1e3a5f"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#48bb78"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#48bb78" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#48bb78" opacity="0.05"/>
+
+  <!-- Icon (checkmark) -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <polyline points="10,24 20,34 38,12" fill="none" stroke="#48bb78" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Title -->
+  <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="44" font-weight="700" fill="white">Testing a Machine-Readable Resume</text>
+  <text x="80" y="255" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="44" font-weight="700" fill="white">Against ATS Systems and AI Agents</text>
+
+  <!-- Tags -->
+  <rect x="80" y="420" width="82" height="30" rx="15" fill="#48bb78" opacity="0.3"/>
+  <text x="94" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#48bb78">resume</text>
+  <rect x="174" y="420" width="80" height="30" rx="15" fill="#48bb78" opacity="0.3"/>
+  <text x="188" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#48bb78">json-ld</text>
+  <rect x="266" y="420" width="52" height="30" rx="15" fill="#48bb78" opacity="0.3"/>
+  <text x="278" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#48bb78">ats</text>
+  <rect x="330" y="420" width="38" height="30" rx="15" fill="#48bb78" opacity="0.3"/>
+  <text x="340" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#48bb78">ai</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#48bb78" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-07-28</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

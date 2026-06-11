@@ -123,7 +123,7 @@ Last updated: 2026-06-11
 |--------|-----------------|--------|
 | Jul 14 | Jekyll Run: Multi-Root Workspace Bug | **Promoted ✅** |
 | Jul 21 | AI-Generated HTML Reports (Jekyll/GitHub Pages) | **Promoted ✅** |
-| Jul 28 | Claude Code Setup Guide | 10 min |
+| Jul 28 | Resume: ATS & AI Agent Validation | **Promoted ✅** |
 
 ---
 
@@ -142,10 +142,10 @@ Last updated: 2026-06-11
 
 | Monday | Proposed Article | Effort |
 |--------|-----------------|--------|
-| Aug 4 | MCP vs CLI vs API Access Patterns | 15 min |
-| Aug 11 | StarVoyager: Legacy SDL to Cross-Platform | 25 min |
-| Aug 18 | Godot Tower Defense Game | 30 min |
-| Aug 25 | Photosynth: Open Source Alternatives | 20 min |
+| Aug 4 | Claude Code Setup Guide | 10 min |
+| Aug 11 | MCP vs CLI vs API Access Patterns | 15 min |
+| Aug 18 | StarVoyager: Legacy SDL to Cross-Platform | 25 min |
+| Aug 25 | Godot Tower Defense Game | 30 min |
 
 ---
 

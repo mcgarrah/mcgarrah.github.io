@@ -6,14 +6,13 @@ categories: [web-development, technical]
 tags: [resume, structured-data, json-ld, seo, ats, schema-org, ai]
 excerpt: "I built a machine-readable resume view with JSON-LD and semantic HTML. Now I need to verify it actually works — against Google's validators, ATS resume parsers, and AI agents that recruiters are starting to use."
 description: "How to validate a machine-readable resume with JSON-LD structured data against Google Rich Results Test, Schema.org validators, ATS resume parsers (Jobscan, Resume Worded), and AI agents. Includes testing methodology and results."
-date: 2026-06-01
-last_modified_at: 2026-06-01
-published: true
+date: 2026-07-28
+last_modified_at: 2026-07-28
 mermaid: true
 seo:
   type: BlogPosting
-  date_published: 2026-06-01
-  date_modified: 2026-06-01
+  date_published: 2026-07-28
+  date_modified: 2026-07-28
 ---
 
 Building a [machine-readable resume view](/resume-site-ground-up-rebuild/) with JSON-LD and semantic HTML is the easy part. Validating that it actually works — that Google indexes the structured data, that ATS systems can parse the PDF exports, and that AI agents extract accurate information from the semantic markup — requires testing against real systems with different parsing pipelines.
@@ -147,9 +146,7 @@ AI recruiting agents are emerging rapidly. Tools like HireVue, Eightfold, and Be
 
 The JSON-LD in the machine view serves dual purpose: Google structured data for SEO, and grounding context for AI agents. A recruiter's AI assistant that can accurately extract "5 years of EKS experience across 20+ clusters" from structured data will surface that candidate over one whose resume requires PDF text extraction and NLP inference.
 
-## Results and Next Steps
-
-*[This section will be populated after running the validation tests]*
+## Results
 
 ### Export Inventory
 
@@ -194,20 +191,21 @@ All three validators show clean results:
 
 ### AI Agent Extraction (Machine View)
 
-*Not yet completed — requires feeding the URL to each agent and evaluating output.*
+I fed each major AI system the same prompt against the machine view URL:
 
-- Claude: feed `/resume/machine/` URL, extract all jobs/dates/skills, verify completeness
-- ChatGPT: same extraction test
-- Gemini: same extraction test
-- Compare: which agent extracts the most accurate structured data?
+> "Please parse my resume at https://mcgarrah.org/resume/machine/ and extract the useful ATS information with a summary."
+
+**Claude (Anthropic):** Took several minutes ("A bit longer, thanks for your patience..." appeared), but produced the most comprehensive summary. It found the most positions and correctly distinguished between full-time primary roles and part-time/concurrent/advisory roles — a nuance the others missed.
+
+**ChatGPT (OpenAI):** Good parse, but clipped the results to the last 10 years as a typical ATS would. Produced a solid candidate summary. Took the longest to respond but did the best job of framing my candidacy in context.
+
+**Gemini (Google):** Returned results almost immediately. Least aware of career history older than 10 years and over-focused on the current role at Envestnet.
+
+**Verdict:** Claude produced the best structured extraction by far. ChatGPT and Gemini performed adequately, with ChatGPT slightly ahead in synthesizing a candidate narrative. All three successfully parsed the JSON-LD and semantic markup — the machine view works as intended.
 
 ### Cross-Format Consistency
 
-*Not yet completed — requires cross-referencing all export formats.*
-
-- Verify all exports contain the same job count, date ranges, and credential list
-- Confirm anchor links in ultra-brief PDF resolve to correct `/resume/print/#anchor` targets
-- Verify DOCX preserves section headings that ATS systems use for classification
+The exports are intentionally different — each optimized for a specific audience and level of detail. The brief PDF targets ATS keyword matching, the ultra-brief targets job boards with length constraints, and the machine view targets AI agents and Google. What must remain consistent across all formats: position titles, company names, date ranges, and credential details. The `#anchor` links in the brief exports that point back to the full resume view also need validation to ensure they resolve correctly after content updates.
 
 ## The Broader Point
 
