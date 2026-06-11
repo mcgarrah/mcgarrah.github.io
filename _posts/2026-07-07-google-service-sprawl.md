@@ -4,14 +4,14 @@ image: /assets/images/og/google-service-sprawl.png
 layout: post
 categories: [web-development, technical]
 tags: [google, web-development, analytics, search, adsense, seo, frustration]
-date: 2026-06-26
-last_modified_at: 2026-06-26
+date: 2026-07-07
+last_modified_at: 2026-07-07
 excerpt: "Running a technical blog has turned into a maze of Google services, each with its own setup complexity, approval processes, and interconnected dependencies. What started as a simple Jekyll website has become an exercise in Google service integration frustration — and I'm still fighting."
 description: "An honest look at the overhead of integrating Google Analytics, Search Console, Custom Search, and AdSense into a Jekyll blog. The complexity tax is real, the approval process is opaque, and the battle continues."
 seo:
   type: BlogPosting
-  date_published: 2026-06-26
-  date_modified: 2026-06-26
+  date_published: 2026-07-07
+  date_modified: 2026-07-07
 ---
 
 Vendor service sprawl is a real operational cost, and Google is a case study in how "free" services accumulate complexity. Running a technical blog now requires integrating Analytics, Search Console, Custom Search, and AdSense — each with its own dashboard, approval process, privacy implications, and integration quirks. What should be a solved problem for a static site has become a multi-month project with opaque feedback loops and interconnected dependencies that don't always play nicely together.

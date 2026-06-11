@@ -6,14 +6,14 @@ categories: [technical, ai]
 tags: [machine-learning, data-science, research, software-engineering, platform-engineering, leadership]
 excerpt: "Software development succeeds 4 out of 5 times. Data science succeeds 1 out of 5. That difference is not a quality problem — it is a fundamental difference in the nature of the work. DS follows the academic research model: hypothesis, experiment, documented failure, iterate."
 description: "Why data science organizations fail when managed like software development teams, and how the academic research model — with its emphasis on documented failure, reproducibility, and iterative hypothesis testing — provides the correct operational framework for ML initiatives."
-date: 2026-06-13
-last_modified_at: 2026-06-13
+date: 2026-06-23
+last_modified_at: 2026-06-23
 published: true
 mermaid: true
 seo:
   type: BlogPosting
-  date_published: 2026-06-13
-  date_modified: 2026-06-13
+  date_published: 2026-06-23
+  date_modified: 2026-06-23
 ---
 
 In my previous article on [Five Stages of a Cloud Data Science Platform](/five-stages-cloud-data-science-platform/), I addressed the infrastructure question: how do you give data scientists production data access without compromising your security posture? That article solved the platform architecture problem. This one addresses the operational model problem that sits on top of it.

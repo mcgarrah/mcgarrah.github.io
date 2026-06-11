@@ -97,12 +97,12 @@ Last updated: 2026-06-11
 | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
 |-----|-----|-----|-----|-----|-----|-----|
 | **1** ✅ [Managing AI Context](/managing-cross-ai-agent-context/) | 2 | **3** ✅ [ZFS Boot Mirrors Pt 3](/proxmox-zfs-boot-mirrors-part-3/) | 4 | 5 | 6 | 7 |
-| **8** ✅ [Draft Preview Pt 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** ✅ [Domain Migration Pt 2](/name-service-registrars-part-2/) | 11 | **12** 📅 [Draft Preview Pt 2](/jekyll-draft-preview-site-part-2/) | **13** 📅 [Research Model DS](/research-model-for-data-science/) | 14 |
-| 15 | 16 | **17** 📅 [Draft Preview Pt 3](/jekyll-draft-preview-site-part-3/) | 18 | 19 | 20 | 21 |
-| 22 | 23 | 24 | 25 | **26** 📅 [Google Service Sprawl](/google-service-sprawl/) | 27 | 28 |
-| **30** 🔲 *Open — first Monday slot* | | | | | | |
+| **8** ✅ [Draft Preview Pt 1](/jekyll-draft-preview-site-part-1/) | 9 | **10** ✅ [Domain Migration Pt 2](/name-service-registrars-part-2/) | 11 | 12 | 13 | 14 |
+| **16** 📅 [Draft Preview Pt 2](/jekyll-draft-preview-site-part-2/) | 17 | 18 | 19 | 20 | 21 | 22 |
+| **23** 📅 [Research Model DS](/research-model-for-data-science/) | 24 | 25 | 26 | 27 | 28 | 29 |
+| **30** 📅 [Draft Preview Pt 3](/jekyll-draft-preview-site-part-3/) | | | | | | |
 
-**Summary:** 4 published + 4 scheduled (through Jun 26). Transition to weekly Monday cadence. Jun 30 is the first Monday-only slot.
+**Summary:** 4 published + 3 scheduled (Mon Jun 16, 23, 30). Weekly Monday cadence established.
 
 ---
 
@@ -110,21 +110,20 @@ Last updated: 2026-06-11
 
 | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
 |-----|-----|-----|-----|-----|-----|-----|
-| **7** 🔲 | 8 | 9 | 10 | 11 | 12 | 13 |
+| **7** 📅 [Google Service Sprawl](/google-service-sprawl/) | 8 | 9 | 10 | 11 | 12 | 13 |
 | **14** 🔲 | 15 | 16 | 17 | 18 | 19 | 20 |
 | **21** 🔲 | 22 | 23 | 24 | 25 | 26 | 27 |
 | **28** 🔲 | 29 | 30 | 31 | | | |
 
-**Available slots:** 4 Mondays (Jul 7, 14, 21, 28)
+**Available slots:** 3 open Mondays (Jul 14, 21, 28) + 1 scheduled (Jul 7)
 
 **Proposed (near-ready drafts, ranked by effort):**
 
 | Monday | Proposed Article | Effort |
 |--------|-----------------|--------|
-| Jul 7 | Claude Code Setup Guide | 10 min |
-| Jul 14 | MCP vs CLI vs API Access Patterns | 15 min |
-| Jul 21 | AI-Generated HTML Reports (Jekyll/GitHub Pages) | 15 min |
-| Jul 28 | StarVoyager: Legacy SDL to Cross-Platform | 25 min |
+| Jul 14 | Claude Code Setup Guide | 10 min |
+| Jul 21 | MCP vs CLI vs API Access Patterns | 15 min |
+| Jul 28 | AI-Generated HTML Reports (Jekyll/GitHub Pages) | 15 min |
 
 ---
 
@@ -143,10 +142,10 @@ Last updated: 2026-06-11
 
 | Monday | Proposed Article | Effort |
 |--------|-----------------|--------|
-| Aug 4 | Godot Tower Defense Game | 30 min |
-| Aug 11 | Photosynth: Open Source Alternatives | 20 min |
-| Aug 18 | Domain Migration Part 3 (final transfer + Porkbun services) | 2-3 hrs |
-| Aug 25 | Git History Bloat Cleanup (Part 1) | 25 min |
+| Aug 4 | StarVoyager: Legacy SDL to Cross-Platform | 25 min |
+| Aug 11 | Godot Tower Defense Game | 30 min |
+| Aug 18 | Photosynth: Open Source Alternatives | 20 min |
+| Aug 25 | Domain Migration Part 3 (final transfer + Porkbun services) | 2-3 hrs |
 
 ---
 
@@ -166,11 +165,11 @@ Last updated: 2026-06-11
 
 | Monday | Proposed Article | Effort |
 |--------|-----------------|--------|
-| Sep 1 | Git Repo Audit Methodology (Part 2) | 25 min |
-| Sep 8 | PowerDNS LXC + Proxmox SDN | 30 min |
-| Sep 15 | OpenWRT LXC Native Implementation | 35 min |
-| Sep 22 | Jekyll Run: Multi-Root Workspace Bug | 10 min |
-| Sep 29 | Forking Jekyll Run to Run Jekyll | 15 min |
+| Sep 1 | Git History Bloat Cleanup (Part 1) | 25 min |
+| Sep 8 | Git Repo Audit Methodology (Part 2) | 25 min |
+| Sep 15 | PowerDNS LXC + Proxmox SDN | 30 min |
+| Sep 22 | OpenWRT LXC Native Implementation | 35 min |
+| Sep 29 | Jekyll Run: Multi-Root Workspace Bug | 10 min |
 
 ---
 
@@ -226,14 +225,14 @@ Last updated: 2026-06-11
 | March | 1 | — | — | — | 1 |
 | April | 25 | — | — | — | 25 |
 | May | 27 | — | — | — | 27 |
-| June | 4 | 4 | — | 1 | 9 |
-| July | — | — | 4 | — | 4 |
+| June | 4 | 3 | — | — | 7 |
+| July | — | 1 | 3 | — | 4 |
 | August | — | — | 4 | — | 4 |
 | September | — | — | 5 | — | 5 |
 | October | — | — | — | 4 | 4 |
 | November | — | — | — | 4 | 4 |
 | December | — | — | — | 5 | 5 |
-| **Total** | **62** | **4** | **13** | **14** | **93** |
+| **Total** | **62** | **4** | **12** | **13** | **91** |
 
 ### Cadence Change Notes
 
