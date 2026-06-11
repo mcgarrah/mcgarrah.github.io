@@ -1,7 +1,7 @@
 ---
-title: "Email Forwarding for 16 Domains: Evaluating Forward Email After Porkbun Migration"
+title: "Migrating 16 Domains from SquareSpace to Porkbun — Part 3: The Final Transfer and Porkbun Services"
 layout: post
-date: 2026-02-07
+date: 2026-07-15
 categories: [technical, homelab, email]
 tags: [porkbun, forward-email, mailgun, email-forwarding, dns, mx-records]
 excerpt: "After migrating 16 domains from SquareSpace to Porkbun, evaluating email forwarding options. Comparing Porkbun's built-in service, Mailgun (current), and Forward Email for cost-effective, privacy-focused email routing."
