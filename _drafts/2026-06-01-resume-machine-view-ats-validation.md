@@ -45,8 +45,6 @@ The primary validator for JSON-LD structured data intended for Google Search.
 - **Input**: `https://mcgarrah.org/resume/machine/`
 - **What it validates**: JSON-LD syntax, Schema.org type correctness, required properties for rich result eligibility
 
-![Google Rich Results Test showing structured data validation for the machine-readable resume view](/assets/images/resume-ats-validation-001.png)
-
 My initial submission flagged `ScholarlyArticle` warnings in the publications section — the type requires `headline` and `image` properties that I hadn't included. After adding `<meta itemprop="headline">` and `<meta itemprop="image">` tags, the warnings resolved.
 
 **Key learning**: Google's validator is strict about properties it considers "recommended" for types that are eligible for rich results. Schema.org itself is more permissive — a property can be valid Schema.org but still produce a Google warning if Google has specific expectations for that type.
@@ -57,8 +55,6 @@ My initial submission flagged `ScholarlyArticle` warnings in the publications se
 - **Input**: paste URL or raw HTML
 - **What it validates**: Schema.org vocabulary correctness, nesting, property value types
 
-![Schema.org Markup Validator results for the machine-readable resume](/assets/images/resume-ats-validation-002.png)
-
 More permissive than Google's tool because it validates against the full Schema.org specification, not just the subset Google supports for rich results. Useful for catching structural errors that Google's tool might not flag.
 
 ### Google Search Console
@@ -67,8 +63,6 @@ After the page is live and indexed:
 - Check **Enhancements** → **Unparsable structured data** for any indexing failures
 - Check **Performance** → filter by page to see if rich results are appearing
 - Monitor over time — structured data issues can appear days after indexing
-
-![Google Search Console showing structured data indexing status](/assets/images/resume-ats-validation-003.png)
 
 ## Validation Layer 2: ATS Resume Parsers
 
@@ -171,29 +165,49 @@ Each export serves a different use case and needs independent validation:
 | Machine View (HTML) | `/resume/machine/` | Google, AI agents, recruiters | — | ✅ Primary |
 
 ### Structured Data Validation
-- [ ] Google Rich Results Test: `/resume/machine/` — re-validate after 2026-05-09 content update
-- [ ] Schema Markup Validator: `/resume/machine/`
-- [ ] Google Search Console: verify indexing and rich results appearing
+
+All three validators show clean results:
+
+**Google Rich Results Test** — `/resume/machine/` validates correctly after the 2026-05-09 content update.
+
+![Google Rich Results Test — structured data validates correctly](/assets/images/resume-ats-validation-001.png)
+
+**Schema.org Markup Validator** — vocabulary and nesting confirmed for `/resume/machine/`.
+
+![Schema.org Markup Validator — vocabulary and nesting confirmed](/assets/images/resume-ats-validation-002.png)
+
+**Google Search Console** — structured data indexed without errors, rich results appearing.
+
+![Google Search Console — structured data indexed without errors](/assets/images/resume-ats-validation-003.png)
 
 ### ATS Parse Testing (PDF/DOCX uploads)
-- [ ] Brief PDF → Jobscan (3 target job descriptions)
-- [ ] Brief PDF → Resume Worded structural analysis
-- [ ] Brief PDF → direct Greenhouse upload: verify parsed fields
-- [ ] Brief PDF → direct Workday upload: verify parsed fields
-- [ ] Ultra-Brief PDF → Jobscan (same 3 job descriptions — compare scores)
-- [ ] DOCX → Jobscan (same 3 job descriptions — compare to PDF scores)
-- [ ] DOCX → direct Lever upload: verify parsed fields
+
+*Not yet completed — requires hands-on testing with real ATS portals.*
+
+- Brief PDF → Jobscan (3 target job descriptions)
+- Brief PDF → Resume Worded structural analysis
+- Brief PDF → direct Greenhouse upload: verify parsed fields
+- Brief PDF → direct Workday upload: verify parsed fields
+- Ultra-Brief PDF → Jobscan (same 3 job descriptions — compare scores)
+- DOCX → Jobscan (same 3 job descriptions — compare to PDF scores)
+- DOCX → direct Lever upload: verify parsed fields
 
 ### AI Agent Extraction (Machine View)
-- [ ] Claude: feed `/resume/machine/` URL, extract all jobs/dates/skills, verify completeness
-- [ ] ChatGPT: same extraction test
-- [ ] Gemini: same extraction test
-- [ ] Compare: which agent extracts the most accurate structured data?
+
+*Not yet completed — requires feeding the URL to each agent and evaluating output.*
+
+- Claude: feed `/resume/machine/` URL, extract all jobs/dates/skills, verify completeness
+- ChatGPT: same extraction test
+- Gemini: same extraction test
+- Compare: which agent extracts the most accurate structured data?
 
 ### Cross-Format Consistency
-- [ ] Verify all exports contain the same job count, date ranges, and credential list
-- [ ] Confirm anchor links in ultra-brief PDF resolve to correct `/resume/print/#anchor` targets
-- [ ] Verify DOCX preserves section headings that ATS systems use for classification
+
+*Not yet completed — requires cross-referencing all export formats.*
+
+- Verify all exports contain the same job count, date ranges, and credential list
+- Confirm anchor links in ultra-brief PDF resolve to correct `/resume/print/#anchor` targets
+- Verify DOCX preserves section headings that ATS systems use for classification
 
 ## The Broader Point
 
