@@ -179,7 +179,15 @@ All three validators show clean results:
 
 ### ATS Parse Testing (PDF/DOCX uploads)
 
-This would be a valuable next step — uploading the brief PDF and DOCX exports to tools like Jobscan, Resume Worded, and real ATS portals (Greenhouse, Workday, Lever) to verify parse fidelity. I plan to submit to a couple of companies that have resume import mechanisms and observe how the parsed output compares to what I intended. Results will be updated here once I have real submissions to report on.
+This would be a valuable next step — uploading the brief PDF and DOCX exports to ATS simulation tools to verify parse fidelity. I plan to submit to a couple of companies that have resume import mechanisms and observe how the parsed output compares to what I intended. Results will be updated here once I have real submissions to report on.
+
+**Free ATS testing tools (no job application required):**
+
+- [Jobscan](https://www.jobscan.co/resume-score) — Upload PDF + paste job description, get ATS match score and keyword analysis (5 free scans/month)
+- [Resume Worded](https://resumeworded.com/score) — Upload PDF, get structural analysis and ATS score
+- [Past the Bots](https://pastthebots.com/) — Shows exactly what ATS parsers extract from your resume, simulates Workday/Greenhouse/Taleo/Lever/iCIMS parsing differences
+- [OwlApply ATS Scanner](https://owlapply.com/en/ai-tools/ats-resume-scanner) — Free, no signup, checks formatting and keyword coverage against ATS criteria
+- [Hireflow](https://www.hireflow.net/) — Upload and see how an ATS reads your file, no account required
 
 ### AI Agent Extraction (Machine View)
 
