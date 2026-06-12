@@ -179,7 +179,7 @@ All three validators show clean results:
 
 ### ATS Parse Testing (PDF/DOCX uploads)
 
-This would be a valuable next step — uploading the brief PDF and DOCX exports to tools like Jobscan, Resume Worded, and real ATS portals (Greenhouse, Workday, Lever) to verify parse fidelity. That testing is out of scope for this round but remains on the list for a future pass when I'm actively applying to positions and can observe real parsed output.
+This would be a valuable next step — uploading the brief PDF and DOCX exports to tools like Jobscan, Resume Worded, and real ATS portals (Greenhouse, Workday, Lever) to verify parse fidelity. I plan to submit to a couple of companies that have resume import mechanisms and observe how the parsed output compares to what I intended. Results will be updated here once I have real submissions to report on.
 
 ### AI Agent Extraction (Machine View)
 
