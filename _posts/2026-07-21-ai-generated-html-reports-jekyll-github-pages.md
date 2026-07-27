@@ -3,7 +3,7 @@ title: "AI-Generated HTML Reports on GitHub Pages: A Pattern for Lightweight Das
 image: /assets/images/og/ai-generated-html-reports-jekyll-github-pages.png
 layout: post
 categories: [technical, devtools, jekyll]
-tags: [ai agents, kiro, html, github pages, jekyll, dashboards, automation, static sites, reporting, mermaid]
+tags: [ai agents, kiro, html, github-pages, jekyll, dashboards, automation, static sites, reporting, mermaid]
 excerpt: "AI coding agents produce HTML instinctively — self-contained, zero-dependency, renders anywhere. Instead of letting those reports die in a chat window, publish them to a Jekyll site on GitHub Pages for stable URLs, version history, and instant sharing. Here's the pattern."
 description: "A pattern for using AI coding agents to generate self-contained HTML reports and dashboards, then publishing them to a Jekyll site on GitHub Pages for stable URLs, git-tracked history, and zero-infrastructure sharing. Covers the markdown-first content workflow, report design standards, GitHub Actions automation, and when to use HTML vs markdown posts."
 date: 2026-07-21

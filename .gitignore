@@ -8,7 +8,6 @@ _site/
 vendor/
 .bundle/
 Gemfile.lock
-bin/
 *.gem
 
 # Python virtual environment
