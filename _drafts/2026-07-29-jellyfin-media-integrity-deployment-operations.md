@@ -18,7 +18,7 @@ The plugin is built — scanner core, SQLite persistence, REST API, admin dashbo
 
 <!-- excerpt-end -->
 
-> **Implementation status:** The deployment procedures, CI/CD workflows, and monitoring configurations in this article are partially operational. The GitHub Actions build and release pipelines are live and working. The Proxmox LXC provisioning, CephFS tuning, and monitoring scripts are planned for the milestone following core scanner implementation.
+> **Implementation status (updated July 31, 2026):** The build pipeline, release pipeline, and Proxmox LXC provisioning are all live and operational — the LXC build/integration-test container (.NET 9 SDK, `jellyfin-ffmpeg`, test Jellyfin instance) is up and running. `MaxReadRateMbPerSec` and the quiet-hours settings shown in the CephFS/NFS tuning tables below are now actually enforced (they weren't for a while — see the [CephFS-Specific Configuration](#cephfs-specific-configuration) section for how). The CI/CD section below reflects the real, current workflows, including automated `manifest.json` version bumps on tagged releases and a unit test suite gating every build. CephFS OSD-level tuning and Prometheus/Grafana monitoring remain aspirational, as noted in the Roadmap.
 
 This is Part 5 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series.
 
@@ -136,6 +136,13 @@ CephFS distributed storage requires careful throttling to avoid impacting other 
 - **Quiet hours only** — Scanning happens when nobody is watching
 - **Single file at a time** — Prevents MDS metadata load spikes
 
+> **Update (July 31, 2026) — how the read-rate cap and quiet hours actually work:** For a while, `MaxReadRateMbPerSec` and the quiet-hours settings were config fields that did nothing — a gap found during a later review. They're enforced now, but worth understanding the mechanism:
+>
+> - **`MaxReadRateMbPerSec` is an average-rate pacer, not a literal in-flight byte cap.** After each file scan, the plugin computes how long the file *should* have taken at the configured rate (`fileSizeMB ÷ maxReadRateMbPerSec`) and pads the wall-clock gap before the next file if the scan finished faster than that. This was a deliberate choice over piping the file through ffmpeg's stdin for precise byte-level control: stdin piping breaks seekability, and many MP4/MOV files store the `moov` atom at the end of the file — probing them over a non-seekable pipe produces a false `"moov atom not found"` failure, which is exactly the corruption signature this plugin exists to catch. The padding approach has zero risk to decode correctness and still bounds the long-run average throughput pulled from CephFS.
+> - **`UseQuietHoursOnly` gates every scan through `ScanEngine`**, the same choke point all scan paths (manual, event-driven, and scheduled) already go through — mirroring the existing playback-pause mechanism. If the toggle is on and the current time falls outside the window, the scan waits (polling every 5 minutes) rather than skipping outright, so a manual "scan now" from the dashboard still eventually runs instead of silently no-op'ing.
+>
+> The OS-level `lxc.cgroup2.io.max` limit from the [Resource Limits](#resource-limits) section above is still the harder guarantee — the plugin's pacing is a cooperative, application-level complement to it, not a replacement.
+
 ### Monitoring CephFS Impact
 
 Watch OSD utilization during scanning:
@@ -227,7 +234,9 @@ WantedBy=timers.target
 
 ## CI/CD Pipeline
 
-> **Build environment note:** A dedicated Proxmox LXC container is being provisioned as the .NET 9 build and integration test environment. It will include `jellyfin-ffmpeg`, a test Jellyfin instance, and sample media files for end-to-end validation. Until operational, CI uses GitHub-hosted Ubuntu runners.
+> **Build environment note (updated July 31, 2026):** The Proxmox LXC build/integration-test container is operational (.NET 9 SDK, `jellyfin-ffmpeg`, test Jellyfin instance, sample media). GitHub-hosted Ubuntu runners remain the primary CI path; the LXC is used for local/manual verification.
+>
+> **Update:** The workflows below are the real, current ones — including two things that were missing for a while: a wired-up unit test suite (`tests/Jellyfin.Plugin.MediaIntegrityScanner.Tests`, covering the quiet-hours/read-rate pacing logic from the [scanner core article](/jellyfin-media-integrity-scanner-core/#update-quiet-hours-and-read-rate-throttling)), and a real `scripts/update-manifest.py` wired into the release workflow (the script existed only as an unimplemented reference in this article before). Note that `dotnet build`/`dotnet publish` target the plugin's `.csproj` explicitly rather than the solution file — once the test project joined the `.sln`, publishing the whole solution would have bundled test binaries into the release artifact.
 
 ### GitHub Actions: Build & Test
 
@@ -237,38 +246,44 @@ name: Build Plugin
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
     branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v7
 
       - name: Setup .NET 9
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '9.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore --verbosity normal
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore --verbosity normal
 
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
 
       - name: Publish
-        run: dotnet publish --configuration Release --output ./artifacts
+        run: dotnet publish Jellyfin.Plugin.MediaIntegrityScanner/Jellyfin.Plugin.MediaIntegrityScanner.csproj --configuration Release --output ./artifacts --no-build
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: List artifacts
+        run: ls -la ./artifacts/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
         with:
           name: media-integrity-scanner
           path: ./artifacts/
+          retention-days: 30
 ```
 
 ### GitHub Actions: Release
@@ -284,38 +299,47 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v7
 
       - name: Setup .NET 9
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '9.0.x'
 
+      - name: Restore dependencies
+        run: dotnet restore Jellyfin.Plugin.MediaIntegrityScanner/Jellyfin.Plugin.MediaIntegrityScanner.csproj
+
       - name: Build Release
-        run: dotnet publish --configuration Release --output ./publish
+        run: dotnet publish Jellyfin.Plugin.MediaIntegrityScanner/Jellyfin.Plugin.MediaIntegrityScanner.csproj --configuration Release --output ./publish
 
       - name: Package
         run: |
           cd publish
-          zip -r ../media-integrity-scanner.zip .
+          zip -r ../media-integrity-scanner-${{ github.ref_name }}.zip .
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
-          files: media-integrity-scanner.zip
+          files: media-integrity-scanner-${{ github.ref_name }}.zip
           generate_release_notes: true
 
       - name: Update manifest.json
         run: |
-          # Update version and download URL in manifest
-          python3 scripts/update-manifest.py ${{ github.ref_name }}
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          python3 scripts/update-manifest.py "${{ github.ref_name }}" "media-integrity-scanner-${{ github.ref_name }}.zip"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add manifest.json
-          git commit -m "Release ${{ github.ref_name }}"
+          git commit -m "chore: update manifest.json for ${{ github.ref_name }}"
+          # Assumes the tag was created from the current tip of main.
           git push origin HEAD:main
 ```
+
+`scripts/update-manifest.py` normalizes the git tag (`v0.2.0` → `0.2.0.0`), computes the MD5 checksum of the release zip (the convention Jellyfin plugin manifests use), derives `targetAbi` from the `Jellyfin.Controller` package reference in the `.csproj`, and prepends a new version entry to `manifest.json` — replacing any existing entry for the same version, so re-running for the same tag is idempotent.
 
 ## Operational Runbook
 

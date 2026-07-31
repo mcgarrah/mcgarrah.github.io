@@ -18,7 +18,7 @@ The [architecture article](/jellyfin-media-integrity-architecture-design/) laid 
 
 <!-- excerpt-end -->
 
-> **Implementation status:** The code in this article represents the target implementation for the scanner core. The [v0.1.0 release](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/releases/tag/v0.1.0) contains the plugin scaffold (interfaces, models, and project structure) but not yet the full implementations shown here. These are being built in the next development milestone.
+> **Implementation status (updated July 31, 2026):** The scanner core described in this article is fully implemented and shipping — plugin scaffold, FFmpeg wrapper, resolver, and scan engine are all real, not target code. A few things changed from the original design as bugs and gaps surfaced during hardening: the FFmpeg process wrapper now drains stdout/stderr concurrently with process exit (to avoid an OS pipe-buffer deadlock on large stderr output) and kills the process tree on cancellation instead of leaving orphaned ffmpeg processes; `IsScanning` is tracked with `Interlocked` counters rather than a semaphore-count comparison; and the scan engine gained two pacing mechanisms not shown in the original code below — a quiet-hours window check and a post-scan read-rate throttle. See the [Scan Pacing update](#update-quiet-hours-and-read-rate-throttling) at the end of this article for details.
 
 This is Part 3 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series.
 
@@ -26,7 +26,7 @@ This is Part 3 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integri
 
 Following the [jellyfin-plugin-template](https://github.com/jellyfin/jellyfin-plugin-template) pattern:
 
-> **Build environment note:** The .NET 9 SDK build environment is being provisioned as a dedicated Proxmox LXC container with `jellyfin-ffmpeg` installed for integration testing. Until that's operational, project structure validation runs via GitHub Actions on hosted runners.
+> **Build environment note (updated July 31, 2026):** The dedicated Proxmox LXC build/integration-test container is now operational (.NET 9 SDK, `jellyfin-ffmpeg`, and a test Jellyfin instance), alongside GitHub Actions CI.
 
 ```
 jellyfin-plugin-media-integrity-scanner/
@@ -511,6 +511,29 @@ public class HeaderScanTask : IScheduledTask
     }
 }
 ```
+
+## Update: Quiet Hours and Read-Rate Throttling
+
+The [deployment article](/jellyfin-media-integrity-deployment-operations/) recommends specific `MaxReadRateMbPerSec` and `UseQuietHoursOnly`/`QuietHoursStart`/`QuietHoursEnd` values for CephFS and NFS backends. Those config fields existed from the start, but nothing actually enforced them — a gap caught during a later review pass. Two additions to `ScanEngine` close it:
+
+```csharp
+public static class ScanThrottle
+{
+    // Supports windows that wrap past midnight (e.g., 22:00-06:00).
+    // Fails open (returns true) if either bound can't be parsed.
+    public static bool IsWithinQuietHours(string? start, string? end, TimeSpan timeOfDay) { /* ... */ }
+
+    // Pads wall-clock time after a scan so the average MB/s for that
+    // file doesn't exceed the configured cap.
+    public static TimeSpan ComputeReadRateDelay(long fileSizeBytes, int maxReadRateMbPerSec, int actualDurationMs) { /* ... */ }
+}
+```
+
+`ScanItemAsync` checks `IsWithinQuietHours` before scanning (waiting in a loop if outside the window, same pattern as the existing playback-pause check), and calls `ComputeReadRateDelay` after each scan to pad the inter-file gap so the *average* rate for that file doesn't exceed the cap.
+
+The read-rate throttle is deliberately **not** a literal in-flight byte cap. An earlier design considered piping the file through ffmpeg's stdin (`pipe:0`) to get precise control over read bytes/sec, but that breaks seekability — and many MP4/MOV files store the `moov` atom at the end of the file, so probing them over a non-seekable pipe produces a false `"moov atom not found"` failure. That's exactly the corruption signature this plugin exists to detect, so a naive throttle could turn healthy files into false positives. Padding wall-clock time after the fact has zero risk to decode correctness, since ffmpeg still opens the file directly and reads at full speed — it only bounds the long-run average throughput the scanner pulls from storage, which is the actual concern behind the CephFS/NFS tuning guidance.
+
+Both functions are pure and dependency-free (no Jellyfin types), so they're covered by a small xUnit test project — see the [deployment article](/jellyfin-media-integrity-deployment-operations/) for the CI wiring.
 
 ## What's Next
 

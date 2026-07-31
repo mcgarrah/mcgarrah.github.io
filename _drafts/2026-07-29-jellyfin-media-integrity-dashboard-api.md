@@ -18,7 +18,7 @@ The [scanner core](/jellyfin-media-integrity-scanner-core/) handles the detectio
 
 <!-- excerpt-end -->
 
-> **Implementation status:** The REST API controller and dashboard code in this article represent the target implementation. The [v0.1.0 release](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/releases/tag/v0.1.0) includes a placeholder dashboard HTML but not yet the functional API controller or live data integration shown here.
+> **Implementation status (updated July 31, 2026):** The REST API controller and dashboard are fully implemented and shipping. Two accuracy bugs surfaced during a later review and were fixed — see the [Status Accuracy and Library Filtering update](#update-status-accuracy-and-library-filtering) at the end of this article: `GetStatus` originally reported `TotalFiles`/`PendingFiles` straight from the scan-results table (which never reflected the real library size, and double-counted items scanned in both phases), and `libraryId` on `GET /Results` was accepted but silently ignored.
 
 This is Part 4 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series.
 
@@ -480,6 +480,16 @@ curl -X POST http://localhost:8096/MediaIntegrity/Scan \
   -H "Content-Type: application/json" \
   -d '{"deepScan": false}'
 ```
+
+## Update: Status Accuracy and Library Filtering
+
+Two things in the original `GetStatus`/`GetResults` design didn't hold up once real libraries were scanned:
+
+**`TotalFiles`/`PendingFiles` were derived entirely from the `scan_results` table** — `COUNT(*)` over rows that are only ever written as Pass/Fail/Error (nothing ever inserts a "Pending" row), so `PendingFiles` was always `0`, and `TotalFiles` always equaled `ScannedFiles`, even on a freshly-installed library with thousands of files that hadn't been scanned yet. Worse, an item scanned in both phases (header + deep) produced two rows in `scan_results`, so `COUNT(*)` double-counted it.
+
+The fix: `GetStatisticsAsync` now dedupes by `item_id`, keeping only the highest-`scan_phase` (most authoritative) row per item via a `ROW_NUMBER() OVER (PARTITION BY item_id ...)` window query, and adds a distinct `ErroredFiles` bucket (previously errors counted toward the total but vanished from the pass/fail breakdown). The controller then derives the real `TotalFiles` from `ILibraryManager.GetItemList(...)` — the same query shape `ScanEngine` and the scheduled tasks already use — and computes `PendingFiles = TotalFiles - ScannedFiles`. The dashboard grew an "Errored" stat card to match.
+
+**`libraryId` on `GET /Results` was a no-op.** The API accepted the parameter, the XML doc even said "not yet implemented," and the SQL query never touched it. Fixed by resolving `libraryId` to the set of item IDs currently in that library (via the same `ILibraryManager` query, scoped with `ParentId`) in the controller, then passing that set down to a parameterized `item_id IN (...)` clause — keeping the database layer free of any dependency on Jellyfin's library structure.
 
 ## What's Next
 
