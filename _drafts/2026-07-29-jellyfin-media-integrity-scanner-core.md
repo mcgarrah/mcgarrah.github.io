@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, ffmpeg, dotnet, csharp, plugin-development, cr
 excerpt: "Implementing the scanner engine — FFmpeg process management, bounded task queues, cross-platform binary resolution, and the .NET 8 plugin structure that ties it all together."
 description: "Building the core scanning engine for the Jellyfin Media Integrity Scanner plugin. Covers .NET 8 plugin scaffolding, FFmpeg process wrapper, bounded concurrent task queue, cross-platform path resolution, and production-safe error handling. Part 3 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-07-29
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-07-29
+  date_modified: 2026-08-01
 ---
 
 The [architecture article](/jellyfin-media-integrity-architecture-design/) laid out the design decisions — two-phase scanning, I/O throttling, SQLite persistence, event-driven updates. This article implements the core: the plugin skeleton, FFmpeg integration, and the bounded scan engine.
@@ -534,6 +534,149 @@ public static class ScanThrottle
 The read-rate throttle is deliberately **not** a literal in-flight byte cap. An earlier design considered piping the file through ffmpeg's stdin (`pipe:0`) to get precise control over read bytes/sec, but that breaks seekability — and many MP4/MOV files store the `moov` atom at the end of the file, so probing them over a non-seekable pipe produces a false `"moov atom not found"` failure. That's exactly the corruption signature this plugin exists to detect, so a naive throttle could turn healthy files into false positives. Padding wall-clock time after the fact has zero risk to decode correctness, since ffmpeg still opens the file directly and reads at full speed — it only bounds the long-run average throughput the scanner pulls from storage, which is the actual concern behind the CephFS/NFS tuning guidance.
 
 Both functions are pure and dependency-free (no Jellyfin types), so they're covered by a small xUnit test project — see the [deployment article](/jellyfin-media-integrity-deployment-operations/) for the CI wiring.
+
+Stacking all of this on top of the original `ScanItemAsync` gives a longer gate pipeline than the code above suggests — concurrency slot, quiet hours, playback pause, the fixed inter-file delay, the scan itself, then the read-rate throttle:
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {
+  "primaryColor": "#17221f",
+  "primaryTextColor": "#e7ede9",
+  "primaryBorderColor": "#3e6e67",
+  "lineColor": "#7c93a3",
+  "secondaryColor": "#1d2b27",
+  "tertiaryColor": "#101a18",
+  "fontFamily": "monospace",
+  "fontSize": "14px"
+}}}%%
+flowchart TD
+    START(["ScanItemAsync called<br/>from any trigger"]):::pipe
+    SEM["wait for a free slot<br/>MaxConcurrentScans (1)"]:::act
+    QH{"UseQuietHoursOnly (false)<br/>and outside window?"}:::gate
+    WAITQH["poll every 5 min<br/>until inside 02:00&ndash;06:00"]:::wait
+    PP{"PauseDuringPlayback (true)<br/>and any session playing?"}:::gate
+    WAITPP["poll every 30 sec<br/>until playback ends"]:::wait
+    DELAY["fixed pause<br/>DelayBetweenFilesMs (5000)"]:::act
+    PHASE{"which phase?"}:::gate
+    HEADER["ffprobe<br/>Header check"]:::exec
+    DECODE["ffmpeg null-decode<br/>FullDecode check"]:::exec
+    THROTTLE["paced delay<br/>MaxReadRateMbPerSec (10)"]:::act
+    SAVE[("SaveResultAsync<br/>scan_results")]:::db
+    ERRSAVE[("SaveResultAsync<br/>Status: Error")]:::db
+    DONE(["slot released,<br/>IsScanning re-evaluated"]):::pipe
+    CANCELLED(["OperationCanceledException<br/>propagates, nothing saved"]):::stop
+
+    START --> SEM --> QH
+    QH -->|"yes"| WAITQH --> QH
+    QH -->|"no"| PP
+    PP -->|"yes"| WAITPP --> PP
+    PP -->|"no"| DELAY --> PHASE
+    PHASE -->|"Header"| HEADER
+    PHASE -->|"FullDecode"| DECODE
+    HEADER --> THROTTLE
+    DECODE --> THROTTLE
+    HEADER -.->|"exception,<br/>e.g. ffmpeg missing"| ERRSAVE
+    DECODE -.->|"exception"| ERRSAVE
+    THROTTLE --> SAVE --> DONE
+    ERRSAVE --> DONE
+
+    WAITQH -.->|"Cancel() called"| CANCELLED
+    WAITPP -.->|"Cancel() called"| CANCELLED
+    SEM -.->|"Cancel() called"| CANCELLED
+
+    classDef gate fill:#2a2013,stroke:#e3a857,color:#f4d9a8
+    classDef wait fill:#2a2013,stroke:#e3a857,color:#f4d9a8,stroke-dasharray: 3 3
+    classDef act fill:#16332c,stroke:#5fa88f,color:#cfefe2
+    classDef exec fill:#16332c,stroke:#5fa88f,color:#cfefe2,stroke-width:2px
+    classDef db fill:#17221f,stroke:#7c93a3,color:#e7ede9
+    classDef pipe fill:#101a18,stroke:#e3a857,color:#e3a857,stroke-width:2px
+    classDef stop fill:#331c1a,stroke:#d96c5d,color:#f3c8c2
+```
+
+Every file, whoever triggered its scan, walks this same path — a manually-triggered API scan and a scheduled sweep get no special treatment once they're queued.
+
+## Update: `MaxConcurrentScans` Wasn't Honored by Bulk Scans
+
+The `HeaderScanTask` loop shown above has a subtle bug: it's a plain `foreach` with a single `await` per iteration. `ScanEngine`'s internal `SemaphoreSlim` is sized to `MaxConcurrentScans`, but a sequential loop never asks it for more than one slot at a time — so setting `MaxConcurrentScans` above `1` had no effect on a scheduled or library-wide scan. It only mattered for manual single-item scans issued concurrently from the API, which almost nobody does.
+
+Fixed by switching both scheduled tasks and `ScanEngine.ScanLibraryAsync` to `Parallel.ForEachAsync` with `MaxDegreeOfParallelism` set to the configured value:
+
+```csharp
+var maxConcurrent = Math.Max(1, config?.MaxConcurrentScans ?? 1);
+await Parallel.ForEachAsync(
+    items,
+    new ParallelOptions { MaxDegreeOfParallelism = maxConcurrent, CancellationToken = cancellationToken },
+    async (item, ct) =>
+    {
+        if (!await _db.IsCurrentAsync(item.Id.ToString(), item.Path))
+        {
+            await _scanner.ScanItemAsync(item, ScanPhase.Header, ct);
+        }
+
+        var done = Interlocked.Increment(ref processed);
+        progress.Report((double)done / total * 100);
+    });
+```
+
+The semaphore inside `ScanEngine` isn't redundant with this — it's still what keeps a manual single-item scan and a bulk scan from together exceeding the configured limit. This change fixes the half the semaphore alone couldn't: the loop itself never asking for more than one slot. `Interlocked.Increment` replaces the plain `processed++`, since parallel iterations now complete out of order. Default behavior (`MaxConcurrentScans = 1`) is unchanged.
+
+## Update: The Skip Check Didn't Know About Scan Phase
+
+The `IsCurrentAsync(item.Id.ToString(), item.Path)` check in the loop above — "does this item already have a passing scan with an unchanged mtime" — has a bug that took a while to surface: it never looked at *which phase* produced that passing record. Since files are normally Header-scanned first (either on library add or via `HeaderScanTask`), once a file passes that quick check, `IsCurrentAsync` reports it "current" for **any** later request — including a `DeepScanTask` run asking for a full `FullDecode` pass — as long as the file's mtime hasn't changed.
+
+That's a real problem for `DeepScanTask` specifically: its entire purpose is catching mid-file corruption that a header check misses, but it would silently skip almost every file in the library on every scheduled run, forever, because they'd already "passed" at the Header level. The deep scan had likely never actually deep-scanned anything in a real deployment.
+
+Fixed by adding a `minPhase` parameter to `IsCurrentAsync`, requiring `scan_phase >= minPhase` in the underlying query, and passing the right phase at each of the three call sites — `(int)phase` in `ScanLibraryAsync`, `Header` in `HeaderScanTask`, `FullDecode` in `DeepScanTask`. See the [architecture article's incremental-scanning section](/jellyfin-media-integrity-architecture-design/#incremental-scanning-logic) for how this interacts with the schema design.
+
+Here's the failure mode laid out end to end, alongside the one path that was never affected by it — an `itemId`-scoped API call, which bypasses `IsCurrentAsync` entirely:
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {
+  "actorBkg": "#17221f",
+  "actorBorder": "#3e6e67",
+  "actorTextColor": "#e7ede9",
+  "actorLineColor": "#3e6e67",
+  "signalColor": "#a8b8bd",
+  "signalTextColor": "#e7ede9",
+  "labelBoxBkgColor": "#2a2013",
+  "labelBoxBorderColor": "#e3a857",
+  "labelTextColor": "#f4d9a8",
+  "loopTextColor": "#e7ede9",
+  "noteBkgColor": "#1d2b27",
+  "noteBorderColor": "#3e6e67",
+  "noteTextColor": "#e7ede9",
+  "activationBorderColor": "#5fa88f",
+  "activationBkgColor": "#16332c",
+  "sequenceNumberColor": "#101a18",
+  "fontFamily": "monospace",
+  "fontSize": "13px"
+}}}%%
+sequenceDiagram
+    participant SCH as Task Scheduler
+    participant DST as DeepScanTask
+    participant DB as scan_results
+    participant SE as ScanEngine
+    participant AD as Admin (dashboard)
+
+    SCH->>DST: Sunday 01:00 trigger
+    activate DST
+    DST->>DST: EnableDeepScan == true?
+    DST->>DB: IsCurrentAsync(item, minPhase=FullDecode)
+    Note over DB: file already has a passing<br/>Header (phase 1) record &mdash;<br/>phase 1 is less than FullDecode (phase 2)
+    DB-->>DST: false, not current at this phase
+    DST->>SE: ScanItemAsync(item, FullDecode)
+    SE->>DB: SaveResultAsync(Pass, FullDecode)
+    deactivate DST
+
+    Note over DB,SE: before the phase-aware fix, that check<br/>returned true for ANY passing record &mdash;<br/>this file would have been skipped forever
+
+    AD->>SE: POST /MediaIntegrity/Scan<br/>itemId + deepScan: true
+    activate SE
+    Note over SE: the itemId-scoped path calls<br/>ScanItemAsync directly &mdash;<br/>no currency check at all
+    SE->>DB: SaveResultAsync(Pass, FullDecode)
+    deactivate SE
+```
+
+If `EnableDeepScan` ever seemed to do nothing against a library that had already loaded in cleanly, this was why.
 
 ## What's Next
 

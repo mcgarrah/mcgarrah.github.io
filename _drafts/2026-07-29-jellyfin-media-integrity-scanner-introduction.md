@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, ffmpeg, proxmox, ceph, plugin-development, dot
 excerpt: "Media files rot silently. Bit-flip corruption, incomplete transfers, and storage failures leave your Jellyfin library with files that look fine in the UI but fail during playback. This is the first in a series on building a production-safe media integrity scanner for Jellyfin."
 description: "Introducing the Jellyfin Media Integrity Scanner plugin project — a production-safe tool for detecting corrupt, truncated, and damaged media files in your Jellyfin library without impacting playback performance. Part 1 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-07-29
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-07-29
+  date_modified: 2026-08-01
 ---
 
 Your Jellyfin library looks healthy. Every thumbnail loads. Every title appears in the right collection. But somewhere in those terabytes of media, files are silently broken — and you won't know until someone hits play and gets a black screen, audio glitch, or a crash halfway through a movie.
@@ -156,6 +156,12 @@ The project scaffold is complete and [published on GitHub](https://github.com/mc
 - ⬜ Integration testing with real media files
 
 The v0.1.0 release is installable in Jellyfin but not yet functional — it establishes the plugin structure, interfaces, and build pipeline. Implementation begins with the scan engine in the next development cycle.
+
+## Update: Implementation Complete
+
+Every item in the checklist above is now done: the scanner engine, SQLite persistence, REST API, admin dashboard, library event hooks, and a real Docker-based integration test suite alongside 113 unit tests. There's also a proper in-app settings page — configuration is no longer a hand-edited XML file, as the "Current Status" section above implied it might stay.
+
+Two real bugs turned up along the way, both only caught once the test suite started asserting on actual response data instead of just HTTP status: the dashboard was reading its JSON fields in the wrong casing (details in the [dashboard article](/jellyfin-media-integrity-dashboard-api/#update-the-dashboard-was-reading-the-wrong-json-casing)), and the deep-scan "already scanned, skip it" check didn't account for which scan phase had actually run (details in the [scanner core article](/jellyfin-media-integrity-scanner-core/#update-the-skip-check-didnt-know-about-scan-phase)). Both are fixed and covered by regression tests now.
 
 ## What's Next
 

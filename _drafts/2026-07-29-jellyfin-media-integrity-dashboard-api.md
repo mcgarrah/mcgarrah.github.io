@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, rest-api, dashboard, html, javascript, plugin-
 excerpt: "A scanner that runs in the background is only useful if you can see its results. This article implements the REST API controller and admin dashboard for the Jellyfin Media Integrity Scanner — turning raw scan data into actionable library health visibility."
 description: "Implementing the REST API and admin dashboard for the Jellyfin Media Integrity Scanner plugin. Covers the ASP.NET Core controller, scan result queries, manual scan triggers, and the HTML/JavaScript dashboard with library health overview. Part 4 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-07-29
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-07-29
+  date_modified: 2026-08-01
 ---
 
 The [scanner core](/jellyfin-media-integrity-scanner-core/) handles the detection work — finding corrupt files and recording results in SQLite. But a scanner that runs silently in the background is only half the solution. Admins need to see what's broken, when it was scanned, and have the ability to trigger scans on demand.
@@ -461,6 +461,60 @@ The dashboard is an embedded HTML page served through Jellyfin's plugin web page
 </html>
 ```
 
+That `setInterval(loadStatus, 10000)` at the bottom is doing more work than it looks like. A new file landing in a watched folder while someone's mid-episode doesn't show up as a quick blip — the scan sits waiting for playback to end before it ever touches ffmpeg, and the dashboard keeps polling `IsScanning` through the whole wait:
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {
+  "actorBkg": "#17221f",
+  "actorBorder": "#3e6e67",
+  "actorTextColor": "#e7ede9",
+  "actorLineColor": "#3e6e67",
+  "signalColor": "#a8b8bd",
+  "signalTextColor": "#e7ede9",
+  "labelBoxBkgColor": "#2a2013",
+  "labelBoxBorderColor": "#e3a857",
+  "labelTextColor": "#f4d9a8",
+  "loopTextColor": "#e7ede9",
+  "noteBkgColor": "#1d2b27",
+  "noteBorderColor": "#3e6e67",
+  "noteTextColor": "#e7ede9",
+  "activationBorderColor": "#5fa88f",
+  "activationBkgColor": "#16332c",
+  "sequenceNumberColor": "#101a18",
+  "fontFamily": "monospace",
+  "fontSize": "13px"
+}}}%%
+sequenceDiagram
+    participant JF as Jellyfin Core
+    participant LM as LibraryMonitor
+    participant SE as ScanEngine
+    participant SM as SessionManager
+    participant DB as scan_results
+
+    JF->>LM: ItemAdded (new episode copied in)
+    activate LM
+    LM->>LM: ScanOnItemAdded == true?
+    LM->>SE: ScanItemAsync(item, Header)
+    deactivate LM
+    activate SE
+    SE->>SE: acquire concurrency slot
+    SE->>SM: any session with NowPlayingItem?
+    SM-->>SE: yes, someone is watching
+    loop every 30 seconds
+        SE->>SM: still playing?
+        SM-->>SE: yes
+    end
+    Note over SE: playback ends
+    SM-->>SE: no
+    SE->>SE: apply DelayBetweenFilesMs
+    SE->>SE: ffprobe the file
+    SE->>DB: SaveResultAsync(Pass, Header)
+    deactivate SE
+    Note over DB: the dashboard's next<br/>GET /Status reflects the new file
+```
+
+None of that shows up as a distinct dashboard state — `IsScanning` is just `true` for however long the wait plus the actual scan takes, which is why the "Status" card can sit on "Scanning..." for a lot longer than the file itself would ever take to check.
+
 ## API Usage Examples
 
 ### Check library health from the command line
@@ -490,6 +544,20 @@ Two things in the original `GetStatus`/`GetResults` design didn't hold up once r
 The fix: `GetStatisticsAsync` now dedupes by `item_id`, keeping only the highest-`scan_phase` (most authoritative) row per item via a `ROW_NUMBER() OVER (PARTITION BY item_id ...)` window query, and adds a distinct `ErroredFiles` bucket (previously errors counted toward the total but vanished from the pass/fail breakdown). The controller then derives the real `TotalFiles` from `ILibraryManager.GetItemList(...)` — the same query shape `ScanEngine` and the scheduled tasks already use — and computes `PendingFiles = TotalFiles - ScannedFiles`. The dashboard grew an "Errored" stat card to match.
 
 **`libraryId` on `GET /Results` was a no-op.** The API accepted the parameter, the XML doc even said "not yet implemented," and the SQL query never touched it. Fixed by resolving `libraryId` to the set of item IDs currently in that library (via the same `ILibraryManager` query, scoped with `ParentId`) in the controller, then passing that set down to a parameterized `item_id IN (...)` clause — keeping the database layer free of any dependency on Jellyfin's library structure.
+
+## Update: A Real Settings Page
+
+Every field in `PluginConfiguration` — throttling, quiet hours, ffmpeg path overrides, the on-add/on-remove toggles — could originally only be changed by hand-editing the plugin's XML config file on disk. There was no in-app way to configure it at all, which meant Jellyfin's admin dashboard technically listed the plugin as "configurable" without actually offering a working configuration UI.
+
+Fixed with a second web page (`integrity_settings.html`), registered alongside the dashboard via a second `PluginPageInfo` entry in `GetPages()`. It's a straightforward form over all twelve config properties, using the same `ApiClient.getPluginConfiguration`/`updatePluginConfiguration` JS calls Jellyfin's own plugin pages use to load and save. One gotcha worth flagging: the settings page's JS has to address the plugin by its **dashless** GUID (`c8f4a3b21d5e4f6a9b7c2e8d0f1a3b5c`, no hyphens) — Jellyfin 10.11.11's `/Plugins/{id}/Configuration` routes 404 on the canonical hyphenated form. The dashboard and settings pages now cross-link to each other via `configurationpage?name=...`.
+
+## Update: The Dashboard Was Reading the Wrong JSON Casing
+
+This one is worth calling out plainly: **the dashboard likely never rendered real data in any live browser session.** Its JS reads `data.isScanning`, `data.totalFiles`, `item.filePath`, and so on — camelCase, which is the ASP.NET Core default for JSON responses. But Jellyfin's host doesn't apply that default to controller output; it serializes using the raw C# property names, so a real `/MediaIntegrity/Status` response looks like `{"IsScanning":false,"TotalFiles":1,...}` — PascalCase. Every field read in `loadStatus`, `renderResults`, and `renderPagination` was silently reading `undefined`.
+
+This surfaced only once an integration test piped a real response through `jq` and the PascalCase keys were staring back. Worth noting the asymmetry: incoming request bodies deserialize case-*insensitively* (the dashboard's own `triggerScan()` already sent `{ deepScan: deep }` and it correctly bound to `ScanRequest.DeepScan`), so only the outgoing side needed the fix. The settings page above was unaffected, since its JS was written by copying the C# `PluginConfiguration` property names directly — which happened to already be PascalCase.
+
+Every `data.`/`item.` field access in the dashboard is now PascalCase, verified against a real Jellyfin 10.11.11 instance end-to-end (trigger a scan, poll status, render results) rather than just by reading the diff.
 
 ## What's Next
 

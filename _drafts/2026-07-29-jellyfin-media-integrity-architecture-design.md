@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, architecture, sqlite, throttling, plugin-devel
 excerpt: "Plugin or script? How aggressive should scanning be? Where do results live? This article covers the key architecture decisions behind the Jellyfin Media Integrity Scanner — from two-phase scanning strategy to production-safe I/O throttling."
 description: "Architecture and design decisions for the Jellyfin Media Integrity Scanner plugin. Covers plugin vs. script tradeoffs, two-phase scanning strategy, SQLite schema design, I/O throttling model, and CephFS/NFS storage considerations. Part 2 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-07-29
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-07-29
+  date_modified: 2026-08-01
 ---
 
 The [first article](/jellyfin-media-integrity-scanner-introduction/) introduced the problem: media files rot silently, and Jellyfin doesn't validate stream integrity. This article covers the architectural decisions that shape the plugin's design — the tradeoffs, constraints, and reasoning behind each choice.
@@ -173,6 +173,8 @@ On each scheduled scan:
 
 This means only new or modified files get scanned on subsequent runs.
 
+> **Update:** step 3 as originally implemented didn't account for `scan_phase` — it skipped an item if *any* passing record existed with a matching mtime, regardless of whether that pass came from the quick Header check or the full Phase 2 decode. Since files are almost always Header-scanned first, this meant the Phase 2 deep scan would treat a Header-only pass as "current" and skip it forever. The fix requires the passing record's `scan_phase` to be at or above the phase being requested. See the [scanner core article](/jellyfin-media-integrity-scanner-core/#update-the-skip-check-didnt-know-about-scan-phase) for the full story.
+
 ## Decision 5: Event-Driven Library Monitoring
 
 Rather than relying solely on scheduled scans, the plugin hooks into Jellyfin's library events:
@@ -182,6 +184,65 @@ Rather than relying solely on scheduled scans, the plugin hooks into Jellyfin's 
 - **ItemRemoved** — File deleted → purge scan_results entry
 
 This keeps the database in sync with the actual library state and ensures new imports are validated promptly.
+
+> **Update:** `ItemUpdated` never actually got a handler — only `ItemAdded` and `ItemRemoved` are wired up in the shipped `LibraryMonitor`. A re-encoded file currently only gets re-scanned once its mtime no longer matches the stored record, via the incremental-scanning check above, not immediately on replacement.
+
+Library events are only two of six things that can put a file in front of the scanner. Scheduled tasks and the dashboard/API reach into the same engine, and all of them land in the same currency check before anything runs:
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {
+  "primaryColor": "#17221f",
+  "primaryTextColor": "#e7ede9",
+  "primaryBorderColor": "#3e6e67",
+  "lineColor": "#7c93a3",
+  "secondaryColor": "#1d2b27",
+  "tertiaryColor": "#101a18",
+  "fontFamily": "monospace",
+  "fontSize": "14px"
+}}}%%
+flowchart TD
+    IA["ItemAdded<br/>library event"]:::ev
+    IR["ItemRemoved<br/>library event"]:::ev
+    HS["HeaderScanTask<br/>daily, 03:00"]:::ev
+    DS["DeepScanTask<br/>Sunday, 01:00"]:::ev
+    API["POST /MediaIntegrity/Scan<br/>dashboard or API"]:::ev
+    CAN["POST /MediaIntegrity/Cancel<br/>dashboard or API"]:::ev
+
+    IA -->|"ScanOnItemAdded"| SIA1["ScanItemAsync<br/>Header · this file"]:::act
+    IR -->|"PurgeOnItemRemoved"| PURGE["PurgeItemAsync"]:::act
+
+    HS --> LOOP1{"IsCurrentAsync<br/>at Header?"}:::gate
+    DS -->|"only if EnableDeepScan"| LOOP2{"IsCurrentAsync<br/>at FullDecode?"}:::gate
+
+    LOOP1 -->|"current"| SKIP1["file untouched"]:::stop
+    LOOP1 -->|"stale"| SIA1
+    LOOP2 -->|"current"| SKIP2["file untouched"]:::stop
+    LOOP2 -->|"stale"| SIA2["ScanItemAsync<br/>FullDecode · this file"]:::act
+
+    API --> BUSY{"IsScanning?"}:::gate
+    BUSY -->|"yes &rarr; 409"| REJECT["request refused,<br/>nothing changes"]:::stop
+    BUSY -->|"no &rarr; 202"| SCOPE{"itemId given?"}:::gate
+    SCOPE -->|"yes &mdash; skips the<br/>currency check"| SIA3["ScanItemAsync<br/>forced phase · one file"]:::act
+    SCOPE -->|"no"| SLA["ScanLibraryAsync<br/>checks IsCurrentAsync per item"]:::act
+
+    CAN -.->|"cancellation token"| SIA1
+    CAN -.-> SIA2
+    CAN -.-> SIA3
+    CAN -.-> SLA
+
+    SIA1 --> GATES(["gate pipeline &mdash; see the<br/>scanner core article"]):::pipe
+    SIA2 --> GATES
+    SIA3 --> GATES
+    SLA --> GATES
+
+    classDef ev fill:#1d2b27,stroke:#3e6e67,color:#e7ede9
+    classDef gate fill:#2a2013,stroke:#e3a857,color:#f4d9a8
+    classDef act fill:#16332c,stroke:#5fa88f,color:#cfefe2
+    classDef stop fill:#331c1a,stroke:#d96c5d,color:#f3c8c2
+    classDef pipe fill:#101a18,stroke:#e3a857,color:#e3a857,stroke-width:2px
+```
+
+The one asymmetry worth keeping in mind: an `itemId`-scoped API call skips the currency check entirely — it's the only way to force a re-scan of a file the scheduled tasks would otherwise wave through as "already handled."
 
 ## Decision 6: Cross-Platform FFmpeg Resolution
 

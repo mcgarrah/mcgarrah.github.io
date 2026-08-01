@@ -7,18 +7,18 @@ tags: [jellyfin, media-integrity, proxmox, ceph, deployment, ci-cd, monitoring, 
 excerpt: "Getting the Media Integrity Scanner into production — installing in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring and alerting, and building the CI/CD pipeline for automated plugin releases."
 description: "Deploying and operating the Jellyfin Media Integrity Scanner plugin in a production homelab. Covers Proxmox LXC installation, CephFS/NFS storage configuration, monitoring with Prometheus/Grafana, alerting on failures, and GitHub Actions CI/CD for automated builds and releases. Part 5 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-07-29
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-07-29
+  date_modified: 2026-08-01
 ---
 
 The plugin is built — scanner core, SQLite persistence, REST API, admin dashboard. Now it needs to run reliably in production without causing problems. This article covers the deployment story: installing the plugin, configuring it for shared storage, monitoring its operation, and automating the release pipeline.
 
 <!-- excerpt-end -->
 
-> **Implementation status (updated July 31, 2026):** The build pipeline, release pipeline, and Proxmox LXC provisioning are all live and operational — the LXC build/integration-test container (.NET 9 SDK, `jellyfin-ffmpeg`, test Jellyfin instance) is up and running. `MaxReadRateMbPerSec` and the quiet-hours settings shown in the CephFS/NFS tuning tables below are now actually enforced (they weren't for a while — see the [CephFS-Specific Configuration](#cephfs-specific-configuration) section for how). The CI/CD section below reflects the real, current workflows, including automated `manifest.json` version bumps on tagged releases and a unit test suite gating every build. CephFS OSD-level tuning and Prometheus/Grafana monitoring remain aspirational, as noted in the Roadmap.
+> **Implementation status (updated August 1, 2026):** The build pipeline, release pipeline, and Proxmox LXC provisioning are all live and operational — the LXC build/integration-test container (.NET 9 SDK, `jellyfin-ffmpeg`, test Jellyfin instance) is up and running. `MaxReadRateMbPerSec` and the quiet-hours settings shown in the CephFS/NFS tuning tables below are now actually enforced (they weren't for a while — see the [CephFS-Specific Configuration](#cephfs-specific-configuration) section for how). The CI/CD section below reflects the real, current workflows, including automated `manifest.json` version bumps on tagged releases and a unit test suite (113 tests) plus a real Docker-based integration suite gating every build — see the [CI/CD Pipeline](#cicd-pipeline) section for what that testing found. There's also a real in-app settings page now (see the [dashboard article](/jellyfin-media-integrity-dashboard-api/#update-a-real-settings-page)) — the "Configure throttling settings" step in the [Operational Runbook](#operational-runbook) below no longer means hand-editing an XML file. CephFS OSD-level tuning and Prometheus/Grafana monitoring remain aspirational, as noted in the Roadmap.
 
 This is Part 5 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series.
 
@@ -237,6 +237,12 @@ WantedBy=timers.target
 > **Build environment note (updated July 31, 2026):** The Proxmox LXC build/integration-test container is operational (.NET 9 SDK, `jellyfin-ffmpeg`, test Jellyfin instance, sample media). GitHub-hosted Ubuntu runners remain the primary CI path; the LXC is used for local/manual verification.
 >
 > **Update:** The workflows below are the real, current ones — including two things that were missing for a while: a wired-up unit test suite (`tests/Jellyfin.Plugin.MediaIntegrityScanner.Tests`, covering the quiet-hours/read-rate pacing logic from the [scanner core article](/jellyfin-media-integrity-scanner-core/#update-quiet-hours-and-read-rate-throttling)), and a real `scripts/update-manifest.py` wired into the release workflow (the script existed only as an unimplemented reference in this article before). Note that `dotnet build`/`dotnet publish` target the plugin's `.csproj` explicitly rather than the solution file — once the test project joined the `.sln`, publishing the whole solution would have bundled test binaries into the release artifact.
+>
+> **Update (August 1, 2026) — the test suite grew a lot, and it found real bugs:** The unit test project grew from 20 tests to 113 across 8 files, covering the database layer, the ffmpeg process wrapper, the API controller, and `ScanEngine` itself with mocked dependencies. Separately, the Docker-based integration suite (`tests/run-integration-tests.sh` and `integration-test.yml`, kept in sync with each other) grew from a basic "plugin loads, config endpoint responds" smoke check into something that actually exercises the scanning pipeline: a settings-page configuration round-trip, both web pages being served, a full scan-and-verify flow (trigger → poll → assert results), item-detail lookups, an item-scoped deep scan, and the cancel endpoint.
+>
+> Two things surfaced along the way that are worth knowing about if you're troubleshooting a similar setup:
+> - **The "Verify FFmpeg is available in container" CI step was silently passing without checking anything**, for a long time. It ran `docker exec jellyfin-test ffmpeg -version | head -5` — since `jellyfin-ffmpeg` isn't symlinked onto `PATH` in the `jellyfin/jellyfin` image (it only lives at `/usr/lib/jellyfin-ffmpeg/ffmpeg`), that command actually fails, but piping into `head` without `pipefail` means the pipeline's reported exit code is `head`'s, not `ffmpeg`'s — so the step went green anyway. Fixed by checking the real path and adding `set -euo pipefail`, a good reminder that any `cmd | head`/`| tail` in CI is worth a second look for whether it's masking the thing you actually meant to check.
+> - **Writing that integration suite found two real, previously-undetected bugs in the plugin itself** — the dashboard was reading JSON field names in the wrong casing (see the [dashboard article](/jellyfin-media-integrity-dashboard-api/#update-the-dashboard-was-reading-the-wrong-json-casing)), and the deep-scan "skip if already scanned" check never looked at scan phase (see the [scanner core article](/jellyfin-media-integrity-scanner-core/#update-the-skip-check-didnt-know-about-scan-phase)). Both had shipped silently for a while; both were only caught because the integration tests started actually asserting on real response data instead of just HTTP status codes.
 
 ### GitHub Actions: Build & Test
 
