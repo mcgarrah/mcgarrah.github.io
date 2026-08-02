@@ -8,6 +8,7 @@ excerpt: "A scanner that runs in the background is only useful if you can see it
 description: "Implementing the REST API and admin dashboard for the Jellyfin Media Integrity Scanner plugin. Covers the ASP.NET Core controller, scan result queries, manual scan triggers, and the HTML/JavaScript dashboard with library health overview. Part 4 of a 6-part development series."
 date: 2026-08-12
 last_modified_at: 2026-08-12
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-08-12

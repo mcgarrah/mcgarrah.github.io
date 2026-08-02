@@ -8,6 +8,7 @@ excerpt: "Implementing the scanner engine — FFmpeg process management, bounded
 description: "Building the core scanning engine for the Jellyfin Media Integrity Scanner plugin. Covers .NET 8 plugin scaffolding, FFmpeg process wrapper, bounded concurrent task queue, cross-platform path resolution, and production-safe error handling. Part 3 of a 6-part development series."
 date: 2026-08-10
 last_modified_at: 2026-08-10
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-08-10
@@ -552,7 +553,7 @@ flowchart TD
     START(["ScanItemAsync called<br/>from any trigger"]):::pipe
     SEM["wait for a free slot<br/>MaxConcurrentScans (1)"]:::act
     QH{"UseQuietHoursOnly (false)<br/>and outside window?"}:::gate
-    WAITQH["poll every 5 min<br/>until inside 02:00&ndash;06:00"]:::wait
+    WAITQH["poll every 5 min<br/>until inside 02:00–06:00"]:::wait
     PP{"PauseDuringPlayback (true)<br/>and any session playing?"}:::gate
     WAITPP["poll every 30 sec<br/>until playback ends"]:::wait
     DELAY["fixed pause<br/>DelayBetweenFilesMs (5000)"]:::act
@@ -661,17 +662,17 @@ sequenceDiagram
     activate DST
     DST->>DST: EnableDeepScan == true?
     DST->>DB: IsCurrentAsync(item, minPhase=FullDecode)
-    Note over DB: file already has a passing<br/>Header (phase 1) record &mdash;<br/>phase 1 is less than FullDecode (phase 2)
+    Note over DB: file already has a passing<br/>Header (phase 1) record —<br/>phase 1 is less than FullDecode (phase 2)
     DB-->>DST: false, not current at this phase
     DST->>SE: ScanItemAsync(item, FullDecode)
     SE->>DB: SaveResultAsync(Pass, FullDecode)
     deactivate DST
 
-    Note over DB,SE: before the phase-aware fix, that check<br/>returned true for ANY passing record &mdash;<br/>this file would have been skipped forever
+    Note over DB,SE: before the phase-aware fix, that check<br/>returned true for ANY passing record —<br/>this file would have been skipped forever
 
     AD->>SE: POST /MediaIntegrity/Scan<br/>itemId + deepScan: true
     activate SE
-    Note over SE: the itemId-scoped path calls<br/>ScanItemAsync directly &mdash;<br/>no currency check at all
+    Note over SE: the itemId-scoped path calls<br/>ScanItemAsync directly —<br/>no currency check at all
     SE->>DB: SaveResultAsync(Pass, FullDecode)
     deactivate SE
 ```

@@ -8,6 +8,7 @@ excerpt: "Plugin or script? How aggressive should scanning be? Where do results 
 description: "Architecture and design decisions for the Jellyfin Media Integrity Scanner plugin. Covers plugin vs. script tradeoffs, two-phase scanning strategy, SQLite schema design, I/O throttling model, and CephFS/NFS storage considerations. Part 2 of a 6-part development series."
 date: 2026-08-05
 last_modified_at: 2026-08-05
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-08-05
@@ -220,9 +221,9 @@ flowchart TD
     LOOP2 -->|"stale"| SIA2["ScanItemAsync<br/>FullDecode · this file"]:::act
 
     API --> BUSY{"IsScanning?"}:::gate
-    BUSY -->|"yes &rarr; 409"| REJECT["request refused,<br/>nothing changes"]:::stop
-    BUSY -->|"no &rarr; 202"| SCOPE{"itemId given?"}:::gate
-    SCOPE -->|"yes &mdash; skips the<br/>currency check"| SIA3["ScanItemAsync<br/>forced phase · one file"]:::act
+    BUSY -->|"yes → 409"| REJECT["request refused,<br/>nothing changes"]:::stop
+    BUSY -->|"no → 202"| SCOPE{"itemId given?"}:::gate
+    SCOPE -->|"yes — skips the<br/>currency check"| SIA3["ScanItemAsync<br/>forced phase · one file"]:::act
     SCOPE -->|"no"| SLA["ScanLibraryAsync<br/>checks IsCurrentAsync per item"]:::act
 
     CAN -.->|"cancellation token"| SIA1
@@ -230,7 +231,7 @@ flowchart TD
     CAN -.-> SIA3
     CAN -.-> SLA
 
-    SIA1 --> GATES(["gate pipeline &mdash; see the<br/>scanner core article"]):::pipe
+    SIA1 --> GATES(["gate pipeline — see the<br/>scanner core article"]):::pipe
     SIA2 --> GATES
     SIA3 --> GATES
     SLA --> GATES
