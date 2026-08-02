@@ -8,6 +8,7 @@ excerpt: "Media files rot silently. Bit-flip corruption, incomplete transfers, a
 description: "Introducing the Jellyfin Media Integrity Scanner plugin project — a production-safe tool for detecting corrupt, truncated, and damaged media files in your Jellyfin library without impacting playback performance. Part 1 of a 6-part development series."
 date: 2026-08-03
 last_modified_at: 2026-08-03
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-08-03
@@ -93,41 +94,25 @@ This is a six-part series covering the full development lifecycle:
 
 ## Architecture at a Glance
 
-```
-┌─────────────────────────────────────────────────┐
-│                 Jellyfin Server                 │
-├─────────────────────────────────────────────────┤
-│  ┌───────────────────────────────────────────┐  │
-│  │       Media Integrity Scanner Plugin      │  │
-│  ├───────────────────────────────────────────┤  │
-│  │  Library Event Monitor                    │  │
-│  │    ├── OnItemAdded → Queue for scan       │  │
-│  │    ├── OnItemUpdated → Re-queue if needed │  │
-│  │    └── OnItemRemoved → Purge from cache   │  │
-│  ├───────────────────────────────────────────┤  │
-│  │  Scan Engine (Bounded, Thread-Safe)       │  │
-│  │    ├── Phase 1: Header/metadata check     │  │
-│  │    ├── Phase 2: Full stream decode        │  │
-│  │    └── I/O Throttle (configurable)        │  │
-│  ├───────────────────────────────────────────┤  │
-│  │  SQLite Cache                             │  │
-│  │    └── Scan results, timestamps, status   │  │
-│  ├───────────────────────────────────────────┤  │
-│  │  REST API Controller                      │  │
-│  │    ├── GET /MediaIntegrity/Status         │  │
-│  │    ├── GET /MediaIntegrity/Results        │  │
-│  │    └── POST /MediaIntegrity/Scan          │  │
-│  ├───────────────────────────────────────────┤  │
-│  │  Admin Dashboard (HTML/JS)                │  │
-│  │    └── Library health overview + details  │  │
-│  └───────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────┘
-           │                           │
-           ▼                           ▼
-    ┌─────────────┐            ┌──────────────┐
-    │   FFmpeg    │            │  Media Files │
-    │  (decode)   │            │  (read-only) │
-    └─────────────┘            └──────────────┘
+```mermaid
+flowchart TD
+    subgraph JF["Jellyfin Server"]
+        subgraph Plugin["Media Integrity Scanner Plugin"]
+            LEM["<b>Library Event Monitor</b><br/>OnItemAdded → queue for scan<br/>OnItemUpdated → re-queue if needed<br/>OnItemRemoved → purge from cache"]
+            SE["<b>Scan Engine</b> (bounded, thread-safe)<br/>Phase 1: header/metadata check<br/>Phase 2: full stream decode<br/>I/O throttle (configurable)"]
+            DB[("<b>SQLite Cache</b><br/>scan results, timestamps, status")]
+            API["<b>REST API Controller</b><br/>GET /MediaIntegrity/Status<br/>GET /MediaIntegrity/Results<br/>POST /MediaIntegrity/Scan"]
+            UI["<b>Admin Dashboard</b> (HTML/JS)<br/>library health overview + details"]
+
+            LEM --> SE
+            SE --> DB
+            DB --> API
+            API --> UI
+        end
+    end
+
+    SE --> FFmpeg["FFmpeg<br/>(decode)"]
+    SE --> Media[("Media Files<br/>(read-only)")]
 ```
 
 ## My Infrastructure Context
