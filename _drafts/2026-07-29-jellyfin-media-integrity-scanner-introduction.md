@@ -7,18 +7,16 @@ tags: [jellyfin, media-integrity, ffmpeg, proxmox, ceph, plugin-development, dot
 excerpt: "Media files rot silently. Bit-flip corruption, incomplete transfers, and storage failures leave your Jellyfin library with files that look fine in the UI but fail during playback. This is the first in a series on building a production-safe media integrity scanner for Jellyfin."
 description: "Introducing the Jellyfin Media Integrity Scanner plugin project — a production-safe tool for detecting corrupt, truncated, and damaged media files in your Jellyfin library without impacting playback performance. Part 1 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-02
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-02
+  date_modified: 2026-08-01
 ---
 
 Your Jellyfin library looks healthy. Every thumbnail loads. Every title appears in the right collection. But somewhere in those terabytes of media, files are silently broken — and you won't know until someone hits play and gets a black screen, audio glitch, or a crash halfway through a movie.
 
 <!-- excerpt-end -->
-
-The concrete version of that, in my own house: my wife has a shelf's worth of old sitcoms she ripped from CD and DVD years ago and folded into the library since. She's been hitting episodes that just hang — freeze on a frame mid-laugh-track, or the audio drops out and the player never recovers. Every affected file traces back to a rip that's a decade or more old, made with whatever tool was lying around at the time, on optical media that wasn't exactly pristine to begin with. Nobody in the house can tell which episodes are actually broken until she's the one who finds out, three minutes into an episode she just wanted to unwind with. That's the actual problem this plugin needs to solve — find the bad rips before she does, not after.
 
 This is the first article in a series documenting the development of **jellyfin-plugin-media-integrity-scanner** — a Jellyfin plugin that performs production-safe integrity scanning of your media library. The plugin detects corrupt, truncated, and damaged media files without impacting playback performance or overwhelming your storage infrastructure.
 
@@ -31,8 +29,6 @@ Media files degrade for reasons that have nothing to do with Jellyfin itself:
 - **Storage subsystem failures** — RAID rebuilds, CephFS rebalancing, ZFS scrub-detected errors with no redundancy available, or LVM thin provisioning running out of space mid-write.
 - **Filesystem corruption** — Power loss, kernel panics, or hardware failures that corrupt the filesystem metadata or file contents.
 - **Encoding errors** — Incomplete transcoding jobs, ffmpeg crashes during processing, or malformed container headers from buggy ripping software.
-
-The last one is exactly what's been happening to those old sitcom rips — years-old ripping tools, inconsistent settings from disc to disc, and no way to know in advance which episodes came out clean and which are quietly waiting to hang someone mid-episode.
 
 The common thread: Jellyfin's library scan only checks that files exist and have parseable metadata. It does not validate that the actual media streams are playable from start to finish.
 
@@ -163,7 +159,7 @@ The v0.1.0 release is installable in Jellyfin but not yet functional — it esta
 
 ## Update: Implementation Complete
 
-Every item in the checklist above is now done: the scanner engine, SQLite persistence, REST API, admin dashboard, library event hooks, and a real Docker-based integration test suite alongside 154 unit tests. There's also a proper in-app settings page — configuration is no longer a hand-edited XML file, as the "Current Status" section above implied it might stay.
+Every item in the checklist above is now done: the scanner engine, SQLite persistence, REST API, admin dashboard, library event hooks, and a real Docker-based integration test suite alongside 113 unit tests. There's also a proper in-app settings page — configuration is no longer a hand-edited XML file, as the "Current Status" section above implied it might stay.
 
 Two real bugs turned up along the way, both only caught once the test suite started asserting on actual response data instead of just HTTP status: the dashboard was reading its JSON fields in the wrong casing (details in the [dashboard article](/jellyfin-media-integrity-dashboard-api/#update-the-dashboard-was-reading-the-wrong-json-casing)), and the deep-scan "already scanned, skip it" check didn't account for which scan phase had actually run (details in the [scanner core article](/jellyfin-media-integrity-scanner-core/#update-the-skip-check-didnt-know-about-scan-phase)). Both are fixed and covered by regression tests now.
 

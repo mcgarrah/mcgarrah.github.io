@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, rest-api, dashboard, html, javascript, plugin-
 excerpt: "A scanner that runs in the background is only useful if you can see its results. This article implements the REST API controller and admin dashboard for the Jellyfin Media Integrity Scanner — turning raw scan data into actionable library health visibility."
 description: "Implementing the REST API and admin dashboard for the Jellyfin Media Integrity Scanner plugin. Covers the ASP.NET Core controller, scan result queries, manual scan triggers, and the HTML/JavaScript dashboard with library health overview. Part 4 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-02
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-02
+  date_modified: 2026-08-01
 ---
 
 The [scanner core](/jellyfin-media-integrity-scanner-core/) handles the detection work — finding corrupt files and recording results in SQLite. But a scanner that runs silently in the background is only half the solution. Admins need to see what's broken, when it was scanned, and have the ability to trigger scans on demand.
@@ -587,14 +587,6 @@ That constraint is also what shaped the **stable vs. development channel** desig
 One assumption that turned out to be wrong, caught only by hitting the real endpoints rather than trusting the usual ASP.NET Core default: **Jellyfin serializes this plugin's new channel enum as its string name** (`"Stable"`/`"Development"`), not the underlying `0`/`1` a bare `System.Text.Json` setup would produce. Both the dashboard's new version banner and the settings page's channel dropdown are written against that string, confirmed by POSTing both a string and (hypothetically) an int body directly against the live endpoint rather than assuming either would work.
 
 The dashboard now shows the running version plus, when a newer one exists for the configured channel, an "Update Available" banner with a one-click "Update Now" button; settings gained the channel dropdown and the two manifest-URL overrides. A daily scheduled task keeps the check result cached so opening the dashboard doesn't fire a network call every time.
-
-## Update: The Update Checker's First Real Install Exposed a Packaging Bug That Had Shipped Since v0.1.0
-
-Building the feature is one thing; actually clicking "Update Now" for real is another. Registering both manifests as Jellyfin repositories, switching to the Development channel, and triggering a real install worked exactly as designed — Jellyfin genuinely downloaded the build, verified its checksum, and staged it. Then the restart came back with the plugin marked `Malfunctioned`.
-
-The server's own log named the file: `runtimes/win-x86/native/e_sqlite3.dll` — a Windows-native SQLite binary, not a real .NET assembly, that Jellyfin's plugin loader tried to load as one anyway. Turns out `dotnet publish`'s output — and therefore every release ZIP this project had ever cut, going back to the very first `v0.1.0` tag — bundled the plugin's entire build output uncritically: a full second copy of Jellyfin's own framework assemblies (already loaded by the host process) and a native SQLite binary for every OS and architecture the underlying package supports. This had shipped silently the whole time, because every test in this whole review — unit tests, the integration suite, Playwright, months of manual local deployment — always hand-copied five specific files rather than using the real release ZIP. The update checker's own real install path was the first thing to ever exercise it.
-
-The full story — decompiling Jellyfin's own plugin loader to find why, an emergency single-platform stopgap, and the real fix that restores genuine cross-platform support — is in the [deployment article's write-up](/jellyfin-media-integrity-deployment-operations/#update-a-real-packaging-bug-found-only-by-actually-installing-a-release).
 
 ## What's Next
 

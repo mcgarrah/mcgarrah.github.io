@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, proxmox, ceph, deployment, ci-cd, monitoring, 
 excerpt: "Getting the Media Integrity Scanner into production — installing in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring and alerting, and building the CI/CD pipeline for automated plugin releases."
 description: "Deploying and operating the Jellyfin Media Integrity Scanner plugin in a production homelab. Covers Proxmox LXC installation, CephFS/NFS storage configuration, monitoring with Prometheus/Grafana, alerting on failures, and GitHub Actions CI/CD for automated builds and releases. Part 5 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-02
+last_modified_at: 2026-08-01
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-02
+  date_modified: 2026-08-01
 ---
 
 The plugin is built — scanner core, SQLite persistence, REST API, admin dashboard. Now it needs to run reliably in production without causing problems. This article covers the deployment story: installing the plugin, configuring it for shared storage, monitoring its operation, and automating the release pipeline.
@@ -262,24 +262,6 @@ Also fixed while wiring this up: the existing stable `release.yml` updated `mani
 
 No safe way to dry-run a workflow whose only trigger is "push to main" without literally pushing to main first, so the real test was the first real merge. It worked cleanly on the first attempt: a genuine `v0.1.0-dev.1` pre-release appeared with the built zip attached, and `manifest-unstable.json` picked up a matching `0.1.0.1` entry with the right checksum and source URL, no fix-forward required.
 
-## Update: A Real Packaging Bug, Found Only By Actually Installing a Release
-
-Every previous pass of this whole series had verified the plugin one of two ways: a curl script that hand-copies five specific DLLs into a bind-mounted config directory, or a Playwright suite doing the same. Neither had ever actually installed a real release ZIP through Jellyfin's own Catalog mechanism — until the update checker's first real end-to-end test did exactly that, registering both manifests as Jellyfin repositories and clicking "Update Now" for real. Jellyfin downloaded the build, checksummed it, staged it correctly... and came back from the restart with the plugin marked `Malfunctioned`.
-
-**The crash, and what caused it.** The server's own log named the file: `runtimes/win-x86/native/e_sqlite3.dll` — a native Windows binary, not a real .NET assembly. `dotnet publish`'s output (and therefore the release ZIP, since the packaging step just zips the whole publish folder) had always bundled two things that don't belong in a shipped plugin: a full second copy of Jellyfin's own framework assemblies (already loaded by the host process — the `Jellyfin.Controller`/`Jellyfin.Model` package references had no `ExcludeAssets` setting, so NuGet copied their entire dependency tree by default), and a `runtimes/` folder with a native SQLite binary for every OS and architecture the underlying package supports, including several Windows-named `.dll` files. This wasn't a dev-channel-specific bug — **the existing stable `v0.1.0` release had shipped with this exact bloat from the start**, and anyone installing it the normal way, rather than this project's own habit of hand-copying files for every test, would have hit the identical crash.
-
-Decompiling Jellyfin's own `PluginManager` (pulled straight out of the running server container with `ilspycmd`, since there's no live internet access during development to check any official docs on this) explained why: it recursively finds every `.dll` under a plugin's folder and tries to load each one as a managed assembly, with no awareness of runtime identifiers at all. A native binary that happens to end in `.dll` gets fed into that call exactly like a real assembly and blows up with `BadImageFormatException`, taking the whole plugin down with it.
-
-**First fix, an emergency stopgap**: exclude the Jellyfin framework assemblies properly (a clean, permanent fix via `ExcludeAssets="runtime"`), and for the native-binary crash, trim the shipped `runtimes/` folder down to just `linux-x64` — correct for the Docker image this whole project's integration tests already use, but it quietly narrowed real-world support: Windows, macOS, and other-architecture Linux/NAS installs would have had no working native SQLite library at all. Verified by reproducing the exact crash locally before confirming the trim fixed it.
-
-**Second fix, the real one**: more decompiling turned up Jellyfin's actual intended mechanism for this — a plugin can ship its own `meta.json` with a populated `"assemblies"` list, and Jellyfin uses *only* that whitelist to decide what to load, instead of the naive recursive-`.dll` fallback. With the whitelist in place, native runtime binaries never reach Jellyfin's assembly loader at all, regardless of platform or filename — .NET's own native library resolution (used internally by the SQLite dependency) finds the right one for whatever platform Jellyfin is actually running on, completely independent of how Jellyfin's own loader discovered the managed assemblies. That makes it safe to ship **one universal package** covering every real Jellyfin server platform — Windows and Linux and macOS, x64 and ARM — instead of picking just one. Verified for real by staging a build containing the exact `win-x64` binary that had crashed the previous attempt, and confirming via the server's own log that it loaded only the five whitelisted managed assemblies and never touched anything under `runtimes/`.
-
-A second, smaller bug turned up while checking a different install method: downloading a release ZIP and dropping it straight into the plugins folder yourself (a legitimate way self-hosters install plugins not yet listed in any repository, not just a testing shortcut). A minimal `meta.json` with only a GUID and the assemblies list caused the plugin to silently vanish from Jellyfin's plugin list on that specific path — it turns out a manually-discovered plugin folder uses its bundled `meta.json` as the *sole* manifest, not merged onto a freshly-built one the way a real Catalog install reconciles it, so a manifest missing fields like `name` or `status` behaved differently there than during an actual install. Fixed by shipping a complete manifest instead of a minimal one.
-
-Checked this against the wider Jellyfin plugin ecosystem rather than assuming it was the only reasonable approach: a current community plugin bundling a native PDF-rendering library hit a related problem (an unresolved loose dependency, not a native-binary one) and worked around it with a hackier technique — merging dependencies into one assembly and renaming a managed DLL away from a `.dll` extension so Jellyfin's scanner skips it outright. The `meta.json` assemblies-whitelist approach used here — explicitly *including* the real dependencies in the whitelist rather than hiding them from the scanner — is the more Jellyfin-intended mechanism.
-
-Also worth knowing, confirmed against a currently-open Jellyfin issue: the manifest's `targetAbi` field (already set to `10.11.0.0` here, requiring Jellyfin 10.11 or newer) is a **minimum-version-only** check — there's no way to express an upper bound like "10.11.x only, not 10.12+." If a future Jellyfin release ever makes a breaking plugin-ABI change, this plugin would still be considered compatible by Jellyfin's own logic. A real limitation of Jellyfin itself, not something worth working around here.
-
 ### GitHub Actions: Build & Test
 
 ```yaml
@@ -424,10 +406,9 @@ sqlite3 media-integrity.db "PRAGMA integrity_check;"
 
 ### Upgrading the Plugin
 
-1. Open the dashboard — if a newer version exists for your configured channel (Stable or Development, see [Checking for Updates](/jellyfin-media-integrity-dashboard-api/#update-an-in-plugin-update-checker)), an "Update Available" banner appears with the version and a one-click **Update Now**
-2. Click it — Jellyfin downloads and stages the update the same way Dashboard > Plugins > Catalog would
-3. Restart Jellyfin to actually load the new version (the banner tells you this after a successful install)
-4. For manual installs (no repository registered): download the release ZIP and replace the plugin's files yourself, then restart
+1. Check the repository for new releases
+2. Jellyfin's plugin auto-update handles it if installed via repository
+3. For manual installs: replace the DLL files and restart
 
 ## Project Roadmap
 
