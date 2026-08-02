@@ -559,6 +559,23 @@ This surfaced only once an integration test piped a real response through `jq` a
 
 Every `data.`/`item.` field access in the dashboard is now PascalCase, verified against a real Jellyfin 10.11.11 instance end-to-end (trigger a scan, poll status, render results) rather than just by reading the diff.
 
+## Update: The Dashboard Was Never Actually Reachable in a Real Browser
+
+The PascalCase fix above turned out not to be the whole story. Building a Playwright suite to drive this plugin's pages through an actual browser — not curl+grep, not a REST call — surfaced something more fundamental: **both config pages had likely never rendered at all in a genuine admin session.**
+
+Jellyfin's classic (non-React) admin dashboard doesn't navigate to a plugin's config page the way a browser normally would. It fetches the page's HTML via AJAX through an internal `loadView`/`ViewManager` mechanism and injects the result as a *fragment* into the already-running single-page app — which is what supplies the global `ApiClient`/`Dashboard` objects this page's own JS depends on. Both `integrity_dashboard.html` and `integrity_settings.html` were written as full standalone documents (`<!DOCTYPE html><html><head>...<body>`), and that structural mismatch broke two different ways depending on how you reached the page:
+
+- A direct URL (`.../configurationpage?name=...`) forces a real top-level page load, which never gets `ApiClient` injected: `ReferenceError: ApiClient is not defined`.
+- A genuine in-app click on the plugin's own auto-generated "Settings" link instead throws inside *Jellyfin's own bundled code* — `Cannot read properties of undefined (reading 'classList')` in `Object.loadView` — because it's trying to graft a full document into the DOM where it expects a content fragment.
+
+Both are the same root cause, confirmed via two distinct real stack traces, not two separate bugs. There's no public documentation for the expected fragment shape (this plugin ships with no external API access during development), so it was reverse-engineered by inspecting a real rendered session: wrap the content in `<div id="...Page" data-role="page" class="page type-interior pluginConfigurationPage"><div data-role="content" class="content-primary">...</div></div>`, with no `<!DOCTYPE>`/`<html>`/`<head>`/`<body>`/`<title>` wrapper.
+
+Fixing the structure surfaced two smaller, related issues in the same pass:
+- The pages' own internal cross-links (dashboard's "Settings »", settings' "« Back to Dashboard") used plain relative `href`s with no SPA hash prefix — clicking either one forced the exact same full-page-load path and reproduced `ApiClient is not defined`, even after the fragment fix. Jellyfin's own auto-generated links use `href="#/configurationpage?name=..."`; ours needed the same `#/` prefix.
+- Those same nav links, positioned with `float: right`, sat directly underneath Jellyfin's fixed app-bar header on this Jellyfin version's React-based chrome — a real click-target problem for actual users, confirmed by bounding-box inspection, not just a browser-automation artifact. Fixed with more top padding on the page container.
+
+Worth flagging as expected behavior rather than a bug: Jellyfin's `ViewManager` hides a previously-visited page (`display:none`) instead of removing it from the DOM when you navigate back to it, re-injecting a fresh copy — including a fresh copy of the page's own `<script>` block — on every visit. Each visit's `setInterval(loadStatus, 10000)` polling loop keeps running on the hidden, stale copy too. Harmless for a user (only the visible copy is ever read), but worth knowing if you're writing your own plugin-page tests against a classic Jellyfin dashboard page: scope element lookups to the visible page rather than a bare `#id`, since Jellyfin doesn't guarantee that ID stays unique for long.
+
 ## What's Next
 
 The [final article](/jellyfin-media-integrity-deployment-operations/) covers deployment and operations: installing the plugin in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring/alerting, and the CI/CD pipeline for plugin releases.
