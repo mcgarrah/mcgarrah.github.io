@@ -59,17 +59,11 @@ jobs:
       - name: Encrypt HTML with Staticrypt
         env:
           DRAFTS_PASSWORD: ${{ secrets.DRAFTS_PASSWORD }}
-          DRAFTS_SALT: ${{ secrets.DRAFTS_SALT }}
         run: |
           set -euo pipefail
 
           if [[ -z "$DRAFTS_PASSWORD" ]]; then
             echo "::error::Missing DRAFTS_PASSWORD secret"
-            exit 1
-          fi
-
-          if [[ -z "$DRAFTS_SALT" ]]; then
-            echo "::error::Missing DRAFTS_SALT secret"
             exit 1
           fi
 
@@ -171,7 +165,6 @@ jobs:
             npm exec staticrypt -- \
               "$file" \
               -p "$DRAFTS_PASSWORD" \
-              -s "$DRAFTS_SALT" \
               --short \
               --remember 30 \
               --template-title "Draft Preview - mcgarrah.org" \
