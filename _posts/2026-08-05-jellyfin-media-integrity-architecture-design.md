@@ -6,12 +6,12 @@ categories: [homelab, media-server]
 tags: [jellyfin, media-integrity, architecture, sqlite, throttling, plugin-development, dotnet]
 excerpt: "Plugin or script? How aggressive should scanning be? Where do results live? This article covers the key architecture decisions behind the Jellyfin Media Integrity Scanner — from two-phase scanning strategy to production-safe I/O throttling."
 description: "Architecture and design decisions for the Jellyfin Media Integrity Scanner plugin. Covers plugin vs. script tradeoffs, two-phase scanning strategy, SQLite schema design, I/O throttling model, and CephFS/NFS storage considerations. Part 2 of a 6-part development series."
-date: 2026-07-29
-last_modified_at: 2026-08-02
+date: 2026-08-05
+last_modified_at: 2026-08-05
 seo:
   type: BlogPosting
-  date_published: 2026-07-29
-  date_modified: 2026-08-02
+  date_published: 2026-08-05
+  date_modified: 2026-08-05
 ---
 
 The [first article](/jellyfin-media-integrity-scanner-introduction/) introduced the problem: media files rot silently, and Jellyfin doesn't validate stream integrity. This article covers the architectural decisions that shape the plugin's design — the tradeoffs, constraints, and reasoning behind each choice.

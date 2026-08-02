@@ -6,12 +6,12 @@ categories: [homelab, media-server]
 tags: [jellyfin, media-integrity, ffmpeg, proxmox, ceph, plugin-development, dotnet]
 excerpt: "Media files rot silently. Bit-flip corruption, incomplete transfers, and storage failures leave your Jellyfin library with files that look fine in the UI but fail during playback. This is the first in a series on building a production-safe media integrity scanner for Jellyfin."
 description: "Introducing the Jellyfin Media Integrity Scanner plugin project — a production-safe tool for detecting corrupt, truncated, and damaged media files in your Jellyfin library without impacting playback performance. Part 1 of a 6-part development series."
-date: 2026-07-29
-last_modified_at: 2026-08-02
+date: 2026-08-03
+last_modified_at: 2026-08-03
 seo:
   type: BlogPosting
-  date_published: 2026-07-29
-  date_modified: 2026-08-02
+  date_published: 2026-08-03
+  date_modified: 2026-08-03
 ---
 
 Your Jellyfin library looks healthy. Every thumbnail loads. Every title appears in the right collection. But somewhere in those terabytes of media, files are silently broken — and you won't know until someone hits play and gets a black screen, audio glitch, or a crash halfway through a movie.

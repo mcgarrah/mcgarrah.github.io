@@ -6,12 +6,12 @@ categories: [homelab, media-server]
 tags: [jellyfin, media-integrity, release-management, auto-update, testing, plugin-development, dotnet]
 excerpt: "From v0.1.0-dev to v0.1.1 stable: building automatic update checking, session-aware restart logic, and testing infrastructure to ship reliable releases. This article documents the post-development improvements that turned a working prototype into production-ready software."
 description: "v0.1.1 release article for the Jellyfin Media Integrity Scanner. Covers update checker architecture, session-aware auto-restart, package bloat fixes, Playwright E2E testing, media corruption test matrix, and architectural documentation. Part 6 of a 6-part development series."
-date: 2026-08-02
-last_modified_at: 2026-08-02
+date: 2026-08-19
+last_modified_at: 2026-08-19
 seo:
   type: BlogPosting
-  date_published: 2026-08-02
-  date_modified: 2026-08-02
+  date_published: 2026-08-19
+  date_modified: 2026-08-19
 ---
 
 The first five articles in this series documented the development path from problem statement through operational deployment of the Media Integrity Scanner plugin. By the end of that arc (2026-07-31), the plugin was functionally complete — two-phase scanning, SQLite persistence, REST API, dashboard, and event-driven library monitoring all shipping and tested.
