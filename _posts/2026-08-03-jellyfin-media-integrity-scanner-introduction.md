@@ -98,21 +98,21 @@ This is a six-part series covering the full development lifecycle:
 flowchart TD
     subgraph JF["Jellyfin Server"]
         subgraph Plugin["Media Integrity Scanner Plugin"]
-            LEM["<b>Library Event Monitor</b><br/>OnItemAdded → queue for scan<br/>OnItemUpdated → re-queue if needed<br/>OnItemRemoved → purge from cache"]
-            SE["<b>Scan Engine</b> (bounded, thread-safe)<br/>Phase 1: header/metadata check<br/>Phase 2: full stream decode<br/>I/O throttle (configurable)"]
-            DB[("<b>SQLite Cache</b><br/>scan results, timestamps, status")]
-            API["<b>REST API Controller</b><br/>GET /MediaIntegrity/Status<br/>GET /MediaIntegrity/Results<br/>POST /MediaIntegrity/Scan"]
-            UI["<b>Admin Dashboard</b> (HTML/JS)<br/>library health overview + details"]
+            LEM["Library Event Monitor"]
+            SE["Scan Engine<br/>bounded, thread-safe"]
+            DB[("SQLite Cache")]
+            API["REST API Controller"]
+            UI["Admin Dashboard"]
 
-            LEM --> SE
-            SE --> DB
-            DB --> API
-            API --> UI
+            LEM -- "queue on add/update" --> SE
+            SE -- "store results" --> DB
+            DB -- "query" --> API
+            API -- "render" --> UI
         end
     end
 
-    SE --> FFmpeg["FFmpeg<br/>(decode)"]
-    SE --> Media[("Media Files<br/>(read-only)")]
+    SE -- "decode" --> FFmpeg["FFmpeg"]
+    SE -- "read-only" --> Media[("Media Files")]
 ```
 
 ## My Infrastructure Context
