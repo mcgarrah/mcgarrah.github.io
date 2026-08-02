@@ -48,8 +48,8 @@ jobs:
         uses: actions/configure-pages@v6
       - name: Jekyll Doctor
         run: bundle exec jekyll doctor
-      - name: Lint front matter
-        run: python3 scripts/lint-frontmatter.py _posts/
+      - name: Lint front matter and tags
+        run: python3 scripts/lint-frontmatter.py
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"

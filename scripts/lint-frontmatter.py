@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
-Front matter linter for mcgarrah.github.io blog posts.
+Front matter and tag linter for mcgarrah.github.io blog posts.
 
 Enforces a tiered schema based on post date:
   - Legacy  (before 2023-01-01): title, layout required — warnings only, never fails CI
   - Full    (2023-01-01 and later): title, layout, categories, tags, last_modified_at,
                                     excerpt, description, seo.type, seo.date_published
                                     — errors, fails CI
+
+Also detects tag slug collisions (near-duplicate tags with different casing that
+map to the same slug after lowercasing and space-to-hyphen conversion).
 
 Usage:
   python3 scripts/lint-frontmatter.py [--strict] [path ...]
@@ -19,7 +22,7 @@ Usage:
 
 Exit codes:
   0  No errors (warnings may be present)
-  1  One or more schema errors found
+  1  One or more schema errors or tag collisions found
 """
 
 import sys
@@ -177,6 +180,60 @@ def validate(path: Path):
 
 
 # ---------------------------------------------------------------------------
+# Tag collision detection (cross-file)
+# ---------------------------------------------------------------------------
+
+def tag_slug(tag_str):
+    """Convert a tag to its slug form (lowercase, spaces to hyphens)."""
+    return tag_str.strip().lower().replace(" ", "-")
+
+
+def check_tag_collisions(files):
+    """
+    Detect tag slug collisions across all files.
+    Returns list of error strings if collisions are found.
+
+    A collision occurs when two or more tags normalize to the same slug
+    but differ in casing or spacing (e.g., "CI-CD" vs "ci-cd").
+    """
+    errors = []
+    tags_map = {}  # slug -> {original_tag_str -> [file, file, ...]}
+
+    for path in files:
+        data, parse_error = extract_front_matter(path)
+        if parse_error or not data:
+            continue
+
+        tags = data.get("tags", [])
+        if isinstance(tags, str):
+            tags = [tags]
+        elif not isinstance(tags, list):
+            continue
+
+        for tag in tags:
+            if not isinstance(tag, str):
+                continue
+            tag_str = tag.strip()
+            slug = tag_slug(tag_str)
+
+            if slug not in tags_map:
+                tags_map[slug] = {}
+            if tag_str not in tags_map[slug]:
+                tags_map[slug][tag_str] = []
+            tags_map[slug][tag_str].append(str(path))
+
+    # Report collisions
+    for slug, variants in tags_map.items():
+        if len(variants) > 1:
+            collision_msg = f"Tag slug collision [{slug}] with multiple variants:"
+            for variant, files in variants.items():
+                collision_msg += f"\n  - \"{variant}\" in {', '.join(files)}"
+            errors.append(collision_msg)
+
+    return errors
+
+
+# ---------------------------------------------------------------------------
 # File collection
 # ---------------------------------------------------------------------------
 
@@ -225,6 +282,17 @@ def main():
             print(f"WARN  {rel}: {msg}")
         for msg in errors:
             print(f"ERROR {rel}: {msg}")
+
+    # Check for tag slug collisions across all files
+    print()
+    print("=== TAG COLLISION CHECK ===")
+    collision_errors = check_tag_collisions(files)
+    if collision_errors:
+        total_errors += len(collision_errors)
+        for msg in collision_errors:
+            print(f"ERROR {msg}")
+    else:
+        print("No tag slug collisions found.")
 
     print(f"\n{len(files)} files checked — {total_errors} error(s), {total_warnings} warning(s)")
 
