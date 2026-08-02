@@ -23,3 +23,5 @@ package-lock.json
 # OS artifacts
 .DS_Store
 *Zone.Identifier
+
+/bin
