@@ -588,6 +588,14 @@ One assumption that turned out to be wrong, caught only by hitting the real endp
 
 The dashboard now shows the running version plus, when a newer one exists for the configured channel, an "Update Available" banner with a one-click "Update Now" button; settings gained the channel dropdown and the two manifest-URL overrides. A daily scheduled task keeps the check result cached so opening the dashboard doesn't fire a network call every time.
 
+## Update: The Update Checker's First Real Install Exposed a Packaging Bug That Had Shipped Since v0.1.0
+
+Building the feature is one thing; actually clicking "Update Now" for real is another. Registering both manifests as Jellyfin repositories, switching to the Development channel, and triggering a real install worked exactly as designed — Jellyfin genuinely downloaded the build, verified its checksum, and staged it. Then the restart came back with the plugin marked `Malfunctioned`.
+
+The server's own log named the file: `runtimes/win-x86/native/e_sqlite3.dll` — a Windows-native SQLite binary, not a real .NET assembly, that Jellyfin's plugin loader tried to load as one anyway. Turns out `dotnet publish`'s output — and therefore every release ZIP this project had ever cut, going back to the very first `v0.1.0` tag — bundled the plugin's entire build output uncritically: a full second copy of Jellyfin's own framework assemblies (already loaded by the host process) and a native SQLite binary for every OS and architecture the underlying package supports. This had shipped silently the whole time, because every test in this whole review — unit tests, the integration suite, Playwright, months of manual local deployment — always hand-copied five specific files rather than using the real release ZIP. The update checker's own real install path was the first thing to ever exercise it.
+
+The full story — decompiling Jellyfin's own plugin loader to find why, an emergency single-platform stopgap, and the real fix that restores genuine cross-platform support — is in the [deployment article's write-up](/jellyfin-media-integrity-deployment-operations/#update-a-real-packaging-bug-found-only-by-actually-installing-a-release).
+
 ## What's Next
 
 The [final article](/jellyfin-media-integrity-deployment-operations/) covers deployment and operations: installing the plugin in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring/alerting, and the CI/CD pipeline for plugin releases.
