@@ -5,13 +5,13 @@ image: /assets/images/og/jellyfin-media-integrity-deployment-operations.png
 categories: [homelab, media-server]
 tags: [jellyfin, media-integrity, proxmox, ceph, deployment, ci-cd, monitoring, github-actions]
 excerpt: "Getting the Media Integrity Scanner into production — installing in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring and alerting, and building the CI/CD pipeline for automated plugin releases."
-description: "Deploying and operating the Jellyfin Media Integrity Scanner plugin in a production homelab. Covers Proxmox LXC installation, CephFS/NFS storage configuration, monitoring with Prometheus/Grafana, alerting on failures, and GitHub Actions CI/CD for automated builds and releases. Part 5 of a 5-part development series."
+description: "Deploying and operating the Jellyfin Media Integrity Scanner plugin in a production homelab. Covers Proxmox LXC installation, CephFS/NFS storage configuration, monitoring with Prometheus/Grafana, alerting on failures, and GitHub Actions CI/CD for automated builds and releases. Part 5 of a 6-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-01
+last_modified_at: 2026-08-02
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-01
+  date_modified: 2026-08-02
 ---
 
 The plugin is built — scanner core, SQLite persistence, REST API, admin dashboard. Now it needs to run reliably in production without causing problems. This article covers the deployment story: installing the plugin, configuring it for shared storage, monitoring its operation, and automating the release pipeline.
@@ -436,3 +436,4 @@ Future enhancements under consideration:
 3. [Building the Scanner Core](/jellyfin-media-integrity-scanner-core/)
 4. [The Dashboard & API](/jellyfin-media-integrity-dashboard-api/)
 5. **Deployment & Operations** (this post)
+6. [v0.1.1 Release: Update Checker & Auto-Update](/jellyfin-media-integrity-release-and-updates/)

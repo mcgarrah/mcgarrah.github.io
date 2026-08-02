@@ -14,11 +14,13 @@ seo:
   date_modified: 2026-08-02
 ---
 
-The [five-part series](/jellyfin-media-integrity-scanner-introduction/) documented the development path from problem statement through operational deployment of the Media Integrity Scanner plugin. By the end of that series (2026-07-31), the plugin was functionally complete — two-phase scanning, SQLite persistence, REST API, dashboard, and event-driven library monitoring all shipping and tested.
+The first five articles in this series documented the development path from problem statement through operational deployment of the Media Integrity Scanner plugin. By the end of that arc (2026-07-31), the plugin was functionally complete — two-phase scanning, SQLite persistence, REST API, dashboard, and event-driven library monitoring all shipping and tested.
 
 But "functionally complete" and "production-ready" are different things. Between v0.1.0 and the v0.1.1 stable release (2026-08-02), the plugin gained automatic update checking, session-aware restart logic, comprehensive end-to-end testing, and critical packaging fixes. This article covers what changed and why.
 
 <!-- excerpt-end -->
+
+No plan survives contact with real data. The first five articles designed a scanner, a dashboard, and a release pipeline that all looked correct on paper — and every one of them still had a gap that only showed up once something real got involved: a real installed release instead of five hand-copied DLLs, a real dashboard response parsed by real browser JavaScript, a real Jellyfin server that has no idea whether anyone's mid-episode when a restart gets triggered. This article is that reckoning, not a sixth increment of new features.
 
 ## The v0.1.0 → v0.1.1 Journey
 

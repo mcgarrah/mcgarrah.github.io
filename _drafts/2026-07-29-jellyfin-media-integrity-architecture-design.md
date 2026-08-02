@@ -5,13 +5,13 @@ image: /assets/images/og/jellyfin-media-integrity-architecture-design.png
 categories: [homelab, media-server]
 tags: [jellyfin, media-integrity, architecture, sqlite, throttling, plugin-development, dotnet]
 excerpt: "Plugin or script? How aggressive should scanning be? Where do results live? This article covers the key architecture decisions behind the Jellyfin Media Integrity Scanner — from two-phase scanning strategy to production-safe I/O throttling."
-description: "Architecture and design decisions for the Jellyfin Media Integrity Scanner plugin. Covers plugin vs. script tradeoffs, two-phase scanning strategy, SQLite schema design, I/O throttling model, and CephFS/NFS storage considerations. Part 2 of a 5-part development series."
+description: "Architecture and design decisions for the Jellyfin Media Integrity Scanner plugin. Covers plugin vs. script tradeoffs, two-phase scanning strategy, SQLite schema design, I/O throttling model, and CephFS/NFS storage considerations. Part 2 of a 6-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-01
+last_modified_at: 2026-08-02
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-01
+  date_modified: 2026-08-02
 ---
 
 The [first article](/jellyfin-media-integrity-scanner-introduction/) introduced the problem: media files rot silently, and Jellyfin doesn't validate stream integrity. This article covers the architectural decisions that shape the plugin's design — the tradeoffs, constraints, and reasoning behind each choice.
@@ -273,3 +273,4 @@ The [next article](/jellyfin-media-integrity-scanner-core/) implements the scann
 3. [Building the Scanner Core](/jellyfin-media-integrity-scanner-core/)
 4. [The Dashboard & API](/jellyfin-media-integrity-dashboard-api/)
 5. [Deployment & Operations](/jellyfin-media-integrity-deployment-operations/)
+6. [v0.1.1 Release: Update Checker & Auto-Update](/jellyfin-media-integrity-release-and-updates/)

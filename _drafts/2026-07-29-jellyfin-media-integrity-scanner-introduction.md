@@ -5,13 +5,13 @@ image: /assets/images/og/jellyfin-media-integrity-scanner-introduction.png
 categories: [homelab, media-server]
 tags: [jellyfin, media-integrity, ffmpeg, proxmox, ceph, plugin-development, dotnet]
 excerpt: "Media files rot silently. Bit-flip corruption, incomplete transfers, and storage failures leave your Jellyfin library with files that look fine in the UI but fail during playback. This is the first in a series on building a production-safe media integrity scanner for Jellyfin."
-description: "Introducing the Jellyfin Media Integrity Scanner plugin project — a production-safe tool for detecting corrupt, truncated, and damaged media files in your Jellyfin library without impacting playback performance. Part 1 of a 5-part development series."
+description: "Introducing the Jellyfin Media Integrity Scanner plugin project — a production-safe tool for detecting corrupt, truncated, and damaged media files in your Jellyfin library without impacting playback performance. Part 1 of a 6-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-01
+last_modified_at: 2026-08-02
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-01
+  date_modified: 2026-08-02
 ---
 
 Your Jellyfin library looks healthy. Every thumbnail loads. Every title appears in the right collection. But somewhere in those terabytes of media, files are silently broken — and you won't know until someone hits play and gets a black screen, audio glitch, or a crash halfway through a movie.
@@ -80,7 +80,7 @@ The plugin is licensed **GPL-2.0-or-later** to match [Jellyfin server's own lice
 
 ## Article Series Outline
 
-This is a five-part series covering the full development lifecycle:
+This is a six-part series covering the full development lifecycle:
 
 | # | Article | Focus |
 |---|---------|-------|
@@ -89,6 +89,7 @@ This is a five-part series covering the full development lifecycle:
 | 3 | [Building the Scanner Core](/jellyfin-media-integrity-scanner-core/) | FFmpeg integration, cross-platform paths, .NET 9 plugin structure |
 | 4 | [The Dashboard & API](/jellyfin-media-integrity-dashboard-api/) | Admin UI, REST API controller, real-time scan status |
 | 5 | [Deployment & Operations](/jellyfin-media-integrity-deployment-operations/) | Proxmox/CephFS deployment, scheduling, monitoring, CI/CD |
+| 6 | [v0.1.1 Release: Update Checker & Auto-Update](/jellyfin-media-integrity-release-and-updates/) | Update checker, session-aware auto-restart, packaging fixes — what real installs and real testing found that no amount of planning caught first |
 
 ## Architecture at a Glance
 

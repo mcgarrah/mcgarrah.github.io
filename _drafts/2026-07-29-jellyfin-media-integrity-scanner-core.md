@@ -5,13 +5,13 @@ image: /assets/images/og/jellyfin-media-integrity-scanner-core.png
 categories: [homelab, media-server]
 tags: [jellyfin, media-integrity, ffmpeg, dotnet, csharp, plugin-development, cross-platform]
 excerpt: "Implementing the scanner engine — FFmpeg process management, bounded task queues, cross-platform binary resolution, and the .NET 8 plugin structure that ties it all together."
-description: "Building the core scanning engine for the Jellyfin Media Integrity Scanner plugin. Covers .NET 8 plugin scaffolding, FFmpeg process wrapper, bounded concurrent task queue, cross-platform path resolution, and production-safe error handling. Part 3 of a 5-part development series."
+description: "Building the core scanning engine for the Jellyfin Media Integrity Scanner plugin. Covers .NET 8 plugin scaffolding, FFmpeg process wrapper, bounded concurrent task queue, cross-platform path resolution, and production-safe error handling. Part 3 of a 6-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-01
+last_modified_at: 2026-08-02
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-01
+  date_modified: 2026-08-02
 ---
 
 The [architecture article](/jellyfin-media-integrity-architecture-design/) laid out the design decisions — two-phase scanning, I/O throttling, SQLite persistence, event-driven updates. This article implements the core: the plugin skeleton, FFmpeg integration, and the bounded scan engine.
@@ -689,3 +689,4 @@ The [next article](/jellyfin-media-integrity-dashboard-api/) adds the admin-faci
 3. **Building the Scanner Core** (this post)
 4. [The Dashboard & API](/jellyfin-media-integrity-dashboard-api/)
 5. [Deployment & Operations](/jellyfin-media-integrity-deployment-operations/)
+6. [v0.1.1 Release: Update Checker & Auto-Update](/jellyfin-media-integrity-release-and-updates/)
