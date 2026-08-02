@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, rest-api, dashboard, html, javascript, plugin-
 excerpt: "A scanner that runs in the background is only useful if you can see its results. This article implements the REST API controller and admin dashboard for the Jellyfin Media Integrity Scanner — turning raw scan data into actionable library health visibility."
 description: "Implementing the REST API and admin dashboard for the Jellyfin Media Integrity Scanner plugin. Covers the ASP.NET Core controller, scan result queries, manual scan triggers, and the HTML/JavaScript dashboard with library health overview. Part 4 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-01
+last_modified_at: 2026-08-02
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-01
+  date_modified: 2026-08-02
 ---
 
 The [scanner core](/jellyfin-media-integrity-scanner-core/) handles the detection work — finding corrupt files and recording results in SQLite. But a scanner that runs silently in the background is only half the solution. Admins need to see what's broken, when it was scanned, and have the ability to trigger scans on demand.
