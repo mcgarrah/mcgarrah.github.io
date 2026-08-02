@@ -250,6 +250,18 @@ WantedBy=timers.target
 >
 > One operational gotcha worth keeping in mind for any script that starts a Jellyfin container and installs a plugin into it in the same breath: **the plugin DLL has to land in the bind-mounted config directory *before* the container's first boot, not after.** Jellyfin loads plugins once, early in its own startup; copying a DLL in after that point is a no-op until the container is restarted. This is a genuine race, not a hypothetical — reproduced locally by starting the container and copying the DLL in immediately after, which intermittently lost the race and left every `/MediaIntegrity/*` route 404ing until an explicit restart. Both CI workflows now copy the plugin in before `docker run`/`docker compose up`, not after.
 
+## Update: Automated Development Releases
+
+Adding an [in-plugin update checker](/jellyfin-media-integrity-dashboard-api/#update-an-in-plugin-update-checker) that can offer a Development channel meant that channel needed something real to point at — a plugin repository manifest that actually gets newer entries as work lands on `main`, not just at tagged milestones.
+
+A second workflow, `release-dev.yml`, now runs on every push to `main` and cuts a real GitHub **pre-release** plus a new `manifest-unstable.json`, parallel to the existing tagged-release path but never touching the stable `manifest.json`. The tricky part was version numbering: Jellyfin manifest versions have to be a clean 4-part numeric `System.Version` — no semver `-dev`/`-rc` suffix survives round-tripping through it — so the dev workflow keeps Major.Minor.Build from the current stable base and bumps only the fourth (Revision) component using the run's own unique, ever-increasing run number (`0.1.0.147`, say). The human-friendly `v0.1.0-dev.147` form still shows up in the GitHub release title and changelog text, just not in the version Jellyfin actually compares against.
+
+One thing deliberately *not* done: bumping `Directory.Build.props` on every single dev push and committing it back. That's fine for a build artifact (the compiled DLL needs the real version baked in to compare correctly against what's installed), but committing it every push would spam the repo and collide with the stable release workflow's own version-bump commits to the same file — so the dev workflow bumps it locally within the CI run only, discards that change, and commits just the manifest update.
+
+Also fixed while wiring this up: the existing stable `release.yml` updated `manifest.json`'s version on every tag but never actually bumped `Directory.Build.props` — meaning the *built assembly's own* version number never moved past `0.1.0.0`, tag after tag. Harmless before there was any code that cared about the plugin's own version, but a real problem for an update checker: it would report "update available" forever, even seconds after actually installing one, since the thing it's comparing against never changes. Both workflows now agree on the version story.
+
+No safe way to dry-run a workflow whose only trigger is "push to main" without literally pushing to main first, so the real test was the first real merge. It worked cleanly on the first attempt: a genuine `v0.1.0-dev.1` pre-release appeared with the built zip attached, and `manifest-unstable.json` picked up a matching `0.1.0.1` entry with the right checksum and source URL, no fix-forward required.
+
 ### GitHub Actions: Build & Test
 
 ```yaml
