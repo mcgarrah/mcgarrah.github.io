@@ -63,56 +63,40 @@ jellyfin-plugin-media-integrity-scanner/
 
 ## Plugin Entry Point
 
-The plugin registers its services with Jellyfin's dependency injection:
+Every Jellyfin plugin extends `BasePlugin<TConfiguration>`, and Jellyfin constructs it once at startup via DI. A lot of this plugin's *other* classes — `ScanEngine`, the scheduled tasks, the API controller — reach back into it through a static `Instance` property rather than getting `PluginConfiguration` injected directly, since Jellyfin's container doesn't thread plugin config through to every consumer on its own:
 
 ```csharp
-using MediaBrowser.Common.Plugins;
-using MediaBrowser.Model.Plugins;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Jellyfin.Plugin.MediaIntegrityScanner;
-
-public class Plugin : BasePlugin<PluginConfiguration>,
-    IHasWebPages
+public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 {
-    public Plugin(
-        IApplicationPaths applicationPaths,
-        IXmlSerializer xmlSerializer)
+    public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer)
         : base(applicationPaths, xmlSerializer)
     {
         Instance = this;
     }
 
     public static Plugin? Instance { get; private set; }
+    public override Guid Id => Guid.Parse("c8f4a3b2-1d5e-4f6a-9b7c-2e8d0f1a3b5c");
 
-    public override string Name => "Media Integrity Scanner";
-    public override string Description =>
-        "Validates media file integrity using FFmpeg. " +
-        "Detects corrupt, truncated, and damaged files.";
-    public override Guid Id =>
-        Guid.Parse("c8f4a3b2-1d5e-4f6a-9b7c-2e8d0f1a3b5c");
-
-    public IEnumerable<PluginPageInfo> GetPages()
+    public IEnumerable<PluginPageInfo> GetPages() => new[]
     {
-        return new[]
+        new PluginPageInfo
         {
-            new PluginPageInfo
-            {
-                Name = "Media Integrity",
-                EmbeddedResourcePath = GetType().Namespace + ".Web.integrity_dashboard.html"
-            }
-        };
-    }
+            Name = "Media Integrity",
+            EmbeddedResourcePath = GetType().Namespace + ".Web.integrity_dashboard.html"
+        }
+    };
 }
 ```
 
+`GetPages()` is what makes the admin dashboard show up under Dashboard → Plugins at all — Jellyfin sees `IHasWebPages` and serves each `EmbeddedResourcePath` as a config page (it later grew a second entry for the settings page; see the [dashboard article's update](/jellyfin-media-integrity-dashboard-api/#update-a-real-settings-page)). The `Id` GUID has to match `manifest.json` exactly, or Jellyfin treats an upgrade as installing an unrelated plugin.
+
+Full file: [`Plugin.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/Plugin.cs).
+
 ## Plugin Configuration
 
+`PluginConfiguration` is a plain settings bag — Jellyfin serializes it to XML on disk and, later, exposes it to an in-app settings page (see the [dashboard article](/jellyfin-media-integrity-dashboard-api/#update-a-real-settings-page)). The fields fall into a few groups; here's the scanning-related subset:
+
 ```csharp
-using MediaBrowser.Model.Plugins;
-
-namespace Jellyfin.Plugin.MediaIntegrityScanner;
-
 public class PluginConfiguration : BasePluginConfiguration
 {
     // Scanning behavior
@@ -121,397 +105,137 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool PauseDuringPlayback { get; set; } = true;
     public bool EnableDeepScan { get; set; } = false;
 
-    // Throttling
+    // Throttling / scheduling
     public int MaxReadRateMbPerSec { get; set; } = 10;
-
-    // Scheduling
     public bool UseQuietHoursOnly { get; set; } = false;
     public string QuietHoursStart { get; set; } = "02:00";
     public string QuietHoursEnd { get; set; } = "06:00";
 
-    // FFmpeg
-    public string? FfmpegPathOverride { get; set; }
-    public string? FfprobePathOverride { get; set; }
-
-    // Event-driven scanning
-    public bool ScanOnItemAdded { get; set; } = true;
-    public bool PurgeOnItemRemoved { get; set; } = true;
+    // FFmpeg path overrides, event-driven scan toggles...
 }
 ```
+
+None of these fields *do* anything by themselves — they're read by whoever cares. `MaxConcurrentScans` only matters because `ScanEngine`'s constructor sizes a `SemaphoreSlim` from it; `UseQuietHoursOnly`/`QuietHoursStart`/`QuietHoursEnd` only matter because `ScanThrottle.IsWithinQuietHours` checks them (see the [pacing update](#update-quiet-hours-and-read-rate-throttling) below). The real file has grown a second set of fields since — update-channel and manifest-URL settings for the [v0.1.1 update checker](/jellyfin-media-integrity-release-and-updates/) — omitted here since they're unrelated to the scanner core.
+
+Full file: [`PluginConfiguration.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/PluginConfiguration.cs).
 
 ## FFmpeg Binary Resolution
 
-The cross-platform resolver finds ffmpeg regardless of installation method:
+Jellyfin ships its own bundled `jellyfin-ffmpeg`, but this plugin can't assume it's on `PATH`, or even that the admin is running the packaged build. `FfmpegResolver` tries four things in order, falling through only if the previous one comes up empty:
+
+1. **A user-configured override** (`FfmpegPathOverride`/`FfprobePathOverride`) — respected first, so an admin can always pin a specific build.
+2. **Jellyfin's own configured ffmpeg path** (`IServerConfigurationManager.GetEncodingOptions().EncoderAppPath`) — the server already resolved this once for its own transcoding, so reuse it instead of asking the admin to configure the same path twice.
+3. **Known install locations per OS** — `/usr/lib/jellyfin-ffmpeg/ffmpeg` on Linux, the Jellyfin Server folder on Windows, Homebrew's prefix on macOS.
+4. **A plain `PATH` lookup**, the same way a shell would find it.
 
 ```csharp
-namespace Jellyfin.Plugin.MediaIntegrityScanner.Scanner;
+public string ResolveFfmpegPath() =>
+    ResolveBinary("ffmpeg", Plugin.Instance?.Configuration?.FfmpegPathOverride);
 
-public class FfmpegResolver
+private string ResolveBinary(string binaryName, string? userOverride)
 {
-    private readonly IServerConfigurationManager _config;
-    private readonly ILogger<FfmpegResolver> _logger;
-
-    public FfmpegResolver(
-        IServerConfigurationManager config,
-        ILogger<FfmpegResolver> logger)
+    if (!string.IsNullOrEmpty(userOverride) && File.Exists(userOverride))
     {
-        _config = config;
-        _logger = logger;
+        return userOverride;
     }
 
-    public string ResolveFfmpegPath()
-    {
-        // 1. User override from plugin config
-        var pluginConfig = Plugin.Instance?.Configuration;
-        if (!string.IsNullOrEmpty(pluginConfig?.FfmpegPathOverride))
-        {
-            if (File.Exists(pluginConfig.FfmpegPathOverride))
-                return pluginConfig.FfmpegPathOverride;
+    var serverFfmpeg = _config.GetEncodingOptions().EncoderAppPath;
+    // ... then platform-specific candidates, then a PATH lookup ...
 
-            _logger.LogWarning(
-                "Configured ffmpeg path not found: {Path}",
-                pluginConfig.FfmpegPathOverride);
-        }
-
-        // 2. Jellyfin's own configured ffmpeg
-        var serverFfmpeg = _config.GetEncodingOptions().EncoderAppPath;
-        if (!string.IsNullOrEmpty(serverFfmpeg) && File.Exists(serverFfmpeg))
-            return serverFfmpeg;
-
-        // 3. Platform-specific known locations
-        var candidates = GetPlatformCandidates();
-        foreach (var candidate in candidates)
-        {
-            if (File.Exists(candidate))
-                return candidate;
-        }
-
-        // 4. PATH lookup
-        var pathResult = FindInPath("ffmpeg");
-        if (pathResult != null)
-            return pathResult;
-
-        throw new InvalidOperationException(
-            "FFmpeg not found. Install ffmpeg or configure the path " +
-            "in Media Integrity Scanner settings.");
-    }
-
-    private static IEnumerable<string> GetPlatformCandidates()
-    {
-        if (OperatingSystem.IsLinux())
-        {
-            yield return "/usr/lib/jellyfin-ffmpeg/ffmpeg";
-            yield return "/usr/bin/ffmpeg";
-            yield return "/usr/local/bin/ffmpeg";
-        }
-        else if (OperatingSystem.IsWindows())
-        {
-            yield return Path.Combine(
-                Environment.GetFolderPath(
-                    Environment.SpecialFolder.CommonApplicationData),
-                "Jellyfin", "Server", "ffmpeg.exe");
-            yield return @"C:\ffmpeg\bin\ffmpeg.exe";
-        }
-        else if (OperatingSystem.IsMacOS())
-        {
-            yield return "/opt/homebrew/bin/ffmpeg";
-            yield return "/usr/local/bin/ffmpeg";
-        }
-    }
-
-    private static string? FindInPath(string executable)
-    {
-        var pathVar = Environment.GetEnvironmentVariable("PATH");
-        if (string.IsNullOrEmpty(pathVar)) return null;
-
-        var separator = OperatingSystem.IsWindows() ? ';' : ':';
-        var extension = OperatingSystem.IsWindows() ? ".exe" : "";
-
-        return pathVar.Split(separator)
-            .Select(dir => Path.Combine(dir, executable + extension))
-            .FirstOrDefault(File.Exists);
-    }
+    throw new InvalidOperationException(
+        $"{binaryName} not found. Install ffmpeg or configure the path in Media Integrity Scanner settings.");
 }
 ```
+
+If all four come up empty, it throws rather than silently disabling scanning — a scanner that can't run ffmpeg has no useful degraded mode. `ResolveFfprobePath` shares the exact same `ResolveBinary` helper, just parameterized on `"ffprobe"` and its own override field.
+
+Full file: [`Scanner/FfmpegResolver.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/Scanner/FfmpegResolver.cs).
 
 ## The Scan Engine
 
-The bounded, thread-safe scan engine processes files sequentially with configurable throttling:
+`ScanEngine` is the one choke point every trigger — library events, scheduled tasks, manual API calls — eventually calls into, which is what makes "bounded" and "thread-safe" actual guarantees rather than just words: a `SemaphoreSlim` sized to `MaxConcurrentScans` gates every concurrent scan through the same instance, no matter what kicked it off.
 
 ```csharp
-namespace Jellyfin.Plugin.MediaIntegrityScanner.Scanner;
-
-public class ScanEngine : IScanEngine, IDisposable
+public ScanEngine(FfmpegWrapper ffmpeg, IDatabaseManager db, ISessionManager sessions, ILogger<ScanEngine> logger)
 {
-    private readonly SemaphoreSlim _scanLock;
-    private readonly FfmpegWrapper _ffmpeg;
-    private readonly IDatabaseManager _db;
-    private readonly ISessionManager _sessions;
-    private readonly ILogger<ScanEngine> _logger;
-    private CancellationTokenSource? _cts;
+    var maxConcurrent = Plugin.Instance?.Configuration?.MaxConcurrentScans ?? 1;
+    _scanLock = new SemaphoreSlim(maxConcurrent);
+}
 
-    public ScanEngine(
-        FfmpegWrapper ffmpeg,
-        IDatabaseManager db,
-        ISessionManager sessions,
-        ILogger<ScanEngine> logger)
+public async Task ScanItemAsync(BaseItem item, ScanPhase phase, CancellationToken cancellationToken)
+{
+    await _scanLock.WaitAsync(cancellationToken);
+    try
     {
-        _ffmpeg = ffmpeg;
-        _db = db;
-        _sessions = sessions;
-        _logger = logger;
-
-        var config = Plugin.Instance?.Configuration;
-        _scanLock = new SemaphoreSlim(
-            config?.MaxConcurrentScans ?? 1);
-    }
-
-    public bool IsScanning { get; private set; }
-
-    public async Task ScanItemAsync(
-        BaseItem item,
-        ScanPhase phase,
-        CancellationToken cancellationToken)
-    {
-        await _scanLock.WaitAsync(cancellationToken);
-        try
+        if (ShouldPauseForPlayback())
         {
-            // Check playback pause
-            if (ShouldPauseForPlayback())
-            {
-                _logger.LogInformation(
-                    "Pausing scan — active playback detected");
-                await WaitForPlaybackEnd(cancellationToken);
-            }
-
-            // Apply inter-file delay
-            var config = Plugin.Instance?.Configuration;
-            var delay = config?.DelayBetweenFilesMs ?? 5000;
-            await Task.Delay(delay, cancellationToken);
-
-            // Execute scan
-            var result = phase switch
-            {
-                ScanPhase.Header => await _ffmpeg.ProbeAsync(
-                    item.Path, cancellationToken),
-                ScanPhase.FullDecode => await _ffmpeg.DecodeAsync(
-                    item.Path, cancellationToken),
-                _ => throw new ArgumentException(
-                    $"Unknown phase: {phase}")
-            };
-
-            // Persist result
-            await _db.SaveResultAsync(new ScanRecord
-            {
-                ItemId = item.Id.ToString(),
-                FilePath = item.Path,
-                FileSize = new FileInfo(item.Path).Length,
-                LastModified = File.GetLastWriteTimeUtc(item.Path)
-                    .ToString("O"),
-                ScanPhase = (int)phase,
-                ScanStatus = result.Success
-                    ? (int)ScanStatus.Pass
-                    : (int)ScanStatus.Fail,
-                ScanTimestamp = DateTime.UtcNow.ToString("O"),
-                ErrorOutput = result.ErrorOutput,
-                ScanDurationMs = result.DurationMs
-            });
+            await WaitForPlaybackEnd(cancellationToken);
         }
-        finally
+
+        var delay = Plugin.Instance?.Configuration?.DelayBetweenFilesMs ?? 5000;
+        await Task.Delay(delay, cancellationToken);
+
+        var result = phase switch
         {
-            _scanLock.Release();
-        }
+            ScanPhase.Header => await _ffmpeg.ProbeAsync(item.Path, cancellationToken),
+            ScanPhase.FullDecode => await _ffmpeg.DecodeAsync(item.Path, cancellationToken),
+            _ => throw new ArgumentException($"Unknown phase: {phase}")
+        };
+
+        await _db.SaveResultAsync(new ScanRecord { /* item id, path, phase, pass/fail, duration ... */ });
     }
-
-    private bool ShouldPauseForPlayback()
+    finally
     {
-        var config = Plugin.Instance?.Configuration;
-        if (config?.PauseDuringPlayback != true) return false;
-
-        return _sessions.Sessions
-            .Any(s => s.NowPlayingItem != null);
-    }
-
-    private async Task WaitForPlaybackEnd(
-        CancellationToken cancellationToken)
-    {
-        while (ShouldPauseForPlayback() &&
-               !cancellationToken.IsCancellationRequested)
-        {
-            await Task.Delay(
-                TimeSpan.FromSeconds(30), cancellationToken);
-        }
-    }
-
-    public void Dispose()
-    {
-        _scanLock.Dispose();
-        _cts?.Dispose();
+        _scanLock.Release();
     }
 }
 ```
+
+Every scan takes a slot, checks whether it should pause for active playback, applies the configured inter-file delay, runs the right ffmpeg phase, then persists the result — always in that order, whether it came from a scheduled task or a dashboard button. `ShouldPauseForPlayback`/`WaitForPlaybackEnd` and `Dispose` are omitted above for length; the full gate pipeline — including the quiet-hours window and read-rate throttle added later — is diagrammed further down in this article.
+
+Full file: [`Scanner/ScanEngine.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/Scanner/ScanEngine.cs).
 
 ## FFmpeg Process Wrapper
 
+`FfmpegWrapper` is the only place that actually shells out to ffmpeg/ffprobe. `ProbeAsync` is Phase 1 — ffprobe reading container/stream metadata, cheap and fast. `DecodeAsync` is Phase 2 — a full ffmpeg decode with `-f null -` (decode every frame, write nowhere), expensive but able to catch mid-file frame corruption a header check can't see. Both funnel through the same process runner:
+
 ```csharp
-namespace Jellyfin.Plugin.MediaIntegrityScanner.Scanner;
-
-public class FfmpegWrapper
+public async Task<ScanResult> ProbeAsync(string filePath, CancellationToken ct)
 {
-    private readonly string _ffmpegPath;
-    private readonly string _ffprobePath;
-    private readonly ILogger<FfmpegWrapper> _logger;
-
-    public FfmpegWrapper(
-        FfmpegResolver resolver,
-        ILogger<FfmpegWrapper> logger)
-    {
-        _ffmpegPath = resolver.ResolveFfmpegPath();
-        _ffprobePath = resolver.ResolveFfprobePath();
-        _logger = logger;
-    }
-
-    /// <summary>
-    /// Phase 1: Quick header/metadata validation via ffprobe.
-    /// </summary>
-    public async Task<ScanResult> ProbeAsync(
-        string filePath, CancellationToken ct)
-    {
-        var sw = Stopwatch.StartNew();
-        var args = $"-v error -show_entries format=duration,size " +
-                   $"-show_entries stream=codec_type,codec_name " +
-                   $"-of json \"{filePath}\"";
-
-        var (exitCode, _, stderr) = await RunProcessAsync(
-            _ffprobePath, args, ct);
-
-        sw.Stop();
-        return new ScanResult
-        {
-            Success = exitCode == 0 &&
-                      string.IsNullOrWhiteSpace(stderr),
-            ErrorOutput = stderr,
-            DurationMs = (int)sw.ElapsedMilliseconds
-        };
-    }
-
-    /// <summary>
-    /// Phase 2: Full decode — reads every frame, outputs nothing.
-    /// </summary>
-    public async Task<ScanResult> DecodeAsync(
-        string filePath, CancellationToken ct)
-    {
-        var sw = Stopwatch.StartNew();
-        var args = $"-v error -i \"{filePath}\" -f null -";
-
-        var (exitCode, _, stderr) = await RunProcessAsync(
-            _ffmpegPath, args, ct);
-
-        sw.Stop();
-        return new ScanResult
-        {
-            Success = exitCode == 0 &&
-                      string.IsNullOrWhiteSpace(stderr),
-            ErrorOutput = stderr,
-            DurationMs = (int)sw.ElapsedMilliseconds
-        };
-    }
-
-    private static async Task<(int ExitCode, string Stdout, string Stderr)>
-        RunProcessAsync(string exe, string args, CancellationToken ct)
-    {
-        using var process = new Process
-        {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = exe,
-                Arguments = args,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            }
-        };
-
-        process.Start();
-
-        var stdoutTask = process.StandardOutput.ReadToEndAsync(ct);
-        var stderrTask = process.StandardError.ReadToEndAsync(ct);
-
-        await process.WaitForExitAsync(ct);
-
-        return (
-            process.ExitCode,
-            await stdoutTask,
-            await stderrTask
-        );
-    }
+    var args = "-v error -show_entries format=duration,size " +
+               "-show_entries stream=codec_type,codec_name -of json \"" + filePath + "\"";
+    var (exitCode, _, stderr) = await RunProcessAsync(_ffprobePath, args, ct);
+    return new ScanResult { Success = exitCode == 0 && string.IsNullOrWhiteSpace(stderr), ErrorOutput = stderr };
 }
 ```
+
+`DecodeAsync` has the same shape, just against `ffmpeg -v error -i "<file>" -f null -`. The real `RunProcessAsync` (not shown) redirects stdout/stderr and drains both *concurrently* with the process exit — an earlier version awaited them sequentially after `WaitForExitAsync`, which deadlocks once a large stderr stream fills the OS pipe buffer — and kills the whole process tree on cancellation, so a cancelled deep scan doesn't leave an orphaned ffmpeg process running against a file nobody's waiting on anymore.
+
+Full file: [`Scanner/FfmpegWrapper.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/Scanner/FfmpegWrapper.cs).
 
 ## Scheduled Task Registration
 
-```csharp
-namespace Jellyfin.Plugin.MediaIntegrityScanner.ScheduledTasks;
+Jellyfin discovers `IScheduledTask` implementations via DI and lists them under Dashboard → Scheduled Tasks automatically — `Name`/`Key`/`Category` are what show up there, and `GetDefaultTriggers()` is only the *default*; an admin can reconfigure the schedule from that same page.
 
+```csharp
 public class HeaderScanTask : IScheduledTask
 {
-    private readonly ILibraryManager _library;
-    private readonly IScanEngine _scanner;
-    private readonly IDatabaseManager _db;
-
     public string Name => "Media Integrity - Header Scan";
-    public string Key => "MediaIntegrityHeaderScan";
-    public string Description =>
-        "Quick validation of media file headers and metadata.";
     public string Category => "Media Integrity";
 
-    public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
+    public IEnumerable<TaskTriggerInfo> GetDefaultTriggers() => new[]
     {
-        return new[]
-        {
-            new TaskTriggerInfo
-            {
-                Type = TaskTriggerInfo.TriggerDaily,
-                TimeOfDayTicks = TimeSpan.FromHours(3).Ticks
-            }
-        };
-    }
+        new TaskTriggerInfo { Type = TaskTriggerInfoType.DailyTrigger, TimeOfDayTicks = TimeSpan.FromHours(3).Ticks }
+    };
 
-    public async Task ExecuteAsync(
-        IProgress<double> progress,
-        CancellationToken cancellationToken)
-    {
-        var items = _library.GetItemList(new InternalItemsQuery
-        {
-            MediaTypes = new[] { MediaType.Video, MediaType.Audio },
-            IsVirtualItem = false
-        });
-
-        var total = items.Count;
-        var processed = 0;
-
-        foreach (var item in items)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            // Skip if already scanned and file unchanged
-            if (await _db.IsCurrentAsync(item.Id.ToString(), item.Path))
-            {
-                processed++;
-                progress.Report((double)processed / total * 100);
-                continue;
-            }
-
-            await _scanner.ScanItemAsync(
-                item, ScanPhase.Header, cancellationToken);
-
-            processed++;
-            progress.Report((double)processed / total * 100);
-        }
-    }
+    public Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken) =>
+        _scanner.ScanLibraryAsync(null, ScanPhase.Header, cancellationToken, progress);
 }
 ```
+
+`DeepScanTask` is the same shape, wired to a weekly Sunday trigger and `ScanPhase.FullDecode` instead, and only runs at all if `EnableDeepScan` is on. Both tasks just delegate straight into `ScanEngine`, so a scheduled sweep and a manual "scan library" API call walk the exact same gating logic described above — there's no separate scheduled-task-only code path to keep in sync. (An earlier version of this loop lived directly in the task and had its own concurrency bug — see the [MaxConcurrentScans update](#update-maxconcurrentscans-wasnt-honored-by-bulk-scans) below.)
+
+Full file: [`ScheduledTasks/HeaderScanTask.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/ScheduledTasks/HeaderScanTask.cs).
 
 ## Update: Quiet Hours and Read-Rate Throttling
 

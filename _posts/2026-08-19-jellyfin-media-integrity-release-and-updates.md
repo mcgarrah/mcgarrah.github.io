@@ -8,6 +8,7 @@ excerpt: "From v0.1.0-dev to v0.1.1 stable: building automatic update checking, 
 description: "v0.1.1 release article for the Jellyfin Media Integrity Scanner. Covers update checker architecture, session-aware auto-restart, package bloat fixes, Playwright E2E testing, media corruption test matrix, and architectural documentation. Part 6 of a 6-part development series."
 date: 2026-08-19
 last_modified_at: 2026-08-19
+mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-08-19
@@ -36,108 +37,112 @@ This article is Part 6 of the [Jellyfin Media Integrity Scanner](/jellyfin-media
 
 ## Feature 1: Update Checker with Stable/Development Channels
 
-Users installing the plugin via manifest.json could see updates in the Jellyfin dashboard, but there was no way for the plugin itself to detect new versions and notify the user — let alone automatically install them. The update checker solves this.
+Users installing the plugin via `manifest.json` could see updates listed in Jellyfin's own Plugins → Catalog page, but nothing surfaced that from *inside* the plugin — no dashboard banner, no way to trigger an install without going through Jellyfin's generic catalog UI. The natural fix leans on machinery Jellyfin already has rather than reinventing it: `IInstallationManager`, the same DI-registered service the Catalog page itself uses to list and install plugin versions.
 
-### Architecture
+That interface only ever returns versions from plugin repositories an admin has **already registered** under Dashboard → Plugins → Repositories — a plugin has no way to discover its own updates from a manifest Jellyfin doesn't know about, and this plugin deliberately doesn't register one on the admin's behalf, since that's global server config, not this plugin's own. Registering `manifest.json` (stable) and, optionally, `manifest-unstable.json` (development) is a one-time, explicit setup step, documented on the settings page rather than done silently.
 
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {
+  "primaryColor": "#17221f",
+  "primaryTextColor": "#e7ede9",
+  "primaryBorderColor": "#3e6e67",
+  "lineColor": "#7c93a3",
+  "secondaryColor": "#1d2b27",
+  "tertiaryColor": "#101a18",
+  "fontFamily": "monospace",
+  "fontSize": "14px"
+}}}%%
+flowchart TD
+    subgraph DAILY["CheckForUpdatesTask — daily, 04:00"]
+        A["RefreshAsync"]:::act --> B["IInstallationManager<br/>.GetAvailablePackages"]:::act
+        B --> C{"classify each version<br/>by RepositoryUrl"}:::gate
+        C -->|"manifest.json"| D["Stable"]:::pipe
+        C -->|"manifest-unstable.json"| E["Development"]:::pipe
+        D --> F[("cached UpdateStatus")]:::db
+        E --> F
+    end
+
+    subgraph WEEKLY["AutoUpdateTask — weekly, Sunday 04:00"]
+        G{"EnableAutoUpdate?"}:::gate
+        G -->|"no"| SKIP1["skip"]:::stop
+        G -->|"yes"| H{"update available for<br/>configured channel?"}:::gate
+        H -->|"no"| SKIP2["skip"]:::stop
+        H -->|"yes"| I["InstallPackage via<br/>IInstallationManager"]:::act
+        I --> J{"AutoRestartAfterUpdate?"}:::gate
+        J -->|"no"| STAGED["leave staged,<br/>admin restarts manually"]:::pipe
+        J -->|"yes"| K["wait for zero active<br/>playback sessions"]:::wait
+        K --> L["ISystemManager.Restart()"]:::pipe
+    end
+
+    F -.->|"read by"| H
+
+    classDef gate fill:#2a2013,stroke:#e3a857,color:#f4d9a8
+    classDef wait fill:#2a2013,stroke:#e3a857,color:#f4d9a8,stroke-dasharray: 3 3
+    classDef act fill:#16332c,stroke:#5fa88f,color:#cfefe2
+    classDef db fill:#17221f,stroke:#7c93a3,color:#e7ede9
+    classDef pipe fill:#101a18,stroke:#e3a857,color:#e3a857,stroke-width:2px
+    classDef stop fill:#331c1a,stroke:#d96c5d,color:#f3c8c2
 ```
-┌────────────────────────────────────────────┐
-│         Plugin Startup / Scheduled          │
-├────────────────────────────────────────────┤
-│  Check for updates every 7 days (default)  │
-│  Query GitHub releases API                 │
-│  Compare versions & filter by channel      │
-│  (stable or development)                   │
-└────────────┬─────────────────────────────┘
-             │
-             ▼
-      ┌──────────────────┐
-      │ Update Available?│
-      └──────┬───────┬──┘
-             │       │
-         Yes│       │No
-             │       │
-             ▼       ▼
-        [Notify   [Reschedule
-         User]    Check]
-```
 
-The update checker runs asynchronously without blocking plugin startup or scan operations. When it detects a new version, it logs a message and sets a flag that appears in the dashboard status:
-
-```json
-{
-  "IsScanning": false,
-  "UpdateAvailable": {
-    "Version": "0.1.2",
-    "Channel": "stable",
-    "ReleaseUrl": "https://github.com/mcgarrah/...",
-    "AllowAutoUpdate": true
-  }
-}
-```
+`UpdateStatus` — the cached object both tasks and the dashboard read — tracks `CurrentVersion`, `LatestStableVersion`, `LatestDevVersion`, `UpdateAvailable`, `AvailableVersion`, and which `Channel` it was computed against. Splitting the check (daily, cheap, read-only) from the install-and-maybe-restart step (weekly, and off by default) means opening the dashboard never triggers a live network call or an unexpected install — it just reads whatever the last scheduled check found.
 
 ### Channel Selection
 
-The update checker respects a user-configurable preference:
+Since a single registered repository can list many versions and Jellyfin has no first-class idea of "channels," this plugin publishes two separate manifests and classifies each `VersionInfo` Jellyfin returns by which registered repository URL it came from — not by a repository's free-text display name, which an admin could label anything:
 
 | Setting | Default | Effect |
 |---------|---------|--------|
-| `CheckForUpdates` | true | Enable automatic checking |
-| `PreferredReleaseChannel` | "stable" | "stable" or "development" |
-| `AllowAutoUpdate` | false | Automatically download and install updates |
+| `UpdateChannel` | `Stable` | `Stable` or `Development` — which channel counts as "available" |
+| `StableManifestUrl` | this repo's `manifest.json` | Advanced override; rarely touched |
+| `DevManifestUrl` | this repo's `manifest-unstable.json` | Advanced override; rarely touched |
+| `EnableAutoUpdate` | `false` | Weekly task installs (stages) a newer version automatically |
+| `AutoRestartAfterUpdate` | `false` | After an automatic install, also restart once nobody's watching |
 
-A user can enable `AllowAutoUpdate` to have the plugin download and stage updates automatically, then restart to apply them. The key innovation is the **session-aware restart logic** (covered next).
+All four update-related settings default to off — a conservative install only ever sees update notifications and clicks "Update Now" on the dashboard by hand. `EnableAutoUpdate` and `AutoRestartAfterUpdate` are deliberately separate toggles: the first lets the plugin stage a newer version without touching the running process at all, the second is what actually restarts Jellyfin to load it, covered next.
 
-### Implementation Details
-
-The update checker:
-
-1. **Uses GitHub releases API** — No custom update server to maintain. Release artifacts on GitHub become the authoritative source.
-2. **Filters by semantic version** — Parses `manifest.json` version field and compares against GitHub releases. Ignores pre-releases unless the user selected the development channel.
-3. **Runs on a 7-day schedule** — Configurable via settings, defaulting to weekly checks to avoid hammering the API.
-4. **Handles offline gracefully** — If GitHub is unreachable, the check logs a warning and reschedules for next week. No user-facing errors.
+Full source: [`Updates/UpdateChecker.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/Updates/UpdateChecker.cs), [`ScheduledTasks/CheckForUpdatesTask.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/ScheduledTasks/CheckForUpdatesTask.cs).
 
 ## Feature 2: Session-Aware Auto-Restart
 
-Automatic updates are only useful if they actually apply. But blindly restarting Jellyfin to load a new plugin version creates a terrible user experience: if a scan is running, restarting interrupts it and potentially corrupts the database. If someone is actively watching a movie, restarting kills their playback.
-
-The plugin detects these situations and defers the restart:
+Automatic updates are only useful if they actually apply, but blindly restarting Jellyfin the moment a new version installs is a terrible user experience: an in-progress scan gets cut off mid-file, and anyone mid-episode loses playback outright. `AutoUpdateTask` — the same weekly task that performs the install — handles this by refusing to restart until it's actually safe:
 
 ```csharp
-// Pseudo-code: session-aware restart decision
-bool CanRestartNow()
+public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
 {
-    // Check if an integrity scan is running
-    if (ScanEngine.IsScanning)
-        return false;
-    
-    // Check if users are actively streaming
-    if (SessionManager.ActivePlaybackSessions.Any())
-        return false;
-    
-    // Check quiet hours (if configured)
-    if (Config.UseQuietHoursOnly && !IsInQuietHours())
-        return false;
-    
-    return true;
+    if (!config.EnableAutoUpdate) { return; }
+
+    var status = await _updateChecker.RefreshAsync(cancellationToken);
+    if (!status.UpdateAvailable) { return; }
+
+    await _updateChecker.InstallAsync(status.Channel, cancellationToken);
+
+    if (config.AutoRestartAfterUpdate)
+    {
+        await WaitForNoActivePlaybackAsync(cancellationToken);
+        _systemManager.Restart();
+    }
+}
+
+private async Task WaitForNoActivePlaybackAsync(CancellationToken cancellationToken)
+{
+    while (_sessions.Sessions.Any(s => s.NowPlayingItem != null) && !cancellationToken.IsCancellationRequested)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(30), cancellationToken);
+    }
 }
 ```
 
-When the update is staged and ready to apply:
-
-1. **On idle** — If the plugin detects zero active scans and zero playback sessions, it restarts immediately
-2. **On schedule** — If the user configured quiet hours, it waits for the quiet window and restarts then
-3. **Last resort** — If an update has been staged for more than 7 days, it forces a restart (the update is critical) but logs a warning that scans were interrupted
-
-This prevents the most painful scenario: a user's scan of 50,000 files starts on Monday, and auto-update silently kills it on Wednesday morning.
+Notice what's *not* there: no forced restart after some maximum wait. That was a deliberate call, not an oversight — `ISystemManager.Restart()` is a one-way door with no way to defer or cancel it once called (confirmed by decompiling Jellyfin's own implementation rather than assuming), so there's no safe way to "restart soon anyway" without risking the exact scenario this feature exists to prevent. If playback never stops, the update simply stays installed-but-not-loaded until an admin restarts manually — which is also exactly why `EnableAutoUpdate` and `AutoRestartAfterUpdate` are two separate settings: an install with no restart is a strictly safer default than an install that eventually forces one.
 
 ### What Triggers a Restart
 
-The plugin only restarts when:
-- An update is staged and ready to apply (`AllowAutoUpdate: true`)
-- OR a manual "Apply Update" button is clicked in the dashboard
+Restarts only ever come from this one path:
 
-Normal operation (scanning, API requests, dashboard access) never triggers a restart.
+- `EnableAutoUpdate` is on, a newer version exists for the configured channel, **and** `AutoRestartAfterUpdate` is also on.
+
+Scanning, API requests, and dashboard access never trigger a restart under any circumstances — and the wait loop above re-checks playback every 30 seconds indefinitely, so a scan or a movie that's still running an hour after the update installed simply delays the restart by that same hour.
+
+Full source: [`ScheduledTasks/AutoUpdateTask.cs`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/ScheduledTasks/AutoUpdateTask.cs).
 
 ## Critical Fixes: Packaging and Cross-Platform Support
 
@@ -162,29 +167,28 @@ This bloated the plugin zip to ~40MB, most of it unused. Windows installs includ
 
 ### Issue 2: Assembly Whitelist for Cross-Platform Loading
 
-Even after removing redundant assemblies, the plugin needed an explicit **whitelist** of which assemblies were allowed to load on each platform. The `.pdb` debug symbol files were platform-independent, but some binaries weren't, and Jellyfin's plugin loader was conservative: if it saw any assembly it couldn't verify, it rejected the entire plugin package.
+Trimming the package down to just `linux-x64`'s native SQLite binary (Issue 1's fix) stopped the install crash, but it meant Windows, macOS, and every other Linux architecture would have shipped with no working native SQLite library at all. Restoring real cross-platform support meant bundling *every* server platform's native binary back in — which reintroduced the original crash, just for a different set of files.
 
-**Fix (PR #30):** Added an assembly whitelist to `manifest.json`:
+The actual mechanism, found by decompiling Jellyfin's own `PluginManager` (`Emby.Server.Implementations.dll`, pulled from a real 10.11.11 server image) rather than guessing: a plugin can ship its own `meta.json` with a populated `assemblies` list, and Jellyfin uses **only that whitelist** to decide what to load as a managed .NET assembly — instead of its default fallback of recursively loading every `.dll` under the plugin folder, which is what choked on a bundled native binary that merely *looked* like a managed assembly by extension.
+
+**Fix (PR #30):** a flat `assemblies` whitelist in the plugin's own bundled `meta.json` (not the repository-level `manifest.json` used earlier in this article — a different file, at a different layer):
 
 ```json
 {
+  "guid": "c8f4a3b2-1d5e-4f6a-9b7c-2e8d0f1a3b5c",
   "assemblies": [
     "Jellyfin.Plugin.MediaIntegrityScanner.dll",
-    "Microsoft.Data.Sqlite.dll"
-  ],
-  "linuxNativeAssemblies": [
-    "runtimes/linux-x64/native/e_sqlite3.so"
-  ],
-  "windowsNativeAssemblies": [
-    "runtimes/win-x64/native/e_sqlite3.dll"
-  ],
-  "osxNativeAssemblies": [
-    "runtimes/osx-x64/native/libe_sqlite3.dylib"
+    "Microsoft.Data.Sqlite.dll",
+    "SQLitePCLRaw.batteries_v2.dll",
+    "SQLitePCLRaw.core.dll",
+    "SQLitePCLRaw.provider.e_sqlite3.dll"
   ]
 }
 ```
 
-This lets Jellyfin know: "This plugin is guaranteed to load correctly on Windows, Linux, and macOS." The plugin now installs successfully on all three platforms.
+With the whitelist in place, native runtime binaries for every platform (win-x64/arm64, linux-x64/arm/arm64/musl variants, osx-x64/arm64) never reach Jellyfin's assembly loader at all, regardless of filename — so the package can safely bundle all of them in one universal zip. Verified against a real demo instance: staged a build containing every platform's native binary (including the exact `win-x64` DLL that crashed the previous attempt) and confirmed via the server's own logs that it loaded only the five whitelisted managed assemblies and never touched a native runtime file.
+
+Full file: [`meta.json`](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/Jellyfin.Plugin.MediaIntegrityScanner/meta.json).
 
 ## Testing Infrastructure: Playwright E2E and Corruption Matrix
 
