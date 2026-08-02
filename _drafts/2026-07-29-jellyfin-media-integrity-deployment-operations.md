@@ -7,11 +7,11 @@ tags: [jellyfin, media-integrity, proxmox, ceph, deployment, ci-cd, monitoring, 
 excerpt: "Getting the Media Integrity Scanner into production — installing in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring and alerting, and building the CI/CD pipeline for automated plugin releases."
 description: "Deploying and operating the Jellyfin Media Integrity Scanner plugin in a production homelab. Covers Proxmox LXC installation, CephFS/NFS storage configuration, monitoring with Prometheus/Grafana, alerting on failures, and GitHub Actions CI/CD for automated builds and releases. Part 5 of a 5-part development series."
 date: 2026-07-29
-last_modified_at: 2026-08-01
+last_modified_at: 2026-08-02
 seo:
   type: BlogPosting
   date_published: 2026-07-29
-  date_modified: 2026-08-01
+  date_modified: 2026-08-02
 ---
 
 The plugin is built — scanner core, SQLite persistence, REST API, admin dashboard. Now it needs to run reliably in production without causing problems. This article covers the deployment story: installing the plugin, configuring it for shared storage, monitoring its operation, and automating the release pipeline.
@@ -424,9 +424,10 @@ sqlite3 media-integrity.db "PRAGMA integrity_check;"
 
 ### Upgrading the Plugin
 
-1. Check the repository for new releases
-2. Jellyfin's plugin auto-update handles it if installed via repository
-3. For manual installs: replace the DLL files and restart
+1. Open the dashboard — if a newer version exists for your configured channel (Stable or Development, see [Checking for Updates](/jellyfin-media-integrity-dashboard-api/#update-an-in-plugin-update-checker)), an "Update Available" banner appears with the version and a one-click **Update Now**
+2. Click it — Jellyfin downloads and stages the update the same way Dashboard > Plugins > Catalog would
+3. Restart Jellyfin to actually load the new version (the banner tells you this after a successful install)
+4. For manual installs (no repository registered): download the release ZIP and replace the plugin's files yourself, then restart
 
 ## Project Roadmap
 
