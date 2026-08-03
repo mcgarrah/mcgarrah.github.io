@@ -50,6 +50,8 @@ While I was at it, I ran the same checklist against all six cluster nodes, not j
 
 One aside worth recording: the cluster's mon quorum had a separate, unrelated warning going in (`1/6 mons down, out of quorum: edgar`, with mon.edgar logging "laggy" lease warnings). edgar's own clock was confirmed synced via `timedatectl` — not the cause. A hard power cycle of the SAN switch (a Netgear GS108) fixed it before the migration even started. Filed under: when Ceph mons get flaky, check the switch before you go looking at the nodes.
 
+That switch is a known weak point, not a one-off. It's an unmanaged consumer switch that hangs every few months, and it's the reason an HP ProCurve 2810 — managed, LACP-capable — has been sitting on a shelf waiting for a maintenance window rather than actually deployed. This incident is one more real data point for a future article: getting that SAN network onto real, LACP-bonded, managed switching instead of hoping the Netgear stays up between reboots.
+
 ## Pause Ceph, Pull the Drives
 
 ```bash
