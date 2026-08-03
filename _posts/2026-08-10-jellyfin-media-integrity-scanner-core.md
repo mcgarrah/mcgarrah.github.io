@@ -19,15 +19,11 @@ The [architecture article](/jellyfin-media-integrity-architecture-design/) laid 
 
 <!-- excerpt-end -->
 
-> **Implementation status (updated July 31, 2026):** The scanner core described in this article is fully implemented and shipping — plugin scaffold, FFmpeg wrapper, resolver, and scan engine are all real, not target code. A few things changed from the original design as bugs and gaps surfaced during hardening: the FFmpeg process wrapper now drains stdout/stderr concurrently with process exit (to avoid an OS pipe-buffer deadlock on large stderr output) and kills the process tree on cancellation instead of leaving orphaned ffmpeg processes; `IsScanning` is tracked with `Interlocked` counters rather than a semaphore-count comparison; and the scan engine gained two pacing mechanisms not shown in the original code below — a quiet-hours window check and a post-scan read-rate throttle. See the [Scan Pacing update](#update-quiet-hours-and-read-rate-throttling) at the end of this article for details.
-
-This is Part 3 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series.
+This is Part 3 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series. The scanner core described below is real, shipped code, not a target design, built and tested against a dedicated Proxmox LXC container running .NET 9 and `jellyfin-ffmpeg` alongside GitHub Actions CI. A few things evolved from the version shown here as testing surfaced real gaps: the FFmpeg process wrapper now drains stdout/stderr concurrently with process exit, to avoid an OS pipe-buffer deadlock on large stderr output, and kills the process tree on cancellation instead of leaving orphaned ffmpeg processes; `IsScanning` is tracked with `Interlocked` counters rather than a semaphore-count comparison; and the scan engine gained two pacing mechanisms not shown below — a quiet-hours window and a post-scan read-rate throttle, covered in the [Scan Pacing update](#update-quiet-hours-and-read-rate-throttling) further down.
 
 ## Project Structure
 
 Following the [jellyfin-plugin-template](https://github.com/jellyfin/jellyfin-plugin-template) pattern:
-
-> **Build environment note (updated July 31, 2026):** The dedicated Proxmox LXC build/integration-test container is now operational (.NET 9 SDK, `jellyfin-ffmpeg`, and a test Jellyfin instance), alongside GitHub Actions CI.
 
 ```
 jellyfin-plugin-media-integrity-scanner/

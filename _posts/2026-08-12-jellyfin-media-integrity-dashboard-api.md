@@ -19,9 +19,7 @@ The [scanner core](/jellyfin-media-integrity-scanner-core/) handles the detectio
 
 <!-- excerpt-end -->
 
-> **Implementation status (updated July 31, 2026):** The REST API controller and dashboard are fully implemented and shipping. Two accuracy bugs surfaced during a later review and were fixed — see the [Status Accuracy and Library Filtering update](#update-status-accuracy-and-library-filtering) at the end of this article: `GetStatus` originally reported `TotalFiles`/`PendingFiles` straight from the scan-results table (which never reflected the real library size, and double-counted items scanned in both phases), and `libraryId` on `GET /Results` was accepted but silently ignored.
-
-This is Part 4 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series.
+This is Part 4 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series. The REST API controller and dashboard below are fully implemented and shipping, though two accuracy bugs surfaced during a later review: `GetStatus` originally reported `TotalFiles`/`PendingFiles` straight from the scan-results table, which never reflected the real library size and double-counted items scanned in both phases, and `libraryId` on `GET /Results` was accepted but silently ignored. Both are covered in the [Status Accuracy and Library Filtering update](#update-status-accuracy-and-library-filtering) further down.
 
 ## REST API Controller
 
@@ -265,7 +263,7 @@ The dashboard now shows the running version plus, when a newer one exists for th
 
 ## What's Next
 
-The [final article](/jellyfin-media-integrity-deployment-operations/) covers deployment and operations: installing the plugin in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring/alerting, and the CI/CD pipeline for plugin releases.
+The [next article](/jellyfin-media-integrity-deployment-operations/) covers deployment and operations: installing the plugin in Proxmox LXC containers, configuring for CephFS storage, setting up monitoring/alerting, and the CI/CD pipeline for plugin releases.
 
 ## Series Navigation
 

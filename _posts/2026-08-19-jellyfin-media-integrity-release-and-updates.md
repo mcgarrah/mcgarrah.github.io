@@ -237,7 +237,7 @@ This gives confidence that the plugin's detection logic matches what real ffmpeg
 
 ## Documentation: ARCHITECTURE.md
 
-The five-part blog series covers the design, but operators and developers need to understand **every single code path** that can trigger a scan — Jellyfin events, scheduled tasks, manual API calls. A single diagram that shows all of these helps immensely.
+The first five articles in this series cover the design, but operators and developers need to understand **every single code path** that can trigger a scan — Jellyfin events, scheduled tasks, manual API calls. A single diagram that shows all of these helps immensely.
 
 [ARCHITECTURE.md](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner/blob/main/ARCHITECTURE.md) includes:
 
@@ -314,16 +314,33 @@ The six-part series now covers:
 
 Together, these articles document a complete development and release cycle: from identifying a problem, designing a solution, implementing it, shipping it, and then hardening it for production use based on real-world feedback.
 
-## What's Next
+## Future Work
 
-The plugin is stable and production-ready, but the roadmap includes:
+The plugin is stable and production-ready, but v0.1.1 is the end of the *development series*, not the end of the plugin's evolution. Some of these are old ideas that never got past a bullet point; others came out of specifically sitting down and asking hard questions about parts of the design that had started to feel too convenient to be true. None of it is scheduled — this is the honest state of "things worth doing," not a roadmap with dates.
 
-- Prometheus metrics export (direct scrape, not custom polling scripts)
-- Bulk rescan operations (scan all files matching criteria: media type, library, date range)
-- Scan result export (CSV for analysis or archival)
-- Storage-level integrations (alerts when CephFS/RAID health degrades)
+### Operational improvements
 
-These are future enhancements, not prerequisites for stable operation. v0.1.1 is the end of the development series, but not the end of the plugin's evolution.
+- **A CLI mode.** Right now every interaction goes through the dashboard or the REST API — there's no way to, say, initialize the database or kick off a scan from a script after a fresh install. The catch: a Jellyfin plugin has no `Main()` and depends entirely on Jellyfin's own DI container, so this only works cleanly if it turns out to mean "a thin CLI wrapper over the existing API," not "run the plugin binary standalone."
+- **Database size and maintenance visibility.** The SQLite cache has no size reporting and no exposed way to `VACUUM` or run an integrity check — currently that's a manual `sqlite3` shell session. A dashboard stat plus a manual "run maintenance now" button would close that gap, assuming `VACUUM` really is safe to run against the live WAL-mode database without stopping Jellyfin, which needs confirming for real rather than assumed from documentation.
+- **Prometheus metrics export** — a native `/metrics` endpoint instead of the polling script from the [deployment article](/jellyfin-media-integrity-deployment-operations/#monitoring--alerting).
+- **Scan result export** (CSV, for analysis or archival) and **bulk rescan operations** (scan everything matching a media type, library, or date range).
+- **Storage-level integrations** — alerts when CephFS/RAID health itself degrades, not just when a file fails a scan.
+- **Webhook notifications** to Discord/Slack/ntfy on failures, and **repair automation** that attempts an `ffmpeg -c copy` remux on the subset of failures that kind of fix can actually help.
+
+### Under the hood
+
+- **The throttling model is more naive than it looks.** `MaxConcurrentScans` is a flat, manually-set number with no relationship to the host's actual CPU count, and `MaxReadRateMbPerSec` is enforced *per file*, not system-wide — run more concurrent scans and the real aggregate read rate off storage can exceed the configured cap by a multiple of however many scans are running at once. Worth a real redesign: a vCPU-aware default for concurrency, and a shared rate limiter every scan draws from instead of each one pacing itself in isolation.
+- **The scan-results database is add-and-remove, but only while something's listening.** A removed library item does get purged — confirmed by reading the real code, not assumed — but only if the plugin happens to be running at the exact moment Jellyfin reports the removal. There's no periodic reconciliation pass that catches whatever that missed. Jellyfin's own `ILibraryManager.GetItemIds()` is exactly the primitive a "diff the database against what's actually in the library" task would need; nothing's built against it yet.
+- **A per-library throttle profile and a scan-priority queue** (recently-added files first) — both straightforward extensions of the existing throttling model, just not built.
+- **Live-reload of Jellyfin's own ffmpeg path.** The resolver already checks Jellyfin's global transcoding ffmpeg override, which is nice — but it's only read once, at plugin startup, and cached from then on. Change that setting in Jellyfin's own dashboard later and this plugin won't notice until a restart.
+
+### Testing and platform coverage
+
+- **Every CI check runs on Linux only.** The unit tests, integration suite, and Playwright suite all execute on `ubuntu-latest` — nothing runs on Windows or macOS, despite the plugin explicitly shipping and claiming support for both. One test file even says so directly in a code comment: the Windows/macOS branches of the ffmpeg path resolver "are not covered." Real proof of cross-platform support means actually running somewhere other than Linux, not just packaging correctly for it.
+
+### An idea that hit a real wall
+
+The one genuinely appealing idea that turned out not to be buildable, at least not yet: using Jellyfin's own playback-failure signal to trigger an immediate follow-up scan on whatever file a client just reported trouble with, instead of waiting for the next scheduled sweep. Jellyfin's client-facing API *does* carry a `Failed` flag when a session stops — but reading the real, decompiled `SessionManager` source shows that flag gets read internally to decide whether to update watch state, and is never copied onto the event a plugin actually receives. A playback that failed and a playback someone simply stopped early look identical from the one hook a plugin can subscribe to. This isn't a plugin design problem to solve — it's a gap in what Jellyfin exposes, and the honest next step is raising it upstream rather than working around something that isn't there.
 
 ---
 

@@ -18,9 +18,7 @@ The plugin is built — scanner core, SQLite persistence, REST API, admin dashbo
 
 <!-- excerpt-end -->
 
-> **Implementation status (updated August 1, 2026):** The build pipeline, release pipeline, and Proxmox LXC provisioning are all live and operational — the LXC build/integration-test container (.NET 9 SDK, `jellyfin-ffmpeg`, test Jellyfin instance) is up and running. `MaxReadRateMbPerSec` and the quiet-hours settings shown in the CephFS/NFS tuning tables below are now actually enforced (they weren't for a while — see the [CephFS-Specific Configuration](#cephfs-specific-configuration) section for how). The CI/CD section below reflects the real, current workflows, including automated `manifest.json` version bumps on tagged releases and a unit test suite (113 tests) plus a real Docker-based integration suite gating every build — see the [CI/CD Pipeline](#cicd-pipeline) section for what that testing found. There's also a real in-app settings page now (see the [dashboard article](/jellyfin-media-integrity-dashboard-api/#update-a-real-settings-page)) — the "Configure throttling settings" step in the [Operational Runbook](#operational-runbook) below no longer means hand-editing an XML file. CephFS OSD-level tuning and Prometheus/Grafana monitoring remain aspirational, as noted in the Roadmap.
-
-This is Part 5 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series.
+This is Part 5 of the [Jellyfin Media Integrity Scanner](/jellyfin-media-integrity-scanner-introduction/) development series. The build pipeline, release pipeline, and Proxmox LXC provisioning described below are all live and operational, and `MaxReadRateMbPerSec` and the quiet-hours settings in the CephFS/NFS tuning tables are genuinely enforced (see [CephFS-Specific Configuration](#cephfs-specific-configuration) for the mechanism). The CI/CD section reflects the real, current workflows — automated `manifest.json` version bumps on tagged releases, plus a unit test suite and a Docker-based integration suite gating every build (see [CI/CD Pipeline](#cicd-pipeline) for what that testing found). There's also a real in-app settings page now (see the [dashboard article](/jellyfin-media-integrity-dashboard-api/#update-a-real-settings-page)), so the "Configure throttling settings" step in the [Operational Runbook](#operational-runbook) no longer means hand-editing an XML file. CephFS OSD-level tuning and Prometheus/Grafana monitoring remain aspirational — see the [final article's Future Work section](/jellyfin-media-integrity-release-and-updates/#future-work) for where those stand.
 
 ## Installation Methods
 
@@ -410,16 +408,9 @@ sqlite3 media-integrity.db "PRAGMA integrity_check;"
 2. Jellyfin's plugin auto-update handles it if installed via repository
 3. For manual installs: replace the DLL files and restart
 
-## Project Roadmap
+## What's Next
 
-Future enhancements under consideration:
-
-- **Prometheus metrics endpoint** — Native `/metrics` export for Grafana dashboards
-- **Webhook notifications** — POST to Discord/Slack/ntfy on failures
-- **Repair automation** — Attempt `ffmpeg -c copy` repair on fixable failures
-- **Library-specific settings** — Different throttle profiles per library
-- **Scan priority queue** — Recently added files scan first
-- **CLI companion tool** — Standalone scanner using the same core logic
+The plugin is deployed, monitored, and releasing on a real CI/CD pipeline — but v0.1.0 wasn't the end of the story. The [final article](/jellyfin-media-integrity-release-and-updates/) covers what production use and real testing turned up afterward: an update checker, session-aware auto-restart, a packaging bug that broke non-Linux installs, and a full future-work list of what's still being evaluated.
 
 ## Resources
 
