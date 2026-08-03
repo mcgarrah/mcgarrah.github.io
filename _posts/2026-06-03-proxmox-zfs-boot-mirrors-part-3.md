@@ -270,5 +270,6 @@ ceph osd tree
 
 - [ZFS Boot Mirrors on Proxmox 8 - Part 1](/proxmox-zfs-boot-mirrors-part-1/) — Same-size drive replacement
 - [ZFS Boot Mirrors on Proxmox 8 - Part 2](/proxmox-zfs-boot-mirrors-part-2/) — Emergency recovery from catastrophic dual-drive failure
+- [ZFS Boot Mirrors on Proxmox 8 - Part 4](/proxmox-zfs-boot-mirrors-part-4/) — This procedure, executed for real against a live node
 - [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring and alerting
 - [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place
