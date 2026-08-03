@@ -5,7 +5,7 @@ categories: [web-development, technical, automation]
 tags: [jekyll, seo, github-actions, lighthouse, monitoring, automation]
 excerpt: "Building a comprehensive SEO health check system for Jekyll sites with GitHub Actions, Lighthouse CI, and automated link validation - Part 2 of the Jekyll SEO series."
 description: "Learn how to implement advanced SEO monitoring for Jekyll sites using GitHub Actions, Lighthouse CI, Lychee link checker, and comprehensive automated validation with detailed reporting and artifact management."
-image: /assets/images/jekyll-seo-health-checks.png
+image: /assets/images/og/jekyll-seo-health-checks.png
 author: Michael McGarrah
 date: 2026-01-01
 published: true

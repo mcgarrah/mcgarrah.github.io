@@ -5,7 +5,7 @@ categories: [web-development, technical]
 tags: [jekyll, seo, github-pages, google-search-console, canonical-urls, sitemap]
 excerpt: "How to resolve Google Search Console redirect warnings and canonical URL conflicts in Jekyll sites hosted on GitHub Pages."
 description: "Complete guide to fixing canonical URL mismatches, redirect warnings, and SEO indexing issues in Jekyll websites. Includes Google Search Console troubleshooting and sitemap optimization."
-image: /assets/images/jekyll-seo-canonical.png
+image: /assets/images/og/jekyll-seo-sitemap-canonical-url-fixes.png
 author: Michael McGarrah
 published: true
 last_modified_at: 2025-12-31
