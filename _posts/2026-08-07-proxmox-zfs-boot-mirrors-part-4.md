@@ -175,7 +175,7 @@ Fixed by restoring the quirks file (and, while at it, actually creating the Ceph
 - **The apt/etc diff is worth keeping.** It's what actually caught the missing Ceph packages, the vGPU helper, and the stale enterprise Ceph repo — all things that would otherwise have surfaced one at a time, later, as separate confusing failures instead of one upfront list.
 - **A node with USB-attached drives needs its `usb_storage.quirks` GRUB drop-in restored explicitly.** It's not covered by the ZFS boot-mirror checklist at all — a separate concern that needs its own line item.
 
-Three nodes left on spinning rust: tanaka (an Apple HDD with reallocated sectors climbing fast), poe (oldest drives in the cluster, 6+ years), and kovacs (5 years, stable but aging). Same procedure, same hardware family, same UEFI answer already settled going in — and this time, every one of these four gaps gets fixed proactively instead of found live.
+tanaka (an Apple HDD with reallocated sectors climbing fast) was next in line, and by the time this posts it's already done — see [Part 5](/proxmox-zfs-boot-mirrors-part-5/) for how a migration goes when all four of these gaps are fixed proactively instead of found live. Two nodes left on spinning rust after that: poe (oldest drives in the cluster, 6+ years) and kovacs (5 years, stable but aging). Same procedure, same hardware family, same UEFI answer already settled going in.
 
 ## Related Articles
 
