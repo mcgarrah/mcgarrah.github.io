@@ -4,8 +4,8 @@ image: /assets/images/og/proxmox-zfs-boot-mirrors-part-4.png
 layout: post
 categories: [proxmox, zfs, storage, homelab, ceph]
 tags: [proxmox, zfs, storage, homelab, hardware, boot, mirror, ceph, ssd, uefi]
-excerpt: "Part 3 laid out the plan for migrating to smaller SSDs. Here's what happened running it against a real node with both mirror drives failing at once — a UEFI dead end (the third one), two Ceph gaps the plan never anticipated, and a mistake I made and had to recover from live."
-description: "A real execution of the Part 3 planned-migration procedure against a live node with both ZFS boot mirror drives degraded. Covers the SMART trigger, a confirmed UEFI dead end on this hardware, gaps in the original checklist (SAN network, Ceph mon/mgr recreation), a hostid mistake that broke the next boot, and full verification."
+excerpt: "Part 3 laid out the plan for migrating to smaller SSDs. Here's what happened running it against a real node with both mirror drives failing at once — a UEFI dead end (the third one), four gaps the plan never anticipated, a mistake I made and had to recover from live, and a real hardware failure that surfaced while fixing the last gap."
+description: "A real execution of the Part 3 planned-migration procedure against a live node with both ZFS boot mirror drives degraded. Covers the SMART trigger, a confirmed UEFI dead end on this hardware, gaps in the original checklist (SAN network, Ceph mon/mgr recreation, USB SMART quirks), a hostid mistake that broke the next boot, a live OSD failure caused by the USB gap, and full verification."
 date: 2026-08-07
 last_modified_at: 2026-08-07
 seo:
@@ -157,19 +157,32 @@ pvecm status
 
 Back to the exact pre-migration baseline, on new 128GB SSDs, with PVE and the kernel updated (8.4.19, `6.8.12-39-pve`) along the way.
 
+## A Fourth Gap, Found the Next Day
+
+This cluster's Seagate USB drives (three OSD block devices and one backup drive, all on edgar) need a `usb_storage.quirks=` GRUB parameter to report SMART data at all — covered in an [earlier article](/usb-drive-smart/) and its [production update](/usb-drive-smart-updates/), and living in its own drop-in file, `/etc/default/grub.d/usb-quirks.cfg`.
+
+That file was never part of the Golden Backup Checklist. It's a separate concern from `/etc/default/grub` itself (which the checklist does capture), so it silently didn't survive the fresh install. Confirmed the next day: every other node in the cluster had the identical file; edgar didn't.
+
+This wasn't a theoretical gap for long. While confirming it was actually missing, `osd.7` — backed by one of edgar's Seagate USB drives — threw a real hardware I/O error and the drive dropped off the USB bus entirely, reappearing under a new kernel device name a few minutes later (`sdf` → `sdh`). The data was fine — `pvscan` found the LVM volume intact under the new name — but the block device itself kept refusing reads until something forced a clean USB re-enumeration. Exactly the class of instability those two earlier articles exist to reduce, showing up live in the middle of confirming the gap that let it happen.
+
+Fixed by restoring the quirks file (and, while at it, actually creating the CephFS master copy the original USB-SMART article described but that had never really been done), refreshing the boot config, pausing Ceph, and rebooting. The reboot did double duty: it loaded the quirks parameter *and* forced the stuck drive to re-enumerate cleanly. Both problems gone in the same action — `smartctl -d sat -H` now reports real Seagate model numbers and PASSED on all four USB drives instead of generic "Portable"/"Expansion HDD" labels, and all three OSDs came back up on their own.
+
 ## What This Changes for Next Time
 
 - **Stop planning for UEFI on this hardware.** Three attempts, three walls (harlan, quell, edgar). poe and kovacs — the two remaining HDD nodes — should budget zero time on it and go straight to Legacy BIOS/GRUB.
 - **A mon+mgr+osd node needs more than OSD reactivation.** `pveceph mon create` and `pveceph mgr create`, plus checking `/etc/network/interfaces` for a second bridge, are now part of the real checklist — not just `ceph-volume lvm activate --all`.
 - **The hostid-restore step is conditional**, not a reflex. Only for a pool that predates the current install.
 - **The apt/etc diff is worth keeping.** It's what actually caught the missing Ceph packages, the vGPU helper, and the stale enterprise Ceph repo — all things that would otherwise have surfaced one at a time, later, as separate confusing failures instead of one upfront list.
+- **A node with USB-attached drives needs its `usb_storage.quirks` GRUB drop-in restored explicitly.** It's not covered by the ZFS boot-mirror checklist at all — a separate concern that needs its own line item.
 
-Two nodes left on spinning rust: poe (oldest drives in the cluster, 6+ years) and kovacs (5 years, stable but aging). Same procedure, same hardware family, same UEFI answer already settled going in.
+Three nodes left on spinning rust: tanaka (an Apple HDD with reallocated sectors climbing fast), poe (oldest drives in the cluster, 6+ years), and kovacs (5 years, stable but aging). Same procedure, same hardware family, same UEFI answer already settled going in — and this time, every one of these four gaps gets fixed proactively instead of found live.
 
 ## Related Articles
 
 - [ZFS Boot Mirrors on Proxmox 8 - Part 1](/proxmox-zfs-boot-mirrors-part-1/) — Same-size drive replacement
 - [ZFS Boot Mirrors on Proxmox 8 - Part 2](/proxmox-zfs-boot-mirrors-part-2/) — Emergency recovery from catastrophic dual-drive failure
 - [ZFS Boot Mirrors on Proxmox 8 - Part 3](/proxmox-zfs-boot-mirrors-part-3/) — The planned-migration procedure this article executes
+- [Enabling SMART Monitoring on Seagate USB Drives](/usb-drive-smart/) — The original UAS quirks fix this article's fourth gap is about
+- [USB Drive SMART Updates](/usb-drive-smart-updates/) — Production experience and the GRUB parameter approach
 - [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring and alerting
 - [Proxmox & Ceph Homelab Guide](/proxmox-ceph-guide/) — All my Proxmox and Ceph articles in one place
