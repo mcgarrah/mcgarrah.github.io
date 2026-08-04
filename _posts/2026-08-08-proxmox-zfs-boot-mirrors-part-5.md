@@ -33,7 +33,7 @@ Two separate problems, both mechanical, neither one a drive issue:
 1. **A loose VGA cable** at the monitor end — looked identical to "the board is dead" from the chair, and only showed itself once a DVI-to-HDMI adapter was tried on a different port and actually produced a picture.
 2. **A SATA power connector with a 90° bend** right at the connector body, causing an intermittent power fault to one of the new SSDs. Swapped for a flat, straight extender cable and the drive appeared immediately.
 
-Neither of these would show up in any runbook. They're the kind of thing a trash-can crash cart earns its keep on — a spare monitor, keyboard, and a handful of cable adapters kept on hand specifically so "is it actually dead or is it a cable" takes five minutes to answer instead of becoming its own outage. Worth budgeting for on any hands-on hardware work, not just this migration.
+Neither of these would show up in any runbook. They're exactly the kind of thing the [***trash can*** **crash cart** (TC<sup>3</sup>)](/proxmox-upgrade-issues/) earns its keep on — a spare monitor, keyboard, and a pile of VGA/DVI/DisplayPort/HDMI adapters kept on hand specifically so "is it actually dead or is it a cable" takes five minutes to answer instead of becoming its own outage. That cart was built for a much worse night (a power-outage recovery with four overlapping hardware failures at once); tonight it just made quick work of two small mechanical problems. Worth having on hand for any hands-on hardware work, not just migrations.
 
 ## Pre-Flight
 
@@ -132,6 +132,7 @@ With tanaka done, the cluster has two nodes left on spinning rust: **poe** (the 
 - [ZFS Boot Mirrors on Proxmox 8 - Part 2](/proxmox-zfs-boot-mirrors-part-2/) — Emergency recovery from catastrophic dual-drive failure
 - [ZFS Boot Mirrors on Proxmox 8 - Part 3](/proxmox-zfs-boot-mirrors-part-3/) — The planned-migration procedure this article executes
 - [ZFS Boot Mirrors on Proxmox 8 - Part 4](/proxmox-zfs-boot-mirrors-part-4/) — edgar's migration, and the four gaps found live that this article fixes proactively
+- [Proxmox Upgrade Issues: A Crash Cart Recovery Story](/proxmox-upgrade-issues/) — Where the trash-can crash cart (TC³) comes from
 - [Enabling SMART Monitoring on Seagate USB Drives](/usb-drive-smart/) — The original UAS quirks fix behind the USB gap
 - [USB Drive SMART Updates](/usb-drive-smart-updates/) — Production experience and the GRUB parameter approach
 - [Monitoring ZFS Boot Mirror Health in Proxmox 8 Clusters](/proxmox-zfs-boot-mirror-smart-analysis/) — SMART monitoring and alerting
