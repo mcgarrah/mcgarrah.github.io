@@ -164,6 +164,56 @@ inclusion: auto
 
 This gives the agent explicit context about the execution environment, reducing the chance it tries to use Windows-style commands or paths.
 
+## Phantom Diffs in the Source Control Panel
+
+After getting shell execution working, you may notice another oddity: Kiro's Source Control panel shows files as "modified" even when `git status` from the terminal reports a clean working tree. The phantom diffs almost always affect shell scripts (`.sh` files), though other text files can be hit too.
+
+**Root cause:** Kiro's SCM panel accesses the WSL2 filesystem through the `\\wsl$\` UNC path. When the Windows-side git provider (or the SCM extension itself) reads these files through the 9P filesystem bridge, it may interpret line endings or file permissions differently than the Linux-native git. Shell scripts are the most common trigger because they have the executable bit set — and Windows/9P doesn't perfectly translate Unix permissions.
+
+You can confirm this is a phantom diff by running:
+```bash
+git ls-files -m  # Should show nothing
+git diff         # Should show nothing
+```
+
+If both are empty but the SCM panel still shows changes, the fix is to add a `.gitattributes` file that explicitly declares line endings:
+
+```
+# .gitattributes — prevents phantom diffs via \\wsl$\ UNC path access
+*.sh text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.html text eol=lf
+*.svg text eol=lf
+*.png binary
+*.jpg binary
+*.webp binary
+*.pdf binary
+```
+
+**Global vs per-repo:** You can set this globally so it applies to all repositories without adding a file to each one. Git reads global attributes from `~/.config/git/attributes` (the XDG default location on Linux). Create the file with the same content above — no `core.attributesFile` config entry needed, git finds it automatically.
+
+```bash
+mkdir -p ~/.config/git
+cat > ~/.config/git/attributes << 'EOF'
+*.sh text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.html text eol=lf
+*.svg text eol=lf
+*.png binary
+*.jpg binary
+*.pdf binary
+EOF
+```
+
+Adding a per-repo `.gitattributes` is still worthwhile for portability — collaborators and CI will benefit from the explicit declarations — but the global file covers your local Kiro experience across all repositories immediately.
+
 ## Known Remaining Limitations
 
 Even with these fixes, some quirks persist:
@@ -193,6 +243,7 @@ The fix boils down to: **explicitly declare Linux terminal profiles** in Kiro's 
 | Shell integration (zsh) | `~/.zshrc` | Source Kiro integration when `TERM_PROGRAM == kiro` |
 | Shell integration (bash) | `~/.bashrc` | Source Kiro integration when `TERM_PROGRAM == kiro` |
 | Agent context | `~/.kiro/steering/shell-environment.md` | Tell agent it's in Linux/zsh |
+| Phantom SCM diffs | `~/.config/git/attributes` (global) or `.gitattributes` (per-repo) | Explicit `eol=lf` for text files |
 
 Once configured, Kiro's agent can reliably execute shell commands in your WSL2 environment — making the agentic coding experience actually functional for Linux-first developers on Windows hardware.
 
