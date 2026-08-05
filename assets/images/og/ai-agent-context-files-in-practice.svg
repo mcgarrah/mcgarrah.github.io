@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0F0F23"/>
+
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#00D4AA"/>
+
+  <!-- Decorative corner element -->
+  <circle cx="1100" cy="100" r="200" fill="#00D4AA" opacity="0.08"/>
+  <circle cx="1150" cy="580" r="120" fill="#00D4AA" opacity="0.05"/>
+
+  <!-- Icon: multiple document/agent nodes -->
+  <g transform="translate(68, 55) scale(1.2)">
+    <rect x="4" y="8" width="20" height="26" rx="3" fill="none" stroke="#00D4AA" stroke-width="2"/><rect x="14" y="4" width="20" height="26" rx="3" fill="none" stroke="#00D4AA" stroke-width="2"/><rect x="24" y="0" width="20" height="26" rx="3" fill="none" stroke="#00D4AA" stroke-width="2"/><line x1="28" y1="8" x2="40" y2="8" stroke="#00D4AA" stroke-width="1.5"/><line x1="28" y1="13" x2="38" y2="13" stroke="#00D4AA" stroke-width="1.5"/><line x1="28" y1="18" x2="36" y2="18" stroke="#00D4AA" stroke-width="1.5"/>
+  </g>
+
+  <!-- Title -->
+  <text x="80" y="200" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">AI Agent Context Files in Practice:</text>
+  <text x="80" y="258" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="48" font-weight="700" fill="white">One Repo, Five Agents</text>
+
+  <!-- Tags -->
+  <rect x="80" y="420" width="42" height="30" rx="15" fill="#00D4AA" opacity="0.3"/>
+  <text x="92" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00D4AA">ai</text>
+  <rect x="134" y="420" width="96" height="30" rx="15" fill="#00D4AA" opacity="0.3"/>
+  <text x="146" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00D4AA">kiro</text>
+  <rect x="242" y="420" width="123" height="30" rx="15" fill="#00D4AA" opacity="0.3"/>
+  <text x="254" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00D4AA">claude-code</text>
+  <rect x="377" y="420" width="135" height="30" rx="15" fill="#00D4AA" opacity="0.3"/>
+  <text x="389" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#00D4AA">github-copilot</text>
+
+  <!-- Footer: site + date -->
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#00D4AA" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-08-14</text>
+
+  <!-- Author -->
+  <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>
+</svg>

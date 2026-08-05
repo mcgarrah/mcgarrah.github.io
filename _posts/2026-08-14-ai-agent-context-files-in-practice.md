@@ -6,12 +6,12 @@ categories: [technical, development]
 tags: [ai, claude-code, github-copilot, kiro, gemini, productivity, tooling, plugin-development]
 excerpt: "I wrote about managing AI context files across multiple agents in theory. Here's how it actually plays out in a real project — a Jellyfin plugin where Kiro, Claude Code, Copilot, Gemini, and Codex all need to know the same things."
 description: "A practical case study of implementing centralized AI agent context management in a real .NET plugin repository. Demonstrates the AGENTS.md pattern with minimal per-tool stubs for Kiro, Claude Code, GitHub Copilot, Gemini CLI, and OpenAI Codex."
-date: 2026-07-30
-last_modified_at: 2026-07-30
+date: 2026-08-14
+last_modified_at: 2026-08-14
 seo:
   type: BlogPosting
-  date_published: 2026-07-30
-  date_modified: 2026-07-30
+  date_published: 2026-08-14
+  date_modified: 2026-08-14
 ---
 
 Two months ago I wrote about [managing context across multiple AI coding assistants](/managing-cross-ai-agent-context/) and documented the [reference guide for every agent's file format](/ai-coding-agent-context-files-reference/). The theory was straightforward: maintain a single source of truth and let each agent's config file be a thin pointer.
