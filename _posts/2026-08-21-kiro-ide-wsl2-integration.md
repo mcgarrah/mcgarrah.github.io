@@ -166,39 +166,82 @@ This gives the agent explicit context about the execution environment, reducing 
 
 ## Phantom Diffs in the Source Control Panel
 
-After getting shell execution working, you may notice another oddity: Kiro's Source Control panel shows files as "modified" even when `git status` from the terminal reports a clean working tree. The phantom diffs almost always affect shell scripts (`.sh` files), though other text files can be hit too.
+After getting shell execution working, you may notice another oddity: Kiro's Source Control panel shows files as "modified" even when `git status` from the terminal reports a clean working tree. The phantom diffs almost always affect shell scripts (`.sh` files) — specifically those with the executable bit (`chmod +x`) set.
 
-**Root cause:** Kiro's SCM panel accesses the WSL2 filesystem through the `\\wsl$\` UNC path. When the Windows-side git provider (or the SCM extension itself) reads these files through the 9P filesystem bridge, it may interpret line endings or file permissions differently than the Linux-native git. Shell scripts are the most common trigger because they have the executable bit set — and Windows/9P doesn't perfectly translate Unix permissions.
+**Root cause:** Kiro's built-in git SCM extension reads file metadata through the `\\wsl$\` UNC path (the 9P filesystem bridge between Windows and WSL2). The 9P bridge does not faithfully translate Unix file permissions — Windows sees all files without the executable bit. Git's index stores these files as `100755` (executable), but when the SCM extension stats them through the UNC path, it sees `100644` (non-executable). That permission mismatch registers as a modification.
 
 You can confirm this is a phantom diff by running:
 ```bash
-git ls-files -m  # Should show nothing
-git diff         # Should show nothing
+git status          # Clean — nothing to commit
+git ls-files -m     # Empty — no modifications
+git diff            # Empty — no content changes
+git ls-tree HEAD jekyll-caddy.sh  # Shows 100755 — executable in index
+ls -la jekyll-caddy.sh            # Shows -rwxr-xr-x — executable on disk
 ```
 
-If both are empty but the SCM panel still shows changes, the fix is to add a `.gitattributes` file that explicitly declares line endings:
+If all of those are clean but the SCM panel still shows "M", the issue is filemode detection through the 9P bridge.
 
-```
-# .gitattributes — prevents phantom diffs via \\wsl$\ UNC path access
-*.sh text eol=lf
-*.md text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
-*.json text eol=lf
-*.py text eol=lf
-*.html text eol=lf
-*.svg text eol=lf
-*.png binary
-*.jpg binary
-*.webp binary
-*.pdf binary
-```
+### What Doesn't Work
 
-**Global vs per-repo:** You can set this globally so it applies to all repositories without adding a file to each one. Git reads global attributes from `~/.config/git/attributes` (the XDG default location on Linux). Create the file with the same content above — no `core.attributesFile` config entry needed, git finds it automatically.
+I tried several approaches before finding the solution:
+
+- **`.gitattributes` with `eol=lf`** — This fixes line-ending phantom diffs but has no effect on permission/filemode diffs. The problem isn't line endings.
+- **`git.path` pointing to a wrapper script** — I created `~/.local/bin/git-kiro` that injected `-c core.fileMode=false` and set `"git.path"` in both the Kiro user settings and workspace `.vscode/settings.json`. The SCM extension ignored it entirely — it appears to use its own git integration that doesn't honor `git.path` when connected via WSL Remote.
+- **Global git attributes** (`~/.config/git/attributes`) — Same story. Attributes control line-ending normalization, not filemode comparison.
+
+### The Fix: `core.fileMode=false` Per Repository
+
+The only approach that works is setting `core.fileMode=false` directly in each repository's `.git/config`:
 
 ```bash
-mkdir -p ~/.config/git
-cat > ~/.config/git/attributes << 'EOF'
+git config core.fileMode false
+```
+
+This tells git to stop comparing the executable bit between the index and the working tree. Files already committed as `100755` remain `100755` in the repository — this setting only affects the working-tree comparison.
+
+Apply to all affected repos:
+```bash
+git -C ~/github/mcgarrah.github.io config core.fileMode false
+git -C ~/github/jellyfin-plugin-media-integrity-scanner config core.fileMode false
+git -C ~/github/k8s-proxmox config core.fileMode false
+git -C ~/github/resume config core.fileMode false
+```
+
+For new clones, add it after cloning:
+```bash
+git clone <url> && git -C <repo> config core.fileMode false
+```
+
+### Why Not Set It Globally?
+
+You could run `git config --global core.fileMode false` to apply it everywhere, but that affects all tools on the system — Claude Code, Antigravity (Gemini), terminal git, CI scripts. The per-repo approach isolates the workaround to just the repositories open in Kiro.
+
+The tradeoff is minor: if you add a new shell script with `chmod +x`, git won't automatically detect the permission change. You'll need to explicitly tell git:
+```bash
+git update-index --chmod=+x newscript.sh
+```
+
+Since this only matters when adding *new* executable files (not editing existing ones), it's rarely an issue in practice.
+
+### Why This Happens
+
+The chain of events:
+
+1. Kiro connects to WSL2 via `jeanp413.open-remote-wsl`
+2. The built-in git SCM extension runs on the remote side
+3. But it reads file stats through a code path that goes via the 9P bridge (`\\wsl$\`)
+4. The 9P bridge strips Unix permission bits — all files appear as `644`
+5. Git's index says `755` for shell scripts
+6. The SCM extension sees `755 → 644` = modified
+
+The Linux-native git binary doesn't have this problem because it reads permissions directly from the ext4 filesystem. The SCM extension's internal git implementation takes a different code path that hits the 9P translation layer.
+
+### Supplementary: `.gitattributes` for Line Endings
+
+While `.gitattributes` doesn't fix the permission issue, it's still worth adding for line-ending normalization — a separate class of phantom diffs that can occur with other file types:
+
+```
+# .gitattributes — normalize line endings for cross-platform sanity
 *.sh text eol=lf
 *.md text eol=lf
 *.yml text eol=lf
@@ -209,10 +252,9 @@ cat > ~/.config/git/attributes << 'EOF'
 *.png binary
 *.jpg binary
 *.pdf binary
-EOF
 ```
 
-Adding a per-repo `.gitattributes` is still worthwhile for portability — collaborators and CI will benefit from the explicit declarations — but the global file covers your local Kiro experience across all repositories immediately.
+This handles the case where a file is committed with LF but the 9P bridge serves it with CRLF (less common, but possible depending on mount options).
 
 ## Known Remaining Limitations
 
@@ -243,7 +285,8 @@ The fix boils down to: **explicitly declare Linux terminal profiles** in Kiro's 
 | Shell integration (zsh) | `~/.zshrc` | Source Kiro integration when `TERM_PROGRAM == kiro` |
 | Shell integration (bash) | `~/.bashrc` | Source Kiro integration when `TERM_PROGRAM == kiro` |
 | Agent context | `~/.kiro/steering/shell-environment.md` | Tell agent it's in Linux/zsh |
-| Phantom SCM diffs | `~/.config/git/attributes` (global) or `.gitattributes` (per-repo) | Explicit `eol=lf` for text files |
+| Phantom SCM diffs | Each repo's `.git/config` | `core.fileMode=false` to suppress permission phantom diffs |
+| Line-ending normalization | `.gitattributes` (per-repo) or `~/.config/git/attributes` (global) | `eol=lf` declarations for text files |
 
 Once configured, Kiro's agent can reliably execute shell commands in your WSL2 environment — making the agentic coding experience actually functional for Linux-first developers on Windows hardware.
 
