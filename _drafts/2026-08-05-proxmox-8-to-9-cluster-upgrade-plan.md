@@ -62,6 +62,8 @@ A subsequent reboot confirmed `quell` booted kernel `6.8.12-30-pve` cleanly with
 ### 3. Cleanup of `systemd-boot` on Legacy GRUB Systems
 Running `pve8to9 --full` flagged `systemd-boot` as unnecessary on legacy BIOS systems. It was purged across all 6 nodes without impacting GRUB functionality.
 
+`pve8to9 --full` itself was run three separate times across this pre-flight work — once as the initial audit, once to confirm items 1-3 actually took effect, and once more after the LXC maintenance below. Given the kernel-pin lesson above (a fix that looked complete but silently wasn't), re-running the checker after every batch of changes rather than trusting a single clean run once was worth the extra few minutes each time.
+
 ### 4. Predictable Network Interface MAC Mapping
 Because Debian 13 "Trixie" could theoretically alter device naming schemes, a physical MAC address table was compiled across all nodes:
 
@@ -76,34 +78,60 @@ Because Debian 13 "Trixie" could theoretically alter device naming schemes, a ph
 
 If an interface renames post-upgrade, matching physical MACs allows quick remediation in `/etc/network/interfaces`.
 
-### 5. Pre-Upgrade LXC Container OS and Application Maintenance
-LXC guest operating system distros do not need to be upgraded from Debian 12 to 13 before the PVE host upgrade. However, updating userspace packages (such as `systemd` and base tools) inside existing LXCs ensures smooth compatibility with the newer host kernel. Using Community Scripts, LXC OS packages and apps are refreshed fleet-wide prior to host upgrade:
-```bash
-# Update base OS packages across LXC containers
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs.sh)"
+### 5. Pre-Upgrade LXC Container OS and Application Maintenance — the Real Story
+LXC guest operating system distros do not need to be upgraded from Debian 12 to 13 before the PVE host upgrade. However, updating userspace packages (such as `systemd` and base tools) inside existing LXCs ensures smooth compatibility with the newer host kernel.
 
-# Update containerized application stacks
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-apps.sh)"
+The obvious approach — Community Scripts' `update-lxcs.sh` — turned out to have a real gap. Pulling the actual script source (not just trusting a summary of what it does) showed all three of its `whiptail` dialogs — initial confirm, skip-not-running, container-exclusion checklist — are unconditional. There is no environment-variable bypass for this script, and a sandboxed remote shell can't supply whiptail a real TTY even with `ssh -t`.
+
+The real answer was a separate, purpose-built worker script normally installed by a different helper (`cron-update-lxcs.sh`) for scheduled runs: `update-lxcs-cron.sh`. Verified via source to have zero interactive dependencies, it does exactly what's needed — iterate every container, run the OS-appropriate update command (`apt-get update && dist-upgrade` for Debian-based, with `DEBIAN_FRONTEND=noninteractive`), starting and stopping containers as needed:
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs-cron.sh)"
 ```
+
+`update-apps.sh` (application-*version* updates, as opposed to OS packages), by contrast, does support proper unattended env vars:
+
+```bash
+var_backup=yes var_backup_storage=local var_container=all_running var_unattended=yes var_skip_confirm=yes var_auto_reboot=no \
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-apps.sh)"
+```
+
+Only `ct:101` (Technitium DNS) is actually tagged as community-script-managed, so it was the only container this pass touched — the rest were correctly skipped, not broken, since the tool has no safe update path for anything it didn't install itself.
+
+Since `pct exec`/`pct list` are node-scoped, `update-lxcs-cron.sh` had to be run once per node actually hosting containers (poe, kovacs, quell, harlan) — not once cluster-wide.
+
+**An unplanned find along the way:** a slow, 161-package update on one of two identically-named `jellyfin` containers on `harlan` (`ct:501` and `ct:502`) prompted a closer look at why. Comparing their configs showed `501` was an explicit prior generation of `502` — tagged `deprecated`, set to not start on boot, and sharing a MAC address with `502` specifically so the two could never run at once. After confirming it carried no HA dependency and its rootfs was a private volume separate from the CephFS mounts both containers reference, it was destroyed — freeing 22GB from the `cephrbd` pool.
+
+**Also added, prompted by this exercise rather than the upgrade itself:** a persistent weekly cron job (`update-lxcs-cron.sh` plus a matching `/etc/update-lxcs.conf`) installed on all 6 nodes — including the two hosting no containers today — as a hedge against Proxmox HA someday relocating a workload to a node that's never had this maintenance run before.
 
 ---
 
 ## Phase 0: Building the Safety Net (PBS & Off-Cluster Backups)
 
-To safeguard HA guest data during a multi-day maintenance window, a Proxmox Backup Server (PBS) instance is provisioned on `edgar`.
+To safeguard HA guest data during a multi-day maintenance window, a Proxmox Backup Server (PBS) instance is being provisioned — as an LXC container on `edgar`, via the [Community Scripts helper](https://community-scripts.org/scripts/proxmox-backup-server), not a QEMU VM. That choice was easy. Two other decisions took real diligence to get right, because an earlier internal plan had already answered them differently, on paper, without anyone confirming the answers still held.
 
-### Option A: Proxmox Helper Script LXC (Recommended for Homelab Efficiency)
-1. **PBS Dataset Allocation:** Create an 8TiB dataset (`replica28/pbs/datastore`) on `edgar`'s ZFS USB pool.
-2. **Automated LXC Deployment:** Deploy PBS inside a lightweight LXC container using the [Community Script `proxmox-backup-server.sh`](https://community-scripts.org/scripts/proxmox-backup-server).
-3. **Storage Bind-Mount:** Add `mp0: /replica28/pbs/datastore,mp=/mnt/datastore` to `/etc/pve/lxc/9000.conf` to mount the ZFS pool directly into the container.
+**Storage architecture.** The earlier plan called for passing the entire USB drive through to the PBS LXC as a raw block device, letting the container import and own the ZFS pool itself. The decision made here goes the other way: **edgar, the host, creates and owns the `replica28/pbs` dataset**, bind-mounted into the container via a plain `mp0` line. The reason is concrete, not aesthetic — a separate piece of this same safety-net work (refreshing a stale, several-months-old CephFS backup copy) depends on `zfs send`/`receive` running directly on the host, between `quell` and `edgar`. Handing the whole USB drive to a container would take that pool out of the host's hands and break it.
 
-### Option B: PBS in QEMU VM (Full Official Support Reference)
-For official support standards, PBS can also be provisioned in a QEMU VM (`qm create 9000`) with an 8TB virtual disk mapped from `pbs-datastore`.
+**Network address.** A candidate IP was already written down in that same earlier plan, but nothing had actually confirmed it was still free months later. Rather than trust old paper, the full `/23` got cross-referenced three independent ways: every Proxmox node and container config, a live ARP table dump, and an actual `nmap -sn` sweep of all 512 addresses. All three agreed that `192.168.86.9` — chosen deliberately to sit right before `.10`/`.11`, the first Proxmox node, within the block already informally reserved for infrastructure — was genuinely unused. The sweep also surfaced a few historical ARP entries for devices that had quietly gone offline since anything last talked to them, which would have been easy to mistake for live conflicts without the second check.
+
+```bash
+# On edgar — the host owns the dataset
+zfs create -o quota=8T replica28/pbs
+mkdir -p /replica28/pbs/datastore
+
+# The container itself, via the Community Scripts helper
+# (interactive by design — no unattended bypass exists for LXC creation)
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/proxmox-backup-server.sh)"
+
+# Bind-mount the dataset in, once the container exists
+# /etc/pve/lxc/<vmid>.conf:
+mp0: /replica28/pbs/datastore,mp=/mnt/datastore
+```
 
 ### Initial Backup Execution:
-1. **Cluster Integration:** Register `pbs-backup` cluster-wide in Proxmox (`pvesm add pbs ...`).
+1. **Datastore & Cluster Integration:** `proxmox-backup-manager datastore create main /mnt/datastore` inside the container, then register it cluster-wide in Proxmox (`pvesm add pbs ...`).
 2. **Full Guest Snapshot:** Run a full vzdump snapshot backup of all active containers (`ct:101`, `500`, `502`, `601`, `602`, `603`).
-3. **CephFS Off-Cluster Replication:** Refresh CephFS backup snapshots on `quell`'s USB ZFS pool (`replica`) and transfer incremental deltas to `edgar`'s `replica28/replica` pool.
+3. **CephFS Off-Cluster Replication:** Refresh CephFS backup snapshots on `quell`'s USB ZFS pool (`replica`) and transfer incremental deltas to `edgar`'s `replica28/replica` pool — the exact replication path the storage-architecture decision above was made to protect.
 
 ---
 
@@ -205,5 +233,7 @@ Once all nodes report `PVE 9.x`, `Ceph 19.2 Squid`, and `HEALTH_OK`, the pre-upg
 2. **Respect `proxmox-boot-tool`:** Don't manually edit GRUB files or remove `/etc/default/grub.d/` entries when kernel pins are active—always use `proxmox-boot-tool kernel unpin` and `refresh`.
 3. **Test Your Rollback Paths First:** A ZFS boot snapshot is only a safety net if you have verified the rescue shell rollback workflow beforehand.
 4. **Respect Out-of-Band Realities:** When nodes lack IPMI/BMC management, schedule OS reboots only when physical access to the hardware is available.
+5. **Pull the Actual Script Source, Not a Summary of It:** A helper script's documented behavior and its real behavior can diverge—`update-lxcs.sh` looked like it supported unattended runs until its actual source showed otherwise, and only that check surfaced the real non-interactive tool underneath.
+6. **Re-Verify Old Plans Against Current Reality:** A pre-existing backup plan had the right instinct but a stale IP and a storage architecture nobody had re-checked against what the cluster actually needed six months later. Written plans decay; the systems they describe keep changing underneath them.
 
 With a methodical, phase-gated plan, even complex hyper-converged homelab clusters can transition seamlessly to Proxmox VE 9.
