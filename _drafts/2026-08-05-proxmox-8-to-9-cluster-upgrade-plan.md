@@ -1,8 +1,17 @@
 ---
-title: "Proxmox VE 8 to 9 Cluster Upgrade: Moving 'AlteredCarbon' to Ceph Squid and Debian Trixie"
 layout: post
-categories: ["homelab", "proxmox", "infrastructure"]
-tags: ["proxmox", "ceph", "squid", "debian", "trixie", "zfs", "homelab", "upgrade", "cluster", "backup", "pbs"]
+title: "Proxmox VE 8 to 9 Cluster Upgrade: Moving 'AlteredCarbon' to Ceph Squid and Debian Trixie"
+image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-plan.png
+categories: [homelab, proxmox, infrastructure]
+tags: [proxmox, ceph, squid, debian, trixie, zfs, homelab, upgrade, cluster, backup, pbs]
+excerpt: "Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. Here is the complete architectural strategy, pre-flight hardening checklist, and step-by-step rollout plan for upgrading AlteredCarbon from Proxmox VE 8 to 9."
+description: "Complete upgrade plan for a 6-node Proxmox VE 8 cluster to Proxmox VE 9 (Debian Trixie, Ceph Squid). Covers ZFS boot mirrors, Ceph OSD migration, HA workload sequencing, rollback paths, and pre-flight hardening on aging Dell OptiPlex 990 hardware with no out-of-band management."
+date: 2026-08-05
+last_modified_at: 2026-08-05
+seo:
+  type: BlogPosting
+  date_published: 2026-08-05
+  date_modified: 2026-08-05
 ---
 
 Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. My 6-node Proxmox VE cluster—codenamed **AlteredCarbon** (`harlan`, `kovacs`, `poe`, `edgar`, `tanaka`, and `quell`)—runs a combination of ZFS root boot mirrors, Ceph storage (Reef 18.2.8), and High Availability (HA) LXC workloads.
