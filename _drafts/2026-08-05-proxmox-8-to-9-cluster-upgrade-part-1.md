@@ -200,6 +200,17 @@ ssh poe "ceph -s"   # HEALTH_OK (mod the flags above) — quell's 3 OSDs up/in o
 ### 6-9. Remaining Daemons, `edgar` Last
 Restart the remaining monitors, then managers, then OSD hosts one at a time (`harlan`, `kovacs`, `poe`, then `edgar` last — its USB-backed OSDs, `osd.1`/`osd.4`/`osd.7`, get the same extra scrutiny they'll get again in Part 2), then metadata servers across all 6:
 ```bash
+# remaining mons, then mgrs — the 4 nodes not covered by the canary
+for n in harlan kovacs poe edgar; do
+  ssh $n "systemctl restart ceph-mon@\$(hostname)"
+  ssh poe "ceph -s | grep -E 'quorum|HEALTH'"
+done
+for n in harlan kovacs poe edgar; do
+  ssh $n "systemctl restart ceph-mgr@\$(hostname)"
+  ssh poe "ceph -s | grep -A2 mgr:"
+done
+
+# OSD hosts one at a time, edgar last
 for n in harlan kovacs poe; do
   ssh $n "systemctl restart 'ceph-osd@*'"
   ssh poe "ceph -s"   # must show HEALTH_OK before the next host
@@ -207,6 +218,12 @@ done
 ssh edgar "systemctl restart 'ceph-osd@*'"
 ssh edgar "cat /sys/module/usb_storage/parameters/quirks; lsblk -o NAME,SIZE,TRAN,MODEL,SERIAL | grep usb"
 ssh poe "ceph osd tree | grep -A5 'host edgar'; ceph -s"
+
+# MDS across all 6, confirm CephFS stays responsive
+for n in harlan kovacs poe edgar tanaka quell; do
+  ssh $n "systemctl restart ceph-mds@\$(hostname)"
+  ssh poe "ceph fs status; ceph -s"
+done
 ```
 
 ### 10. Unset Flags, Final Verification
