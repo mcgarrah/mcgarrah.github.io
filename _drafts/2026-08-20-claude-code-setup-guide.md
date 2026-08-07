@@ -2,15 +2,15 @@
 layout: post
 title: "Getting Started with Claude Code: A Guide for IDE-First Developers"
 categories: [ai, development-tools, automation]
-tags: [claude-code, ai-coding-assistant, cli, amazon-q, anthropic, developer-tools]
+tags: [claude-code, ai-coding-assistant, cli, amazon-q, kiro, anthropic, developer-tools]
 excerpt: "Setting up Claude Code as a CLI-based AI coding assistant — from the perspective of someone used to IDE-integrated tools like Amazon Q in VS Code."
 description: "A practical guide to installing, configuring, and using Claude Code for AI-assisted development, written for developers transitioning from IDE-based assistants like Amazon Q to a terminal-first workflow."
-date: 2026-05-01
-last_modified_at: 2026-05-01
+date: 2026-08-20
+last_modified_at: 2026-08-20
 seo:
   type: BlogPosting
   date_published: 2026-05-01
-  date_modified: 2026-05-01
+  date_modified: 2026-08-20
 ---
 
 I've been using Amazon Q Developer with the VS Code plugin as my primary AI coding assistant for a while now. On May 1, 2026, AWS made it official: [Amazon Q Developer is reaching end of support](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/), with the plugin being retired in favor of [Kiro](https://kiro.dev/). There's now a hard deadline on the migration — if you're still on Amazon Q Developer, the clock is running. I started looking at alternatives before the announcement, and Claude Code from Anthropic is where I landed first. Claude Code from Anthropic caught my attention — but it's a very different experience. There's no IDE plugin. It's a CLI tool. If you're coming from a comfortable VS Code integration, that shift takes some adjustment. As someone who grew up on UNIX terminals, the CLI itself isn't the problem — it's losing the IDE conveniences I've gotten comfortable with.
@@ -18,6 +18,8 @@ I've been using Amazon Q Developer with the VS Code plugin as my primary AI codi
 <!-- excerpt-end -->
 
 This article covers what Claude Code is, how to set it up, and what the day-to-day workflow looks like when your AI assistant lives in the terminal instead of your editor sidebar.
+
+> **Update, August 2026:** I wrote the bulk of this guide the day AWS announced Amazon Q Developer's end of support, when Claude Code was one of several tools I was evaluating. The setup steps below haven't changed. What has changed is everything after them — several months of running Claude Code, Kiro, and now Antigravity side by side. See [What About Kiro?](#what-about-kiro) near the end for how that's actually played out.
 
 ## What Is Claude Code
 
@@ -172,21 +174,27 @@ The Anthropic Max subscription provides a fixed monthly cost which may be more p
 
 ## What About Kiro?
 
-Kiro is AWS's designated successor to Amazon Q Developer — a full IDE (not a plugin) built on VS Code with spec-driven development, automated agents, steering hooks, and MCP server integration. With the [official end-of-support announcement](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/) now published, Kiro is the intended migration path for Amazon Q Developer users. I've written about Kiro's configuration model and WSL2 support separately:
+Kiro is AWS's designated successor to Amazon Q Developer — a full IDE (not a plugin) built on VS Code with spec-driven development, automated agents, steering hooks, and MCP server integration. I stayed on my paid Amazon Q Developer subscription through the spring and summer while evaluating Claude Code and writing about Kiro's configuration model, then converted that subscription to Kiro in early August once continuing to pay for a retired product stopped making sense.
+
+That conversion turned out to be the harder half of the transition, not the easier one. Getting Kiro's agent to reliably execute shell commands inside WSL2 took real configuration work — misdirected paths, false exit codes, and a shell tool that's literally named `execute_pwsh` despite having nothing to do with PowerShell. I wrote up the full diagnosis and fix separately:
 
 - [Kiro IDE: Running Parallel Personas for Director and Developer Workflows](/kiro-ide-parallel-personas-director-developer/)
 - [Kiro IDE on Windows: WSL2 Support via Open Remote Extension](/kiro-ide-wsl2-support-open-remote-extension/)
+- [Kiro IDE + WSL2: Fixing the Agent Shell Execution Layer](/kiro-ide-wsl2-integration/)
 
-For developers who want to stay in a familiar IDE-plugin model rather than adopt an entirely new IDE, Claude Code fills the gap during the transition period. The two tools aren't mutually exclusive — I've been running both.
+Several months in, Claude Code has become one of two tools I actually reach for daily — the other being [Antigravity](https://antigravity.google/), Google's agentic IDE, which I've since brought into rotation. I'm also evaluating OpenAI's Codex CLI as a possible third. Kiro is configured, paid for, and still on the machine, but between the WSL2 friction documented above and the heavier day-to-day overhead of a full IDE, it's getting noticeably less use than the other two right now.
+
+The takeaway for anyone navigating this same landscape: the tool with the vendor's official blessing as "the migration path" isn't automatically the path of least resistance. In my case, the narrower CLI-first tools have so far been more reliable in daily use than the full-IDE successor product they're meant to replace.
 
 ## Conclusion
 
 Claude Code is a capable AI coding assistant with a fundamentally different interaction model than what IDE plugin users are accustomed to. The CLI-first approach is jarring at first, but the agentic capabilities — reading your whole project, executing multi-step plans, running commands — make it a powerful tool once you adjust your workflow.
 
-If you're coming from Amazon Q in VS Code, expect a transition period. Keep your editor open, use git liberally, and start with small tasks. The terminal-first approach grows on you faster than you'd expect.
+If you're coming from Amazon Q in VS Code, expect a transition period. Keep your editor open, use git liberally, and start with small tasks. Several months later, the terminal-first approach is still the one I reach for first — see [above](#what-about-kiro) for how it's held up against Kiro and where Antigravity and Codex fit into the rotation.
 
 ## Related Links
 
 - [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code/overview)
 - [Anthropic Console](https://console.anthropic.com/)
 - [Amazon Kiro](https://kiro.dev/)
+- [Kiro IDE + WSL2: Fixing the Agent Shell Execution Layer](/kiro-ide-wsl2-integration/) — where the Kiro side of this comparison has actually landed

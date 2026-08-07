@@ -90,7 +90,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages ✅, research-model ✅, phonemes, multi-gpu | Two promoted with Substack companions; remaining drafts standalone |
 | 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md`, Part 1: `2026-07-01-aasr-proxmox-overview.md` |
-| 🖥️ **Kiro IDE** | — | Both articles published: Parallel Personas (`2026-05-02`) and WSL2 Support (`2026-05-03`) |
+| 🖥️ **Kiro IDE** | — | Three articles published: Parallel Personas (`2026-05-02`), WSL2 Support (`2026-05-03`), Shell Execution Fix (`2026-08-21`). Kiro is now the least-used of the paid AI coding tools day to day — see revised framing in `claude-code-setup-guide.md` |
 | 🪟 **Windows SysAdmin** | win11-in-place-upgrade-ventoy-clonezilla | DISM 62.3% hang published (`2026-05-25`), Error 0x80070490 published (`2026-05-27`), Part 3 in-place upgrade draft (`2026-05-30`) |
 | ☁️ **AWS Terraform Modules** | — | QuickSight vanity URL article published (`2026-04-25-quicksight-vanity-urls-serverless-edge-redirects.md`) |
 | 🤖 **AI Agent Tooling** | mcp-vs-cli-vs-api-access-patterns, ai-generated-html-reports-jekyll-github-pages, proxmox-ceph-dashboard-ai-generated-html | MCP vs CLI vs API comparison, AI-generated HTML reports pattern (Part 1), Proxmox dashboard implementation (Part 2) |
@@ -186,11 +186,13 @@ Drafts that form natural publishing sequences or share a topic.
 - **What's needed:** Add personal experience notes to each section.
 - **Effort:** 1-2 hours
 
-### `2026-05-01-claude-code-setup-guide.md`
+### `2026-08-20-claude-code-setup-guide.md`
 
-- Well-written, complete guide
-- **What's needed:** Fix broken front matter. ~~Fact-check the Amazon Q / Kiro claim.~~ Confirmed by [official AWS announcement](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/) (May 1, 2026). Ready to promote.
-- **Effort:** 1 hour
+- ~~Fix broken front matter.~~ Done — dates now 2026-08-20, matches filename.
+- ~~Fact-check the Amazon Q / Kiro claim.~~ Confirmed by [official AWS announcement](https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/) (May 1, 2026).
+- Reconciled with `2026-08-21-kiro-ide-wsl2-integration.md` (2026-08-06): rewrote "What About Kiro?" and the conclusion to reflect the actual timeline — paid Kiro subscription conversion in early August, ongoing WSL2 agent friction, Antigravity and Claude Code now the daily drivers, Codex under evaluation. Kiro cluster note above is stale ("Both articles published") — now three, and the framing there ("intended migration path") no longer matches this article's tone.
+- **What's needed:** Ready to promote once an Antigravity article exists to backfill the cross-link (currently links to `antigravity.google/` directly).
+- **Effort:** Done
 
 ### `2026-05-10-jekyll-internal-formatting-front-matter.md` — 📝 Jekyll Deep Dives
 
