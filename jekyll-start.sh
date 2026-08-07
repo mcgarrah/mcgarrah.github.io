@@ -8,6 +8,11 @@
 # Default flags: --trace --drafts --future --unpublished --livereload --incremental
 # Port: 4000 (Jekyll default)
 #
+# Before serving, runs jekyll-checks.sh: jekyll doctor, front matter lint
+# (_posts/, same as CI), a tag-slug collision check across _posts/+_drafts/
+# (CI only checks _posts/), and missing-OG-image detection. Informational
+# only — a failing check prints a warning but doesn't stop the server.
+#
 # Prerequisites:
 #   - Ruby 3.3+ via rbenv (see .ruby-version)
 #   - bundle install completed
@@ -156,37 +161,11 @@ if [ "$CLEAN" = true ]; then
 fi
 
 # =============================================================================
-# Check for missing OG images
+# Local pre-flight checks (jekyll doctor, front matter lint, tag collisions,
+# missing OG images) — see jekyll-checks.sh for what each one covers.
 # =============================================================================
-check_og_images() {
-    local missing=0
-    local missing_files=""
-
-    for post in _posts/*.md; do
-        # Extract the image path from front matter
-        local img=$(grep -m1 "^image:" "$post" | sed 's/^image: *//' | tr -d '"' | tr -d "'")
-        if [ -z "$img" ]; then
-            continue
-        fi
-
-        # Strip leading slash — paths are relative to repo root
-        local file="${img#/}"
-        if [ ! -f "$file" ]; then
-            missing=$((missing + 1))
-            missing_files="$missing_files\n  • $post → $file"
-        fi
-    done
-
-    if [ "$missing" -gt 0 ]; then
-        echo "⚠ Missing OG images ($missing posts):"
-        echo -e "$missing_files"
-        echo ""
-        echo "  Generate with: python3 bin/generate-og-images.py"
-        echo ""
-    fi
-}
-
-check_og_images
+source "$(dirname "${BASH_SOURCE[0]}")/jekyll-checks.sh"
+run_local_checks
 
 echo "Starting Jekyll on port $PORT..."
 echo ""

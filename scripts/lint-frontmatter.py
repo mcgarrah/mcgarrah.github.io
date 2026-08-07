@@ -12,13 +12,20 @@ Also detects tag slug collisions (near-duplicate tags with different casing that
 map to the same slug after lowercasing and space-to-hyphen conversion).
 
 Usage:
-  python3 scripts/lint-frontmatter.py [--strict] [path ...]
+  python3 scripts/lint-frontmatter.py [--strict] [--tags-only] [path ...]
 
-  --strict   Exit non-zero on warnings (legacy posts) in addition to errors.
-             Default: only errors (standard/full violations) cause non-zero exit.
+  --strict     Exit non-zero on warnings (legacy posts) in addition to errors.
+               Default: only errors (standard/full violations) cause non-zero exit.
 
-  path       One or more files or directories to check.
-             Defaults to _posts/ and _drafts/ relative to repo root.
+  --tags-only  Skip per-file schema validation, only check for tag slug
+               collisions. Drafts are normally full of expected schema
+               errors (missing fields on WIP posts); this isolates the one
+               check that's actionable across _posts/ + _drafts/ together —
+               a tag that only collides with another tag in a draft is
+               invisible to CI, since CI lints _posts/ only.
+
+  path         One or more files or directories to check.
+               Defaults to _posts/ and _drafts/ relative to repo root.
 
 Exit codes:
   0  No errors (warnings may be present)
@@ -257,6 +264,10 @@ def main():
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--strict", action="store_true",
                         help="exit non-zero on warnings as well as errors")
+    parser.add_argument("--tags-only", action="store_true",
+                        help="skip per-file schema validation and only run the "
+                             "tag slug collision check (useful for scanning "
+                             "_drafts/ without full-schema noise from WIP posts)")
     parser.add_argument("paths", nargs="*",
                         help="files or directories to check (default: _posts/ _drafts/)")
     args = parser.parse_args()
@@ -272,16 +283,17 @@ def main():
     total_warnings = 0
     total_errors = 0
 
-    for path in files:
-        warnings, errors = validate(path)
-        total_warnings += len(warnings)
-        total_errors += len(errors)
+    if not args.tags_only:
+        for path in files:
+            warnings, errors = validate(path)
+            total_warnings += len(warnings)
+            total_errors += len(errors)
 
-        rel = path.relative_to(repo_root) if path.is_absolute() else path
-        for msg in warnings:
-            print(f"WARN  {rel}: {msg}")
-        for msg in errors:
-            print(f"ERROR {rel}: {msg}")
+            rel = path.relative_to(repo_root) if path.is_absolute() else path
+            for msg in warnings:
+                print(f"WARN  {rel}: {msg}")
+            for msg in errors:
+                print(f"ERROR {rel}: {msg}")
 
     # Check for tag slug collisions across all files
     print()

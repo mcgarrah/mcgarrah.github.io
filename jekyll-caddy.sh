@@ -39,6 +39,11 @@
 #   - Resume repo expected at ../resume (sibling directory)
 #   - Both sites must be pre-built (bundle exec jekyll build)
 #
+# After prerequisites pass, runs jekyll-checks.sh against the blog repo:
+# jekyll doctor, front matter lint (_posts/, same as CI), a tag-slug
+# collision check across _posts/+_drafts/ (CI only checks _posts/), and
+# missing-OG-image detection. Informational only — doesn't block startup.
+#
 # Ports:
 #   4001 — Blog (Jekyll serve — avoids 4000 used by jekyll-start.sh)
 #   4002 — Resume (Jekyll serve)
@@ -224,6 +229,15 @@ if [ "$ERRORS" -gt 0 ]; then
     echo "ERROR: $ERRORS prerequisite(s) failed. Fix the issues above and retry."
     exit 1
 fi
+
+# =============================================================================
+# Local pre-flight checks (jekyll doctor, front matter lint, tag collisions,
+# missing OG images) — blog only, informational, doesn't block startup.
+# See jekyll-checks.sh for what each one covers.
+# =============================================================================
+
+source "$(dirname "${BASH_SOURCE[0]}")/jekyll-checks.sh"
+run_local_checks
 
 # =============================================================================
 # Port checks
