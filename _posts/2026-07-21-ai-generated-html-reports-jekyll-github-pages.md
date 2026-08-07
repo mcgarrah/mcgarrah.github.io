@@ -260,6 +260,7 @@ The real power of this pattern shows when you separate content from generation. 
 
 **`tools/generate_report.py`** — how the report looks (change rarely):
 
+{% raw %}
 ```python
 #!/usr/bin/env python3
 """Generate a self-contained HTML report from CSV data and content config."""
@@ -329,6 +330,7 @@ if __name__ == "__main__":
         output_path=Path("reports/cost-summary.html")
     )
 ```
+{% endraw %}
 
 The key insight from working with this pattern: **`report-content.json` is where you iterate with the agent.** Changing what the report says (title, methodology notes, assumptions, section headings) is cheap — just editing a JSON file. Changing how it looks (the generator) is expensive. Separating them means you can refine content in 10 iterations for the token cost of one HTML rewrite.
 

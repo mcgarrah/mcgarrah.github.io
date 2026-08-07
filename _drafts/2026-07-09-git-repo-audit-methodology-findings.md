@@ -15,7 +15,7 @@ series: "Repository Cleanup"
 series_part: 2
 ---
 
-**Part 2**: Systematic audit methodology and findings across `mcgarrah.github.io`, `resume`, `k8s-proxmox`, and `jekyll-run`. [Part 1]({{ site.baseurl }}{% post_url 2026-07-08-git-history-bloat-drafts-repo-cleanup %}) covers the drafts repository problem and the cleanup plan I intend to validate first.
+**Part 2**: Systematic audit methodology and findings across `mcgarrah.github.io`, `resume`, `k8s-proxmox`, and `jekyll-run`. [Part 1](/git-history-bloat-drafts-repo-cleanup/) covers the drafts repository problem and the cleanup plan I intend to validate first.
 
 I am not treating this as a blanket campaign to rewrite history across every repository I own. The point of this pass was to measure first, then narrow the next likely candidate if the `drafts.mcgarrah.org` cleanup goes smoothly. This post documents the screening approach, the current findings, and why `mcgarrah.github.io` is the only repository that currently looks worth evaluating for the same treatment.
 

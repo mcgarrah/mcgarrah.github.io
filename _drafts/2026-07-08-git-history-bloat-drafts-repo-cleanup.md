@@ -19,7 +19,7 @@ series_part: 1
 
 `drafts.mcgarrah.org` was supposed to be the lightweight sibling site. It was brand new, narrowly scoped, and meant to be easier to move around than the main site. Instead, it felt chunky almost immediately. Fresh clones were slower than they had any right to be, and that kind of friction is exactly the sort of thing that keeps bothering me until I understand it.
 
-That annoyance turned out to be useful. A lot of cleanup work starts the same way: something is not broken enough to page you, but it is inefficient enough to keep stealing attention. This post documents the exact issue, root cause, and the history rewrite + clean reclone path I plan to take. [Part 2]({{ site.baseurl }}{% post_url 2026-07-09-git-repo-audit-methodology-findings %}) covers the audit methodology I used and how I will decide whether to apply the same cleanup to `mcgarrah.github.io` next.
+That annoyance turned out to be useful. A lot of cleanup work starts the same way: something is not broken enough to page you, but it is inefficient enough to keep stealing attention. This post documents the exact issue, root cause, and the history rewrite + clean reclone path I plan to take. [Part 2](/git-repo-audit-methodology-findings/) covers the audit methodology I used and how I will decide whether to apply the same cleanup to `mcgarrah.github.io` next.
 
 <!-- excerpt-end -->
 
