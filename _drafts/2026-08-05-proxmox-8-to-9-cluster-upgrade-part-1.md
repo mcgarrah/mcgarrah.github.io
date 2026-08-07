@@ -156,76 +156,71 @@ Then registered cluster-wide with `pvesm add pbs`, confirmed active at roughly 8
 
 Proxmox requires upgrading Ceph across all nodes **before** performing the OS upgrade to Proxmox VE 9. The first pass at this plan restarted every monitor, manager, and OSD host in one continuous, cluster-wide sweep — a real risk given the Sandy Bridge/no-AVX2 watch item flagged back at the top of this post. If Squid genuinely didn't run cleanly on this hardware, that design would find out by potentially taking down mon quorum and OSD availability everywhere at once. It got restructured to add a canary stage, the same discipline Part 2's OS upgrade already uses.
 
-### 1. Update Repository Configurations
-Flip `ceph.list` on all 6 nodes to point to `ceph-squid`:
-```bash
-for n in harlan kovacs poe edgar tanaka quell; do
-  ssh $n "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list
-  apt update"
-done
-```
+That fixed the daemon-restart risk, but a second look turned up a quieter version of the same problem: the original plan still flipped every node's `ceph.list` to Squid and upgraded every node's Ceph packages **up front, across all 6 nodes**, before a single daemon had actually proven Squid works on this hardware. Nothing gets restarted at that point, so it's not a runtime risk — but it does mean every node is sitting there with Squid packages installed and its repo already pointed at Squid before the canary has said anything. If the canary *had* turned up a real problem, "roll back" would have meant re-pointing and downgrading all 6 nodes, not just the 2 that were actually touched. The fix: fold the repo flip and package upgrade into each node's own turn, so nothing about a node's Ceph install changes until it's specifically that node's turn to go.
 
-### 2. Set Cluster Safety Flags
+### 1. Set Cluster Safety Flags
 ```bash
 ssh poe "ceph osd set noout; ceph osd set nobackfill"
 ```
-These stay set through the entire staged process below, not just a single restart sweep.
+This is a cluster-wide OSD map flag, not a package or repo change, so it's the one thing that's genuinely safe to set fleet-wide up front. It stays set through the entire staged process below.
 
-### 3. Rolling Upgrade of Ceph Packages
-Package-file upgrade only, at this point — zero runtime risk, since a running daemon keeps executing its old in-memory code until explicitly restarted. Using detached `tmux` sessions ensures `apt full-upgrade` survives temporary SSH disconnections:
+### 2. Canary Stage 1 — `tanaka`: Flip Repo, Upgrade Packages, Restart Mon+Mgr
+Isolated to this one node — no other node's `ceph.list` or Ceph packages get touched yet. No OSDs on tanaka, making it the simplest possible test of whether Squid's mon/mgr code runs cleanly on Sandy Bridge. Using a detached `tmux` session so `apt full-upgrade` survives a dropped SSH connection:
 ```bash
-for n in harlan kovacs poe edgar tanaka quell; do
-  ssh $n "tmux new -d -s ceph-upgrade 'apt update && apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
-done
-```
-
-### 4. Canary Stage 1 — `tanaka`'s Monitor and Manager Only
-No OSDs on this node, making it the simplest possible test of whether Squid's mon/mgr code runs cleanly on Sandy Bridge:
-```bash
+ssh tanaka "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
+ssh tanaka "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
+# poll /root/ceph-upgrade-status until DONE, then:
 ssh tanaka "systemctl restart ceph-mon@tanaka ceph-mgr@tanaka"
-ssh poe "ceph -s; ceph versions"   # tanaka now squid; rest of fleet still reef — expected, mixed versions are supported short-term
+ssh poe "ceph -s; ceph versions"   # tanaka now squid; every other node still fully on reef, repo AND packages — expected
 ```
 
-### 5. Canary Stage 2 — `quell`'s Monitor, Manager, and OSDs
-The OSD-host canary, chosen deliberately: standard internal SATA/SSD OSDs with no known fragility, and already the first node verified elsewhere in this project. Deliberately *not* `edgar` — its USB-backed OSDs already have a known quirk (more on that below), and testing Squid there first would make it impossible to tell a real Squid problem apart from the existing USB issue:
+### 3. Canary Stage 2 — `quell`: Same Pattern, Plus OSDs
+The OSD-host canary, chosen deliberately: standard internal SATA/SSD OSDs with no known fragility, and already the first node verified elsewhere in this project. Deliberately *not* `edgar` — its USB-backed OSDs already have a known quirk (more on that below), and testing Squid there first would make it impossible to tell a real Squid problem apart from the existing USB issue. Still isolated to quell only:
 ```bash
+ssh quell "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
+ssh quell "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
+# poll until DONE, then:
 ssh quell "systemctl restart ceph-mon@quell ceph-mgr@quell"
 ssh quell "systemctl restart 'ceph-osd@*'"
 ssh poe "ceph -s"   # HEALTH_OK (mod the flags above) — quell's 3 OSDs up/in on squid, no flapping
 ```
 
-**Gate:** only once both canaries are confirmed clean does the rest of the cluster proceed — the same explicit go/no-go discipline Part 2 uses before its own batch rollout.
+**Gate:** only once both canaries are confirmed clean does the rest of the cluster proceed — the same explicit go/no-go discipline Part 2 uses before its own batch rollout. At this point the remaining 4 nodes haven't had their `ceph.list` touched at all, so a real problem is contained to exactly the 2 canary nodes, at the package level as well as the daemon level.
 
-### 6-9. Remaining Daemons, `edgar` Last
-Restart the remaining monitors, then managers, then OSD hosts one at a time (`harlan`, `kovacs`, `poe`, then `edgar` last — its USB-backed OSDs, `osd.1`/`osd.4`/`osd.7`, get the same extra scrutiny they'll get again in Part 2), then metadata servers across all 6:
+### 4. Remaining Nodes, One at a Time — `edgar` Last
+Each of the remaining 4 nodes gets its own repo flip, package upgrade, and full daemon restart — verified healthy — before the *next* node's repo is touched at all. `harlan`, `kovacs`, `poe` first, then `edgar` last, so its USB-backed OSDs (`osd.1`/`osd.4`/`osd.7`) get the extra scrutiny they'll get again in Part 2:
 ```bash
-# remaining mons, then mgrs — the 4 nodes not covered by the canary
-for n in harlan kovacs poe edgar; do
-  ssh $n "systemctl restart ceph-mon@\$(hostname)"
+for n in harlan kovacs poe; do
+  ssh $n "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
+  ssh $n "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
+  # poll until DONE, then:
+  ssh $n "systemctl restart ceph-mon@\$(hostname) ceph-mgr@\$(hostname)"
   ssh poe "ceph -s | grep -E 'quorum|HEALTH'"
-done
-for n in harlan kovacs poe edgar; do
-  ssh $n "systemctl restart ceph-mgr@\$(hostname)"
-  ssh poe "ceph -s | grep -A2 mgr:"
+  ssh $n "systemctl restart 'ceph-osd@*'"
+  ssh poe "ceph -s"   # must show HEALTH_OK before the next node's repo gets touched at all
 done
 
-# OSD hosts one at a time, edgar last
-for n in harlan kovacs poe; do
-  ssh $n "systemctl restart 'ceph-osd@*'"
-  ssh poe "ceph -s"   # must show HEALTH_OK before the next host
-done
+# edgar last — same isolation pattern, plus the USB-specific checks
+ssh edgar "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
+ssh edgar "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
+# poll until DONE, then:
+ssh edgar "systemctl restart ceph-mon@edgar ceph-mgr@edgar"
+ssh poe "ceph -s | grep -E 'quorum|HEALTH'"
 ssh edgar "systemctl restart 'ceph-osd@*'"
 ssh edgar "cat /sys/module/usb_storage/parameters/quirks; lsblk -o NAME,SIZE,TRAN,MODEL,SERIAL | grep usb"
 ssh poe "ceph osd tree | grep -A5 'host edgar'; ceph -s"
+```
 
-# MDS across all 6, confirm CephFS stays responsive
+### 5. Restart MDS Across All 6
+By this point every node is already on Squid packages, so a fleet-wide pass here is fine:
+```bash
 for n in harlan kovacs poe edgar tanaka quell; do
   ssh $n "systemctl restart ceph-mds@\$(hostname)"
   ssh poe "ceph fs status; ceph -s"
 done
 ```
 
-### 10. Unset Flags, Final Verification
+### 6. Unset Flags, Final Verification
 ```bash
 ssh poe "ceph osd unset nobackfill; ceph osd unset noout
 ceph versions   # expect squid everywhere, zero reef stragglers
