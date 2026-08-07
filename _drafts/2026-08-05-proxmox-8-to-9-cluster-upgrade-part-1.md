@@ -34,14 +34,15 @@ Before touching package repositories or running upgrade scripts, it is vital to 
   - `tanaka` (.15) — Non-OSD / Canary Host (recently rebuilt)
   - `quell` (.16) — OSD Host
 - **Compute & Architecture:** Legacy BIOS / GRUB boot with ZFS root boot mirrors across all 6 nodes (UEFI is non-viable on this Dell OptiPlex 990 family; see prior boot drive post). Sandy Bridge i7-2600 processors without AVX2 support — flagged early as a watch item for Squid/Trixie compatibility, and it shapes how the Ceph upgrade gets staged below.
-- **Storage:** Ceph Reef (18.2.8) across 15 OSDs (5 hosts), with a mix of internal SATA SSDs and external USB-backed ZFS pools (`replica28`).
+- **Storage:** Ceph Reef (18.2.8) across 15 OSDs (5 hosts), with a mix of internal SATA SSDs and external USB-backed OSDs. We also have some external USB-backed ZFS pools (`replica28`) for large 20Tb+ drives used for backups.
+- **Workloads:**
+  - `ct:109` — Proxmox Backups Server (PBS) LXC
 - **High Availability Workloads:**
-  - `ct:101` — Technitium DNS Primary
-  - `ct:500` — Caddy Reverse Proxy
-  - `ct:502` — Jellyfin Media Server
-  - `ct:601` / `ct:602` / `ct:603` — Ceph Core Services
-
-![ZFS Boot Mirror Status - Node Baseline](/assets/images/zfs-boot-mirror-proxmox8-001.png)
+  - `ct:101` — Technitium DNS Primary LXC
+  - `ct:500` — Caddy Reverse Proxy LXC
+  - `ct:502` — Jellyfin Media Server LXC
+  - `ct:601` / `ct:602` / `ct:603` - Agentic Development Services
+- **ZFS Boot Mirror:** requires some hard drive swaps documented in the on going [ZFS Boot Mirrors](/proxmox-zfs-boot-mirrors-part-4/) series.
 
 ---
 
@@ -65,8 +66,6 @@ ssh quell "proxmox-boot-tool kernel unpin"
 ssh quell "proxmox-boot-tool refresh"
 ```
 A subsequent reboot confirmed `quell` booted kernel `6.8.12-30-pve` cleanly with full cluster quorum.
-
-![ZFS Boot Mirror Status - Cluster Baseline](/assets/images/zfs-boot-mirror-proxmox8-002.png)
 
 ### 3. Cleanup of `systemd-boot` on Legacy GRUB Systems
 Running `pve8to9 --full` flagged `systemd-boot` as unnecessary on legacy BIOS systems. It was purged across all 6 nodes without impacting GRUB functionality.
