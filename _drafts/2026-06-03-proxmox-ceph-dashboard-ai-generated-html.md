@@ -2,7 +2,7 @@
 title: "Building a Proxmox + Ceph Status Dashboard with AI-Generated HTML"
 layout: post
 categories: [technical, homelab, devtools]
-tags: [proxmox, ceph, dashboard, html, ai agents, kiro, python, api, monitoring, github pages]
+tags: [proxmox, ceph, dashboard, html, ai agents, kiro, python, api, monitoring, github-pages]
 excerpt: "Putting the AI-generated HTML report pattern into practice: pulling real metrics from a Proxmox 8 cluster and Ceph storage pool, generating a self-contained status dashboard, and publishing it to GitHub Pages. A concrete example of the pattern from Part 1."
 description: "Part 2 of the AI-generated HTML reports series. A hands-on implementation pulling cluster status, node health, VM inventory, and Ceph OSD/pool metrics from the Proxmox API, generating a self-contained dark-mode HTML dashboard with CSS charts, and publishing it to GitHub Pages as a living report."
 date: 2026-06-03

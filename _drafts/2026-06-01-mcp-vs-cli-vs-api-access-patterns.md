@@ -2,7 +2,7 @@
 title: "MCP vs CLI vs API: Access Patterns for AI Coding Agents"
 layout: post
 categories: [technical, devtools]
-tags: [mcp, kiro, ai agents, cli, api, developer tools, automation, model context protocol]
+tags: [mcp, kiro, ai agents, cli, api, developer-tools, automation, model context protocol]
 excerpt: "AI coding agents can interact with external systems through three patterns: MCP servers, CLI tools, and direct API calls. Each has different tradeoffs around setup effort, approval granularity, agent reliability, and coverage. Here's how to choose."
 description: "A comparison of the three access patterns available to AI coding agents — MCP (Model Context Protocol) servers, CLI tools, and direct HTTP API calls — covering setup effort, approval control, agent reliability, coverage breadth, and when to use each pattern."
 date: 2026-06-01
