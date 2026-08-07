@@ -5,6 +5,12 @@ date: 2026-07-15
 categories: [technical, homelab, email]
 tags: [porkbun, forward-email, mailgun, email-forwarding, dns, mx-records]
 excerpt: "After migrating 16 domains from SquareSpace to Porkbun, evaluating email forwarding options. Comparing Porkbun's built-in service, Mailgun (current), and Forward Email for cost-effective, privacy-focused email routing."
+last_modified_at: 2026-08-07
+description: "Part 3 of a domain migration series: the final mcgarrah.org transfer to Porkbun, plus a cost and feature comparison of Porkbun aliases, Mailgun, and Forward Email for privacy-focused email forwarding."
+seo:
+  type: BlogPosting
+  date_published: 2026-07-15
+  date_modified: 2026-08-07
 ---
 
 <!--

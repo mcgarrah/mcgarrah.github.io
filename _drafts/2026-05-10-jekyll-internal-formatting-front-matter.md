@@ -1,8 +1,16 @@
 ---
-title:  "Jekyll Internal Formatting: Front Matter, Parsing Engines, and Content Syntax"
+title: "Jekyll Internal Formatting: Front Matter, Parsing Engines, and Content Syntax"
 layout: post
 categories: [technical, jekyll]
 tags: [jekyll, markdown, front-matter, kramdown, liquid, formatting, abbreviations]
+date: 2026-05-10
+last_modified_at: 2026-08-07
+excerpt: "A reference for this blog's internal formatting conventions — front matter structure, kramdown abbreviation definitions, and parsing-engine behavior — accumulated across 139+ posts."
+description: "Internal reference documenting this Jekyll blog's formatting conventions: front matter schema, kramdown's abbreviation-definition syntax and the acronyms currently in use, and parsing-engine quirks worth knowing before writing a new post."
+seo:
+  type: BlogPosting
+  date_published: 2026-05-10
+  date_modified: 2026-08-07
 ---
 
 A deep dive into the internal formatting and syntax conventions used in this Jekyll blog — front matter structure, parsing engine behavior, abbreviation definitions, and content conventions that have evolved over 139+ posts.

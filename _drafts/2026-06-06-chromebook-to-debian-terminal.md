@@ -3,8 +3,14 @@ title: "Turning a $79 Chromebook into a Debian Linux Terminal"
 layout: post
 categories: [technical]
 tags: [chromeos, linux, debian, development]
+date: 2026-06-06
+last_modified_at: 2026-08-07
 excerpt: "Three paths to running Debian on a Lenovo IdeaPad 3 Chromebook — from the sandboxed container you already have, to a full bare-metal installation that reclaims every byte of RAM for terminal work."
 description: "Evaluating three approaches to running Debian Linux on a budget Chromebook: Crostini containers, Developer Mode with legacy boot, and full UEFI firmware replacement via MrChromebox. Optimizing for a text-console-only workflow on 4GB RAM."
+seo:
+  type: BlogPosting
+  date_published: 2026-06-06
+  date_modified: 2026-08-07
 ---
 
 In my [previous post](/drafts/2026-06-05-claude-on-chromeos), I set up Claude Code on a Lenovo IdeaPad 3 Chromebook (11IGL05) — a $79 clearance machine with a Celeron N4020 and 4GB RAM. It works, but the memory constraints are real. ChromeOS consumes 1.5–2GB just existing, leaving precious little headroom for a Linux container running Claude Code.

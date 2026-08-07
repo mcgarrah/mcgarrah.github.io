@@ -5,6 +5,12 @@ date: 2026-04-01
 categories: [research, machine-learning, linguistics]
 tags: [phonemes, asr, machine-learning, pytorch, nlp, speech-recognition, acm, research, deep-learning]
 excerpt: "Diving back into phoneme research with machine learning. Exploring recent ACM publications (2021-2026) on phonetic analysis and ASR improvements. Building on previous PyTorch ASR work to identify new research directions."
+last_modified_at: 2026-08-07
+description: "Revisiting phoneme-level speech representation research via ACM Digital Library after a 2025 PyTorch ASR project, investigating whether explicit phoneme modeling improves ASR accuracy, robustness, and multilingual transfer over end-to-end approaches."
+seo:
+  type: BlogPosting
+  date_published: 2026-04-01
+  date_modified: 2026-08-07
 ---
 
 ## Renewed Interest in Phoneme Research

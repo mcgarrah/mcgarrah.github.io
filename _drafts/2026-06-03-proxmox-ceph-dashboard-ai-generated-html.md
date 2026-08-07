@@ -7,7 +7,6 @@ excerpt: "Putting the AI-generated HTML report pattern into practice: pulling re
 description: "Part 2 of the AI-generated HTML reports series. A hands-on implementation pulling cluster status, node health, VM inventory, and Ceph OSD/pool metrics from the Proxmox API, generating a self-contained dark-mode HTML dashboard with CSS charts, and publishing it to GitHub Pages as a living report."
 date: 2026-06-03
 last_modified_at: 2026-06-03
-published: false
 seo:
   type: BlogPosting
   date_published: 2026-06-03

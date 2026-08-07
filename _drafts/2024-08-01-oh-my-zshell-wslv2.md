@@ -1,6 +1,16 @@
 ---
-title:  "WSLv2 with Oh My Zsh"
+title: "WSLv2 with Oh My Zsh"
 layout: post
+categories: [technical, wsl, linux]
+tags: [wsl, wsl2, zsh, linux]
+date: 2024-08-01
+last_modified_at: 2026-08-07
+excerpt: "Setting up Oh My Zsh on WSLv2 as part of a Thinkpad T480 development environment, plus notes on a known WSLv2 CUDA symlink warning and LXC/LXD permissions references."
+description: "Notes on installing Oh My Zsh across WSLv2 and macOS terminals, part of a broader Thinkpad T480 WSL2 development setup, with a known-issue note on the WSLv2 CUDA symlink warning after apt upgrade."
+seo:
+  type: BlogPosting
+  date_published: 2024-08-01
+  date_modified: 2026-08-07
 ---
 
 Why do I install **OMZ** on just about every system I use now? Because it just works out of the box and improves the command line experience without getting in the way. The other part of why is that I started using the iTerm2 (a terminal) in MacOS a good bit, and it defaults to **zsh** and not **bash**.

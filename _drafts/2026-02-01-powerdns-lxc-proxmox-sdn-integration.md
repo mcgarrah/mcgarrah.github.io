@@ -4,6 +4,14 @@ layout: post
 categories: [homelab, proxmox, dns]
 tags: [powerdns, lxc, proxmox, sdn, dns, homelab]
 mermaid: true
+date: 2026-02-01
+last_modified_at: 2026-08-07
+excerpt: "A production-ready PowerDNS LXC container for Proxmox VE 8.4's SDN integration — HTTPS/TLS, a web admin interface, and automatic DNS provider registration, built from 40+ commits of hardening on the community-scripts project."
+description: "Deep dive into a PowerDNS LXC implementation for Proxmox VE 8.4 SDN integration: HTTPS/TLS via an Nginx reverse proxy, PowerDNS-Admin web UI, SQLite backend, and the automatic API key/zone configuration needed to register PowerDNS as a Proxmox SDN DNS provider."
+seo:
+  type: BlogPosting
+  date_published: 2026-02-01
+  date_modified: 2026-08-07
 ---
 
 **DRAFT ahead of submitting Pull Request**

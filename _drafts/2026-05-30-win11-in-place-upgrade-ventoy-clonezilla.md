@@ -8,7 +8,6 @@ excerpt: "When DISM and SFC can't fix a corrupted Windows 11 component store, th
 description: "Part 3 of the Windows 11 repair series. After DISM/SFC failed to resolve error 0x80070490, this covers resetting Windows Update components, preparing Ventoy multi-boot USB with Windows 11 ISO and Clonezilla, creating a full disk backup before the in-place upgrade, and executing the repair install that replaces the component store while preserving files and apps."
 date: 2026-05-30
 last_modified_at: 2026-05-30
-published: false
 seo:
   type: BlogPosting
   date_published: 2026-05-30

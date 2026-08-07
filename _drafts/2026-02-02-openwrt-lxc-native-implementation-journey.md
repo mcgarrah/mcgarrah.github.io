@@ -3,6 +3,14 @@ title: "OpenWRT LXC Native Implementation: From Debian Overlay to Pure Rootfs"
 layout: post
 categories: [homelab, proxmox, networking]
 tags: [openwrt, lxc, proxmox, networking, router, firewall]
+date: 2026-02-02
+last_modified_at: 2026-08-07
+excerpt: "Four approaches to running OpenWRT as an LXC container on Proxmox — from a failed Debian+chroot hybrid to a working native rootfs implementation as an unmanaged, privileged container, distilled from 50+ commits of trial and error."
+description: "How native OpenWRT LXC containers on Proxmox VE actually work: why Debian-chroot and managed-container approaches failed, why Proxmox's pct tooling doesn't support LXC's native openwrt ostype, and the unmanaged/privileged container configuration that finally got full router functionality — LuCI, opkg, UCI, procd — running natively."
+seo:
+  type: BlogPosting
+  date_published: 2026-02-02
+  date_modified: 2026-08-07
 ---
 
 **DRAFT ahead of submitting Pull Request**

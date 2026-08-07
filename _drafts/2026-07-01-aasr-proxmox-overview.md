@@ -4,6 +4,13 @@ layout: post
 categories: [ai, homelab, research]
 tags: [proxmox, gemini, machine-learning, aarc, ceph, automation]
 excerpt: "Automating the machine learning research lifecycle on a distributed cluster of legacy hardware using Proxmox, Gemini 3 Pro's 2M context window, and an evolutionary Git loop."
+date: 2026-07-01
+last_modified_at: 2026-08-07
+description: "How the Autonomous AI Scientific Research (AASR) project automates an ML research lifecycle on six 14-year-old Dell OptiPlex 990 nodes, using Gemini's 2M-token context window as long-term memory for an evolutionary Git loop."
+seo:
+  type: BlogPosting
+  date_published: 2026-07-01
+  date_modified: 2026-08-07
 ---
 
 The idea of AI automating scientific research sounds like something reserved for hyperscalers with massive H100 clusters. But what if you could orchestrate a miniature version of this on 14-year-old enterprise desktops? 

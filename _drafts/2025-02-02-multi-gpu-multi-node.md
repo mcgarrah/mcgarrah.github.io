@@ -1,6 +1,16 @@
 ---
-title:  "Multiple GPUs on Multiple Nodes in the Homelab"
+title: "Multiple GPUs on Multiple Nodes in the Homelab"
 layout: post
+categories: [technical, homelab, ai, hardware]
+tags: [homelab, gpu, ai, machine-learning, hardware]
+date: 2025-02-02
+last_modified_at: 2026-08-07
+excerpt: "Researching how to pool an odd mix of homelab GPUs — Quadro P400s/P620s and laptop MX150s — for AI/ML workloads, from multi-instance Ollama to Triton, LiteLLM, and distributed llama.cpp inference."
+description: "Research notes on running AI/ML workloads across a mismatched set of homelab GPUs (Quadro P400/P620, laptop MX150), covering multi-node inference options like Triton, distributed llama.cpp, LiteLLM routing, and Exo's device-pooling approach."
+seo:
+  type: BlogPosting
+  date_published: 2025-02-02
+  date_modified: 2026-08-07
 ---
 
 How can I get my multiple CPUs with RAM and GPUs with vRAM all running my machine learning models?

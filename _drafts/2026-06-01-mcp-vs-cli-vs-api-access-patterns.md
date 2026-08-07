@@ -7,7 +7,6 @@ excerpt: "AI coding agents can interact with external systems through three patt
 description: "A comparison of the three access patterns available to AI coding agents — MCP (Model Context Protocol) servers, CLI tools, and direct HTTP API calls — covering setup effort, approval control, agent reliability, coverage breadth, and when to use each pattern."
 date: 2026-06-01
 last_modified_at: 2026-06-01
-published: false
 seo:
   type: BlogPosting
   date_published: 2026-06-01

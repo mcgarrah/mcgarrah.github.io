@@ -1,8 +1,16 @@
 ---
-title:  "Site to Site VPN for the Homelabs"
+title: "Site to Site VPN for the Homelabs"
 layout: post
 categories: [technical, networking]
 tags: [vpn, wireguard, tailscale, headscale, brume2, openwrt, gl-inet, networking, homelab, carp]
+date: 2024-01-27
+last_modified_at: 2026-08-07
+excerpt: "Linking two homelab sites three hours apart with a split-tunnel site-to-site VPN — comparing WireGuard direct on GL.iNet Brume2 hardware against layering Tailscale or self-hosted Headscale on top."
+description: "Planning notes for a split-tunnel site-to-site VPN between two homelab locations, weighing raw WireGuard on GL.iNet Brume2 appliances against Tailscale/Headscale mesh overlays, plus CARP failover considerations if the VPN endpoint moves onto the Proxmox cluster."
+seo:
+  type: BlogPosting
+  date_published: 2024-01-27
+  date_modified: 2026-08-07
 ---
 
 ## VPN in a multi-site Home Network

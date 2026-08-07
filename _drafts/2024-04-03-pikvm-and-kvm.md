@@ -1,6 +1,16 @@
 ---
-title:  "PiKVM v3 and AIMOS 8-port KVM Setup"
+title: "PiKVM v3 and AIMOS 8-port KVM Setup"
 layout: post
+categories: [technical, homelab, hardware]
+tags: [homelab, hardware, pikvm, kvm, raspberry-pi]
+date: 2024-04-03
+last_modified_at: 2026-08-07
+excerpt: "A year-long parts list and configuration log for combining a PiKVM v3 with an 8-port AIMOS HDMI KVM switch to manage multiple homelab servers from one keyboard/video/mouse setup."
+description: "Parts list, wiring order, and PiKVM configuration notes — console sizing, password resets, static IP, EDID — for pairing a PiKVM v3 with an 8-port AIMOS KVM switch to manage multiple homelab servers."
+seo:
+  type: BlogPosting
+  date_published: 2024-04-03
+  date_modified: 2026-08-07
 ---
 
 Setting up my [PiKVM v3](https://docs.pikvm.org/v3/) has been a journey spanning well over a year to get it the way I wanted. The goal was to get a ~cheap~ frugal setup that let me manage more than just one or a couple machines and both have the PiKVM WebUI and local KVM (keyboard / video / mouse). So I have a local keyboard/video/mouse on the test bench that functions when sitting near the servers and also the remote PiKVM WebUI with keyboard/video/mouse when remotely accessing or just across the house. That was a trippy path to get it all working cleanly. Hopefully, my final setup and failures along hte way are useful to someone else heading down this path.

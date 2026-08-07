@@ -4,6 +4,13 @@ layout: post
 categories: [technical, computer-vision]
 tags: [photosynth, photogrammetry, point-cloud, computer-vision, open-source, python, gatech]
 excerpt: "Microsoft Photosynth is gone, but the photogrammetry techniques behind it live on in open-source tools. A look at what replaced it and where my old Georgia Tech project fits in."
+date: 2026-01-01
+last_modified_at: 2026-08-07
+description: "What replaced Microsoft Photosynth after its shutdown, and where a Georgia Tech computational photography project — a Python tool for extracting and visualizing Photosynth point clouds — fits into today's open-source photogrammetry landscape."
+seo:
+  type: BlogPosting
+  date_published: 2026-01-01
+  date_modified: 2026-08-07
 ---
 
 Microsoft Photosynth was one of those services that felt like the future when it launched — upload a pile of photos and get back a navigable 3D point cloud. I used it extensively during my [Computational Photography](https://www.youtube.com/watch?v=WZPtuNnaqVc&list=PLG_DpV4CFj60wdkJuM2cWBC-uyKEhbYNL) coursework at Georgia Tech, and it became the foundation for my [final project](/photosync-export-visualizer/) — a Python tool that extracted and visualized Photosynth's point cloud data.

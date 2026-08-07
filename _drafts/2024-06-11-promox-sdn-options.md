@@ -1,6 +1,16 @@
 ---
-title:  "ProxMox 8.2 SDN options for the Homelabs"
+title: "ProxMox 8.2 SDN options for the Homelabs"
 layout: post
+categories: [technical, homelab, proxmox, networking]
+tags: [proxmox, homelab, sdn, ceph, networking, openwrt]
+date: 2024-06-11
+last_modified_at: 2026-08-07
+excerpt: "Planning a multi-media services platform on Proxmox with CephFS storage and LXC containers, and evaluating Proxmox SDN's VXLAN/EVPN options for HA networking between an OpenWRT LXC and the cluster nodes."
+description: "Early planning notes for building a media services platform on a Proxmox + CephFS cluster using LXC, and researching Proxmox SDN's VXLAN/EVPN options to give an OpenWRT LXC HA networking across nodes."
+seo:
+  type: BlogPosting
+  date_published: 2024-06-11
+  date_modified: 2026-08-07
 ---
 
 After adding fourth (4) set of three (3) 5tb hard drives to my Ceph cluster on Proxmox 8.2.2, I'm up to about 20tb of highly available storage with no means of serving media out of it. So the plan is to build my multi-media services platform on a Proxmox Clusters with CephFS for the storage using LXC containers as a first options over VMs.

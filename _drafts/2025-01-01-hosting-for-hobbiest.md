@@ -1,6 +1,16 @@
 ---
-title:  "Hosting for the Hobbiest"
+title: "Hosting for the Hobbyist"
 layout: post
+categories: [technical, hosting, devops]
+tags: [hosting, netlify, cloud]
+date: 2025-01-01
+last_modified_at: 2026-08-07
+excerpt: "Comparing free-tier hosting options — Netlify, Koyeb, and (briefly) Ploomber — for small hobbyist projects, with the actual bandwidth, build-minute, and resource limits for each."
+description: "A comparison of hobbyist-friendly free hosting tiers — Netlify, Koyeb, and Ploomber — covering bandwidth, build minutes, storage, and compute limits for small side projects."
+seo:
+  type: BlogPosting
+  date_published: 2025-01-01
+  date_modified: 2026-08-07
 ---
 
 Netlify, Ploomber and Koyeb hosting...

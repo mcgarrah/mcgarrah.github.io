@@ -3,6 +3,14 @@ title: "Proxmox Cluster Roadmap: Building VMS (Video Media Service)"
 layout: post
 categories: [technical, homelab, roadmap]
 tags: [proxmox, homelab, infrastructure, planning, vms, jellyfin, arr-suite, dns, gpu, caddy, sso, kubernetes]
+date: 2026-02-05
+last_modified_at: 2026-08-07
+excerpt: "A phased roadmap for turning a Proxmox homelab cluster into a production Video Media Service reachable from five family sites — starting with ZFS boot mirror health across six nodes, then service deployment, then an eventual Kubernetes migration."
+description: "Multi-phase roadmap for building a production-grade Video Media Service (VMS) on a Proxmox homelab cluster: ZFS boot mirror hardening across six nodes based on drive health data, service deployment (Jellyfin, arr-suite, DNS, SSO, Caddy), and a longer-term path to Kubernetes."
+seo:
+  type: BlogPosting
+  date_published: 2026-02-05
+  date_modified: 2026-08-07
 ---
 
 This is my comprehensive roadmap for transforming my Proxmox homelab cluster into a production-ready Video Media Service (VMS) accessible at `vms.home.mcgarrah.org` from all five family sites (Raleigh, Beach, Wilson, Katie, Sam). The project spans infrastructure hardening, service deployment, and eventual Kubernetes migration.

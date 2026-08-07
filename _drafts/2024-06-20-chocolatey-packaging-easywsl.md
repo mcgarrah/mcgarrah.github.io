@@ -1,6 +1,16 @@
 ---
-title:  "How to package software in Chocolatey"
+title: "How to package software in Chocolatey"
 layout: post
+categories: [technical, windows, development]
+tags: [windows, chocolatey, wsl, packaging]
+date: 2024-06-20
+last_modified_at: 2026-08-07
+excerpt: "Learning Chocolatey package creation from scratch by packaging easyWSL — an unpackaged WSL utility — including dependency handling and the NUSPEC/PowerShell install script structure."
+description: "A walkthrough of learning Chocolatey package creation by packaging the easyWSL utility, covering account setup, dependency declarations (.NET Desktop Runtime), and the NUSPEC/install-script structure borrowed from the PowerToys package."
+seo:
+  type: BlogPosting
+  date_published: 2024-06-20
+  date_modified: 2026-08-07
 ---
 
 I'm interested in learning a bit more about Chocolatey packaging for Windows environments. I'm using it for my Thinkpad T480 Windows development laptops running WSLv2 and base windows tools. It makes updates a lot easier with a CLI and GUI package manager. I recently encountered a utility that wasn't packaged ([easyWSL](https://github.com/redcode-labs/easyWSL)) that I like using and wanted to figure out how hard it is to package it up and keep it current.

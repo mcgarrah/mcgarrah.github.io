@@ -4,9 +4,14 @@ layout: post
 categories: [ai, homelab, research]
 tags: [proxmox, machine-learning, aasr, ceph, automation, flask, gradio, forgejo]
 excerpt: "Building an autonomous ML research cluster on legacy hardware — a five-part series covering the Manager-Worker architecture, GPU passthrough, the evolutionary Git loop, AI provider integration, and hardware-aware data science."
+description: "Series overview for Autonomous AI Scientific Research (AASR): five parts covering Manager-Worker architecture, GPU passthrough on legacy hardware, an evolutionary Git loop for automated ML experimentation, AI provider integration, and hardware-aware data science on a 14-year-old Dell OptiPlex cluster."
 date: 2026-07-01
 last_modified_at: 2026-07-28
 sitemap: false
+seo:
+  type: BlogPosting
+  date_published: 2026-07-01
+  date_modified: 2026-07-28
 ---
 
 The idea of AI automating scientific research sounds like something reserved for hyperscalers

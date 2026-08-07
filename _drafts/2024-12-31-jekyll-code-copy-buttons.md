@@ -1,6 +1,16 @@
 ---
-title:  "Jekyll Copy Copy Buttons for the Homelabs"
+title: "Jekyll Code Copy Buttons for the Homelabs"
 layout: post
+categories: [web-development, jekyll]
+tags: [jekyll, web-development, clipboard, comments]
+date: 2024-12-31
+last_modified_at: 2026-08-07
+excerpt: "Investigating a code copy-to-clipboard button for Jekyll's code blocks, plus a separate look at adding a GitHub Issues API-based comment system to posts."
+description: "Research notes on two Jekyll UX additions: a copy-to-clipboard button for code blocks, and a comment system built on the GitHub Issues API as an alternative to hosted comment widgets."
+seo:
+  type: BlogPosting
+  date_published: 2024-12-31
+  date_modified: 2026-08-07
 ---
 
 Adding a code copy button to the code sections of a Jekyll post are kind of useful. This is especially true for the posts I write with commands used for doing something useful.

@@ -1,6 +1,16 @@
 ---
-title:  "Building Kubernetes on Proxmox with Ansible & Teraform for the Homelabs"
+title: "Building Kubernetes on Proxmox with Ansible & Terraform for the Homelabs"
 layout: post
+categories: [technical, homelab, proxmox, kubernetes]
+tags: [proxmox, kubernetes, terraform, ansible, homelab]
+date: 2024-12-01
+last_modified_at: 2026-08-07
+excerpt: "Standing up a Kubernetes cluster on Proxmox using Jairus Christensen's ClusterCreator (Terraform/OpenTofu + Ansible), including notes on moving Terraform state to CephFS and the cluster config variables that need to change for this homelab."
+description: "Working notes on bootstrapping Kubernetes on a Proxmox cluster with the ClusterCreator Terraform/Ansible toolchain — covering Terraform state storage on CephFS, cluster type variables, and the Ansible config values that need adjusting for this homelab's Ceph datastore."
+seo:
+  type: BlogPosting
+  date_published: 2024-12-01
+  date_modified: 2026-08-07
 ---
 
 [ClusterCreator: Terraform & Ansible K8S Bootstrapping on Proxmox](https://github.com/mcgarrah/ClusterCreator) by Jairus Christensen looks like an amazing opportunity for me to get a Kuberetes Cluster running in the Homelab with my existing Proxmox Cluster.

@@ -1,6 +1,16 @@
 ---
-title:  "Link Aggregated (LAG) and LACP NIC Bonding"
+title: "Link Aggregated (LAG) and LACP NIC Bonding"
 layout: post
+categories: [technical, homelab, networking]
+tags: [homelab, networking, lag, lacp, nic-bonding]
+date: 2024-03-11
+last_modified_at: 2026-08-07
+excerpt: "What's the difference between LAG and LACP, and why does it matter for homelab network redundancy and throughput? A highway-lanes analogy for link aggregation, plus notes on the per-connection bandwidth limit that trips people up."
+description: "Explains the difference between Link Aggregation (LAG) and LACP for homelab networking, using a highway-lanes analogy to cover throughput, redundancy, and the per-TCP-connection bandwidth ceiling."
+seo:
+  type: BlogPosting
+  date_published: 2024-03-11
+  date_modified: 2026-08-07
 ---
 
 ## LAG and LACP... what is the difference?

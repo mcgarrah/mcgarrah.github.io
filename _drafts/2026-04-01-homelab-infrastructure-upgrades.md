@@ -3,6 +3,14 @@ title: "Homelab Infrastructure Upgrades: Addressing Network Bottlenecks and Reli
 layout: post
 categories: ["homelab", "networking", "infrastructure"]
 tags: ["glinet", "brume2", "tailscale", "procurve", "proxmox", "caddy", "vpn", "networking"]
+date: 2026-04-01
+last_modified_at: 2026-08-07
+excerpt: "Addressing real homelab pain points — a 100Mb ProCurve backbone bottleneck, flaky consumer SAN switches, unreliable site-to-site connectivity, and ZFS boot drive failures — with a concrete upgrade plan built around GL-iNet Brume 2 VPN appliances."
+description: "A homelab infrastructure upgrade plan addressing network bottlenecks (100Mb ProCurve 2510-24 backbone), unreliable consumer SAN switches, inconsistent site-to-site connectivity across five family locations, and ZFS boot drive single-points-of-failure — anchored by a GL-iNet Brume 2 VPN deployment."
+seo:
+  type: BlogPosting
+  date_published: 2026-04-01
+  date_modified: 2026-08-07
 ---
 
 After months of dealing with intermittent network issues, aging hardware bottlenecks, and reliability problems in my homelab, it's time for a comprehensive infrastructure upgrade. These aren't just nice-to-have improvements—they're addressing real pain points that have been impacting daily operations and limiting the lab's potential.

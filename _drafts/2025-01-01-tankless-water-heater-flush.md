@@ -1,6 +1,16 @@
 ---
-title:  "Tankless Water Heater Maintenance Flush for the Home~~labs~~"
+title: "Tankless Water Heater Maintenance Flush for the Home~~labs~~"
 layout: post
+categories: [personal]
+tags: [personal, maintenance, water-heater]
+date: 2025-01-01
+last_modified_at: 2026-08-07
+excerpt: "A yearly vinegar-flush maintenance routine for two tankless water heaters — equipment list, timing, and the one lesson learned that saves the pump and hoses from ruin."
+description: "How-to notes for a yearly DIY vinegar flush on two tankless water heaters: the ~$100 equipment list, timing expectations, and the critical clean-water rinse step that protects the pump and hoses."
+seo:
+  type: BlogPosting
+  date_published: 2025-01-01
+  date_modified: 2026-08-07
 ---
 
 Show pictures of my two tankless water heaters. Show closed up and opened up.

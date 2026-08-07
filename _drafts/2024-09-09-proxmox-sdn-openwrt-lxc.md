@@ -1,6 +1,16 @@
 ---
-title:  "Proxmox 8.2 SDN with OpenWRT 23.05.3 LXC for the Homelabs"
+title: "Proxmox 8.2 SDN with OpenWRT 23.05.3 LXC for the Homelabs"
 layout: post
+categories: [technical, homelab, proxmox, networking]
+tags: [proxmox, homelab, sdn, openwrt, networking, lxc]
+date: 2024-09-09
+last_modified_at: 2026-08-07
+excerpt: "Setting up a private Proxmox SDN network managed by an OpenWRT LXC with LuCI, starting from a VM-based OpenWRT router before migrating to LXC for HA and failover across the cluster."
+description: "Working notes on building a Proxmox SDN network fronted by OpenWRT — starting with a VM-based router per a Novaspirit Tech tutorial, then working out what's needed for HA/failover via an OpenWRT LXC instead."
+seo:
+  type: BlogPosting
+  date_published: 2024-09-09
+  date_modified: 2026-08-07
 ---
 
 Setting up a private SDN network on Proxmox 8.2 that can be managed by an OpenWRT with LuCI webui...

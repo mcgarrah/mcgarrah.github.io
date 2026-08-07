@@ -3,8 +3,14 @@ title: "Claude Code on a $79 Chromebook"
 layout: post
 categories: [technical]
 tags: [chromeos, claude, ai, development]
+date: 2026-06-05
+last_modified_at: 2026-08-07
 excerpt: "A discontinued Lenovo Chromebook with 4GB RAM and a Celeron N4020 makes a surprisingly capable portable terminal for AI-assisted development with Claude Code — if you understand the constraints."
 description: "Setting up Claude Code CLI on ChromeOS via Crostini Linux, evaluating the resource constraints of running an AI coding agent on a sub-$100 Chromebook, and connecting it to VS Code for a lightweight portable development workflow."
+seo:
+  type: BlogPosting
+  date_published: 2026-06-05
+  date_modified: 2026-08-07
 ---
 
 I picked up two Lenovo IdeaPad 3 Chromebooks (11IGL05) back in 2022 when Best Buy was clearing them out — $79 marked down from $139, and I got one down to $70 with additional discounts. Lenovo was discontinuing the model. The machines are at or near their ChromeOS Auto Update Expiration (AUE) date — sources vary between June 2026 and June 2027 for this platform — so they're either just past end-of-support or have one more year. Either way, at that price point I bought two without hesitation and got four solid years of use out of them.

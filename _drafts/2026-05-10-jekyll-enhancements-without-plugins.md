@@ -1,8 +1,16 @@
 ---
-title:  "Jekyll Enhancements Without Plugins"
+title: "Jekyll Enhancements Without Plugins"
 layout: post
 categories: [technical, jekyll]
 tags: [jekyll, plugins, github-pages, enhancements, search, comments, gdpr, seo]
+date: 2026-05-10
+last_modified_at: 2026-08-07
+excerpt: "A reference collection of plugin-free Jekyll enhancements evaluated for GitHub Pages compatibility — search, comments, and UX additions — noting which ones this blog adopted and which were deferred."
+description: "A working reference of plugin-free Jekyll enhancement techniques from Jekyll Codex, evaluated against this blog's GitHub Pages constraints — covering search, the comment-system evaluation that led to Giscus, and UX additions like reading time and cookie consent."
+seo:
+  type: BlogPosting
+  date_published: 2026-05-10
+  date_modified: 2026-08-07
 ---
 
 A collection of Jekyll enhancements that can be implemented without plugins — useful for GitHub Pages compatibility and reducing dependency complexity. Many of these were evaluated during the build-out of this blog, with some adopted and others deferred.

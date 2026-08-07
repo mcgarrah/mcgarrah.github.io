@@ -4,6 +4,13 @@ layout: post
 categories: [technical, homelab, roadmap]
 tags: [proxmox, kubernetes, homelab, infrastructure, planning, dns, vpn, backup, jellyfin]
 excerpt: "A comprehensive checklist of everything I need to complete before deploying Kubernetes on my Proxmox homelab cluster. Site-to-site VPN, DNS decisions, backups, media services, and more."
+date: 2026-02-13
+last_modified_at: 2026-08-07
+description: "A prioritized checklist of infrastructure prerequisites — site-to-site VPN, split-horizon DNS, backups, and media services — that must be in place on a Proxmox homelab cluster before deploying Kubernetes."
+seo:
+  type: BlogPosting
+  date_published: 2026-02-13
+  date_modified: 2026-08-07
 ---
 
 It's Friday the 13th, and what better day to confront the terrifying complexity of deploying Kubernetes on a homelab? After documenting my [AlteredCarbon cluster infrastructure](/proxmox-homelab-infrastructure-overview/), I realized I have a substantial list of prerequisites before I can run `terraform apply` and spin up my K8s cluster.

@@ -1,6 +1,16 @@
 ---
-title:  "Oracle Cloud Infrastructure for the Homelab"
+title: "Oracle Cloud Infrastructure for the Homelab"
 layout: post
+categories: [technical, cloud, homelab]
+tags: [oracle-cloud, cloud, terraform, kubernetes, homelab]
+date: 2025-02-10
+last_modified_at: 2026-08-07
+excerpt: "Evaluating Oracle Cloud's Always Free tier — a 24GB RAM / 4 vCPU Ampere instance, 200GB storage — as free homelab-adjacent compute, plus Terraform modules for standing up a free OKE Kubernetes cluster on it."
+description: "Research notes on Oracle Cloud Infrastructure's Always Free tier (Ampere compute, block storage) as free homelab-adjacent capacity, including Terraform modules for deploying a free-tier Kubernetes (OKE) cluster."
+seo:
+  type: BlogPosting
+  date_published: 2025-02-10
+  date_modified: 2026-08-07
 ---
 
 OCI is an interesting proposition. They offer something called the Always Free Tier which seems to have a very generous amount of hardware.
