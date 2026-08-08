@@ -7,11 +7,11 @@ tags: [proxmox, ceph, squid, debian, trixie, zfs, homelab, upgrade, cluster, bac
 excerpt: "Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. Part 1 covers everything that happens before the actual Proxmox OS upgrade: pre-flight hardening, the Ceph Reef to Squid migration, and building a real backup safety net."
 description: "Part 1 of a two-part series on upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers pre-flight hardening (dead apt repos, a persistent kernel pin, LXC maintenance), building a Proxmox Backup Server safety net from scratch, and the Ceph Reef to Squid upgrade — all on aging Dell OptiPlex 990 hardware with no out-of-band management."
 date: 2026-08-05
-last_modified_at: 2026-08-06
+last_modified_at: 2026-08-07
 seo:
   type: BlogPosting
   date_published: 2026-08-05
-  date_modified: 2026-08-06
+  date_modified: 2026-08-07
 ---
 
 Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. My 6-node Proxmox VE cluster—codenamed **AlteredCarbon** (`harlan`, `kovacs`, `poe`, `edgar`, `tanaka`, and `quell`)—runs a combination of ZFS root boot mirrors, Ceph storage (Reef 18.2.8), and High Availability (HA) LXC workloads.
@@ -150,6 +150,10 @@ Then registered cluster-wide with `pvesm add pbs`, confirmed active at roughly 8
 
 **The first real backup run** covered all 6 HA-managed containers (`101`, `500`, `502`, `601`, `602`, `603`) — all succeeded, with useful incremental dedup already kicking in on the very first run. Speeds ranged 7.8-13.4 MiB/s, which prompted a closer look: not the USB interface (confirmed at full USB 3.0 SuperSpeed, `5000 Mbps`, via `lsusb -t`), and not a slow drive class either (`smartctl` identifies it as a 7200 RPM, 3.5" desktop unit). At 28TB, this drive is almost certainly **SMR** (shingled magnetic recording) — the only way consumer drives reach that density — and SMR's known weakness is exactly this workload: PBS writes its datastore as thousands of discrete ~4MB chunk files rather than one sequential stream, which triggers costly read-modify-write cycles inside SMR's shingled zones. A second NIC was added to the container on the dedicated SAN network (`10.10.10.9`, confirmed reachable from all 6 nodes) in case rerouting backup traffic there would help — but given the bottleneck is the drive's write pattern rather than network capacity, it likely won't move the needle much on its own.
 
+**A fourth real issue, found two days later during routine patching, not the upgrade itself:** a fleet-wide reboot to pick up the latest PVE 8.4.x kernel (`6.8.12-41-pve`, unrelated to this project's own upgrade work) left CT 109 stopped. `journalctl` on edgar told the whole story in an 8-second window: the kernel found the USB drive at `19:59:31`, but `zfs-import-cache.service` — a one-shot that runs early in boot — checked for importable pools one second later and found none, since the drive hadn't finished settling yet. `zfs-import.target` reported "active" anyway (root's `rpool` was already mounted by the initramfs, so nothing in the default boot chain was actually waiting on `replica28`). `pve-guests.service` made its one and only startup attempt at `19:59:44`, found CT 109's `mp0` bind-mount source missing, and gave up. `replica28` finished importing at `19:59:57` — 8 seconds too late, and `pve-guests.service` doesn't retry. CT 109 sat stopped for nearly three hours until a manual start from the web UI.
+
+The fix: a small systemd oneshot (`replica28-import-wait.service`) ordered `Before=pve-guests.service` that polls for the pool to actually mount, capped at 60 seconds, paired with a `pve-guests.service.d` drop-in adding `Wants=`+`After=` on it — deliberately a soft dependency (`Wants=`, not `Requires=`), so one slow USB drive can never block every *other* guest on the host from starting if the wait ever times out. It's the same category of problem as the USB-OSD timing issue below — enumeration speed racing boot-time service ordering — just hitting a different unit this time.
+
 ---
 
 ## Phase A: Ceph Reef (18.2.8) → Ceph Squid (19.2.x) Upgrade
@@ -236,5 +240,6 @@ ceph -s         # HEALTH_OK"
 3. **Pull the Actual Script Source, Not a Summary of It:** A helper script's documented behavior and its real behavior can diverge — `update-lxcs.sh` looked like it supported unattended runs until its actual source showed otherwise, and the same pattern repeated later with a wrong post-install script URL.
 4. **Re-Verify Old Plans Against Current Reality:** A pre-existing backup plan had the right instinct but a stale IP and a storage architecture nobody had re-checked against what the cluster actually needed months later. Written plans decay; the systems they describe keep changing underneath them.
 5. **Stage Risky Restarts, Even Within a Single Subsystem:** The same canary discipline that makes sense for an OS upgrade applies just as much to a hyper-converged storage layer's own version jump — a cluster-wide daemon restart sweep is still a single point of failure, even if every individual command is well-tested.
+6. **Boot-Time Service Ordering Doesn't Know About Late-Arriving USB Devices:** `pve-guests.service` gets exactly one startup pass, and nothing in the default boot chain waits for a second, non-root ZFS pool to actually finish importing before that pass runs. Any guest with storage on a USB-attached pool needs its own explicit wait-gate — the fix is cheap, but only if you know to look for it before the next reboot, not after.
 
 With pre-flight complete, a real backup safety net in place, and Ceph already sitting on Squid, the cluster is as ready as it can be without actually touching the Proxmox OS itself. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covers the canary node, the batch rollout, and — hopefully — a clean bill of health at the end.
