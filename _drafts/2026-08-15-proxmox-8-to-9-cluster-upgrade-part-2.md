@@ -14,7 +14,7 @@ seo:
   date_modified: 2026-08-06
 ---
 
-**[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered everything that happens before a single node touches Proxmox VE 9: pre-flight hardening across all six nodes, building a real Proxmox Backup Server safety net from nothing, and staging the Ceph Reef → Squid upgrade with a canary instead of one cluster-wide sweep. With that done, the actual OS upgrade can start.
+**[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered everything that happens before a single node touches Proxmox VE 9: pre-flight hardening across all six nodes and building a real Proxmox Backup Server safety net from nothing. **[Part 1.5](/proxmox-8-to-9-cluster-upgrade-part-1-5/)** covered the Ceph Reef → Squid upgrade required before the OS jump can even start — staged with a canary instead of one cluster-wide sweep, plus release-note research and a before/after performance baseline. With Ceph fully on Squid, the actual OS upgrade can start.
 
 This post covers the part that actually carries risk to the running cluster: rebooting six nodes with **no out-of-band management** into a kernel roughly four major versions newer (`6.8` → `7.0`, targeting the current PVE 9.2 point release rather than bare 9.0) than what they're running today, on hardware where UEFI has already failed four separate times. One canary node first, then the remaining five in sequence, then verification — including network interface naming, and a GPU investigation that turned out different than expected.
 

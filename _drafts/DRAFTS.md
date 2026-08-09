@@ -86,7 +86,7 @@ Drafts that form natural publishing sequences or share a topic.
 | 📝 **Jekyll Deep Dives** | enhancements-without-plugins, internal-formatting, dark-mode-toggle, tag-sprawl, front-matter-hygiene, post-series-navigation | Active cluster with 6 drafts |
 | 🛡️ **Jekyll Security & Privacy** | security-hardening-csp-sri, plausible-vs-google-analytics | New cluster from TODO.md items |
 | 🧰 **Git & Repository Maintenance** | git-history-bloat-drafts-repo-cleanup, git-repo-audit-methodology-findings, git-health-monitoring-github-actions-outline | Series in progress: Part 1 (cleanup execution), Part 2 (audit methodology), Part 3 outline (future automation) |
-| 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid | OSD moves, Reef→Squid upgrade |
+| 🗄️ **Ceph Storage** | ceph-osd-moving-disks, ceph-reef-to-squid (superseded) | OSD moves; Reef→Squid upgrade now covered by the `proxmox-8-to-9-cluster-upgrade-part-1-5` post in the AlteredCarbon series below |
 | 🏗️ **Homelab Infrastructure** | overview, checklist, roadmap, upgrades | Massive overlap — pick ONE |
 | 🧠 **Data Science & AI/ML** | five-stages ✅, research-model ✅, phonemes, multi-gpu | Two promoted with Substack companions; remaining drafts standalone |
 | 🤖 **AASR / AME** | See `AASR-PROJECT.md`, `AME-GPT-EXPLORATION.md` | AASR infrastructure series (5 parts) + AME GPT deep dive series. Series index: `2026-07-01-aasr-project-series-overview.md`, Part 1: `2026-07-01-aasr-proxmox-overview.md` |
@@ -382,7 +382,7 @@ Drafts that form natural publishing sequences or share a topic.
 
 ### `2025-02-20-ceph-reef-to-squid-upgrade.md` — 🗄️ Ceph Storage
 
-- 4 lines — just a link. Expand when upgrade is performed.
+- Superseded (2026-08-08) by `2026-08-09-proxmox-8-to-9-cluster-upgrade-part-1-5.md`, part of the AlteredCarbon PVE8→9 series. This stub's original intent (expand when the upgrade is performed) is now fulfilled there in much greater depth. Archive this stub or fold any remaining unique content into the series.
 
 ### `2025-02-10-oracle-cloud-infra-learning.md`
 

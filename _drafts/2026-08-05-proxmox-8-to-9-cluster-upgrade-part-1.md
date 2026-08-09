@@ -1,24 +1,24 @@
 ---
 layout: post
-title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 1: Pre-Flight, Ceph Squid, and the Backup Safety Net"
+title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 1: Pre-Flight and the Backup Safety Net"
 image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-1.png
 categories: [homelab, proxmox, infrastructure]
-tags: [proxmox, ceph, squid, debian, trixie, zfs, homelab, upgrade, cluster, backup, pbs]
-excerpt: "Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. Part 1 covers everything that happens before the actual Proxmox OS upgrade: pre-flight hardening, the Ceph Reef to Squid migration, and building a real backup safety net."
-description: "Part 1 of a two-part series on upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers pre-flight hardening (dead apt repos, a persistent kernel pin, LXC maintenance), building a Proxmox Backup Server safety net from scratch, and the Ceph Reef to Squid upgrade — all on aging Dell OptiPlex 990 hardware with no out-of-band management."
+tags: [proxmox, ceph, debian, trixie, zfs, homelab, upgrade, cluster, backup, pbs]
+excerpt: "Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. Part 1 covers everything that happens before the Ceph and OS upgrades themselves: pre-flight hardening and building a real backup safety net."
+description: "Part 1 of a three-part series on upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers pre-flight hardening (dead apt repos, a persistent kernel pin, LXC maintenance) and building a Proxmox Backup Server safety net from scratch — all on aging Dell OptiPlex 990 hardware with no out-of-band management."
 date: 2026-08-05
-last_modified_at: 2026-08-07
+last_modified_at: 2026-08-09
 seo:
   type: BlogPosting
   date_published: 2026-08-05
-  date_modified: 2026-08-07
+  date_modified: 2026-08-09
 ---
 
 Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. My 6-node Proxmox VE cluster—codenamed **AlteredCarbon** (`harlan`, `kovacs`, `poe`, `edgar`, `tanaka`, and `quell`)—runs a combination of ZFS root boot mirrors, Ceph storage (Reef 18.2.8), and High Availability (HA) LXC workloads.
 
 With Proxmox VE 9 (built on Debian 13 "Trixie" and Ceph 19.2 "Squid") now available, it is time to move the cluster forward. However, upgrading a cluster with **no out-of-band management** (no IPMI, iDRAC, or PiKVM) on aging Dell OptiPlex 990 hardware (Sandy Bridge i7-2600 CPUs) requires a battle-tested execution plan where every risk is audited and every rollback path is verified before touching production workloads.
 
-This turned into a two-part series. **Part 1** (this post) covers everything that happens *before* a single node touches Trixie: the pre-flight audit and hardening, building a real backup safety net from nothing, and the Ceph Reef → Squid migration that Proxmox requires before the OS upgrade can even begin. **Part 2** covers the actual OS upgrade itself — the canary node, the batch rollout, and verification — once it's actually run.
+This turned into a three-part series. **Part 1** (this post) covers everything that happens *before* the storage or OS layer gets touched at all: the pre-flight audit and hardening, and building a real backup safety net from nothing. **[Part 1.5](/proxmox-8-to-9-cluster-upgrade-part-1-5/)** covers the Ceph Reef → Squid migration that Proxmox requires before the OS upgrade can even begin — substantial enough on its own, once release notes and a performance baseline were involved, to earn its own post. **Part 2** covers the actual OS upgrade itself — the canary node, the batch rollout, and verification — once it's actually run.
 
 <!-- excerpt-end -->
 
@@ -152,84 +152,7 @@ Then registered cluster-wide with `pvesm add pbs`, confirmed active at roughly 8
 
 **A fourth real issue, found two days later during routine patching, not the upgrade itself:** a fleet-wide reboot to pick up the latest PVE 8.4.x kernel (`6.8.12-41-pve`, unrelated to this project's own upgrade work) left CT 109 stopped. `journalctl` on edgar told the whole story in an 8-second window: the kernel found the USB drive at `19:59:31`, but `zfs-import-cache.service` — a one-shot that runs early in boot — checked for importable pools one second later and found none, since the drive hadn't finished settling yet. `zfs-import.target` reported "active" anyway (root's `rpool` was already mounted by the initramfs, so nothing in the default boot chain was actually waiting on `replica28`). `pve-guests.service` made its one and only startup attempt at `19:59:44`, found CT 109's `mp0` bind-mount source missing, and gave up. `replica28` finished importing at `19:59:57` — 8 seconds too late, and `pve-guests.service` doesn't retry. CT 109 sat stopped for nearly three hours until a manual start from the web UI.
 
-The fix: a small systemd oneshot (`replica28-import-wait.service`) ordered `Before=pve-guests.service` that polls for the pool to actually mount, capped at 60 seconds, paired with a `pve-guests.service.d` drop-in adding `Wants=`+`After=` on it — deliberately a soft dependency (`Wants=`, not `Requires=`), so one slow USB drive can never block every *other* guest on the host from starting if the wait ever times out. It's the same category of problem as the USB-OSD timing issue below — enumeration speed racing boot-time service ordering — just hitting a different unit this time.
-
----
-
-## Phase A: Ceph Reef (18.2.8) → Ceph Squid (19.2.x) Upgrade
-
-Proxmox requires upgrading Ceph across all nodes **before** performing the OS upgrade to Proxmox VE 9. The first pass at this plan restarted every monitor, manager, and OSD host in one continuous, cluster-wide sweep — a real risk given the Sandy Bridge/no-AVX2 watch item flagged back at the top of this post. If Squid genuinely didn't run cleanly on this hardware, that design would find out by potentially taking down mon quorum and OSD availability everywhere at once. It got restructured to add a canary stage, the same discipline Part 2's OS upgrade already uses.
-
-That fixed the daemon-restart risk, but a second look turned up a quieter version of the same problem: the original plan still flipped every node's `ceph.list` to Squid and upgraded every node's Ceph packages **up front, across all 6 nodes**, before a single daemon had actually proven Squid works on this hardware. Nothing gets restarted at that point, so it's not a runtime risk — but it does mean every node is sitting there with Squid packages installed and its repo already pointed at Squid before the canary has said anything. If the canary *had* turned up a real problem, "roll back" would have meant re-pointing and downgrading all 6 nodes, not just the 2 that were actually touched. The fix: fold the repo flip and package upgrade into each node's own turn, so nothing about a node's Ceph install changes until it's specifically that node's turn to go.
-
-### 1. Set Cluster Safety Flags
-```bash
-ssh poe "ceph osd set noout; ceph osd set nobackfill"
-```
-This is a cluster-wide OSD map flag, not a package or repo change, so it's the one thing that's genuinely safe to set fleet-wide up front. It stays set through the entire staged process below.
-
-### 2. Canary Stage 1 — `tanaka`: Flip Repo, Upgrade Packages, Restart Mon+Mgr
-Isolated to this one node — no other node's `ceph.list` or Ceph packages get touched yet. No OSDs on tanaka, making it the simplest possible test of whether Squid's mon/mgr code runs cleanly on Sandy Bridge. Using a detached `tmux` session so `apt full-upgrade` survives a dropped SSH connection:
-```bash
-ssh tanaka "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
-ssh tanaka "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
-# poll /root/ceph-upgrade-status until DONE, then:
-ssh tanaka "systemctl restart ceph-mon@tanaka ceph-mgr@tanaka"
-ssh poe "ceph -s; ceph versions"   # tanaka now squid; every other node still fully on reef, repo AND packages — expected
-```
-
-### 3. Canary Stage 2 — `quell`: Same Pattern, Plus OSDs
-The OSD-host canary, chosen deliberately: standard internal SATA/SSD OSDs with no known fragility, and already the first node verified elsewhere in this project. Deliberately *not* `edgar` — its USB-backed OSDs already have a known quirk (more on that below), and testing Squid there first would make it impossible to tell a real Squid problem apart from the existing USB issue. Still isolated to quell only:
-```bash
-ssh quell "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
-ssh quell "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
-# poll until DONE, then:
-ssh quell "systemctl restart ceph-mon@quell ceph-mgr@quell"
-ssh quell "systemctl restart 'ceph-osd@*'"
-ssh poe "ceph -s"   # HEALTH_OK (mod the flags above) — quell's 3 OSDs up/in on squid, no flapping
-```
-
-**Gate:** only once both canaries are confirmed clean does the rest of the cluster proceed — the same explicit go/no-go discipline Part 2 uses before its own batch rollout. At this point the remaining 4 nodes haven't had their `ceph.list` touched at all, so a real problem is contained to exactly the 2 canary nodes, at the package level as well as the daemon level.
-
-### 4. Remaining Nodes, One at a Time — `edgar` Last
-Each of the remaining 4 nodes gets its own repo flip, package upgrade, and full daemon restart — verified healthy — before the *next* node's repo is touched at all. `harlan`, `kovacs`, `poe` first, then `edgar` last, so its USB-backed OSDs (`osd.1`/`osd.4`/`osd.7`) get the extra scrutiny they'll get again in Part 2:
-```bash
-for n in harlan kovacs poe; do
-  ssh $n "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
-  ssh $n "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
-  # poll until DONE, then:
-  ssh $n "systemctl restart ceph-mon@\$(hostname) ceph-mgr@\$(hostname)"
-  ssh poe "ceph -s | grep -E 'quorum|HEALTH'"
-  ssh $n "systemctl restart 'ceph-osd@*'"
-  ssh poe "ceph -s"   # must show HEALTH_OK before the next node's repo gets touched at all
-done
-
-# edgar last — same isolation pattern, plus the USB-specific checks
-ssh edgar "sed -i 's/ceph-reef bookworm no-subscription/ceph-squid bookworm no-subscription/' /etc/apt/sources.list.d/ceph.list; apt update"
-ssh edgar "tmux new -d -s ceph-upgrade 'apt full-upgrade -y ceph ceph-common ceph-mds ceph-mgr ceph-mon ceph-osd ceph-mgr-dashboard; echo DONE > /root/ceph-upgrade-status'"
-# poll until DONE, then:
-ssh edgar "systemctl restart ceph-mon@edgar ceph-mgr@edgar"
-ssh poe "ceph -s | grep -E 'quorum|HEALTH'"
-ssh edgar "systemctl restart 'ceph-osd@*'"
-ssh edgar "cat /sys/module/usb_storage/parameters/quirks; lsblk -o NAME,SIZE,TRAN,MODEL,SERIAL | grep usb"
-ssh poe "ceph osd tree | grep -A5 'host edgar'; ceph -s"
-```
-
-### 5. Restart MDS Across All 6
-By this point every node is already on Squid packages, so a fleet-wide pass here is fine:
-```bash
-for n in harlan kovacs poe edgar tanaka quell; do
-  ssh $n "systemctl restart ceph-mds@\$(hostname)"
-  ssh poe "ceph fs status; ceph -s"
-done
-```
-
-### 6. Unset Flags, Final Verification
-```bash
-ssh poe "ceph osd unset nobackfill; ceph osd unset noout
-ceph versions   # expect squid everywhere, zero reef stragglers
-ceph -s         # HEALTH_OK"
-```
+The fix: a small systemd oneshot (`replica28-import-wait.service`) ordered `Before=pve-guests.service` that polls for the pool to actually mount, capped at 60 seconds, paired with a `pve-guests.service.d` drop-in adding `Wants=`+`After=` on it — deliberately a soft dependency (`Wants=`, not `Requires=`), so one slow USB drive can never block every *other* guest on the host from starting if the wait ever times out. It's the same category of problem as the USB-OSD timing issue covered in Part 2 — enumeration speed racing boot-time service ordering — just hitting a different unit this time.
 
 ---
 
@@ -239,7 +162,6 @@ ceph -s         # HEALTH_OK"
 2. **Respect `proxmox-boot-tool`:** Don't manually edit GRUB files or remove `/etc/default/grub.d/` entries when kernel pins are active — always use `proxmox-boot-tool kernel unpin` and `refresh`.
 3. **Pull the Actual Script Source, Not a Summary of It:** A helper script's documented behavior and its real behavior can diverge — `update-lxcs.sh` looked like it supported unattended runs until its actual source showed otherwise, and the same pattern repeated later with a wrong post-install script URL.
 4. **Re-Verify Old Plans Against Current Reality:** A pre-existing backup plan had the right instinct but a stale IP and a storage architecture nobody had re-checked against what the cluster actually needed months later. Written plans decay; the systems they describe keep changing underneath them.
-5. **Stage Risky Restarts, Even Within a Single Subsystem:** The same canary discipline that makes sense for an OS upgrade applies just as much to a hyper-converged storage layer's own version jump — a cluster-wide daemon restart sweep is still a single point of failure, even if every individual command is well-tested.
-6. **Boot-Time Service Ordering Doesn't Know About Late-Arriving USB Devices:** `pve-guests.service` gets exactly one startup pass, and nothing in the default boot chain waits for a second, non-root ZFS pool to actually finish importing before that pass runs. Any guest with storage on a USB-attached pool needs its own explicit wait-gate — the fix is cheap, but only if you know to look for it before the next reboot, not after.
+5. **Boot-Time Service Ordering Doesn't Know About Late-Arriving USB Devices:** `pve-guests.service` gets exactly one startup pass, and nothing in the default boot chain waits for a second, non-root ZFS pool to actually finish importing before that pass runs. Any guest with storage on a USB-attached pool needs its own explicit wait-gate — the fix is cheap, but only if you know to look for it before the next reboot, not after.
 
-With pre-flight complete, a real backup safety net in place, and Ceph already sitting on Squid, the cluster is as ready as it can be without actually touching the Proxmox OS itself. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covers the canary node, the batch rollout, and — hopefully — a clean bill of health at the end.
+With pre-flight complete and a real backup safety net in place, the cluster is ready for the next phase: upgrading Ceph itself from Reef to Squid. That turned into a big enough undertaking on its own — release notes, a known-issue audit, and a deliberate departure from Ceph's documented restart order — that it earns its own post. **[Part 1.5](/proxmox-8-to-9-cluster-upgrade-part-1-5/)** covers that upgrade in full; **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covers the actual Proxmox OS upgrade once Ceph is done.
