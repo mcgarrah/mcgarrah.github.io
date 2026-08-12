@@ -20,7 +20,7 @@ Some bugs announce themselves. A stack trace, a 500, a container that won't star
 
 ## The setup
 
-Migrating a Proxmox homelab's dashboard from Homarr to [Homepage](https://gethomepage.dev/) — a different post covers why — the actual container came from [community-scripts/ProxmoxVE](https://github.com/community-scripts/ProxmoxVE)'s `ct/homepage.sh`, the same one-line-curl installer pattern used for a dozen other services on this cluster already. It ran, it finished, the dashboard loaded. Nothing about the install output suggested a problem.
+Migrating a Proxmox homelab's dashboard from Homarr to [Homepage](https://gethomepage.dev/) — [a different post covers why](/homepage-homelab-dashboard/) — the actual container came from [community-scripts/ProxmoxVE](https://github.com/community-scripts/ProxmoxVE)'s `ct/homepage.sh`, the same one-line-curl installer pattern used for a dozen other services on this cluster already. It ran, it finished, the dashboard loaded. Nothing about the install output suggested a problem.
 
 ## What the log actually said
 
