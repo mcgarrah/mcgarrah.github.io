@@ -102,6 +102,8 @@ Drafts that form natural publishing sequences or share a topic.
 | 🔐 **Jekyll GDPR Plugin** | See `JEKYLLGDPR-PLUGIN.md` | Tracks 2026-07-06 plugin productization and reuse from prior plugin CI/CD work |
 | 🔒 **Draft Preview Site** | — | All 3 parts published |
 | 🔧 **Caddy Reverse Proxy** | — | All 3 articles published (Proxmox UI, Ceph Dashboard, Multi-Site Jekyll) |
+| 🏠 **Homarr Dashboard** | homarr-homelab-dashboard | Ready (2026-08-10, updated 2026-08-12). Deployment, Caddy integration, two Proxmox API gotchas, and a hardware-verified Glances proposal for the Wyse 3040 fleet (Glances itself never got deployed — still just a plan). Superseded banner added: Homarr was retired and replaced with Homepage two days later; kept as historical record for its still-applicable Proxmox API troubleshooting content. |
+| 💾 **UrBackup Client Fleet** | urbackup-proxmox-wyse3040-client-templates | Ready (2026-08-11, updated 2026-08-12). UrBackup server on a shared LXC covering Proxmox nodes + Wyse 3040 fleet: LXC UID-mapping gotcha (2nd time, same bug as PBS), Veeam ruled out (no LXC support), exponential-backoff trap solved via UrBackup's HTTP API, a wrong LVM-image-backup assumption corrected by checking `vgs` directly, two reusable client template scripts, plus the full remote-site internet-mode/debug-logging resolution story. All 6 Proxmox nodes + both Wyse units confirmed paired and templated (verified live 2026-08-12) before publishing. |
 
 ---
 
