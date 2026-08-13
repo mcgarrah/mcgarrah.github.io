@@ -5,20 +5,20 @@ image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-1.png
 categories: [homelab, proxmox, infrastructure]
 tags: [proxmox, ceph, debian, trixie, zfs, homelab, upgrade, cluster, backup, pbs]
 excerpt: "Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. Part 1 covers everything that happens before the Ceph and OS upgrades themselves: pre-flight hardening and building a real backup safety net."
-description: "Part 1 of a three-part series on upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers pre-flight hardening (dead apt repos, a persistent kernel pin, LXC maintenance) and building a Proxmox Backup Server safety net from scratch — all on aging Dell OptiPlex 990 hardware with no out-of-band management."
+description: "Part 1 of a four-part series on upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers pre-flight hardening (dead apt repos, a persistent kernel pin, LXC maintenance) and building a Proxmox Backup Server safety net from scratch — all on aging Dell OptiPlex 990 hardware with no out-of-band management."
 date: 2026-08-05
-last_modified_at: 2026-08-09
+last_modified_at: 2026-08-12
 seo:
   type: BlogPosting
   date_published: 2026-08-05
-  date_modified: 2026-08-09
+  date_modified: 2026-08-12
 ---
 
 Upgrading a live, multi-node hyper-converged homelab cluster is equal parts software engineering, operational discipline, and risk management. My 6-node Proxmox VE cluster—codenamed **AlteredCarbon** (`harlan`, `kovacs`, `poe`, `edgar`, `tanaka`, and `quell`)—runs a combination of ZFS root boot mirrors, Ceph storage (Reef 18.2.8), and High Availability (HA) LXC workloads.
 
 With Proxmox VE 9 (built on Debian 13 "Trixie" and Ceph 19.2 "Squid") now available, it is time to move the cluster forward. However, upgrading a cluster with **no out-of-band management** (no IPMI, iDRAC, or PiKVM) on aging Dell OptiPlex 990 hardware (Sandy Bridge i7-2600 CPUs) requires a battle-tested execution plan where every risk is audited and every rollback path is verified before touching production workloads.
 
-This turned into a three-part series. **Part 1** (this post) covers everything that happens *before* the storage or OS layer gets touched at all: the pre-flight audit and hardening, and building a real backup safety net from nothing. **[Part 1.5](/proxmox-8-to-9-cluster-upgrade-part-1-5/)** covers the Ceph Reef → Squid migration that Proxmox requires before the OS upgrade can even begin — substantial enough on its own, once release notes and a performance baseline were involved, to earn its own post. **Part 2** covers the actual OS upgrade itself — the canary node, the batch rollout, and verification — once it's actually run.
+This turned into a four-part series. **Part 1** (this post) covers everything that happens *before* the storage or OS layer gets touched at all: the pre-flight audit and hardening, and building a real backup safety net from nothing. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covers the Ceph Reef → Squid migration that Proxmox requires before the OS upgrade can even begin — substantial enough on its own, once release notes and a performance baseline were involved, to earn its own post. **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** covers the NVIDIA GPU driver work on the four Pascal-generation nodes, done deliberately out of sequence — ahead of the OS upgrade rather than after it, to de-risk the kernel jump. **Part 4** covers the actual OS upgrade itself — the canary node, the batch rollout, and verification — once it's actually run.
 
 <!-- excerpt-end -->
 
@@ -164,4 +164,4 @@ The fix: a small systemd oneshot (`replica28-import-wait.service`) ordered `Befo
 4. **Re-Verify Old Plans Against Current Reality:** A pre-existing backup plan had the right instinct but a stale IP and a storage architecture nobody had re-checked against what the cluster actually needed months later. Written plans decay; the systems they describe keep changing underneath them.
 5. **Boot-Time Service Ordering Doesn't Know About Late-Arriving USB Devices:** `pve-guests.service` gets exactly one startup pass, and nothing in the default boot chain waits for a second, non-root ZFS pool to actually finish importing before that pass runs. Any guest with storage on a USB-attached pool needs its own explicit wait-gate — the fix is cheap, but only if you know to look for it before the next reboot, not after.
 
-With pre-flight complete and a real backup safety net in place, the cluster is ready for the next phase: upgrading Ceph itself from Reef to Squid. That turned into a big enough undertaking on its own — release notes, a known-issue audit, and a deliberate departure from Ceph's documented restart order — that it earns its own post. **[Part 1.5](/proxmox-8-to-9-cluster-upgrade-part-1-5/)** covers that upgrade in full; **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covers the actual Proxmox OS upgrade once Ceph is done.
+With pre-flight complete and a real backup safety net in place, the cluster is ready for the next phase: upgrading Ceph itself from Reef to Squid. That turned into a big enough undertaking on its own — release notes, a known-issue audit, and a deliberate departure from Ceph's documented restart order — that it earns its own post. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covers that upgrade in full; **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** covers the NVIDIA GPU driver work done ahead of the OS jump; **[Part 4](/proxmox-8-to-9-cluster-upgrade-part-4/)** covers the actual Proxmox OS upgrade once both are done.

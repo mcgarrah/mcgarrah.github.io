@@ -17,9 +17,8 @@
 
   <!-- Title -->
     <text x="80" y="160" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="white">Proxmox VE 8 to 9 Cluster Upgrade,</text>
-    <text x="80" y="212" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="white">Part 2: Ceph Reef to Squid — Release</text>
-    <text x="80" y="264" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="white">Notes, a Deliberate Detour from the</text>
-    <text x="80" y="316" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="white">Official Order, and What Actually</text>
+    <text x="80" y="212" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="white">Part 4: The Canary, the Batch, and</text>
+    <text x="80" y="264" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="700" fill="white">Verification</text>
 
   <!-- Tags -->
     <rect x="80" y="420" width="87" height="30" rx="15" fill="#E67E22" opacity="0.3"/>
@@ -32,7 +31,7 @@
   <!-- Footer: site + date -->
   <line x1="80" y1="520" x2="1120" y2="520" stroke="#E67E22" stroke-opacity="0.3" stroke-width="1"/>
   <text x="80" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">mcgarrah.org</text>
-  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-08-09</text>
+  <text x="1120" y="570" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)" text-anchor="end">2026-08-15</text>
 
   <!-- Author -->
   <text x="80" y="600" font-family="system-ui, sans-serif" font-size="16" fill="rgba(255,255,255,0.7)">Michael McGarrah</text>

@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 1.5: Ceph Reef to Squid — Release Notes, a Deliberate Detour from the Official Order, and What Actually Happened"
-image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-1-5.png
+title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 2: Ceph Reef to Squid — Release Notes, a Deliberate Detour from the Official Order, and What Actually Happened"
+image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-2.png
 categories: [homelab, proxmox, infrastructure]
 tags: [proxmox, ceph, squid, cephfs, bluestore, homelab, upgrade, cluster, performance, troubleshooting]
 excerpt: "Ceph Reef to Squid turned out to be substantial enough — its own release notes, its own known-issue list, and its own restart-order trade-offs against Proxmox's official guidance — to earn a post of its own between pre-flight and the actual OS upgrade. This is that post: what changed in Squid, where this plan intentionally diverges from Ceph's documented upgrade order and why, and what actually happened running it for real against six 2011-era nodes — including a rebuild-era gap in CephFS redundancy the upgrade itself surfaced."
-description: "Part 1.5 of a three-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the Ceph Reef to Squid upgrade in depth: what actually changed in Squid (CephFS quiesce, BlueStore LZ4-by-default, the metadata balancer), a real known-issue audit (the elastic shared blob OSD bug, the iSCSI upgrade tracker issue), a deliberate divergence from Ceph's official mon/mgr/OSD restart order in favor of tighter per-node fault isolation, and the real execution against six 2011-era Sandy Bridge nodes — wedged scheduled tasks, an interactive dialog `-y` doesn't suppress, a mirror-side slowdown, and a stale-cluster-state gap in CephFS MDS redundancy left over from two nodes' earlier rebuilds."
+description: "Part 2 of a four-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the Ceph Reef to Squid upgrade in depth: what actually changed in Squid (CephFS quiesce, BlueStore LZ4-by-default, the metadata balancer), a real known-issue audit (the elastic shared blob OSD bug, the iSCSI upgrade tracker issue), a deliberate divergence from Ceph's official mon/mgr/OSD restart order in favor of tighter per-node fault isolation, and the real execution against six 2011-era Sandy Bridge nodes — wedged scheduled tasks, an interactive dialog `-y` doesn't suppress, a mirror-side slowdown, and a stale-cluster-state gap in CephFS MDS redundancy left over from two nodes' earlier rebuilds."
 date: 2026-08-09
 last_modified_at: 2026-08-12
 seo:
@@ -16,7 +16,7 @@ seo:
 
 **[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered everything that happens before touching a single package: the pre-flight audit and hardening across all six nodes, and building a real Proxmox Backup Server safety net from nothing. What it didn't cover — deliberately, once it became clear how much there was to say — is the Ceph Reef to Squid upgrade itself. That work turned out to deserve its own post: Squid's release notes, a known-issue list worth actually reading before touching production, a restart-order decision that intentionally departs from what Ceph's own documentation recommends, and — now that it's actually run — a handful of real gotchas the plan alone couldn't have predicted.
 
-This is that post. **Part 2** picks up after this one, once Ceph is fully on Squid, and covers the actual Proxmox OS upgrade to Trixie.
+This is that post. **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** picks up after this one with the NVIDIA GPU driver work, done deliberately ahead of the OS jump rather than after it; **Part 4** covers the actual Proxmox OS upgrade to Trixie once both are done.
 
 <!-- excerpt-end -->
 
@@ -207,4 +207,4 @@ The same five checks, run identically before Section 1 and after Section 6, is w
 5. **A Health Check Only Warns About What It Knows to Expect.** `ceph -s` never once flagged that CephFS was running on 4 MDS instead of the documented 6 — a valid 1-active/3-standby configuration is, correctly, not an error from Ceph's point of view. The gap was only findable by checking live state against this cluster's own architecture documentation, not by watching for an alert that was never going to fire.
 6. **A Node Rebuild Doesn't Reset Everything the Cluster Remembers.** Local state and cluster-side state can drift out of sync in exactly the way that turns a "just recreate it" fix into a real investigation — a rebuilt node's stale SSH host key or a stale cephx auth entry both look, from the outside, like they should have been cleared along with everything else on that disk. They weren't.
 
-With Ceph's own upgrade plan fully specified, run for real, and one unrelated-but-real redundancy gap closed along the way — **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covers what happens once Squid is confirmed clean everywhere: the actual Proxmox OS upgrade to Trixie.
+With Ceph's own upgrade plan fully specified, run for real, and one unrelated-but-real redundancy gap closed along the way — **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** covers the NVIDIA GPU driver work done next, deliberately ahead of the OS jump; **Part 4** covers the actual Proxmox OS upgrade to Trixie once Squid and the GPU drivers are both confirmed clean.

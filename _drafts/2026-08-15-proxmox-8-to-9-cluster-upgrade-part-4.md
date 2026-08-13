@@ -1,22 +1,22 @@
 ---
 layout: post
-title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 2: The Canary, the Batch, and Verification"
-image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-2.png
+title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 4: The Canary, the Batch, and Verification"
+image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-4.png
 categories: [homelab, proxmox, infrastructure]
 tags: [proxmox, ceph, squid, debian, trixie, zfs, homelab, upgrade, cluster, gpu, networking]
-excerpt: "Part 1 covered everything that happens before touching Proxmox itself — pre-flight hardening, the Ceph Squid migration, and a real backup safety net. Part 2 is the actual OS upgrade: one canary node, five more in sequence, and verifying nothing quietly broke along the way."
-description: "Part 2 of a two-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the tanaka canary upgrade with a tested ZFS rollback path, the sequential batch rollout of the remaining five nodes, and post-upgrade verification — including GPU passthrough and network interface naming, the two things most likely to break quietly on a kernel jump this large."
+excerpt: "Part 1 covered everything that happens before touching Proxmox itself — pre-flight hardening and a real backup safety net; Part 2 covered the Ceph Squid migration; Part 3 covered the NVIDIA GPU driver work done ahead of the jump. Part 4 is the actual OS upgrade: one canary node, five more in sequence, and verifying nothing quietly broke along the way."
+description: "Part 4 of a four-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the tanaka canary upgrade with a tested ZFS rollback path, the sequential batch rollout of the remaining five nodes, and post-upgrade verification — including confirming the NVIDIA drivers installed in Part 3 survive the kernel jump, and network interface naming, the two things most likely to break quietly on a kernel jump this large."
 date: 2026-08-15
-last_modified_at: 2026-08-06
+last_modified_at: 2026-08-12
 seo:
   type: BlogPosting
   date_published: 2026-08-15
-  date_modified: 2026-08-06
+  date_modified: 2026-08-12
 ---
 
-**[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered everything that happens before a single node touches Proxmox VE 9: pre-flight hardening across all six nodes and building a real Proxmox Backup Server safety net from nothing. **[Part 1.5](/proxmox-8-to-9-cluster-upgrade-part-1-5/)** covered the Ceph Reef → Squid upgrade required before the OS jump can even start — staged with a canary instead of one cluster-wide sweep, plus release-note research and a before/after performance baseline. With Ceph fully on Squid, the actual OS upgrade can start.
+**[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered everything that happens before a single node touches Proxmox VE 9: pre-flight hardening across all six nodes and building a real Proxmox Backup Server safety net from nothing. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covered the Ceph Reef → Squid upgrade required before the OS jump can even start — staged with a canary instead of one cluster-wide sweep, plus release-note research and a before/after performance baseline. **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** covered the NVIDIA GPU driver work on the four Pascal-generation nodes, done deliberately out of sequence — ahead of this OS upgrade rather than after it, to test the new driver against a known-stable kernel first. With Ceph fully on Squid and the GPU drivers already validated, the actual OS upgrade can start.
 
-This post covers the part that actually carries risk to the running cluster: rebooting six nodes with **no out-of-band management** into a kernel roughly four major versions newer (`6.8` → `7.0`, targeting the current PVE 9.2 point release rather than bare 9.0) than what they're running today, on hardware where UEFI has already failed four separate times. One canary node first, then the remaining five in sequence, then verification — including network interface naming, and a GPU investigation that turned out different than expected.
+This post covers the part that actually carries risk to the running cluster: rebooting six nodes with **no out-of-band management** into a kernel roughly four major versions newer (`6.8` → `7.0`, targeting the current PVE 9.2 point release rather than bare 9.0) than what they're running today, on hardware where UEFI has already failed four separate times. One canary node first, then the remaining five in sequence, then verification — including network interface naming, and confirming the NVIDIA drivers installed in Part 3 survive the jump.
 
 <!-- excerpt-end -->
 
@@ -82,17 +82,18 @@ ssh poe "ceph -s; ceph versions; pvecm status"
 
 Every node should report `PVE 9.2`, `Ceph 19.2 Squid`, and `HEALTH_OK`. But a kernel jump this large (`6.8` to `7.0`) doesn't just risk the things with obvious error messages — it risks the things that quietly keep working *almost* correctly, or fail somewhere a `ceph -s` will never show you.
 
-### GPU Passthrough — and a Correction Along the Way
-The cluster splits GPU passthrough across two hardware generations — Quadro K600 on `edgar` and `tanaka`, Quadro P620 on the other four. The initial assumption going into this verification was the obvious one: a kernel major-version jump this large (`6.8` to `7.0`) could easily break NVIDIA driver compatibility, so check the driver branch against the new kernel before assuming passthrough survives.
+### GPU Passthrough — Confirming What Part 3 Already Installed
+Unlike the rest of this post, GPU passthrough isn't something to investigate fresh here — **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** already did that work, deliberately ahead of this OS upgrade: `nouveau` confirmed running by default on both hardware generations, the K600 (Kepler) nodes ruled out as a dead end (`R470` broken past kernel `6.10`, compute capability too old for ML anyway), and the P620 (Pascal) nodes running NVIDIA's proprietary `580.x` driver via DKMS, installed and verified on `harlan`, `kovacs`, `poe`, and `quell` before this kernel jump — specifically so the driver wasn't also an unknown at the same time as the kernel.
 
-Checking it directly turned that assumption on its head. `lspci -k` on every GPU node showed **`nouveau`** — the open-source, kernel-builtin driver — not NVIDIA's proprietary stack. No `nvidia-smi` anywhere, no driver package installed. Since `nouveau` ships as part of the mainline Linux kernel itself rather than a separate out-of-tree module, there's no driver-branch compatibility question at all here: it builds and ships with every kernel release automatically, including `7.0`. Passthrough survival was never actually at risk.
+Post-upgrade verification here is narrower: confirm the DKMS-built `580.x` module survives the `6.8` → `7.0` jump and rebuilds cleanly against the new kernel headers, rather than re-deriving whether proprietary drivers are viable at all.
 
-That finding opened a more interesting, more consequential question: `nouveau` doesn't support NVIDIA's NVENC hardware encoding, only basic display and limited decode acceleration — so the *real* hardware-accelerated Jellyfin transcoding and any ML workload this hardware could theoretically support were never actually happening, upgrade or not. Investigating what it would take to fix that for real turned into its own can of worms:
+```bash
+for n in harlan kovacs poe quell; do
+  ssh $n "dkms status; nvidia-smi --query-gpu=driver_version,name --format=csv,noheader"
+done
+```
 
-- **The K600 (Kepler) nodes are a dead end.** `R470` is the last driver branch that ever supported Kepler, and it's confirmed broken on kernels past roughly `6.10` — a kernel function it depends on was removed. `7.0` is well beyond that, with no supported path back. Kepler's compute capability is also long past what any current ML framework will run. `edgar` and `tanaka` stay on `nouveau`; fixing this for real means a physical GPU swap, not a driver update.
-- **The P620 (Pascal) nodes are a real, if not risk-free, option.** Pascal's last supported branch is `580.x` — the next major version drops Pascal entirely, so this is a closing window, not a permanent solution. Kernel `7.0` support on `580.x` is reportedly still being worked out as of mid-2026, not yet a sure thing. The plan: canary the driver on one P620 node first (installed from NVIDIA's official `.run` file, not a Debian package — Proxmox's kernel headers don't always line up cleanly with apt-based DKMS), confirm both an NVENC transcode and a basic CUDA workload actually run, and only then roll it out to the other three. If `580.x` doesn't build cleanly against `7.0` on the canary, the same `proxmox-boot-tool kernel pin` mechanism already proven during `quell`'s pre-flight work in Part 1 is the fallback — hold that one node back on its prior kernel until the driver branch catches up.
-
-Post-upgrade verification, then, isn't just "does the GPU still show up" — it's confirming the thing that actually matters (real hardware acceleration) was correctly scoped to the hardware that can deliver it, and deliberately not chased on the hardware that can't.
+Expected: `nvidia/580.142` reported as `installed` against the new `7.0` kernel on all four nodes, and `nvidia-smi` still reporting the Quadro P620 cleanly. If DKMS didn't rebuild automatically against the new kernel headers, the fallback is the same `proxmox-boot-tool kernel pin` mechanism from Part 1 — hold that node back on its prior kernel until the driver branch is confirmed compatible, rather than running a node with a broken GPU module. `edgar` and `tanaka` stay on `nouveau`, unaffected either way — nothing to re-investigate there beyond passthrough itself still working, which the kernel's built-in driver guarantees.
 
 ### Network Interface Naming
 Part 1 compiled a full MAC-address-to-interface table across all 6 nodes specifically because Debian 13 could, in theory, alter predictable network interface naming. The real verification here isn't "does the node have network access" — DHCP or a static IP misconfigured to the wrong physical port can still technically pass a ping test while quietly routing management traffic over the wrong NIC, or the SAN bridge over the public one. The actual check is confirming each node's `vmbr0` (public) and `vmbr1` (SAN) bridges still have the *same physical MAC addresses* bound to them as `bridge-ports` that Part 1's table recorded — not just that connectivity exists, but that it's going over the intended physical path.
