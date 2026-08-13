@@ -3,15 +3,15 @@ layout: post
 title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 3: NVIDIA GPU Drivers, Installed Ahead of the OS Jump"
 image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-3.png
 categories: [homelab, proxmox, infrastructure]
-tags: [proxmox, nvidia, gpu, dkms, pascal, kepler, turing, ampere, vgpu, nvenc, jellyfin, cuda, pytorch, machine-learning, homelab, upgrade, cluster]
+tags: [proxmox, nvidia, gpu, dkms, pascal, kepler, turing, ampere, vgpu, nvenc, jellyfin, cuda, pytorch, machine-learning, homelab, upgrade, cluster, rtd3, pcie]
 excerpt: "Real hardware-accelerated Jellyfin transcoding was never actually happening on this cluster — every GPU node was quietly running the open-source nouveau driver instead of NVIDIA's proprietary stack. Fixing that turned into its own post, done deliberately out of sequence: before the Trixie kernel jump, not after, so the driver and the kernel weren't both unproven at the same time."
-description: "Part 3 of a four-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the real state of NVIDIA GPU support across the cluster's two hardware generations (Kepler K600, Pascal P620), the real 580.x driver install — done deliberately ahead of the PVE9 OS upgrade rather than after it — across all four Pascal nodes, including a driver load/unload gotcha that left one GPU stuck in PCI D3cold, a CUDA/PyTorch validation on a second container, confirming Jellyfin's hardware transcode actually works (past a Direct Play false negative), applying the NVENC session-cap unlock for multi-stream transcoding, proving the whole stack survives HA failover across all four GPU nodes, and researching an actual physical GPU swap for the dead-end Kepler nodes."
+description: "Part 3 of a four-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the real state of NVIDIA GPU support across the cluster's two hardware generations (Kepler K600, Pascal P620), the real 580.x driver install — done deliberately ahead of the PVE9 OS upgrade rather than after it — across all four Pascal nodes, including a driver load/unload gotcha that left one GPU stuck in PCI D3cold, a CUDA/PyTorch validation on a second container, confirming Jellyfin's hardware transcode actually works (past a Direct Play false negative), applying the NVENC session-cap unlock for multi-stream transcoding, proving the whole stack survives HA failover across all four GPU nodes, researching an actual physical GPU swap for the dead-end Kepler nodes, and — weeks later — root-causing a second D3cold recurrence to NVIDIA's RTD3 power management, fixing it fleet-wide, and disproving a plausible-looking PCIe link-speed correlation along the way."
 date: 2026-08-12
-last_modified_at: 2026-08-12
+last_modified_at: 2026-08-13
 seo:
   type: BlogPosting
   date_published: 2026-08-12
-  date_modified: 2026-08-12
+  date_modified: 2026-08-13
 ---
 
 **[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered pre-flight hardening and building a real backup safety net. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covered the Ceph Reef → Squid upgrade required before the OS jump can even start. This post is a detour from the storage/OS spine of the series, and deliberately so: while auditing GPU passthrough as part of pre-flight, it turned out every GPU node in the cluster was quietly running the open-source `nouveau` driver instead of NVIDIA's proprietary stack — meaning real hardware-accelerated Jellyfin transcoding was never actually happening, upgrade or not. Fixing that for real turned into substantial work on its own, and it got done here, out of sequence, before the Trixie kernel jump rather than after it.
@@ -258,9 +258,85 @@ Earlier in this post, the verdict on the K600 nodes was final short of one optio
 
 **Where this stands:** worth actually checking, not assuming either way. One of these OptiPlex 990 MTs may already have had its stock ~300W PSU swapped for a 500-600W OEM unit at some point — if that swap included a real 6+2-pin PCIe connector (not just extra SATA/Molex power, which some generic PSU upgrades add without touching GPU power at all) and there's enough width/length/dual-slot clearance next to it, a 3060 in `edgar` becomes realistic. `tanaka`'s smaller Desktop chassis is a separate, more constrained problem regardless of what's found in `edgar` — a dual-slot full-height card is unlikely to fit there no matter the power situation, making the T1000 (or staying on `nouveau`) the more realistic path for that node specifically. **Nothing has been purchased or installed yet** — this is confirmed-viable-on-paper, pending an actual look inside the case.
 
+## `kovacs`'s GPU Falls Off the Bus Again — This Time With a Root Cause, Not Just a Reboot
+
+The `kovacs` D3cold incident earlier in this post got fixed with a reboot and a shrug: root cause "not fully pinned down," possibly some ACPI quirk, moving on. It happened again — not during a fresh driver install this time, but under ordinary operational load, weeks later. That gave this investigation a real chance to go past "reboot fixed it" to an actual, fixable root cause, and it turned up a second, unrelated-looking finding along the way that was worth chasing down separately rather than folding into the same story by assumption.
+
+**The trigger wasn't a GPU alert.** It was a request to categorize error messages out of the [Media Integrity Scanner](https://github.com/mcgarrah/jellyfin-plugin-media-integrity-scanner) plugin — a separate side project scanning the media library for corrupt files via `ffprobe`/`ffmpeg`, running against `ct:590` (`jellyfin-test` on `kovacs`). Of 3,062 files the plugin currently listed as failing a Deep Scan, 98.5% shared the exact same error text: `CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected`. That's not a corrupt-file signature — it's the GPU not being there. Confirmed live, both on the `kovacs` host and inside the container: `nvidia-smi` failing with `Unable to determine the device handle for GPU0: 0000:01:00.0: Unknown Error / No devices were found`, and `lspci -vv` coming back truncated — no `LnkCap`, `LnkSta`, or `Status: D0` at all, just the bare BAR listing. A device that won't answer extended config-space reads isn't hung; it's not electrically there.
+
+**`dmesg -T` on `kovacs`'s one continuous boot session showed exactly one hard fault:**
+
+```
+NVRM: Xid (PCI:0000:01:00): 79, GPU has fallen off the bus.
+NVRM: GPU 0000:01:00.0: GPU has fallen off the bus.
+NVRM: Xid (PCI:0000:01:00): 154, GPU recovery action changed from 0x0 (None) to 0x1 (GPU Reset Required)
+```
+
+Cross-referenced against `journalctl -u pve-container@590`: the fault landed **23 minutes after `ct:590` successfully started** with GPU passthrough active. Not proof by itself, but tight enough to take seriously — especially since the driver's own `Xid 154` message says this triggered its *own* internal recovery attempt. And it apparently worked, for a while: the plugin's scan-result database shows two genuine hardware-decode passes recorded roughly four hours later. Then, sometime before the next check, it died again — this time with **zero new `dmesg` output**. No second `Xid`, nothing. A true GPU-internal fault gets logged as an Xid event; a device that has its power rail cut before it can even raise an interrupt does not.
+
+**Before accepting "one flaky card," the other three P620 nodes got checked for anything that would make `kovacs` different.** Identical board (Dell `06D7TR`), identical BIOS (`A24`), identical kernel, identical boot `cmdline` — confirmed, not assumed. And identical on the one setting that actually mattered:
+
+```bash
+$ for h in harlan kovacs poe quell; do ssh root@$h "cat /proc/driver/nvidia/params | grep DynamicPowerManagement"; done
+DynamicPowerManagement: 3   # all four, no exceptions
+$ for h in harlan kovacs poe quell; do ssh root@$h "grep -r . /etc/modprobe.d/ | grep -i nvidia"; done
+(nothing on any of the four)
+```
+
+`DynamicPowerManagement: 3` is NVIDIA's out-of-the-box "Fine-Grained" RTD3 default — it lets the GPU power itself fully off (D3cold) when idle, relying on the motherboard's ACPI `_PR3`/`_PS0` methods to bring it back cleanly. These 2011-era Dell desktop boards were never validated against RTD3 by NVIDIA or Dell, and "GPU permanently falls off the bus after a power-down, needs a full reboot" is a well-documented failure class for exactly this combination. `kovacs` was the one that hit it because `ct:590`'s Deep Scan workload is the burstiest idle/active GPU pattern in the fleet — scan a batch, go idle, scan another batch — exactly the wake cycle that exercises RTD3's weak point. `harlan`, `poe`, and `quell` hadn't hit it yet, but nothing in their config made them immune. **Treated as a systemic exposure across all four nodes, not a `kovacs`-specific defect.**
+
+**The fix: disable RTD3 outright rather than live with the exposure.**
+
+```bash
+echo 'options nvidia NVreg_DynamicPowerManagement=0x00' > /etc/modprobe.d/nvidia-power.conf
+update-initramfs -u
+reboot
+```
+
+Validated on `kovacs` under real load before touching anything else — not just `nvidia-smi` responding, but a direct `ffmpeg -hwaccel cuda` decode of a real library file, watched live: `nvidia-smi --query-gpu=utilization.decoder` hit a sustained 100% with zero errors.
+
+**Then rolled out to the other three, with care taken over what was actually running where.** `quell` was empty — fixed first, no migration needed. `poe` was running `technitiumdns` (HA group `ALL`) — migrated to `edgar` before the reboot, back after. `harlan` was running production Jellyfin (`ct:502`, HA group `P620`) and `nutrition-api-dev` (`ct:602`) — both migrated off to already-fixed nodes first, `systemctl is-active jellyfin` checked as `active` on the temporary node, fixed `harlan`, migrated both back. Zero actual service downtime across the whole rollout — everything relocated via `ha-manager migrate`, nothing stopped and left down. All four now confirmed: `DynamicPowerManagement: 0`, `nvidia-smi` healthy.
+
+### A Second Finding That Looked Related and Wasn't
+
+Comparing `lspci -vv` across all four nodes during this same investigation turned up something else: three of the four P620 cards were negotiating their PCIe link at only 2.5GT/s instead of the card's rated 5GT/s. `harlan` was the one exception — until its own reboot in this same rollout, after which it came back downgraded too. Four for four, and the one exception stopped being an exception the moment it got rebooted. That felt like more than coincidence, sitting right next to a GPU power-management bug that had just been root-caused — both symptoms live in the same corner of the PCIe spec (ASPM, D3cold, the link power-state machine), so the instinct was that a board with a shaky D3cold implementation probably had a shaky link-training implementation too.
+
+**Tested that instinct directly instead of writing it down as fact.** On `kovacs` (safe — only test workloads there), forced a live PCIe link retrain via `setpci` (writing the Retrain Link bit in the root port's Link Control register) without a reboot:
+
+```bash
+$ setpci -s 0000:00:01.0 CAP_EXP+10.w=0063   # set Retrain Link bit
+$ lspci -s 00:01.0 -vv | grep LnkSta
+LnkSta: Speed 2.5GT/s, Width x16   # settled right back at the same speed
+```
+
+Clean retrain, no training error, same result. Then went further and disabled ASPM entirely on the root port before retraining again — if ASPM's link-power negotiation were really the shared cause, removing it from the equation should have changed the outcome:
+
+```bash
+$ setpci -s 0000:00:01.0 CAP_EXP+10.w=0040   # clear ASPM bits
+$ setpci -s 0000:00:01.0 CAP_EXP+10.w=0060   # retrain, ASPM off
+$ lspci -s 00:01.0 -vv | grep LnkSta
+LnkSta: Speed 2.5GT/s, Width x16   # still no change
+```
+
+It didn't change. That's the moment the ASPM-shared-root-cause theory should have died, and going back to check link speed **while the GPU was actually doing something** is what actually explained it:
+
+```
+# idle:
+LnkSta: Speed 2.5GT/s (downgraded), Width x16
+
+# mid hardware decode, nvidia-smi decoder utilization at 100%:
+LnkSta: Speed 5GT/s, Width x16
+```
+
+**This is normal NVIDIA driver behavior, not a defect.** The driver scales the PCIe link down to Gen1 at idle as a legitimate, unrelated power-saving measure, and back up to full speed the instant real work shows up. Every idle reading taken during the original four-node comparison — including the "harlan flipped right after its reboot" pattern that looked so suspicious — just happened to catch each card between workloads. The apparent correlation with the RTD3 rollout was real (all four nodes genuinely were freshly rebooted and freshly idle at the moment they got checked) but coincidental, not causal. Restored ASPM to its original setting on `kovacs` afterward and confirmed the GPU stayed healthy through the whole experiment.
+
+**Two separate investigations, two different outcomes: one real, fleet-wide bug fixed for good; one plausible-looking correlation tested to destruction and correctly ruled out.** Worth writing up the second one exactly as thoroughly as the first — an unresolved "suspicious but unconfirmed" note left standing in project documentation is exactly the kind of thing that gets treated as fact the next time someone reads it, and this one turned out to be wrong.
+
 ## Where This Leaves Things
 
 **All four P620 nodes (`harlan`, `kovacs`, `poe`, `quell`) now have working host-side NVIDIA drivers**, confirmed via `nvidia-smi` and `dkms status`. Passthrough is wired up into two containers so far — Jellyfin (`ct:502`) and the `nutrition-api-dev` container, the latter proven with a real CUDA compute workload via PyTorch, not just a device probe. **Jellyfin's hardware-acceleration path is now fully validated across every dimension that matters:** single-stream transcode confirmed live via `nvidia-smi` (after working through the Direct Play false negative above), the NVENC session-cap patch applied and functionally verified with four concurrent encode sessions, and — the last gap — GPU passthrough, the patch, and a real transcode all confirmed working after HA failover to *every one* of the four P620 nodes, not just the one it happened to start on. `edgar` and `tanaka` stay on `nouveau` for now — but "dead end short of a physical GPU swap" has turned into real research toward that swap, not just a closed door: Turing T-series cards are a confirmed clean fit, and an RTX 3060 is a live possibility for `edgar` specifically if a prior PSU upgrade turns out to have the right connector, pending physical inspection.
+
+**One more round after all of the above: `kovacs`'s GPU fell off the bus a second time, weeks later, under real operational load rather than a fresh install — and this time the investigation went all the way to a fixable root cause instead of stopping at "reboot fixed it again."** RTD3 (NVIDIA's default fine-grained power management) turned out to be the actual cause, confirmed identical and unfixed across all four P620 nodes, not a `kovacs`-specific fluke — disabled fleet-wide (`NVreg_DynamicPowerManagement=0x00`) with zero actual service downtime, migrating production Jellyfin and DNS off each node in turn before its reboot. A second-looking finding — a PCIe link speed "downgrade" that showed up right alongside it — got tested to destruction rather than written down as fact, and turned out to be normal idle power scaling, not a bug at all. Full writeup, including the live `setpci` experiments that disproved the more exciting theory, lives in the homelab's own infrastructure docs: [`GPU-PCIE-RTD3-INVESTIGATION.md`](https://github.com/mcgarrah/k8s-proxmox/blob/main/docs/GPU-PCIE-RTD3-INVESTIGATION.md).
 
 The driver install itself never touched Ceph, cluster quorum, or anything storage-related from Part 2 — it's genuinely a parallel track, which is exactly why it was safe to do out of sequence, ahead of the OS upgrade rather than folded into its post-upgrade verification.
 
@@ -280,5 +356,7 @@ The driver install itself never touched Ceph, cluster quorum, or anything storag
 8. **A Userspace Patch Follows the Userspace Copy, Not the Host.** The NVENC session-cap patch had to be applied inside `ct:502` specifically, because that container has its own copy of `libnvidia-encode.so` from its `--no-kernel-module` install — patching the host's copy would have patched a library nothing here actually links against. That said, because the patch lives inside the *container's* rootfs rather than the host, it travels automatically whenever that same container migrates between nodes — the distinction that matters is container vs. host, not node vs. node. A genuinely new container getting GPU passthrough on another node for the first time would still need its own copy patched.
 9. **"HA-Eligible" and "Actually Works There" Are Different Claims.** `ct:502` had been correctly configured to run on any of the four P620 nodes since before any of this GPU work started — that configuration alone proved nothing about whether it would actually function once it landed somewhere other than the one node everything had been tested on. Only walking it through every node and checking `nvidia-smi`, the patch, and a real transcode on each one closed that gap.
 10. **Check the Actual Hardware Before Assuming It Matches the Fleet.** `edgar` and `tanaka` looked like they'd share a chassis with the rest of the cluster — they don't. `dmidecode` run directly against both turned up two different Dell OptiPlex form factors, a distinction with real consequences for what GPU could physically go in each one, and one that wasn't recorded anywhere in this project's own docs beforehand.
+11. **"Reboot Fixed It" Isn't the Same as "Root Caused."** The first `kovacs` D3cold incident got a working fix and an honest shrug about *why*. It happened again, and going back with a real cross-node comparison instead of accepting round two as more bad luck turned up an actual, fixable, fleet-wide default (`DynamicPowerManagement: 3`) — the same class of workaround-vs-fix gap worth checking anywhere a "just restart it" fix has been living unquestioned for a while.
+12. **A Plausible-Looking Correlation Deserves the Same Rigor as a Real Bug.** A PCIe link speed downgrade showing up right next to a freshly-root-caused power-management bug, on the same nodes, right after the same reboots, looked like more than coincidence. It would have been easy to write "likely related, needs more investigation" into a doc and move on. Testing it directly — a live link retrain, then the same retrain with ASPM disabled, then finally just checking the link speed under real load instead of at idle — took maybe twenty extra minutes and turned "probably connected" into "definitely not," which is a more useful thing to have on record than an unresolved suspicion.
 
 **Part 4** picks up next: the actual Proxmox OS upgrade to Trixie, including confirming these four freshly-installed drivers survive the kernel jump.
