@@ -32,6 +32,8 @@ Add the custom repository to Jellyfin:
 4. **Save** → Go to **Catalog** → Install **Media Integrity Scanner**
 5. **Restart Jellyfin**
 
+**If the plugin doesn't appear in the Catalog after adding the repository, this is almost always the web client, not the server.** Hit exactly this standing up a second test instance: the repository saved correctly, the manifest was reachable (confirmed both from a browser and with `curl` from inside the container), and querying the server's own `/Packages` API directly with an authenticated request showed the plugin present in the catalog data all along — correct GUID, correctly tagged with the repository name. The web UI was just holding a stale, cached view of the catalog fetched before the repository was added. A hard refresh of the Catalog page (Ctrl+Shift+R / Cmd+Shift+R, not a normal reload) resolved it immediately. If that doesn't do it, a full logout/login or a private-browsing window rules out cached session state, and it's worth checking the Catalog page's category filter dropdown hasn't been left on something other than "General" from a previous session.
+
 ### Method 2: Manual DLL Installation
 
 For development or airgapped environments:
