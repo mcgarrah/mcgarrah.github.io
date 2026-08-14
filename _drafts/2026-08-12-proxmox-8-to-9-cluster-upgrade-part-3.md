@@ -5,13 +5,13 @@ image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-3.png
 categories: [homelab, proxmox, infrastructure]
 tags: [proxmox, nvidia, gpu, dkms, pascal, kepler, turing, ampere, vgpu, nvenc, jellyfin, cuda, pytorch, machine-learning, homelab, upgrade, cluster, rtd3, pcie]
 excerpt: "Real hardware-accelerated Jellyfin transcoding was never actually happening on this cluster — every GPU node was quietly running the open-source nouveau driver instead of NVIDIA's proprietary stack. Fixing that turned into its own post, done deliberately out of sequence: before the Trixie kernel jump, not after, so the driver and the kernel weren't both unproven at the same time."
-description: "Part 3 of a four-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the real state of NVIDIA GPU support across the cluster's two hardware generations (Kepler K600, Pascal P620), the real 580.x driver install — done deliberately ahead of the PVE9 OS upgrade rather than after it — across all four Pascal nodes, including a driver load/unload gotcha that left one GPU stuck in PCI D3cold, a CUDA/PyTorch validation on a second container, confirming Jellyfin's hardware transcode actually works (past a Direct Play false negative), applying the NVENC session-cap unlock for multi-stream transcoding, proving the whole stack survives HA failover across all four GPU nodes, researching an actual physical GPU swap for the dead-end Kepler nodes, and — weeks later — root-causing a second D3cold recurrence to NVIDIA's RTD3 power management, fixing it fleet-wide, and disproving a plausible-looking PCIe link-speed correlation along the way."
+description: "Part 3 of a four-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the real state of NVIDIA GPU support across the cluster's two hardware generations (Kepler K600, Pascal P620), the real 580.x driver install — done deliberately ahead of the PVE9 OS upgrade rather than after it — across all four Pascal nodes, including a driver load/unload gotcha that left one GPU stuck in PCI D3cold, a CUDA/PyTorch validation on a second container, confirming Jellyfin's hardware transcode actually works (past a Direct Play false negative), applying the NVENC session-cap unlock for multi-stream transcoding, proving the whole stack survives HA failover across all four GPU nodes, researching an actual physical GPU swap for the dead-end Kepler nodes, root-causing a second D3cold recurrence to NVIDIA's RTD3 power management and fixing it fleet-wide, disproving a plausible-looking PCIe link-speed correlation along the way, and finally a third reboot-triggered failure mode — a device-node boot race that fenced production Jellyfin out of HA entirely — root-caused and fixed fleet-wide with a real reboot test to prove it."
 date: 2026-08-12
-last_modified_at: 2026-08-13
+last_modified_at: 2026-08-14
 seo:
   type: BlogPosting
   date_published: 2026-08-12
-  date_modified: 2026-08-13
+  date_modified: 2026-08-14
 ---
 
 **[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered pre-flight hardening and building a real backup safety net. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covered the Ceph Reef → Squid upgrade required before the OS jump can even start. This post is a detour from the storage/OS spine of the series, and deliberately so: while auditing GPU passthrough as part of pre-flight, it turned out every GPU node in the cluster was quietly running the open-source `nouveau` driver instead of NVIDIA's proprietary stack — meaning real hardware-accelerated Jellyfin transcoding was never actually happening, upgrade or not. Fixing that for real turned into substantial work on its own, and it got done here, out of sequence, before the Trixie kernel jump rather than after it.
@@ -332,11 +332,59 @@ LnkSta: Speed 5GT/s, Width x16
 
 **Two separate investigations, two different outcomes: one real, fleet-wide bug fixed for good; one plausible-looking correlation tested to destruction and correctly ruled out.** Worth writing up the second one exactly as thoroughly as the first — an unresolved "suspicious but unconfirmed" note left standing in project documentation is exactly the kind of thing that gets treated as fact the next time someone reads it, and this one turned out to be wrong.
 
+## A Third Reboot-Triggered Failure: The Device-Node Boot Race
+
+The RTD3 rollout above involved rebooting all four P620 nodes in turn. That created the exact conditions for a fourth, completely different bug to surface — one that had nothing to do with power management and everything to do with what "the driver is installed" actually means at the moment a node comes back up.
+
+**The symptom looked like a permissions problem.** Production Jellyfin (`ct:502`, HA-managed, group `P620`) turned up stopped, and `ha-manager status` showed it fenced in `error` state — requiring manual intervention, not just a routine restart. `pve-ha-lrm`'s journal had the real reason, and it wasn't ownership or gid mismatches at all:
+
+```
+unable to start service ct:502: Device /dev/nvidia0 does not exist
+unable to start service ct:502: Device /dev/nvidia-uvm does not exist
+```
+
+Device ownership was fine throughout — `crw-rw-rw-` on the nvidia devices, `video`/`render` gids matching the container's `dev0`/`dev1` `/dev/dri` entries exactly, the same passthrough config already proven working across all four nodes earlier in this post. The devices weren't *misconfigured*. They didn't *exist yet*.
+
+**The real cause: two different device families come up on two different timelines at boot, and nothing tells HA to wait for the slower one.** `/dev/nvidia0` and `/dev/nvidiactl` get created almost immediately — the `nvidia`/`nvidia-modeset` kernel modules load at PCI-probe time, seconds into boot. `/dev/nvidia-uvm` and `/dev/nvidia-uvm-tools` are backed by a separate module, `nvidia_uvm`, and that one is **lazy-loaded**: it only loads the first time something actually touches CUDA or Unified Memory — running `nvidia-smi`, for instance. Nothing on a bare Proxmox host does that on its own; none of these driver installs included an `nvidia-persistenced` unit. Confirmed directly in `dmesg -T` on `poe`: `nvidia`/`nvidia-modeset` loaded 11 seconds after boot; `nvidia_uvm` didn't load until nearly 30 minutes later, the moment `nvidia-smi` finally got run by hand. `pve-ha-lrm`'s own retry budget for a failed service start — two attempts, ten seconds apart — isn't remotely long enough to wait out a module that only loads on demand. Any HA-managed container racing that gap on a cold boot loses.
+
+**This wasn't a `ct:502`-only fluke.** `ct:602` (`nutrition-api-dev`, HA group `CEPH-CORE`, GPU-passthrough for the PyTorch validation earlier in this post) hit the identical race on `quell` the same day — same two-line failure signature, same fenced error state. And checking the other two nodes turned up a live landmine, not just a historical one: `harlan` and `kovacs` had *also* rebooted as part of the same RTD3 rollout and were sitting with `/dev/nvidia-uvm*` silently missing at that exact moment — nothing had tried to start a GPU container there since, so nothing had failed yet, but the next reboot or HA relocation would have hit the exact same wall. Treated as a fleet-wide exposure across all four P620 nodes, the same call made for the RTD3 bug above, not a fix scoped to the two nodes that happened to fail first.
+
+**The fix: force every `/dev/nvidia*` device node to exist before Proxmox's own container-start machinery ever runs.**
+
+```ini
+# /etc/systemd/system/nvidia-gpu-init.service
+[Unit]
+Description=Force NVIDIA GPU device node creation before HA/guest autostart
+Before=pve-ha-lrm.service pve-guests.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/nvidia-smi
+ExecStart=/usr/bin/nvidia-modprobe -c 0 -u
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+systemctl daemon-reload
+systemctl enable --now nvidia-gpu-init.service
+```
+
+`Before=` is declared entirely inside this new unit — no vendor Proxmox service file needed editing, so the fix survives `pve-manager` package upgrades cleanly. `nvidia-modprobe -c 0 -u` is the explicit, documented way to force the GPU-0 device file and the UVM device files into existence; `nvidia-smi` alone was empirically observed to trigger the same `nvidia_uvm` load on this driver version, and running both costs nothing. Deployed to all four P620 nodes at once — which immediately closed the latent gap on `harlan` and `kovacs` too, not just recovered the two that had already failed.
+
+**Verified with an actual reboot, not just an enabled unit — the same discipline this post already paid for once with the `nouveau` blacklist gotcha earlier.** Rebooted `poe` for real. `nvidia-gpu-init.service` completed and all four device nodes existed within about two seconds of boot. `pve-ha-lrm`'s journal for that boot shows `ct:502` and `ct:101` both starting and reporting `OK` on the **first** attempt — no retries, no fenced error state. `ceph -s` stayed `HEALTH_OK` and the cluster stayed quorate 6/6 throughout.
+
+Three separate reboot-triggered GPU failure modes have now shown up in this one project — the `nouveau` blacklist race on the very first canary install, `kovacs`'s D3cold/RTD3 fault, and this device-node boot race. None of them were visible from a running, already-booted system; every one of them only existed at the moment a node actually came back from a cold boot.
+
 ## Where This Leaves Things
 
 **All four P620 nodes (`harlan`, `kovacs`, `poe`, `quell`) now have working host-side NVIDIA drivers**, confirmed via `nvidia-smi` and `dkms status`. Passthrough is wired up into two containers so far — Jellyfin (`ct:502`) and the `nutrition-api-dev` container, the latter proven with a real CUDA compute workload via PyTorch, not just a device probe. **Jellyfin's hardware-acceleration path is now fully validated across every dimension that matters:** single-stream transcode confirmed live via `nvidia-smi` (after working through the Direct Play false negative above), the NVENC session-cap patch applied and functionally verified with four concurrent encode sessions, and — the last gap — GPU passthrough, the patch, and a real transcode all confirmed working after HA failover to *every one* of the four P620 nodes, not just the one it happened to start on. `edgar` and `tanaka` stay on `nouveau` for now — but "dead end short of a physical GPU swap" has turned into real research toward that swap, not just a closed door: Turing T-series cards are a confirmed clean fit, and an RTX 3060 is a live possibility for `edgar` specifically if a prior PSU upgrade turns out to have the right connector, pending physical inspection.
 
 **One more round after all of the above: `kovacs`'s GPU fell off the bus a second time, weeks later, under real operational load rather than a fresh install — and this time the investigation went all the way to a fixable root cause instead of stopping at "reboot fixed it again."** RTD3 (NVIDIA's default fine-grained power management) turned out to be the actual cause, confirmed identical and unfixed across all four P620 nodes, not a `kovacs`-specific fluke — disabled fleet-wide (`NVreg_DynamicPowerManagement=0x00`) with zero actual service downtime, migrating production Jellyfin and DNS off each node in turn before its reboot. A second-looking finding — a PCIe link speed "downgrade" that showed up right alongside it — got tested to destruction rather than written down as fact, and turned out to be normal idle power scaling, not a bug at all. Full writeup, including the live `setpci` experiments that disproved the more exciting theory, lives in the homelab's own infrastructure docs: [`GPU-PCIE-RTD3-INVESTIGATION.md`](https://github.com/mcgarrah/k8s-proxmox/blob/main/docs/GPU-PCIE-RTD3-INVESTIGATION.md).
+
+**The RTD3 rollout's own reboots then surfaced a fourth, unrelated bug: production Jellyfin got fenced out of HA entirely by a device-node boot race.** `/dev/nvidia-uvm*` is lazy-created by a kernel module that only loads on first CUDA touch, and nothing on a bare host triggers that automatically — so HA's short two-attempt retry budget lost the race against the driver's own lazy loading on every P620 node that rebooted that day, not just the one (`poe`) that happened to be running the container that failed first. Fixed fleet-wide with a systemd oneshot unit ordered ahead of `pve-ha-lrm`/`pve-guests`, and confirmed with a real reboot test rather than trusting the enabled unit alone. Full details and the fix itself are documented alongside the RTD3 investigation in [`NVIDIA-GPU-KERNEL-PINNING.md`](https://github.com/mcgarrah/k8s-proxmox/blob/main/docs/NVIDIA-GPU-KERNEL-PINNING.md).
 
 The driver install itself never touched Ceph, cluster quorum, or anything storage-related from Part 2 — it's genuinely a parallel track, which is exactly why it was safe to do out of sequence, ahead of the OS upgrade rather than folded into its post-upgrade verification.
 
@@ -358,5 +406,6 @@ The driver install itself never touched Ceph, cluster quorum, or anything storag
 10. **Check the Actual Hardware Before Assuming It Matches the Fleet.** `edgar` and `tanaka` looked like they'd share a chassis with the rest of the cluster — they don't. `dmidecode` run directly against both turned up two different Dell OptiPlex form factors, a distinction with real consequences for what GPU could physically go in each one, and one that wasn't recorded anywhere in this project's own docs beforehand.
 11. **"Reboot Fixed It" Isn't the Same as "Root Caused."** The first `kovacs` D3cold incident got a working fix and an honest shrug about *why*. It happened again, and going back with a real cross-node comparison instead of accepting round two as more bad luck turned up an actual, fixable, fleet-wide default (`DynamicPowerManagement: 3`) — the same class of workaround-vs-fix gap worth checking anywhere a "just restart it" fix has been living unquestioned for a while.
 12. **A Plausible-Looking Correlation Deserves the Same Rigor as a Real Bug.** A PCIe link speed downgrade showing up right next to a freshly-root-caused power-management bug, on the same nodes, right after the same reboots, looked like more than coincidence. It would have been easy to write "likely related, needs more investigation" into a doc and move on. Testing it directly — a live link retrain, then the same retrain with ASPM disabled, then finally just checking the link speed under real load instead of at idle — took maybe twenty extra minutes and turned "probably connected" into "definitely not," which is a more useful thing to have on record than an unresolved suspicion.
+13. **A Working System Proves Nothing About a Fresh Boot.** Three separate GPU failures in this one project — the `nouveau` blacklist race, `kovacs`'s D3cold/RTD3 fault, and the device-node boot race that fenced production Jellyfin out of HA — were all completely invisible on an already-running system and only existed in the narrow window right after a cold boot. "It's been up and working" is not the same claim as "it will come back up correctly," and the only way to actually know is to reboot it and watch.
 
 **Part 4** picks up next: the actual Proxmox OS upgrade to Trixie, including confirming these four freshly-installed drivers survive the kernel jump.
