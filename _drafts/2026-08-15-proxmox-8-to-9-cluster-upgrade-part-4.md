@@ -1,113 +1,144 @@
 ---
 layout: post
-title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 4: The Canary, the Batch, and Verification"
+title: "Proxmox VE 8 to 9 Cluster Upgrade, Part 4: A Media Automation Stack, Built Ahead of the OS Jump — and Two Incidents That Found the Cluster's Real Limits"
 image: /assets/images/og/proxmox-8-to-9-cluster-upgrade-part-4.png
 categories: [homelab, proxmox, infrastructure]
-tags: [proxmox, ceph, squid, debian, trixie, zfs, homelab, upgrade, cluster, gpu, networking]
-excerpt: "Part 1 covered everything that happens before touching Proxmox itself — pre-flight hardening and a real backup safety net; Part 2 covered the Ceph Squid migration; Part 3 covered the NVIDIA GPU driver work done ahead of the jump. Part 4 is the actual OS upgrade: one canary node, five more in sequence, and verifying nothing quietly broke along the way."
-description: "Part 4 of a four-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers the tanaka canary upgrade with a tested ZFS rollback path, the sequential batch rollout of the remaining five nodes, and post-upgrade verification — including confirming the NVIDIA drivers installed in Part 3 survive the kernel jump, and network interface naming, the two things most likely to break quietly on a kernel jump this large."
+tags: [proxmox, ceph, cephfs, homelab, upgrade, cluster, radarr, sonarr, prowlarr, qbittorrent, sabnzbd, bazarr, jellyseerr, wireguard, vpn, jellyfin, troubleshooting, performance]
+excerpt: "The point of upgrading a six-node cluster was never the upgrade itself — it was to run more on it with confidence. With Ceph already on Squid and GPU passthrough already working, Part 4 covers standing up a full *arr media automation stack ahead of the still-pending OS jump, reusing an existing WireGuard pattern for the download client's kill switch, a handful of real coordination bugs a growing service mesh surfaces on its own, and two incidents — one memory, one disk I/O — that the new stack's first real burst of activity exposed within an hour of each other."
+description: "Part 4 of a five-part series upgrading a 6-node Proxmox VE 8 cluster to Proxmox VE 9. Covers deploying a nine-container *arr media automation stack (Prowlarr, Radarr, Sonarr, qBittorrent, SABnzbd, Bazarr, Seerr, Recyclarr, caddy-ui) deliberately ahead of the OS upgrade itself, reusing an existing native WireGuard kill-switch pattern for qBittorrent instead of Docker/gluetun, several real coordination bugs surfaced by wiring independent services together (Seerr and Bazarr each caching their own copy of Radarr/Sonarr's root-folder paths, a config-drift bug that silently reverted a password fix three times, a Recyclarr crash that turned out to be an unrelated stale cache), and two incidents diagnosed back to back: Jellyfin's ffmpeg transcodes getting OOM-killed inside an undersized 2GB container, and a CephFS-wide disk I/O saturation event traced to a mass concurrent download burst overwhelming BlueStore's write pipeline on HDD-backed OSDs."
 date: 2026-08-15
-last_modified_at: 2026-08-12
+last_modified_at: 2026-08-16
 seo:
   type: BlogPosting
   date_published: 2026-08-15
-  date_modified: 2026-08-12
+  date_modified: 2026-08-16
 ---
 
-**[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered everything that happens before a single node touches Proxmox VE 9: pre-flight hardening across all six nodes and building a real Proxmox Backup Server safety net from nothing. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covered the Ceph Reef → Squid upgrade required before the OS jump can even start — staged with a canary instead of one cluster-wide sweep, plus release-note research and a before/after performance baseline. **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** covered the NVIDIA GPU driver work on the four Pascal-generation nodes, done deliberately out of sequence — ahead of this OS upgrade rather than after it, to test the new driver against a known-stable kernel first. With Ceph fully on Squid and the GPU drivers already validated, the actual OS upgrade can start.
+**[Part 1](/proxmox-8-to-9-cluster-upgrade-part-1/)** covered pre-flight hardening and a real backup safety net. **[Part 2](/proxmox-8-to-9-cluster-upgrade-part-2/)** covered the Ceph Reef → Squid migration required before the OS jump can even start. **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** covered the NVIDIA GPU driver work, also done deliberately ahead of the jump so hardware-accelerated Jellyfin transcoding would actually work once there was a real library to transcode. The OS upgrade itself — Trixie, the new kernel, all six nodes — is still ahead; that's **Part 5**, once it's actually run.
 
-This post covers the part that actually carries risk to the running cluster: rebooting six nodes with **no out-of-band management** into a kernel roughly four major versions newer (`6.8` → `7.0`, targeting the current PVE 9.2 point release rather than bare 9.0) than what they're running today, on hardware where UEFI has already failed four separate times. One canary node first, then the remaining five in sequence, then verification — including network interface naming, and confirming the NVIDIA drivers installed in Part 3 survive the jump.
+This post is the reason the GPU work in Part 3 mattered in the first place: a real Jellyfin library, fed by a real media automation pipeline, running on the *current*, already-proven PVE 8.4 kernel rather than waiting on the OS jump — one fewer unknown to introduce at the same time as everything else. It covers standing that pipeline up — nine new containers, a download client riding an existing WireGuard pattern instead of reaching for Docker, and a handful of coordination bugs that only show up once independent services start talking to each other for real. It closes with the two incidents that mattered most: within about an hour of each other, the first real burst of activity through the new stack found a memory ceiling on Jellyfin and a disk I/O ceiling on Ceph that neither had been tested against before — found now, deliberately, before that same load has to compete with an OS upgrade too.
 
-<!-- excerpt-end -->
+## The Stack: Nine Containers, One Convention
 
-*A note on timing: this post is being written and scheduled before the upgrade itself runs, the same way Part 1's Ceph and backup work was planned out before execution. The plan below reflects what's designed to happen — expect this post to get a pass of real results, corrections, and probably at least one surprise once it's actually run, the same way nearly every phase in Part 1 turned up something the plan didn't originally account for.*
+The build followed the same one-app-per-LXC convention already established across this cluster (`ct:500` Caddy, `ct:501` Homepage, `ct:502` Jellyfin) rather than a combined Docker Compose stack — consistent with a broader preference this infrastructure has for native installs over containerized ones wherever that's reasonably achievable.
 
----
+| VMID | App | Role |
+|---|---|---|
+| 503 | Prowlarr | Indexer aggregator — the one place indexers get configured, synced out to Radarr/Sonarr |
+| 504 | qBittorrent | Torrent client, VPN-gated (see below) |
+| 505 | Radarr | Movie library automation |
+| 506 | Sonarr | TV library automation |
+| 507 | Bazarr | Subtitle automation for both libraries |
+| 508 | Seerr | Request/discovery front end (the user-facing "add this to my library" UI) |
+| 509 | Recyclarr | Headless — no persistent process, just a daily cron syncing TRaSH Guides quality profiles into Radarr/Sonarr |
+| 510 | FlareSolverr | Cloudflare-challenge solver for Prowlarr indexers — see the dead end below |
+| 511 | SABnzbd | Usenet download client |
 
-## Phase B: Canary Node Upgrade (`tanaka` → PVE 9 / Trixie)
+Reverse proxy exposure matches the pattern already established for Homepage and UrBackup: `https://<cluster-ip>:<port>` blocks differentiated by port on the shared Caddy instance (`ct:500`), not per-app hostnames. Nine new `bind` blocks, nine new ports, zero new DNS records.
 
-`tanaka` has no Ceph OSDs and is HA-idle, making it the ideal canary: the smallest possible blast radius if something goes wrong, and the node already carrying the freshest, best-understood configuration in the cluster from its own recent rebuild.
+**One dead end worth naming plainly:** FlareSolverr was added specifically to unblock Cloudflare-protected public torrent indexers (1337x, eztv). It doesn't. Both sites gate their actual *search* pages — not their homepages, which is what a naive standalone test hits — behind Cloudflare Turnstile, a materially harder interactive challenge than FlareSolverr's headless-Chrome JS-challenge solver was ever built to pass. This was confirmed two ways: directly against FlareSolverr, and against a second, heavier tool ([Byparr](https://github.com/ThePhaseless/Byparr), a Firefox-based drop-in replacement) installed specifically to test whether a stronger anti-bot stack would fare better. It didn't — both genuinely attempted the challenge and both failed after 130–200 seconds, most likely because Turnstile also scores IP reputation, not just browser fingerprint, and a home IP with no history on either site has none to offer. FlareSolverr stays deployed for indexers with a lighter challenge, but 1337x and eztv are a closed question until a real Turnstile solver exists, not a configuration gap.
 
-### 1. Testing the Rollback Mechanism First
-A ZFS snapshot is only a real safety net if the recovery path has actually been exercised once, not just written down. Before touching anything for real:
-1. Snapshot: `zfs snapshot rpool/ROOT/pve-1@rollback-test`.
-2. Create a marker file and install a small, disposable test package — something trivially easy to confirm is gone afterward.
-3. Boot the Proxmox 8.4 installer's Debug/Rescue shell, import `rpool`, run `zfs rollback -r rpool/ROOT/pve-1@rollback-test`, export `rpool`.
-4. Boot back into the installed OS and confirm the marker file and test package are completely gone, and the node still rejoins the cluster cleanly.
+## Reusing an Existing WireGuard Pattern for the Download Client
 
-Only once this round-trip is proven does the real upgrade get a snapshot of its own.
+qBittorrent needed a kill switch — torrent traffic should stop dead if the VPN tunnel isn't up, not silently fail over to the LAN IP. The [site-to-site VPN work](/networking-site-2-site-vpn/) already running elsewhere in this infrastructure meant WireGuard wasn't a new technology to introduce here, just a new application of it: a per-device tunnel config from PrivadoVPN (bundled with an existing Easynews Usenet subscription, confirmed to have an official P2P-allowed policy before committing to it), deployed as `/etc/wireguard/wg0.conf` inside `ct:504`, with `wg-quick` and `iptables` doing the enforcement — no Docker, no `gluetun` sidecar.
 
-### 2. Executing the Canary Upgrade
-1. Fresh pre-upgrade snapshot: `zfs snapshot rpool/ROOT/pve-1@pre-v9-upgrade`.
-2. Flip apt sources from `bookworm` to `trixie` in `/etc/apt/sources.list.d/pve-install-repo.list` and `ceph.list`.
-3. Run the OS upgrade inside `tmux`, so a dropped SSH session doesn't kill it mid-flight:
-   ```bash
-   tmux new -d -s pve9-upgrade 'apt update && apt full-upgrade -y; echo DONE > /root/pve9-upgrade-status'
-   ```
-4. Reboot into the new Trixie kernel on-site — physical presence is the recovery plan here, not a nicety, given there's no IPMI/BMC to fall back on.
-5. Verify: `pveversion -v`, `zpool status`, `pvecm status`, and confirm `tanaka` rejoins the Ceph cluster cleanly.
-
-If anything goes wrong, the rollback path proven in step 1 above is the actual answer, not a hopeful assumption.
-
----
-
-## Phase C: Sequential Batch Upgrade of the Remaining Five Nodes
-
-Once `tanaka` passes its soak period, the rest go in this order:
-
-1. **`quell`** — already proved it tolerates a fresh kernel earlier in this project (its stale kernel pin was resolved and verified via two real reboots back in Part 1's pre-flight), so it goes first among the OSD hosts too.
-2. **`poe`**, **`kovacs`**, **`harlan`** — standard OSD host upgrades, no known complications.
-3. **`edgar`** — last, deliberately. Its three OSDs (`osd.1`, `osd.4`, `osd.7`) live on USB-attached drives, which already caused one real incident during an earlier, unrelated migration. Going last here isn't superstition — it's giving every other node's turn a chance to surface a general Trixie-kernel problem first, before combining that risk with a known-fragile storage path.
-
-### Per-Node Workflow
-For each node:
-1. **Relocate HA workloads** to peer nodes (`ha-manager migrate ct:<id> <peer>`) rather than letting a mid-reboot HA fencing event handle it reactively.
-2. **Take a ZFS root snapshot** (`zfs snapshot rpool/ROOT/pve-1@pre-v9-upgrade`) — the exact mechanism already proven on `tanaka`.
-3. **Flip repositories, upgrade, reboot** — same `tmux`-wrapped pattern as the canary.
-4. **`edgar`-specific:** verify the `usb_storage.quirks` kernel parameter survived the upgrade, check all 4 USB drives via `lsblk`, run `smartctl` health checks, and confirm all 3 USB-backed OSDs rejoin `ceph osd tree` cleanly before moving on.
-
----
-
-## Phase D: Verification — Including the Two Things Most Likely to Break Quietly
-
-The obvious checks come first:
+The kill switch itself is a fwmark-based default-reject:
 
 ```bash
-# Versions across all nodes
-for n in harlan kovacs poe edgar tanaka quell; do ssh $n "pveversion -v | head -3"; done
-
-# Cluster quorum & Ceph health
-ssh poe "ceph -s; ceph versions; pvecm status"
+# Everything qBittorrent sends gets marked by wg-quick's own routing table.
+# Default REJECT on OUTPUT for anything that isn't going out the tunnel...
+iptables -A OUTPUT -m mark --mark $(wg show wg0 fwmark) -j ACCEPT
+iptables -A OUTPUT -o wg0 -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+# ...with an explicit LAN exception inserted ahead of the reject, so
+# management access (SSH, the WebUI) survives even with the tunnel down.
+iptables -I OUTPUT -d 192.168.86.0/24 -j ACCEPT
+iptables -A OUTPUT -j REJECT
 ```
 
-Every node should report `PVE 9.2`, `Ceph 19.2 Squid`, and `HEALTH_OK`. But a kernel jump this large (`6.8` to `7.0`) doesn't just risk the things with obvious error messages — it risks the things that quietly keep working *almost* correctly, or fail somewhere a `ceph -s` will never show you.
+Verified the only way that actually means something: force-killing the `wg0` interface (not a graceful `wg-quick down`, which runs cleanup hooks that could mask a real failure) and confirming both DNS resolution and direct-IP traffic failed while LAN access kept working.
 
-### GPU Passthrough — Confirming What Part 3 Already Installed
-Unlike the rest of this post, GPU passthrough isn't something to investigate fresh here — **[Part 3](/proxmox-8-to-9-cluster-upgrade-part-3/)** already did that work, deliberately ahead of this OS upgrade: `nouveau` confirmed running by default on both hardware generations, the K600 (Kepler) nodes ruled out as a dead end (`R470` broken past kernel `6.10`, compute capability too old for ML anyway), and the P620 (Pascal) nodes running NVIDIA's proprietary `580.x` driver via DKMS, installed and verified on `harlan`, `kovacs`, `poe`, and `quell` before this kernel jump — specifically so the driver wasn't also an unknown at the same time as the kernel.
+One real gotcha from this build, worth remembering for anyone maintaining a kill switch like this rather than just standing one up once: **never edit the live iptables rules while the app is still running against them.** `iptables -I` inserts at position 1, so a routine mid-session tweak briefly reordered the LAN-`ACCEPT` exception behind the default `REJECT` — caught quickly by checking `iptables -L OUTPUT -n -v --line-numbers` rather than trusting the edit blindly, but the brief window was enough for real ICMP-reject responses to reach qBittorrent's *already-open* UDP tracker sockets. Those sockets latched into a bad state — `Operation not permitted` on every UDP tracker — that persisted even after the ruleset itself was fixed. Only a full `systemctl restart qbittorrent-nox`, forcing fresh sockets, actually cleared it. The rule fix and the service restart are two separate remediations; doing only the first looks fixed and isn't.
 
-Post-upgrade verification here is narrower: confirm the DKMS-built `580.x` module survives the `6.8` → `7.0` jump and rebuilds cleanly against the new kernel headers, rather than re-deriving whether proprietary drivers are viable at all.
+## What a Growing Service Mesh Actually Costs You
+
+Nine services that need to agree with each other about where files live, what a "good enough" release looks like, and who owns the credentials for what turned up a consistent failure shape: **independent services love caching a copy of state that belongs to a different service, and nothing tells you when that copy goes stale.**
+
+**Seerr caches its own root-folder path per Radarr/Sonarr connection, and doesn't track the live value.** A later, unrelated fix — consolidating Radarr's and Sonarr's CephFS mounts from three separate bind-mounts down to one so hardlinked imports would actually work instead of silently falling back to copies — changed both apps' root folder paths. Seerr's *own* stored copy of those paths, set once at initial connection time, didn't follow. Every new request through the default Radarr/Sonarr connections would have failed outright until this was caught and fixed by hand. Bazarr has the identical failure shape for its own reason — it maintains its own `path_mappings` translating Radarr's/Sonarr's reported paths back to its own separate CephFS mount — and needed the same manual fix for the same underlying change. **Any service that stores a filesystem path belonging to a *different* service needs that path re-checked every time the owning service's layout changes, full stop; there's no dynamic-discovery shortcut here.**
+
+**A live-patched config and its local source-of-truth drifting apart caused the same bug to resurface three times.** qBittorrent's WebUI password got fixed once, directly, via `sed` against the live `services.yaml` inside the Homepage container — without touching the *local* copy of that same file that every subsequent Homepage deploy actually pushes *from*. Every unrelated Homepage edit after that (adding a new widget, fixing an unrelated tile) silently reverted the password back to the stale value, because it was overwriting the live file from a local copy that had never been told about the fix. The lesson generalizes past this one file: **never patch a config live on a remote host without updating whatever local copy is the actual source of truth for the next push** — a `diff` against live before pushing again would have caught this on the first recurrence instead of the third.
+
+**An opaque crash pointed at the most recent change, and wasn't caused by it.** Adding a second, differently-scoped quality profile to Recyclarr's config produced an immediate `.NET` `Offset and length were out of bounds for the array` exception on sync — reproduced even after fully reverting the edit, which ruled out the config change and pointed at something environmental instead: a corrupted local cache of the downloaded TRaSH Guides data. Deleting `~/.config/recyclarr/resources/` and letting it re-download fixed it outright, edit and all. Worth remembering for any tool that caches a remote definitions repo locally: an opaque crash with no config-level explanation is worth ruling the cache out before assuming the most recent edit is the culprit.
+
+**Quality profiles assign at add-time, not continuously.** Three movies and one TV series had been added via Seerr *before* Recyclarr's curated quality profiles existed, back when Seerr's Radarr/Sonarr connections still pointed at the generic default profile with no format restrictions. Radarr and Sonarr both assign a title's quality profile once, at the moment it's added — changing the app's default profile later doesn't retroactively touch anything already in the library. The practical result: two of those movies had silently grabbed 37–40GB Remux releases, and one TV show had multiple non-compliant HDTV/Bluray-remux season packs sitting in the download queue, all invisible until checked directly against each title's actual `qualityProfileId`. Fixed with a bulk reassignment to the correct profile, a blocklist-and-remove on the non-compliant queue items, and a fresh search — but the fact that it took a direct API check to even notice is the real point. **A profile change in one of these apps is not retroactive, and nothing surfaces that on its own.**
+
+## Incident 1: Jellyfin's Transcodes Getting Silently Killed
+
+With the pipeline live and Jellyfin actually serving real playback again, a report came in fast: a title hanging mid-playback, looking for all the world like the server had gone offline.
+
+It hadn't, quite. `curl` against `/System/Info/Public` returned a clean `200` — a lightweight, likely in-memory-served endpoint. `curl` against `/health` hung completely, no response at all inside a ten-second window. That split is the tell: a genuinely offline or network-partitioned server fails both identically; a server up but internally starved for threads or memory answers the cheap requests and stalls on anything that has to actually do work. Jellyfin's own log confirmed it directly:
+
+```
+[20:09:42] WRN  the heartbeat has been running for "00:00:05.9278910" which is
+           longer than "00:00:01". This could be caused by thread pool starvation.
+[20:10:23] ERR  FFmpeg exited with code 137
+[20:11:59] ERR  Error processing request: A task was canceled.
+           URL GET /videos/.../hls1/main/0.ts
+[20:19:17] ERR  FFmpeg exited with code 137
+```
+
+Exit code 137 is `128 + SIGKILL` — the kernel's OOM killer, not a crash or a codec failure. The HLS segment request failing two minutes later is the exact mechanism behind "playback hung": the transcoder feeding the stream had already been killed, so the player just stopped receiving new segments. The container itself explained why: capped at 2048MB with effectively no usable swap, and Jellyfin's own base process — before any transcode even starts — was already sitting at roughly 1.9GB RSS. There was never real headroom for a transcode's `ffmpeg` child process to exist inside that limit; it was a matter of when, not if.
 
 ```bash
-for n in harlan kovacs poe quell; do
-  ssh $n "dkms status; nvidia-smi --query-gpu=driver_version,name --format=csv,noheader"
-done
+systemctl restart jellyfin       # clears the current hung state
+pct set 502 -memory 6144         # 2048 -> 6144MB; host had 19GB free to spare
 ```
 
-Expected: `nvidia/580.142` reported as `installed` against the new `7.0` kernel on all four nodes, and `nvidia-smi` still reporting the Quadro P620 cleanly. If DKMS didn't rebuild automatically against the new kernel headers, the fallback is the same `proxmox-boot-tool kernel pin` mechanism from Part 1 — hold that node back on its prior kernel until the driver branch is confirmed compatible, rather than running a node with a broken GPU module. `edgar` and `tanaka` stay on `nouveau`, unaffected either way — nothing to re-investigate there beyond passthrough itself still working, which the kernel's built-in driver guarantees.
+Both `/health` and `/System/Info/Public` returned clean `200`s immediately after the restart, with the process back to a healthy ~264MB baseline. Two things are still open rather than fully closed: `pct config` reports 512MB of swap allocated to this container, but `free -h` run *inside* it shows zero — a real discrepancy that would have meant a graceful degradation path was actually a hard cliff, worth a closer look next time this comes up. And it's still unconfirmed whether the failed transcode was actually using the hardware acceleration Part 3 spent an entire post getting working, or silently fell back to a far heavier software encode — worth checking Jellyfin's own transcode dashboard the next time a session is active.
 
-### Network Interface Naming
-Part 1 compiled a full MAC-address-to-interface table across all 6 nodes specifically because Debian 13 could, in theory, alter predictable network interface naming. The real verification here isn't "does the node have network access" — DHCP or a static IP misconfigured to the wrong physical port can still technically pass a ping test while quietly routing management traffic over the wrong NIC, or the SAN bridge over the public one. The actual check is confirming each node's `vmbr0` (public) and `vmbr1` (SAN) bridges still have the *same physical MAC addresses* bound to them as `bridge-ports` that Part 1's table recorded — not just that connectivity exists, but that it's going over the intended physical path.
+## Incident 2: A Disk I/O Storm From the Stack's Own First Real Workload
 
-### Final Cleanup
-Once every node reports clean on both fronts, the pre-upgrade ZFS snapshots get destroyed (after a short soak period, not immediately), and infrastructure documentation (`CLUSTER-SUMMARY.md`, `BOOT-DRIVE-ANALYSIS.md`) gets updated to reflect the new baseline.
+The same viewing session also produced actual, cluster-wide `ceph -s` warnings — not adjacent to the Jellyfin incident, a second, independent finding surfaced by checking storage health directly rather than assuming the memory fix was the whole story:
 
----
+```
+health: HEALTH_WARN
+        Slow OSD heartbeats on back (longest 2123.010ms)
+        Slow OSD heartbeats on front (longest 1430.318ms)
+        0 slow ops, oldest one blocked for 32 sec, daemons [osd.13,osd.4] have slow ops.
+```
 
-## Key Takeaways from the Upgrade Itself
+Multi-second heartbeat delays and ops blocked for over half a minute are not cosmetic — any read landing on an affected OSD stalls for exactly that long, which is more than enough to visibly pause video playback. `ceph osd tree` narrowed it to a specific host: `osd.4` and `osd.7`, both on `edgar`, showed slow heartbeats to nearly every other OSD in the cluster — a node-level pattern, not one failing disk. `top` on `edgar` pointed at the actual mechanism: `50% wa` (I/O wait), not CPU — a classic symptom on this cluster's HDD-backed OSDs (`ceph osd tree` confirms all fifteen are `hdd` class) when write demand outpaces what spinning disks can absorb.
 
-1. **Respect Out-of-Band Realities:** When nodes lack IPMI/BMC management, schedule OS reboots only when physical access to the hardware is actually available — the rollback plan is only as good as your ability to execute it if remote access disappears.
-2. **Test Rollback Paths Before You Need Them:** A ZFS snapshot is a real safety net only after the rescue-shell rollback workflow has actually been exercised once, end to end.
-3. **A Clean `ceph -s` Isn't the Whole Verification:** Passthrough devices and network path integrity can both degrade in ways a health check will never surface — verify the things that don't have their own error messages.
-4. **Order Matters When One Node Has a Known Fragility:** Save the node with the pre-existing quirk for last, so a new problem elsewhere doesn't get confused with the old one.
+The trigger was self-inflicted and easy to name: adding a paid Usenet indexer (NZBgeek) and three new public torrent indexers to Prowlarr in the same session had just triggered hundreds of near-simultaneous grabs across two shows' entire back catalogs. `/proc/diskstats`, sampled before and after a 3-second window, confirmed real queuing rather than just a busy-but-fine disk — one of `edgar`'s three data drives showed roughly 57% instantaneous utilization *and* an average queue depth of about 9 concurrent I/Os, computed from the ratio of the weighted-time field to the raw busy-time field:
 
-With a methodical, phase-gated plan — and a canary at both the storage layer and the OS layer — even a complex hyper-converged homelab cluster on hardware this old can move to Proxmox VE 9 without betting the whole cluster on a single untested step.
+```bash
+# %util  = Δ(field 13, io_ticks)   / window_ms * 100
+# avg qd = Δ(field 14, weighted_ms) / Δ(field 13, io_ticks)
+```
+
+A queue depth of 9 on a rotational disk means real requests waiting a real amount of time before being serviced — enough, on its own, to explain the observed multi-hundred-millisecond OSD commit latencies.
+
+**What actually fixed it took three attempts, and the middle two only partially worked:**
+
+1. **Throttling new download traffic** (qBittorrent capped to 8Mbps and one concurrent download, SABnzbd capped to a fraction of its prior speed) — heartbeat times improved briefly, then got worse again.
+2. **Pausing Ceph's own background scrub** (`ceph osd set noscrub` / `nodeep-scrub` — standard, safe, fully reversible; the cluster had 10 scrubbing plus 5 deep-scrubbing PGs running concurrently with everything else) — cleared the `SLOW_OPS` and `MDS_SLOW_METADATA_IO` warnings from the health summary.
+3. **Fully stopping all download traffic**, not just throttling it — SABnzbd's queue paused outright, every qBittorrent torrent explicitly stopped rather than speed-capped, plus `start_paused_enabled` flipped on so Radarr/Sonarr's still-running background searches couldn't quietly re-add active downloads. This is what actually mattered: I/O wait on `edgar` dropped from 69% to 10% within about a minute.
+
+The gap between steps 1 and 3 is the real finding here. **Throttling new traffic and clearing an existing backlog are not the same fix.** BlueStore's internal write pipeline (RocksDB compaction, in this case) had already accepted far more work than the disks could keep up with in real time; slowing new arrivals down didn't undo what was already queued internally. Only actually stopping new arrivals gave the backlog room to drain. SMART health on every disk checked came back clean — this was a self-inflicted traffic jam from how much got requested at once, not failing hardware.
+
+## Why These Two Landed Together
+
+Neither incident was really about a bug. Jellyfin's 2GB memory cap had been fine for however long the container had been idling with nothing serious asking it to transcode. Ceph's HDD-backed OSDs had been fine under whatever background load the cluster carried before this stack existed. Both limits were real the entire time; nothing had generated enough concurrent, realistic demand to actually find them until the automation pipeline's first real burst of activity did — in the same viewing session, about ten minutes apart. That's not a coincidence so much as the expected outcome of finally pointing real, continuous, self-generated load at infrastructure that had only ever been smoke-tested.
+
+## Key Takeaways
+
+1. **A service that stores another service's filesystem path is a liability the moment that path changes.** Seerr and Bazarr both did this independently, and both broke the same way for the same reason — check every dependent service's cached copy, not just the app whose config you actually changed.
+2. **A config fix applied directly to a live host, without updating whatever local copy the next deploy pushes from, isn't fixed — it's postponed.** Diff before you push, especially after any out-of-band edit.
+3. **Quality/format policies in Radarr and Sonarr are not retroactive.** Anything added before a profile change stays on the old profile forever unless it's explicitly re-checked and reassigned.
+4. **Throttling new load and draining an existing backlog are different problems with different fixes.** If slowing new traffic down doesn't relieve pressure within a reasonable window, the bottleneck is very possibly already-queued work, not the current arrival rate — stop the traffic instead of just capping it.
+5. **A container's memory limit that "has always been fine" has usually just never been tested against real concurrent load.** Idle headroom and working headroom are not the same measurement.
+6. **Reuse existing infrastructure patterns before reaching for new tooling.** The qBittorrent kill switch needed nothing this cluster didn't already have proven elsewhere — native WireGuard, `iptables`, and TUN passthrough on an unprivileged LXC — which is a real argument for standardizing on a small set of patterns across a growing homelab instead of picking new tools per project.
+
+With the media pipeline live, both incidents diagnosed and fixed, and the download backlog intentionally paused until it can resume without contending with active playback, the cluster is in a genuinely better-understood state than it was before this stack existed — not because nothing broke, but because what broke was real, found fast, and fixed for reasons that generalize past this one stack.
+
+**Part 5** picks up next: the actual Proxmox OS upgrade to Trixie, now with a real, actively-used workload on the cluster to verify against instead of an idle one.
