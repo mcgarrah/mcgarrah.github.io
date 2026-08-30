@@ -64,6 +64,8 @@ All in I'm at about at about **$520 USD** on this configuration and setup.  That
 
 TODO: Diagram of the layout of all parts and accessories...
 
+> **Note to self:** the full interoperability research and planning reference for this setup — what the AIMOS can and cannot do with the PiKVM, WebUI port-switching options, the EDID/boot-hang fix, MSD caveats, and a bench-verification checklist — lives in the `k8s-proxmox` repo at `docs/PIKVM-AIMOS-KVM.md`. Pull the wiring diagram and findings from there when finishing this article.
+
 First the startup order and cabling up in a certain order is important for the EDID handling.
 
 My choice of the AIMOS 8-port KVM has an impact on capabilies. The PiKVM V3 handles the backfeed power issues for me.
