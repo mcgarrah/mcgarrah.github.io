@@ -5,14 +5,14 @@ image: /assets/images/og/resume-machine-view-ats-validation.png
 categories: [web-development, technical]
 tags: [resume, structured-data, json-ld, seo, ats, schema-org, ai]
 excerpt: "I built a machine-readable resume view with JSON-LD and semantic HTML. Now I need to verify it actually works — against Google's validators, ATS resume parsers, and AI agents that recruiters are starting to use."
-description: "How to validate a machine-readable resume with JSON-LD structured data against Google Rich Results Test, Schema.org validators, ATS resume parsers (Jobscan, Resume Worded), and AI agents. Includes testing methodology and results."
+description: "How to validate a machine-readable resume with JSON-LD structured data against Google Rich Results Test, Schema.org validators, ATS resume parsers (OwlApply, Hireflow), and AI agents. Includes testing methodology and results."
 date: 2026-07-28
-last_modified_at: 2026-07-28
+last_modified_at: 2026-08-28
 mermaid: true
 seo:
   type: BlogPosting
   date_published: 2026-07-28
-  date_modified: 2026-07-28
+  date_modified: 2026-08-28
 ---
 
 Building a [machine-readable resume view](/resume-site-ground-up-rebuild/) with JSON-LD and semantic HTML is the easy part. Validating that it actually works — that Google indexes the structured data, that ATS systems can parse the PDF exports, and that AI agents extract accurate information from the semantic markup — requires testing against real systems with different parsing pipelines.
@@ -179,15 +179,16 @@ All three validators show clean results:
 
 ### ATS Parse Testing (PDF/DOCX uploads)
 
-This would be a valuable next step — uploading the brief PDF and DOCX exports to ATS simulation tools to verify parse fidelity. I plan to submit to a couple of companies that have resume import mechanisms and observe how the parsed output compares to what I intended. Results will be updated here once I have real submissions to report on.
+Uploading the brief PDF and DOCX exports to ATS simulation tools is a good way to verify parse fidelity before doing it for real. I still plan to submit to a couple of companies that have resume import mechanisms and observe how the parsed output compares to what I intended — those real submissions will be updated here once I have them to report on. For now, I ran the exports through a few of the free (and free-with-login) simulators.
 
 **Free ATS testing tools (no job application required):**
 
-- [Jobscan](https://www.jobscan.co/resume-score) — Upload PDF + paste job description, get ATS match score and keyword analysis (5 free scans/month)
-- [Resume Worded](https://resumeworded.com/score) — Upload PDF, get structural analysis and ATS score
-- [Past the Bots](https://pastthebots.com/) — Shows exactly what ATS parsers extract from your resume, simulates Workday/Greenhouse/Taleo/Lever/iCIMS parsing differences
 - [OwlApply ATS Scanner](https://owlapply.com/en/ai-tools/ats-resume-scanner) — Free, no signup, checks formatting and keyword coverage against ATS criteria
 - [Hireflow](https://www.hireflow.net/) — Upload and see how an ATS reads your file, no account required
+
+They all came back with minor issues or inflated non-issues. Two takeaways were genuinely worth acting on: use regular characters instead of symbols in the text to avoid parsing issues, and use the same date format across every section.
+
+Mostly, though, these tools are looking to sell you something and flag faults that are not faults.
 
 ### AI Agent Extraction (Machine View)
 
