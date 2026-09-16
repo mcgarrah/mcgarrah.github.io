@@ -91,12 +91,12 @@ I also ran a real end-to-end Ceph benchmark afterward (something I'd genuinely n
 | Drive-local write ceiling, node A's OSD | 25.5 MB/s | 31.99 MB/s | Roughly flat — same drive, same ceiling, normal run-to-run variance |
 | Drive-local write ceiling, node D's OSD | 22.8 MB/s | 27.07 MB/s | Roughly flat — same drive, same ceiling |
 | Real client write (full replication path) | never measured — structurally impossible above ~11.6 MB/s given the network cap | **39.17 MB/s** | New number, only possible once the network stopped being the limit |
-| Real client read (full replication path) | never measured — same ~11.6 MB/s structural cap | **120.86 MB/s** | New number, essentially full drive speed |
+| Real client read | not affected by this fix either way | **120.86 MB/s** | Real number, but not this fix's doing — see correction below |
 
 The drive-local numbers are the control group here — they don't touch the network at all, so if they'd jumped too, I'd have been suspicious I was measuring something else by accident. They didn't jump. They stayed exactly where a mechanical drive with a fixed write ceiling should stay, before and after a completely unrelated network fix. That's what tells you the bottleneck actually moved layers, rather than just "got better" for some vaguer reason:
 
-- **Read: 120.86 MB/s** — close enough to my drives' independently-measured raw read speed that reads are now running at essentially full disk speed. The network is completely out of their way.
-- **Write: 39.17 MB/s** — lower, and that's the *good* kind of lower. Writes are now bottlenecked by the drives, not the network. That's the right bottleneck to have.
+- **Write: 39.17 MB/s** — bottlenecked by the drives now, not the network. That's the right bottleneck to have, and it's this fix's actual, direct result — a write's replication step really does cross the network I just fixed.
+- **Read: 120.86 MB/s, but I need to correct myself here.** I originally wrote this off as "the network is completely out of the way for reads," as if this fix were why. That's wrong, and I caught it a couple days later while writing up a follow-on plan: Ceph splits traffic across two separate networks — a "cluster" network for OSD-to-OSD replication (the one I fixed) and a "public" network that clients actually use for both reads *and* writes. Client reads never touch the network I spent this whole post fixing. The public network had already been confirmed fine, months earlier, completely unrelated to any of this. So the read number is real, and the drives can genuinely deliver it — I just credited the wrong fix for it. Worth leaving the mistake visible rather than quietly editing it away, since it's a useful reminder that "the numbers got better" and "I know why they got better" are two different claims, and only one of them I'd actually verified at the time.
 
 ## Why the drives are the bottleneck now: SMR, and what I traded for a good price
 
