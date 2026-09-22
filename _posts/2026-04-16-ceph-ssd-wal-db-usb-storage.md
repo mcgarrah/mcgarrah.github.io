@@ -7,12 +7,12 @@ tags: [proxmox, ceph, ssd, usb, storage, performance, homelab, wal, db, bluestor
 excerpt: "Running Ceph on USB drives sounds crazy until you put the WAL and DB on an SSD. Here's how separating metadata onto a Crucial MX500 transformed my 15-OSD homelab cluster from sluggish to surprisingly capable — at a fraction of all-SSD costs."
 description: "Architecture and implementation guide for hybrid Ceph BlueStore storage with SSD WAL/DB acceleration and USB HDD data drives. Covers WAL vs DB differences, sizing, ceph-volume creation, Proxmox UI setup, performance results, cost analysis, and operational lessons from a 15-OSD Proxmox homelab cluster."
 date: 2026-04-16
-last_modified_at: 2026-04-16
+last_modified_at: 2026-09-22
 published: true
 seo:
   type: BlogPosting
   date_published: 2026-04-16
-  date_modified: 2026-04-16
+  date_modified: 2026-09-22
 ---
 
 Running Ceph in a homelab means making tradeoffs — the same cost-performance-resilience triangle that drives every storage architecture decision. You want distributed storage — high availability, scalability, data protection — but enterprise hardware costs spiral fast. My answer: put the brains on SSD and the bulk on cheap USB drives.
@@ -91,6 +91,8 @@ done
 ```
 
 I haven't run a formal A/B comparison yet — designing a test that isolates the WAL vs DB variable without disrupting a live cluster with 10 TiB of data is tricky. The OSDs serve different PGs with different access patterns, so raw latency numbers aren't directly comparable. A proper test would require creating matched OSDs on the same node with identical data, which means temporarily destroying and recreating an OSD. That's a project for a maintenance window, not a Tuesday afternoon. If I get to it, I'll publish the results as a follow-up.
+
+**Update (September 2026):** I did run that comparison — see [Measuring the WAL vs DB Performance Gap](/ceph-wal-vs-db-performance-test/) — and the real gap turned out to be a modest 5-15%, not worth a destroy-and-recreate cycle on its own. What *did* change the math was finding `ceph-volume lvm migrate`, an in-place BlueFS migration path that converts a WAL-only OSD to DB without touching the object data at all. I ended up converting all nine WAL-only OSDs (harlan, kovacs, quell) this way after a real `DB_DEVICE_STALLED_READ_ALERT` incident — see [The WAL/DB Conversion I Said Wasn't Worth It](/ceph-wal-db-in-place-migration/) for the full story, including a real `ceph-volume` bug hit along the way.
 
 ## My Hardware Setup
 
@@ -353,6 +355,8 @@ During [Ceph rebalancing](/ceph-rebalance/), the SSD acceleration helps signific
 
 ## Related Posts
 
+- [The WAL/DB Conversion I Said Wasn't Worth It](/ceph-wal-db-in-place-migration/) — How the nine WAL-only OSDs described here actually got converted to DB, months later, using a tool this post didn't know about
+- [Measuring the WAL vs DB Performance Gap](/ceph-wal-vs-db-performance-test/) — The follow-up benchmark referenced above
 - [When ZFS and Ceph Problems Collide](/zfs-ceph-overlapping-failures/) — Discovering the WAL vs DB inconsistency across the cluster
 - [Ceph OSD Recovery After Power Failure](/ceph-osd-recovery-power-failure/) — Recovering from cascading OSD failures on the same hardware
 - [Proxmox Ceph Settings for the Homelab](/proxmox-ceph-homelab-settings/) — Tuning scrub intervals and pool settings for homelab hardware
