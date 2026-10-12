@@ -93,7 +93,7 @@ I applied it at 22:18 on October 5. The numbers, from the mon logs and the elect
 | First 17 hours after | 2 unexplained episodes (02:33, and 11:25), plus one at 11:06 minutes before a planned reboot of a node |
 | Following ~34 hours (Oct 7 12:00 to Oct 8 22:15) | **0** |
 
-That last window includes no planned maintenance. The election epoch sat at 1290984 and the quorum age kept counting up to two days. At the old rate I would have seen about 47.
+That last window includes no planned maintenance. The election epoch sat at 1290984 and the quorum age kept counting up to two days. At the old rate I would have seen about 47. It did not stay perfect: one election showed up at 04:42 on October 9 with the same signature (edgar's `lease_timeout` in `paxos updating`, no maintenance going on). A second one followed at 07:36 on October 12, again with edgar first and no maintenance. Two in about five days, against roughly 170 at the old rate, is a 99% drop and not a cure. Edgar being first both times is the loose thread I would pull next.
 
 The elections in the first window that I could explain were my own: I rebooted a node, and power-cycled another for an SSD swap. Taking a mon away and bringing it back always causes an election, and that is correct behavior, not this problem.
 
