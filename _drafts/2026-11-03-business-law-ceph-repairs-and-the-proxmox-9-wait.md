@@ -29,7 +29,7 @@ The practical effect is simple. Long, uninterrupted homelab sessions are rare ri
 
 ## What the Ceph cluster has been teaching me
 
-Since September I have been fixing Ceph problems in the background, mostly one at a time and mostly because something broke or alerted. The cluster is now seven Proxmox nodes: six hosting OSDs, plus `jaeger`, the newest and still the odd one out.
+Since September I have been fixing Ceph problems in the background, mostly one at a time and mostly because something broke or alerted. The cluster is now eight Proxmox members: seven voting nodes that carry OSDs, plus `kadmin`, a newer non-voting node I cover below.
 
 The short version of the fall:
 
@@ -40,6 +40,23 @@ The short version of the fall:
 - **There is now a fast pool.** As of 2026-11-02 a replicated SSD pool, `cephrbd-ssd`, exists, and the first containers (InfluxDB, Grafana, and UrBackup's root disk) have moved onto it.
 
 None of this was on a schedule. Each item started as an alert or an annoyance and became a small project. That is the real pattern of a homelab: the plan says one thing, and the cluster decides the order.
+
+## A new member: kadmin
+
+The newest addition is `kadmin`, a Lenovo M90 that joined the cluster on 2026-10-23. It is deliberately a different kind of node:
+
+- **It cannot host OSDs,** so it adds no storage. It runs no Ceph daemons at all, only the Ceph client.
+- **It can still run guests.** LXC containers and VMs can live on it and use the cluster's Ceph storage like any other node.
+- **It does not vote.** The cluster has seven voting nodes and `kadmin` makes eight members, so it does not change quorum arithmetic.
+- **It can join the Ceph SAN.** The SAN is a separate gigabit storage network. `kadmin` has only one expansion slot, so I installed a dual-port gigabit NIC in it. The second port is what lets it sit on the SAN alongside its normal network link.
+
+Its first job is the one the Proxmox 9 plan was missing: a canary that has no Ceph daemons and cannot hurt storage. It is also where I test patches and upgrade steps before they touch a production node.
+
+It also earned its keep in a way I did not intend. On 2026-10-26 five nodes were reset by the HA watchdog within about twenty minutes. The weak link was `kadmin`, which was still on a 100Mb port at the time, and an unthrottled download in a container started within seconds of the first retransmits. Moving `kadmin` to gigabit was the first fix. It is the same lesson as the 100Mb Ceph bottleneck in September: a slow link on one machine can take down a lot more than that machine.
+
+<!-- REVIEW: the NIC is installed (confirmed by you), but the repo's node parity checklist still says kadmin has no SAN NIC and no cephsan link files. Say here whether the SAN port is already in service, or leave the wording as it is. -->
+<!-- REVIEW: remove all REVIEW comments before publishing. -->
+
 
 ## The Proxmox 9 upgrade: planned, prepared, not started
 
@@ -55,6 +72,8 @@ The first is physical presence. None of these OptiPlex nodes has out-of-band man
 
 The second is that the plan keeps being corrected by reality. The canary node was originally `tanaka` because it hosted no OSDs. Then it gained OSDs. I switched the canary to `jaeger`, which had no Ceph daemons at all. Then `jaeger` gained OSDs too, and HA moved three containers onto it. A canary that is no longer isolated is still useful, but the safeguards have to change: wait for clean cluster state, check for at-risk placement groups, set `noout`, migrate the guests off first.
 
+`kadmin` mostly solves that. It has no Ceph daemons and cannot hold OSDs, so it is the isolated canary the plan originally wanted. The plan now reflects that. `kadmin` is the first canary because it has no OSDs. `jaeger` is the second canary, and the first node where an upgrade is an OSD-host maintenance event, so it gets the full set of Ceph safeguards.
+
 The lesson from the safety-flag outage applies directly here. An upgrade plan written in August is a record of what I knew in August. Before each phase I need to re-read it against the live cluster instead of trusting it.
 
 ## Writing in batches
@@ -63,13 +82,37 @@ I have not stopped writing. I have changed how. Instead of finishing one article
 
 That has a side effect I did not plan for. The draft folder is now a fairly honest record of what I have actually been doing, not what I intended to do. Right now it holds articles on:
 
+**Ceph and storage**
+
 - the Ceph network bottleneck and the node upgrade it triggered
 - the in-place WAL/DB migration
 - the safety flags and the outage they caused
 - the monitor election storm and the setting that stopped it
-- a diagnostic tooling baseline across all the nodes, including a bug in my own detection script that hid a real gap
+- seven nodes with fewer daemons: why an even monitor count buys nothing, a measured 5-second CephFS failover, and how erasure coding cuts 18 TiB of media from 55 TiB of raw space to 27
+- a USB3 card stuck at PCIe Gen1 that was capping Ceph backfill, because of a BIOS default. Two `setpci` writes took three USB drives from 160 MB/s to 283 MB/s aggregate
+- tuning a background copy's I/O ceiling on a live cluster by stepping up and testing, after 22 stop and resume cycles in six hours
+
+**Hardware**
+
 - a GPU upgrade decision, and why the cheapest VRAM per dollar was a card I rejected
-- session persistence for AI coding CLIs running in a container on the cluster
+- a used RTX 3060 in a 2011-era OptiPlex with a $60 power supply, and two unexplained reboots, including the hypotheses I got wrong
+- a diagnostic tooling baseline across all the nodes, including a bug in my own detection script that hid a real gap
+- Seagate USB drives, SMART and UAS. This one corrects two earlier posts: the quirk keeps UAS on and removes a flag the kernel sets on every Seagate bridge, so my explanation was wrong even though the commands work. It covers what 24 drives across seven nodes show
+
+**Dashboards and backups**
+
+- Homarr as a single pane of glass, replaced by Homepage two days later when a backup fleet exposed a gap
+- the Homepage LXC installer bug that runs the wrong Next.js startup command at about seven times the disk footprint, and never visibly breaks
+- one UrBackup server for three very different clients: Proxmox hosts, Wyse 3040 thin clients, and the gaps between them
+
+**AI coding tools**
+
+- a getting-started guide to Claude Code for people used to IDE-integrated tools
+- session persistence for AI coding CLIs running in a container on the cluster, in three parts: surviving HA migrations, holding a plain shell open, and extending it to the other three tools
+- an idempotent provisioner script for that container, built to be run again and again
+
+**The upgrade series**
+
 - the Proxmox 8 to 9 series, which only has real material through the preparation stage
 
 The Proxmox 9 series is the awkward one. Parts one to four describe work I have finished. Part five describes the OS upgrade, which I have not run. I would rather hold part five than publish an account of something I have not done.
@@ -78,11 +121,13 @@ The Proxmox 9 series is the awkward one. Parts one to four describe work I have 
 
 In rough order, and subject to what the cluster and my coursework allow:
 
-1. **Publish the Ceph articles first.** They are written, they stand on their own, and they cover things I wish I had read before hitting them.
-2. **Finish the CephFS erasure-coding migration.** The runbook is written. The fast SSD pool and the rest of the rebalance have to settle first.
-3. **Run the Proxmox 9 canary on `jaeger`.** This needs a weekend with me physically in the room.
-4. **Then Phase C, one node at a time,** with `edgar` last because of its USB-backed OSDs.
-5. **Write the series conclusion after the upgrade, not before.**
+1. **Publish the Seagate correction early,** because it fixes explanations in two earlier posts.
+2. **Then the Ceph articles.** They are written, they stand on their own, and they cover things I wish I had read before hitting them.
+3. **Finish the CephFS erasure-coding migration.** The runbook is written. The fast SSD pool and the rest of the rebalance have to settle first.
+4. **Run the Proxmox 9 canary on `kadmin`, then `jaeger`.** This needs a weekend with me physically in the room.
+5. **Then Phase C, one node at a time,** with `edgar` last because of its USB-backed OSDs.
+6. **Bring `kadmin`'s second NIC port into service** on the Ceph SAN.
+7. **Write the series conclusion after the upgrade, not before.**
 
 The course will not leave much room for any of this for a while. I would rather publish fewer, correct posts than keep a schedule I cannot honestly meet.
 
