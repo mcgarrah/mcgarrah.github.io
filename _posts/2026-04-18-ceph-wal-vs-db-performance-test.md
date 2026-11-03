@@ -8,12 +8,12 @@ mermaid: true
 excerpt: "Nine of my fifteen Ceph OSDs use WAL-only acceleration while six use DB. I set out to measure the performance gap and discovered the real story isn't WAL vs DB — it's the USB 3.0 hardware ceiling that dominates everything. The matched-hardware comparison shows DB is 5-15% faster on reads, not the 32% that naive cross-node testing suggested."
 description: "Benchmarking WAL-only vs DB acceleration on Ceph BlueStore OSDs with USB 3.0 drives and SSD metadata. Covers cross-node and matched-hardware comparisons, USB storage IOPS analysis, backfill tuning, recovery rate measurements, and ready-to-run benchmark scripts for a 15-OSD Proxmox homelab cluster."
 date: 2026-04-18
-last_modified_at: 2026-09-22
+last_modified_at: 2026-04-18
 published: true
 seo:
   type: BlogPosting
   date_published: 2026-04-18
-  date_modified: 2026-09-22
+  date_modified: 2026-04-18
 ---
 
 My [hybrid Ceph storage article](/ceph-ssd-wal-db-usb-storage/) documented the WAL vs DB inconsistency across the AlteredCarbon cluster — harlan, kovacs, and quell use WAL-only, while edgar and poe use DB. I recommended standardizing on DB but admitted I hadn't measured the actual performance difference.
@@ -455,8 +455,6 @@ The matched comparison tells a very different story than Phase 1. Controlling fo
 
 **Follow-up planned.** Once osd.6 finishes backfilling and edgar returns to normal load, a clean retest of the matched quell vs edgar comparison will give more definitive numbers. The scrub timing and peering time comparisons are also deferred until the 577-PG scrub backlog clears.
 
-**Update (September 2026):** The clean retest never happened — a real production incident overtook it first. A recurring `DB_DEVICE_STALLED_READ_ALERT` on two of these exact WAL-only OSDs sent me looking for a fix, not another benchmark, and I found `ceph-volume lvm migrate` — an in-place BlueFS migration path that moves only the actual WAL/DB data (a few GB) rather than requiring the destroy-and-recreate cycle this whole article's cost estimate was built on. All nine WAL-only OSDs are now converted to DB. The 5-15% read/write latency numbers above held up as the real, modest gap; what changed was the cost of getting there. Full writeup, including a real `ceph-volume` tag-stripping bug and its fix, and a correction to this article's own mClock recovery-tuning conclusion below: [The WAL/DB Conversion I Said Wasn't Worth It](/ceph-wal-db-in-place-migration/).
-
 ## Safety Checklist
 
 - [ ] `ceph osd set noout` before any OSD destruction
@@ -761,7 +759,6 @@ To generalize this for any OSD, replace `6` with the OSD ID and adjust the targe
 
 ## References
 
-- [The WAL/DB Conversion I Said Wasn't Worth It](/ceph-wal-db-in-place-migration/) — The September 2026 follow-up: how the conversion actually happened, and why the cost estimate above turned out wrong
 - [Hybrid Ceph Storage: SSD WAL/DB Acceleration](/ceph-ssd-wal-db-usb-storage/) — The architecture article this test supports
 - [When ZFS and Ceph Problems Collide](/zfs-ceph-overlapping-failures/) — Where the WAL vs DB inconsistency was discovered
 - [Ceph OSD SSD Acceleration Reference](https://github.com/mcgarrah/k8s-proxmox/blob/main/docs/CEPH-OSD-SSD-ACCELERATION.md) — Full OSD-to-device mapping
