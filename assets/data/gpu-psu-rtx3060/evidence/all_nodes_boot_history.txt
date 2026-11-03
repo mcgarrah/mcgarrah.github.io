@@ -1,0 +1,63 @@
+##### poe
+up since: 2026-10-03 23:57:07
+reboot   system boot  6.8.12-41-pve    Sat Oct  3 23:57   still running
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 21:09   still running
+shutdown system down  6.8.12-41-pve    Wed Sep 30 21:03 - 21:09  (00:05)
+reboot   system boot  6.8.12-41-pve    Wed Sep 23 04:12 - 21:03 (7+16:50)
+ -2 cfd31fed6fab48fab5bce73771b4751d Wed 2026-09-23 04:12:35 EDT Wed 2026-09-30 21:03:29 EDT
+ -1 8ce8e5f11a8e46a29f79f733cbad364d Wed 2026-09-30 21:09:13 EDT Sat 2026-10-03 23:56:10 EDT
+  0 21317eace0d64c1283a19cbc1fa554b8 Sat 2026-10-03 23:57:30 EDT Mon 2026-10-05 14:04:38 EDT
+##### kovacs
+up since: 2026-10-03 23:57:17
+reboot   system boot  6.8.12-41-pve    Sat Oct  3 23:57   still running
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 20:16   still running
+shutdown system down  6.8.12-41-pve    Wed Sep 30 20:04 - 20:16  (00:12)
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 18:23 - 20:04  (01:40)
+ -2 83588b7db09c4a49a07f9fbeb974c22e Wed 2026-09-30 18:23:56 EDT Wed 2026-09-30 20:04:24 EDT
+ -1 4dd582dd577b4be087c05f7eb2319dbe Wed 2026-09-30 20:16:42 EDT Sat 2026-10-03 23:56:17 EDT
+  0 605d344362a54e859107acd81b76be1c Sat 2026-10-03 23:57:40 EDT Mon 2026-10-05 14:05:01 EDT
+##### harlan
+up since: 2026-10-03 23:57:05
+reboot   system boot  6.8.12-41-pve    Sat Oct  3 23:57   still running
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 21:58   still running
+shutdown system down  6.8.12-41-pve    Wed Sep 30 21:54 - 21:58  (00:03)
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 21:43 - 21:54  (00:11)
+ -2 06f98aefdc744e4ba1604cdca1a07744 Wed 2026-09-30 21:43:28 EDT Wed 2026-09-30 21:54:41 EDT
+ -1 b339c6a585f74e87828da7d72e03accd Wed 2026-09-30 21:58:01 EDT Sat 2026-10-03 23:56:01 EDT
+  0 d001389200c84d6a83a1c7367537b9c7 Sat 2026-10-03 23:57:17 EDT Mon 2026-10-05 14:05:10 EDT
+##### edgar
+up since: 2026-10-03 23:57:04
+reboot   system boot  6.8.12-41-pve    Sat Oct  3 23:57   still running
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 01:50   still running
+shutdown system down  6.8.12-41-pve    Wed Sep 30 01:43 - 01:50  (00:06)
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 01:03 - 01:43  (00:40)
+ -2 6e328466b9ee4d2780a3579a0e959f98 Wed 2026-09-30 01:03:19 EDT Wed 2026-09-30 01:43:59 EDT
+ -1 0064828928fd4902be1273eb675fba02 Wed 2026-09-30 01:50:30 EDT Sat 2026-10-03 23:56:00 EDT
+  0 223391fb81c042cd986366289e942f09 Sat 2026-10-03 23:57:37 EDT Mon 2026-10-05 14:05:11 EDT
+##### tanaka
+up since: 2026-10-03 23:58:03
+reboot   system boot  6.8.12-41-pve    Sat Oct  3 23:58   still running
+reboot   system boot  6.8.12-41-pve    Wed Sep 23 04:12   still running
+reboot   system boot  6.8.12-41-pve    Mon Sep 21 20:44   still running
+shutdown system down  6.8.12-41-pve    Mon Sep 21 14:28 - 20:44  (06:15)
+ -2 a0e37dcf31ec44fa83af299f77457372 Mon 2026-09-21 20:44:15 EDT Wed 2026-09-23 04:11:52 EDT
+ -1 3dd2e25d08c440df9466cf8fdfabced2 Wed 2026-09-23 04:12:38 EDT Sat 2026-10-03 23:57:21 EDT
+  0 ef421198cc01445f89a149f71b89359d Sat 2026-10-03 23:58:13 EDT Mon 2026-10-05 14:05:13 EDT
+##### jaeger
+up since: 2026-10-03 23:58:17
+reboot   system boot  6.8.12-43-pve    Sat Oct  3 23:58   still running
+reboot   system boot  6.8.12-43-pve    Wed Sep 30 12:15   still running
+shutdown system down  6.8.12-43-pve    Wed Sep 30 12:14 - 12:15  (00:00)
+reboot   system boot  6.8.12-43-pve    Wed Sep 30 12:08 - 12:14  (00:06)
+ -2 81b08d449f9f425d8c0820f6f5d49f82 Wed 2026-09-30 12:08:20 EDT Wed 2026-09-30 12:14:40 EDT
+ -1 9f72a4a671414baf8c3f15e65b5da14d Wed 2026-09-30 12:15:37 EDT Sat 2026-10-03 23:57:21 EDT
+  0 d1b97594a785413ca5eadcc53a4d5767 Sat 2026-10-03 23:58:31 EDT Mon 2026-10-05 14:05:30 EDT
+##### quell
+up since: 2026-10-05 09:14:28
+reboot   system boot  6.8.12-41-pve    Mon Oct  5 09:14   still running
+reboot   system boot  6.8.12-41-pve    Sat Oct  3 23:57   still running
+reboot   system boot  6.8.12-41-pve    Wed Sep 30 15:53   still running
+shutdown system down  6.8.12-41-pve    Wed Sep 30 13:43 - 15:53  (02:09)
+ -2 d29eba75181e4f1b9d005426714c67d3 Wed 2026-09-30 15:53:15 EDT Sat 2026-10-03 23:56:20 EDT
+ -1 0a097ca1b6174e749dd2570c08cb2ab8 Sat 2026-10-03 23:57:11 EDT Mon 2026-10-05 09:13:20 EDT
+  0 51ac1b6001564e09ae4b34d0a414ecdb Mon 2026-10-05 09:14:40 EDT Mon 2026-10-05 14:05:31 EDT

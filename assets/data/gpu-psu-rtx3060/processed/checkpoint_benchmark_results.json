@@ -1,0 +1,291 @@
+{
+  "prompt": "a young woman with auburn hair wearing a green wool coat, standing on a rainy city street at dusk, neon reflections on wet pavement, cinematic lighting, highly detailed",
+  "negative": "blurry, low quality, deformed, extra fingers, bad anatomy, watermark, text",
+  "settings": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 25,
+    "cfg_scale": 6.0,
+    "sampler_name": "DPM++ 2M"
+  },
+  "seeds": [
+    1001,
+    1002,
+    1003,
+    1004
+  ],
+  "gpu_power_limit_w": 130,
+  "offload_mode": "none",
+  "checkpoint-01": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 76.91,
+        "file": "/home/mcgarrah/bench/checkpoint-01/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.18,
+        "file": "/home/mcgarrah/bench/checkpoint-01/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.67,
+        "file": "/home/mcgarrah/bench/checkpoint-01/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.74,
+        "file": "/home/mcgarrah/bench/checkpoint-01/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 354.1,
+    "start_and_load_seconds": 453.9,
+    "ram_gb_after_load": 8.18,
+    "shared_ram_gb_after": 9.06
+  },
+  "checkpoint-02": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 146.5,
+        "file": "/home/mcgarrah/bench/checkpoint-02/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.24,
+        "file": "/home/mcgarrah/bench/checkpoint-02/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.74,
+        "file": "/home/mcgarrah/bench/checkpoint-02/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.81,
+        "file": "/home/mcgarrah/bench/checkpoint-02/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 127.4,
+    "start_and_load_seconds": 144.0,
+    "ram_gb_after_load": 8.19,
+    "shared_ram_gb_after": 9.09
+  },
+  "checkpoint-03": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 112.95,
+        "file": "/home/mcgarrah/bench/checkpoint-03/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.23,
+        "file": "/home/mcgarrah/bench/checkpoint-03/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 20.15,
+        "file": "/home/mcgarrah/bench/checkpoint-03/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.84,
+        "file": "/home/mcgarrah/bench/checkpoint-03/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 293.8,
+    "start_and_load_seconds": 467.7,
+    "ram_gb_after_load": 8.19,
+    "shared_ram_gb_after": 9.07
+  },
+  "checkpoint-04": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 138.49,
+        "file": "/home/mcgarrah/bench/checkpoint-04/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.22,
+        "file": "/home/mcgarrah/bench/checkpoint-04/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.74,
+        "file": "/home/mcgarrah/bench/checkpoint-04/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.8,
+        "file": "/home/mcgarrah/bench/checkpoint-04/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 130.3,
+    "start_and_load_seconds": 553.0,
+    "ram_gb_after_load": 8.48,
+    "shared_ram_gb_after": 9.1
+  },
+  "checkpoint-05": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 164.76,
+        "file": "/home/mcgarrah/bench/checkpoint-05/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.5,
+        "file": "/home/mcgarrah/bench/checkpoint-05/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.73,
+        "file": "/home/mcgarrah/bench/checkpoint-05/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 19.01,
+        "file": "/home/mcgarrah/bench/checkpoint-05/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 327.2,
+    "start_and_load_seconds": 316.9,
+    "ram_gb_after_load": 14.98,
+    "shared_ram_gb_after": 8.95
+  },
+  "checkpoint-06": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 134.63,
+        "file": "/home/mcgarrah/bench/checkpoint-06/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.17,
+        "file": "/home/mcgarrah/bench/checkpoint-06/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 19.47,
+        "file": "/home/mcgarrah/bench/checkpoint-06/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.73,
+        "file": "/home/mcgarrah/bench/checkpoint-06/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 334.2,
+    "start_and_load_seconds": 1163.8,
+    "ram_gb_after_load": 13.93,
+    "shared_ram_gb_after": 8.95
+  },
+  "checkpoint-07": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 126.96,
+        "file": "/home/mcgarrah/bench/checkpoint-07/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.39,
+        "file": "/home/mcgarrah/bench/checkpoint-07/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.77,
+        "file": "/home/mcgarrah/bench/checkpoint-07/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.78,
+        "file": "/home/mcgarrah/bench/checkpoint-07/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 245.9,
+    "start_and_load_seconds": 584.4,
+    "ram_gb_after_load": 8.55,
+    "shared_ram_gb_after": 9.06,
+    "tagged": [
+      {
+        "seed": 1001,
+        "seconds": 19.03,
+        "file": "/home/mcgarrah/bench/checkpoint-07/tagged/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.87,
+        "file": "/home/mcgarrah/bench/checkpoint-07/tagged/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.91,
+        "file": "/home/mcgarrah/bench/checkpoint-07/tagged/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 19.12,
+        "file": "/home/mcgarrah/bench/checkpoint-07/tagged/1004.png"
+      }
+    ],
+    "tag_prefix": "score_9, score_8_up, score_7_up, ",
+    "tagged_ram_gb_after": 9.08
+  },
+  "checkpoint-08": {
+    "shared": [
+      {
+        "seed": 1001,
+        "seconds": 116.33,
+        "file": "/home/mcgarrah/bench/checkpoint-08/shared/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.22,
+        "file": "/home/mcgarrah/bench/checkpoint-08/shared/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.7,
+        "file": "/home/mcgarrah/bench/checkpoint-08/shared/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.8,
+        "file": "/home/mcgarrah/bench/checkpoint-08/shared/1004.png"
+      }
+    ],
+    "preread_seconds": 134.5,
+    "start_and_load_seconds": 611.3,
+    "ram_gb_after_load": 8.19,
+    "shared_ram_gb_after": 9.1,
+    "tagged": [
+      {
+        "seed": 1001,
+        "seconds": 19.06,
+        "file": "/home/mcgarrah/bench/checkpoint-08/tagged/1001.png"
+      },
+      {
+        "seed": 1002,
+        "seconds": 18.92,
+        "file": "/home/mcgarrah/bench/checkpoint-08/tagged/1002.png"
+      },
+      {
+        "seed": 1003,
+        "seconds": 18.94,
+        "file": "/home/mcgarrah/bench/checkpoint-08/tagged/1003.png"
+      },
+      {
+        "seed": 1004,
+        "seconds": 18.93,
+        "file": "/home/mcgarrah/bench/checkpoint-08/tagged/1004.png"
+      }
+    ],
+    "tag_prefix": "masterpiece, best quality, amazing quality, ",
+    "tagged_ram_gb_after": 9.12
+  }
+}

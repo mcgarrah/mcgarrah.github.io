@@ -1,0 +1,6 @@
+rung,batches_of_100_images,busy_samples,mean_w,max_w,largest_100ms_step_w,max_temp_c
+130 W generation,6,113956,126.4,140.0,97.7,74
+140 W generation,1,18764,136.0,146.9,102.3,76
+150 W generation,1,18716,145.6,155.8,112.3,79
+170 W generation,6,111734,151.0,161.9,118.4,80
+"170 W gpu-burn, 3 h",0,,169.7,177.7,11.0,81

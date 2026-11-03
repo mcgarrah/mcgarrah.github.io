@@ -1,0 +1,108 @@
+##### boot -2 (Sep30 15:53 - Oct3 23:56): LAST 25 journal lines (reset #1)
+2026-10-03T23:56:20-0400 quell ceph-mgr[1881]: DEBUG:request:[::ffff:192.168.x.x:50172] [GET] [None] /
+2026-10-03T23:56:20-0400 quell ceph-mgr[1881]: INFO:root:Redirecting to active 'https://192.168.x.x:8443/'
+2026-10-03T23:56:20-0400 quell ceph-mgr[1881]: INFO:request:[::ffff:192.168.x.x:50172] [GET] [303] [0.002s] [95.0B] [<uuid>] /
+
+##### boot -2: kernel OOM kills
+2026-10-02T19:32:09-0400 quell kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=system-ceph\x2dosd.slice,mems_allowed=0,global_oom,task_memcg=/lxc/604/ns/system.slice/sdnext.service,task=python,pid=1814255,uid=101000
+2026-10-02T19:32:09-0400 quell kernel: Out of memory: Killed process 1814255 (python) total-vm:40135468kB, anon-rss:19605492kB, file-rss:67760kB, shmem-rss:12288kB, UID:101000 pgtables:42932kB oom_score_adj:0
+2026-10-03T21:14:04-0400 quell kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=system-ceph\x2dmon.slice,mems_allowed=0,global_oom,task_memcg=/lxc/604/ns/system.slice/sdnext.service,task=python,pid=2329820,uid=101000
+2026-10-03T21:14:04-0400 quell kernel: Out of memory: Killed process 2329820 (python) total-vm:45184188kB, anon-rss:18274508kB, file-rss:65092kB, shmem-rss:12292kB, UID:101000 pgtables:39948kB oom_score_adj:0
+
+##### boot -2: NVIDIA driver errors
+2026-10-02T07:47:00-0400 quell kernel: NVRM: nvCheckOkFailedNoLog: Check failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from _memdescAllocInternal(pMemDesc) @ mem_desc.c:1359
+2026-10-02T07:48:00-0400 quell kernel: NVRM: nvCheckOkFailedNoLog: Check failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from _memdescAllocInternal(pMemDesc) @ mem_desc.c:1359
+2026-10-02T07:48:07-0400 quell kernel: NVRM: nvCheckOkFailedNoLog: Check failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from _memdescAllocInternal(pMemDesc) @ mem_desc.c:1359
+2026-10-02T07:48:09-0400 quell kernel: NVRM: nvCheckOkFailedNoLog: Check failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from _memdescAllocInternal(pMemDesc) @ mem_desc.c:1359
+2026-10-02T07:48:09-0400 quell kernel: NVRM: nvCheckOkFailedNoLog: Check failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from rmStatus @ system_mem.c:356
+2026-10-02T07:48:09-0400 quell kernel: NVRM: nvAssertOkFailedNoLog: Assertion failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from pRmApi->Alloc(pRmApi, device->session->handle, isSyste
+
+##### boot -1 (Oct3 23:57 - Oct5 09:13): LAST 12 journal lines (reset #2)
+
+##### boot -1: first ct:604 start attempt after reset #1
+2026-10-03T23:57:11-0400 quell kernel: Memory: 32749760K/33510452K available (20480K kernel code, 3638K rwdata, 13520K rodata, 4756K init, 5756K bss, 760436K reserved, 0K cma-reserved)
+2026-10-03T23:57:11-0400 quell kernel: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+2026-10-03T23:57:11-0400 quell kernel: pci 0000:00:01.0: [8086:0101] type 01 class 0x060400 PCIe Root Port
+2026-10-03T23:57:11-0400 quell kernel: pci 0000:00:1c.0: [8086:1c10] type 01 class 0x060400 PCIe Root Port
+2026-10-03T23:57:11-0400 quell kernel: pci 0000:00:1c.2: [8086:1c14] type 01 class 0x060400 PCIe Root Port
+2026-10-03T23:57:11-0400 quell kernel: pci 0000:00:1c.4: [8086:1c18] type 01 class 0x060400 PCIe Root Port
+2026-10-03T23:57:11-0400 quell kernel: pci 0000:00:1e.0: [8086:244e] type 01 class 0x060401 conventional PCI bridge
+2026-10-03T23:57:16-0400 quell audit[1333]: AVC apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/bin/lxc-start" pid=1333 comm="apparmor_parser"
+2026-10-03T23:57:16-0400 quell audit[1332]: AVC apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/bin/lxc-copy" pid=1332 comm="apparmor_parser"
+2026-10-03T23:57:16-0400 quell kernel: audit: type=1400 audit(1791086236.610:3): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/bin/lxc-start" pid=1333 comm="apparmor_parser"
+2026-10-03T23:57:16-0400 quell kernel: audit: type=1400 audit(1791086236.610:4): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/bin/lxc-copy" pid=1332 comm="apparmor_parser"
+2026-10-03T23:57:16-0400 quell audit[1328]: AVC apparmor="STATUS" operation="profile_load" profile="unconfined" name="lxc-container-default" pid=1328 comm="apparmor_parser"
+2026-10-03T23:57:16-0400 quell audit[1328]: AVC apparmor="STATUS" operation="profile_load" profile="unconfined" name="lxc-container-default-cgns" pid=1328 comm="apparmor_parser"
+2026-10-03T23:57:16-0400 quell audit[1328]: AVC apparmor="STATUS" operation="profile_load" profile="unconfined" name="lxc-container-default-with-mounting" pid=1328 comm="apparmor_parser"
+2026-10-03T23:57:16-0400 quell audit[1328]: AVC apparmor="STATUS" operation="profile_load" profile="unconfined" name="lxc-container-default-with-nesting" pid=1328 comm="apparmor_parser"
+2026-10-03T23:57:17-0400 quell systemd[1]: Starting lxcfs.service - FUSE filesystem for LXC...
+2026-10-03T23:57:17-0400 quell systemd[1]: Starting pve-lxc-syscalld.service - Proxmox VE LXC Syscall Daemon...
+2026-10-03T23:57:17-0400 quell systemd[1]: Started pve-lxc-syscalld.service - Proxmox VE LXC Syscall Daemon.
+2026-10-03T23:57:17-0400 quell systemd[1]: Started lxcfs.service - FUSE filesystem for LXC.
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: Starting LXCFS at /usr/bin/lxcfs
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: Running constructor lxcfs_init to reload liblxcfs
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: mount namespace: 5
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: hierarchies:
+2026-10-03T23:57:17-0400 quell lxcfs[1406]:   0: fd:   6: cpuset,cpu,io,memory,hugetlb,pids,rdma,misc
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: Kernel supports pidfds
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: Kernel supports swap accounting
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: api_extensions:
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: - cgroups
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: - sys_cpu_online
+2026-10-03T23:57:17-0400 quell lxcfs[1406]: - proc_cpuinfo
+
+##### boot -1: kernel NVRM/Xid/AER/MCE
+2026-10-03T23:57:11-0400 quell kernel: acpi PNP0A08:00: _OSC: OS requested [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+2026-10-03T23:57:11-0400 quell kernel: acpi PNP0A08:00: _OSC: platform willing to grant [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+
+##### boot 0: ct:604 start failure after reset #2 (09:14:40-09:16:40, noise removed)
+2026-10-05T09:14:40-0400 quell kernel: Linux version 6.8.12-41-pve (build@proxmox) (gcc (Debian 12.2.0-14+deb12u1) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC PMX 6.8.12-41 (2026-08-06
+2026-10-05T09:14:40-0400 quell kernel: Command line: BOOT_IMAGE=/vmlinuz-6.8.12-41-pve root=ZFS=/ROOT/pve-1 ro usb_storage.quirks=0bc2:2038:,0bc2:2344:,0bc2:ab83:,0bc2:ab9a:,0bc2:ac25:,0bc2:ac2b:,0bc2:ac35:,0bc
+2026-10-05T09:14:40-0400 quell kernel: KERNEL supported cpus:
+2026-10-05T09:14:40-0400 quell kernel:   Intel GenuineIntel
+2026-10-05T09:14:40-0400 quell kernel:   AMD AuthenticAMD
+2026-10-05T09:14:40-0400 quell kernel:   Hygon HygonGenuine
+2026-10-05T09:14:40-0400 quell kernel:   Centaur CentaurHauls
+2026-10-05T09:14:40-0400 quell kernel:   zhaoxin   Shanghai  
+2026-10-05T09:14:40-0400 quell kernel: BIOS-provided physical RAM map:
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x0000000000000000-0x000000000009abff] usable
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x000000000009ac00-0x000000000009ffff] reserved
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000000e0000-0x00000000000fffff] reserved
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x0000000000100000-0x00000000cf1f7fff] usable
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000cf1f8000-0x00000000cf23bfff] reserved
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000cf23c000-0x00000000cf5b6fff] usable
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000cf5b7000-0x00000000cf5e6fff] reserved
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000cf5e7000-0x00000000cf7e6fff] ACPI NVS
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000cf7e7000-0x00000000cf7fefff] ACPI data
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000cf7ff000-0x00000000cf7fffff] usable
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000fed1c000-0x00000000fed1ffff] reserved
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x00000000ffc00000-0x00000000ffc1ffff] reserved
+2026-10-05T09:14:40-0400 quell kernel: BIOS-e820: [mem 0x0000000100000000-0x000000082dffffff] usable
+2026-10-05T09:14:40-0400 quell kernel: NX (Execute Disable) protection: active
+2026-10-05T09:14:40-0400 quell kernel: APIC: Static calls initialized
+2026-10-05T09:14:40-0400 quell kernel: SMBIOS 2.6 present.
+2026-10-05T09:14:40-0400 quell kernel: DMI: Dell Inc. OptiPlex 990/06D7TR, BIOS A24 07/02/2018
+2026-10-05T09:14:40-0400 quell kernel: tsc: Fast TSC calibration using PIT
+2026-10-05T09:14:40-0400 quell kernel: tsc: Detected 3392.388 MHz processor
+2026-10-05T09:14:40-0400 quell kernel: e820: update [mem 0x00000000-0x00000fff] usable ==> reserved
+2026-10-05T09:14:40-0400 quell kernel: e820: remove [mem 0x000a0000-0x000fffff] usable
+2026-10-05T09:14:40-0400 quell kernel: last_pfn = 0x82e000 max_arch_pfn = 0x400000000
+2026-10-05T09:14:40-0400 quell kernel: total RAM covered: 32736M
+2026-10-05T09:14:40-0400 quell kernel: Found optimal setting for mtrr clean up
+2026-10-05T09:14:40-0400 quell kernel:  gran_size: 64K         chunk_size: 64M         num_reg: 9          lose cover RAM: 0G
+2026-10-05T09:14:40-0400 quell kernel: MTRR map: 8 entries (5 fixed + 3 variable; max 25), built from 10 variable MTRRs
+2026-10-05T09:14:40-0400 quell kernel: x86/PAT: Configuration [0-7]: WB  WC  UC- UC  WB  WP  UC- WT  
+2026-10-05T09:14:40-0400 quell kernel: e820: update [mem 0xd0000000-0xffffffff] usable ==> reserved
+2026-10-05T09:14:40-0400 quell kernel: last_pfn = 0xcf800 max_arch_pfn = 0x400000000
+2026-10-05T09:14:40-0400 quell kernel: found SMP MP-table at [mem 0x000f21b0-0x000f21bf]
+2026-10-05T09:14:40-0400 quell kernel: RAMDISK: [mem 0x2fbb9000-0x33dd3fff]
+2026-10-05T09:14:40-0400 quell kernel: ACPI: Early table checksum verification disabled
+2026-10-05T09:14:40-0400 quell kernel: ACPI: RSDP 0x00000000000FE300 000024 (v02 DELL  )
+2026-10-05T09:14:40-0400 quell kernel: ACPI: XSDT 0x00000000CF7FDE18 00007C (v01 DELL   CBX3     06222004 MSFT 00010013)
+2026-10-05T09:14:40-0400 quell kernel: ACPI: FACP 0x00000000CF787D98 0000F4 (v04 DELL   CBX3     06222004 MSFT 00010013)
+2026-10-05T09:14:40-0400 quell kernel: ACPI: DSDT 0x00000000CF771018 007581 (v02 INT430 SYSFexxx 00001001 INTL 20090903)
+2026-10-05T09:14:40-0400 quell kernel: ACPI: FACS 0x00000000CF7E4E40 000040
+2026-10-05T09:14:40-0400 quell kernel: ACPI: FACS 0x00000000CF7E4D40 000040
+2026-10-05T09:14:40-0400 quell kernel: ACPI: APIC 0x00000000CF7FCF18 0000CC (v02 DELL   CBX3     06222004 MSFT 00010013)
+2026-10-05T09:14:40-0400 quell kernel: ACPI: TCPA 0x00000000CF7E5D18 000032 (v02                 00000000      00000000)
+2026-10-05T09:14:40-0400 quell kernel: ACPI: SSDT 0x00000000CF788A98 0002F9 (v01 DELLTP TPM      00003000 INTL 20090903)

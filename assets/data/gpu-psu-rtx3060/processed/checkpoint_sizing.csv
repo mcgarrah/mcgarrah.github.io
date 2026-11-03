@@ -1,0 +1,9 @@
+checkpoint,file_bytes,file_gb,precision,cold_start_min,warm_image_s
+checkpoint-01,6938078334,6.94,fp16,13.5,18.53
+checkpoint-02,7105350162,7.11,"fp16, plus about 0.33 GB of fp32 tensors",4.5,18.6
+checkpoint-03,6938065488,6.94,fp16,12.7,19.07
+checkpoint-04,6938041288,6.94,fp16,11.4,18.59
+checkpoint-05,6938044450,6.94,fp16,10.7,18.75
+checkpoint-06,6938058338,6.94,fp16,25.0,18.79
+checkpoint-07,6938041050,6.94,fp16,13.8,18.65
+checkpoint-08,6938040682,6.94,fp16,12.4,18.57

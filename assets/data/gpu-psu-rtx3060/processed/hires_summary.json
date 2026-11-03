@@ -1,0 +1,16 @@
+{
+  "samples_100ms": 400163,
+  "busy_samples": 353478,
+  "max_instant_w_busy": 177.74,
+  "over_145w": 221847,
+  "hw_slowdown_samples": 0,
+  "pcie_link_under_load": [
+    [
+      2,
+      16
+    ]
+  ],
+  "max_temp_c": 81,
+  "first": "2026-10-05T12:04:10",
+  "last": "2026-10-05T23:12:52"
+}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Retry onboot guests that failed to autostart after a node hard reset (Ceph/CephFS still recovering)
+After=pve-guests.service pve-cluster.service ceph.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/onboot-retry.sh
+
+[Install]
+WantedBy=multi-user.target
