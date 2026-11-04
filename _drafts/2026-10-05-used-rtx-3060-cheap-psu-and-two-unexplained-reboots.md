@@ -27,6 +27,8 @@ A while back I [bought a $60 "750W" power supply]({% post_url 2025-02-16-power-s
 
 > **Status (2026-10-05, late evening): unresolved, and the reset did not reproduce.** The node reset once on its own during image generation at the card's full 170 W, and a different, cluster-wide reset happened two days earlier. I then ran about 3 hours of image generation at 170 W (600 images) and a 3 hour `gpu-burn` at 170 W, plus a stepped ladder from 130 W up: no reset, no PCIe error, no throttle flag, no wrong pixel. That is evidence against a steady-load limit and against a gross fault, but one reset in roughly 45 minutes is too small a sample to call anything safe. Both the PSU and the used GPU remain suspects.
 
+> **Update (2026-10-11): the cluster-wide reset happened again.** At about 07:18 on Sunday 2026-10-11 all seven nodes lost power together a second time, eight days after the first, with the same signature and a clean recovery. Together with a confirmed utility outage on the night of 2026-09-11/12, that makes the cluster-wide events very likely a power-delivery problem; see [the second cluster-wide event](#the-second-cluster-wide-event-2026-10-11). It does not explain reset #2, which hit `quell` alone. [AUTHOR: the title still says two unexplained reboots; the cluster-wide one now has a likely cause, so consider retitling.]
+
 ## The build
 
 | Part | Detail |
@@ -48,6 +50,7 @@ One number deserves a second look. Two 24 A rails is at most 2 x 24 A x 12 V = *
 timeline
     title From purchase to two unexplained reboots
     2024-03 : $60 KDM "750W" PSU bought and installed
+    2026-09-11 : 23:38 real overnight utility outage, nodes down about five hours
     2026-10-01 (approx.) : RTX 3060 installed, driver and passthrough working
              : 5 minute gpu-burn at 170 W passes
     2026-10-02 : SD.Next killed by the host out-of-memory killer (first)
@@ -58,6 +61,7 @@ timeline
              : GPU capped at 130 W, 3 hour generation soak passes
              : 15:32 to 19:41 power ladder 140 W, 150 W, 170 W passes
              : 19:42 to 22:42 3 hour gpu-burn at 170 W passes
+    2026-10-11 : 07:18 all seven nodes lose power again, same signature
 ```
 
 ## The pain points before the reboots
@@ -105,11 +109,11 @@ What this does and does not tell me:
 
 - It is **not** a fault local to one node's GPU or PSU: seven machines with different power supplies, and only one of them had a new GPU.
 - poe's journal shows no network, quorum or fencing messages before it ended, but journald can lose the last minute or more, so that is not conclusive.
-- The nodes have **no UPS** and nothing logs the incoming power, so no log can say what the mains did.
+- The nodes have **no UPS**, and the one small UPS that does exist (below) is not networked, so nothing logs the incoming power and no log can say what the mains did.
 - My best explanation, and the most likely one, is a **brief power interruption on the line feeding the house**: I suspect a tree limb on the power line, though I have no utility outage report to confirm it. Seven machines with no ride-through losing power together and booting again within a couple of minutes (each node's BIOS, disks and Ceph start-up add their own delay, which is why the boot times spread over about 80 seconds) fits that far better than any software cause.
-- A separate Wyse 3040 thin client on the same LAN **did not** reboot (it has been up since September 12). That is the one loose end: it may be on a different outlet or circuit, or a tiny fixed 5 V load rides through a flicker that a full-size supply does not. I have not checked.
+- A separate Wyse 3040 thin client on the same LAN **did not** reboot (it has been up since September 12). That is explained by what it is plugged into: a small non-networked ("dumb") UPS that also carries the Google Wifi, the HP ProCurve 2500 switch and the Google Fiber router and fiber device. The nodes are not on it. So the network and the thin client rode through while the nodes dropped; what that does and does not prove is below.
 
-I cannot prove this from software alone, and the lesson is simple: a cluster with seven machines and no UPS will lose its Ceph quorum to the next flicker as well. A UPS would also be the first thing to log the input voltage that this post is missing.
+I cannot prove this from software alone, and the lesson is simple: a cluster with seven machines and no UPS will lose its Ceph quorum to the next flicker as well. It did, eight days later (next sections). A UPS would also be the first thing to log the input voltage that this post is missing.
 
 ## Reboot #2: only `quell`, mid-generation
 
@@ -131,6 +135,30 @@ poe corosync[1612]: [KNET ] link: host: 6 link: 0 is down            09:13:56
 poe corosync[1612]: [QUORUM] Sync left[1]: 6                         09:14:07
 poe corosync[1612]: [KNET ] link: Resetting MTU for link 0 because host 6 joined   09:14:53
 ```
+
+## The second cluster-wide event: 2026-10-11
+
+Eight days after the first, it happened again. At about 07:18 on Sunday 2026-10-11 all seven nodes lost power together and booted again within about 85 seconds of each other. I found it at 08:51 from the boot histories, the same way I found the first one. This time I could compare it with the first event instead of reasoning from a single data point.
+
+| Node | Previous boot ended | New boot started |
+|---|---|---|
+| kovacs | 07:18:10 | 07:19:59 |
+| poe | 07:18:20 | 07:19:44 |
+| harlan | 07:18:31 | 07:19:45 |
+| edgar | 07:18:32 | 07:20:04 |
+| quell | 07:18:41 | 07:19:28 |
+| tanaka | 07:19:23 | 07:20:28 |
+| jaeger | 07:19:24 | 07:20:52 |
+
+What the second event adds:
+
+- **The same signature.** No node recorded a shutdown (`last -x` shows a new boot with no shutdown entry before it), and on poe and edgar, the two journals I read, the last lines are ordinary `sudo` and Telegraf entries. Recovery was clean without intervention: the monitors regained quorum after two elections, all 28 OSDs came back, the metadata server went active, the ZFS root pools I checked were healthy and HA reported no errors.
+- **Seven supplies, one new GPU.** Two cluster-wide events cannot be blamed on the `quell` GPU or its $60 supply. Whatever caused them reached seven machines with different power supplies at once. That narrows the "bad PSU" suspect to reset #2 only.
+- **The order repeats.** In both events the journals of the first five nodes ended within about 30 seconds of each other, `quell` was the last of those five (not the first to go), and `tanaka` and `jaeger` stopped logging roughly a minute after the rest. I do not have an explanation for that order and my guess is journal flush timing, but a repeat is more consistent with one external cause than with a fault on any single machine.
+- **The thin client was on a UPS the whole time.** The Raleigh Wyse 3040 shares one small non-networked UPS with the Google Wifi, the HP ProCurve 2500 switch and the Google Fiber router and fiber device. Its boot history shows one boot on 2026-09-12 and the next at 02:00 on 2026-10-19, a scheduled upgrade reboot, so it did not restart on 10-03 or 10-11: the UPS bridged both interruptions. It did go down in the long outage below and came back with the nodes, which is what a small battery does when an outage outlasts it. Two things follow. The network was almost certainly up throughout both events, so a switch or router failure is not part of the story: the nodes lost power. And the Wyse cannot tell me whether the rack shares a circuit with that UPS, because the UPS would hide a utility sag from it just as well as a fault on the rack's circuit alone. [AUTHOR: confirm the ProCurve and the fiber gear did not restart on either date, and say whether the UPS beeped or switched to battery at 23:56 on 10-03 and 07:18 on 10-11.]
+- **This is not the first outage here.** On the night of 2026-09-11/12 a real utility outage, which I confirmed at the time, took the nodes down for about five hours: the journals on the four nodes whose history goes back that far end between 23:37:50 and 23:38:20 and restart between 04:49 and 04:50, and the thin client returned at 04:49 as well. The power lines here are above ground, and storms have knocked the power out before. Two short events a week apart fit a marginal line, though I have no utility report for either.
+
+I still cannot separate a sag on the utility feed from a fault on the circuit or power strip that feeds the rack, because nothing here logs the input voltage. The same two cheap steps test both: a UPS that reports input voltage, and tracing what else shares that circuit. None of this explains reset #2. `quell` reset alone, at 155 W and 74 C with nothing else on the line failing, which is why the PSU and the card stay on the suspect list below.
 
 ## Measuring power at 100 ms
 
@@ -207,7 +235,7 @@ The reset is the only event in roughly 11 hours of load, and it happened in the 
 |---|---|---|---|
 | **PSU spike or over-current handling** ($60 unit, ~2.5 years old) | Instant loss with no logs fits a power-good glitch; one node reset in generation | No voltage sensor to see it; 3 h of generation and 3 h of `gpu-burn` at 170 W clean, with nothing above 178 W at 100 ms | A known-good PSU; a wall-power meter |
 | **A bad GPU** (used, from eBay) | Bought used | 0 compute errors over well over 1,500 images and about 3.75 hours of burn, 0 canary mismatches, 0 PCIe errors, no driver error | The card in another machine, or a swap |
-| **Mains interruption** (reset #1) | All seven nodes at once, no UPS, a suspected tree limb on the line | The Wyse thin client did not reboot; no utility report | A UPS with monitoring (NUT) would log the next one |
+| **Mains interruption or the rack's circuit** (reset #1 and the 2026-10-11 event) | All seven nodes at once, twice in eight days, the same signature both times, no UPS on the nodes, a confirmed real outage on 2026-09-11/12 | No utility report for either short event; the small UPS that carried the Wyse and the network gear through both would equally hide a fault that only touches the rack's circuit | A UPS that logs input voltage; tracing what else shares the rack's circuit; whether the existing UPS beeped at those times |
 | **The 2011 platform** (board, voltage regulators, BIOS) | Age | Nothing specific | A CPU-only stress test |
 | Memory pressure | | Host had 13.8 GB free | ruled out for reset #2 |
 | Overheating | | 74 C, cooler than during the burns | ruled out |
@@ -281,10 +309,11 @@ What can actually separate the suspects is hardware: a known-good PSU, the card 
 
 ### Power protection comes first
 
-Reset #1 is almost certainly a mains event, and it is the same failure that will hit the next time something touches the line: seven machines, no UPS, and a Ceph cluster that loses its quorum and restarts every OSD at once. It is also the missing instrument for reset #2. A UPS that reports its input voltage is the only thing that can tell me whether `quell` was handed a brief sag that six lighter-loaded nodes rode through.
+Reset #1 and the 2026-10-11 event are almost certainly the same problem on the mains or the rack's circuit, and it will hit again the next time something touches the line: seven machines, no UPS, and a Ceph cluster that loses its quorum and restarts every OSD at once. It is also the missing instrument for reset #2. A UPS that reports its input voltage is the only thing that can tell me whether `quell` was handed a brief sag that six lighter-loaded nodes rode through.
 
 None of it is built yet, but the plan and most of the hardware are there:
 
+- **What is already protected (a non-networked UPS).** The Google Wifi, the Wyse 3040 at Raleigh, the HP ProCurve 2500 switch and the Google Fiber router and fiber device share one small UPS with no data connection, and it held through both short events. It is why the network stayed up while the nodes dropped. Because it cannot report anything it is not a NUT source, and the nodes remain the unprotected part.
 - **A dedicated NUT server (planned).** The design is a spare Wyse 3040 thin client running Network UPS Tools (NUT), with the UPS plugged into it by USB so the whole network can read it on TCP port 3493. The Wyse is not set up yet and NUT is not installed anywhere.
 - **Spare UPS units (on hand).** I have several, enough to cover minor power problems while a proper rack-sized one is sorted out. `quell` gets one first, since it carries the heaviest load on the cheapest supply.
 - **A client on every node (planned).** The baseline is NUT's `nut-client` (the `upsmon` daemon) on each Proxmox node, pointed at the Wyse, so that every node shuts down cleanly when the battery runs low and logs when it goes on battery.

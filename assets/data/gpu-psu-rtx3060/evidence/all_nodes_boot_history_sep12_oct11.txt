@@ -1,0 +1,64 @@
+# Boot history around two more cluster-wide power losses (collected 2026-11-03, read-only: last -x and journalctl --list-boots)
+# A. Overnight 2026-09-11/12: a real utility outage at Raleigh, confirmed at the time. Journals end 23:37-23:38, nodes return 04:49-04:50 (about five hours).
+# B. 2026-10-11 ~07:18 EDT: second short cluster-wide event, same signature as 2026-10-03: journals stop mid-routine, no shutdown sequence.
+# 'LAST ENTRY' is the last moment a boot's journal recorded; the next line's 'FIRST ENTRY' is when the node came back.
+##### poe
+Sat 2026-08-15 07:05:06 EDT Fri 2026-09-11 23:38:20 EDT
+Sat 2026-09-12 04:49:51 EDT Wed 2026-09-23 04:10:50 EDT
+Sat 2026-10-03 23:57:30 EDT Sun 2026-10-11 07:18:20 EDT
+Sun 2026-10-11 07:19:44 EDT Mon 2026-10-26 13:16:51 EDT
+##### kovacs
+Wed 2026-08-26 22:47:49 EDT Fri 2026-09-11 23:38:20 EDT
+Sat 2026-09-12 04:50:09 EDT Wed 2026-09-23 04:10:21 EDT
+Sat 2026-10-03 23:57:40 EDT Sun 2026-10-11 07:18:10 EDT
+Sun 2026-10-11 07:19:59 EDT Mon 2026-10-26 13:17:18 EDT
+##### harlan
+Wed 2026-09-09 06:05:28 EDT Fri 2026-09-11 23:37:50 EDT
+Sat 2026-09-12 04:49:57 EDT Tue 2026-09-22 16:05:53 EDT
+Tue 2026-10-06 11:07:46 EDT Sun 2026-10-11 07:18:31 EDT
+Sun 2026-10-11 07:19:45 EDT Mon 2026-10-26 13:17:13 EDT
+##### edgar
+Sat 2026-10-03 23:57:37 EDT Sun 2026-10-11 07:18:32 EDT
+Sun 2026-10-11 07:20:04 EDT Mon 2026-10-26 13:16:37 EDT
+##### quell
+Sat 2026-09-05 23:28:58 EDT Fri 2026-09-11 23:38:13 EDT
+Sat 2026-09-12 04:50:02 EDT Tue 2026-09-22 16:49:53 EDT
+Tue 2026-10-06 15:33:30 EDT Sun 2026-10-11 07:18:41 EDT
+Sun 2026-10-11 07:19:28 EDT Tue 2026-11-03 12:36:57 EST
+##### tanaka
+Thu 2026-08-13 18:47:14 EDT Fri 2026-09-11 23:39:32 EDT
+Fri 2026-09-11 23:40:24 EDT Sat 2026-09-12 00:50:51 EDT
+Sat 2026-10-03 23:58:13 EDT Sun 2026-10-11 07:19:23 EDT
+Sun 2026-10-11 07:20:28 EDT Mon 2026-10-26 13:16:52 EDT
+##### jaeger
+Thu 2026-10-08 12:18:46 EDT Sun 2026-10-11 07:19:24 EDT
+Sun 2026-10-11 07:20:52 EDT Tue 2026-10-13 17:05:03 EDT
+##### Raleigh Wyse 3040 thin client (separate device on a small non-networked UPS shared with the Google Wifi, HP ProCurve 2500 and Google Fiber gear; the nodes are not on it): no boot between Sep 12 and the scheduled upgrade reboot at 02:00 on Oct 19, so the UPS carried it through both short events, and it went down in the Sep 11/12 outage
+reboot   system boot  6.1.0-54-amd64   Mon Oct 19 02:00:56 2026   still running
+shutdown system down  6.1.0-53-amd64   Mon Oct 19 02:00:02 2026 - Mon Oct 19 02:00:56 2026  (00:00)
+reboot   system boot  6.1.0-53-amd64   Sat Sep 12 04:49:51 2026 - Mon Oct 19 02:00:02 2026 (36+21:10)
+reboot   system boot  6.1.0-53-amd64   Fri Sep 11 02:00:46 2026 - Mon Oct 19 02:00:02 2026 (37+23:59)
+shutdown system down  6.1.0-52-amd64   Fri Sep 11 02:00:02 2026 - Fri Sep 11 02:00:46 2026  (00:00)
+
+##### last -x around 2026-10-11 (a clean shutdown would show a 'shutdown system down' line just before the boot; none does)
+### poe
+reboot   system boot  6.8.12-41-pve    Sun Oct 11 07:19:39 2026   still running
+(any shutdown entry on Oct 10-11: 0)
+### kovacs
+reboot   system boot  6.8.12-41-pve    Sun Oct 11 07:19:54 2026   still running
+(any shutdown entry on Oct 10-11: 0)
+### harlan
+reboot   system boot  6.8.12-41-pve    Sun Oct 11 07:19:44 2026   still running
+(any shutdown entry on Oct 10-11: 0)
+### edgar
+reboot   system boot  6.8.12-41-pve    Sun Oct 11 07:20:04 2026   still running
+(any shutdown entry on Oct 10-11: 0)
+### quell
+reboot   system boot  6.8.12-41-pve    Sun Oct 11 07:19:27 2026   still running
+(any shutdown entry on Oct 10-11: 0)
+### tanaka
+reboot   system boot  6.8.12-41-pve    Sun Oct 11 07:20:28 2026   still running
+(any shutdown entry on Oct 10-11: 0)
+### jaeger
+reboot   system boot  6.8.12-43-pve    Sun Oct 11 07:20:47 2026 - Tue Oct 13 17:05:02 2026 (2+09:44)
+(any shutdown entry on Oct 10-11: 0)

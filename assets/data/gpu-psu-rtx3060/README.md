@@ -10,7 +10,7 @@ and MAC addresses were removed from everything in this folder; no credentials ar
 |---|---|
 | `raw/*.gz` | Measurement logs, gzipped. `hires_130w.csv` is the 100 ms GPU log (instant W, average W, SM MHz, memory MHz, temp, utilisation, PCIe gen and width, throttle bitmask); `gpu_power_*.csv` are 2 s GPU logs; `mem_*.csv` are 2 s host and container memory logs; `*_phases.log` are the orchestrators' phase logs; `gpu_burn_170w.log`, `soak_gpu_burn.log` and `burn_soak_gpu_burn.log` (the 3 hour run) are raw `gpu-burn` output |
 | `processed/` | Small tables the figures are drawn from, the benchmark results, `hires_summary.json`, `batch_summaries.txt` and `exposure_estimate.md` (hours of each load by power cap) |
-| `evidence/` | Sanitised journal excerpts around both resets, boot history of all seven nodes, what another node's corosync saw, the Ceph cluster log around the first reset, hardware identity, and the per-hour image counts the exposure table is built from |
+| `evidence/` | Sanitised journal excerpts around both resets, boot history of all seven nodes, boot history around the 2026-09-11/12 utility outage and the 2026-10-11 cluster-wide event (`all_nodes_boot_history_sep12_oct11.txt`), what another node's corosync saw, the Ceph cluster log around the first reset, hardware identity, and the per-hour image counts the exposure table is built from |
 | `scripts/` | The soak, stepped-power-ladder, image-batch, checkpoint-benchmark and boot-retry scripts that produced the data |
 | `build_assets.py` | Rebuilds every figure (`assets/images/gpu-psu-rtx3060-*.png`) and the processed tables from `raw/` |
 | `refresh_from_quell.sh` | Re-pulls the latest logs from the node, sanitises and gzips them into `raw/`, then runs `build_assets.py` |
