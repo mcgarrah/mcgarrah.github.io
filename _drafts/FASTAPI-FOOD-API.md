@@ -1,3 +1,7 @@
+---
+date: 1999-12-31
+---
+
 # Designing a Unified Food Nutrition Lookup API (FastAPI Aggregator)
 
 Objective: Build a production-grade FastAPI service that aggregates three data sources – USDA FoodData Central (FDC), Open Food Facts (OFF), and GS1 Global Product Classification (GPC) – into one canonical “food intelligence” API. The service will asynchronously fetch data from all sources by GTIN/UPC barcode (the primary key for lookup), reconcile the disparate data into a single Pydantic model, and return a unified JSON response. The focus here is on the data model, data mapping, and conflict-resolution logic first, followed by the API implementation and deployment considerations.

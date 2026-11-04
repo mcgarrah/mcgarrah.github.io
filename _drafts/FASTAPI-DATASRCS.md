@@ -1,3 +1,7 @@
+---
+date: 1999-12-31
+---
+
 # Additional Free & Open Food Data Sources to Complement USDA FDC & Open Food Facts
 
 To bolster data quality and coverage in your food intelligence API, consider integrating other open-access nutrition datasets. Each adds unique value in terms of geographic coverage, data collection methods, or nutrient details. Below are several recommended sources, along with their content, access methods, and strengths/limitations. These resources can be layered into your reconciliation model with appropriate confidence weighting (e.g. giving higher weight to lab-analyzed official data, but still leveraging crowdsourced breadth).
