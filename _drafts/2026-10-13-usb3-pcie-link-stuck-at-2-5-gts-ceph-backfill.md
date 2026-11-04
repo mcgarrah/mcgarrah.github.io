@@ -130,6 +130,15 @@ lspci -s <root-port> -vv | grep -E "LnkCap:|LnkCtl2:"
 
 If `LnkSta` is below `LnkCap` and the *root port's* `LnkCtl2` target is below its own `LnkCap`, you probably have this problem. Two caveats: a Gen1-only card or port cannot be raised, and not every slot on a board shares the same default. On this board simply moving the card from the long slot to the x1 slot gave 5 GT/s with no software at all.
 
+## Later: the link speed was one of three faults
+
+Raising the link fixed the shared bottleneck on every node. It did not stop the resets on the two nodes that kept logging them, and the explanation turned out to be hardware in two more places.
+
+* **A bad card in jaeger.** The FebSmart card in jaeger, which takes no SATA power lead, was a faulty unit. Replacing it with a new SATA-powered card fixed some of the problems there, though not all of them. The model itself is not the issue: edgar and tanaka carry the same unpowered FebSmart and logged no resets on their OSD ports in the same week. [AUTHOR: add which problems the new card fixed and which remain, with reset counts before and after, and the swap date.]
+* **A powered hub.** The Anker 7-port powered USB3 hub (12 V, 3000 mA) that I used to attach extra drives to jaeger and tanaka was conclusively causing some of the errors on both nodes. As of 2026-10-23 all 42 of tanaka's resets that week came from test drives behind its powered hub, and none from the OSD drives on the card's direct ports. [AUTHOR: confirm that tanaka's test hub is the Anker, and add how it was proven (hub removed, drives direct), the before and after counts, and the dates.]
+
+A `(downgraded)` link, a bad card and an underpowered hub all produce the same symptom, USB resets under load, and each one hides the next. Change one thing, re-measure, then look again; a fix that improves the numbers is not proof that it was the only fault.
+
 ## What I would do differently
 
 * **Measure the shared path before tuning the consumers.** I tuned reservation concurrency, mClock profiles and reweights first. Those mattered, but a link running at half speed was a standing tax under all of them.
