@@ -6,4 +6,4 @@
 #   bin/update-og-frontmatter.py — adds image: field to post front matter
 #
 PyYAML==6.0.3
-cairosvg==2.9.0
+cairosvg==2.9.1
