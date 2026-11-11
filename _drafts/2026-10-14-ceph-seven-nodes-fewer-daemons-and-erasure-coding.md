@@ -1,21 +1,25 @@
 ---
 layout: post
-title: "Seven Ceph Nodes, Fewer Daemons: Why an Even Monitor Count Buys Nothing and Where Erasure Coding Fits"
+title: "Seven Ceph Nodes, Fewer Daemons, Part 1: Why an Even Monitor Count Buys Nothing"
 categories: [homelab, ceph, proxmox]
 tags: [ceph, proxmox, cephfs, monitors, mds, mgr, erasure-coding, quorum, capacity-planning, high-availability, dell-optiplex-990]
-excerpt: "My Ceph cluster ran a monitor, a manager and a metadata server on every node but one. Six monitors tolerate exactly the same two failures as five, so I trimmed the cluster to 5 monitors, 3 managers and 3 metadata servers, measured a 5-second CephFS failover, and cleared the way for erasure coding that will cut the raw cost of 18 TiB of media from 55 TiB to 27."
-description: "Why a six-monitor Ceph quorum is no more fault tolerant than five, how to trim monitors, managers and metadata servers safely with pveceph, what to fix in the consumers that hard-code daemon addresses, and how a seventh OSD host makes a k=4,m=2 erasure-coded CephFS data pool practical. Measured numbers from a seven-node Proxmox cluster."
+excerpt: "Part 1 of 2. My Ceph cluster ran a monitor, a manager and a metadata server on every node but one. Six monitors tolerate exactly the same two failures as five, so I trimmed the cluster to 5 monitors, 3 managers and 3 metadata servers, measured a 5-second CephFS failover, and wrote the plan for erasure coding that would cut the raw cost of 18 TiB of media from 55 TiB to 27."
+description: "Why a six-monitor Ceph quorum is no more fault tolerant than five, how to trim monitors, managers and metadata servers safely with pveceph, what to fix in the consumers that hard-code daemon addresses, and how a seventh OSD host makes a k=4,m=2 erasure-coded CephFS data pool practical. Part 1 of 2, written before any data moved."
 date: 2026-10-14
-last_modified_at: 2026-10-14
+last_modified_at: 2026-11-06
 seo:
   type: BlogPosting
   date_published: 2026-10-14
-  date_modified: 2026-10-14
+  date_modified: 2026-11-06
+series: "Seven Ceph Nodes"
+series_part: 1
 ---
 
 Most Ceph clusters I see in small deployments share one trait: every node runs every service. Proxmox makes it a few clicks per node, the first three nodes get a monitor, a manager and a metadata server, and nobody revisits the decision as the cluster grows. Mine did exactly that. When the cluster reached seven nodes, with a move to erasure coding on the roadmap, I stopped to ask whether that layout was a design or a default. It was a default, and it was costing me more than it returned.
 
-This is the reasoning, the measured results of the change, and where the cluster is heading.
+This is the reasoning, the measured results of the change, and the plan I wrote for the next step.
+
+This is Part 1 of two. I wrote it on October 14, before any data moved, and I have left its numbers as they were that day. The plan at the end did not survive the first live media library. [Part 2](/ceph-seven-nodes-part-2-moving-live-media-to-erasure-coding/) is what happened when I started, with the numbers from three weeks later.
 
 <!-- excerpt-end -->
 
@@ -23,7 +27,7 @@ This is the reasoning, the measured results of the change, and where the cluster
 
 Seven Dell OptiPlex 990 desktops run Proxmox VE and Ceph Squid. Each carries three 5 TB SMR drives on a USB3 card as OSDs, with a SATA SSD in front of them for the BlueStore DB and WAL, plus a small SSD-backed OSD that holds the CephFS metadata. The cluster grew from six OSD hosts to seven when the newest node, jaeger, joined as an OSD-only host.
 
-| | Today |
+| | October 14 |
 |---|---|
 | Raw capacity | 98 TiB (97 TiB HDD, 1.9 TiB SSD) |
 | Raw used | 56 TiB, 57% |
@@ -108,7 +112,7 @@ I tested both before reloading (Telegraf's `--test` mode produced over ten thous
 - **Quieter.** Fewer monitors means fewer election participants and fewer writers to boot disks I am already watching for wear.
 - **Honest documentation.** The layout now encodes a reason for each daemon's placement instead of a default.
 
-I haven't yet measured an effect on election frequency, and I'm not going to claim one. The monitor-election instability I fixed earlier this month had a different root cause (rocksdb compaction), and I'll compare election counts from this point forward against that baseline.
+I haven't yet measured an effect on election frequency, and I'm not going to claim one. The monitor-election instability I fixed earlier this month had a different root cause (rocksdb compaction), and I'll compare election counts from this point forward against that baseline. Part 2 has that count.
 
 ## What comes next: erasure coding on seven hosts
 
@@ -118,7 +122,9 @@ Why this workload suits it: the data is a media library, written once, read many
 
 Why the seventh host matters. With `crush-failure-domain=host` and exactly six hosts, a 4+2 pool places one chunk on every host. Lose one and every placement group is down to five of six chunks with no spare host to rebuild onto, so there is no self-healing until it returns. With seven hosts, each placement group picks six of seven, and when a host fails its missing chunk can be rebuilt onto the seventh. Availability is honest rather than magical: with the default `min_size` of 5, losing two hosts at once leaves placement groups inactive (four chunks) until recovery, though no data is lost. That is the same outcome replication gives me today with `size=3`, `min_size=2`.
 
-The migration itself is deliberately boring, because the cluster can't afford a clever one. Add the erasure-coded pool as an additional data pool, set the directory layout on a new directory so new writes land in it, copy the existing data across with rsync, verify, then remove the old copy. One top-level directory at a time, smallest first, saving the 13 TB TV library for last, so the old and new copies of only one directory ever coexist. The layout attribute survives the rename, so no per-file work is needed afterward. The staging order and the capacity checks (`nearfull` at 85%, backfills refused at 90%, writes refused at 95%) are in the runbook, and I'm not starting until the rebalance has settled and the new host's drives have taken their share.
+The migration plan I wrote was deliberately boring, because the cluster can't afford a clever one. Add the erasure-coded pool as an additional data pool, set the directory layout on a new directory so new writes land in it, copy the existing data across with rsync, verify, then remove the old copy and rename the new one into place. One top-level directory at a time, smallest first, saving the 13 TB TV library for last, so the old and new copies of only one directory ever coexist. The layout attribute survives the rename, so no per-file work is needed afterward. The staging order and the capacity checks (`nearfull` at 85%, backfills refused at 90%, writes refused at 95%) are in the runbook, and I wasn't going to start until the rebalance had settled and the new host's drives had taken their share.
+
+I was right that boring was the goal and wrong about what boring meant for the two big libraries. The next post shows where the copy-and-rename plan broke, what replaced it, and what the USB drives under this cluster did while it ran.
 
 ## What I'd do differently at scale
 
