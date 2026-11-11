@@ -11,6 +11,8 @@ seo:
   type: BlogPosting
   date_published: 2026-11-06
   date_modified: 2026-11-06
+series: "Seven Ceph Nodes"
+series_part: 3
 ---
 
 My InfluxDB container was healthy by every measure I normally check. Two cores, about 4% of one in use, 859 MB of 6 GB of RAM, no swap. And Telegraf was throwing away 7,500 to 9,500 metrics at a time with "Metric buffer overflow" warnings, while the Proxmox status daemon on harlan and poe logged InfluxDB timeouts all day. My first question was whether the container was undersized. The number that answered it was the root disk's write latency: 730 ms.

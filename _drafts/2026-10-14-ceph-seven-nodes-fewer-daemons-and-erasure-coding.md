@@ -3,8 +3,8 @@ layout: post
 title: "Seven Ceph Nodes, Fewer Daemons, Part 1: Why an Even Monitor Count Buys Nothing"
 categories: [homelab, ceph, proxmox]
 tags: [ceph, proxmox, cephfs, monitors, mds, mgr, erasure-coding, quorum, capacity-planning, high-availability, dell-optiplex-990]
-excerpt: "Part 1 of 2. My Ceph cluster ran a monitor, a manager and a metadata server on every node but one. Six monitors tolerate exactly the same two failures as five, so I trimmed the cluster to 5 monitors, 3 managers and 3 metadata servers, measured a 5-second CephFS failover, and wrote the plan for erasure coding that would cut the raw cost of 18 TiB of media from 55 TiB to 27."
-description: "Why a six-monitor Ceph quorum is no more fault tolerant than five, how to trim monitors, managers and metadata servers safely with pveceph, what to fix in the consumers that hard-code daemon addresses, and how a seventh OSD host makes a k=4,m=2 erasure-coded CephFS data pool practical. Part 1 of 2, written before any data moved."
+excerpt: "Part 1. My Ceph cluster ran a monitor, a manager and a metadata server on every node but one. Six monitors tolerate exactly the same two failures as five, so I trimmed the cluster to 5 monitors, 3 managers and 3 metadata servers, measured a 5-second CephFS failover, and wrote the plan for erasure coding that would cut the raw cost of 18 TiB of media from 55 TiB to 27."
+description: "Why a six-monitor Ceph quorum is no more fault tolerant than five, how to trim monitors, managers and metadata servers safely with pveceph, what to fix in the consumers that hard-code daemon addresses, and how a seventh OSD host makes a k=4,m=2 erasure-coded CephFS data pool practical. Part 1, written before any data moved."
 date: 2026-10-14
 last_modified_at: 2026-11-06
 seo:
@@ -19,7 +19,7 @@ Most Ceph clusters I see in small deployments share one trait: every node runs e
 
 This is the reasoning, the measured results of the change, and the plan I wrote for the next step.
 
-This is Part 1 of two. I wrote it on October 14, before any data moved, and I have left its numbers as they were that day. The plan at the end did not survive the first live media library. [Part 2](/ceph-seven-nodes-part-2-moving-live-media-to-erasure-coding/) is what happened when I started, with the numbers from three weeks later.
+This is Part 1 of the series. I wrote it on October 14, before any data moved, and I have left its numbers as they were that day. The plan at the end did not survive the first live media library. [Part 2](/ceph-seven-nodes-part-2-moving-live-media-to-erasure-coding/) is what happened when I started, with the numbers from three weeks later.
 
 <!-- excerpt-end -->
 

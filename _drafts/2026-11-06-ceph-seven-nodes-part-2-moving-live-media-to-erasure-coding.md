@@ -3,7 +3,7 @@ layout: post
 title: "Seven Ceph Nodes, Part 2: Moving a Live Media Library to Erasure Coding"
 categories: [homelab, ceph, proxmox]
 tags: [ceph, cephfs, erasure-coding, proxmox, usb-storage, migration, jellyfin, observability, runbooks, dell-optiplex-990]
-excerpt: "Part 2 of 2. The copy-and-rename plan from Part 1 worked for thirteen small directories and failed for the libraries people are watching. I replaced it with a per-file rewrite that keeps Jellyfin up, wrapped it in a seven-node watchdog, and then spent two days finding out what USB-attached OSDs do under sustained load."
+excerpt: "Part 2. The copy-and-rename plan from Part 1 worked for thirteen small directories and failed for the libraries people are watching. I replaced it with a per-file rewrite that keeps Jellyfin up, wrapped it in a seven-node watchdog, and then spent two days finding out what USB-attached OSDs do under sustained load."
 description: "Migrating a live CephFS media library to a k=4,m=2 erasure-coded pool without taking the media server down: why directory swaps fail with bind mounts and active writers, a rate-limited in-place file rewrite with checksum verification, a watchdog across seven nodes, and the recovery steps for a USB OSD the kernel marked offline. Measured numbers and the mistakes along the way."
 date: 2026-11-06
 last_modified_at: 2026-11-06
