@@ -4,7 +4,7 @@
   "description": "External dependency tracking for Jekyll blog security scanning",
   "private": true,
   "dependencies": {
-    "mermaid": "^11.0.0",
+    "mermaid": "^12.3.0",
     "katex": "^0.19.1",
     "clipboard": "^2.0.11"
   },
