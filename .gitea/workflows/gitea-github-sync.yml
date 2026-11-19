@@ -1,0 +1,66 @@
+name: Gitea and GitHub branch sync
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  sync:
+    runs-on: self-hosted
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: builtin:checkout
+        with:
+          fetch-depth: 0
+
+      - name: Reconcile branches safely
+        env:
+          GITHUB_REMOTE_URL: https://github.com/mcgarrah/mcgarrah.github.io.git
+          GITHUB_SYNC_TOKEN: ${{ secrets.UPSTREAM_GITHUB_PAT }}
+          GITEA_API_URL: https://192.168.86.30:3002/api/v1
+          GITEA_SERVER_URL: ${{ gitea.server_url }}
+          GITEA_REPOSITORY: ${{ gitea.repository }}
+          GITEA_TOKEN: ${{ gitea.token }}
+          GITEA_EVENT_NAME: ${{ gitea.event_name }}
+          GITEA_REF: ${{ gitea.ref }}
+        run: |
+          set +x
+          python3 scripts/gitea/sync-branches.py
+
+      - name: Notify owner if sync fails
+        if: failure()
+        env:
+          GITEA_SERVER_URL: ${{ gitea.server_url }}
+          GITEA_REPOSITORY: ${{ gitea.repository }}
+          GITEA_REF: ${{ gitea.ref }}
+          GITEA_RUN_ID: ${{ gitea.run_id }}
+        run: |
+          set +x
+          python3 - <<'PYMAIL'
+          import os
+          import smtplib
+          from email.message import EmailMessage
+
+          def clean(name):
+              return " ".join(os.environ.get(name, "").replace("\r", " ").replace("\n", " ").split())[:500]
+
+          server = clean("GITEA_SERVER_URL").rstrip("/")
+          repository = clean("GITEA_REPOSITORY")
+          run_id = clean("GITEA_RUN_ID")
+          run_url = f"{server}/{repository}/actions/runs/{run_id}"
+          message = EmailMessage()
+          message["From"] = "michael@mcgarrah.org"
+          message["To"] = "mcgarrah@mcgarrah.org"
+          message["Subject"] = f"Gitea sync failed: {repository}"
+          message.set_content(
+              f"The Gitea/GitHub synchronization workflow failed.\n\n"
+              f"Repository: {repository}\nRef: {clean('GITEA_REF')}\n"
+              f"Run: {run_url}\n"
+          )
+          with smtplib.SMTP("192.168.86.224", 25, timeout=10) as relay:
+              relay.send_message(message)
+          PYMAIL
