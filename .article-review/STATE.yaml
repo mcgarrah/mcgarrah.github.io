@@ -1,0 +1,159 @@
+# Article Review — resumable state
+#
+# Read this FIRST when resuming. Find the first phase whose status is not "done",
+# and restart at Step 1 of that phase in KIRO-CLAUDE-OPUS5-MAX-ARTICLE-REVIEW.md.
+# Steps are idempotent — rerunning a completed step is safe.
+#
+# Update this file at the end of every STEP, not every phase. A step is the unit
+# of recovery.
+#
+# If any count below disagrees with `python3 .article-review/audit.py`, the
+# filesystem wins. Re-run the audit and update this file.
+
+baseline_date: 2026-09-02
+current_phase: 1
+plan: KIRO-CLAUDE-OPUS5-MAX-ARTICLE-REVIEW.md
+
+# Snapshot from the last audit run. Drift detector.
+last_audit: 2026-11-24   # baseline_date above is the frozen 2026-09-02 starting point
+counts:
+  posts: 191
+  drafts: 84
+  trackers: 17
+  buffer: 0              # future-dated posts in _posts/ — 0 means nothing will publish
+  buffer_health: red     # green >=4, yellow 2-3, red 0-1
+  days_since_last_post: 71   # last published 2026-09-14
+  orphaned_drafts: 28    # audit.py DRIFT line, absent from DRAFTS.md / schedule tracker (12 at baseline, 15 on 2026-10-30)
+
+phases:
+  "0":
+    name: Baseline & State
+    status: done
+    completed: 2026-09-02
+    artifacts:
+      - .article-review/audit.py
+      - .article-review/audit.json
+      - .article-review/BASELINE.md
+      - .article-review/STATE.yaml
+    notes: >
+      audit.py verified working in all four modes (default, --inventory, --buffer, --json).
+      Numbers in BASELINE.md are reproducible. Re-audited 2026-10-30; see the
+      amendment at the end of BASELINE.md. Phases 1-6 and 8 are still not started.
+
+  "1":
+    name: Reconcile the Control Plane
+    status: not_started
+    last_step: null
+    artifacts: []
+    expected_artifacts:
+      - .article-review/INVENTORY.md
+      - .article-review/PHASE1-CHANGES.md
+      - _drafts/SCHEDULE.md
+    blocks: ["2"]
+
+  "2":
+    name: Triage All Drafts Against a Rubric
+    status: not_started
+    last_step: null
+    # 7 batches of ~10 drafts. Record which batches are complete here —
+    # this phase is the most likely to span multiple sessions.
+    batches_complete: []
+    artifacts: []
+    expected_artifacts:
+      - .article-review/TRIAGE-BATCHES.md
+      - .article-review/triage/BATCH-01..07.md
+      - .article-review/QUEUE.md
+    blocks: ["3"]
+
+  "3":
+    name: Archive, Merge, Kill
+    status: not_started
+    last_step: null
+    artifacts: []
+    expected_artifacts:
+      - .article-review/PHASE3-DISPOSITIONS.md
+      - _drafts/archive/
+    blocks: ["4"]
+
+  "4":
+    name: Verification Sweep
+    status: not_started
+    last_step: null
+    artifacts: []
+    expected_artifacts:
+      - .article-review/VERIFICATION-LOG.md
+      - .article-review/G-GATE-RESULTS.md
+    blocks: ["5"]
+
+  "5":
+    name: Commit to the Schedule
+    status: not_started
+    last_step: null
+    artifacts: []
+    expected_artifacts:
+      - _drafts/SCHEDULE.md
+      - .article-review/PHASE5-PROMOTIONS.md
+    blocks: ["6", "7", "8"]
+    notes: >
+      Exit criteria is buffer >= 4. This is the phase that stops the current
+      publishing gap. Phases 6, 7, 8 are independent of each other and may run
+      in any order once this is done.
+
+  "6":
+    name: Enforce the Gate in Tooling
+    status: not_started
+    last_step: null
+    artifacts: []
+    expected_artifacts:
+      - scripts/draft-status.py
+      - scripts/promote-draft.py
+      - .article-review/PHASE6-TOOLING.md
+
+  "7":
+    name: Cross-Repo Intake
+    status: in_progress
+    completed_steps: [1, 2]     # INTAKE.md created and prioritized
+    last_step: 2
+    started: 2026-09-02
+    artifacts:
+      - .article-review/INTAKE.md
+    expected_artifacts:
+      - .article-review/INTAKE.md
+    notes: >
+      Started EARLY, ahead of Phase 5, because August 2026 produced 140 commits
+      in 24 days across ~52 workstreams and the coverage gap was urgent.
+      Source repos: ../k8s-proxmox (write from docs/, NOT articles/) and
+      ../jellyfin-plugin-media-integrity-scanner. See Appendix B of the plan
+      plus the full coverage matrix in INTAKE.md.
+    key_findings: >
+      (1) The five-part PVE 8->9 series cannot conclude: Parts 1-4 are verified
+      preparation work, Part 5 documents Phase B/C which have NOT run. Part 5
+      honestly self-labels as pre-execution. Recommendation: reframe the arc as
+      "Preparing a 6-Node Cluster for PVE 9", publish 1-4, hold 5.
+      (2) Four February drafts (roadmap, overview, checklist, upgrades) now
+      describe a cluster that no longer exists - largest factual-error risk in
+      _drafts/. Archive all four; the summary article replaces them.
+      (3) Biggest uncovered workstreams, all S4: the observability stack
+      (InfluxDB/Grafana/6 Telegraf collectors/18-panel dashboard), 3-site
+      WireGuard, two-tier Technitium DNS, CephFS LXC idmap permissions,
+      Recyclarr config drift, and the openwrt-vm silent backup failure.
+      (4) NEW CONTEXT: Jellyfin + *arr are now a production family service.
+      This is the strongest available article - see INTAKE.md Part 4,
+      "The Month the Homelab Became Production". Needs zero new engineering.
+    open_verifications:
+      - openwrt-vm 1001 PBS backup fix status (blocks article A4)
+      - "*arr Phase 1 download->import round-trip test (blocks series C2)"
+      - gap-fill copy still running? last recorded progress 2026-08-29
+
+  "8":
+    name: Published-Post Debt
+    status: not_started
+    last_step: null
+    sub_projects:
+      "8a_legacy_frontmatter": not_started    # 59 pre-2023 posts
+      "8b_svp_edits": not_started             # 8 posts, ~2.5h total
+      "8c_series_navigation": not_started     # build the feature before writing the article
+    artifacts: []
+    expected_artifacts:
+      - .article-review/PHASE8-LEGACY.md
+      - .article-review/PHASE8-SVP.md
